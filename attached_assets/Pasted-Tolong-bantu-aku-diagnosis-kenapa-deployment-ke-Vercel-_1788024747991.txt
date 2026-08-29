@@ -1,0 +1,24 @@
+Tolong bantu aku diagnosis kenapa deployment ke Vercel tidak menampilkan perubahan terbaru, meskipun build di Vercel selesai sukses ("Build Completed", "Deployment completed").
+
+Konteks:
+- Project ini pakai pnpm workspace monorepo.
+- Build command: NODE_OPTIONS="--max-old-space-size=3072" pnpm --filter @workspace/numatik run build
+- Output directory yang diharapkan: artifacts/numatik/dist/public
+- Root Directory di Vercel di-set ke root repo (./)
+- Ada error TypeScript yang muncul saat build (tapi build tetap lanjut jalan):
+  api/chat.ts(160,19): error TS2339: Property 'ok' does not exist on type 'Response'.
+  api/chat.ts(161,40): error TS2339: Property 'text' does not exist on type 'Response'.
+  api/chat.ts(162,49): error TS2339: Property 'status' does not exist on type 'Response'.
+  api/chat.ts(166,33): error TS2339: Property 'json' does not exist on type 'Response'.
+- Perubahan terbaru yang seharusnya sudah live: halaman "Olimpiade Statistika" (commit terbaru sekitar 1 jam lalu).
+
+Yang perlu kamu cek dan perbaiki:
+1. Cek apakah commit terbaru (perubahan halaman Olimpiade Statistika) benar-benar sudah di-push ke branch 'main' di GitHub, bukan cuma tersimpan lokal di Replit atau di branch lain.
+2. Perbaiki error TypeScript di api/chat.ts — sepertinya ada konflik nama tipe 'Response' custom yang menimpa tipe bawaan (global) Response dari fetch API. Cek apakah ada import atau interface bernama 'Response' yang bentrok, dan perbaiki supaya tidak error (misalnya rename interface custom atau gunakan tipe eksplisit seperti globalThis.Response).
+3. Jalankan build secara lokal persis dengan command yang dipakai Vercel: 
+   NODE_OPTIONS="--max-old-space-size=3072" pnpm --filter @workspace/numatik run build
+   Lalu cek apakah folder artifacts/numatik/dist/public benar-benar berisi file HTML/JS terbaru yang mengandung perubahan "Olimpiade Statistika".
+4. Kalau folder output tersebut TIDAK mengandung perubahan terbaru meskipun build sukses, cari tahu kenapa — misalnya cache build lokal, file yang lupa di-save, atau ada proses build lain yang menimpa hasilnya.
+5. Setelah dipastikan benar, commit dan push semua perubahan ke branch main di GitHub.
+
+Tolong laporkan temuan kamu langkah demi langkah, dan pastikan di akhir folder artifacts/numatik/dist/public sudah berisi build terbaru yang benar sebelum aku redeploy ulang di Vercel.
