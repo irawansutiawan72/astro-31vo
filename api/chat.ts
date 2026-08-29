@@ -143,7 +143,7 @@ export default async function handler(req: any, res: any) {
       ...chatMessages,
     ]
 
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const response: globalThis.Response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
