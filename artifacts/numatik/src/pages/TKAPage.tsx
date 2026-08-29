@@ -102,7 +102,7 @@ const TKAPage = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
+    <div className="tka-menu-page relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
       <Starfield />
       <PageNavigation prevPath="/menu" />
       <div className="relative z-10 max-w-2xl w-full px-4 py-10">
@@ -162,7 +162,7 @@ const TKAPage = () => {
           </button>
 
           {showModul && (
-            <div className="rounded-2xl overflow-hidden"
+            <div className="tka-menu-surface rounded-2xl overflow-hidden"
               style={{
                 border: isWhite ? "1px solid rgba(0,119,182,0.2)" : "1px solid rgba(34,211,238,0.2)",
                 boxShadow: isWhite ? "0 4px 24px rgba(0,119,182,0.08)" : "0 4px 24px rgba(34,211,238,0.08)",
@@ -174,7 +174,7 @@ const TKAPage = () => {
                     <button
                       key={topic.name}
                       onClick={() => handleTopicClick(topic.name)}
-                      className="group flex items-center gap-3 w-full rounded-xl px-3 py-2.5 text-left transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                      className="tka-menu-item group flex items-center gap-3 w-full rounded-xl px-3 py-2.5 text-left transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
                       style={{
                         background: isWhite ? "var(--bg-secondary)" : "rgba(255,255,255,0.04)",
                         border: isWhite ? "1px solid rgba(0,119,182,0.12)" : "1px solid rgba(255,255,255,0.07)",
@@ -192,7 +192,7 @@ const TKAPage = () => {
                         style={isWhite ? { background: "rgba(0,119,182,0.1)", color: "#1565c0", border: "1px solid rgba(0,119,182,0.2)" } : { background: "rgba(34,211,238,0.1)", color: "#22d3ee", border: "1px solid rgba(34,211,238,0.2)" }}>
                         {ti + 1}
                       </span>
-                      <span className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-sm"
+                      <span className="tka-menu-icon shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-sm"
                         style={{ background: isWhite ? "rgba(0,0,0,0.06)" : "rgba(0,0,0,0.3)", border: isWhite ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.06)" }}>
                         {topic.emoji}
                       </span>

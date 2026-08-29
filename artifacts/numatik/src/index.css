@@ -2837,6 +2837,36 @@
 .theme-sunset .text-secondary         { color: #0369a1 !important; }
 .theme-sunset .text-muted-foreground  { color: #4b9cc8 !important; }
 
+/* ── TKA menu surfaces: keep only the three bright named themes bright ── */
+/* The TKA landing and module index pages use inline space-theme surfaces,
+   which otherwise stay dark even after the page gradient changes. */
+[data-theme="light"] .tka-menu-page .tka-menu-surface,
+[data-theme="forest"] .tka-menu-page .tka-menu-surface,
+[data-theme="sunset"] .tka-menu-page .tka-menu-surface {
+  background: var(--bg-card) !important;
+}
+
+[data-theme="light"] .tka-menu-page .tka-menu-item,
+[data-theme="forest"] .tka-menu-page .tka-menu-item,
+[data-theme="sunset"] .tka-menu-page .tka-menu-item {
+  background: rgba(255,255,255,0.72) !important;
+  border-color: var(--border) !important;
+}
+
+[data-theme="light"] .tka-menu-page .tka-menu-item:disabled,
+[data-theme="forest"] .tka-menu-page .tka-menu-item:disabled,
+[data-theme="sunset"] .tka-menu-page .tka-menu-item:disabled {
+  background: rgba(255,255,255,0.48) !important;
+  border-color: var(--border) !important;
+}
+
+[data-theme="light"] .tka-menu-page .tka-menu-icon,
+[data-theme="forest"] .tka-menu-page .tka-menu-icon,
+[data-theme="sunset"] .tka-menu-page .tka-menu-icon {
+  background: rgba(255,255,255,0.58) !important;
+  border-color: var(--border) !important;
+}
+
 /* ── Card / container backgrounds: light sky blue tones ── */
 .theme-sunset .bg-cyan-950\/40,
 .theme-sunset .bg-cyan-950\/50,

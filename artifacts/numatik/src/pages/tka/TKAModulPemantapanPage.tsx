@@ -72,7 +72,7 @@ const TKAModulPemantapanPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="tka-menu-page relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
       <PageNavigation prevPath="/tka" />
 
@@ -112,7 +112,7 @@ const TKAModulPemantapanPage = () => {
         </div>
 
         {/* ── All Topics (flat list) ── */}
-        <div className="rounded-2xl overflow-hidden"
+        <div className="tka-menu-surface rounded-2xl overflow-hidden"
           style={isWhite ? {
             border: "1px solid rgba(33,150,243,0.4)",
             boxShadow: "0 4px 32px rgba(33,150,243,0.1)",
@@ -130,7 +130,7 @@ const TKAModulPemantapanPage = () => {
                   key={topic.name}
                   onClick={() => handleClick(topic.name)}
                   disabled={!hasRoute}
-                  className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-left transition-all duration-200
+                  className={`tka-menu-item group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-left transition-all duration-200
                     ${hasRoute
                       ? "cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
                       : "cursor-not-allowed opacity-35"}`}
@@ -167,7 +167,7 @@ const TKAModulPemantapanPage = () => {
                   </span>
 
                   {/* Emoji icon */}
-                  <span className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm"
+                  <span className="tka-menu-icon shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm"
                     style={isWhite ? { background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" } : { background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)" }}>
                     {topic.emoji}
                   </span>
