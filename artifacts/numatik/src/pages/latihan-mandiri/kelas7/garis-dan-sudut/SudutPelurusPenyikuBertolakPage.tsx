@@ -4,10 +4,120 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { BookOpen, ChevronLeft } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
+import { useTheme } from "@/contexts/ThemeContext";
+
+function SudutPelurusDiagram({ isDark }: { isDark: boolean }) {
+  const colors = isDark
+    ? {
+        background: "rgba(15, 23, 42, 0.92)",
+        border: "rgba(250, 204, 21, 0.38)",
+        line: "#fde047",
+        accent: "#22d3ee",
+        label: "#fef08a",
+        arc: "#fb7185",
+      }
+    : {
+        background: "rgba(248, 250, 252, 0.96)",
+        border: "rgba(30, 64, 175, 0.28)",
+        line: "#1e3a8a",
+        accent: "#0e7490",
+        label: "#172554",
+        arc: "#be123c",
+      };
+
+  return (
+    <svg
+      viewBox="0 0 400 230"
+      className="mt-3 w-full max-w-xs block rounded-xl border"
+      style={{ background: colors.background, borderColor: colors.border }}
+      role="img"
+      aria-label="Diagram sudut x dan sudut 37 derajat"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Diagram sudut x dan sudut 37°</title>
+
+      <line
+        x1="64"
+        y1="185"
+        x2="64"
+        y2="24"
+        stroke={colors.line}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <line
+        x1="64"
+        y1="185"
+        x2="366"
+        y2="185"
+        stroke={colors.line}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <line
+        x1="64"
+        y1="185"
+        x2="244"
+        y2="49"
+        stroke={colors.line}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M64 165 H84 V185"
+        fill="none"
+        stroke={colors.accent}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <circle cx="64" cy="185" r="5" fill={colors.accent} />
+
+      <path
+        d="M119 185 A55 55 0 0 0 108 152"
+        fill="none"
+        stroke={colors.arc}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M108 152 A55 55 0 0 0 64 130"
+        fill="none"
+        stroke={colors.arc}
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray="5 4"
+      />
+
+      <text
+        x="142"
+        y="174"
+        fill={colors.label}
+        fontSize="20"
+        fontFamily="ui-sans-serif, system-ui, sans-serif"
+        fontWeight="800"
+      >
+        37°
+      </text>
+      <text
+        x="88"
+        y="112"
+        fill={colors.label}
+        fontSize="24"
+        fontFamily="Georgia, serif"
+        fontStyle="italic"
+        fontWeight="800"
+      >
+        x
+      </text>
+    </svg>
+  );
+}
 
 const SudutPelurusPenyikuBertolakPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
@@ -38,6 +148,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qa.text')}</p>
                 <img src={"/images/a_1774838179561.png"} alt="Soal a" className="mt-3 w-full max-w-xs block" />
+                <SudutPelurusDiagram isDark={isDark} />
               </div>
             </div>
 
