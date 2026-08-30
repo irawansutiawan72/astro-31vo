@@ -466,7 +466,7 @@ const PolaGeometriPage = () => {
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
+    <div className="pola-geometri-materi-route relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 pt-20 pb-12">
