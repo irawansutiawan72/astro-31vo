@@ -1,5 +1,7 @@
 {pkgs}: {
   deps = [
+    pkgs.libreoffice
+    pkgs.libwmf
     pkgs.libgbm
     pkgs.systemdMinimal
     pkgs.udev

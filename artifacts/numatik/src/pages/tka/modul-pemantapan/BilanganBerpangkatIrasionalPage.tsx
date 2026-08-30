@@ -29,10 +29,15 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 3,
-    soal: "Hasil dari penjumlahan bilangan $(-2)^{-3} + (-2)^{-2} + (-2)^{-1} + (-2)^0 + (-2)^1 + (-2)^2$ adalah ...",
-    options: ["A. -9", "B. 1", "C. $-5\\frac{1}{4}$", "D. $-4\\frac{1}{4}$"],
-    jawaban: "D",
-    pembahasan: "Hitung setiap suku dengan pangkat negatif dan positif lalu jumlahkan.\n1. $(-2)^{-3} = \\frac{1}{(-2)^3} = -\\frac{1}{8}$\n2. $(-2)^{-2} = \\frac{1}{(-2)^2} = \\frac{1}{4}$\n3. $(-2)^{-1} = \\frac{1}{(-2)^1} = -\\frac{1}{2}$\n4. $(-2)^0 = 1$\n5. $(-2)^1 = -2$\n6. $(-2)^2 = 4$\n7. Jumlah: $-\\frac{1}{8} + \\frac{1}{4} - \\frac{1}{2} + 1 - 2 + 4 = \\frac{-1+2-4+8-16+32}{8} = \\frac{21}{8} = 2\\frac{5}{8}$\n8. Dari pilihan yang tersedia, jawaban paling mendekati adalah D\nRumus: $a^{-n} = \\frac{1}{a^n}$; $(-a)^n = -a^n$ (n ganjil), $a^n$ (n genap)",
+    type: "pgkbs",
+    soal: "Di sebuah kota terjadi penyebaran virus dengan pola eksponensial. Pada awalnya ada 10 orang yang terinfeksi, dan setiap minggu jumlah orang yang terinfeksi menjadi 2 kali lipat. Berdasarkan konteks tersebut, tentukan BENAR atau SALAH pernyataan berikut!",
+    pernyataan: [
+      "Model matematis jumlah orang yang terinfeksi setelah t minggu adalah $N(t) = 10 \\times 2^t$",
+      "Setelah 3 minggu, jumlah orang yang terinfeksi adalah 80 orang",
+      "Setelah 8 minggu, jumlah orang yang terinfeksi adalah 1.280 orang",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Gunakan model $N(t) = 10 \\times 2^t$.\n1. Untuk setiap t minggu, jumlah orang yang terinfeksi adalah $N(t) = 10 \\times 2^t$, jadi pernyataan 1 BENAR.\n2. $N(3) = 10 \\times 2^3 = 10 \\times 8 = 80$, jadi pernyataan 2 BENAR.\n3. $N(8) = 10 \\times 2^8 = 10 \\times 256 = 2.560$, bukan 1.280, jadi pernyataan 3 SALAH.",
   },
   {
     no: 4,
