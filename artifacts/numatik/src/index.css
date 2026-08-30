@@ -1513,6 +1513,19 @@
 .light-mode .border-emerald-500\/20 { border-color: rgba(16,185,129,0.35) !important; }
 .light-mode .border-rose-500\/20    { border-color: rgba(244,63,94,0.35) !important; }
 
+/* ── Aritmetika Sosial latihan: brighten the Bunga Tunggal and PPN cards ──
+   Their lime/green and emerald/teal gradient stops were not covered by the
+   existing light-mode palette, leaving the cards visibly dark. ── */
+html.light-mode .latihan-mandiri-route .from-lime-900\/40 {
+  --tw-gradient-from: rgba(236,252,203,0.80) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .latihan-mandiri-route .to-green-900\/30 {
+  --tw-gradient-to: rgba(220,252,231,0.65) var(--tw-gradient-to-position) !important;
+}
+html.light-mode .latihan-mandiri-route .from-emerald-900\/40 {
+  --tw-gradient-from: rgba(209,250,229,0.80) var(--tw-gradient-from-position) !important;
+}
+
 /* ── Kesimpulan text colors used across Koordinat Kartesius sub-materi ── */
 .light-mode .text-rose-100\/90    { color: #9f1239 !important; }
 .theme-ocean .text-rose-100\/90   { color: #fecdd3 !important; }
