@@ -4,6 +4,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { BookOpen, GraduationCap } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const topicsKelas9 = [
   { label: "BILANGAN BERPANGKAT", path: "/latihan-mandiri/kelas-9/bilangan-berpangkat" },
@@ -19,6 +20,7 @@ const topicsKelas9 = [
 const LatihanMandiriKelas9Page = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
@@ -29,7 +31,7 @@ const LatihanMandiriKelas9Page = () => {
         <h1 className="font-display text-2xl md:text-3xl font-bold text-primary text-glow-cyan mb-2 text-center">
           {t('practice.titleGrade9')}
         </h1>
-        <p className="text-white/60 text-sm text-center mb-8 font-body">
+        <p className={`${isDark ? "text-white/60" : "text-slate-600"} text-sm text-center mb-8 font-body`}>
           {t('practice.selectTopic')}
         </p>
 
@@ -41,13 +43,17 @@ const LatihanMandiriKelas9Page = () => {
                 playPopSound();
                 navigate(topic.path);
               }}
-              className="group flex items-center gap-4 bg-card/80 backdrop-blur border border-border rounded-xl px-5 py-4
+              className={`group flex items-center gap-4 rounded-xl px-5 py-4
                 hover:border-accent/60 transition-all duration-300
-                cursor-pointer text-left animate-slide-up"
+                cursor-pointer text-left animate-slide-up ${
+                  isDark
+                    ? "bg-card/80 backdrop-blur border border-border"
+                    : "bg-white/90 border border-slate-200 shadow-sm hover:bg-cyan-50"
+                }`}
               style={{ animationDelay: `${i * 0.03}s` }}
             >
               <BookOpen className="w-5 h-5 text-accent shrink-0 group-hover:scale-110 transition-transform" />
-              <span className="font-body text-sm text-white">{topic.label}</span>
+              <span className={`font-body text-sm ${isDark ? "text-white" : "text-slate-800"}`}>{topic.label}</span>
               <span className="ml-auto text-xs text-accent font-display">{t('practice.openButton')}</span>
             </button>
           ))}
