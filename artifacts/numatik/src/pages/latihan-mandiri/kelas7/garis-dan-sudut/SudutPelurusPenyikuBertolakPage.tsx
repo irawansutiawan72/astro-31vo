@@ -167,7 +167,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">c)</span>
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qc.text')}</p>
-                <img src={"/images/c_1774838179562.png"} alt="Soal c" className="mt-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q1c" isDark={isDark} />
               </div>
             </div>
@@ -177,7 +176,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">d)</span>
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qd.text')}</p>
-                <img src={"/images/d_1774838179563.png"} alt="Soal d" className="mt-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q1d" isDark={isDark} />
               </div>
             </div>
