@@ -450,7 +450,7 @@ const PenyelesaianPLSVPage = () => {
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden plsv-ptlsv-practice-route">
       <Starfield />
       <PageNavigation />
 

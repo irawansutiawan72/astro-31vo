@@ -485,7 +485,7 @@ const ModelMatematikaPtLSVPage = () => {
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden plsv-ptlsv-practice-route">
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">

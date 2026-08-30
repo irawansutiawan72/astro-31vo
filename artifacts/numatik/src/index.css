@@ -4944,3 +4944,126 @@ html.light-mode .bg-slate-900\/90 .bg-yellow-500\/10 {
 .light-mode .algebra-practice-light-route [class*="bg-rose-500/5"] {
   background-color: rgba(255, 241, 242, 0.92) !important;
 }
+
+/* ── PLSV/PtLSV practice — readable material and question surfaces ──
+   Detail pages use the same dark space palette as the index cards. Keep that
+   palette for dark/ocean themes, but turn every material/question surface
+   into a pale, lightly tinted card when a bright theme is active. */
+.light-mode .plsv-ptlsv-practice-route [class*="from-red-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-rose-900/"] {
+  --tw-gradient-from: rgba(255, 228, 230, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-orange-900/"] {
+  --tw-gradient-from: rgba(255, 237, 213, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-amber-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-yellow-900/"] {
+  --tw-gradient-from: rgba(254, 249, 195, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-lime-900/"] {
+  --tw-gradient-from: rgba(236, 252, 203, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-green-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-emerald-900/"] {
+  --tw-gradient-from: rgba(209, 250, 229, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-teal-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-cyan-900/"] {
+  --tw-gradient-from: rgba(204, 251, 241, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-sky-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-blue-900/"] {
+  --tw-gradient-from: rgba(224, 242, 254, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-indigo-900/"] {
+  --tw-gradient-from: rgba(224, 231, 255, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-violet-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-purple-900/"] {
+  --tw-gradient-from: rgba(237, 233, 254, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="from-fuchsia-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="from-pink-900/"] {
+  --tw-gradient-from: rgba(252, 231, 243, 0.94) var(--tw-gradient-from-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-red-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-rose-900/"] {
+  --tw-gradient-to: rgba(255, 241, 242, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-orange-900/"] {
+  --tw-gradient-to: rgba(255, 247, 237, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-amber-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-yellow-900/"] {
+  --tw-gradient-to: rgba(254, 243, 199, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-lime-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-green-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-emerald-900/"] {
+  --tw-gradient-to: rgba(209, 250, 229, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-teal-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-cyan-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-sky-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-blue-900/"] {
+  --tw-gradient-to: rgba(224, 242, 254, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-indigo-900/"] {
+  --tw-gradient-to: rgba(224, 231, 255, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="to-violet-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-purple-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-fuchsia-900/"],
+.light-mode .plsv-ptlsv-practice-route [class*="to-pink-900/"] {
+  --tw-gradient-to: rgba(243, 232, 255, 0.88) var(--tw-gradient-to-position) !important;
+}
+
+/* Inner question rows, tables, and explanation panels. */
+.light-mode .plsv-ptlsv-practice-route [class*="-500/5"] {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="-500/10"] {
+  background-color: rgba(248, 250, 252, 0.90) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="-500/15"],
+.light-mode .plsv-ptlsv-practice-route [class*="-500/20"] {
+  background-color: rgba(241, 245, 249, 0.92) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route .bg-transparent {
+  background-color: rgba(255, 255, 255, 0.34) !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route [class*="border-"][class*="-500/10"],
+.light-mode .plsv-ptlsv-practice-route [class*="border-"][class*="-500/15"],
+.light-mode .plsv-ptlsv-practice-route [class*="border-"][class*="-500/20"] {
+  border-color: rgba(100, 116, 139, 0.28) !important;
+}
+
+/* Keep the exercise copy and low-contrast hints legible over the pale cards. */
+.light-mode .plsv-ptlsv-practice-route .text-white,
+.light-mode .plsv-ptlsv-practice-route [class*="text-white/"] {
+  color: #172033 !important;
+}
+
+.light-mode .plsv-ptlsv-practice-route .katex {
+  color: currentColor;
+}
