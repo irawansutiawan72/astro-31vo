@@ -17,7 +17,7 @@ const topics = [
 export default function DirectTopicMenu({ kind }: { kind: MenuKind }) {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const light = theme === "light";
+  const light = theme !== "dark" && theme !== "ocean";
   const base = kind === "materi" ? "/materi-matematika" : kind === "latihan" ? "/latihan-mandiri" : kind === "game" ? "/math-game-arena" : "/lkpd";
   const Icon = kind === "materi" ? BookOpen : kind === "latihan" ? ClipboardList : kind === "game" ? Gamepad2 : ClipboardList;
   const title = kind === "materi" ? "BUKU ANIMASI MATEMATIKA" : kind === "latihan" ? "TUGAS-LATIHAN MANDIRI" : kind === "game" ? "MATH GAME ARENA" : "LKPD";
@@ -27,10 +27,10 @@ export default function DirectTopicMenu({ kind }: { kind: MenuKind }) {
     <main className="relative z-10 max-w-3xl w-full px-4 py-10">
       <Icon className="w-12 h-12 text-primary mx-auto mb-4" />
       <h1 className="font-display text-2xl md:text-3xl font-bold text-primary text-glow-cyan mb-2 text-center">{title}</h1>
-      <p className="text-white/60 text-sm text-center mb-8 font-body">Pilih materi secara langsung.</p>
+       <p className={`${light ? "text-slate-600" : "text-white/60"} text-sm text-center mb-8 font-body`}>Pilih materi secara langsung.</p>
       <div className="flex flex-col gap-6">
         {[7, 8, 9].map((grade) => <section key={grade}>
-          <div className="flex flex-col gap-3">{topics.filter(([g]) => g === grade).map(([_, label, slug]) => <button key={slug} onClick={() => { playPopSound(); navigate(`${base}/kelas-${grade}/${slug}`); }} className="group flex items-center gap-4 bg-card/80 backdrop-blur border border-border rounded-xl px-5 py-4 hover:border-primary/60 transition-all cursor-pointer text-left"><Icon className="w-5 h-5 text-primary shrink-0 group-hover:scale-110 transition-transform" /><span className="font-body text-sm text-white">{label}</span><span className="ml-auto text-xs text-primary font-display">BUKA</span></button>)}</div>
+           <div className="flex flex-col gap-3">{topics.filter(([g]) => g === grade).map(([_, label, slug]) => <button key={slug} onClick={() => { playPopSound(); navigate(`${base}/kelas-${grade}/${slug}`); }} className={`group flex items-center gap-4 rounded-xl px-5 py-4 transition-all cursor-pointer text-left ${light ? "bg-white/90 border border-slate-200 shadow-sm hover:bg-cyan-50 hover:border-cyan-300" : "bg-card/80 backdrop-blur border border-border hover:border-primary/60"}`}><Icon className="w-5 h-5 text-primary shrink-0 group-hover:scale-110 transition-transform" /><span className={`font-body text-sm ${light ? "text-slate-800" : "text-white"}`}>{label}</span><span className="ml-auto text-xs text-primary font-display">BUKA</span></button>)}</div>
         </section>)}
       </div>
     </main>
