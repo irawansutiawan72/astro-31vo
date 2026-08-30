@@ -80,6 +80,16 @@ const KongruenPentagonDiagram = () => (
     <circle cx="86" cy="28" r="2.5" fill="#facc15" />
     <circle cx="132" cy="50" r="2.5" fill="#facc15" />
     <circle cx="116" cy="116" r="2.5" fill="#facc15" />
+    <text x="20" y="126" fontSize="8" fill="#fef3c7" fontWeight="bold">A</text>
+    <text x="34" y="52" fontSize="8" fill="#fef3c7" fontWeight="bold">B</text>
+    <text x="84" y="20" fontSize="8" fill="#fef3c7" fontWeight="bold">C</text>
+    <text x="135" y="48" fontSize="8" fill="#fef3c7" fontWeight="bold">D</text>
+    <text x="118" y="126" fontSize="8" fill="#fef3c7" fontWeight="bold">E</text>
+    <text x="31" y="92" fontSize="7" fill="#fde68a">AB = 4 cm</text>
+    <text x="57" y="39" fontSize="7" fill="#fde68a">BC = 3 cm</text>
+    <text x="108" y="35" fontSize="7" fill="#fde68a">CD = 3 cm</text>
+    <text x="126" y="87" fontSize="7" fill="#fde68a">DE = 4 cm</text>
+    <text x="70" y="119" fontSize="7" fill="#fde68a">EA = 5 cm</text>
     <text x="74" y="140" textAnchor="middle" fontSize="9" fill="#fde68a">ABCDE</text>
 
     <text x="208" y="79" textAnchor="middle" fontSize="20" fill="#facc15">≅</text>
@@ -93,6 +103,16 @@ const KongruenPentagonDiagram = () => (
       <circle cx="132" cy="50" r="2.5" fill="#a78bfa" />
       <circle cx="116" cy="116" r="2.5" fill="#a78bfa" />
     </g>
+    <text x="390" y="22" fontSize="8" fill="#ddd6fe" fontWeight="bold">P</text>
+    <text x="377" y="102" fontSize="8" fill="#ddd6fe" fontWeight="bold">Q</text>
+    <text x="327" y="128" fontSize="8" fill="#ddd6fe" fontWeight="bold">R</text>
+    <text x="274" y="102" fontSize="8" fill="#ddd6fe" fontWeight="bold">S</text>
+    <text x="296" y="22" fontSize="8" fill="#ddd6fe" fontWeight="bold">T</text>
+    <text x="365" y="50" fontSize="7" fill="#c4b5fd">PQ = 4 cm</text>
+    <text x="345" y="105" fontSize="7" fill="#c4b5fd">QR = 3 cm</text>
+    <text x="298" y="105" fontSize="7" fill="#c4b5fd">RS = 3 cm</text>
+    <text x="278" y="57" fontSize="7" fill="#c4b5fd">ST = 4 cm</text>
+    <text x="325" y="25" fontSize="7" fill="#c4b5fd">TP = 5 cm</text>
     <text x="336" y="140" textAnchor="middle" fontSize="9" fill="#c4b5fd">PQRST</text>
     <text x="210" y="15" textAnchor="middle" fontSize="9" fill="#facc15" fontWeight="bold">Pentagon tak beraturan — ukuran sama, arah berbeda</text>
   </svg>
@@ -109,6 +129,22 @@ const KongruenOctagonDiagram = () => (
     <circle cx="142" cy="29" r="2.5" fill="#22d3ee" />
     <circle cx="174" cy="91" r="2.5" fill="#22d3ee" />
     <circle cx="145" cy="148" r="2.5" fill="#22d3ee" />
+    <text x="19" y="159" fontSize="8" fill="#cffafe" fontWeight="bold">A</text>
+    <text x="12" y="93" fontSize="8" fill="#cffafe" fontWeight="bold">B</text>
+    <text x="61" y="63" fontSize="8" fill="#cffafe" fontWeight="bold">C</text>
+    <text x="38" y="24" fontSize="8" fill="#cffafe" fontWeight="bold">D</text>
+    <text x="104" y="45" fontSize="8" fill="#cffafe" fontWeight="bold">E</text>
+    <text x="145" y="22" fontSize="8" fill="#cffafe" fontWeight="bold">F</text>
+    <text x="177" y="93" fontSize="8" fill="#cffafe" fontWeight="bold">G</text>
+    <text x="148" y="159" fontSize="8" fill="#cffafe" fontWeight="bold">H</text>
+    <text x="4" y="124" fontSize="7" fill="#a5f3fc">AB = 4 cm</text>
+    <text x="28" y="82" fontSize="7" fill="#a5f3fc">BC = 3,5</text>
+    <text x="34" y="49" fontSize="7" fill="#a5f3fc">CD = 3</text>
+    <text x="74" y="40" fontSize="7" fill="#a5f3fc">DE = 4</text>
+    <text x="111" y="36" fontSize="7" fill="#a5f3fc">EF = 3</text>
+    <text x="151" y="58" fontSize="7" fill="#a5f3fc">FG = 5</text>
+    <text x="155" y="125" fontSize="7" fill="#a5f3fc">GH = 2</text>
+    <text x="84" y="158" fontSize="7" fill="#a5f3fc">HA = 7</text>
     <text x="100" y="168" textAnchor="middle" fontSize="9" fill="#a5f3fc">ABCDEFGH · segi-8 cekung</text>
 
     <text x="228" y="91" textAnchor="middle" fontSize="20" fill="#facc15">≅</text>
@@ -125,6 +161,22 @@ const KongruenOctagonDiagram = () => (
       <circle cx="174" cy="91" r="2.5" fill="#f472b6" />
       <circle cx="145" cy="148" r="2.5" fill="#f472b6" />
     </g>
+    <text x="402" y="159" fontSize="8" fill="#fbcfe8" fontWeight="bold">P</text>
+    <text x="408" y="93" fontSize="8" fill="#fbcfe8" fontWeight="bold">Q</text>
+    <text x="370" y="63" fontSize="8" fill="#fbcfe8" fontWeight="bold">R</text>
+    <text x="388" y="24" fontSize="8" fill="#fbcfe8" fontWeight="bold">S</text>
+    <text x="327" y="45" fontSize="8" fill="#fbcfe8" fontWeight="bold">T</text>
+    <text x="287" y="22" fontSize="8" fill="#fbcfe8" fontWeight="bold">U</text>
+    <text x="252" y="93" fontSize="8" fill="#fbcfe8" fontWeight="bold">V</text>
+    <text x="279" y="159" fontSize="8" fill="#fbcfe8" fontWeight="bold">W</text>
+    <text x="395" y="124" fontSize="7" fill="#f9a8d4">PQ = 4 cm</text>
+    <text x="369" y="82" fontSize="7" fill="#f9a8d4">QR = 3,5</text>
+    <text x="353" y="49" fontSize="7" fill="#f9a8d4">RS = 3</text>
+    <text x="317" y="40" fontSize="7" fill="#f9a8d4">ST = 4</text>
+    <text x="279" y="36" fontSize="7" fill="#f9a8d4">TU = 3</text>
+    <text x="256" y="58" fontSize="7" fill="#f9a8d4">UV = 5</text>
+    <text x="252" y="125" fontSize="7" fill="#f9a8d4">VW = 2</text>
+    <text x="326" y="158" fontSize="7" fill="#f9a8d4">WP = 7</text>
     <text x="360" y="168" textAnchor="middle" fontSize="9" fill="#f9a8d4">PQRSTUVW · segi-8 cekung</text>
     <text x="230" y="15" textAnchor="middle" fontSize="9" fill="#22d3ee" fontWeight="bold">Segi-8 cekung — cermin mengubah arah, bukan ukuran</text>
   </svg>
