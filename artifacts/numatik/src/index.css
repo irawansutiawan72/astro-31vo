@@ -5200,3 +5200,39 @@ html.light-mode .pola-geometri-practice-route .katex,
 html.light-mode .pola-geometri-materi-route .katex {
   color: currentColor;
 }
+
+/* ── TKA Pemantapan: keep visual question content inside portrait layouts ── */
+.tka-pemantapan,
+.tka-pemantapan-content {
+  min-width: 0;
+}
+
+.tka-pemantapan svg,
+.tka-pemantapan img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.tka-pemantapan table {
+  max-width: 100%;
+}
+
+.tka-pemantapan .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.15rem;
+}
+
+@media (max-width: 640px) {
+  .tka-pemantapan .tka-pemantapan-content {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .tka-pemantapan .grid-cols-2:has(svg),
+  .tka-pemantapan .grid-cols-2:has(img) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

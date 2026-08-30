@@ -159,6 +159,9 @@ const SECTION_COLORS = [
 
 const optionLetters = ['A', 'B', 'C', 'D', 'E'];
 
+const normalizeStatementText = (value: string) =>
+  value.replace(/^\s*(?:(?:\(\d+\)|\d+[.)])|(?:\([ivx]+\)|[ivx]+[.)]))\s*/i, "");
+
 /* ── Type badge config ── */
 const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; border: string }> = {
   pg: {
@@ -310,12 +313,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   const contentRenderer = (text: string) => renderWithLatex(text, imageScale);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center overflow-hidden tka-pemantapan"
+    <div className="relative min-h-screen flex flex-col items-center overflow-x-hidden tka-pemantapan"
       style={isLightTheme ? { background: "var(--bg-primary)" } : { background: "linear-gradient(160deg, #0f0c29 0%, #141428 40%, #1a0a2e 70%, #0d1117 100%)" }}>
       <Starfield />
       <PageNavigation />
 
-      <div className="tka-pemantapan-content relative z-10 max-w-3xl w-full px-4 pt-8 pb-14">
+      <div className="tka-pemantapan-content relative z-10 min-w-0 max-w-3xl w-full px-4 pt-8 pb-14">
 
         {/* ── Header: shared Bilangan Bulat design ── */}
         <div className="relative mb-6">
@@ -530,10 +533,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                   ?? (typeof gambarMap?.[soal.no] === "string"
                     ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, imageScale)
                     : gambarMap?.[soal.no]);
-                const hasInlineDiagram = soal.soal.includes("[DIAGRAM]");
+                const hasInlineVisual = soal.soal.split('\n').some((line) =>
+                  line.trim() === "[DIAGRAM]" || /^\[IMAGE:[^|]+(?:\|\w+)?\]$/.test(line.trim())
+                );
 
                 return (
-                  <div key={soal.no} className="relative rounded-2xl overflow-hidden"
+                  <div key={soal.no} className="relative min-w-0 rounded-2xl overflow-hidden"
                     style={isLightTheme ? {
                       background: "var(--bg-card)",
                       border: "1px solid rgba(0,0,0,0.08)",
@@ -561,35 +566,34 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         </span>
                         <div className="font-body text-sm leading-relaxed" style={{ color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.9)" }}>
                           {soal.soal.split('\n').map((line, lineIdx) => (
-                            <span key={lineIdx}>
+                            <Fragment key={lineIdx}>
                               {lineIdx > 0 && <br />}
                               {line.trim() === "[DIAGRAM]" ? (
-                                <span className="my-2 block">{diagram}</span>
+                                <div className="my-2 min-w-0 max-w-full overflow-x-auto">{diagram}</div>
                               ) : contentRenderer(line)}
-                            </span>
+                            </Fragment>
                           ))}
                         </div>
                       </div>
                     </div>
 
                     {/* ── Optional diagram/image, placed after the statements ── */}
-                    {!hasInlineDiagram && diagram && (
-                      <div className="px-5 pb-2">
-                        {diagram}
+                    {!hasInlineVisual && diagram && (
+                      <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
+                        <div className="min-w-0 max-w-full">{diagram}</div>
                       </div>
                     )}
 
-                    {/* ── PGK: numbered pernyataan list ── */}
+                    {/* ── PGK: checkbox statement list ── */}
                     {type === "pgk" && soal.pernyataan && (
-                      <div className="px-5 pb-2 space-y-1.5 ml-11">
+                      <div className="px-5 pb-2 space-y-1.5 ml-11 min-w-0">
                         {soal.pernyataan.map((p, pi) => (
-                          <div key={pi} className="flex items-start gap-2 text-xs font-body leading-relaxed"
+                          <div key={pi} className="flex items-start gap-2 min-w-0 text-xs font-body leading-relaxed"
                             style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
-                            <span className="flex-shrink-0 w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
-                              style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)", color: "#fcd34d" }}>
-                              {pi + 1}
+                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
+                              style={{ background: "rgba(245,158,11,0.08)", borderColor: "rgba(245,158,11,0.45)", color: "#fcd34d" }}>
                             </span>
-                            <span>{contentRenderer(p)}</span>
+                            <span className="min-w-0">{contentRenderer(normalizeStatementText(p))}</span>
                           </div>
                         ))}
                         <p className="text-[11px] font-body text-amber-300/60 mt-2 italic">
@@ -843,7 +847,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                 let diagramInserted = false;
 
                 return (
-                  <div key={soal.no} className="relative rounded-2xl overflow-hidden"
+                  <div key={soal.no} className="relative min-w-0 rounded-2xl overflow-hidden"
                     style={isLightTheme ? {
                       background: "var(--bg-card)",
                       border: isRevealed
@@ -880,6 +884,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           {soal.soal.split('\n').map((line, lineIdx) => {
                             const imgMatch = line.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
                             if (imgMatch) {
+                              // An explicit visual in the question takes precedence over
+                              // a fallback visual supplied through soalSvg/gambarMap.
+                              diagramInserted = true;
                               const sizeClass = imgMatch[2] === 'small'
                                 ? (imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
                                 : (imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm w-full');
@@ -904,7 +911,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 {!diagramInserted && diagram && /berikut/i.test(line) && (
                                   (() => {
                                     diagramInserted = true;
-                                    return <div className="my-2">{diagram}</div>;
+                                    return <div className="my-2 min-w-0 max-w-full overflow-x-auto">{diagram}</div>;
                                   })()
                                 )}
                               </Fragment>
@@ -914,9 +921,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       </div>
                     </div>
 
-                    {/* ── PGK: numbered pernyataan list ── */}
+                    {/* ── PGK: checkbox statement list ── */}
                     {(type === "pgk") && soal.pernyataan && (
-                      <div className="px-5 pb-2 space-y-1.5 ml-11">
+                      <div className="px-5 pb-2 space-y-1.5 ml-11 min-w-0">
                         {soal.pernyataan.map((p, pi) => {
                           const isSelectedPGK = selectedPGK.includes(pi);
                           const isCorrectPGK = soal.jawabanPGK?.includes(pi) ?? false;
@@ -926,7 +933,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             type="button"
                             disabled={isRevealed}
                             onClick={() => soal.jawabanPGK && handleSelectPGK(soal.no, pi)}
-                            className="w-full flex items-start gap-2 text-left text-xs font-body text-white/80 leading-relaxed rounded-lg px-2 py-1 transition-colors"
+                            className="w-full min-w-0 flex items-start gap-2 text-left text-xs font-body text-white/80 leading-relaxed rounded-lg px-2 py-1 transition-colors"
                             style={{
                               background: isRevealed
                                 ? isCorrectPGK ? "rgba(34,197,94,0.12)" : isSelectedPGK ? "rgba(239,68,68,0.12)" : "transparent"
@@ -934,15 +941,19 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               cursor: soal.jawabanPGK && !isRevealed ? "pointer" : "default",
                             }}
                           >
-                            <span className="flex-shrink-0 w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
+                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
                               style={{
-                                background: isSelectedPGK ? "rgba(245,158,11,0.35)" : "rgba(245,158,11,0.15)",
-                                border: "1px solid rgba(245,158,11,0.3)",
-                                color: "#fcd34d",
+                                background: isSelectedPGK
+                                  ? isRevealed
+                                    ? isCorrectPGK ? "rgba(34,197,94,0.3)" : "rgba(239,68,68,0.3)"
+                                    : "rgba(245,158,11,0.35)"
+                                  : "rgba(245,158,11,0.08)",
+                                borderColor: isRevealed && isCorrectPGK ? "rgba(34,197,94,0.6)" : isRevealed && isSelectedPGK ? "rgba(239,68,68,0.6)" : "rgba(245,158,11,0.45)",
+                                color: isRevealed && isCorrectPGK ? "#86efac" : isRevealed && isSelectedPGK ? "#fca5a5" : "#fcd34d",
                               }}>
-                              {pi + 1}
+                              {isSelectedPGK ? "✓" : ""}
                             </span>
-                            <span>{contentRenderer(p)}</span>
+                            <span className="min-w-0">{contentRenderer(normalizeStatementText(p))}</span>
                             {isRevealed && (isCorrectPGK
                               ? <CheckCircle2 className="w-3.5 h-3.5 ml-auto shrink-0 text-green-400" />
                               : isSelectedPGK
@@ -961,8 +972,8 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
                     {/* ── Optional diagram/image, placed after the statements ── */}
                     {!diagramInserted && diagram && (
-                      <div className="px-5 pb-2">
-                        {diagram}
+                      <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
+                        <div className="min-w-0 max-w-full">{diagram}</div>
                       </div>
                     )}
 

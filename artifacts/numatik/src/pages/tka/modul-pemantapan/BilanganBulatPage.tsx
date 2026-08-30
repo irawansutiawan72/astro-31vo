@@ -268,13 +268,13 @@ const BilanganBulatPage = () => {
       <div className="flex flex-col gap-2">
         {items.map((item, i) => {
           const isClicked = clicks.has(i);
-          let cls = "border rounded-lg px-3 py-2 text-xs font-body transition-all flex items-center justify-between ";
+          let cls = "border rounded-lg px-3 py-2 text-xs font-body transition-all flex items-start justify-between min-w-0 ";
           if (!isClicked)   cls += isDark ? "bg-white/5 border-white/10 text-white/80 cursor-pointer hover:bg-white/10 hover:border-amber-500/40 active:scale-95" : "bg-gray-50 border-gray-300 text-gray-700 cursor-pointer hover:bg-amber-50 hover:border-amber-400 active:scale-95";
           else if (item.benar) cls += isDark ? "bg-green-900/40 border-green-500/60 text-green-300 font-bold" : "bg-green-50 border-green-400 text-green-700 font-bold";
           else                 cls += isDark ? "bg-red-900/30 border-red-500/50 text-red-300" : "bg-red-50 border-red-400 text-red-600";
           return (
             <div key={i} className={cls} onClick={() => pickComplex(qn, i)}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2 min-w-0">
                 <span className={`shrink-0 w-4 h-4 rounded border flex items-center justify-center transition-all ${
                   !isClicked
                     ? isDark ? "border-white/30 bg-white/5" : "border-gray-300 bg-white"
@@ -288,7 +288,7 @@ const BilanganBulatPage = () => {
                     </svg>
                   )}
                 </span>
-                <span>{item.text}</span>
+                <span className="min-w-0">{item.text}</span>
               </div>
               {isClicked && item.benar  && <span className={`ml-2 font-bold shrink-0 ${isDark ? "text-green-400" : "text-green-600"}`}>✓ Benar!</span>}
               {isClicked && !item.benar && <span className={`ml-2 font-bold shrink-0 ${isDark ? "text-red-400" : "text-red-500"}`}>✗ Salah</span>}
@@ -369,7 +369,7 @@ const BilanganBulatPage = () => {
   const hint  = `text-xs font-body font-semibold mb-2`;
 
   return (
-    <div className={`relative min-h-screen flex flex-col items-center overflow-x-hidden overflow-y-auto ${outerBg}`}>
+    <div className={`relative min-h-screen flex flex-col items-center overflow-x-hidden overflow-y-auto tka-pemantapan ${outerBg}`}>
       {isDark && <Starfield />}
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
@@ -1093,33 +1093,6 @@ const BilanganBulatPage = () => {
         {/* ── Soal-Soal ── */}
         {activeTab === "soal" && <div className="flex flex-col gap-5">
 
-          {/* ══ SOAL 1 — PGS ══ */}
-          <Soal n={1} tipe="PGS">
-            <p className={qText}>
-              Hasil dari <InlineMath math="-18 + 42 \div (-6) \times 3" /> adalah ....
-            </p>
-            <MCQ qn={1} correct={0} options={[
-              "A. −39", "B. −33", "C. 3", "D. 33"
-            ]} />
-            <PembahasanBtn n={1} />
-            {expandedPembahasan.has(1) && (
-              <div className="mt-3 space-y-2">
-                <PBJawaban>A. −39</PBJawaban>
-                <PBKonsep>
-                  <p>Urutan operasi hitung campuran: <span className="font-bold">Ka–Pa–Ka–Ta</span></p>
-                  <p>① Kurung → ② Pangkat/Akar → ③ Kali/Bagi (kiri ke kanan) → ④ Tambah/Kurang (kiri ke kanan)</p>
-                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: Bagi dan kali punya prioritas sama, kerjakan dari kiri.</p>
-                </PBKonsep>
-                <PBSteps>
-                  <S n={1}><p>Kerjakan bagi dan kali dari kiri ke kanan: <InlineMath math="42 \div (-6) = -7" /></p></S>
-                  <S n={2}><p>Lanjutkan kali: <InlineMath math="-7 \times 3 = -21" /></p></S>
-                  <S n={3}><p>Kerjakan tambah/kurang: <InlineMath math="-18 + (-21) = -18 - 21 = -39" /></p></S>
-                  <S n={4}><div><BlockMath math="-18 + 42 \div (-6) \times 3 = -18 + (-21) = -39" /></div></S>
-                </PBSteps>
-              </div>
-            )}
-          </Soal>
-
           {/* ══ SOAL 2 — MCMA ══ */}
           <Soal n={2} tipe="MCMA">
             <p className={qText}>
@@ -1128,10 +1101,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={2} items={[
-              { text: <span>(1) <InlineMath math="(-3) \times (-5) = 15" /></span>,                  benar: true  },
-              { text: <span>(2) <InlineMath math="7 + (-7) = 14" /></span>,                          benar: false },
-              { text: <span>(3) <InlineMath math="(-12) \div 4 = -3" /></span>,                      benar: true  },
-              { text: <span>(4) <InlineMath math="(-2)^3 = -8" /></span>,                            benar: true  },
+              { text: <InlineMath math="(-3) \times (-5) = 15" />,                  benar: true  },
+              { text: <InlineMath math="7 + (-7) = 14" />,                          benar: false },
+              { text: <InlineMath math="(-12) \div 4 = -3" />,                      benar: true  },
+              { text: <InlineMath math="(-2)^3 = -8" />,                            benar: true  },
             ]} />
             <PembahasanBtn n={2} />
             {expandedPembahasan.has(2) && (
@@ -1219,10 +1192,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark?"text-amber-300":"text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={5} items={[
-              { text: "(1) Hasil perkalian dua bilangan bulat negatif selalu positif",              benar: true  },
-              { text: "(2) Hasil penjumlahan bilangan bulat positif dan negatif selalu negatif",   benar: false },
-              { text: "(3) Bilangan bulat positif selalu lebih besar dari bilangan bulat negatif mana pun", benar: true  },
-              { text: "(4) Bilangan cacah termasuk bagian dari bilangan bulat",                    benar: true  },
+              { text: "Hasil perkalian dua bilangan bulat negatif selalu positif",              benar: true  },
+              { text: "Hasil penjumlahan bilangan bulat positif dan negatif selalu negatif",   benar: false },
+              { text: "Bilangan bulat positif selalu lebih besar dari bilangan bulat negatif mana pun", benar: true  },
+              { text: "Bilangan cacah termasuk bagian dari bilangan bulat",                    benar: true  },
             ]} />
             <PembahasanBtn n={5} />
             {expandedPembahasan.has(5) && (
@@ -1272,34 +1245,6 @@ const BilanganBulatPage = () => {
             )}
           </Soal>
 
-          {/* ══ SOAL 7 — PGS ══ */}
-          <Soal n={7} tipe="PGS">
-            <p className={qText}>
-              Operasi "<InlineMath math="\star" />" didefinisikan sebagai <InlineMath math="a \star b = 3a - 2b" />.
-              Nilai dari <InlineMath math="(-2) \star 4" /> adalah ....
-            </p>
-            <MCQ qn={7} correct={0} options={[
-              "A. −14", "B. −2", "C. 2", "D. 14"
-            ]} />
-            <PembahasanBtn n={7} />
-            {expandedPembahasan.has(7) && (
-              <div className="mt-3 space-y-2">
-                <PBJawaban>A. −14</PBJawaban>
-                <PBKonsep>
-                  <p>Operasi khusus (non-standar): ikuti <span className="font-bold">definisi yang diberikan</span>, lalu substitusikan nilai.</p>
-                  <p>Rumus: <InlineMath math="a \star b = 3a - 2b" /></p>
-                  <p className={`text-[10px] italic ${isDark?"text-violet-300/70":"text-violet-500"}`}>💡 Trik: tulis rumus dulu, baru substitusi — jangan substitusi sebelum tahu rumusnya.</p>
-                </PBKonsep>
-                <PBSteps>
-                  <S n={1}><p>Identifikasi: <InlineMath math="a=-2,\;b=4" /></p></S>
-                  <S n={2}><p>Substitusi: <InlineMath math="3(-2) - 2(4)" /></p></S>
-                  <S n={3}><p>Hitung: <InlineMath math="-6 - 8 = -14" /></p></S>
-                  <S n={4}><div><BlockMath math="(-2)\star 4 = 3(-2)-2(4) = -6-8 = -14" /></div></S>
-                </PBSteps>
-              </div>
-            )}
-          </Soal>
-
           {/* ══ SOAL 8 — MCMA ══ */}
           <Soal n={8} tipe="MCMA">
             <p className={qText}>
@@ -1308,10 +1253,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark?"text-amber-300":"text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={8} items={[
-              { text: <span>(1) Model matematika posisi akhir: <InlineMath math="3+5-8+2" /></span>, benar: true  },
-              { text: "(2) Posisi akhir lift adalah lantai 1",                                       benar: false },
-              { text: "(3) Lift sempat berada di lantai 8",                                         benar: true  },
-              { text: "(4) Posisi akhir lift lebih rendah dari posisi awal",                        benar: true  },
+              { text: <span>Model matematika posisi akhir: <InlineMath math="3+5-8+2" /></span>, benar: true  },
+              { text: "Posisi akhir lift adalah lantai 1",                                       benar: false },
+              { text: "Lift sempat berada di lantai 8",                                         benar: true  },
+              { text: "Posisi akhir lift lebih rendah dari posisi awal",                        benar: true  },
             ]} />
             <PembahasanBtn n={8} />
             {expandedPembahasan.has(8) && (
@@ -1402,10 +1347,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark?"text-amber-300":"text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={11} items={[
-              { text: <span>(1) Langkah pertama: kerjakan <InlineMath math="8 \times 3 = 24" /></span>,     benar: true  },
-              { text: <span>(2) Nilai ekspresi tersebut adalah <InlineMath math="12" /></span>,              benar: false },
-              { text: <span>(3) Setelah kali/bagi, ekspresi menjadi <InlineMath math="24-24+3" /></span>,   benar: true  },
-              { text: <span>(4) Nilai ekspresi tersebut adalah <InlineMath math="3" /></span>,               benar: true  },
+              { text: <span>Langkah pertama: kerjakan <InlineMath math="8 \times 3 = 24" /></span>,     benar: true  },
+              { text: <span>Nilai ekspresi tersebut adalah <InlineMath math="12" /></span>,              benar: false },
+              { text: <span>Setelah kali/bagi, ekspresi menjadi <InlineMath math="24-24+3" /></span>,   benar: true  },
+              { text: <span>Nilai ekspresi tersebut adalah <InlineMath math="3" /></span>,               benar: true  },
             ]} />
             <PembahasanBtn n={11} />
             {expandedPembahasan.has(11) && (
@@ -1489,10 +1434,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark?"text-amber-300":"text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={14} items={[
-              { text: <span>(1) <InlineMath math="-36" /> habis dibagi <InlineMath math="-4" /></span>,                              benar: true  },
-              { text: <span>(2) <InlineMath math="-36 = (-6)^2" /></span>,                                                            benar: false },
-              { text: <span>(3) <InlineMath math="-36" /> adalah bilangan bulat negatif</span>,                                       benar: true  },
-              { text: <span>(4) Banyak faktor positif dari <InlineMath math="36" /> adalah <InlineMath math="9" /></span>,            benar: true  },
+              { text: <span><InlineMath math="-36" /> habis dibagi <InlineMath math="-4" /></span>,                              benar: true  },
+              { text: <span><InlineMath math="-36 = (-6)^2" /></span>,                                                            benar: false },
+              { text: <span><InlineMath math="-36" /> adalah bilangan bulat negatif</span>,                                       benar: true  },
+              { text: <span>Banyak faktor positif dari <InlineMath math="36" /> adalah <InlineMath math="9" /></span>,            benar: true  },
             ]} />
             <PembahasanBtn n={14} />
             {expandedPembahasan.has(14) && (
@@ -1584,10 +1529,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={17} items={[
-              { text: <span>(1) Nilai <InlineMath math="p" /> adalah <InlineMath math="-3" /></span>, benar: true },
-              { text: <span>(2) Nilai <InlineMath math="q" /> adalah <InlineMath math="-3" /></span>, benar: false },
-              { text: <span>(3) Hasil dari <InlineMath math="p \times q - 5" /> adalah <InlineMath math="-14" /></span>, benar: true },
-              { text: <span>(4) Hasil dari <InlineMath math="p + q" /> adalah <InlineMath math="6" /></span>, benar: false },
+              { text: <span>Nilai <InlineMath math="p" /> adalah <InlineMath math="-3" /></span>, benar: true },
+              { text: <span>Nilai <InlineMath math="q" /> adalah <InlineMath math="-3" /></span>, benar: false },
+              { text: <span>Hasil dari <InlineMath math="p \times q - 5" /> adalah <InlineMath math="-14" /></span>, benar: true },
+              { text: <span>Hasil dari <InlineMath math="p + q" /> adalah <InlineMath math="6" /></span>, benar: false },
             ]} />
             <PembahasanBtn n={17} />
             {expandedPembahasan.has(17) && (
@@ -1728,10 +1673,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={22} items={[
-              { text: <span>(1) Gelas dengan suhu air terendah adalah gelas X.</span>, benar: true },
-              { text: <span>(2) Selisih suhu gelas X dan gelas Y adalah <InlineMath math="21°C" />.</span>, benar: true },
-              { text: <span>(3) Urutan suhu dari terendah ke tertinggi adalah X, Y, Z, W.</span>, benar: true },
-              { text: <span>(4) Suhu rata-rata keempat gelas adalah <InlineMath math="-1°C" />.</span>, benar: false },
+              { text: <span>Gelas dengan suhu air terendah adalah gelas X.</span>, benar: true },
+              { text: <span>Selisih suhu gelas X dan gelas Y adalah <InlineMath math="21°C" />.</span>, benar: true },
+              { text: <span>Urutan suhu dari terendah ke tertinggi adalah X, Y, Z, W.</span>, benar: true },
+              { text: <span>Suhu rata-rata keempat gelas adalah <InlineMath math="-1°C" />.</span>, benar: false },
             ]} />
             <PembahasanBtn n={22} />
             {expandedPembahasan.has(22) && (
@@ -1868,10 +1813,10 @@ const BilanganBulatPage = () => {
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
             <MCMA qn={27} items={[
-              { text: <span>(1) Posisi awal kapal selam pada garis bilangan adalah <InlineMath math="-8" />.</span>, benar: true },
-              { text: <span>(2) Ketinggian helikopter dari permukaan laut adalah <InlineMath math="45\text{ m}" />.</span>, benar: true },
-              { text: <span>(3) Posisi akhir kapal selam adalah <InlineMath math="-12\text{ m}" />.</span>, benar: false },
-              { text: <span>(4) Jarak helikopter dari posisi akhir kapal selam adalah <InlineMath math="65\text{ m}" />.</span>, benar: true },
+              { text: <span>Posisi awal kapal selam pada garis bilangan adalah <InlineMath math="-8" />.</span>, benar: true },
+              { text: <span>Ketinggian helikopter dari permukaan laut adalah <InlineMath math="45\text{ m}" />.</span>, benar: true },
+              { text: <span>Posisi akhir kapal selam adalah <InlineMath math="-12\text{ m}" />.</span>, benar: false },
+              { text: <span>Jarak helikopter dari posisi akhir kapal selam adalah <InlineMath math="65\text{ m}" />.</span>, benar: true },
             ]} />
             <PembahasanBtn n={27} />
             {expandedPembahasan.has(27) && (
