@@ -76,9 +76,8 @@ const DiagramHubungan = () => (
 
 const GridBangunBerundak = () => (
   <svg viewBox="0 0 560 198" className="w-full max-w-2xl mx-auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dua bangun berundak sebangun pada grid">
-    <title>Dua bangun berundak sebangun pada grid</title>
     <defs>
-      <pattern id="contoh4-grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <pattern id="contoh4-grid" x="20" y="8" width="22" height="22" patternUnits="userSpaceOnUse">
         <path d="M 22 0 L 0 0 0 22" fill="none" stroke="#475569" strokeWidth="0.8" />
       </pattern>
       <pattern id="contoh4-hatch-cyan" width="12" height="12" patternUnits="userSpaceOnUse">
@@ -93,9 +92,6 @@ const GridBangunBerundak = () => (
     <rect width="560" height="198" rx="10" fill="#0f172a" />
     <rect x="8" y="8" width="544" height="182" rx="7" fill="url(#contoh4-grid)" opacity="0.9" />
 
-    <text x="97" y="19" textAnchor="middle" fill="#67e8f9" fontSize="10" fontFamily="sans-serif" fontWeight="bold">ABCDEF</text>
-    <text x="352" y="19" textAnchor="middle" fill="#c4b5fd" fontSize="10" fontFamily="sans-serif" fontWeight="bold">PQRSTU</text>
-
     {/* Bangun kecil: A(2,2), B(5,2), C(5,4), D(4,4), E(4,5), F(2,5) */}
     <polygon points="64,52 130,52 130,96 108,96 108,118 64,118" fill="url(#contoh4-hatch-cyan)" stroke="#22d3ee" strokeWidth="2" strokeLinejoin="round" />
     <circle cx="64" cy="52" r="3" fill="#22d3ee" />
@@ -104,19 +100,6 @@ const GridBangunBerundak = () => (
     <circle cx="108" cy="96" r="3" fill="#22d3ee" />
     <circle cx="108" cy="118" r="3" fill="#22d3ee" />
     <circle cx="64" cy="118" r="3" fill="#22d3ee" />
-    <text x="53" y="49" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">A</text>
-    <text x="133" y="49" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">B</text>
-    <text x="133" y="100" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">C</text>
-    <text x="111" y="100" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">D</text>
-    <text x="111" y="131" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">E</text>
-    <text x="53" y="131" fill="#a5f3fc" fontSize="9" fontFamily="sans-serif" fontWeight="bold">F</text>
-    <text x="96" y="44" textAnchor="middle" fill="#cffafe" fontSize="8" fontFamily="sans-serif">AB = 6 cm</text>
-    <text x="137" y="77" fill="#cffafe" fontSize="8" fontFamily="sans-serif">BC = 4</text>
-    <text x="88" y="112" fill="#cffafe" fontSize="8" textAnchor="middle" fontFamily="sans-serif">DE = ?</text>
-
-    <text x="214" y="89" textAnchor="middle" fill="#facc15" fontSize="22" fontFamily="sans-serif" fontWeight="bold">∼</text>
-    <text x="214" y="106" textAnchor="middle" fill="#fde68a" fontSize="8" fontFamily="sans-serif">k = 2</text>
-
     {/* Bangun besar: P(13,1), Q(19,1), R(19,5), S(17,5), T(17,7), U(13,7) */}
     <polygon points="286,30 418,30 418,118 374,118 374,162 286,162" fill="url(#contoh4-hatch-violet)" stroke="#a78bfa" strokeWidth="2" strokeLinejoin="round" />
     <circle cx="286" cy="30" r="3" fill="#a78bfa" />
@@ -125,24 +108,13 @@ const GridBangunBerundak = () => (
     <circle cx="374" cy="118" r="3" fill="#a78bfa" />
     <circle cx="374" cy="162" r="3" fill="#a78bfa" />
     <circle cx="286" cy="162" r="3" fill="#a78bfa" />
-    <text x="274" y="27" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">P</text>
-    <text x="421" y="27" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">Q</text>
-    <text x="421" y="122" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">R</text>
-    <text x="377" y="122" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">S</text>
-    <text x="377" y="175" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">T</text>
-    <text x="274" y="175" fill="#ddd6fe" fontSize="9" fontFamily="sans-serif" fontWeight="bold">U</text>
-    <text x="352" y="22" textAnchor="middle" fill="#ede9fe" fontSize="8" fontFamily="sans-serif">PQ = 12 cm</text>
-    <text x="426" y="76" fill="#ede9fe" fontSize="8" fontFamily="sans-serif">QR = 8</text>
-    <text x="398" y="149" textAnchor="middle" fill="#ede9fe" fontSize="8" fontFamily="sans-serif">ST = ?</text>
-    <text x="280" y="187" fill="rgba(226,232,240,0.7)" fontSize="8" fontFamily="sans-serif">setiap kotak = 2 cm</text>
   </svg>
 );
 
 const GridBangunMiring = () => (
   <svg viewBox="0 0 560 225" className="w-full max-w-2xl mx-auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dua bangun bersisi miring sebangun pada grid">
-    <title>Dua bangun bersisi miring sebangun pada grid</title>
     <defs>
-      <pattern id="contoh5-grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <pattern id="contoh5-grid" x="18" y="10" width="18" height="18" patternUnits="userSpaceOnUse">
         <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#475569" strokeWidth="0.8" />
       </pattern>
       <pattern id="contoh5-hatch-amber" width="13" height="13" patternUnits="userSpaceOnUse">
@@ -156,9 +128,6 @@ const GridBangunMiring = () => (
     </defs>
     <rect width="560" height="225" rx="10" fill="#0f172a" />
     <rect x="8" y="8" width="544" height="209" rx="7" fill="url(#contoh5-grid)" opacity="0.9" />
-    <text x="108" y="20" textAnchor="middle" fill="#fcd34d" fontSize="10" fontFamily="sans-serif" fontWeight="bold">ABCDE · bangun besar</text>
-    <text x="370" y="20" textAnchor="middle" fill="#fda4af" fontSize="10" fontFamily="sans-serif" fontWeight="bold">PQRST · bangun kecil</text>
-
     {/* Bangun besar: variasi pentagon dengan satu sisi miring */}
     <polygon points="54,190 54,118 90,46 162,46 162,190" fill="url(#contoh5-hatch-amber)" stroke="#fbbf24" strokeWidth="2" strokeLinejoin="round" />
     <circle cx="54" cy="190" r="3" fill="#fbbf24" />
@@ -166,18 +135,6 @@ const GridBangunMiring = () => (
     <circle cx="90" cy="46" r="3" fill="#fbbf24" />
     <circle cx="162" cy="46" r="3" fill="#fbbf24" />
     <circle cx="162" cy="190" r="3" fill="#fbbf24" />
-    <text x="42" y="203" fill="#fef3c7" fontSize="9" fontFamily="sans-serif" fontWeight="bold">A</text>
-    <text x="42" y="116" fill="#fef3c7" fontSize="9" fontFamily="sans-serif" fontWeight="bold">B</text>
-    <text x="82" y="39" fill="#fef3c7" fontSize="9" fontFamily="sans-serif" fontWeight="bold">C</text>
-    <text x="165" y="39" fill="#fef3c7" fontSize="9" fontFamily="sans-serif" fontWeight="bold">D</text>
-    <text x="165" y="203" fill="#fef3c7" fontSize="9" fontFamily="sans-serif" fontWeight="bold">E</text>
-    <text x="45" y="158" fill="#fef3c7" fontSize="8" fontFamily="sans-serif">AB = ?</text>
-    <text x="103" y="39" fill="#fef3c7" fontSize="8" fontFamily="sans-serif">CD = ?</text>
-    <text x="169" y="120" fill="#fef3c7" fontSize="8" fontFamily="sans-serif">DE = 16</text>
-
-    <text x="236" y="117" textAnchor="middle" fill="#facc15" fontSize="21" fontFamily="sans-serif" fontWeight="bold">∼</text>
-    <text x="236" y="135" textAnchor="middle" fill="#fde68a" fontSize="8" fontFamily="sans-serif">k = 2</text>
-
     {/* Bangun kecil: bentuk sama dengan susunan dan proporsi yang divariasikan */}
     <polygon points="342,172 342,136 360,100 396,100 396,172" fill="url(#contoh5-hatch-rose)" stroke="#fb7185" strokeWidth="2" strokeLinejoin="round" />
     <circle cx="342" cy="172" r="3" fill="#fb7185" />
@@ -185,15 +142,6 @@ const GridBangunMiring = () => (
     <circle cx="360" cy="100" r="3" fill="#fb7185" />
     <circle cx="396" cy="100" r="3" fill="#fb7185" />
     <circle cx="396" cy="172" r="3" fill="#fb7185" />
-    <text x="330" y="185" fill="#ffe4e6" fontSize="9" fontFamily="sans-serif" fontWeight="bold">P</text>
-    <text x="330" y="134" fill="#ffe4e6" fontSize="9" fontFamily="sans-serif" fontWeight="bold">Q</text>
-    <text x="354" y="93" fill="#ffe4e6" fontSize="9" fontFamily="sans-serif" fontWeight="bold">R</text>
-    <text x="399" y="93" fill="#ffe4e6" fontSize="9" fontFamily="sans-serif" fontWeight="bold">S</text>
-    <text x="399" y="185" fill="#ffe4e6" fontSize="9" fontFamily="sans-serif" fontWeight="bold">T</text>
-    <text x="333" y="156" fill="#ffe4e6" fontSize="8" fontFamily="sans-serif">PQ = 4</text>
-    <text x="365" y="93" fill="#ffe4e6" fontSize="8" fontFamily="sans-serif">RS = 4</text>
-    <text x="402" y="137" fill="#ffe4e6" fontSize="8" fontFamily="sans-serif">ST = 8</text>
-    <text x="264" y="207" fill="rgba(226,232,240,0.7)" fontSize="8" fontFamily="sans-serif">1 kotak = 2 cm · sisi miring tetap sebanding</text>
   </svg>
 );
 
@@ -592,8 +540,8 @@ const DefinisiPage = () => {
                   <div className="bg-slate-800/50 rounded-lg p-4 space-y-3">
                     <p className="font-body text-sm text-white">
                       Perhatikan dua bangun berundak pada grid berikut. Bangun ABCDEF dan PQRSTU sebangun.
-                      Setiap kotak mewakili 2 cm. Jika <InlineMath math="AB = 6" /> cm dan <InlineMath math="PQ = 12" /> cm,
-                      tentukan panjang <InlineMath math="DE" /> dan <InlineMath math="ST" />!
+                      Jika <InlineMath math="AB = 3" /> kotak dan <InlineMath math="PQ = 6" /> kotak,
+                      tentukan panjang <InlineMath math="DE" /> dan <InlineMath math="ST" /> dalam satuan kotak!
                     </p>
                     <div className="flex justify-center rounded-lg overflow-hidden">
                       <GridBangunBerundak />
@@ -602,15 +550,15 @@ const DefinisiPage = () => {
                   <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4">
                     <p className="font-body text-xs font-semibold text-cyan-300 mb-3">PEMBAHASAN:</p>
                     <div className="space-y-2 font-body text-sm text-white/80">
-                      <p><strong>Langkah 1:</strong> Tentukan faktor skala dari ABCDEF ke PQRSTU.</p>
+                      <p><strong>Langkah 1:</strong> Tentukan faktor skala dari bangun kecil ke bangun besar.</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="k = \frac{PQ}{AB} = \frac{12}{6} = 2" />
+                        <BlockMath math="k = \frac{PQ}{AB} = \frac{6}{3} = 2" />
                       </div>
-                      <p><strong>Langkah 2:</strong> Pada grid, panjang DE adalah 1 kotak = 2 cm. Sisi DE bersesuaian dengan ST.</p>
+                      <p><strong>Langkah 2:</strong> Pada grid, panjang DE adalah 1 kotak. Sisi DE bersesuaian dengan ST.</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="ST = k \times DE = 2 \times 2 = 4 \text{ cm}" />
+                        <BlockMath math="ST = k \times DE = 2 \times 1 = 2 \text{ kotak}" />
                       </div>
-                      <p><strong className="text-cyan-300">DE = 2 cm dan ST = 4 cm.</strong> Semua sisi yang bersesuaian memiliki perbandingan 1 : 2.</p>
+                      <p><strong className="text-cyan-300">DE = 1 kotak dan ST = 2 kotak.</strong> Semua sisi yang bersesuaian memiliki perbandingan 1 : 2.</p>
                     </div>
                   </div>
                 </div>
@@ -622,10 +570,10 @@ const DefinisiPage = () => {
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4 space-y-3">
                     <p className="font-body text-sm text-white">
-                      Bangun ABCDE dan PQRST memiliki bentuk yang sama seperti pada grid. Setiap kotak mewakili 2 cm.
-                      Diketahui <InlineMath math="DE = 16" /> cm dan <InlineMath math="ST = 8" /> cm.
-                      Jika <InlineMath math="PQ = RS = 4" /> cm, tentukan faktor skala dari PQRST ke ABCDE,
-                      serta panjang <InlineMath math="AB" /> dan <InlineMath math="CD" />!
+                      Bangun ABCDE dan PQRST memiliki bentuk yang sama seperti pada grid.
+                      Diketahui <InlineMath math="DE = 8" /> kotak dan <InlineMath math="ST = 4" /> kotak.
+                      Jika <InlineMath math="PQ = RS = 2" /> kotak, tentukan faktor skala dari PQRST ke ABCDE,
+                      serta panjang <InlineMath math="AB" /> dan <InlineMath math="CD" /> dalam satuan kotak!
                     </p>
                     <div className="flex justify-center rounded-lg overflow-hidden">
                       <GridBangunMiring />
@@ -636,14 +584,14 @@ const DefinisiPage = () => {
                     <div className="space-y-2 font-body text-sm text-white/80">
                       <p><strong>Langkah 1:</strong> Gunakan pasangan sisi tegak DE dan ST untuk mencari faktor skala.</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="k = \frac{DE}{ST} = \frac{16}{8} = 2" />
+                        <BlockMath math="k = \frac{DE}{ST} = \frac{8}{4} = 2" />
                       </div>
                       <p><strong>Langkah 2:</strong> Kalikan sisi-sisi bangun kecil dengan <InlineMath math="k = 2" />.</p>
                       <div className="bg-slate-900/50 rounded p-3 space-y-1">
-                        <p><InlineMath math="AB = k \times PQ = 2 \times 4 = 8 \text{ cm}" /></p>
-                        <p><InlineMath math="CD = k \times RS = 2 \times 4 = 8 \text{ cm}" /></p>
+                        <p><InlineMath math="AB = k \times PQ = 2 \times 2 = 4 \text{ kotak}" /></p>
+                        <p><InlineMath math="CD = k \times RS = 2 \times 2 = 4 \text{ kotak}" /></p>
                       </div>
-                      <p><strong className="text-rose-300">k = 2, AB = 8 cm, dan CD = 8 cm.</strong> Sisi miring juga ikut dikalikan 2, sehingga bentuk tetap sebangun.</p>
+                      <p><strong className="text-rose-300">k = 2, AB = 4 kotak, dan CD = 4 kotak.</strong> Sisi miring juga ikut dikalikan 2, sehingga bentuk tetap sebangun.</p>
                     </div>
                   </div>
                 </div>
