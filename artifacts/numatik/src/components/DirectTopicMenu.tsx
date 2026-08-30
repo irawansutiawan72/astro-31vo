@@ -9,7 +9,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 type MenuKind = "materi" | "latihan" | "game" | "lkpd";
 
 const topics = [
-  [7, "Bilangan Bulat", "bilangan-bulat"], [7, "Bilangan Rasional / Pecahan", "bilangan-rasional"], [7, "Aljabar", "aljabar"], [7, "PLSV dan PtLSV", "plsv-ptlsv"], [7, "Perbandingan", "perbandingan"], [7, "Aritmetika Sosial", "aritmetika-sosial"], [7, "Garis dan Sudut", "garis-dan-sudut"], [7, "Segitiga dan Segiempat", "segitiga-dan-segiempat"], [7, "Himpunan", "himpunan"],
+  [7, "Bilangan Bulat", "bilangan-bulat"], [7, "Bilangan Rasional / Pecahan", "bilangan-rasional"], [7, "Aljabar", "aljabar"], [7, "Persamaan dan Pertidaksamaan Linear Satu Variabel", "plsv-ptlsv"], [7, "Perbandingan", "perbandingan"], [7, "Aritmetika Sosial", "aritmetika-sosial"], [7, "Garis dan Sudut", "garis-dan-sudut"], [7, "Segitiga dan Segiempat", "segitiga-dan-segiempat"], [7, "Himpunan", "himpunan"],
   [8, "Pola Bilangan", "pola-bilangan"], [8, "Koordinat Cartesius", "koordinat-cartesius"], [8, "Relasi dan Fungsi", "relasi-dan-fungsi"], [8, "SPLDV", "spldv"], [8, "Persamaan Garis Lurus", "persamaan-garis-lurus"], [8, "Teorema Pythagoras", "teorema-pythagoras"], [8, "Lingkaran", "lingkaran"], [8, "Garis Singgung Lingkaran", "garis-singgung-lingkaran"], [8, "Bangun Ruang Sisi Datar", "bangun-ruang-sisi-datar"],
   [9, "Bilangan Berpangkat", "bilangan-berpangkat"], [9, "Kesebangunan dan Kekongruenan", "kesebangunan-kekongruenan"], [9, "Transformasi Geometri", "transformasi-geometri"], [9, "Bangun Ruang Sisi Lengkung", "bangun-ruang-sisi-lengkung"], [9, "Statistika", "statistika"], [9, "Peluang", "peluang"], [9, "Persamaan Kuadrat", "persamaan-kuadrat"], [9, "Fungsi Kuadrat", "fungsi-kuadrat"],
 ] as const;
