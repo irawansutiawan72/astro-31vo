@@ -145,23 +145,23 @@ function Q1b({ colors }: { colors: DiagramColors }) {
       <Line x1={252} y1={430} x2={320} y2={100} colors={colors} />
       <Point cx={252} cy={430} colors={colors} />
       <path
-        d="M210 356 A85 85 0 0 1 269 347"
+        d="M200 339 A105 105 0 0 1 274 327"
         fill="none"
         stroke={colors.arc}
         strokeWidth="3"
         strokeLinecap="round"
       />
       <path
-        d="M275 375 A62 62 0 0 1 304 465"
+        d="M275 322 A110 110 0 0 1 294 532"
         fill="none"
         stroke={colors.arc}
         strokeWidth="3"
         strokeLinecap="round"
       />
-      <Text x={260} y={365} colors={colors} size={26} italic>
+      <Text x={258} y={350} colors={colors} size={26} italic>
         y
       </Text>
-      <Text x={350} y={385} colors={colors} size={23}>
+      <Text x={350} y={400} colors={colors} size={23}>
         127°
       </Text>
     </SvgFrame>
