@@ -397,7 +397,7 @@ const BilanganBerpangkatIrasionalPage = () => (
     latihanDasar={[...latihanDasar, ...latihanTambahan]
       .filter((soal) => ![4, 5, 7, 8].includes(soal.no))
       .map((soal, index) => ({ ...soal, no: index + 1 }))
-      .filter((soal) => ![25, 26, 32].includes(soal.no))}
+      .filter((soal) => ![15, 20, 21, 23, 25, 26, 27, 32].includes(soal.no))}
   />
 );
 
