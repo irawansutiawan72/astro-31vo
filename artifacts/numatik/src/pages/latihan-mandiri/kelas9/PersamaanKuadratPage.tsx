@@ -104,7 +104,7 @@ const PersamaanKuadratPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="persamaan-kuadrat-practice-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">

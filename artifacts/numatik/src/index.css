@@ -1526,6 +1526,45 @@ html.light-mode .latihan-mandiri-route .from-emerald-900\/40 {
   --tw-gradient-from: rgba(209,250,229,0.80) var(--tw-gradient-from-position) !important;
 }
 
+/* ── Selected latihan menu cards: match the bright pastel card treatment ── */
+html.light-mode .garis-dan-sudut-practice-route [class*="from-green-900/"] {
+  --tw-gradient-from: rgba(220,252,231,0.94) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .garis-dan-sudut-practice-route [class*="to-lime-900/"] {
+  --tw-gradient-to: rgba(236,252,203,0.88) var(--tw-gradient-to-position) !important;
+}
+
+html.light-mode .segitiga-segiempat-practice-route [class*="from-fuchsia-900/"] {
+  --tw-gradient-from: rgba(250,232,255,0.94) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .segitiga-segiempat-practice-route [class*="to-violet-900/"] {
+  --tw-gradient-to: rgba(237,233,254,0.88) var(--tw-gradient-to-position) !important;
+}
+
+html.light-mode .pola-bilangan-practice-route [class*="from-cyan-900/"] {
+  --tw-gradient-from: rgba(207,250,254,0.94) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .pola-bilangan-practice-route [class*="via-purple-900/"] {
+  --tw-gradient-via: rgba(243,232,255,0.82) var(--tw-gradient-via-position) !important;
+}
+html.light-mode .pola-bilangan-practice-route [class*="to-violet-900/"] {
+  --tw-gradient-to: rgba(237,233,254,0.88) var(--tw-gradient-to-position) !important;
+}
+
+html.light-mode .persamaan-kuadrat-practice-route [class*="from-fuchsia-900/"] {
+  --tw-gradient-from: rgba(250,232,255,0.94) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .persamaan-kuadrat-practice-route [class*="to-violet-900/"] {
+  --tw-gradient-to: rgba(237,233,254,0.88) var(--tw-gradient-to-position) !important;
+}
+
+html.light-mode .fungsi-kuadrat-practice-route [class*="from-fuchsia-900/"] {
+  --tw-gradient-from: rgba(250,232,255,0.94) var(--tw-gradient-from-position) !important;
+}
+html.light-mode .fungsi-kuadrat-practice-route [class*="to-pink-900/"] {
+  --tw-gradient-to: rgba(252,231,243,0.88) var(--tw-gradient-to-position) !important;
+}
+
 /* ── Kesimpulan text colors used across Koordinat Kartesius sub-materi ── */
 .light-mode .text-rose-100\/90    { color: #9f1239 !important; }
 .theme-ocean .text-rose-100\/90   { color: #fecdd3 !important; }
