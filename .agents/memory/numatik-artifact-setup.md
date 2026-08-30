@@ -11,6 +11,9 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - `listArtifacts()` returns empty after GitHub import — artifact registration is not preserved. Workflow is manually configured via `configureWorkflow` to match `artifact.toml` intent.
 - Imported projects may therefore be unreachable by artifact-based screenshot/presentation tools even while the managed frontend workflow runs; use build, logs, and direct route checks as fallback verification.
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.
+- Build and dev prehooks regenerate the tracked search index from page content; content changes can therefore legitimately update `public/search-index.json`.
+  **Why:** Search needs to reflect newly added instructional text and routes after a build.
+  **How to apply:** Keep the generated index synchronized when changing searchable page copy; do not mistake that diff for an unrelated source edit.
 
 ## Languages
 - App uses **i18n (react-i18next)** with 3 locales: `id` (Indonesian), `en` (English), `ja` (Japanese).
