@@ -1541,13 +1541,13 @@ html.light-mode .segitiga-segiempat-practice-route [class*="to-violet-900/"] {
   --tw-gradient-to: rgba(237,233,254,0.88) var(--tw-gradient-to-position) !important;
 }
 
-html.light-mode .pola-bilangan-practice-route [class*="from-cyan-900/"] {
+html.light-mode .pola-bilangan-practice-route .pola-pengertian-card [class*="from-cyan-900/"] {
   --tw-gradient-from: rgba(207,250,254,0.94) var(--tw-gradient-from-position) !important;
 }
-html.light-mode .pola-bilangan-practice-route [class*="via-purple-900/"] {
+html.light-mode .pola-bilangan-practice-route .pola-pengertian-card [class*="via-purple-900/"] {
   --tw-gradient-via: rgba(243,232,255,0.82) var(--tw-gradient-via-position) !important;
 }
-html.light-mode .pola-bilangan-practice-route [class*="to-violet-900/"] {
+html.light-mode .pola-bilangan-practice-route .pola-pengertian-card [class*="to-violet-900/"] {
   --tw-gradient-to: rgba(237,233,254,0.88) var(--tw-gradient-to-position) !important;
 }
 

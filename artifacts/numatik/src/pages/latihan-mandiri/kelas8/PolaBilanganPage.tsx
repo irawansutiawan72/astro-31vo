@@ -83,7 +83,7 @@ const PolaBilanganPage = () => {
               <button
                 key={s.key}
                 onClick={() => { playPopSound(); navigate(s.path); }}
-                className={`group relative rounded-2xl overflow-hidden text-left transition-all duration-300 hover:scale-[1.01] animate-slide-up`}
+                className={`group relative rounded-2xl overflow-hidden text-left transition-all duration-300 hover:scale-[1.01] animate-slide-up ${s.key === "pengertianDanPolaKhusus" ? "pola-pengertian-card" : ""}`}
                 style={{ animationDelay: `${i * 0.07}s` }}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${s.gradient} backdrop-blur`} />
