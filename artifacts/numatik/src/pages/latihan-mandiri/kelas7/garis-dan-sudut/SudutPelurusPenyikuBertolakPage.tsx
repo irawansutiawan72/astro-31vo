@@ -5,6 +5,7 @@ import PageNavigation from "@/components/PageNavigation";
 import { BookOpen, ChevronLeft } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
 import { useTheme } from "@/contexts/ThemeContext";
+import { RedrawnAngleDiagram } from "./AngleRedrawSVGs";
 
 function SudutPelurusDiagram({ isDark }: { isDark: boolean }) {
   const colors = isDark
@@ -158,6 +159,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qb.text')}</p>
                 <img src={"/images/b_1774838179562.png"} alt="Soal b" className="mt-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q1b" isDark={isDark} />
               </div>
             </div>
 
@@ -167,6 +169,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qc.text')}</p>
                 <img src={"/images/c_1774838179562.png"} alt="Soal c" className="mt-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q1c" isDark={isDark} />
               </div>
             </div>
 
@@ -176,6 +179,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qd.text')}</p>
                 <img src={"/images/d_1774838179563.png"} alt="Soal d" className="mt-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q1d" isDark={isDark} />
               </div>
             </div>
 
@@ -185,6 +189,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qe.text')}</p>
                 <img src={"/images/e_1774838179563.png"} alt="Soal e" className="mt-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q1e" isDark={isDark} />
               </div>
             </div>
 
@@ -194,6 +199,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qf.text')}</p>
                 <img src={"/images/f_1774838179564.png"} alt="Soal f" className="mt-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q1f" isDark={isDark} />
               </div>
             </div>
           </div>
@@ -227,6 +233,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q2.stem')}</p>
                 <img src={"/images/no_2_1774838544613.png"} alt="Soal 2" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q2" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q2.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q2.optB')}</p>
@@ -242,6 +249,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q3.stem')}</p>
                 <img src={"/images/no_3_1774838544614.png"} alt="Soal 3" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q3" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q3.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q3.optB')}</p>
@@ -257,6 +265,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q4.stem')}</p>
                 <img src={"/images/no_4_1774838544614.png"} alt="Soal 4" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q4" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q4.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q4.optB')}</p>
@@ -272,6 +281,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q5.stem')}</p>
                 <img src={"/images/no_5_1774838544615.png"} alt="Soal 5" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q5" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q5.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q5.optB')}</p>
@@ -287,6 +297,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q6.stem')}</p>
                 <img src={"/images/no_6_1774838544615.png"} alt="Soal 6" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q6" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q6.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q6.optB')}</p>
@@ -316,6 +327,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q8.stem')}</p>
                 <img src={"/images/no_8_1774838544616.png"} alt="Soal 8" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q8" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q8.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q8.optB')}</p>
@@ -345,6 +357,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q10.stem')}</p>
                 <img src={"/images/no_10_1774838544616.png"} alt="Soal 10" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q10" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q10.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q10.optB')}</p>
@@ -360,6 +373,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q11.stem')}</p>
                 <img src={"/images/no_11_1774838544616.png"} alt="Soal 11" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q11" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q11.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q11.optB')}</p>
@@ -375,6 +389,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q12.stem')}</p>
                 <img src={"/images/no_12_1774838544617.png"} alt="Soal 12" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q12" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q12.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q12.optB')}</p>
@@ -390,6 +405,7 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q13.stem')}</p>
                 <img src={"/images/no_13_1774838544618.png"} alt="Soal 13" className="my-3 w-full max-w-xs block" />
+                <RedrawnAngleDiagram kind="q13" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q13.optA')}</p>
                   <p>{t('practice.garisDanSudut.sudutPelurus.q13.optB')}</p>
