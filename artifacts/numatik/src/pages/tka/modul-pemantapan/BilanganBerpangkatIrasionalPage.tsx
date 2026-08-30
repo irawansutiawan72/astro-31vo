@@ -273,6 +273,25 @@ const latihanDasar: LatihanSoal[] = [
   },
 ];
 
+const urutanLatihanBerdasarkanSubmateri = [
+  // Bilangan berpangkat bulat, negatif, dan eksponensial
+  1, 2, 8, 5, 10, 22, 23, 3,
+  // Pangkat pecahan
+  4, 9, 18,
+  // Menyederhanakan dan mengoperasikan bentuk akar
+  7, 28, 11, 12, 13, 15, 19, 25, 29,
+  // Merasionalkan penyebut
+  6, 14, 16, 17, 20,
+  // Notasi ilmiah
+  21, 24, 26, 27,
+] as const;
+
+const latihanDasarGrouped: LatihanSoal[] = urutanLatihanBerdasarkanSubmateri.map((nomorLama, index) => {
+  const soal = latihanDasar.find((item) => item.no === nomorLama);
+  if (!soal) throw new Error(`Soal latihan nomor ${nomorLama} tidak ditemukan`);
+  return { ...soal, no: index + 1 };
+});
+
 const contohSoal: LatihanSoal[] = [
   {
     no: 1,
@@ -329,7 +348,7 @@ const BilanganBerpangkatIrasionalPage = () => (
     title="BILANGAN BERPANGKAT DAN IRASIONAL"
     materiSections={materiSections}
     contohSoal={contohSoal}
-    latihanDasar={latihanDasar}
+    latihanDasar={latihanDasarGrouped}
   />
 );
 
