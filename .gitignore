@@ -48,6 +48,10 @@ Thumbs.db
 .cache/
 .local/
 
+# Environment secrets
+.env
+.env.local
+
 # Migration artifacts (keep locally, don't commit)
 .migration-backup/
 .old-artifacts-backup/
