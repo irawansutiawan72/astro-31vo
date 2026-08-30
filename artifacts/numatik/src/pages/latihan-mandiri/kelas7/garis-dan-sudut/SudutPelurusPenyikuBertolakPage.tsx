@@ -148,7 +148,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">a)</span>
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qa.text')}</p>
-                <img src={"/images/a_1774838179561.png"} alt="Soal a" className="mt-3 w-full max-w-xs block" />
                 <SudutPelurusDiagram isDark={isDark} />
               </div>
             </div>
@@ -188,7 +187,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">e)</span>
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qe.text')}</p>
-                <img src={"/images/e_1774838179563.png"} alt="Soal e" className="mt-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q1e" isDark={isDark} />
               </div>
             </div>
@@ -232,7 +230,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">2.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q2.stem')}</p>
-                <img src={"/images/no_2_1774838544613.png"} alt="Soal 2" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q2" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q2.optA')}</p>
@@ -248,7 +245,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">3.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q3.stem')}</p>
-                <img src={"/images/no_3_1774838544614.png"} alt="Soal 3" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q3" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q3.optA')}</p>
@@ -264,7 +260,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">4.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q4.stem')}</p>
-                <img src={"/images/no_4_1774838544614.png"} alt="Soal 4" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q4" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q4.optA')}</p>
@@ -280,7 +275,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">5.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q5.stem')}</p>
-                <img src={"/images/no_5_1774838544615.png"} alt="Soal 5" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q5" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q5.optA')}</p>
@@ -296,7 +290,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">6.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q6.stem')}</p>
-                <img src={"/images/no_6_1774838544615.png"} alt="Soal 6" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q6" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q6.optA')}</p>
@@ -326,7 +319,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">8.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q8.stem')}</p>
-                <img src={"/images/no_8_1774838544616.png"} alt="Soal 8" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q8" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q8.optA')}</p>
@@ -356,7 +348,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">10.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q10.stem')}</p>
-                <img src={"/images/no_10_1774838544616.png"} alt="Soal 10" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q10" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q10.optA')}</p>
@@ -372,7 +363,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">11.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q11.stem')}</p>
-                <img src={"/images/no_11_1774838544616.png"} alt="Soal 11" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q11" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q11.optA')}</p>
@@ -388,7 +378,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">12.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q12.stem')}</p>
-                <img src={"/images/no_12_1774838544617.png"} alt="Soal 12" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q12" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q12.optA')}</p>
@@ -404,7 +393,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">13.</span>
               <div>
                 <p className="mb-2">{t('practice.garisDanSudut.sudutPelurus.q13.stem')}</p>
-                <img src={"/images/no_13_1774838544618.png"} alt="Soal 13" className="my-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q13" isDark={isDark} />
                 <div className="ml-4 space-y-1">
                   <p>{t('practice.garisDanSudut.sudutPelurus.q13.optA')}</p>
