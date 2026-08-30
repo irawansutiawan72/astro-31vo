@@ -279,9 +279,9 @@ const urutanLatihanBerdasarkanSubmateri = [
   // Pangkat pecahan
   4, 9, 18,
   // Menyederhanakan dan mengoperasikan bentuk akar
-  7, 28, 11, 12, 13, 15, 19, 25, 29,
+  7, 12, 13, 15, 19, 25, 29,
   // Merasionalkan penyebut
-  6, 14, 16, 17, 20,
+  6, 14, 16, 17,
   // Notasi ilmiah
   21, 24, 26, 27,
 ] as const;
