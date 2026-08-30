@@ -934,7 +934,10 @@ const AppInner = () => {
     <>
       <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
-        <div className={/^\/materi-matematika\/kelas-[789](?:\/.*)?$/.test(pathname) ? "animation-submaterial-route" : undefined}>
+        <div className={[
+          /^\/materi-matematika\/kelas-[789](?:\/.*)?$/.test(pathname) ? "animation-submaterial-route" : "",
+          pathname.startsWith("/latihan-mandiri") ? "latihan-mandiri-route" : "",
+        ].filter(Boolean).join(" ") || undefined}>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/menu" element={<MenuPage />} />

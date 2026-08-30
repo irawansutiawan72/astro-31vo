@@ -4638,6 +4638,115 @@ html.light-mode .bg-slate-900\/90 .bg-yellow-500\/10 {
   fill: rgba(15,23,42,0.82) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   LATIHAN MANDIRI — bright-theme readability
+   All exercise routes share this marker from App.tsx. Keep these
+   overrides route-scoped so dark/ocean pages and other app areas stay
+   unchanged.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Make translucent white and dark utility surfaces read as light cards. */
+.light-mode .latihan-mandiri-route .bg-white\/3,
+.light-mode .latihan-mandiri-route .bg-white\/5,
+.light-mode .latihan-mandiri-route .bg-white\/8,
+.light-mode .latihan-mandiri-route .bg-white\/10,
+.light-mode .latihan-mandiri-route .bg-white\/20 {
+  background-color: rgba(255,255,255,0.76) !important;
+}
+
+.light-mode .latihan-mandiri-route .bg-slate-950,
+.light-mode .latihan-mandiri-route .bg-slate-950\/70,
+.light-mode .latihan-mandiri-route .bg-slate-950\/80,
+.light-mode .latihan-mandiri-route .bg-slate-900\/60,
+.light-mode .latihan-mandiri-route .bg-slate-900\/70,
+.light-mode .latihan-mandiri-route .bg-slate-900\/80,
+.light-mode .latihan-mandiri-route .bg-slate-800\/80 {
+  background-color: rgba(248,250,252,0.94) !important;
+}
+
+/* Exercise index cards that use an inline translucent dark background. */
+.light-mode .latihan-mandiri-route button.backdrop-blur,
+.light-mode .latihan-mandiri-route button[class*="bg-card"] {
+  background-color: rgba(255,255,255,0.92) !important;
+  background-image: none !important;
+}
+
+/* Card overlays and question panels with inline dark colors. */
+.light-mode .latihan-mandiri-route [style*="rgba(2,8,23"],
+.light-mode .latihan-mandiri-route [style*="rgba(6,12,30"],
+.light-mode .latihan-mandiri-route [style*="rgba(8,15,35"],
+.light-mode .latihan-mandiri-route [style*="rgba(9,16,35"],
+.light-mode .latihan-mandiri-route [style*="rgba(10,15,40"],
+.light-mode .latihan-mandiri-route [style*="rgba(10,18,40"],
+.light-mode .latihan-mandiri-route [style*="rgba(15,12,41"],
+.light-mode .latihan-mandiri-route [style*="rgba(15,10,30"],
+.light-mode .latihan-mandiri-route [style*="rgba(20,20,40"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Formula / answer rows written as inline white-on-dark surfaces. */
+.light-mode .latihan-mandiri-route [style*="rgba(255,255,255,0.03"],
+.light-mode .latihan-mandiri-route [style*="rgba(255,255,255,0.04"],
+.light-mode .latihan-mandiri-route [style*="rgba(255,255,255,0.06"],
+.light-mode .latihan-mandiri-route [style*="rgba(255,255,255,0.08"] {
+  background-color: rgba(241,245,249,0.92) !important;
+  border-color: rgba(100,116,139,0.28) !important;
+}
+
+/* Readable body copy and headings in custom exercise cards. */
+.light-mode .latihan-mandiri-route .text-white,
+.light-mode .latihan-mandiri-route .text-white\/80,
+.light-mode .latihan-mandiri-route .text-white\/85,
+.light-mode .latihan-mandiri-route .text-white\/90,
+.light-mode .latihan-mandiri-route .text-white\/95 {
+  color: #172033 !important;
+}
+
+.light-mode .latihan-mandiri-route .text-white\/20,
+.light-mode .latihan-mandiri-route .text-white\/25,
+.light-mode .latihan-mandiri-route .text-white\/30,
+.light-mode .latihan-mandiri-route .text-white\/40,
+.light-mode .latihan-mandiri-route .text-white\/50,
+.light-mode .latihan-mandiri-route .text-white\/55,
+.light-mode .latihan-mandiri-route .text-white\/60,
+.light-mode .latihan-mandiri-route .text-white\/65,
+.light-mode .latihan-mandiri-route .text-white\/70,
+.light-mode .latihan-mandiri-route .text-white\/75 {
+  color: #475569 !important;
+}
+
+/* The generic light-mode rules do not cover every low-opacity accent. */
+.light-mode .latihan-mandiri-route .text-cyan-300\/30,
+.light-mode .latihan-mandiri-route .text-cyan-300\/50,
+.light-mode .latihan-mandiri-route .text-emerald-300\/30,
+.light-mode .latihan-mandiri-route .text-green-300\/30,
+.light-mode .latihan-mandiri-route .text-indigo-300\/30,
+.light-mode .latihan-mandiri-route .text-indigo-300\/60,
+.light-mode .latihan-mandiri-route .text-muted-foreground\/60,
+.light-mode .latihan-mandiri-route .text-violet-300\/30,
+.light-mode .latihan-mandiri-route .text-violet-300\/70,
+.light-mode .latihan-mandiri-route .text-rose-300\/30,
+.light-mode .latihan-mandiri-route .text-rose-300\/50,
+.light-mode .latihan-mandiri-route .text-teal-400\/40,
+.light-mode .latihan-mandiri-route .text-white\/20 {
+  color: #475569 !important;
+}
+
+/* Dashed separators should remain visible against the pale cards. */
+.light-mode .latihan-mandiri-route .border-white\/5,
+.light-mode .latihan-mandiri-route .border-white\/8,
+.light-mode .latihan-mandiri-route .border-white\/10,
+.light-mode .latihan-mandiri-route .border-white\/20 {
+  border-color: rgba(100,116,139,0.28) !important;
+}
+
+/* SVG canvases embedded in exercises should not remain navy. */
+.light-mode .latihan-mandiri-route svg.bg-slate-900\/60,
+.light-mode .latihan-mandiri-route svg.bg-slate-950\/70 {
+  background-color: rgba(248,250,252,0.96) !important;
+}
+
 /* 7. Axis/grid stroke lines that use near-white strokes → subtle dark on light themes */
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.15)"],
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.1)"],
