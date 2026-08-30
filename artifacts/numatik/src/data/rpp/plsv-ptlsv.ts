@@ -56,7 +56,7 @@ export const plsvPtlsv: MateriCatalogEntry = {
     },
     {
       slug: "penyelesaian-plsv",
-      title: "Penyelesaian PLSV",
+      title: "Penyelesaian Persamaan Linear Satu Variabel",
       desc: "RPP teknik menyelesaikan PLSV menggunakan sifat kesetaraan persamaan (operasi pada kedua ruas).",
       icon: Sigma,
       model: "Discovery",
@@ -146,7 +146,7 @@ export const plsvPtlsv: MateriCatalogEntry = {
     },
     {
       slug: "penyelesaian-ptlsv",
-      title: "Penyelesaian PtLSV",
+      title: "Penyelesaian Pertidaksamaan Linear Satu Variabel",
       desc: "RPP teknik menyelesaikan PtLSV serta menyajikan hasilnya pada garis bilangan.",
       icon: Lightbulb,
       model: "Discovery",

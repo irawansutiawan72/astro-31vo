@@ -57,7 +57,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "pengertian-plsv",
-    label: "PENGERTIAN PLSV, KESAMAAN & EKUIVALEN",
+    label: "PENGERTIAN PERSAMAAN LINEAR SATU VARIABEL, KESAMAAN & EKUIVALEN",
     emoji: "⚖️",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
@@ -108,7 +108,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "penyelesaian-plsv",
-    label: "PENYELESAIAN PLSV",
+    label: "PENYELESAIAN PERSAMAAN LINEAR SATU VARIABEL",
     emoji: "🧮",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
@@ -159,7 +159,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "model-matematika-plsv",
-    label: "MODEL MATEMATIKA & SOAL CERITA PLSV",
+    label: "MODEL MATEMATIKA & SOAL CERITA PERSAMAAN LINEAR SATU VARIABEL",
     emoji: "📖",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
@@ -210,7 +210,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "pengertian-ptlsv",
-    label: "PENGERTIAN KETIDAKSAMAAN, PERTIDAKSAMAAN & PtLSV",
+    label: "PENGERTIAN KETIDAKSAMAAN & PERTIDAKSAMAAN LINEAR SATU VARIABEL",
     emoji: "🔣",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
@@ -261,7 +261,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "penyelesaian-ptlsv",
-    label: "PENYELESAIAN PtLSV",
+    label: "PENYELESAIAN PERTIDAKSAMAAN LINEAR SATU VARIABEL",
     emoji: "📊",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
@@ -312,7 +312,7 @@ export const PLSV_PTLSV: SubmaterialEntry[] = [
   },
   {
     slug: "model-matematika-ptlsv",
-    label: "MODEL MATEMATIKA & SOAL CERITA PtLSV",
+    label: "MODEL MATEMATIKA & SOAL CERITA PERTIDAKSAMAAN LINEAR SATU VARIABEL",
     emoji: "📚",
     parentSlug: PARENT_SLUG,
     parentLabel: PARENT_LABEL,
