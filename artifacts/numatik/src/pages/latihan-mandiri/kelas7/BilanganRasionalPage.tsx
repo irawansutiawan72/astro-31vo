@@ -5,6 +5,7 @@ import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { ChevronRight } from "lucide-react";
 import { InlineMath } from "react-katex";
+import { useTheme } from "@/contexts/ThemeContext";
 import "katex/dist/katex.min.css";
 
 /* ── Visual config (non-translatable) ────────────────── */
@@ -23,6 +24,7 @@ const subtopicsConfig = [
     path: "/latihan-mandiri/kelas-7/bilangan-rasional/pecahan-campuran-persen", soal: 10,
     latex: "1\\dfrac{1}{2}",
     gradient: "from-emerald-900/40 to-green-900/30", border: "border-emerald-500/30",
+    lightGradient: "from-emerald-50/90 to-green-50/70",
     badge: "bg-emerald-500/20 text-emerald-300 border-emerald-400/40", iconBg: "bg-emerald-500/20",
     iconColor: "text-emerald-400", leftBar: "from-emerald-400 to-green-500",
   },
@@ -55,6 +57,7 @@ const subtopicsConfig = [
     path: "/latihan-mandiri/kelas-7/bilangan-rasional/bentuk-desimal", soal: 8,
     latex: "0{,}75",
     gradient: "from-lime-900/40 to-green-900/30", border: "border-lime-500/30",
+    lightGradient: "from-lime-50/90 to-green-50/70",
     badge: "bg-lime-500/20 text-lime-300 border-lime-400/40", iconBg: "bg-lime-500/20",
     iconColor: "text-lime-400", leftBar: "from-lime-400 to-green-500",
   },
@@ -87,6 +90,7 @@ const subtopicsConfig = [
     path: "/latihan-mandiri/kelas-7/bilangan-rasional/pembulatan-desimal", soal: 8,
     latex: "3{,}14\\approx 3",
     gradient: "from-fuchsia-900/40 to-pink-900/30", border: "border-fuchsia-500/30",
+    lightGradient: "from-fuchsia-50/90 to-pink-50/70",
     badge: "bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-400/40", iconBg: "bg-fuchsia-500/20",
     iconColor: "text-fuchsia-400", leftBar: "from-fuchsia-400 to-pink-500",
   },
@@ -95,6 +99,7 @@ const subtopicsConfig = [
 const BilanganRasionalPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
 
   const subtopics = subtopicsConfig.map((s) => ({
     ...s,
@@ -129,7 +134,7 @@ const BilanganRasionalPage = () => {
             <button key={s.key} onClick={() => { playPopSound(); navigate(s.path); }}
               className="group relative rounded-2xl overflow-hidden text-left transition-all duration-300 hover:scale-[1.01] animate-slide-up"
               style={{ animationDelay: `${i * 0.07}s` }}>
-              <div className={`absolute inset-0 bg-gradient-to-br ${s.gradient} backdrop-blur`} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${!isDark && s.lightGradient ? s.lightGradient : s.gradient} backdrop-blur`} />
               <div className={`absolute inset-0 border ${s.border} rounded-2xl group-hover:border-opacity-60 transition-colors`} />
               <div className={`absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b ${s.leftBar} rounded-l-2xl`} />
               <div className="relative px-5 py-4 flex items-center gap-4">
