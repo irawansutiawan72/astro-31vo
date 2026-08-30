@@ -35,6 +35,29 @@ const DonasiPage = () => {
             </p>
           </div>
 
+          {/* QRIS donation barcode */}
+          <div className="bg-white/95 border border-primary/30 rounded-xl p-4 sm:p-6 box-glow-cyan">
+            <p className="text-slate-800 font-display text-sm font-bold tracking-wide mb-3">
+              {t("donasi.qrisLabel")}
+            </p>
+            <a
+              href="/assets/qris-donasi.jpeg"
+              target="_blank"
+              rel="noreferrer"
+              className="block mx-auto w-full max-w-[420px] rounded-lg overflow-hidden transition-transform hover:scale-[1.01]"
+              title={t("donasi.qrisOpen")}
+            >
+              <img
+                src="/assets/qris-donasi.jpeg"
+                alt={t("donasi.qrisAlt")}
+                className="block w-full h-auto object-contain"
+              />
+            </a>
+            <p className="text-slate-600 font-body text-xs mt-3">
+              {t("donasi.qrisHint")}
+            </p>
+          </div>
+
           {/* Bank Account Info */}
           <div className="bg-muted/50 border border-primary/30 rounded-xl p-6 box-glow-cyan">
             <CreditCard className="w-8 h-8 text-primary mx-auto mb-3" />

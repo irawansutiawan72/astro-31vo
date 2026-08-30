@@ -6478,6 +6478,10 @@
     "subtitle": "Ayo dukung agar aplikasinya lebih berkembang",
     "desc": "Dukungan Anda sangat berarti untuk pengembangan aplikasi NUMATIK agar semakin bermanfaat bagi siswa-siswi di seluruh Dunia. 💙",
     "bankNotice": "Rekening Bank dari Negara Indonesia",
+    "qrisLabel": "SCAN QRIS UNTUK DONASI",
+    "qrisAlt": "Barcode QRIS donasi Irawan Sutiawan",
+    "qrisHint": "Ketuk barcode untuk membuka gambar ukuran penuh.",
+    "qrisOpen": "Buka barcode QRIS ukuran penuh",
     "rekeningLabel": "REKENING DONASI",
     "thankyou": "Terima kasih atas dukungannya! 🙏",
     "kembali": "← Kembali ke Menu"

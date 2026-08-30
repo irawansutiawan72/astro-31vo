@@ -6482,6 +6482,10 @@
     "subtitle": "アプリの成長を応援してください",
     "desc": "皆さまのご支援は、NUMATIKのさらなる発展と、世界中の生徒たちへの貢献に、大きな力となります。💙",
     "bankNotice": "インドネシアの銀行口座",
+    "qrisLabel": "QRISをスキャンして寄付",
+    "qrisAlt": "Irawan Sutiawanの寄付用QRISバーコード",
+    "qrisHint": "バーコードをタップすると大きな画像で開きます。",
+    "qrisOpen": "QRISバーコードをフルサイズで開く",
     "rekeningLabel": "寄付口座",
     "thankyou": "ご支援、誠にありがとうございます！🙏",
     "kembali": "← メニューに戻る"

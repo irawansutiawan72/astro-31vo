@@ -6482,6 +6482,10 @@
     "subtitle": "Support us to help the app grow",
     "desc": "Your support means a great deal to the development of NUMATIK, helping it become even more beneficial for students around the world. 💙",
     "bankNotice": "Bank Account from Indonesia",
+    "qrisLabel": "SCAN QRIS TO DONATE",
+    "qrisAlt": "Donation QRIS barcode for Irawan Sutiawan",
+    "qrisHint": "Tap the barcode to open the full-size image.",
+    "qrisOpen": "Open the full-size QRIS barcode",
     "rekeningLabel": "DONATION ACCOUNT",
     "thankyou": "Thank you so much for your support! 🙏",
     "kembali": "← Back to Menu"
