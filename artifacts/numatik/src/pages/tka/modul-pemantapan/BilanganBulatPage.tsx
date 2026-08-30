@@ -1093,6 +1093,33 @@ const BilanganBulatPage = () => {
         {/* ── Soal-Soal ── */}
         {activeTab === "soal" && <div className="flex flex-col gap-5">
 
+          {/* ══ SOAL 1 — PGS ══ */}
+          <Soal n={1} tipe="PGS">
+            <p className={qText}>
+              Hasil dari <InlineMath math="-18 + 42 \div (-6) \times 3" /> adalah ....
+            </p>
+            <MCQ qn={1} correct={0} options={[
+              "A. −39", "B. −33", "C. 3", "D. 33"
+            ]} />
+            <PembahasanBtn n={1} />
+            {expandedPembahasan.has(1) && (
+              <div className="mt-3 space-y-2">
+                <PBJawaban>A. −39</PBJawaban>
+                <PBKonsep>
+                  <p>Urutan operasi hitung campuran: <span className="font-bold">Ka–Pa–Ka–Ta</span></p>
+                  <p>① Kurung → ② Pangkat/Akar → ③ Kali/Bagi (kiri ke kanan) → ④ Tambah/Kurang (kiri ke kanan)</p>
+                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: Bagi dan kali punya prioritas sama, kerjakan dari kiri.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p>Kerjakan bagi dan kali dari kiri ke kanan: <InlineMath math="42 \div (-6) = -7" /></p></S>
+                  <S n={2}><p>Lanjutkan kali: <InlineMath math="-7 \times 3 = -21" /></p></S>
+                  <S n={3}><p>Kerjakan tambah/kurang: <InlineMath math="-18 + (-21) = -18 - 21 = -39" /></p></S>
+                  <S n={4}><div><BlockMath math="-18 + 42 \div (-6) \times 3 = -18 + (-21) = -39" /></div></S>
+                </PBSteps>
+              </div>
+            )}
+          </Soal>
+
           {/* ══ SOAL 2 — MCMA ══ */}
           <Soal n={2} tipe="MCMA">
             <p className={qText}>
@@ -1240,6 +1267,35 @@ const BilanganBulatPage = () => {
                   <S n={1}><p>Suhu puncak = <InlineMath math="-4°C" />.</p></S>
                   <S n={2}><p>Suhu kaki gunung <InlineMath math="23°C" /> lebih tinggi: <InlineMath math="-4+23" />.</p></S>
                   <S n={3}><div><BlockMath math="-4+23=19°C" /></div></S>
+                </PBSteps>
+              </div>
+            )}
+          </Soal>
+
+          {/* ══ SOAL 8 — MCMA ══ */}
+          {/* ══ SOAL 7 — PGS ══ */}
+          <Soal n={7} tipe="PGS">
+            <p className={qText}>
+              Operasi "<InlineMath math="\star" />" didefinisikan sebagai <InlineMath math="a \star b = 3a - 2b" />.
+              Nilai dari <InlineMath math="(-2) \star 4" /> adalah ....
+            </p>
+            <MCQ qn={7} correct={0} options={[
+              "A. −14", "B. −2", "C. 2", "D. 14"
+            ]} />
+            <PembahasanBtn n={7} />
+            {expandedPembahasan.has(7) && (
+              <div className="mt-3 space-y-2">
+                <PBJawaban>A. −14</PBJawaban>
+                <PBKonsep>
+                  <p>Operasi khusus (non-standar): ikuti <span className="font-bold">definisi yang diberikan</span>, lalu substitusikan nilai.</p>
+                  <p>Rumus: <InlineMath math="a \star b = 3a - 2b" /></p>
+                  <p className={`text-[10px] italic ${isDark?"text-violet-300/70":"text-violet-500"}`}>💡 Trik: tulis rumus dulu, baru substitusi — jangan substitusi sebelum tahu rumusnya.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p>Identifikasi: <InlineMath math="a=-2,\;b=4" /></p></S>
+                  <S n={2}><p>Substitusi: <InlineMath math="3(-2) - 2(4)" /></p></S>
+                  <S n={3}><p>Hitung: <InlineMath math="-6 - 8 = -14" /></p></S>
+                  <S n={4}><div><BlockMath math="(-2)\star 4 = 3(-2)-2(4) = -6-8 = -14" /></div></S>
                 </PBSteps>
               </div>
             )}

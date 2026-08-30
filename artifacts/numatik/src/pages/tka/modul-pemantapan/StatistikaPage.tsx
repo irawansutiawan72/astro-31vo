@@ -8,19 +8,6 @@ import {
 
 const latihanDasar: LatihanSoal[] = [
   {
-    "no": 1,
-    "soal": "Diketahui data berikut: 85, 90, 70, 80, 70, 65, 80, 85, 70, 80, 95, 70. Modus dan median data tersebut berturut-turut adalah ...",
-    "options": [
-      "A. 65 dan 80",
-      "B. 70 dan 80",
-      "C. 75 dan 70",
-      "D. 80 dan 75"
-    ],
-    "jawaban": "B",
-    "pembahasan": "Modus = nilai yang paling sering muncul. Median = nilai tengah data setelah diurutkan. Untuk data genap, median = rata-rata dua data tengah.\n\nFrekuensi tiap nilai: 65(1), 70(4), 80(3), 85(2), 90(1), 95(1) → total 12 data\nModus = 70 (muncul paling banyak, 4 kali)\nData diurutkan: 65, 70, 70, 70, 70, 80, 80, 80, 85, 85, 90, 95\nMedian = rata-rata data ke-6 dan ke-7 = $\\frac{80+80}{2} = 80$\n\nSusun data dalam tabel frekuensi terlebih dahulu untuk memudahkan penghitungan modus dan median.\n\nModus = 70 (frekuensi terbanyak) dan Median = 80 (nilai tengah dari 12 data).",
-    "type": "pg"
-  },
-  {
     "no": 2,
     "soal": "Perhatikan tabel berikut!\nPernyataan yang benar dari tabel di atas adalah ...",
     "options": [
@@ -109,19 +96,6 @@ const latihanDasar: LatihanSoal[] = [
       "B"
     ],
     "pembahasan": "Jawaban Akhir: Semua pernyataan benar.\n\nStep by Step:\n1. Usia 3 tahun, kolom laki-laki → 96,1 cm (Benar).\n2. Usia 5 tahun → $110{,}0 - 109{,}4 = 0{,}6$ cm (Benar).\n3. Jangkauan perempuan → $109{,}4 - 74{,}0 = 35{,}4$ cm (Benar)."
-  },
-  {
-    "no": 7,
-    "soal": "Diagram batang menunjukkan nilai ulangan matematika yang diperoleh dari 20 anak pada suatu kelas.\n[DIAGRAM]\nRataan (Mean) dari data tersebut adalah ...",
-    "options": [
-      "A. 7",
-      "B. 7,5",
-      "C. 8",
-      "D. 8,5"
-    ],
-    "jawaban": "C",
-    "pembahasan": "Mean dari data frekuensi = $\\frac{\\sum f_i \\cdot x_i}{\\sum f_i}$. Kalikan tiap nilai dengan frekuensinya, jumlahkan, bagi dengan total frekuensi.\n\nTotal siswa = 2+4+6+5+3 = 20\nJumlah nilai = $6\\cdot2 + 7\\cdot4 + 8\\cdot6 + 9\\cdot5 + 10\\cdot3$\n= 12 + 28 + 48 + 45 + 30 = 163\nMean = $\\frac{163}{20} = 8{,}15$ → pembulatan ke bilangan terdekat = 8\n\nBuat kolom tambahan $f \\cdot x$ di tabel untuk mempermudah penjumlahan.\n\nMean nilai ulangan ≈ 8,15, dibulatkan menjadi 8.",
-    "type": "pg"
   },
   {
     "no": 8,
@@ -458,7 +432,6 @@ const gambarMap = {
   3: renderDasarVisual(41),
   5: renderDasarVisual(51),
   6: renderDasarVisual(60),
-  7: renderDasarVisual(5),
   10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
   15: renderDasarVisual(15),
   16: renderDasarVisual(9),

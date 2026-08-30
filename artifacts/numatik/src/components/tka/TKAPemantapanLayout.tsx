@@ -523,7 +523,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
             </div>
 
             <div className="space-y-4">
-              {contohSoal.map((soal, qi) => {
+              {contohSoal.map((soal) => {
                 const type = soal.type ?? "pg";
                 const selected = selectedContohAnswers[soal.no];
                 const bsArr = pgkbsContohAnswers[soal.no] ?? Array(soal.pernyataan?.length ?? 3).fill(null);
@@ -557,7 +557,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           border: "1px solid rgba(52,211,153,0.3)",
                           color: "#6ee7b7",
                         }}>
-                        {qi + 1}
+                        {soal.no}
                       </span>
                       <div className="flex-1 min-w-0">
                         <span className={`inline-block text-[9px] font-bold font-display px-2 py-0.5 rounded-full mb-1.5 ${typeBadge.color}`}
@@ -590,7 +590,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         {soal.pernyataan.map((p, pi) => (
                           <div key={pi} className="flex items-start gap-2 min-w-0 text-xs font-body leading-relaxed"
                             style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
-                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
+                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 aspect-square rounded-[3px] border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
                               style={{ background: "rgba(245,158,11,0.08)", borderColor: "rgba(245,158,11,0.45)", color: "#fcd34d" }}>
                             </span>
                             <span className="min-w-0">{contentRenderer(normalizeStatementText(p))}</span>
@@ -809,7 +809,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
             )}
 
             <div className="space-y-4">
-              {latihanDasar.map((soal, qi) => {
+              {latihanDasar.map((soal) => {
                 const type = soal.type ?? "pg";
                 const selected = selectedAnswers[soal.no];
                 const selectedPGK = pgkAnswers[soal.no] ?? [];
@@ -844,6 +844,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                   ?? (typeof gambarMap?.[soal.no] === "string"
                     ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, imageScale)
                     : gambarMap?.[soal.no]);
+                const hasInlineVisual = soal.soal.split('\n').some((line) =>
+                  line.trim() === "[DIAGRAM]" || /^\[IMAGE:[^|]+(?:\|\w+)?\]$/.test(line.trim())
+                );
                 let diagramInserted = false;
 
                 return (
@@ -871,7 +874,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           border: "1px solid rgba(167,139,250,0.3)",
                           color: "#a5b4fc",
                         }}>
-                        {qi + 1}
+                        {soal.no}
                       </span>
                       <div className="flex-1 min-w-0">
                         {/* Type badge */}
@@ -899,7 +902,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             if (line.trim() === "[DIAGRAM]" && diagram) {
                               diagramInserted = true;
                               return (
-                                <div key={lineIdx} className="my-2">
+                                <div key={lineIdx} className="my-2 min-w-0 max-w-full overflow-x-auto">
                                   {diagram}
                                 </div>
                               );
@@ -908,7 +911,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               <Fragment key={lineIdx}>
                                 {lineIdx > 0 && <br />}
                                 {contentRenderer(line)}
-                                {!diagramInserted && diagram && /berikut/i.test(line) && (
+                                {!hasInlineVisual && !diagramInserted && diagram && /berikut/i.test(line) && (
                                   (() => {
                                     diagramInserted = true;
                                     return <div className="my-2 min-w-0 max-w-full overflow-x-auto">{diagram}</div>;
@@ -941,7 +944,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               cursor: soal.jawabanPGK && !isRevealed ? "pointer" : "default",
                             }}
                           >
-                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
+                            <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 aspect-square rounded-[3px] border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
                               style={{
                                 background: isSelectedPGK
                                   ? isRevealed
