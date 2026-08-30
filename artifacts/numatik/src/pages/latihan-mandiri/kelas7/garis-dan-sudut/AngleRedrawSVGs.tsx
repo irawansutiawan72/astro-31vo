@@ -145,20 +145,20 @@ function Q1b({ colors }: { colors: DiagramColors }) {
       <Line x1={252} y1={430} x2={320} y2={100} colors={colors} />
       <Point cx={252} cy={430} colors={colors} />
       <path
-        d="M217 369 A70 70 0 0 1 265 361"
+        d="M230 391 A45 45 0 0 1 260 389"
         fill="none"
         stroke={colors.arc}
         strokeWidth="3"
         strokeLinecap="round"
       />
       <path
-        d="M271 331 A100 100 0 0 1 333 484"
+        d="M265 363 A78 78 0 0 1 318 472"
         fill="none"
         stroke={colors.arc}
         strokeWidth="3"
         strokeLinecap="round"
       />
-      <Text x={241} y={342} colors={colors} size={26} italic>
+      <Text x={238} y={378} colors={colors} size={26} italic>
         y
       </Text>
       <Text x={374} y={366} colors={colors} size={23}>
@@ -175,7 +175,7 @@ function Q1c({ colors }: { colors: DiagramColors }) {
       <Line x1={58} y1={455} x2={475} y2={45} colors={colors} />
       <Point cx={258} cy={250} colors={colors} />
       <path
-        d="M219 215 A52 52 0 0 0 215 280"
+        d="M219 215 A52 52 0 0 0 222 287"
         fill="none"
         stroke={colors.arc}
         strokeWidth="3"
@@ -221,13 +221,13 @@ function Q1d({ colors }: { colors: DiagramColors }) {
         stroke={colors.arc}
         strokeWidth="3"
       />
-      <Text x={158} y={222} colors={colors} size={24} italic>
+      <Text x={154} y={230} colors={colors} size={24} italic>
         a
       </Text>
-      <Text x={270} y={205} colors={colors} size={21}>
+      <Text x={292} y={198} colors={colors} size={20}>
         50°
       </Text>
-      <Text x={305} y={256} colors={colors} size={21}>
+      <Text x={320} y={256} colors={colors} size={20}>
         20°
       </Text>
     </SvgFrame>
@@ -267,10 +267,10 @@ function Q1e({ colors }: { colors: DiagramColors }) {
 function Q1f({ colors }: { colors: DiagramColors }) {
   return (
     <SvgFrame viewBox="0 0 600 430" label="Gambar ulang soal 1 bagian f: sudut c dan 80 derajat" colors={colors}>
-      <Line x1={22} y1={35} x2={558} y2={410} colors={colors} />
-      <Line x1={52} y1={405} x2={564} y2={15} colors={colors} />
+      <Line x1={22} y1={35} x2={510} y2={375} colors={colors} />
+      <Line x1={52} y1={405} x2={515} y2={55} colors={colors} />
       <Point cx={300} cy={220} colors={colors} />
-      <RightAngle d="M270 198 L249 220 L270 244 L293 220 Z" colors={colors} />
+      <RightAngle d="M275 203 L250 220 L275 237" colors={colors} />
       <path
         d="M236 176 A78 78 0 0 0 238 267"
         fill="none"
