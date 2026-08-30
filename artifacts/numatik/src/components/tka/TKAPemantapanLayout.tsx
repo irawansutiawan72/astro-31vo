@@ -185,7 +185,6 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
-  const isWhite = theme === "white";
   const [activeTab, setActiveTab] = useState<"materi" | "contoh" | "dasar">("materi");
   /* PG & PGK: stores selected letter (A/B/C/D) per soal.no */
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
@@ -312,40 +311,40 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
   return (
     <div className="relative min-h-screen flex flex-col items-center overflow-hidden tka-pemantapan"
-      style={isWhite ? { background: "var(--bg-primary)" } : { background: "linear-gradient(160deg, #0f0c29 0%, #141428 40%, #1a0a2e 70%, #0d1117 100%)" }}>
+      style={isLightTheme ? { background: "var(--bg-primary)" } : { background: "linear-gradient(160deg, #0f0c29 0%, #141428 40%, #1a0a2e 70%, #0d1117 100%)" }}>
       <Starfield />
       <PageNavigation />
 
-      <div className="relative z-10 max-w-3xl w-full px-4 pt-8 pb-14">
+      <div className="tka-pemantapan-content relative z-10 max-w-3xl w-full px-4 pt-8 pb-14">
 
         {/* ── Header: shared Bilangan Bulat design ── */}
         <div className="relative mb-6">
           {theme === "dark" && <div className="absolute inset-0 rounded-2xl blur-2xl opacity-30" style={{ background: "radial-gradient(ellipse at 50% 0%, #6366f1 0%, transparent 70%)" }} />}
-          <div className="relative rounded-2xl overflow-hidden border" style={{ background: isWhite ? "linear-gradient(to right, #2196f3, #00bcd4)" : "linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.12) 50%, rgba(15,12,41,0.9) 100%)", borderColor: isWhite ? "rgba(33,150,243,0.4)" : "rgba(99,102,241,0.3)" }}>
+          <div className="tka-pemantapan-header relative rounded-2xl overflow-hidden border" style={{ background: isLightTheme ? "linear-gradient(to right, #2196f3, #00bcd4)" : "linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.12) 50%, rgba(15,12,41,0.9) 100%)", borderColor: isLightTheme ? "rgba(33,150,243,0.4)" : "rgba(99,102,241,0.3)" }}>
             {theme === "dark" && <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(167,139,250,0.6), transparent)" }} />}
             <div className="px-6 py-6 flex flex-col items-center text-center">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: isWhite ? "rgba(255,255,255,0.2)" : "linear-gradient(135deg, rgba(99,102,241,0.4), rgba(139,92,246,0.2))", border: isWhite ? "1px solid rgba(255,255,255,0.4)" : "1px solid rgba(167,139,250,0.35)" }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: isLightTheme ? "rgba(255,255,255,0.2)" : "linear-gradient(135deg, rgba(99,102,241,0.4), rgba(139,92,246,0.2))", border: isLightTheme ? "1px solid rgba(255,255,255,0.4)" : "1px solid rgba(167,139,250,0.35)" }}>
                   <BookMarked className="w-[18px] h-[18px] text-white" />
                 </div>
-                <span className="font-body text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: isWhite ? "#fff" : "rgba(167,139,250,0.7)" }}>MODUL PEMANTAPAN TKA MATEMATIKA</span>
+                <span className="font-body text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: isLightTheme ? "#fff" : "rgba(167,139,250,0.7)" }}>MODUL PEMANTAPAN TKA MATEMATIKA</span>
               </div>
-              <h1 className="font-display text-xl md:text-2xl font-bold mb-1 leading-tight" style={{ color: "#ffffff", textShadow: isWhite ? "0 1px 4px rgba(0,0,0,0.3)" : "0 0 40px rgba(167,139,250,0.5)" }}>{title}</h1>
-              <p className="font-body text-[11px] mb-4" style={{ color: isWhite ? "rgba(255,255,255,0.95)" : "rgba(167,139,250,0.5)" }}>Matematika Kelas 7 SMP/MTs · TA 2026–2027</p>
+              <h1 className="font-display text-xl md:text-2xl font-bold mb-1 leading-tight" style={{ color: "#ffffff", textShadow: isLightTheme ? "0 1px 4px rgba(0,0,0,0.3)" : "0 0 40px rgba(167,139,250,0.5)" }}>{title}</h1>
+              <p className="font-body text-[11px] mb-4" style={{ color: isLightTheme ? "rgba(255,255,255,0.95)" : "rgba(167,139,250,0.5)" }}>Matematika Kelas 7 SMP/MTs · TA 2026–2027</p>
               <div className="flex gap-2 flex-wrap justify-center mb-3">
                 {[{ label: "📘 Ringkasan Materi" }, ...(contohSoal?.length ? [{ label: "📚 Contoh Soal" }] : []), { label: "✏️ Latihan Soal" }].map((item) => <span key={item.label} className="text-[10px] font-body px-3 py-1.5 rounded-lg border font-bold" style={{ background: "rgba(255,255,255,0.18)", borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>{item.label}</span>)}
               </div>
               <div className="flex gap-2 flex-wrap justify-center">{Object.values(TYPE_BADGE).map(b => <span key={b.label} className="text-[9px] font-body px-2.5 py-0.5 rounded-full border font-semibold" style={{ background: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>{b.label}</span>)}</div>
             </div>
-            <div className="px-6 py-3 flex items-center justify-center gap-2 border-t" style={{ borderColor: isWhite ? "rgba(255,255,255,0.35)" : "rgba(167,139,250,0.2)", background: isWhite ? "rgba(0,0,0,0.12)" : "rgba(99,102,241,0.08)" }}>
-              <PenLine className="w-3.5 h-3.5 shrink-0" style={{ color: isWhite ? "rgba(255,255,255,0.85)" : "#a5b4fc" }} /><span className="font-body text-sm font-semibold tracking-wide" style={{ color: isWhite ? "#fff" : "#c4b5fd" }}>oleh Irawan Sutiawan, M.Pd</span>
+            <div className="px-6 py-3 flex items-center justify-center gap-2 border-t" style={{ borderColor: isLightTheme ? "rgba(255,255,255,0.35)" : "rgba(167,139,250,0.2)", background: isLightTheme ? "rgba(0,0,0,0.12)" : "rgba(99,102,241,0.08)" }}>
+              <PenLine className="w-3.5 h-3.5 shrink-0" style={{ color: isLightTheme ? "rgba(255,255,255,0.85)" : "#a5b4fc" }} /><span className="font-body text-sm font-semibold tracking-wide" style={{ color: isLightTheme ? "#fff" : "#c4b5fd" }}>oleh Irawan Sutiawan, M.Pd</span>
             </div>
           </div>
         </div>
 
         {/* ── Tab Switcher ── */}
         <div className="flex gap-2 mb-6 p-1 rounded-xl"
-          style={isWhite ? { background: "var(--bg-secondary)", border: "1px solid var(--border)" } : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+          style={isLightTheme ? { background: "var(--bg-secondary)", border: "1px solid var(--border)" } : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
           {([
             { key: "materi" as const, label: "📘 Ringkasan Materi" },
             ...(contohSoal && contohSoal.length > 0 ? [{ key: "contoh" as const, label: "📚 Contoh Soal" }] : []),
@@ -355,7 +354,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
               key={tab.key}
               onClick={() => { playPopSound(); setActiveTab(tab.key); }}
               className="flex-1 font-display text-xs py-2.5 px-3 rounded-lg cursor-pointer transition-all duration-200 font-bold"
-              style={activeTab === tab.key ? (isWhite ? {
+              style={activeTab === tab.key ? (isLightTheme ? {
                 background: "linear-gradient(to right, #2196f3, #00bcd4)",
                 color: "#ffffff",
                 boxShadow: "0 2px 12px rgba(33,150,243,0.3)",
@@ -384,7 +383,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
               const headingText = section.heading.replace(/^[A-Z]\.\s*/, '');
               return (
                 <div key={idx} className={`relative rounded-2xl overflow-hidden border ${color.border}`}
-                  style={isWhite ? {
+                  style={isLightTheme ? {
                     background: "#f0f4ff",
                     border: `1px solid rgba(33,150,243,0.25)`,
                     boxShadow: "0 4px 12px rgba(33,150,243,0.08)",
@@ -511,12 +510,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
           <div className="animate-slide-up">
             {/* Info banner */}
             <div className="mb-4 px-4 py-3 rounded-xl flex items-center gap-2.5"
-              style={isWhite
+              style={isLightTheme
                 ? { background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.25)" }
                 : { background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.22)" }}>
               <Lightbulb className="w-4 h-4 shrink-0 text-emerald-400" />
-              <p className="font-body text-xs leading-relaxed" style={{ color: isWhite ? "#065f46" : "rgba(255,255,255,0.6)" }}>
-                Soal-soal berikut disertai <span className="font-semibold" style={{ color: isWhite ? "#059669" : "#6ee7b7" }}>pembahasan lengkap</span> yang selalu ditampilkan.
+              <p className="font-body text-xs leading-relaxed" style={{ color: isLightTheme ? "#065f46" : "rgba(255,255,255,0.6)" }}>
+                Soal-soal berikut disertai <span className="font-semibold" style={{ color: isLightTheme ? "#059669" : "#6ee7b7" }}>pembahasan lengkap</span> yang selalu ditampilkan.
               </p>
             </div>
 
@@ -535,7 +534,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
                 return (
                   <div key={soal.no} className="relative rounded-2xl overflow-hidden"
-                    style={isWhite ? {
+                    style={isLightTheme ? {
                       background: "var(--bg-card)",
                       border: "1px solid rgba(0,0,0,0.08)",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
@@ -560,7 +559,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           style={{ background: typeBadge.bg, border: `1px solid ${typeBadge.border}` }}>
                           {typeBadge.label}
                         </span>
-                        <div className="font-body text-sm leading-relaxed" style={{ color: isWhite ? "var(--text-primary)" : "rgba(255,255,255,0.9)" }}>
+                        <div className="font-body text-sm leading-relaxed" style={{ color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.9)" }}>
                           {soal.soal.split('\n').map((line, lineIdx) => (
                             <span key={lineIdx}>
                               {lineIdx > 0 && <br />}
@@ -585,7 +584,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       <div className="px-5 pb-2 space-y-1.5 ml-11">
                         {soal.pernyataan.map((p, pi) => (
                           <div key={pi} className="flex items-start gap-2 text-xs font-body leading-relaxed"
-                            style={{ color: isWhite ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
+                            style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
                             <span className="flex-shrink-0 w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
                               style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)", color: "#fcd34d" }}>
                               {pi + 1}
@@ -609,15 +608,15 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
                           let optStyle: React.CSSProperties;
                           if (isThisCorrect) {
-                            optStyle = isWhite
+                            optStyle = isLightTheme
                               ? { background: "#dcfce7", border: "1px solid rgba(34,197,94,0.5)", color: "#15803d" }
                               : { background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.5)", color: "#86efac" };
                           } else if (isSelected && !isThisCorrect) {
-                            optStyle = isWhite
+                            optStyle = isLightTheme
                               ? { background: "#fef2f2", border: "1px solid rgba(239,68,68,0.4)", color: "#dc2626" }
                               : { background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.4)", color: "#fca5a5" };
                           } else {
-                            optStyle = isWhite
+                            optStyle = isLightTheme
                               ? { background: "var(--bg-secondary)", border: "1px solid var(--border)", color: "var(--text-secondary)" }
                               : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.55)" };
                           }
@@ -674,7 +673,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                     {pi + 1}
                                   </span>
                                   <span className="font-body text-xs leading-snug flex-1 min-w-0"
-                                    style={{ color: isWhite ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
+                                    style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.8)" }}>
                                     {contentRenderer(p)}
                                   </span>
                                 </div>
@@ -845,7 +844,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
                 return (
                   <div key={soal.no} className="relative rounded-2xl overflow-hidden"
-                    style={isWhite ? {
+                    style={isLightTheme ? {
                       background: "var(--bg-card)",
                       border: isRevealed
                         ? isCorrect ? "1px solid rgba(34,197,94,0.45)" : "1px solid rgba(239,68,68,0.45)"
@@ -975,7 +974,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           const isSelected = selected === letter;
                           const isThisCorrect = letter === soal.jawaban;
 
-                          let optStyle: React.CSSProperties = isWhite ? {
+                          let optStyle: React.CSSProperties = isLightTheme ? {
                             background: "var(--bg-secondary)",
                             border: "1px solid var(--border)",
                             color: "var(--text-primary)",
@@ -986,20 +985,20 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           };
                           if (isRevealed) {
                             if (isThisCorrect) {
-                              optStyle = isWhite ? {
+                              optStyle = isLightTheme ? {
                                 background: "#dcfce7", border: "1px solid rgba(34,197,94,0.5)", color: "#15803d",
                               } : {
                                 background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.5)", color: "#86efac",
                               };
                             } else if (isSelected && !isThisCorrect) {
-                              optStyle = isWhite ? {
+                              optStyle = isLightTheme ? {
                                 background: "#fef2f2", border: "1px solid rgba(239,68,68,0.4)", color: "#dc2626",
                               } : {
                                 background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.4)", color: "#fca5a5",
                               };
                             }
                           } else if (isSelected) {
-                            optStyle = isWhite ? {
+                            optStyle = isLightTheme ? {
                               background: "#eff6ff", border: "1px solid rgba(33,150,243,0.5)", color: "#1d4ed8",
                             } : {
                               background: "rgba(99,102,241,0.2)", border: "1px solid rgba(99,102,241,0.6)", color: "#c7d2fe",

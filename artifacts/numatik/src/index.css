@@ -4241,6 +4241,88 @@
   background: rgba(0,0,0,0.06) !important;
 }
 
+/* ── 3b. TKAPemantapanLayout: bright themes ──
+   The shared layout now follows the same light-content treatment as
+   Bilangan Bulat for Salju Cerah, Hutan Hijau, and Langit Cerah.
+   Keep these rules scoped so dark and ocean themes retain their original UI. */
+[data-theme="light"] .tka-pemantapan .text-white\/90,
+[data-theme="forest"] .tka-pemantapan .text-white\/90,
+[data-theme="sunset"] .tka-pemantapan .text-white\/90 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .tka-pemantapan .text-white\/80,
+[data-theme="forest"] .tka-pemantapan .text-white\/80,
+[data-theme="sunset"] .tka-pemantapan .text-white\/80 {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .tka-pemantapan .text-white\/60,
+[data-theme="forest"] .tka-pemantapan .text-white\/60,
+[data-theme="sunset"] .tka-pemantapan .text-white\/60,
+[data-theme="light"] .tka-pemantapan .text-white\/50,
+[data-theme="forest"] .tka-pemantapan .text-white\/50,
+[data-theme="sunset"] .tka-pemantapan .text-white\/50,
+[data-theme="light"] .tka-pemantapan .text-white\/40,
+[data-theme="forest"] .tka-pemantapan .text-white\/40,
+[data-theme="sunset"] .tka-pemantapan .text-white\/40 {
+  color: var(--text-muted-foreground) !important;
+}
+
+[data-theme="light"] .tka-pemantapan .text-white,
+[data-theme="forest"] .tka-pemantapan .text-white,
+[data-theme="sunset"] .tka-pemantapan .text-white {
+  color: var(--text-primary) !important;
+}
+
+/* Header remains a colored ribbon, so its white icon/text stays white. */
+[data-theme="light"] .tka-pemantapan .tka-pemantapan-header .text-white,
+[data-theme="forest"] .tka-pemantapan .tka-pemantapan-header .text-white,
+[data-theme="sunset"] .tka-pemantapan .tka-pemantapan-header .text-white {
+  color: #ffffff !important;
+}
+
+/* Dark utility surfaces used by a few richer material sections. */
+[data-theme="light"] .tka-pemantapan .bg-slate-950,
+[data-theme="forest"] .tka-pemantapan .bg-slate-950,
+[data-theme="sunset"] .tka-pemantapan .bg-slate-950,
+[data-theme="light"] .tka-pemantapan .bg-slate-900,
+[data-theme="forest"] .tka-pemantapan .bg-slate-900,
+[data-theme="sunset"] .tka-pemantapan .bg-slate-900,
+[data-theme="light"] .tka-pemantapan .bg-slate-800,
+[data-theme="forest"] .tka-pemantapan .bg-slate-800,
+[data-theme="sunset"] .tka-pemantapan .bg-slate-800 {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .tka-pemantapan .border-white\/5,
+[data-theme="forest"] .tka-pemantapan .border-white\/5,
+[data-theme="sunset"] .tka-pemantapan .border-white\/5,
+[data-theme="light"] .tka-pemantapan .border-white\/8,
+[data-theme="forest"] .tka-pemantapan .border-white\/8,
+[data-theme="sunset"] .tka-pemantapan .border-white\/8,
+[data-theme="light"] .tka-pemantapan .border-white\/10,
+[data-theme="forest"] .tka-pemantapan .border-white\/10,
+[data-theme="sunset"] .tka-pemantapan .border-white\/10 {
+  border-color: var(--border) !important;
+}
+
+/* Inline dark panels in custom material JSX cannot be handled by Tailwind
+   theme utilities, so replace only their dark backgrounds inside this page. */
+[data-theme="light"] .tka-pemantapan [style*="rgba(15,12,41"],
+[data-theme="forest"] .tka-pemantapan [style*="rgba(15,12,41"],
+[data-theme="sunset"] .tka-pemantapan [style*="rgba(15,12,41"],
+[data-theme="light"] .tka-pemantapan [style*="rgba(20,20,40"],
+[data-theme="forest"] .tka-pemantapan [style*="rgba(20,20,40"],
+[data-theme="sunset"] .tka-pemantapan [style*="rgba(20,20,40"],
+[data-theme="light"] .tka-pemantapan [style*="rgba(15,10,30"] ,
+[data-theme="forest"] .tka-pemantapan [style*="rgba(15,10,30"] ,
+[data-theme="sunset"] .tka-pemantapan [style*="rgba(15,10,30"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
 /* ── 4. BiografiPage: orange glow behind "Tergerak" text → hide in white ── */
 [data-theme="white"] .bg-orange-500\/20 {
   background: transparent !important;
