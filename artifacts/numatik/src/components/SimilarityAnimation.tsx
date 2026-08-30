@@ -10,8 +10,13 @@ const REF_A = { x: 82, y: 128 };
 const REF_B = { x: 127, y: 128 };
 const REF_C = { x: 82, y: 68 };
 
-const TRF_CX = 305;
-const TRF_CY = 140;
+const SVG_WIDTH = 520;
+const SVG_HEIGHT = 280;
+
+// Area khusus untuk bangun hasil. Posisi bangun dihitung ulang setiap kali
+// transformasi berubah supaya seluruh segitiga tetap berada di dalam bingkai.
+const RESULT_FRAME = { x: 220, y: 30, width: 280, height: 235 };
+const TRANSFORM_PADDING = 10;
 
 const BASE_AB = 45;
 const BASE_AC = 60;
@@ -156,6 +161,46 @@ function RightAngleSquare({ x, y, size = 8, stroke }: { x: number; y: number; si
   );
 }
 
+function getTransformedPlacement(
+  scale: number,
+  rotation: number,
+  flipH: boolean,
+  flipV: boolean
+) {
+  const scaleX = (flipH ? -1 : 1) * scale;
+  const scaleY = (flipV ? -1 : 1) * scale;
+  const radians = (rotation * Math.PI) / 180;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+
+  // Menggunakan semua titik sudut segitiga untuk mencari bounding box setelah
+  // scale + mirror + rotation. Padding memberi ruang untuk stroke dan titik sudut.
+  const vertices = [
+    { x: 0, y: 0 },
+    { x: BASE_AB, y: 0 },
+    { x: 0, y: -BASE_AC },
+  ].map(({ x, y }) => {
+    const scaledX = x * scaleX;
+    const scaledY = y * scaleY;
+    return {
+      x: scaledX * cos - scaledY * sin,
+      y: scaledX * sin + scaledY * cos,
+    };
+  });
+
+  const minX = Math.min(...vertices.map(point => point.x)) - TRANSFORM_PADDING;
+  const maxX = Math.max(...vertices.map(point => point.x)) + TRANSFORM_PADDING;
+  const minY = Math.min(...vertices.map(point => point.y)) - TRANSFORM_PADDING;
+  const maxY = Math.max(...vertices.map(point => point.y)) + TRANSFORM_PADDING;
+  const width = maxX - minX;
+  const height = maxY - minY;
+
+  return {
+    x: RESULT_FRAME.x + (RESULT_FRAME.width - width) / 2 - minX,
+    y: RESULT_FRAME.y + (RESULT_FRAME.height - height) / 2 - minY,
+  };
+}
+
 interface Props {
   lang?: Language;
 }
@@ -178,7 +223,8 @@ export default function SimilarityAnimation({ lang = "id" }: Props) {
   const sx = flipH ? -1 : 1;
   const sy = flipV ? -1 : 1;
 
-  const cssTransform = `translate(${TRF_CX}px,${TRF_CY}px) rotate(${rotation}deg) scale(${sx * scale},${sy * scale})`;
+  const placement = getTransformedPlacement(scale, rotation, flipH, flipV);
+  const cssTransform = `translate(${placement.x}px,${placement.y}px) rotate(${rotation}deg) scale(${sx * scale},${sy * scale})`;
 
   const sideAB = BASE_AB * scale;
   const sideAC = BASE_AC * scale;
@@ -226,7 +272,7 @@ export default function SimilarityAnimation({ lang = "id" }: Props) {
 
         {/* SVG Canvas */}
         <div className="bg-slate-800/60 rounded-xl overflow-hidden border border-slate-700/50">
-          <svg viewBox="0 0 410 195" className="w-full">
+          <svg viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`} className="w-full">
             <defs>
               <pattern id="simgrid" width="20" height="20" patternUnits="userSpaceOnUse">
                 <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" strokeWidth="0.8" />
@@ -235,7 +281,7 @@ export default function SimilarityAnimation({ lang = "id" }: Props) {
                 <path d="M0,0 L6,3 L0,6 Z" fill="#facc15" />
               </marker>
             </defs>
-            <rect width="410" height="235" fill="url(#simgrid)" />
+            <rect width={SVG_WIDTH} height={SVG_HEIGHT} fill="url(#simgrid)" />
 
             {/* ── REFERENCE TRIANGLE ── */}
             <text x="103" y="18" textAnchor="middle" fontSize="9.5" fill="#64748b" fontFamily="sans-serif" letterSpacing="0.5">
@@ -277,7 +323,18 @@ export default function SimilarityAnimation({ lang = "id" }: Props) {
             </text>
 
             {/* ── TRANSFORMED TRIANGLE ── */}
-            <text x="305" y="18" textAnchor="middle" fontSize="9.5" fill="#60a5fa" fontFamily="sans-serif" letterSpacing="0.5">
+            <rect
+              x={RESULT_FRAME.x}
+              y={RESULT_FRAME.y}
+              width={RESULT_FRAME.width}
+              height={RESULT_FRAME.height}
+              rx="10"
+              fill="rgba(59,130,246,0.04)"
+              stroke="rgba(96,165,250,0.22)"
+              strokeWidth="1"
+              strokeDasharray="4 4"
+            />
+            <text x={RESULT_FRAME.x + RESULT_FRAME.width / 2} y="18" textAnchor="middle" fontSize="9.5" fill="#60a5fa" fontFamily="sans-serif" letterSpacing="0.5">
               {t.svgResult(scale.toFixed(1))}
             </text>
 

@@ -9,6 +9,7 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - First-time setup: `pnpm install` at workspace root (not `npm install` in `.migration-backup/`).
 - `.migration-backup/` is gitignored but its files are **already tracked** in git (committed before gitignore rule). Do not treat it as the active source; it is dead code.
 - `listArtifacts()` returns empty after GitHub import — artifact registration is not preserved. Workflow is manually configured via `configureWorkflow` to match `artifact.toml` intent.
+- Imported projects may therefore be unreachable by artifact-based screenshot/presentation tools even while the managed frontend workflow runs; use build, logs, and direct route checks as fallback verification.
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.
 
 ## Languages
