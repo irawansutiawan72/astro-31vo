@@ -36,27 +36,39 @@ const DiagramSebangun = () => (
 );
 
 const DiagramKongruen = () => (
-  <svg viewBox="0 0 340 160" className="w-full max-w-sm mx-auto">
-    {/* Triangle 1 */}
-    <polygon points="30,130 110,130 70,50" fill="#a855f7" fillOpacity="0.3" stroke="#c084fc" strokeWidth="2" />
-    <text x="70" y="145" textAnchor="middle" fontSize="9" fill="#e9d5ff">△ABC</text>
-    <text x="70" y="158" textAnchor="middle" fontSize="8" fill="#64748b">sisi = 5, 6, 7 cm</text>
-    {/* Equals */}
-    <text x="135" y="95" fontSize="20" fill="#facc15">≅</text>
-    {/* Triangle 2 */}
-    <polygon points="165,130 245,130 205,50" fill="#a855f7" fillOpacity="0.3" stroke="#c084fc" strokeWidth="2" />
-    <text x="205" y="145" textAnchor="middle" fontSize="9" fill="#e9d5ff">△DEF</text>
-    <text x="205" y="158" textAnchor="middle" fontSize="8" fill="#64748b">sisi = 5, 6, 7 cm</text>
-    {/* Labels */}
-    <text x="170" y="20" textAnchor="middle" fontSize="9" fill="#facc15" fontWeight="bold">KONGRUEN (≅)</text>
-    <text x="170" y="35" textAnchor="middle" fontSize="8" fill="#fde68a">bentuk SAMA, ukuran SAMA</text>
-    {/* tick marks */}
-    <line x1="70" y1="130" x2="70" y2="50" stroke="#f97316" strokeWidth="0.5" strokeDasharray="3,2" />
-    <line x1="205" y1="130" x2="205" y2="50" stroke="#f97316" strokeWidth="0.5" strokeDasharray="3,2" />
-    <line x1="30" y1="130" x2="70" y2="130" stroke="#22c55e" strokeWidth="2.5" />
-    <line x1="165" y1="130" x2="205" y2="130" stroke="#22c55e" strokeWidth="2.5" />
-    <text x="50" y="127" fontSize="8" fill="#22c55e">|</text>
-    <text x="185" y="127" fontSize="8" fill="#22c55e">|</text>
+  <svg viewBox="0 0 420 300" className="w-full max-w-lg mx-auto" role="img" aria-label="Contoh segitiga dan segiempat kongruen">
+    <defs>
+      <pattern id="kongruen-hatch-purple" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+        <rect width="10" height="10" fill="#7c3aed" fillOpacity="0.18" />
+        <path d="M0 0V10" stroke="#c4b5fd" strokeWidth="2" strokeOpacity="0.7" />
+      </pattern>
+      <pattern id="kongruen-hatch-teal" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+        <rect width="10" height="10" fill="#0f766e" fillOpacity="0.2" />
+        <path d="M0 0V10" stroke="#5eead4" strokeWidth="2" strokeOpacity="0.7" />
+      </pattern>
+    </defs>
+
+    <text x="210" y="16" textAnchor="middle" fontSize="10" fill="#facc15" fontWeight="bold">CONTOH SEGITIGA KONGRUEN</text>
+    {/* Segitiga kedua diputar 180° agar tidak tampil sebagai salinan berdampingan. */}
+    <polygon points="34,110 112,110 76,38" fill="url(#kongruen-hatch-purple)" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round" />
+    <g transform="translate(205 0) rotate(180 76 74)">
+      <polygon points="34,110 112,110 76,38" fill="url(#kongruen-hatch-purple)" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round" />
+    </g>
+    <text x="76" y="128" textAnchor="middle" fontSize="9" fill="#e9d5ff">△ABC</text>
+    <text x="281" y="128" textAnchor="middle" fontSize="9" fill="#e9d5ff">△PQR</text>
+    <text x="190" y="82" textAnchor="middle" fontSize="20" fill="#facc15">≅</text>
+    <text x="210" y="145" textAnchor="middle" fontSize="8" fill="#fde68a">bentuk dan ukuran sama</text>
+
+    <text x="210" y="169" textAnchor="middle" fontSize="10" fill="#2dd4bf" fontWeight="bold">CONTOH TAMBAHAN: SEGIEMPAT KONGRUEN</text>
+    {/* Sepasang segiempat orisinal; bangun kanan adalah cerminan horizontal bangun kiri. */}
+    <polygon points="28,252 28,194 86,158 144,252" fill="url(#kongruen-hatch-teal)" stroke="#2dd4bf" strokeWidth="2" strokeLinejoin="round" />
+    <g transform="translate(392 0) scale(-1 1)">
+      <polygon points="28,252 28,194 86,158 144,252" fill="url(#kongruen-hatch-teal)" stroke="#5eead4" strokeWidth="2" strokeLinejoin="round" />
+    </g>
+    <text x="86" y="270" textAnchor="middle" fontSize="9" fill="#99f6e4">ABCD</text>
+    <text x="306" y="270" textAnchor="middle" fontSize="9" fill="#99f6e4">EFGH</text>
+    <text x="196" y="220" textAnchor="middle" fontSize="20" fill="#facc15">≅</text>
+    <text x="210" y="288" textAnchor="middle" fontSize="8" fill="#94a3b8">sisi-sisi dan sudut-sudut bersesuaian sama</text>
   </svg>
 );
 
