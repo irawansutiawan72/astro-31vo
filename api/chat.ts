@@ -153,7 +153,7 @@ export default async function handler(req: any, res: any) {
         Authorization: `Bearer ${groqApiKey}`,
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'openai/gpt-oss-120b',
         messages: groqMessages,
         max_tokens: 2048,
         temperature: 0.7,
