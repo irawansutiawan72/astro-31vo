@@ -8,7 +8,7 @@ import {
 
 const latihanDasar: LatihanSoal[] = [
   {
-    "no": 2,
+    "no": 1,
     "soal": "Perhatikan tabel berikut!\nPernyataan yang benar dari tabel di atas adalah ...",
     "options": [
       "A. Modus dari data 5",
@@ -32,7 +32,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Hitung semua ukuran statistik: mean, modus, median, dan jangkauan. Lalu verifikasi pernyataan mana yang benar.\n\nTotal = 30 data\nMean = $\\frac{6+20+25+18+28+32+36+30}{30} = \\frac{195}{30} = 6{,}5$\nKumulatif: 2, 7, 12, 15, 19, ... → data ke-15 = nilai 6, ke-16 = nilai 7\nMedian = $\\frac{6+7}{2} = 6{,}5$ ✓\n\nJika soal meminta pernyataan yang benar/salah, hitung semua ukuran lalu bandingkan satu per satu.\n\nMedian data adalah 6,5 (sama dengan mean). Pernyataan B adalah yang benar."
   },
   {
-    "no": 3,
+    "no": 2,
     "type": "pgk",
     "soal": "Diagram batang berikut menunjukkan distribusi nilai kuis IPA siswa kelas VIII:\nBerdasarkan diagram batang diatas, pilihlah semua pernyataan yang benar. pernyataan yang benar (Jawaban benar lebih dari satu):",
     "pernyataan": [
@@ -49,7 +49,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir:\nJumlah seluruh siswa di kelas tersebut adalah 22 orang (Benar).\nNilai 8 merupakan modus (Benar).\nJumlah siswa yang memperoleh nilai 6 dan 9 adalah 8 orang (Benar).\n\nKonsep dan Trik: Modus = nilai dengan batang tertinggi (frekuensi terbesar). $\\text{Total Siswa} = \\sum \\text{Frekuensi}$.\n\nStep by Step Penyelesaian:\n1. Total siswa: $1 + 4 + 5 + 6 + 4 + 2 = 22\\text{ orang}$ → Benar.\n2. Batang tertinggi ada pada nilai 8 (frekuensi = 6) → Benar.\n3. Selisih siswa nilai 10 (2 orang) dan nilai 5 (1 orang) $= 2 - 1 = 1\\text{ orang}$ → Salah.\n4. Siswa bernilai 6 (4 orang) + siswa bernilai 9 (4 orang) $= 8\\text{ orang}$ → Benar."
   },
   {
-    "no": 4,
+    "no": 3,
     "type": "pgk",
     "soal": "Dalam suatu pemeriksaan kesehatan, dicatat massa tubuh dari 11 siswa sebagai berikut: 42, 45, 50, 55, 50, 55, 60, 55, 40, 65, 55.\nBerdasarkan data di atas, pilihlah semua pernyataan yang benar.",
     "pernyataan": [
@@ -66,7 +66,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: Jangkauan data 25 kg (Benar); modus 55 kg (Benar); rata-rata 52 kg (Benar).\n\nKonsep & Trik: Urutkan data terlebih dahulu untuk menentukan median dan modus dengan cepat.\n\nStep by Step:\nData terurut: 40, 42, 45, 50, 50, 55, 55, 55, 55, 60, 65 (banyak data, $n = 11$).\nJangkauan: $\\text{Maks} - \\text{Min} = 65 - 40 = 25\\text{ kg}$.\nModus: nilai paling sering muncul adalah 55 (muncul 4 kali).\nMedian: data ke-$\\frac{11+1}{2} = 6$, yaitu 55.\nRata-rata: $\\frac{572}{11} = 52\\text{ kg}$."
   },
   {
-    "no": 5,
+    "no": 4,
     "type": "pgkbs",
     "soal": "Perhatikan diagram batang berikut.\nBerdasarkan diagram tersebut, tentukan kebenaran dari pernyataan berikut.",
     "pernyataan": [
@@ -82,7 +82,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: Pernyataan 1 Benar; Pernyataan 2 Benar; Pernyataan 3 Benar.\n\nStep by Step:\nTotal siswa = $2 + 3 + 8 + 5 + 6 + 1 = 25$ orang.\nModus: frekuensi terbanyak adalah 8 (nilai 70). Median: data ke-13 adalah nilai 70. Maka modus = median = 70.\nJangkauan: $100 - 50 = 50$.\nRata-rata: $\\frac{(50\\times2)+(60\\times3)+(70\\times8)+(80\\times5)+(90\\times6)+(100\\times1)}{25} = \\frac{1.875}{25} = 75$."
   },
   {
-    "no": 6,
+    "no": 5,
     "type": "pgkbs",
     "soal": "Perhatikan tabel distribusi frekuensi berikut.\n[DIAGRAM]\nTentukan status Benar / Salah untuk pernyataan berikut.",
     "pernyataan": [
@@ -98,7 +98,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: Semua pernyataan benar.\n\nStep by Step:\n1. Usia 3 tahun, kolom laki-laki → 96,1 cm (Benar).\n2. Usia 5 tahun → $110{,}0 - 109{,}4 = 0{,}6$ cm (Benar).\n3. Jangkauan perempuan → $109{,}4 - 74{,}0 = 35{,}4$ cm (Benar)."
   },
   {
-    "no": 8,
+    "no": 6,
     "soal": "Dalam sebuah kelas, nilai rata-rata siswa putra adalah 7,2, sedangkan rata-rata kelompok putri adalah 8,1. Jika nilai rata-rata kelas adalah 7,5, maka perbandingan banyak putra dan siswa putri adalah ...",
     "options": [
       "A. 2 : 1",
@@ -121,7 +121,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Gunakan rumus rata-rata gabungan: $\\bar{x}_{gab} = \\frac{n_1\\bar{x}_1 + n_2\\bar{x}_2}{n_1 + n_2}$. Buat persamaan dan cari perbandingan $n_1 : n_2$.\n\nMisal banyak putra = $x$, putri = $y$\n$\\frac{7{,}2x + 8{,}1y}{x+y} = 7{,}5$\n$7{,}2x + 8{,}1y = 7{,}5x + 7{,}5y$\n$0{,}6y = 0{,}3x \\Rightarrow \\frac{x}{y} = 2$\nRasio putra : putri = 2 : 1\n\nPada masalah rata-rata gabungan, jika rata-rata gabungan lebih dekat ke salah satu kelompok, kelompok itu lebih banyak.\n\nPerbandingan siswa putra dan putri = 2 : 1."
   },
   {
-    "no": 9,
+    "no": 7,
     "soal": "Rata-rata nilai remedial 20 siswa adalah 7, rata-rata nilai siswa laki-laki adalah 6 dan rata-rata nilai siswa perempuan adalah 8,5. Selisih banyak siswa laki-laki dan perempuan adalah ...",
     "options": [
       "A. 8",
@@ -145,7 +145,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Buat sistem persamaan: L + P = 20 dan persamaan rata-rata gabungan. Cari masing-masing, lalu hitung selisihnya.\n\nL + P = 20, rata-rata gabungan 7\n$6L + 8{,}5P = 20 \\times 7 = 140$\nSubstitusi $L = 20 - P$:\n$6(20-P) + 8{,}5P = 140$\n$2{,}5P = 20 \\Rightarrow P = 8$, $L = 12$\nSelisih = 12 − 8 = 4\n\nSelisih L − P = 4. Periksa: rata-rata gabungan mendekati 6 (rata-rata laki-laki) → laki-laki lebih banyak.\n\nSelisih banyak siswa laki-laki dan perempuan = 4 orang."
   },
   {
-    "no": 10,
+    "no": 8,
     "soal": "Suatu hari Ani menemukan sobekan kertas koran yang memuat data pengunjung perpustakaan berupa gambar diagram batang. Rata-rata pengunjung 41 orang selama lima hari. Data tersedia: Senin = 30, Selasa = 45, Rabu = ?, Kamis = 50, Jumat = 25. Tolong bantu Ani mencari banyak pengunjung pada hari Rabu ...",
     "options": [
       "A. 55 orang",
@@ -158,7 +158,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 11,
+    "no": 9,
     "soal": "Ada 25 murid perempuan dalam sebuah kelas. Rata-rata tinggi mereka adalah 130 cm. Pernyataan yang benar adalah ...",
     "options": [
       "A. Jika ada seorang murid perempuan dengan tinggi 132 cm, maka pasti ada seorang murid perempuan dengan tinggi 128 cm.",
@@ -179,7 +179,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Pernyataan tentang statistik: mean tidak harus sama dengan median. Periksa pernyataan B: jika ada 23 anak setinggi tepat 130 cm dan 1 anak 133 cm, tinggi anak ke-25 bisa dihitung dari total.\n\nTotal tinggi = 25 × 130 = 3250 cm\nJika 23 anak @ 130 cm, 1 anak @ 133 cm:\nTotal 24 anak = 23×130 + 133 = 3123 cm\nTinggi anak ke-25 = 3250 − 3123 = 127 cm ✓\nPernyataan B terbukti benar.\n\nUntuk membuktikan pernyataan tentang data statistik, cari contoh konkret yang memenuhi kondisi tersebut.\n\nPernyataan B adalah yang pasti benar: satu anak memiliki tinggi 127 cm jika kondisi lainnya terpenuhi."
   },
   {
-    "no": 12,
+    "no": 10,
     "soal": "Rata-rata usia dari 12 orang pekerja adalah 28 tahun. Ketika ada 1 pekerja baru bergabung, rata-rata usia kelompok tersebut berubah menjadi 29 tahun. Usia pekerja yang baru bergabung tersebut adalah ....",
     "options": [
       "A. 41 tahun",
@@ -192,7 +192,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 13,
+    "no": 11,
     "soal": "Dua kelompok tani, Kelompok A dan Kelompok B, mencatat hasil panen jagung. Rata-rata hasil panen Kelompok A adalah 6 ton, sedangkan Kelompok B adalah 9 ton. Jika 1 orang dari masing-masing kelompok saling bertukar tempat, rata-rata hasil panen kedua kelompok menjadi sama. Selisih hasil panen kedua orang yang bertukar tempat tersebut adalah ....",
     "options": [
       "A. 3,6 ton",
@@ -205,7 +205,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 14,
+    "no": 12,
     "soal": "Rata-rata nilai ujian siswa laki-laki di suatu kelas adalah 7,5 dan rata-rata nilai siswa perempuan adalah 8,0. Jika rata-rata gabungan seluruh siswa di kelas tersebut adalah 7,8, berapakah perbandingan banyaknya siswa laki-laki dan perempuan?",
     "options": [
       "A. $2 : 3$",
@@ -218,7 +218,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 15,
+    "no": 13,
     "soal": "Data hasil seleksi penerimaan karyawan disajikan dalam tabel distribusi frekuensi berikut.\n[DIAGRAM]\nPanitia menetapkan bahwa peserta yang dinyatakan lulus adalah mereka yang memiliki nilai lebih besar dari rata-rata. Jika rata-rata nilai tes adalah 70,2, jumlah peserta yang diterima adalah ....",
     "options": [
       "A. 15 orang",
@@ -231,7 +231,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 16,
+    "no": 14,
     "soal": "Diagram lingkaran menunjukkan kegemaran siswa terhadap mata pelajaran berikut.\n[DIAGRAM]\nJika jumlah siswa seluruhnya 240 orang, jumlah siswa yang gemar Penjas adalah ...",
     "options": [
       "A. 76 orang",
@@ -254,7 +254,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Pada diagram lingkaran, jumlah semua sudut = 360°. Cari sudut sektor Penjas, lalu hitung proporsinya dari total.\n\nSudut Penjas = 360° − (30°+54°+48°+72°) = 360° − 204° = 156°\nBanyak siswa Penjas = $\\frac{156}{360} \\times 240 = 104$ orang\n\nJumlah semua sudut = 360°. Cari sudut yang belum diketahui dengan pengurangan.\n\nBanyak siswa yang gemar Penjas = 104 orang."
   },
   {
-    "no": 17,
+    "no": 15,
     "soal": "Data koleksi jenis buku di sebuah perpustakaan tersaji dalam diagram lingkaran berikut.\n[DIAGRAM]\nJika banyak buku Kesenian 200 eksemplar, banyak buku Kesehatan .... eksemplar",
     "options": [
       "A. 180",
@@ -267,7 +267,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 18,
+    "no": 16,
     "soal": "Diagram garis menunjukkan penyusutan harga mobil setelah dipakai dalam kurun waktu 5 tahun.\n[DIAGRAM]\nBesarnya penyusutan antara tahun 2015 dan 2016 adalah ...",
     "options": [
       "A. Rp 2.500.000,00",
@@ -291,7 +291,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Penyusutan dalam satu tahun = harga tahun ini − harga tahun berikutnya. Baca nilai dari diagram garis.\n\nHarga 2015 = Rp 110.000.000\nHarga 2016 = Rp 102.500.000\nPenyusutan = 110.000.000 − 102.500.000 = Rp 7.500.000\n\nBaca diagram garis dengan teliti. Nilai di sumbu-y harus dibaca dengan tepat sesuai skala.\n\nPenyusutan harga mobil dari 2015 ke 2016 = Rp 7.500.000."
   },
   {
-    "no": 19,
+    "no": 17,
     "soal": "Hasil survei terhadap pelanggan restoran mengenai menu makanan favorit disajikan dalam diagram lingkaran berikut.\n[DIAGRAM]\nJika sebanyak 60 orang memilih Rendang sebagai makanan favoritnya, jumlah total orang yang mengikuti survei tersebut adalah ....",
     "options": [
       "A. 120 orang",
@@ -304,7 +304,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 20,
+    "no": 18,
     "type": "pgkbs",
     "soal": "Suhu udara di suatu wilayah pegunungan dicatat dari sore hingga pagi hari dan disajikan dalam grafik garis berikut.\n[DIAGRAM]\nBerdasarkan grafik di atas, tentukan status Benar/Salah untuk setiap pernyataan.",
     "pernyataan": [
@@ -320,7 +320,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: 1. Benar; 2. Benar; 3. Benar.\n\nStep by Step Penyelesaian:\n1. Suhu terendah pada titik grafik terendah yaitu $24^\\circ\\text{C}$ pada pukul 01.00 → Benar.\n2. Perubahan suhu naik: 01.00–03.00 (naik $1^\\circ\\text{C}$), 03.00–05.00 (naik $3^\\circ\\text{C}$). Kenaikan terbesar adalah $3^\\circ\\text{C}$ pada 03.00–05.00 → Benar.\n3. Beda suhu pukul 19.00–21.00: $29^\\circ\\text{C} - 27^\\circ\\text{C} = 2^\\circ\\text{C}$ → Benar."
   },
   {
-    "no": 21,
+    "no": 19,
     "soal": "Berdasarkan trend grafik suhu tersebut, perkiraan suhu udara pada pukul 22.00 adalah ....",
     "options": [
       "A. $28^\\circ\\text{C}$",
@@ -333,7 +333,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 22,
+    "no": 20,
     "type": "pgkbs",
     "soal": "Sebanyak 200 warga di RW 05 mengikuti pendataan demografi usia yang disajikan dalam diagram lingkaran persentase berikut.\n[DIAGRAM]\nTentukan nilai Benar / Salah untuk pernyataan berikut.",
     "pernyataan": [
@@ -349,7 +349,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: 1. Benar; 2. Benar; 3. Benar.\n\nStep by Step Penyelesaian:\n1. Anak-anak = $20\\% \\times 200 = 40\\text{ orang}$ → Benar.\n2. Remaja + Lansia = $(25\\% + 10\\%) \\times 200 = 35\\% \\times 200 = 70\\text{ orang}$ → Benar.\n3. Selisih Dewasa − Balita = $(35\\% - 10\\%) \\times 200 = 25\\% \\times 200 = 50\\text{ orang}$ → Benar."
   },
   {
-    "no": 23,
+    "no": 21,
     "type": "pgk",
     "soal": "Data pengunjung pameran buku selama 6 hari disajikan dalam grafik garis berikut.\n[DIAGRAM]\nPilihlah semua jawaban yang benar.",
     "pernyataan": [
@@ -366,7 +366,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: Penurunan pengunjung hanya terjadi pada hari ke-4 (Benar); pengunjung paling sedikit terjadi pada hari pertama (Benar); total seluruh pengunjung selama 6 hari adalah 1.150 orang (Benar).\n\nStep by Step Penyelesaian:\n1. Hitung lonjakan harian: H1–H2 naik 100; H2–H3 naik 100; H3–H4 turun 50; H4–H5 naik 30; H5–H6 naik 40.\n2. Kenaikan tertinggi di H1–H2 dan H2–H3 bernilai sama (100 orang), sehingga pernyataan pertama tidak tepat.\n3. Penurunan grafik hanya tampak dari H3 ke H4 → Benar.\n4. Nilai terendah di H1 (50 orang) → Benar.\n5. Total = $50 + 150 + 250 + 200 + 230 + 270 = 1.150\\text{ orang}$ → Benar."
   },
   {
-    "no": 24,
+    "no": 22,
     "soal": "Perhatikan grafik nilai tukar mata uang Dolar AS (USD) terhadap Rupiah (IDR) dalam satu minggu berikut.\n[DIAGRAM]\nJika Danang ingin menukarkan uang Rupiah sebanyak Rp825.000,00 ke Dolar AS pada hari Minggu, berapa banyak uang Dolar AS yang akan diperolehnya?",
     "options": [
       "A. 40 dolar",
@@ -379,7 +379,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 25,
+    "no": 23,
     "type": "pgk",
     "soal": "Suatu sekolah mendata moda transportasi siswa. Data disajikan dalam diagram lingkaran derajat berikut.\n[DIAGRAM]\nJika jumlah siswa yang menggunakan ojek online adalah 30 orang, pilihlah semua jawaban yang benar.",
     "pernyataan": [
@@ -397,7 +397,7 @@ const latihanDasar: LatihanSoal[] = [
     "pembahasan": "Jawaban Akhir: Semua pernyataan benar.\n\nStep by Step:\nTotal siswa: $\\frac{360^\\circ}{72^\\circ} \\times 30 = 5 \\times 30 = 150$ orang.\nSepeda motor: $\\frac{48^\\circ}{360^\\circ} \\times 150 = 20$ orang.\nJalan kaki: $\\frac{60^\\circ}{360^\\circ} \\times 100\\% = 16{,}67\\%$.\nModus ditunjukkan oleh sudut terbesar, yaitu Ojek Online ($72^\\circ$)."
   },
   {
-    "no": 26,
+    "no": 24,
     "soal": "Hasil pengukuran tinggi tanaman disajikan pada tabel frekuensi berikut.\n[DIAGRAM]\nJumlah kuartil atas dan kuartil bawah dari data tersebut adalah ....",
     "options": [
       "A. 23",
@@ -410,7 +410,7 @@ const latihanDasar: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 27,
+    "no": 25,
     "type": "pgkbs",
     "soal": "Tabel nilai ujian seleksi pegawai disajikan dalam tabel frekuensi berikut.\n[DIAGRAM]\nTentukan status Benar / Salah untuk setiap pernyataan.",
     "pernyataan": [
@@ -428,23 +428,23 @@ const latihanDasar: LatihanSoal[] = [
 ];
 
 const gambarMap = {
-  2: renderDasarVisual(4),
-  3: renderDasarVisual(41),
-  5: renderDasarVisual(51),
-  6: renderDasarVisual(60),
-  10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
-  15: renderDasarVisual(15),
-  16: renderDasarVisual(9),
-  17: renderDasarVisual(10),
-  18: renderDasarVisual(11),
-  19: renderDasarVisual(19),
-  20: renderDasarVisual(20),
-  22: renderDasarVisual(22),
-  23: renderDasarVisual(23),
-  24: renderDasarVisual(24),
-  25: renderDasarVisual(25),
-  26: renderDasarVisual(26),
-  27: renderDasarVisual(27),
+  1: renderDasarVisual(4),
+  2: renderDasarVisual(41),
+  4: renderDasarVisual(51),
+  5: renderDasarVisual(60),
+  8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
+  13: renderDasarVisual(15),
+  14: renderDasarVisual(9),
+  15: renderDasarVisual(10),
+  16: renderDasarVisual(11),
+  17: renderDasarVisual(19),
+  18: renderDasarVisual(20),
+  20: renderDasarVisual(22),
+  21: renderDasarVisual(23),
+  22: renderDasarVisual(24),
+  23: renderDasarVisual(25),
+  24: renderDasarVisual(26),
+  25: renderDasarVisual(27),
 };
 
 const StatistikaPage = () => (
