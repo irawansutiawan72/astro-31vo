@@ -545,13 +545,6 @@ const PembulatanBentukDesimalPage = () => {
             </div>
             <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-4">
               <h4 className="text-slate-300 font-semibold text-sm mb-3">{t.sec1IllusTitle}</h4>
-              <div className="overflow-x-auto">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-sAb4zSyRJ4SV95WJABkpgzwNQw7fj0.png"
-                  alt="Decimal rounding illustration"
-                  className="w-full max-w-md mx-auto rounded-lg"
-                />
-              </div>
               <p className="text-white/70 text-xs text-center mt-2">{t.sec1IllusCaption}</p>
             </div>
             <div className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-4">
