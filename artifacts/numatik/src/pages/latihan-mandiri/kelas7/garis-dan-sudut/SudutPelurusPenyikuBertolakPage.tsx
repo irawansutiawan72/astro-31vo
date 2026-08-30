@@ -157,7 +157,6 @@ const SudutPelurusPenyikuBertolakPage = () => {
               <span className="font-semibold text-accent shrink-0">b)</span>
               <div>
                 <p>{t('practice.garisDanSudut.sudutPelurus.qb.text')}</p>
-                <img src={"/images/b_1774838179562.png"} alt="Soal b" className="mt-3 w-full max-w-xs block" />
                 <RedrawnAngleDiagram kind="q1b" isDark={isDark} />
               </div>
             </div>
