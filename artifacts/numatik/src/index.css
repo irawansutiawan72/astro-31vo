@@ -4857,6 +4857,123 @@ html.light-mode .bg-slate-900\/90 .bg-yellow-500\/10 {
   border-color: rgba(100,116,139,0.28) !important;
 }
 
+/* SVG illustrations in these materials use presentation attributes
+   (fill/stroke) instead of Tailwind classes. Recolor those attributes
+   in light themes so diagrams do not become black or lose their labels. */
+[data-theme="light"] .latihan-bangun-ruang-material svg text,
+[data-theme="white"] .latihan-bangun-ruang-material svg text,
+[data-theme="forest"] .latihan-bangun-ruang-material svg text,
+[data-theme="sunset"] .latihan-bangun-ruang-material svg text {
+  fill: #334155 !important;
+  stroke: none !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="white"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="white"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="white"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="white"] {
+  fill: #dbeafe !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#0f172a"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#111827"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#1e293b"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#292524"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#0f172a"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#111827"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#1e293b"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#292524"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#0f172a"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#111827"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#1e293b"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#292524"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#0f172a"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#111827"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#1e293b"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#292524"] {
+  fill: #bfdbfe !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="white"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#111827"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#1e293b"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#292524"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#334155"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="white"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#111827"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#1e293b"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#292524"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#334155"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="white"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#111827"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#1e293b"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#292524"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#334155"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="white"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#111827"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#1e293b"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#292524"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#334155"] {
+  stroke: #7c9ac4 !important;
+}
+
+/* Catch inline SVG colors that are dark without depending on one exact
+   hex value. The scope keeps these soft-pastel replacements local to
+   the five Bangun Ruang Sisi Lengkung exercise pages. */
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="black"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#000"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill="#000000"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill^="#0"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill^="#1"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [fill^="#2"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="black"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#000"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill="#000000"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill^="#0"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill^="#1"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [fill^="#2"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="black"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#000"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill="#000000"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill^="#0"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill^="#1"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [fill^="#2"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="black"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#000"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill="#000000"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill^="#0"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill^="#1"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [fill^="#2"] {
+  fill: #bfdbfe !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="black"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#000"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke="#000000"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke^="#0"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke^="#1"],
+[data-theme="light"] .latihan-bangun-ruang-material svg [stroke^="#2"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="black"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#000"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke="#000000"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke^="#0"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke^="#1"],
+[data-theme="white"] .latihan-bangun-ruang-material svg [stroke^="#2"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="black"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#000"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke="#000000"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke^="#0"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke^="#1"],
+[data-theme="forest"] .latihan-bangun-ruang-material svg [stroke^="#2"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="black"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#000"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke="#000000"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke^="#0"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke^="#1"],
+[data-theme="sunset"] .latihan-bangun-ruang-material svg [stroke^="#2"] {
+  stroke: #7c9ac4 !important;
+}
+
 /* 7. Axis/grid stroke lines that use near-white strokes → subtle dark on light themes */
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.15)"],
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.1)"],
