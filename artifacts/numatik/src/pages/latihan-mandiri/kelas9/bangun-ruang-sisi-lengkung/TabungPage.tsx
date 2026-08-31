@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
+import { useTheme } from "@/contexts/ThemeContext";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 
@@ -28,39 +29,43 @@ const groupHeaders: Record<number, string> = {
   11: "🌍 Bagian D — Aplikasi di Kehidupan Nyata",
 };
 
-function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = "" }: {
-  r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string;
+function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = "", lightMode = false }: {
+  r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string; lightMode?: boolean;
 }) {
+  const { isDark } = useTheme();
+  const svgColor = lightMode && !isDark ? "#7dd3fc" : color;
+  const labelColor = lightMode && !isDark ? "#111827" : color;
+
   return (
     <svg viewBox="0 0 220 200" width="220" height="200" className="mx-auto">
       <defs>
         <linearGradient id={`cyl-fill-${r}`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={color} stopOpacity="0.08" />
-          <stop offset="50%" stopColor={color} stopOpacity="0.18" />
-          <stop offset="100%" stopColor={color} stopOpacity="0.06" />
+          <stop offset="0%" stopColor={svgColor} stopOpacity="0.08" />
+          <stop offset="50%" stopColor={svgColor} stopOpacity="0.18" />
+          <stop offset="100%" stopColor={svgColor} stopOpacity="0.06" />
         </linearGradient>
       </defs>
       <rect x="50" y="45" width="120" height="110" fill={`url(#cyl-fill-${r})`} />
-      <ellipse cx="110" cy="155" rx="60" ry="18" fill={color} fillOpacity="0.12" stroke={color} strokeWidth="1.8" />
-      <ellipse cx="110" cy="45" rx="60" ry="18" fill={color} fillOpacity="0.25" stroke={color} strokeWidth="1.8" />
-      <line x1="50" y1="45" x2="50" y2="155" stroke={color} strokeWidth="1.8" />
-      <line x1="170" y1="45" x2="170" y2="155" stroke={color} strokeWidth="1.8" />
+      <ellipse cx="110" cy="155" rx="60" ry="18" fill={svgColor} fillOpacity="0.12" stroke={svgColor} strokeWidth="1.8" />
+      <ellipse cx="110" cy="45" rx="60" ry="18" fill={svgColor} fillOpacity="0.25" stroke={svgColor} strokeWidth="1.8" />
+      <line x1="50" y1="45" x2="50" y2="155" stroke={svgColor} strokeWidth="1.8" />
+      <line x1="170" y1="45" x2="170" y2="155" stroke={svgColor} strokeWidth="1.8" />
       {r && (
         <>
-          <line x1="110" y1="45" x2="170" y2="45" stroke={color} strokeWidth="1.2" strokeDasharray="4,2" />
-          <text x="140" y="38" fill={color} fontSize="13" textAnchor="middle" fontFamily="monospace">r = {r}</text>
+          <line x1="110" y1="45" x2="170" y2="45" stroke={svgColor} strokeWidth="1.2" strokeDasharray="4,2" />
+          <text x="140" y="38" fill={labelColor} fontSize="13" textAnchor="middle" fontFamily="monospace">r = {r}</text>
         </>
       )}
       {h && (
         <>
-          <line x1="185" y1="45" x2="185" y2="155" stroke={color} strokeWidth="1.2" strokeDasharray="4,2" />
-          <line x1="181" y1="45" x2="189" y2="45" stroke={color} strokeWidth="1.2" />
-          <line x1="181" y1="155" x2="189" y2="155" stroke={color} strokeWidth="1.2" />
-          <text x="200" y="105" fill={color} fontSize="13" textAnchor="middle" fontFamily="monospace">t = {h}</text>
+          <line x1="185" y1="45" x2="185" y2="155" stroke={svgColor} strokeWidth="1.2" strokeDasharray="4,2" />
+          <line x1="181" y1="45" x2="189" y2="45" stroke={svgColor} strokeWidth="1.2" />
+          <line x1="181" y1="155" x2="189" y2="155" stroke={svgColor} strokeWidth="1.2" />
+          <text x="200" y="105" fill={labelColor} fontSize="13" textAnchor="middle" fontFamily="monospace">t = {h}</text>
         </>
       )}
       {extraLabel && (
-        <text x="110" y="190" fill={color} fontSize="11" textAnchor="middle" fontFamily="monospace" fillOpacity="0.7">{extraLabel}</text>
+        <text x="110" y="190" fill={labelColor} fontSize="11" textAnchor="middle" fontFamily="monospace" fillOpacity="0.7">{extraLabel}</text>
       )}
     </svg>
   );
@@ -341,17 +346,50 @@ function TabungCatSVG() {
 
 /* ── No 14 · TONG SAMPAH ──────────────────────────────────────── */
 function TongSampahSVG() {
+  const { isDark } = useTheme();
+  const colors = isDark ? {
+    bodyStart: "#9ca3af",
+    bodyMid: "#d1d5db",
+    bodyEnd: "#374151",
+    bottomStart: "#6b7280",
+    bottomEnd: "#1f2937",
+    bottomStroke: "#4b5563",
+    rib: "#6b7280",
+    top: "#1f2937",
+    topStroke: "#9ca3af",
+    topInner: "#111827",
+    shadow: "#111827",
+    handle: "#9ca3af",
+    label: "#9ca3af",
+    icon: "#6b7280",
+  } : {
+    bodyStart: "#dbeafe",
+    bodyMid: "#eff6ff",
+    bodyEnd: "#bfdbfe",
+    bottomStart: "#bfdbfe",
+    bottomEnd: "#60a5fa",
+    bottomStroke: "#60a5fa",
+    rib: "#60a5fa",
+    top: "#dbeafe",
+    topStroke: "#60a5fa",
+    topInner: "#bfdbfe",
+    shadow: "#93c5fd",
+    handle: "#60a5fa",
+    label: "#111827",
+    icon: "#64748b",
+  };
+
   return (
     <svg viewBox="0 0 240 230" width="240" height="230" className="mx-auto">
       <defs>
         <linearGradient id="ts-body" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#9ca3af" stopOpacity="0.9" />
-          <stop offset="35%" stopColor="#d1d5db" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#374151" stopOpacity="0.9" />
+          <stop offset="0%" stopColor={colors.bodyStart} stopOpacity="0.9" />
+          <stop offset="35%" stopColor={colors.bodyMid} stopOpacity="0.85" />
+          <stop offset="100%" stopColor={colors.bodyEnd} stopOpacity="0.9" />
         </linearGradient>
         <linearGradient id="ts-bot" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#6b7280" />
-          <stop offset="100%" stopColor="#1f2937" />
+          <stop offset="0%" stopColor={colors.bottomStart} />
+          <stop offset="100%" stopColor={colors.bottomEnd} />
         </linearGradient>
       </defs>
 
@@ -360,39 +398,39 @@ function TongSampahSVG() {
       {/* Left sheen */}
       <rect x="55" y="45" width="13" height="155" fill="white" fillOpacity="0.18" />
       {/* Right shadow */}
-      <rect x="172" y="45" width="13" height="155" fill="#111827" fillOpacity="0.22" />
+      <rect x="172" y="45" width="13" height="155" fill={colors.shadow} fillOpacity="0.22" />
 
       {/* Horizontal rib bands */}
       {[90, 130, 165].map((y, i) => (
         <g key={i}>
-          <ellipse cx="120" cy={y} rx="65" ry="8" fill="none" stroke="#6b7280" strokeWidth="2.5" />
+          <ellipse cx="120" cy={y} rx="65" ry="8" fill="none" stroke={colors.rib} strokeWidth="2.5" />
         </g>
       ))}
 
       {/* Bottom ellipse (closed) */}
-      <ellipse cx="120" cy="200" rx="65" ry="17" fill="url(#ts-bot)" stroke="#4b5563" strokeWidth="2" />
+      <ellipse cx="120" cy="200" rx="65" ry="17" fill="url(#ts-bot)" stroke={colors.bottomStroke} strokeWidth="2" />
 
       {/* TOP — open (no lid, just rim) */}
-      <ellipse cx="120" cy="45" rx="65" ry="17" fill="#1f2937" fillOpacity="0.4" stroke="#9ca3af" strokeWidth="2.2" />
+      <ellipse cx="120" cy="45" rx="65" ry="17" fill={colors.top} fillOpacity="0.4" stroke={colors.topStroke} strokeWidth="2.2" />
       {/* Open top hint - dark inside */}
-      <ellipse cx="120" cy="45" rx="55" ry="12" fill="#111827" fillOpacity="0.6" />
+      <ellipse cx="120" cy="45" rx="55" ry="12" fill={colors.topInner} fillOpacity="0.6" />
 
       {/* Trash icon inside */}
-      <text x="120" y="135" fill="#6b7280" fontSize="28" textAnchor="middle" fillOpacity="0.45">🗑</text>
+      <text x="120" y="135" fill={colors.icon} fontSize="28" textAnchor="middle" fillOpacity="0.45">🗑</text>
 
       {/* Handle (ring on side) */}
-      <path d="M 55 80 Q 40 100 55 120" fill="none" stroke="#9ca3af" strokeWidth="4" strokeLinecap="round" />
-      <path d="M 185 80 Q 200 100 185 120" fill="none" stroke="#9ca3af" strokeWidth="4" strokeLinecap="round" />
+      <path d="M 55 80 Q 40 100 55 120" fill="none" stroke={colors.handle} strokeWidth="4" strokeLinecap="round" />
+      <path d="M 185 80 Q 200 100 185 120" fill="none" stroke={colors.handle} strokeWidth="4" strokeLinecap="round" />
 
       {/* Labels */}
-      <line x1="120" y1="45" x2="185" y2="45" stroke="#9ca3af" strokeWidth="1.2" strokeDasharray="4,2" />
-      <text x="155" y="37" fill="#9ca3af" fontSize="11" textAnchor="middle" fontFamily="monospace">r = 21 cm</text>
-      <line x1="210" y1="45" x2="210" y2="200" stroke="#9ca3af" strokeWidth="1.2" strokeDasharray="4,2" />
-      <line x1="205" y1="45" x2="215" y2="45" stroke="#9ca3af" strokeWidth="1.2" />
-      <line x1="205" y1="200" x2="215" y2="200" stroke="#9ca3af" strokeWidth="1.2" />
-      <text x="230" y="127" fill="#9ca3af" fontSize="11" textAnchor="middle" fontFamily="monospace">60 cm</text>
+      <line x1="120" y1="45" x2="185" y2="45" stroke={colors.label} strokeWidth="1.2" strokeDasharray="4,2" />
+      <text x="155" y="37" fill={colors.label} fontSize="11" textAnchor="middle" fontFamily="monospace">r = 21 cm</text>
+      <line x1="210" y1="45" x2="210" y2="200" stroke={colors.label} strokeWidth="1.2" strokeDasharray="4,2" />
+      <line x1="205" y1="45" x2="215" y2="45" stroke={colors.label} strokeWidth="1.2" />
+      <line x1="205" y1="200" x2="215" y2="200" stroke={colors.label} strokeWidth="1.2" />
+      <text x="230" y="127" fill={colors.label} fontSize="11" textAnchor="middle" fontFamily="monospace">60 cm</text>
 
-      <text x="120" y="222" fill="#9ca3af" fontSize="11" textAnchor="middle" fontFamily="monospace" fillOpacity="0.7">Tong Sampah (tanpa tutup)</text>
+      <text x="120" y="222" fill={colors.label} fontSize="11" textAnchor="middle" fontFamily="monospace" fillOpacity="0.7">Tong Sampah (tanpa tutup)</text>
     </svg>
   );
 }
@@ -541,7 +579,7 @@ const questions: Q[] = [
   }),
   Qn(3, "Luas Selimut – Perhitungan", {
     content: "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 20 cm. Luas selimut tabung tersebut adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" />,
+    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode />,
     choices: [
       { label: "A", text: "440 cm²" },
       { label: "B", text: "660 cm²" },
@@ -562,7 +600,7 @@ const questions: Q[] = [
   }),
   Qn(5, "Luas Permukaan Tabung Terbuka", {
     content: "Sebuah tabung tanpa tutup memiliki jari-jari 10 cm dan tinggi 15 cm. Luas permukaannya adalah ... (π = 3,14)",
-    diagram: <CylinderSVG r="10 cm" h="15 cm" />,
+    diagram: <CylinderSVG r="10 cm" h="15 cm" lightMode />,
     choices: [
       { label: "A", text: "942 cm²" },
       { label: "B", text: "1.099 cm²" },
@@ -596,7 +634,7 @@ const questions: Q[] = [
   // ── BAGIAN C · VOLUME ─────────────────────────────────────────────────────
   Qn(8, "Volume Tabung – Diameter Diketahui", {
     content: "Sebuah tabung memiliki diameter 14 cm dan tinggi 20 cm. Volume tabung adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" />,
+    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode />,
     choices: [
       { label: "A", text: "1.540 cm³" },
       { label: "B", text: "2.310 cm³" },
