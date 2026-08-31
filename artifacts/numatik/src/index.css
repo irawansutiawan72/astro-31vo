@@ -4799,6 +4799,64 @@ html.light-mode .bg-slate-900\/90 .bg-yellow-500\/10 {
   background-color: rgba(248,250,252,0.96) !important;
 }
 
+/* ── Bangun Ruang Sisi Lengkung materials ───────────────────────────
+   These five exercise pages contain their own dark gradient layers.
+   Keep the light-theme treatment scoped to this material family so
+   their complete contents become readable without changing dark mode
+   or unrelated pages. */
+[data-theme="light"] .latihan-bangun-ruang-material,
+[data-theme="white"] .latihan-bangun-ruang-material,
+[data-theme="forest"] .latihan-bangun-ruang-material,
+[data-theme="sunset"] .latihan-bangun-ruang-material {
+  background: linear-gradient(180deg, #dbeafe 0%, #e0f2fe 35%, #f8fafc 100%) !important;
+  color: #172033;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material .absolute.inset-0.backdrop-blur,
+[data-theme="white"] .latihan-bangun-ruang-material .absolute.inset-0.backdrop-blur,
+[data-theme="forest"] .latihan-bangun-ruang-material .absolute.inset-0.backdrop-blur,
+[data-theme="sunset"] .latihan-bangun-ruang-material .absolute.inset-0.backdrop-blur {
+  background: rgba(255,255,255,0.84) !important;
+  background-image: none !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material [class*="-900/"],
+[data-theme="white"] .latihan-bangun-ruang-material [class*="-900/"],
+[data-theme="forest"] .latihan-bangun-ruang-material [class*="-900/"],
+[data-theme="sunset"] .latihan-bangun-ruang-material [class*="-900/"] {
+  background-color: rgba(255,255,255,0.82) !important;
+  background-image: none !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material [class*="bg-white/"],
+[data-theme="white"] .latihan-bangun-ruang-material [class*="bg-white/"],
+[data-theme="forest"] .latihan-bangun-ruang-material [class*="bg-white/"],
+[data-theme="sunset"] .latihan-bangun-ruang-material [class*="bg-white/"] {
+  background-color: rgba(241,245,249,0.92) !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material [class*="text-white"],
+[data-theme="white"] .latihan-bangun-ruang-material [class*="text-white"],
+[data-theme="forest"] .latihan-bangun-ruang-material [class*="text-white"],
+[data-theme="sunset"] .latihan-bangun-ruang-material [class*="text-white"] {
+  color: #172033 !important;
+}
+
+[data-theme="light"] .latihan-bangun-ruang-material [style*="rgba(2,8,23"],
+[data-theme="light"] .latihan-bangun-ruang-material [style*="rgba(6,12,30"],
+[data-theme="light"] .latihan-bangun-ruang-material [style*="rgba(8,15,35"],
+[data-theme="white"] .latihan-bangun-ruang-material [style*="rgba(2,8,23"],
+[data-theme="white"] .latihan-bangun-ruang-material [style*="rgba(6,12,30"],
+[data-theme="white"] .latihan-bangun-ruang-material [style*="rgba(8,15,35"],
+[data-theme="forest"] .latihan-bangun-ruang-material [style*="rgba(2,8,23"],
+[data-theme="forest"] .latihan-bangun-ruang-material [style*="rgba(6,12,30"],
+[data-theme="forest"] .latihan-bangun-ruang-material [style*="rgba(8,15,35"],
+[data-theme="sunset"] .latihan-bangun-ruang-material [style*="rgba(2,8,23"],
+[data-theme="sunset"] .latihan-bangun-ruang-material [style*="rgba(6,12,30"] {
+  background: #ffffff !important;
+  border-color: rgba(100,116,139,0.28) !important;
+}
+
 /* 7. Axis/grid stroke lines that use near-white strokes → subtle dark on light themes */
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.15)"],
 .light-mode .lm-kkg-svg line[stroke="rgba(255,255,255,0.1)"],
