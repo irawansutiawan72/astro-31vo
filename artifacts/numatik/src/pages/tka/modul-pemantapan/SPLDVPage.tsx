@@ -503,16 +503,67 @@ const latihanDasar: LatihanSoal[] = [
 ];
 
 const nomorSPLDVDihapus = new Set([5, 11, 13, 14, 16, 18, 21, 22, 27, 31]);
+const tambahanSPLDV: LatihanSoal[] = [
+  // ── Soal tambahan 1 — PG ────────────────────────────────────────────────────
+  {
+    no: 10, type: "pg",
+    soal: "Selisih usia Kakak dan Adik adalah 4 tahun. Jika jumlah umur keduanya adalah 30 tahun, berapakah umur Adik?",
+    options: ["A. 11 tahun", "B. 13 tahun", "C. 15 tahun", "D. 17 tahun"],
+    jawaban: "B",
+    pembahasan: "Misalkan umur Kakak $= k$ dan umur Adik $= a$.\n$k-a=4$ dan $k+a=30$\nJumlahkan kedua persamaan: $2k=34 \\Rightarrow k=17$\nMaka $a=30-17=13$.\nUmur Adik adalah 13 tahun → Jawaban B",
+  },
+
+  // ── Soal tambahan 2 — PGKBS ──────────────────────────────────────────────────
+  {
+    no: 11, type: "pgkbs",
+    soal: "Dua bilangan bulat positif $a$ dan $b$ memenuhi persamaan $a+b=12$. Berdasarkan informasi tersebut, tentukan kebenaran setiap pernyataan berikut!",
+    pernyataan: [
+      "Nilai maksimum dari hasil kali $ab$ adalah 36.",
+      "Nilai minimum dari hasil kali $ab$ adalah 11.",
+      "Pasangan nilai $a$ dan $b$ selalu bernilai genap.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Karena $a$ dan $b$ adalah bilangan bulat positif serta $a+b=12$, pasangan dengan hasil kali terbesar terjadi saat keduanya paling dekat, yaitu $a=b=6$. Jadi nilai maksimum $ab=6\\times6=36$ → Pernyataan (1) BENAR.\n\nNilai terkecil salah satu bilangan positif adalah 1, sehingga bilangan lainnya adalah 11. Jadi nilai minimum $ab=1\\times11=11$ → Pernyataan (2) BENAR.\n\nPasangan $(1,11)$ memenuhi $a+b=12$, tetapi keduanya tidak sama-sama genap → Pernyataan (3) SALAH.",
+  },
+
+  // ── Soal tambahan 3 — PG ────────────────────────────────────────────────────
+  {
+    no: 12, type: "pg",
+    soal: "Toko Kertas \"Cemerlang\" menjual buku tulis dan pulpen. Deni membeli 3 buku tulis dan 2 pulpen dengan total bayar Rp16.000,00. Riko membeli 2 buku tulis dan 4 pulpen dengan total bayar Rp16.000,00. Jika harga satu buku tulis dimisalkan $x$ dan harga satu pulpen dimisalkan $y$, manakah pernyataan yang benar mengenai situasi tersebut?",
+    options: [
+      "A. Model matematika dari pembelian Deni dan Riko adalah $3x+2y=16.000$ dan $2x+4y=16.000$.",
+      "B. Harga satu buku tulis ($x$) adalah Rp3.000,00.",
+      "C. Harga satu pulpen ($y$) adalah Rp2.500,00.",
+      "D. Jika Maya membeli 1 buku tulis dan 3 pulpen, ia harus membayar Rp13.000,00.",
+    ],
+    jawaban: "A",
+    pembahasan: "Model matematika pembelian Deni dan Riko adalah:\n$3x+2y=16.000$ dan $2x+4y=16.000$\n\nDari persamaan kedua, diperoleh $x+2y=8.000$. Kurangkan persamaan ini dari persamaan pertama:\n$3x+2y-(x+2y)=16.000-8.000$\n$2x=8.000 \\Rightarrow x=4.000$\nSubstitusi ke $x+2y=8.000$:\n$4.000+2y=8.000 \\Rightarrow y=2.000$\n\nJadi pernyataan A benar, sedangkan $x$ bukan Rp3.000,00, $y$ bukan Rp2.500,00, dan $x+3y=10.000$ bukan Rp13.000,00.",
+  },
+
+  // ── Soal tambahan 4 — PG ────────────────────────────────────────────────────
+  {
+    no: 13, type: "pg",
+    soal: "Diketahui $m$ dan $n$ merupakan bilangan real. Sistem persamaan linier $2x+my=8$ dan $nx-3y=5$ mempunyai penyelesaian $(x,y)=(1,2)$. Nilai dari $m+n$ adalah ....",
+    options: ["A. 5", "B. 8", "C. 11", "D. 14"],
+    jawaban: "D",
+    pembahasan: "Substitusikan $(x,y)=(1,2)$ ke persamaan pertama:\n$2(1)+m(2)=8 \\Rightarrow 2m=6 \\Rightarrow m=3$\n\nSubstitusikan $(x,y)=(1,2)$ ke persamaan kedua:\n$n(1)-3(2)=5 \\Rightarrow n-6=5 \\Rightarrow n=11$\n\nMaka $m+n=3+11=14$ → Jawaban D",
+  },
+];
 const latihanDasarSPLDV = latihanDasar
   .filter((soal) => !nomorSPLDVDihapus.has(soal.no))
   .map((soal, index) => ({ ...soal, no: index + 1 }));
+const latihanDasarSPLDVDenganTambahan = [
+  ...latihanDasarSPLDV.slice(0, 9),
+  ...tambahanSPLDV,
+  ...latihanDasarSPLDV.slice(9),
+].map((soal, index) => ({ ...soal, no: index + 1 }));
 
 const SPLDVPage = () => (
   <TKAPemantapanLayout
     title="SISTEM PERSAMAAN LINEAR DUA VARIABEL"
     materiSections={materiSections}
     contohSoal={contohSoal}
-    latihanDasar={latihanDasarSPLDV}
+    latihanDasar={latihanDasarSPLDVDenganTambahan}
   />
 );
 

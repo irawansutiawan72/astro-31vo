@@ -667,12 +667,81 @@ const latihanDasar: LatihanSoal[] = [
   },
 ];
 
+const tambahanPLSV: LatihanSoal[] = [
+  // ── Soal tambahan 1 — PG ────────────────────────────────────────────────────
+  {
+    no: 6, type: "pg",
+    soal: "Sebuah usaha percetakan spanduk menentukan harga layanan berdasarkan fungsi keuntungan harian $F(x)=15x-300$ (dalam ribuan rupiah), dengan $x$ menyatakan luas spanduk yang dicetak dalam meter persegi ($m^2$). Jika pemilik percetakan menginginkan keuntungan harian berada di rentang Rp450.000,00 sampai Rp1.200.000,00, maka rentang luas spanduk ($x$) yang harus dicetak sehari adalah ...",
+    options: [
+      "A. $40 \\leq x \\leq 90$",
+      "B. $50 \\leq x \\leq 100$",
+      "C. $50 \\leq x \\leq 110$",
+      "D. $60 \\leq x \\leq 100$",
+    ],
+    jawaban: "B",
+    pembahasan: "Karena $F(x)$ dinyatakan dalam ribuan rupiah, rentang keuntungan tersebut adalah $450 \\leq F(x) \\leq 1.200$.\n$450 \\leq 15x - 300 \\leq 1.200$\n$750 \\leq 15x \\leq 1.500$\n$50 \\leq x \\leq 100$\nJadi, luas spanduk yang harus dicetak berada pada rentang $50 \\leq x \\leq 100$ $m^2$ → Jawaban B",
+  },
+
+  // ── Soal tambahan 2 — PG ────────────────────────────────────────────────────
+  {
+    no: 7, type: "pg",
+    soal: "Suatu katering makanan menghitung pendapatan bersih harian $P(n)$ (dalam ribuan rupiah) berdasarkan jumlah porsi $n$ yang terjual melalui rumus fungsi $P(n)=10n-150$. Jika pengelola menargetkan pendapatan bersih minimal Rp350.000,00 dan maksimal Rp750.000,00 per hari, tentukan daerah asal ($n$) atau rentang porsi makanan yang harus terjual!",
+    options: [
+      "A. $40 \\leq n \\leq 80$",
+      "B. $50 \\leq n \\leq 90$",
+      "C. $50 \\leq n \\leq 100$",
+      "D. $60 \\leq n \\leq 90$",
+    ],
+    jawaban: "B",
+    pembahasan: "Karena $P(n)$ dinyatakan dalam ribuan rupiah, target pendapatan menjadi:\n$350 \\leq 10n - 150 \\leq 750$\n$500 \\leq 10n \\leq 900$\n$50 \\leq n \\leq 90$\nJadi, jumlah porsi yang harus terjual adalah $50 \\leq n \\leq 90$ porsi → Jawaban B",
+  },
+
+  // ── Soal tambahan 3 — PGKBS ──────────────────────────────────────────────────
+  {
+    no: 8, type: "pgkbs",
+    soal: "Jasa kurir Express menerapkan tarif pengiriman barang berdasarkan jarak tempuh $x$ (dalam km) dengan aturan biaya penanganan awal Rp6.000,00 dan tarif tiap kilometer Rp4.000,00. Pelanggan memiliki anggaran maksimum sebesar Rp100.000,00 untuk satu kali kirim. Tentukan kebenaran dari setiap pernyataan berikut!",
+    pernyataan: [
+      "Model matematika dari masalah tersebut adalah $4.000x+6.000 \\leq 100.000$.",
+      "Jarak maksimum pengiriman yang masih dapat dijangkau adalah 23,5 km.",
+      "Jika jarak pengiriman 20 km, maka biaya total yang harus dibayar adalah Rp86.000,00.",
+    ],
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Biaya total terdiri dari biaya penanganan awal dan biaya berdasarkan jarak:\n$4.000x+6.000 \\leq 100.000$\n→ Pernyataan (1) BENAR.\n\n$4.000x \\leq 94.000 \\Rightarrow x \\leq 23,5$\nJarak maksimum adalah 23,5 km → Pernyataan (2) BENAR.\n\nUntuk jarak 20 km:\n$4.000(20)+6.000=80.000+6.000=86.000$\nBiaya totalnya Rp86.000,00 → Pernyataan (3) BENAR.",
+  },
+
+  // ── Soal tambahan 4 — PGK ───────────────────────────────────────────────────
+  {
+    no: 9, type: "pgk",
+    soal: "Suatu jasa penyewaan studio musik menentukan biaya sewa harian berdasarkan fungsi linear $y=5.000d+15.000$, dengan $d$ adalah durasi sewa dalam jam dan $y$ total biaya dalam rupiah. Seorang pemusik memiliki anggaran maksimum sebesar Rp80.000,00 untuk menyewa studio. Manakah pernyataan berikut yang benar? Pilihan jawaban benar bisa lebih dari satu.",
+    pernyataan: [
+      "Jika $d$ menyatakan durasi latihan (jam), masalah ini dapat dimodelkan dengan $5.000d+15.000 \\leq 80.000$.",
+      "Durasi latihan maksimal yang dapat dipilih pemusik adalah 13 jam.",
+      "Jika durasi sewa adalah 10 jam, biaya total yang harus dibayar tepat sama dengan Rp65.000,00.",
+      "Penambahan durasi latihan selama 2 jam akan menambah biaya sewa sebesar Rp10.000,00.",
+    ],
+    options: [
+      "A. 1 dan 2",
+      "B. 1, 2, dan 3",
+      "C. 1, 3, dan 4",
+      "D. 1, 2, 3, dan 4",
+    ],
+    jawaban: "D",
+    pembahasan: "Dengan anggaran maksimum Rp80.000, model pertidaksamaannya adalah:\n$5.000d+15.000 \\leq 80.000$\n→ Pernyataan (1) BENAR.\n\n$5.000d \\leq 65.000 \\Rightarrow d \\leq 13$\nDurasi maksimum adalah 13 jam → Pernyataan (2) BENAR.\n\nUntuk $d=10$:\n$y=5.000(10)+15.000=50.000+15.000=65.000$\n→ Pernyataan (3) BENAR.\n\nTambahan 2 jam menambah biaya sebesar $2\\times5.000=10.000$ rupiah → Pernyataan (4) BENAR.\n\nJadi, pernyataan yang benar adalah 1, 2, 3, dan 4 → Jawaban D",
+  },
+];
+
+const latihanDasarDenganTambahan: LatihanSoal[] = [
+  ...latihanDasar.slice(0, 5),
+  ...tambahanPLSV,
+  ...latihanDasar.slice(5),
+].map((soal, index) => ({ ...soal, no: index + 1 }));
+
 const PLSVPage = () => (
   <TKAPemantapanLayout
     title="PERSAMAAN DAN PERTIDAKSAMAAN LINEAR SATU VARIABEL"
     materiSections={materiSections}
     contohSoal={contohSoal}
-    latihanDasar={latihanDasar}
+    latihanDasar={latihanDasarDenganTambahan}
   />
 );
 
