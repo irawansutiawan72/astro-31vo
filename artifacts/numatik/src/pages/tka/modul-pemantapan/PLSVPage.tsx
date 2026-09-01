@@ -815,17 +815,6 @@ const StudioMusikGraph = () => {
         </text>
 
         <circle cx={x(13)} cy={y(80)} r="7" fill="#a78bfa" stroke="#f5f3ff" strokeWidth="2" />
-        <rect x={x(13) - 66} y={y(80) + 11} width="132" height="34" rx="5" fill="#4c1d95" fillOpacity="0.95" />
-        <text x={x(13)} y={y(80) + 26} textAnchor="middle" fill="#ddd6fe" fontSize="11" fontWeight="700">
-          (13, 80) maksimum
-        </text>
-        <text x={x(13)} y={y(80) + 40} textAnchor="middle" fill="#c4b5fd" fontSize="10">
-          d = 13 jam
-        </text>
-
-        <text x={x(3.2)} y={y(32)} fill="#67e8f9" fontSize="12" fontWeight="700" transform={`rotate(-29 ${x(3.2)} ${y(32)})`}>
-          y = 5d + 15
-        </text>
 
         <g transform="translate(98 58)">
           <line x1="0" y1="0" x2="28" y2="0" stroke="#22d3ee" strokeWidth="4" />
