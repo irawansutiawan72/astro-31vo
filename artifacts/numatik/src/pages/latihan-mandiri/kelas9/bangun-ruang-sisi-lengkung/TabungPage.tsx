@@ -33,21 +33,28 @@ function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = 
   r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string; lightMode?: boolean;
 }) {
   const { isDark } = useTheme();
-  const svgColor = lightMode && !isDark ? "#7dd3fc" : color;
-  const labelColor = lightMode && !isDark ? "#111827" : color;
+  const isLightVariant = lightMode && !isDark;
+  const svgColor = isLightVariant ? "#60a5fa" : color;
+  const labelColor = isLightVariant ? "#075985" : color;
+  const canvasColor = isLightVariant ? "#f8fdff" : "transparent";
+  const bodyStart = isLightVariant ? "#e0f2fe" : svgColor;
+  const bodyMid = isLightVariant ? "#bae6fd" : svgColor;
+  const bodyEnd = isLightVariant ? "#dbeafe" : svgColor;
+  const capColor = isLightVariant ? "#bfdbfe" : svgColor;
 
   return (
     <svg viewBox="0 0 220 200" width="220" height="200" className="mx-auto">
       <defs>
         <linearGradient id={`cyl-fill-${r}`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={svgColor} stopOpacity="0.08" />
-          <stop offset="50%" stopColor={svgColor} stopOpacity="0.18" />
-          <stop offset="100%" stopColor={svgColor} stopOpacity="0.06" />
+          <stop offset="0%" stopColor={bodyStart} stopOpacity={isLightVariant ? "0.9" : "0.08"} />
+          <stop offset="50%" stopColor={bodyMid} stopOpacity={isLightVariant ? "0.95" : "0.18"} />
+          <stop offset="100%" stopColor={bodyEnd} stopOpacity={isLightVariant ? "0.85" : "0.06"} />
         </linearGradient>
       </defs>
+      <rect x="8" y="8" width="204" height="184" rx="14" fill={canvasColor} />
       <rect x="50" y="45" width="120" height="110" fill={`url(#cyl-fill-${r})`} />
-      <ellipse cx="110" cy="155" rx="60" ry="18" fill={svgColor} fillOpacity="0.12" stroke={svgColor} strokeWidth="1.8" />
-      <ellipse cx="110" cy="45" rx="60" ry="18" fill={svgColor} fillOpacity="0.25" stroke={svgColor} strokeWidth="1.8" />
+      <ellipse cx="110" cy="155" rx="60" ry="18" fill={capColor} fillOpacity={isLightVariant ? "0.85" : "0.12"} stroke={svgColor} strokeWidth="1.8" />
+      <ellipse cx="110" cy="45" rx="60" ry="18" fill={capColor} fillOpacity={isLightVariant ? "0.95" : "0.25"} stroke={svgColor} strokeWidth="1.8" />
       <line x1="50" y1="45" x2="50" y2="155" stroke={svgColor} strokeWidth="1.8" />
       <line x1="170" y1="45" x2="170" y2="155" stroke={svgColor} strokeWidth="1.8" />
       {r && (
