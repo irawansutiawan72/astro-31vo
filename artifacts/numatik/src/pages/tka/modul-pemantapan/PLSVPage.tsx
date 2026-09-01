@@ -667,6 +667,177 @@ const latihanDasar: LatihanSoal[] = [
   },
 ];
 
+const StudioMusikGraph = () => {
+  const plot = { left: 78, top: 38, width: 610, height: 296 };
+  const xMax = 14;
+  const yMax = 90;
+  const x = (value: number) => plot.left + (value / xMax) * plot.width;
+  const y = (value: number) => plot.top + plot.height - (value / yMax) * plot.height;
+  const xTicks = [0, 2, 4, 6, 8, 10, 12, 14];
+  const yTicks = [0, 15, 30, 45, 60, 75, 90];
+
+  return (
+    <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-cyan-400/30 bg-slate-950/90 p-2 sm:p-3">
+      <svg
+        viewBox="0 0 760 430"
+        role="img"
+        aria-labelledby="studio-musik-graph-title studio-musik-graph-desc"
+        className="h-auto w-full"
+      >
+        <title id="studio-musik-graph-title">Grafik biaya sewa studio musik</title>
+        <desc id="studio-musik-graph-desc">
+          Grafik y sama dengan 5.000d ditambah 15.000, dengan batas anggaran 80.000 rupiah pada durasi maksimum 13 jam.
+        </desc>
+
+        <rect x="0" y="0" width="760" height="430" rx="12" fill="#0f172a" />
+        <text x="380" y="24" textAnchor="middle" fill="#e2e8f0" fontSize="16" fontWeight="700">
+          Grafik Biaya Sewa Studio Musik
+        </text>
+        <text x="380" y="414" textAnchor="middle" fill="#94a3b8" fontSize="13">
+          d (durasi sewa dalam jam)
+        </text>
+        <text
+          x="18"
+          y="188"
+          textAnchor="middle"
+          fill="#94a3b8"
+          fontSize="13"
+          transform="rotate(-90 18 188)"
+        >
+          y (ribu rupiah)
+        </text>
+
+        {/* Area durasi yang masih sesuai anggaran: 0 ≤ d ≤ 13. */}
+        <rect
+          x={x(0)}
+          y={plot.top}
+          width={x(13) - x(0)}
+          height={plot.height}
+          fill="#06b6d4"
+          fillOpacity="0.07"
+        />
+
+        {yTicks.map((tick) => (
+          <g key={`y-${tick}`}>
+            <line
+              x1={plot.left}
+              y1={y(tick)}
+              x2={plot.left + plot.width}
+              y2={y(tick)}
+              stroke="#334155"
+              strokeWidth="1"
+              strokeDasharray={tick === 0 ? undefined : "4 5"}
+            />
+            <text x={plot.left - 12} y={y(tick) + 4} textAnchor="end" fill="#94a3b8" fontSize="11">
+              {tick}
+            </text>
+          </g>
+        ))}
+
+        {xTicks.map((tick) => (
+          <g key={`x-${tick}`}>
+            <line
+              x1={x(tick)}
+              y1={plot.top}
+              x2={x(tick)}
+              y2={plot.top + plot.height}
+              stroke="#334155"
+              strokeWidth="1"
+              strokeDasharray={tick === 0 ? undefined : "4 5"}
+            />
+            <text x={x(tick)} y={plot.top + plot.height + 20} textAnchor="middle" fill="#94a3b8" fontSize="11">
+              {tick}
+            </text>
+          </g>
+        ))}
+
+        <line
+          x1={plot.left}
+          y1={plot.top + plot.height}
+          x2={plot.left + plot.width}
+          y2={plot.top + plot.height}
+          stroke="#cbd5e1"
+          strokeWidth="1.5"
+        />
+        <line
+          x1={plot.left}
+          y1={plot.top}
+          x2={plot.left}
+          y2={plot.top + plot.height}
+          stroke="#cbd5e1"
+          strokeWidth="1.5"
+        />
+
+        {/* Garis fungsi, dibedakan antara bagian yang terjangkau dan lanjutan garis. */}
+        <line
+          x1={x(0)}
+          y1={y(15)}
+          x2={x(14)}
+          y2={y(85)}
+          stroke="#64748b"
+          strokeWidth="3"
+          strokeDasharray="7 6"
+        />
+        <line
+          x1={x(0)}
+          y1={y(15)}
+          x2={x(13)}
+          y2={y(80)}
+          stroke="#22d3ee"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+
+        {/* Garis batas anggaran y = 80. */}
+        <line
+          x1={plot.left}
+          y1={y(80)}
+          x2={plot.left + plot.width}
+          y2={y(80)}
+          stroke="#f59e0b"
+          strokeWidth="2"
+          strokeDasharray="8 6"
+        />
+        <rect x={x(8.3)} y={y(80) - 25} width="156" height="21" rx="5" fill="#451a03" fillOpacity="0.9" />
+        <text x={x(8.5)} y={y(80) - 10} fill="#fbbf24" fontSize="11" fontWeight="700">
+          Batas anggaran: 80
+        </text>
+
+        <circle cx={x(0)} cy={y(15)} r="5" fill="#22d3ee" stroke="#ecfeff" strokeWidth="2" />
+        <text x={x(0) + 10} y={y(15) - 10} fill="#67e8f9" fontSize="11">
+          (0, 15)
+        </text>
+
+        <circle cx={x(10)} cy={y(65)} r="6" fill="#34d399" stroke="#ecfdf5" strokeWidth="2" />
+        <rect x={x(10) - 45} y={y(65) - 37} width="90" height="21" rx="5" fill="#064e3b" fillOpacity="0.95" />
+        <text x={x(10)} y={y(65) - 22} textAnchor="middle" fill="#a7f3d0" fontSize="11" fontWeight="700">
+          (10, 65)
+        </text>
+
+        <circle cx={x(13)} cy={y(80)} r="7" fill="#a78bfa" stroke="#f5f3ff" strokeWidth="2" />
+        <rect x={x(13) - 66} y={y(80) + 11} width="132" height="34" rx="5" fill="#4c1d95" fillOpacity="0.95" />
+        <text x={x(13)} y={y(80) + 26} textAnchor="middle" fill="#ddd6fe" fontSize="11" fontWeight="700">
+          (13, 80) maksimum
+        </text>
+        <text x={x(13)} y={y(80) + 40} textAnchor="middle" fill="#c4b5fd" fontSize="10">
+          d = 13 jam
+        </text>
+
+        <text x={x(3.2)} y={y(32)} fill="#67e8f9" fontSize="12" fontWeight="700" transform={`rotate(-29 ${x(3.2)} ${y(32)})`}>
+          y = 5d + 15
+        </text>
+
+        <g transform="translate(98 58)">
+          <line x1="0" y1="0" x2="28" y2="0" stroke="#22d3ee" strokeWidth="4" />
+          <text x="36" y="4" fill="#cbd5e1" fontSize="11">Bagian sesuai anggaran</text>
+          <line x1="0" y1="20" x2="28" y2="20" stroke="#f59e0b" strokeWidth="2" strokeDasharray="8 6" />
+          <text x="36" y="24" fill="#cbd5e1" fontSize="11">Batas Rp80.000</text>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
 const tambahanPLSV: LatihanSoal[] = [
   // ── Soal tambahan 1 — PG ────────────────────────────────────────────────────
   {
@@ -713,6 +884,7 @@ const tambahanPLSV: LatihanSoal[] = [
   {
     no: 9, type: "pgk",
     soal: "Suatu jasa penyewaan studio musik menentukan biaya sewa harian berdasarkan fungsi linear $y=5.000d+15.000$, dengan $d$ adalah durasi sewa dalam jam dan $y$ total biaya dalam rupiah. Seorang pemusik memiliki anggaran maksimum sebesar Rp80.000,00 untuk menyewa studio. Manakah pernyataan berikut yang benar? Pilihan jawaban benar bisa lebih dari satu.",
+    gambar: <StudioMusikGraph />,
     pernyataan: [
       "Jika $d$ menyatakan durasi latihan (jam), masalah ini dapat dimodelkan dengan $5.000d+15.000 \\leq 80.000$.",
       "Durasi latihan maksimal yang dapat dipilih pemusik adalah 13 jam.",
