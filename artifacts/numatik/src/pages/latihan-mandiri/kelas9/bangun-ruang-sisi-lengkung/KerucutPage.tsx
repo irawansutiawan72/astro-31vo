@@ -379,7 +379,6 @@ const questions: Q[] = [
   {
     n: 1, title: "Garis Pelukis Kerucut",
     content: "Sebuah kerucut memiliki jari-jari alas 6 cm dan tinggi 8 cm. Panjang garis pelukis (s) kerucut tersebut adalah ...",
-    diagram: <ConeSVG r="6 cm" h="8 cm" />,
     options: [
       { key: "A", text: "8 cm" },
       { key: "B", text: "9 cm" },
@@ -391,7 +390,6 @@ const questions: Q[] = [
   {
     n: 2, title: "Luas Selimut Kerucut",
     content: "Sebuah kerucut memiliki jari-jari 7 cm dan garis pelukis 25 cm. Luas selimut kerucut tersebut adalah ... (π = 22/7)",
-    diagram: <ConeSVG r="7 cm" s="25 cm" />,
     options: [
       { key: "A", text: "440 cm²" },
       { key: "B", text: "550 cm²" },
@@ -403,7 +401,6 @@ const questions: Q[] = [
   {
     n: 3, title: "Luas Permukaan Total Kerucut",
     content: "Sebuah kerucut memiliki jari-jari 5 cm dan tinggi 12 cm. Luas permukaan total kerucut tersebut adalah ... (π = 3,14)",
-    diagram: <ConeSVG r="5 cm" h="12 cm" />,
     options: [
       { key: "A", text: "251,2 cm²" },
       { key: "B", text: "282,6 cm²" },
@@ -415,7 +412,6 @@ const questions: Q[] = [
   {
     n: 4, title: "Volume Kerucut",
     content: "Sebuah kerucut memiliki jari-jari 7 cm dan tinggi 15 cm. Volume kerucut tersebut adalah ... (π = 22/7)",
-    diagram: <ConeSVG r="7 cm" h="15 cm" />,
     options: [
       { key: "A", text: "462 cm³" },
       { key: "B", text: "616 cm³" },

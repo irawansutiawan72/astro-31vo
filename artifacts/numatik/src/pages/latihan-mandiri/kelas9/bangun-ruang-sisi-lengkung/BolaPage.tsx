@@ -742,7 +742,6 @@ const mcQuestions: QMC[] = [
   {
     n: 2, title: "Luas Permukaan Bola – r = 14 cm", cat: "lp",
     content: "Sebuah bola memiliki jari-jari 14 cm. Luas permukaan bola tersebut adalah ... (π = 22/7)",
-    diagram: <SphereSVG r="14 cm" />,
     options: [
       { key: "A", text: "1.848 cm²" },
       { key: "B", text: "2.156 cm²" },
@@ -754,7 +753,6 @@ const mcQuestions: QMC[] = [
   {
     n: 3, title: "Luas Permukaan – Diameter 14 cm", cat: "lp",
     content: "Sebuah bola berdiameter 14 cm. Luas permukaan bola tersebut adalah ... (π = 22/7)",
-    diagram: <SphereSVG r="7 cm" color="#60a5fa" />,
     options: [
       { key: "A", text: "154 cm²" },
       { key: "B", text: "308 cm²" },
@@ -802,7 +800,6 @@ const mcQuestions: QMC[] = [
   {
     n: 7, title: "Volume Bola – Diameter 21 cm", cat: "vol",
     content: "Sebuah bola memiliki diameter 21 cm. Volume bola tersebut adalah ... (π = 22/7)",
-    diagram: <SphereSVG r="10,5 cm" />,
     options: [
       { key: "A", text: "1.386 cm³" },
       { key: "B", text: "2.910 cm³" },

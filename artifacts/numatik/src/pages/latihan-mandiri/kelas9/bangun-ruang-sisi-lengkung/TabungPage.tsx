@@ -586,7 +586,6 @@ const questions: Q[] = [
   }),
   Qn(3, "Luas Selimut – Perhitungan", {
     content: "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 20 cm. Luas selimut tabung tersebut adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "440 cm²" },
       { label: "B", text: "660 cm²" },
@@ -607,7 +606,6 @@ const questions: Q[] = [
   }),
   Qn(5, "Luas Permukaan Tabung Terbuka", {
     content: "Sebuah tabung tanpa tutup memiliki jari-jari 10 cm dan tinggi 15 cm. Luas permukaannya adalah ... (π = 3,14)",
-    diagram: <CylinderSVG r="10 cm" h="15 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "942 cm²" },
       { label: "B", text: "1.099 cm²" },
@@ -641,7 +639,6 @@ const questions: Q[] = [
   // ── BAGIAN C · VOLUME ─────────────────────────────────────────────────────
   Qn(8, "Volume Tabung – Diameter Diketahui", {
     content: "Sebuah tabung memiliki diameter 14 cm dan tinggi 20 cm. Volume tabung adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "1.540 cm³" },
       { label: "B", text: "2.310 cm³" },
