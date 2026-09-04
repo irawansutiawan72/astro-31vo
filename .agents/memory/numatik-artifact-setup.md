@@ -183,6 +183,11 @@ Pecahan soal components are JSX components (not data arrays). Key differences:
 - Index page (BilanganRasionalPage): rename `subtopics` const to `subtopicsConfig` (remove `label`/`desc`, add `key`), then derive `subtopics` inside component with `subtopicsConfig.map(s => ({ ...s, label: t(...), desc: t(...) }))`.
 - Reference file: `artifacts/numatik/src/pages/latihan-mandiri/kelas7/pecahan/ArtiPecahanSenilaiMembandingkanPage.tsx`
 
+## Imported workspace dependency firewall
+- A full frozen workspace install can be blocked by the package firewall on the code-generation-only `orval` package, even when the frontend does not depend on it.
+- **Why:** The Numatik frontend can still be developed and verified without installing the unrelated API-spec generator.
+- **How to apply:** If this recurs, install the root, frontend, and scripts workspace filters needed by Numatik rather than bypassing the firewall or changing the app's dependency graph.
+
 ## Shared statistics question data
 - The TKA Statistika module reuses question data exported by the Olimpiade Statistika page. Apply TKA-only removals by filtering in `tka/modul-pemantapan/StatistikaPage.tsx`, not by editing the shared source.
 - **Why:** The same source questions feed the Olimpiade page, so direct deletion would unintentionally change another user-facing module.

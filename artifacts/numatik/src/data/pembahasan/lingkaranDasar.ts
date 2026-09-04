@@ -204,11 +204,11 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
   21: {
     jawaban: "D. 114°",
     konsepTrik:
-      "$\\angle ABC = 90° + \\dfrac{1}{2}\\angle COD$ untuk konfigurasi sudut tertentu di lingkaran (segiempat tali busur).",
+      "Sudut keliling besarnya setengah ukuran busur yang dihadapinya. Karena AD adalah diameter, busur AD yang melalui bagian atas bernilai 180°; busur DC yang diberikan menambah busur AC yang tidak memuat B.",
     stepByStep:
-      "$\\angle COD = 48°$\n$\\angle ABC = 90° + \\dfrac{48°}{2} = 90° + 24° = 114°$",
+      "$\\angle COD = 48°$ dan AD adalah diameter, sehingga busur AD melalui E $=180°$.\nBusur AC yang tidak memuat B $=180°+48°=228°$.\n$\\angle ABC=\\dfrac{1}{2}\\times228°=114°$.",
     tips:
-      "Hafalkan sifat segiempat tali busur dan hubungan sudut pusat-keliling.",
+      "Untuk sudut keliling ABC, gunakan busur AC yang tidak memuat titik B. Jangan memakai busur kecil AC melalui B.",
     kesimpulan: "Besar $\\angle ABC = 114°$.",
   },
   22: {
@@ -252,14 +252,14 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Jari-jari bianglala adalah $21$ m.",
   },
   26: {
-    jawaban: "D. 172 m",
+    jawaban: "C. 116 cm",
     konsepTrik:
-      "Keliling daerah lengkung $=$ jumlah busur + ruas lurus. Untuk dipagari dua kali, kalikan dengan 2.",
+      "Batas kolam terdiri atas dua busur setengah lingkaran berdiameter 14 cm dan dua ruas lurus. Karena panjang keseluruhan 21 cm, tiap ruas lurus panjangnya $21-14=7$ cm.",
     stepByStep:
-      "Hitung keliling daerah (busur + ruas lurus dari gambar).\nMisal $K_{daerah} = 86$ m.\nKawat = $2 \\times 86 = 172$ m.",
+      "Panjang satu busur setengah lingkaran berdiameter 14 cm $=\\dfrac{1}{2}\\pi d=\\dfrac{1}{2}\\times\\dfrac{22}{7}\\times14=22$ cm.\nDua busur $=2\\times22=44$ cm.\nDua ruas lurus $=2\\times7=14$ cm.\nKeliling kolam $=44+14=58$ cm.\nDua putaran kawat $=2\\times58=116$ cm.",
     tips:
-      "Baca dengan teliti: 'dua kali putaran' artinya kawat dilipat dua keliling.",
-    kesimpulan: "Kawat berduri yang dibutuhkan minimum $172$ m.",
+      "Ukuran 21 cm pada gambar adalah panjang keseluruhan; bagian lurus bukan 21 cm, melainkan $21-14=7$ cm.",
+    kesimpulan: "Panjang minimum kawat berduri adalah $116$ cm.",
   },
   27: {
     jawaban: "B. 146 $m^2$",
@@ -272,24 +272,24 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Luas yang tidak termakan adalah $146$ $m^2$.",
   },
   28: {
-    jawaban: "C. 132 m",
+    jawaban: "D. 160 m",
     konsepTrik:
-      "Keliling daerah lengkung $=$ busur + ruas lurus, kalikan 2 untuk dua kali putaran.",
+      "Keliling kolam terdiri atas busur setengah lingkaran luar, busur setengah lingkaran dalam, dan dua ruas lurus masing-masing 7 m.",
     stepByStep:
-      "Hitung keliling daerah dari gambar (busur + lurus).\nMisal $K = 66$ m.\nKawat $= 2 \\times 66 = 132$ m.",
+      "Jari-jari luar $=28/2=14$ m dan jari-jari dalam $=7$ m.\nBusur luar $=\\pi\\times14=14\\pi=44$ m.\nBusur dalam $=\\pi\\times7=7\\pi=22$ m.\nDua ruas lurus $=2\\times7=14$ m.\nKeliling kolam $=44+22+14=80$ m.\nDua putaran kawat $=2\\times80=160$ m.",
     tips:
-      "Identifikasi semua busur (gunakan sudut pusat dan jari-jari) sebelum menjumlah.",
-    kesimpulan: "Kawat minimum yang dibutuhkan adalah $132$ m.",
+      "Jangan menjumlahkan diameter sebagai bagian dari pagar; yang dihitung adalah dua busur dan dua ruas lurus pada batas kolam.",
+    kesimpulan: "Panjang minimum kawat yang dibutuhkan adalah $160$ m.",
   },
   29: {
-    jawaban: "C. 34 cm",
+    jawaban: "B. 26 cm",
     konsepTrik:
       "Garis singgung tegak lurus jari-jari di titik singgung. Gunakan Pythagoras: $OP^2 = r^2 + AP^2$.",
     stepByStep:
-      "Misal $r = 16$ cm, $AP = 30$ cm (panjang singgung):\n$OP = \\sqrt{16^2 + 30^2} = \\sqrt{256+900} = \\sqrt{1156} = 34$ cm",
+      "Dari gambar, $OQ=10$ cm dan $QP=24$ cm. Karena jari-jari tegak lurus garis singgung, $\\triangle OQP$ siku-siku di Q.\n$OP=\\sqrt{OQ^2+QP^2}=\\sqrt{10^2+24^2}=\\sqrt{100+576}=\\sqrt{676}=26$ cm.",
     tips:
-      "Cari tripel Pythagoras untuk mempercepat: $16$-$30$-$34$ adalah kelipatan $8$-$15$-$17$.",
-    kesimpulan: "Panjang $OP = 34$ cm.",
+      "Gunakan data yang benar-benar tertulis pada gambar: 10 cm adalah jari-jari dan 24 cm adalah panjang garis singgung.",
+    kesimpulan: "Panjang $OP=26$ cm.",
   },
   30: {
     jawaban: "B. 17 cm",
@@ -316,7 +316,7 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     konsepTrik:
       "Garis Singgung Persekutuan Dalam (GSPD): $d = \\sqrt{p^2 - (R+r)^2}$.",
     stepByStep:
-      "Misal $p = 13$, $R = 4$, $r = 1$:\n$d = \\sqrt{13^2 - (4+1)^2} = \\sqrt{169 - 25} = \\sqrt{144} = 12$ cm",
+      "Dari gambar, $AB=20$ cm, jari-jari lingkaran pertama $=11$ cm, dan jari-jari lingkaran kedua $=5$ cm.\n$d=\\sqrt{AB^2-(R+r)^2}=\\sqrt{20^2-(11+5)^2}=\\sqrt{400-256}=\\sqrt{144}=12$ cm.",
     tips:
       "GSPD pakai $(R+r)$, GSPL pakai $(R-r)$ — jangan tertukar.",
     kesimpulan: "Panjang GSPD $= 12$ cm.",
@@ -334,31 +334,31 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
   34: {
     jawaban: "C. $\\dfrac{5}{2}\\sqrt{39}$",
     konsepTrik:
-      "Dua lingkaran kecil bersinggungan dengan sisi-sisi $\\triangle ABC$. Gunakan GSPD untuk menentukan tinggi segitiga.",
+      "Pada gambar, panjang segmen singgung persekutuan dalam adalah $\\sqrt{AB^2-(AD+BE)^2}$. Hubungan kesebangunan pada konfigurasi segitiga siku-siku memberikan tinggi segitiga.",
     stepByStep:
       "$AD = 3{,}5$, $BE = 1{,}5$, $AB = 8$\nGSPD $= \\sqrt{8^2 - (3{,}5+1{,}5)^2} = \\sqrt{64-25} = \\sqrt{39}$\nLuas $\\triangle ABC = \\dfrac{1}{2} \\cdot AB \\cdot t = \\dfrac{1}{2} \\cdot 8 \\cdot \\dfrac{5}{8}\\sqrt{39} = \\dfrac{5}{2}\\sqrt{39}$",
     tips:
-      "Hitung dulu jarak antar titik singgung dengan rumus GSPD, lalu gunakan kesebangunan untuk tinggi.",
+      "Jumlahkan $AD+BE$ karena garis singgungnya berada di antara dua lingkaran. Setelah memperoleh $\\sqrt{39}$, gunakan perbandingan pada gambar untuk mendapatkan $t=\\dfrac{5}{8}\\sqrt{39}$.",
     kesimpulan: "Luas $\\triangle ABC = \\dfrac{5}{2}\\sqrt{39}$ $cm^2$.",
   },
   35: {
     jawaban: "A. 256 cm",
     konsepTrik:
-      "6 kaleng yang disusun rapat $\\to$ tali = 6 ruas lurus (sepanjang $2r$ tiap ruas) + lengkungan total = keliling 1 lingkaran penuh.",
+      "Enam kaleng membentuk susunan segitiga dengan tiga sisi selubung lurus. Setiap sisi selubung pusat membentang dua diameter, sedangkan total busur sudut luar sama dengan satu keliling lingkaran.",
     stepByStep:
-      "Ruas lurus $= 6 \\times 2r = 6 \\times 28 = 168$ cm\nLengkungan total $= 2\\pi r = \\dfrac{44}{7} \\times 14 = 88$ cm\nTotal tali $= 168 + 88 = 256$ cm",
+      "Diameter kaleng $=2r=28$ cm.\nTiga ruas lurus pada selubung masing-masing membentang dua diameter, sehingga total ruas lurus $=3\\times(2\\times28)=168$ cm.\nTotal busur luar $=2\\pi r=2\\times\\dfrac{22}{7}\\times14=88$ cm.\nPanjang tali $=168+88=256$ cm.",
     tips:
-      "Lengkungan tiap kaleng = $\\dfrac{60°}{360°}$ keliling, total 6 kaleng = 1 keliling penuh.",
+      "Jangan menghitung seluruh keliling keenam lingkaran. Busur yang tampak di luar jika digabungkan hanya setara dengan satu lingkaran penuh.",
     kesimpulan: "Panjang tali minimum adalah $256$ cm.",
   },
   36: {
-    jawaban: "C. 261,6 cm",
+    jawaban: "B. 262,8 cm",
     konsepTrik:
-      "Tali = jumlah ruas lurus (sepanjang $2r$ antara tiap pasang gelas yang bersinggungan) + jumlah busur (totalnya = keliling 1 lingkaran).",
+      "Untuk susunan 2 baris × 5 kolom, tali terpendek mengelilingi selubung persegi panjang yang sudut-sudutnya dibulatkan oleh busur lingkaran.",
     stepByStep:
-      "Susunan 10 gelas $\\to$ ruas lurus $= n \\times 2r$ (sesuai pola susunan).\nLengkungan total $= 2\\pi r = 2 \\times 3{,}14 \\times 10 = 62{,}8$ cm\nTotal $\\approx 261{,}6$ cm.",
+      "Diameter gelas $=2r=20$ cm.\nPanjang sisi lurus atas dan bawah masing-masing $=(5-1)\\times20=80$ cm.\nPanjang sisi lurus kiri dan kanan masing-masing $=20$ cm.\nTotal ruas lurus $=2(80)+2(20)=200$ cm.\nEmpat busur sudut 90° setara dengan satu lingkaran penuh: $2\\pi r=2\\times3{,}14\\times10=62{,}8$ cm.\nPanjang tali $=200+62{,}8=262{,}8$ cm.",
     tips:
-      "Cek pola susunan gelas dengan cermat — banyak ruas lurus tergantung bentuk susunan.",
-    kesimpulan: "Panjang tali minimal adalah $261{,}6$ cm.",
+      "Pada susunan 2×5, jarak lurus dihitung dari pusat gelas paling kiri ke paling kanan, yaitu empat diameter, bukan lima diameter.",
+    kesimpulan: "Panjang tali minimal adalah $262{,}8$ cm.",
   },
 };
