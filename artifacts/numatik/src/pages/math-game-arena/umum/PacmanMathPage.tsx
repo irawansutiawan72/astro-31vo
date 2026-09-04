@@ -546,7 +546,7 @@ const PacmanMathPage = ({
     style: PacmanMathPageProps["variant"] = "classic",
   ) {
     if (style === "integer-addition") {
-      drawMathRunner(ctx, px, py, pac);
+      drawSpider(ctx, px, py, pac);
       return;
     }
     const dir = Math.atan2(pac.dy, pac.dx) || 0;
@@ -564,7 +564,7 @@ const PacmanMathPage = ({
     ctx.restore();
   }
 
-  function drawMathRunner(
+  function drawSpider(
     ctx: CanvasRenderingContext2D,
     px: number,
     py: number,
@@ -572,52 +572,80 @@ const PacmanMathPage = ({
   ) {
     const dir = Math.atan2(pac.dy, pac.dx) || 0;
     const r = CELL / 2 - 2;
+    const mouthOpen = 0.22 + pac.mouthA * 0.9;
     ctx.save();
     ctx.translate(px, py);
     ctx.rotate(dir);
+
+    // Eight articulated legs give the player a clearly spider-like silhouette.
+    ctx.strokeStyle = "#67e8f9";
+    ctx.lineWidth = Math.max(1.5, r * 0.16);
+    ctx.lineCap = "round";
+    for (const side of [-1, 1]) {
+      for (let i = 0; i < 4; i++) {
+        const y = (i - 1.5) * r * 0.42;
+        const bendX = side * (r * (0.92 + i * 0.05));
+        const bendY = y + (i - 1.5) * r * 0.2;
+        const footX = side * r * (1.18 + (i % 2) * 0.12);
+        const footY = y + (i - 1.5) * r * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(side * r * 0.42, y);
+        ctx.lineTo(bendX, bendY);
+        ctx.lineTo(footX, footY);
+        ctx.stroke();
+      }
+    }
+
     ctx.shadowColor = "#67e8f9";
     ctx.shadowBlur = 18;
-    const body = ctx.createLinearGradient(-r, -r, r, r);
-    body.addColorStop(0, "#e0f2fe");
-    body.addColorStop(0.28, "#67e8f9");
-    body.addColorStop(0.7, "#06b6d4");
-    body.addColorStop(1, "#155e75");
-    ctx.fillStyle = body;
+    const abdomen = ctx.createRadialGradient(-r * 0.2, r * 0.12, 1, 0, 0, r);
+    abdomen.addColorStop(0, "#e0f2fe");
+    abdomen.addColorStop(0.3, "#67e8f9");
+    abdomen.addColorStop(0.72, "#06b6d4");
+    abdomen.addColorStop(1, "#155e75");
+    ctx.fillStyle = abdomen;
     ctx.beginPath();
-    ctx.moveTo(-r * 0.52, -r * 0.88);
-    ctx.quadraticCurveTo(0, -r * 1.12, r * 0.52, -r * 0.88);
-    ctx.quadraticCurveTo(r * 0.98, -r * 0.48, r * 0.86, r * 0.16);
-    ctx.quadraticCurveTo(r * 0.7, r * 0.92, 0, r);
-    ctx.quadraticCurveTo(-r * 0.7, r * 0.92, -r * 0.86, r * 0.16);
-    ctx.quadraticCurveTo(-r * 0.98, -r * 0.48, -r * 0.52, -r * 0.88);
-    ctx.closePath();
+    ctx.ellipse(-r * 0.16, r * 0.16, r * 0.58, r * 0.78, -0.18, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // A dark visor and antenna make the mascot read as a small math bot,
-    // rather than a round character with the familiar arcade mouth.
-    ctx.fillStyle = "#164e63";
+    // Glowing eyes and an animated open mouth with fangs.
+    ctx.fillStyle = "#0e7490";
     ctx.beginPath();
-    ctx.ellipse(0, -r * 0.14, r * 0.56, r * 0.27, 0, 0, Math.PI * 2);
+    ctx.ellipse(r * 0.3, -r * 0.48, r * 0.52, r * 0.46, 0.1, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#cffafe";
+    ctx.fillStyle = "#f0fdfa";
     ctx.beginPath();
-    ctx.arc(-r * 0.25, -r * 0.16, r * 0.09, 0, Math.PI * 2);
-    ctx.arc(r * 0.25, -r * 0.16, r * 0.09, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = "#083344";
-    ctx.lineWidth = Math.max(1, r * 0.12);
-    ctx.beginPath();
-    ctx.moveTo(0, -r * 0.72);
-    ctx.lineTo(0, -r * 1.15);
-    ctx.stroke();
-    ctx.fillStyle = "#fbbf24";
-    ctx.beginPath();
-    ctx.arc(0, -r * 1.23, r * 0.12, 0, Math.PI * 2);
+    ctx.arc(r * 0.18, -r * 0.58, r * 0.12, 0, Math.PI * 2);
+    ctx.arc(r * 0.49, -r * 0.54, r * 0.12, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = "#083344";
-    ctx.fillRect(-r * 0.16, r * 0.42, r * 0.32, r * 0.1);
-    ctx.fillRect(-r * 0.05, r * 0.31, r * 0.1, r * 0.32);
+    ctx.beginPath();
+    ctx.arc(r * 0.2, -r * 0.58, r * 0.05, 0, Math.PI * 2);
+    ctx.arc(r * 0.51, -r * 0.54, r * 0.05, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#240b36";
+    ctx.strokeStyle = "#fda4af";
+    ctx.lineWidth = Math.max(0.8, r * 0.06);
+    ctx.beginPath();
+    ctx.moveTo(r * 0.52, -r * 0.38);
+    ctx.quadraticCurveTo(r * 0.95, -r * 0.38 - r * mouthOpen, r * 1.0, -r * 0.1);
+    ctx.quadraticCurveTo(r * 0.93, -r * 0.1 + r * mouthOpen, r * 0.52, -r * 0.12);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    ctx.fillStyle = "#fff1f2";
+    ctx.beginPath();
+    ctx.moveTo(r * 0.63, -r * 0.31);
+    ctx.lineTo(r * 0.73, -r * 0.2);
+    ctx.lineTo(r * 0.63, -r * 0.18);
+    ctx.closePath();
+    ctx.moveTo(r * 0.84, -r * 0.3);
+    ctx.lineTo(r * 0.91, -r * 0.2);
+    ctx.lineTo(r * 0.8, -r * 0.18);
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
   }
 
@@ -629,7 +657,7 @@ const PacmanMathPage = ({
     style: PacmanMathPageProps["variant"] = "classic",
   ) {
     if (style === "integer-addition") {
-      drawMathWraith(ctx, gx, gy, g);
+      drawReptile(ctx, gx, gy, g);
       return;
     }
     const r = CELL / 2 - 1;
@@ -667,7 +695,7 @@ const PacmanMathPage = ({
     ctx.restore();
   }
 
-  function drawMathWraith(ctx: CanvasRenderingContext2D, gx: number, gy: number, g: Ghost) {
+  function drawReptile(ctx: CanvasRenderingContext2D, gx: number, gy: number, g: Ghost) {
     const r = CELL / 2 - 1;
     const frightened = g.frightTimer > 0;
     const mainColor = frightened
@@ -677,18 +705,28 @@ const PacmanMathPage = ({
     ctx.translate(gx, gy);
     ctx.shadowColor = frightened ? "#818cf8" : g.glowColor;
     ctx.shadowBlur = 14;
+
+    // A long curved tail and four tiny legs make each enemy read as a reptile.
+    ctx.strokeStyle = mainColor;
+    ctx.lineWidth = Math.max(2, r * 0.32);
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.28, r * 0.18);
+    ctx.bezierCurveTo(-r * 0.85, r * 0.1, -r * 1.0, r * 0.9, -r * 1.42, r * 0.5);
+    ctx.stroke();
+    ctx.lineWidth = Math.max(1, r * 0.11);
+    for (const side of [-1, 1]) {
+      for (const y of [-r * 0.28, r * 0.42]) {
+        ctx.beginPath();
+        ctx.moveTo(side * r * 0.28, y);
+        ctx.lineTo(side * r * 0.62, y + side * r * 0.2);
+        ctx.stroke();
+      }
+    }
+
     ctx.fillStyle = mainColor;
     ctx.beginPath();
-    // Hooded wraith silhouette with uneven shoulders and three wisps.
-    ctx.moveTo(-r * 0.8, r * 0.82);
-    ctx.lineTo(-r * 0.72, -r * 0.15);
-    ctx.quadraticCurveTo(-r * 0.66, -r * 0.9, 0, -r * 1.02);
-    ctx.quadraticCurveTo(r * 0.66, -r * 0.9, r * 0.72, -r * 0.15);
-    ctx.lineTo(r * 0.82, r * 0.82);
-    ctx.lineTo(r * 0.3, r * 0.58);
-    ctx.lineTo(0, r * 0.88);
-    ctx.lineTo(-r * 0.3, r * 0.56);
-    ctx.closePath();
+    ctx.ellipse(-r * 0.05, r * 0.12, r * 0.72, r * 0.52, -0.08, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
@@ -697,24 +735,25 @@ const PacmanMathPage = ({
       ctx.font = "bold 8px monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText("× ×", 0, -r * 0.05);
+      ctx.fillText("×", r * 0.43, -r * 0.1);
     } else {
-      // Hollow diamond eyes and a tiny rune make each enemy read as a
-      // ghost without copying the familiar two-white-eye mascot.
       ctx.fillStyle = "#fef3c7";
-      for (const eyeX of [-r * 0.27, r * 0.27]) {
-        ctx.beginPath();
-        ctx.moveTo(eyeX, -r * 0.35);
-        ctx.lineTo(eyeX + r * 0.13, -r * 0.2);
-        ctx.lineTo(eyeX, -r * 0.05);
-        ctx.lineTo(eyeX - r * 0.13, -r * 0.2);
-        ctx.closePath();
-        ctx.fill();
-      }
-      ctx.strokeStyle = "#2e1065";
-      ctx.lineWidth = 1.4;
       ctx.beginPath();
-      ctx.arc(0, r * 0.22, r * 0.16, Math.PI * 0.15, Math.PI * 0.85);
+      ctx.arc(r * 0.38, -r * 0.18, r * 0.16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#1f2937";
+      ctx.beginPath();
+      ctx.arc(r * 0.42, -r * 0.18, r * 0.07, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#fecdd3";
+      ctx.lineWidth = Math.max(0.8, r * 0.08);
+      ctx.beginPath();
+      ctx.moveTo(r * 0.62, r * 0.08);
+      ctx.lineTo(r * 0.92, r * 0.02);
+      ctx.moveTo(r * 0.92, r * 0.02);
+      ctx.lineTo(r * 1.08, -r * 0.08);
+      ctx.moveTo(r * 0.92, r * 0.02);
+      ctx.lineTo(r * 1.08, r * 0.12);
       ctx.stroke();
     }
     ctx.restore();
@@ -852,7 +891,7 @@ const PacmanMathPage = ({
                   </button>
                 </div>
                  <div className="pm-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>
-                   {variant === "integer-addition" ? "MATH RUNNER" : "PAC MATH"}
+                   {variant === "integer-addition" ? "SPIDER MATH" : "PAC MATH"}
                  </div>
                 <div className="mx-auto mt-0.5 h-0.5 w-28 rounded-full" style={{ background: "linear-gradient(to right,transparent,#facc15,#fb923c,transparent)" }} />
                  <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">
@@ -867,48 +906,64 @@ const PacmanMathPage = ({
                 {/* Left – visual */}
                 <div className="pm-visual">
                   <div className="flex items-end justify-center gap-5 w-full">
-                    {/* Pac-Man side */}
+                    {/* Spider side */}
                     <div className="flex flex-col items-center gap-0.5">
                       <div className="text-[7px] text-cyan-300/80 font-bold tracking-wider uppercase">
-                        {variant === "integer-addition" ? "MATH RUNNER" : "PAC-MAN"}
+                        {variant === "integer-addition" ? "SPIDER MATH" : "PAC-MAN"}
                       </div>
                       <div className="relative">
                         <div className="absolute inset-0 pointer-events-none" style={{ background: variant === "integer-addition" ? "radial-gradient(circle,rgba(34,211,238,0.3) 0%,transparent 70%)" : "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
                         {variant === "integer-addition" ? (
-                          <svg viewBox="0 0 72 72" className="pm-chomp relative z-10 w-16 h-16" style={{ filter: "drop-shadow(0 0 12px #22d3ee)" }} aria-label="Math Runner">
-                            <path d="M19 15Q36 6 53 15Q66 27 60 45Q53 63 36 65Q19 63 12 45Q6 27 19 15Z" fill="#22d3ee" stroke="#cffafe" strokeWidth="3" />
-                            <ellipse cx="36" cy="34" rx="18" ry="9" fill="#164e63" />
-                            <circle cx="29" cy="33" r="3" fill="#cffafe" /><circle cx="43" cy="33" r="3" fill="#cffafe" />
-                            <path d="M36 17V8" stroke="#083344" strokeWidth="3" strokeLinecap="round" />
-                            <circle cx="36" cy="6" r="3" fill="#fbbf24" />
-                            <path d="M31 49h10M36 44v10" stroke="#083344" strokeWidth="3" strokeLinecap="round" />
+                           <svg viewBox="0 0 92 72" className="pm-chomp relative z-10 w-16 h-16" style={{ filter: "drop-shadow(0 0 12px #22d3ee)" }} aria-label="Spider Math">
+                            <g fill="none" stroke="#67e8f9" strokeWidth="3" strokeLinecap="round">
+                              <path d="M31 27 14 16 7 19M29 34 10 31 4 36M30 42 13 50 7 57M34 48 24 63 17 66" />
+                              <path d="M58 27 75 16 83 19M60 34 80 31 87 36M59 42 76 50 83 57M55 48 65 63 73 66" />
+                            </g>
+                            <ellipse cx="43" cy="43" rx="16" ry="22" fill="#06b6d4" stroke="#cffafe" strokeWidth="3" />
+                            <ellipse cx="53" cy="25" rx="15" ry="13" fill="#0e7490" stroke="#cffafe" strokeWidth="3" />
+                            <circle cx="48" cy="22" r="3.5" fill="#f0fdfa" /><circle cx="59" cy="24" r="3.5" fill="#f0fdfa" />
+                            <circle cx="49" cy="22" r="1.5" fill="#083344" /><circle cx="60" cy="24" r="1.5" fill="#083344" />
+                            <path d="M61 29Q75 33 62 39Q58 35 61 29Z" fill="#240b36" stroke="#fda4af" strokeWidth="1.5">
+                              <animate attributeName="d" dur="0.5s" repeatCount="indefinite"
+                                values="M61 29Q75 33 62 39Q58 35 61 29Z;M61 27Q78 34 62 42Q57 35 61 27Z;M61 29Q75 33 62 39Q58 35 61 29Z" />
+                            </path>
+                            <path d="M63 30 66 34 63 35M70 32 72 35 69 36" fill="#fff1f2" stroke="#fff1f2" strokeWidth="1" />
+                            <path d="M43 49h8M47 45v8" stroke="#083344" strokeWidth="2.5" strokeLinecap="round" />
                           </svg>
                         ) : (
                           <div className="pm-chomp relative z-10 text-5xl" style={{ filter: "drop-shadow(0 0 16px #facc15) drop-shadow(0 0 32px #f59e0b)" }}>😁</div>
                         )}
                       </div>
                       <div className="w-1.5 h-4 rounded-full" style={{ background: variant === "integer-addition" ? "linear-gradient(to bottom,rgba(34,211,238,0.8),transparent)" : "linear-gradient(to bottom,rgba(250,204,21,0.8),transparent)" }} />
-                      <div className="text-[8px] font-bold text-cyan-300">{variant === "integer-addition" ? "PENJUMLAH" : "KAMU"}</div>
+                       <div className="text-[8px] font-bold text-cyan-300">{variant === "integer-addition" ? "LABA-LABA" : "KAMU"}</div>
                     </div>
 
                     <div className="flex flex-col items-center pb-4">
                       <div className="text-xl font-black text-white/20">VS</div>
                     </div>
 
-                    {/* Ghosts side */}
+                    {/* Reptile side */}
                     <div className="flex flex-col items-center gap-1.5">
-                      <div className="text-[7px] text-violet-300/70 font-bold tracking-wider uppercase mb-0.5">WRAITH MUSUH</div>
+                      <div className="text-[7px] text-violet-300/70 font-bold tracking-wider uppercase mb-0.5">REPTIL BEREKOR</div>
                       <div className="grid grid-cols-2 gap-1.5">
                         {([
-                          { glow: "#ff4444", name: "BLINKY", delay: "0s" },
-                          { glow: "#ff9ff3", name: "PINKY",  delay: "0.5s" },
-                          { glow: "#00d2ff", name: "INKY",   delay: "1s" },
-                          { glow: "#ffa500", name: "CLYDE",  delay: "1.5s" },
+                           { glow: "#ff4444", name: "SKINK", delay: "0s" },
+                           { glow: "#ff9ff3", name: "GECKO",  delay: "0.5s" },
+                           { glow: "#00d2ff", name: "IGUANA",   delay: "1s" },
+                           { glow: "#ffa500", name: "VARAN",  delay: "1.5s" },
                         ]).map(g => (
                           <div key={g.name} className="flex flex-col items-center gap-0.5 rounded-lg p-1.5 border"
                             style={{ borderColor: g.glow + "55", background: g.glow + "12", boxShadow: `0 0 10px ${g.glow}33` }}>
                             <div className="pm-fb text-2xl" style={{ animationDelay: g.delay, filter: `drop-shadow(0 0 7px ${g.glow})` }}>
-                              {variant === "integer-addition" ? "◈" : "👻"}
+                               {variant === "integer-addition" ? (
+                                 <svg viewBox="0 0 54 34" className="w-8 h-6" aria-label={`${g.name} reptil`}>
+                                   <path d="M15 18Q7 13 3 17Q8 20 15 21" fill="none" stroke={g.glow} strokeWidth="3" strokeLinecap="round" />
+                                   <ellipse cx="28" cy="18" rx="15" ry="8" fill={g.glow} opacity="0.85" />
+                                   <path d="M37 17Q47 11 52 17L45 23Q40 24 37 21Z" fill={g.glow} />
+                                   <circle cx="46" cy="16" r="2" fill="#fff" /><circle cx="46" cy="16" r="0.8" fill="#111827" />
+                                   <path d="M22 23 18 30M31 23 35 30" stroke={g.glow} strokeWidth="2" strokeLinecap="round" />
+                                 </svg>
+                               ) : "👻"}
                             </div>
                             <span className="text-[6px] font-bold" style={{ color: g.glow }}>{g.name}</span>
                           </div>
@@ -953,8 +1008,8 @@ const PacmanMathPage = ({
                       { icon: variant === "integer-addition" ? "🔷" : "🟡", text: variant === "integer-addition" ? "Kumpulkan energi dan pilih hasil penjumlahan bilangan bulat yang tepat" : "Makan semua titik kuning di labirin untuk naik level" },
                       { icon: "⚡", text: "4 pelet warna besar = pilihan jawaban soal matematika" },
                       { icon: "✅", text: "Pelet BENAR = +500 poin + semua hantu ketakutan!" },
-                      { icon: variant === "integer-addition" ? "◈" : "👻", text: variant === "integer-addition" ? "Kalahkan wraith yang melemah untuk bonus +300 poin" : "Makan hantu ketakutan (biru) = +300 poin bonus" },
-                      { icon: "❌", text: variant === "integer-addition" ? "Jangan sampai tertangkap wraith — kamu punya 3 nyawa!" : "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
+                      { icon: variant === "integer-addition" ? "🦎" : "👻", text: variant === "integer-addition" ? "Kalahkan reptil yang melemah untuk bonus +300 poin" : "Makan hantu ketakutan (biru) = +300 poin bonus" },
+                      { icon: "❌", text: variant === "integer-addition" ? "Jangan sampai tertangkap reptil — kamu punya 3 nyawa!" : "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
                     ].map(({ icon, text }) => (
                       <div key={text} className="flex items-start gap-2 px-1">
                         <span className="text-sm shrink-0 leading-none mt-0.5">{icon}</span>
@@ -996,7 +1051,7 @@ const PacmanMathPage = ({
               <span className="hidden sm:inline">Kembali</span>
             </button>
             <h1 className="font-display text-xl font-bold text-center flex-1" style={{ background: "linear-gradient(90deg,#facc15,#fbbf24,#fb923c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-               {variant === "integer-addition" ? "✚ MATH RUNNER" : "😁 PAC MATH"}
+               {variant === "integer-addition" ? "🕷️ SPIDER MATH" : "😁 PAC MATH"}
             </h1>
             <button onClick={() => { playPopSound(); navigate('/ruang-untuk-guru/numatik-game'); }}
               className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-display font-bold text-xs shadow-[0_0_15px_rgba(250,204,21,0.4)] hover:opacity-90 transition-opacity cursor-pointer">
