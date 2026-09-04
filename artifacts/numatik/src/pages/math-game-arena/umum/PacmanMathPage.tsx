@@ -47,6 +47,43 @@ const BASE_MAZE: number[][] = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], // 20
 ];
 
+// A radial nest layout for Spider Math. The open cardinal gaps connect the
+// rings, while the four outer pockets keep the answer pellets easy to read.
+function createSpiderNestMaze(): number[][] {
+  const maze = Array.from({ length: ROWS }, (_, row) =>
+    Array.from({ length: COLS }, (_, col) =>
+      row === 0 || row === ROWS - 1 || col === 0 || col === COLS - 1 ? 1 : 0,
+    ),
+  );
+  const rings = [2, 5, 8, 11, 14, 17];
+  for (const ring of rings) {
+    const opposite = ROWS - 1 - ring;
+    for (let i = ring; i <= opposite; i++) {
+      maze[ring][i] = 1;
+      maze[opposite][i] = 1;
+      maze[i][ring] = 1;
+      maze[i][opposite] = 1;
+    }
+    for (const [row, col] of [[ring, 10], [opposite, 10], [10, ring], [10, opposite]]) {
+      maze[row][col] = 0;
+    }
+  }
+  // Side opening for the original wrap-around movement rule.
+  maze[TUNNEL_ROW][0] = 0;
+  maze[TUNNEL_ROW][COLS - 1] = 0;
+  // Keep the player and enemy staging area open at the central web hub.
+  for (const row of [9, 10, 11]) {
+    for (const col of [9, 10, 11]) maze[row][col] = 0;
+  }
+  // Answer pellets sit in open outer pockets.
+  for (const [row, col] of [[3, 1], [3, 19], [15, 1], [15, 19]]) {
+    maze[row][col] = 2;
+  }
+  return maze;
+}
+
+const SPIDER_NEST_MAZE = createSpiderNestMaze();
+
 // Power-pellet positions and their answer-option index (0-3)
 const POWER_SPOTS: [number, number, number][] = [
   [3, 1, 0], [3, 19, 1], [15, 1, 2], [15, 19, 3],
@@ -209,7 +246,8 @@ const PacmanMathPage = ({
 
   // ── Start / reset ───────────────────────────────────────────────────────
   const startGame = useCallback((resetLives = true) => {
-    const maze = BASE_MAZE.map(r => [...r]);
+    const mazeSource = variant === "integer-addition" ? SPIDER_NEST_MAZE : BASE_MAZE;
+    const maze = mazeSource.map(r => [...r]);
     mazeRef.current = maze;
     dotsLeftRef.current = countDots(maze);
     pacRef.current = { row: 15, col: 10, dx: 0, dy: 0, ndx: 0, ndy: 0, prog: 0, mouthA: 0.25 };
@@ -224,7 +262,7 @@ const PacmanMathPage = ({
     phaseRef.current = "playing";
     setPhase("playing");
     playPopSound();
-  }, [initGhosts, setupQ]);
+  }, [initGhosts, setupQ, variant]);
 
   // ── Ghost AI: choose next direction ─────────────────────────────────────
   const ghostAI = useCallback((g: Ghost, maze: number[][], pac: typeof pacRef.current) => {
@@ -501,23 +539,51 @@ const PacmanMathPage = ({
   // ── Draw helpers ─────────────────────────────────────────────────────────
   function drawMaze(ctx: CanvasRenderingContext2D, maze: number[][]) {
     if (!maze || maze.length < ROWS) return;
+    const isSpiderNest = variant === "integer-addition";
+    if (isSpiderNest) {
+      const centerX = OX + (COLS * CELL) / 2;
+      const centerY = OY + (ROWS * CELL) / 2;
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = "#22d3ee";
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + Math.cos(angle) * 275, centerY + Math.sin(angle) * 275);
+        ctx.stroke();
+      }
+      for (const radius of [78, 156, 234]) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
     for (let r = 0; r < ROWS; r++) {
       if (!maze[r] || maze[r].length < COLS) continue;
       for (let c = 0; c < COLS; c++) {
         const v = maze[r][c];
         const x = OX + c * CELL, y = OY + r * CELL;
         if (v === 1) {
-          ctx.fillStyle = "#00004a";
+          ctx.fillStyle = isSpiderNest ? "#062a31" : "#00004a";
           ctx.fillRect(x, y, CELL, CELL);
-          ctx.strokeStyle = "#1a1aff";
-          ctx.lineWidth = 1;
-          ctx.shadowColor = "#4444ff"; ctx.shadowBlur = 4;
-          ctx.strokeRect(x + 1, y + 1, CELL - 2, CELL - 2);
+          ctx.strokeStyle = isSpiderNest ? "#0e7490" : "#1a1aff";
+          ctx.lineWidth = isSpiderNest ? 1.5 : 1;
+          ctx.shadowColor = isSpiderNest ? "#22d3ee" : "#4444ff"; ctx.shadowBlur = isSpiderNest ? 5 : 4;
+          if (isSpiderNest) {
+            ctx.beginPath();
+            ctx.roundRect(x + 2, y + 2, CELL - 4, CELL - 4, 5);
+            ctx.stroke();
+          } else {
+            ctx.strokeRect(x + 1, y + 1, CELL - 2, CELL - 2);
+          }
           ctx.shadowBlur = 0;
         } else if (v === 0) {
-          ctx.fillStyle = "#ffdd88";
-          ctx.shadowColor = "#ffdd88"; ctx.shadowBlur = 4;
-          ctx.beginPath(); ctx.arc(x + CELL / 2, y + CELL / 2, 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = isSpiderNest ? "#bef264" : "#ffdd88";
+          ctx.shadowColor = isSpiderNest ? "#a3e635" : "#ffdd88"; ctx.shadowBlur = 4;
+          ctx.beginPath(); ctx.arc(x + CELL / 2, y + CELL / 2, isSpiderNest ? 2.2 : 2.5, 0, Math.PI * 2); ctx.fill();
           ctx.shadowBlur = 0;
         } else if (v === 2) {
           const spot = POWER_SPOTS.find(([sr, sc]) => sr === r && sc === c);
