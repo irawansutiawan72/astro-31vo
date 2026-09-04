@@ -9,6 +9,8 @@ import { InlineMath } from 'react-katex';
 import PembahasanCard from "@/components/PembahasanCard";
 import { lingkaranDasarPembahasan } from "@/data/pembahasan/lingkaranDasar";
 import { lingkaranOlimpiadePembahasan } from "@/data/pembahasan/lingkaranOlimpiade";
+import arsiranLingkaran7cm from "@assets/Gemini_Generated_Image_nznv2pnznv2pnznv_(1)_1788488828137.jpg";
+import arsiranLingkaran14cm from "@assets/Gemini_Generated_Image_mtiuzxmtiuzxmtiu_1788488895904.jpg";
 
 const M = ({ math }: { math: string }) => <InlineMath math={math} />;
 
@@ -906,8 +908,8 @@ export const latihanDasar = [
   { no: 9, soal: "Keliling daerah yang diarsir pada gambar berikut adalah ...", options: [] },
   { no: 10, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: [] },
   { no: 11, soal: "Perhatikan gambar berikut!\nKeliling bangun tersebut adalah ...", options: ["A. 213,6 cm", "B. 221,2 cm", "C. 253,6 cm.", "D. 267,6 cm"] },
-  { no: 12, soal: "Perhatikan gambar berikut\nJika total luas bangun di atas 480 $cm^2$, maka luas daerah persegi adalah ...", options: ["A. 24 $cm^2$", "B. 56 $cm^2$", "C. 72 $cm^2$", "D. 84 $cm^2$"] },
-  { no: 13, soal: "Perhatikan gambar persegipanjang dan lingkaran berikut!\nDiketahui A dan B adalah pusat dua lingkaran yang kongruen dan saling bersinggungan luar. ABQP adalah persegi panjang. Luas daerah yang diarsir seluruhnya adalah 1.316 $cm^2$. Luas persegi panjang ABQP adalah....($\\pi = \\frac{22}{7}$)", options: ["A. 196 $cm^2$", "B. 392 $cm^2$", "C. 492 $cm^2$", "D. 512 $cm^2$"] },
+  { no: 12, soal: "Tentukan keliling dan luas daerah yang diarsir pada gambar berikut! Panjang sisi persegi adalah 7 cm. Gunakan $\\pi = \\frac{22}{7}$.", options: ["A. Keliling 22 cm dan luas 28 $cm^2$", "B. Keliling 28 cm dan luas 22 $cm^2$", "C. Keliling 22 cm dan luas 49 $cm^2$", "D. Keliling 44 cm dan luas 28 $cm^2$"] },
+  { no: 13, soal: "Tentukan keliling dan luas seluruh daerah yang diarsir pada gambar berikut! Panjang sisi persegi adalah 14 cm. Gunakan $\\pi = \\frac{22}{7}$.", options: ["A. Keliling 44 cm dan luas 56 $cm^2$", "B. Keliling 88 cm dan luas 112 $cm^2$", "C. Keliling 88 cm dan luas 196 $cm^2$", "D. Keliling 176 cm dan luas 112 $cm^2$"] },
   { no: 14, soal: "Perhatikan gambar di samping ini!\nDiketahui O adalah titik pusat lingkaran. Besar sudut AOB adalah ....", options: ["A. 15°", "B. 30°", "C. 45°", "D. 60°"] },
   { no: 15, soal: "Perhatikan gambar!\nTitik O adalah pusat lingkaran. Diketahui $\\angle ABE + \\angle ACE + \\angle ADE = 96°$ Besar $\\angle AOE$ adalah....", options: ["A. 32°", "B. 48°", "C. 64°", "D. 84°"] },
   { no: 16, soal: "Perhatikan gambar di bawah ini!,\nBesar $\\angle OAD = 20^0$, besar $\\angle OBD = 30^0$, maka besar sudut BOC adalah ....", options: ["A. $50^0$", "B. $70^0$", "C. $80^0$", "D. $100^0$"] },
@@ -945,8 +947,8 @@ export const dasarImages: Record<number, string> = {
   9: "https://drive.google.com/thumbnail?id=1GMjpq_WbDI8rdaftyeHAX9aHptCiOMcX&sz=w400",
   10: "https://drive.google.com/thumbnail?id=1-MI1v7m9cnAP3zqN7RYHmvQzZEZmRHSe&sz=w400",
   11: "https://drive.google.com/thumbnail?id=1Ou6XsR_gmuUCshF10l7vpy8-bMVBkK-q&sz=w400",
-  12: "https://drive.google.com/thumbnail?id=1bWGArHv-504UUP0ub_j1CYxOJb3QNH3Y&sz=w400",
-  13: "https://drive.google.com/thumbnail?id=1XB3YlEtXMnU1S4WoBJUjgzYnrOdLEWX2&sz=w400",
+  12: arsiranLingkaran7cm,
+  13: arsiranLingkaran14cm,
   14: "https://drive.google.com/thumbnail?id=10SJmtwJyVZ63Ydef9n6XTeTsqzQtoDjD&sz=w400",
   15: "https://drive.google.com/thumbnail?id=18Ree_uwr92Iv8i0bbnGeXbYxWDnDQRXC&sz=w400",
   16: "https://drive.google.com/thumbnail?id=1spb_GAwyyN74ttxevbQZEVW3pc0jhdie&sz=w400",

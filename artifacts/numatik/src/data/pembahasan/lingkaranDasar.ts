@@ -112,24 +112,24 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Keliling bangun adalah $253{,}6$ cm.",
   },
   12: {
-    jawaban: "D. 84 $cm^2$",
+    jawaban: "A. Keliling 22 cm dan luas 28 $cm^2$",
     konsepTrik:
-      "Luas total bangun $=$ luas persegi $+$ luas setengah/lingkaran. Cari luas persegi $= L_{total} - L_{lingkaran}$.",
+      "Daerah arsir dibatasi oleh dua busur seperempat lingkaran berjari-jari 7 cm. Kelilingnya adalah jumlah kedua busur, sedangkan luasnya adalah dua juring seperempat lingkaran dikurangi dua segitiga siku-siku.",
     stepByStep:
-      "$L_{total} = 480$ $cm^2$\n$L_{lingkaran} = 480 - L_{persegi}$\nDengan menghitung bagian lingkaran (mis. $396$ $cm^2$), maka $L_{persegi} = 480 - 396 = 84$ $cm^2$.",
+      "$K = 2 \\times \\dfrac{90°}{360°} \\times 2\\pi r = \\pi r = \\dfrac{22}{7} \\times 7 = 22$ cm\n\n$L = 2\\left(\\dfrac{90°}{360°}\\pi r^2 - \\dfrac{1}{2}r^2\\right)$\n$= 2\\left(\\dfrac{1}{4} \\times \\dfrac{22}{7} \\times 7^2 - \\dfrac{1}{2} \\times 7^2\\right)$\n$= 2(38{,}5 - 24{,}5) = 28$ $cm^2$",
     tips:
-      "Pisahkan daerah dengan cermat — gambar bantuan sangat membantu.",
-    kesimpulan: "Luas persegi adalah $84$ $cm^2$.",
+      "Untuk keliling, hitung hanya busur yang menjadi batas daerah arsir. Untuk luas, kurangi luas segitiga dari luas juring.",
+    kesimpulan: "Keliling daerah arsir adalah 22 cm dan luasnya 28 $cm^2$.",
   },
   13: {
-    jawaban: "B. 392 $cm^2$",
+    jawaban: "B. Keliling 88 cm dan luas 112 $cm^2$",
     konsepTrik:
-      "Dua lingkaran kongruen bersinggungan luar dalam persegi panjang $ABQP$ dengan tinggi $= 2r$ dan panjang $= 4r$.",
+      "Gambar terdiri atas empat daerah arsir yang kongruen. Setiap kelopak dibatasi dua busur seperempat lingkaran berjari-jari 7 cm.",
     stepByStep:
-      "Misal jari-jari lingkaran $= r$.\n$L_{ABQP} = 4r \\times 2r = 8r^2$\n$L_{2 lingkaran} = 2\\pi r^2 = \\dfrac{44}{7}r^2$\nDaerah arsir $= 8r^2 - \\dfrac{44}{7}r^2 = \\dfrac{12r^2}{7}$\nDari soal ada hubungan sehingga $r = 7$ cm.\n$L_{ABQP} = 8(49) = 392$ $cm^2$",
+      "Sisi persegi 14 cm, sehingga jari-jari setiap busur adalah $r = 14 \\div 2 = 7$ cm.\n\nKeliling satu kelopak $= 2 \\times \\dfrac{1}{4} \\times 2\\pi r = 7\\pi = 22$ cm.\nKeliling seluruh arsiran $= 4 \\times 22 = 88$ cm.\n\nLuas satu kelopak $= 2\\left(\\dfrac{1}{4}\\pi r^2 - \\dfrac{1}{2}r^2\\right) = 28$ $cm^2$.\nLuas seluruh arsiran $= 4 \\times 28 = 112$ $cm^2$.",
     tips:
-      "Selalu perhatikan rasio antara panjang dan lebar persegi panjang yang melingkupi lingkaran.",
-    kesimpulan: "Luas persegi panjang $ABQP = 392$ $cm^2$.",
+      "Gunakan simetri: hitung satu kelopak terlebih dahulu, kemudian kalikan empat.",
+    kesimpulan: "Keliling seluruh daerah arsir adalah 88 cm dan luasnya 112 $cm^2$.",
   },
   14: {
     jawaban: "C. 45°",
