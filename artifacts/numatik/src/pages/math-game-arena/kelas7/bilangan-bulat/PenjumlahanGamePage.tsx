@@ -122,7 +122,7 @@ const variants: GameVariant[] = [
   {
     name: "Pac Math",
     emoji: "👾",
-    description: "Gerakkan Pac-Man, makan semua titik, hindari hantu! Soal muncul tiap 25 detik.",
+    description: "Gerakkan Math Runner, kumpulkan energi, dan hindari Wraith! Pilih hasil penjumlahan yang tepat.",
     path: "/math-game-arena/kelas-7/bilangan-bulat/penjumlahan/pac-math",
     from: "#eab308",
     to: "#f97316",

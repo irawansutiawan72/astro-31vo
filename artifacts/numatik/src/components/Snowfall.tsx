@@ -139,9 +139,10 @@ const Snowfall = () => {
     };
   }, []);
 
-  return (
-    <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
-  );
+  // The light theme is intentionally clean. Keep this component as a
+  // compatibility shim for older pages that still import it, but don't
+  // render the old snow effect over the white UI.
+  return null;
 };
 
 export default Snowfall;

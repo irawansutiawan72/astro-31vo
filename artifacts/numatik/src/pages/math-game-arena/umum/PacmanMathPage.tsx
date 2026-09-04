@@ -54,8 +54,18 @@ const POWER_SPOTS: [number, number, number][] = [
 
 // ── Math questions ────────────────────────────────────────────────────────
 interface MQ { q: string; ans: number }
+interface PacmanMathPageProps {
+  variant?: "classic" | "integer-addition";
+  topicLabel?: string;
+}
 function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
-const makeQ = (): MQ => {
+const makeQ = (variant: PacmanMathPageProps["variant"] = "classic"): MQ => {
+  if (variant === "integer-addition") {
+    const a = Math.floor(Math.random() * 31) - 15;
+    const b = Math.floor(Math.random() * 31) - 15;
+    const operator = b < 0 ? "−" : "+";
+    return { q: `${a} ${operator} ${Math.abs(b)}`, ans: a + b };
+  }
   const t = Math.floor(Math.random() * 8);
   switch (t) {
     case 0: { const a = 2 + Math.floor(Math.random() * 9), b = 2 + Math.floor(Math.random() * 9); return { q: `${a} × ${b}`, ans: a * b }; }
@@ -103,7 +113,10 @@ function countDots(maze: number[][]): number {
 }
 
 // ── Main component ────────────────────────────────────────────────────────
-const PacmanMathPage = () => {
+const PacmanMathPage = ({
+  variant = "classic",
+  topicLabel,
+}: PacmanMathPageProps = {}) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLight = theme === "light";
@@ -150,7 +163,7 @@ const PacmanMathPage = () => {
 
   // ── Setup question ──────────────────────────────────────────────────────
   const setupQ = useCallback(() => {
-    const mq = makeQ();
+    const mq = makeQ(variant);
     mqRef.current = mq;
     const ci = Math.floor(Math.random() * 4);
     correctOptRef.current = ci;
@@ -166,7 +179,7 @@ const PacmanMathPage = () => {
     setQuestion(mq.q);
     setOpts([...vals]);
     setCorrectOpt(ci);
-  }, []);
+  }, [variant]);
 
   // ── Flash ───────────────────────────────────────────────────────────────
   const flash = useCallback((msg: string) => {
@@ -304,17 +317,7 @@ const PacmanMathPage = () => {
       ctx.fillRect(0, 0, CW, CH);
       drawMaze(ctx, mazeRef.current);
       const [px, py] = cellCenter(pacRef.current.row, pacRef.current.col);
-      const dyingFrac = 1 - dyingTimerRef.current / 60;
-      ctx.save();
-      ctx.shadowColor = "#facc15"; ctx.shadowBlur = 16;
-      ctx.fillStyle = "#facc15";
-      const mouthClose = Math.min(1, dyingFrac * 2) * Math.PI;
-      ctx.beginPath();
-      ctx.moveTo(px, py);
-      ctx.arc(px, py, CELL / 2 - 1, mouthClose / 2, Math.PI * 2 - mouthClose / 2);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
+      drawPac(ctx, px, py, pacRef.current, variant);
       drawHUD(ctx);
       return;
     }
@@ -464,14 +467,14 @@ const PacmanMathPage = () => {
       const renderR = g.row + g.ndy * g.prog;
       const renderC = g.col + g.ndx * g.prog;
       const [gx, gy] = cellCenter(renderR, renderC);
-      drawGhost(ctx, gx, gy, g);
+      drawGhost(ctx, gx, gy, g, variant);
     }
 
     // Pac-Man
     const renderR = pac.row + pac.dy * pac.prog;
     const renderC = pac.col + pac.dx * pac.prog;
     const [px, py] = cellCenter(renderR, renderC);
-    drawPac(ctx, px, py, pac);
+    drawPac(ctx, px, py, pac, variant);
 
     // Particles
     for (const p of particlesRef.current) {
@@ -493,7 +496,7 @@ const PacmanMathPage = () => {
     }
 
     drawHUD(ctx);
-  }, [startGame, eatCell, ghostAI, burst, flash, setupQ]);
+  }, [startGame, eatCell, ghostAI, burst, flash, setupQ, variant]);
 
   // ── Draw helpers ─────────────────────────────────────────────────────────
   function drawMaze(ctx: CanvasRenderingContext2D, maze: number[][]) {
@@ -535,7 +538,17 @@ const PacmanMathPage = () => {
     }
   }
 
-  function drawPac(ctx: CanvasRenderingContext2D, px: number, py: number, pac: typeof pacRef.current) {
+  function drawPac(
+    ctx: CanvasRenderingContext2D,
+    px: number,
+    py: number,
+    pac: typeof pacRef.current,
+    style: PacmanMathPageProps["variant"] = "classic",
+  ) {
+    if (style === "integer-addition") {
+      drawMathRunner(ctx, px, py, pac);
+      return;
+    }
     const dir = Math.atan2(pac.dy, pac.dx) || 0;
     ctx.save();
     ctx.translate(px, py);
@@ -551,7 +564,59 @@ const PacmanMathPage = () => {
     ctx.restore();
   }
 
-  function drawGhost(ctx: CanvasRenderingContext2D, gx: number, gy: number, g: Ghost) {
+  function drawMathRunner(
+    ctx: CanvasRenderingContext2D,
+    px: number,
+    py: number,
+    pac: typeof pacRef.current,
+  ) {
+    const dir = Math.atan2(pac.dy, pac.dx) || 0;
+    const r = CELL / 2 - 2;
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(dir);
+    ctx.shadowColor = "#22d3ee";
+    ctx.shadowBlur = 18;
+    const body = ctx.createLinearGradient(-r, -r, r, r);
+    body.addColorStop(0, "#a5f3fc");
+    body.addColorStop(0.45, "#22d3ee");
+    body.addColorStop(1, "#0e7490");
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.moveTo(r * 0.98, 0);
+    ctx.lineTo(r * 0.42, -r * 0.82);
+    ctx.lineTo(-r * 0.45, -r * 0.74);
+    ctx.lineTo(-r * 0.92, 0);
+    ctx.lineTo(-r * 0.45, r * 0.74);
+    ctx.lineTo(r * 0.42, r * 0.82);
+    ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // The plus badge makes this a math character, not a mouth-shaped
+    // arcade mascot.
+    ctx.fillStyle = "#083344";
+    ctx.fillRect(-r * 0.18, -r * 0.08, r * 0.36, r * 0.16);
+    ctx.fillRect(-r * 0.08, -r * 0.18, r * 0.16, r * 0.36);
+    ctx.fillStyle = "#ecfeff";
+    ctx.beginPath();
+    ctx.arc(-r * 0.24, -r * 0.24, r * 0.12, 0, Math.PI * 2);
+    ctx.arc(r * 0.24, -r * 0.24, r * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawGhost(
+    ctx: CanvasRenderingContext2D,
+    gx: number,
+    gy: number,
+    g: Ghost,
+    style: PacmanMathPageProps["variant"] = "classic",
+  ) {
+    if (style === "integer-addition") {
+      drawMathWraith(ctx, gx, gy, g);
+      return;
+    }
     const r = CELL / 2 - 1;
     const fright = g.frightTimer > 0;
     const mainColor = fright ? (g.frightTimer < 80 && Math.floor(g.frightTimer / 10) % 2 === 0 ? "#ffffff" : "#0000cc") : g.color;
@@ -584,6 +649,59 @@ const PacmanMathPage = () => {
       ctx.textAlign = "left";
     }
     ctx.shadowBlur = 0;
+    ctx.restore();
+  }
+
+  function drawMathWraith(ctx: CanvasRenderingContext2D, gx: number, gy: number, g: Ghost) {
+    const r = CELL / 2 - 1;
+    const frightened = g.frightTimer > 0;
+    const mainColor = frightened
+      ? (g.frightTimer < 80 && Math.floor(g.frightTimer / 10) % 2 === 0 ? "#f8fafc" : "#6366f1")
+      : g.color;
+    ctx.save();
+    ctx.translate(gx, gy);
+    ctx.shadowColor = frightened ? "#818cf8" : g.glowColor;
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = mainColor;
+    ctx.beginPath();
+    // Hooded wraith silhouette with uneven shoulders and three wisps.
+    ctx.moveTo(-r * 0.8, r * 0.82);
+    ctx.lineTo(-r * 0.72, -r * 0.15);
+    ctx.quadraticCurveTo(-r * 0.66, -r * 0.9, 0, -r * 1.02);
+    ctx.quadraticCurveTo(r * 0.66, -r * 0.9, r * 0.72, -r * 0.15);
+    ctx.lineTo(r * 0.82, r * 0.82);
+    ctx.lineTo(r * 0.3, r * 0.58);
+    ctx.lineTo(0, r * 0.88);
+    ctx.lineTo(-r * 0.3, r * 0.56);
+    ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    if (frightened) {
+      ctx.fillStyle = "#eef2ff";
+      ctx.font = "bold 8px monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("× ×", 0, -r * 0.05);
+    } else {
+      // Hollow diamond eyes and a tiny rune make each enemy read as a
+      // ghost without copying the familiar two-white-eye mascot.
+      ctx.fillStyle = "#fef3c7";
+      for (const eyeX of [-r * 0.27, r * 0.27]) {
+        ctx.beginPath();
+        ctx.moveTo(eyeX, -r * 0.35);
+        ctx.lineTo(eyeX + r * 0.13, -r * 0.2);
+        ctx.lineTo(eyeX, -r * 0.05);
+        ctx.lineTo(eyeX - r * 0.13, -r * 0.2);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.strokeStyle = "#2e1065";
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(0, r * 0.22, r * 0.16, Math.PI * 0.15, Math.PI * 0.85);
+      ctx.stroke();
+    }
     ctx.restore();
   }
 
@@ -718,10 +836,16 @@ const PacmanMathPage = () => {
                     <span>Home</span>
                   </button>
                 </div>
-                <div className="pm-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>PAC MATH</div>
+                 <div className="pm-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>
+                   {variant === "integer-addition" ? "MATH RUNNER" : "PAC MATH"}
+                 </div>
                 <div className="mx-auto mt-0.5 h-0.5 w-28 rounded-full" style={{ background: "linear-gradient(to right,transparent,#facc15,#fb923c,transparent)" }} />
-                <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">Makan · Hindari · Taklukkan</p>
-                <p className="text-white/35 text-[8px] tracking-widest uppercase mt-0.5">🕹️ Game Arkade Matematika Epik 🕹️</p>
+                 <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">
+                   {variant === "integer-addition" ? "Hitung · Jelajah · Taklukkan" : "Makan · Hindari · Taklukkan"}
+                 </p>
+                 <p className="text-white/35 text-[8px] tracking-widest uppercase mt-0.5">
+                   {topicLabel ? `🕹️ ${topicLabel} · Math Game Arena 🕹️` : "🕹️ Game Arkade Matematika Epik 🕹️"}
+                 </p>
               </div>
 
               <div className="pm-main">
@@ -730,13 +854,24 @@ const PacmanMathPage = () => {
                   <div className="flex items-end justify-center gap-5 w-full">
                     {/* Pac-Man side */}
                     <div className="flex flex-col items-center gap-0.5">
-                      <div className="text-[7px] text-yellow-400/70 font-bold tracking-wider uppercase">PAC-MAN</div>
-                      <div className="relative">
-                        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
-                        <div className="pm-chomp relative z-10 text-5xl" style={{ filter: "drop-shadow(0 0 16px #facc15) drop-shadow(0 0 32px #f59e0b)" }}>😁</div>
+                      <div className="text-[7px] text-cyan-300/80 font-bold tracking-wider uppercase">
+                        {variant === "integer-addition" ? "MATH RUNNER" : "PAC-MAN"}
                       </div>
-                      <div className="w-1.5 h-4 rounded-full" style={{ background: "linear-gradient(to bottom,rgba(250,204,21,0.8),transparent)" }} />
-                      <div className="text-[8px] font-bold text-yellow-400">KAMU</div>
+                      <div className="relative">
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: variant === "integer-addition" ? "radial-gradient(circle,rgba(34,211,238,0.3) 0%,transparent 70%)" : "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
+                        {variant === "integer-addition" ? (
+                          <svg viewBox="0 0 72 72" className="pm-chomp relative z-10 w-16 h-16" style={{ filter: "drop-shadow(0 0 12px #22d3ee)" }} aria-label="Math Runner">
+                            <path d="M60 36 45 13 18 15 7 36l11 21 27 2Z" fill="#22d3ee" stroke="#a5f3fc" strokeWidth="3" />
+                            <circle cx="27" cy="28" r="4" fill="#ecfeff" />
+                            <circle cx="45" cy="28" r="4" fill="#ecfeff" />
+                            <path d="M29 39h14M36 32v14" stroke="#083344" strokeWidth="4" strokeLinecap="round" />
+                          </svg>
+                        ) : (
+                          <div className="pm-chomp relative z-10 text-5xl" style={{ filter: "drop-shadow(0 0 16px #facc15) drop-shadow(0 0 32px #f59e0b)" }}>😁</div>
+                        )}
+                      </div>
+                      <div className="w-1.5 h-4 rounded-full" style={{ background: variant === "integer-addition" ? "linear-gradient(to bottom,rgba(34,211,238,0.8),transparent)" : "linear-gradient(to bottom,rgba(250,204,21,0.8),transparent)" }} />
+                      <div className="text-[8px] font-bold text-cyan-300">{variant === "integer-addition" ? "PENJUMLAH" : "KAMU"}</div>
                     </div>
 
                     <div className="flex flex-col items-center pb-4">
@@ -745,7 +880,7 @@ const PacmanMathPage = () => {
 
                     {/* Ghosts side */}
                     <div className="flex flex-col items-center gap-1.5">
-                      <div className="text-[7px] text-white/40 font-bold tracking-wider uppercase mb-0.5">HANTU MUSUH</div>
+                      <div className="text-[7px] text-violet-300/70 font-bold tracking-wider uppercase mb-0.5">WRAITH MUSUH</div>
                       <div className="grid grid-cols-2 gap-1.5">
                         {([
                           { glow: "#ff4444", name: "BLINKY", delay: "0s" },
@@ -755,7 +890,9 @@ const PacmanMathPage = () => {
                         ]).map(g => (
                           <div key={g.name} className="flex flex-col items-center gap-0.5 rounded-lg p-1.5 border"
                             style={{ borderColor: g.glow + "55", background: g.glow + "12", boxShadow: `0 0 10px ${g.glow}33` }}>
-                            <div className="pm-fb text-2xl" style={{ animationDelay: g.delay, filter: `drop-shadow(0 0 7px ${g.glow})` }}>👻</div>
+                            <div className="pm-fb text-2xl" style={{ animationDelay: g.delay, filter: `drop-shadow(0 0 7px ${g.glow})` }}>
+                              {variant === "integer-addition" ? "◈" : "👻"}
+                            </div>
                             <span className="text-[6px] font-bold" style={{ color: g.glow }}>{g.name}</span>
                           </div>
                         ))}
@@ -796,11 +933,11 @@ const PacmanMathPage = () => {
                   <div className="text-[7px] text-white/35 tracking-widest uppercase mb-1 font-bold text-center">📖 Cara Bermain</div>
                   <div className="space-y-1.5">
                     {[
-                      { icon: "🟡", text: "Makan semua titik kuning di labirin untuk naik level" },
+                      { icon: variant === "integer-addition" ? "🔷" : "🟡", text: variant === "integer-addition" ? "Kumpulkan energi dan pilih hasil penjumlahan bilangan bulat yang tepat" : "Makan semua titik kuning di labirin untuk naik level" },
                       { icon: "⚡", text: "4 pelet warna besar = pilihan jawaban soal matematika" },
                       { icon: "✅", text: "Pelet BENAR = +500 poin + semua hantu ketakutan!" },
-                      { icon: "👻", text: "Makan hantu ketakutan (biru) = +300 poin bonus" },
-                      { icon: "❌", text: "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
+                      { icon: variant === "integer-addition" ? "◈" : "👻", text: variant === "integer-addition" ? "Kalahkan wraith yang melemah untuk bonus +300 poin" : "Makan hantu ketakutan (biru) = +300 poin bonus" },
+                      { icon: "❌", text: variant === "integer-addition" ? "Jangan sampai tertangkap wraith — kamu punya 3 nyawa!" : "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
                     ].map(({ icon, text }) => (
                       <div key={text} className="flex items-start gap-2 px-1">
                         <span className="text-sm shrink-0 leading-none mt-0.5">{icon}</span>
@@ -819,7 +956,7 @@ const PacmanMathPage = () => {
                         background: "linear-gradient(135deg,#facc15 0%,#fbbf24 45%,#f59e0b 100%)",
                         boxShadow: "0 0 30px rgba(250,204,21,0.85),0 0 60px rgba(245,158,11,0.35),0 4px 16px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.3)",
                       }}>
-                      😁 MULAI BERMAIN
+                      {variant === "integer-addition" ? "✚ MULAI MISI" : "😁 MULAI BERMAIN"}
                     </button>
                     <div className="text-[7px] text-white/20 text-center leading-relaxed">
                       WASD / Panah = gerak · Joystick kiri untuk mobile
@@ -842,7 +979,7 @@ const PacmanMathPage = () => {
               <span className="hidden sm:inline">Kembali</span>
             </button>
             <h1 className="font-display text-xl font-bold text-center flex-1" style={{ background: "linear-gradient(90deg,#facc15,#fbbf24,#fb923c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              😁 PAC MATH
+               {variant === "integer-addition" ? "✚ MATH RUNNER" : "😁 PAC MATH"}
             </h1>
             <button onClick={() => { playPopSound(); navigate('/ruang-untuk-guru/numatik-game'); }}
               className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-display font-bold text-xs shadow-[0_0_15px_rgba(250,204,21,0.4)] hover:opacity-90 transition-opacity cursor-pointer">

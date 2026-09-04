@@ -188,6 +188,11 @@ Pecahan soal components are JSX components (not data arrays). Key differences:
 - **Why:** The Numatik frontend can still be developed and verified without installing the unrelated API-spec generator.
 - **How to apply:** If this recurs, install the root, frontend, and scripts workspace filters needed by Numatik rather than bypassing the firewall or changing the app's dependency graph.
 
+## Clean light-theme background
+- Keep the legacy `Snowfall` import contract intact but render no animated flakes when the product's clean light theme is active.
+- **Why:** The snow overlay was visually distracting on Math Game Arena and the existing pages share this compatibility component.
+- **How to apply:** Prefer removing the effect at the shared component boundary before duplicating theme-specific conditional changes across game pages.
+
 ## Shared statistics question data
 - The TKA Statistika module reuses question data exported by the Olimpiade Statistika page. Apply TKA-only removals by filtering in `tka/modul-pemantapan/StatistikaPage.tsx`, not by editing the shared source.
 - **Why:** The same source questions feed the Olimpiade page, so direct deletion would unintentionally change another user-facing module.
