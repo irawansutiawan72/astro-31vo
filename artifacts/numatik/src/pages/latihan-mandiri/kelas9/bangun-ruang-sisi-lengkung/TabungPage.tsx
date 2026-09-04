@@ -32,8 +32,8 @@ const groupHeaders: Record<number, string> = {
 function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = "", lightMode = false, showLabels = true }: {
   r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string; lightMode?: boolean; showLabels?: boolean;
 }) {
-  const { isDark } = useTheme();
-  const isLightVariant = lightMode && !isDark;
+  const { theme } = useTheme();
+  const isLightVariant = lightMode && theme !== "dark";
   const svgColor = isLightVariant ? "#60a5fa" : color;
   const labelColor = isLightVariant ? "#075985" : color;
   const canvasColor = isLightVariant ? "#f8fdff" : "transparent";
@@ -628,7 +628,7 @@ const questions: Q[] = [
   }),
   Qn(7, "Luas Permukaan – Terpadu", {
     content: "Sebuah tabung memiliki luas permukaan total 836 cm² dan tinggi 12 cm. Volume tabung tersebut adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="?" h="12 cm" />,
+    diagram: <CylinderSVG r="?" h="12 cm" lightMode />,
     choices: [
       { label: "A", text: "924 cm³" },
       { label: "B", text: "1.848 cm³" },
