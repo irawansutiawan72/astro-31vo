@@ -125,6 +125,52 @@
   border-color: var(--border) !important;
 }
 
+/* Some Olympiad pages use arbitrary dark colors and 950-level palette
+   classes instead of the shared bg-card token. Keep those panels light in
+   the bright themes too, while leaving the space/ocean themes unchanged. */
+[data-theme="light"] .olympiad-theme-route [class*="bg-[#"],
+[data-theme="white"] .olympiad-theme-route [class*="bg-[#"],
+[data-theme="forest"] .olympiad-theme-route [class*="bg-[#"],
+[data-theme="sunset"] .olympiad-theme-route [class*="bg-[#"],
+[data-theme="light"] .olympiad-theme-route [class*="bg-950/"],
+[data-theme="white"] .olympiad-theme-route [class*="bg-950/"],
+[data-theme="forest"] .olympiad-theme-route [class*="bg-950/"],
+[data-theme="sunset"] .olympiad-theme-route [class*="bg-950/"] {
+  background-color: var(--bg-card) !important;
+}
+
+/* Materi panels also use dark 900-level gradient stops. Replace the full
+   gradient with a soft light surface so headings and body copy stay legible. */
+[data-theme="light"] .olympiad-theme-route [class*="from-"][class*="-900/"],
+[data-theme="white"] .olympiad-theme-route [class*="from-"][class*="-900/"],
+[data-theme="forest"] .olympiad-theme-route [class*="from-"][class*="-900/"],
+[data-theme="sunset"] .olympiad-theme-route [class*="from-"][class*="-900/"],
+[data-theme="light"] .olympiad-theme-route [class*="to-"][class*="-900/"],
+[data-theme="white"] .olympiad-theme-route [class*="to-"][class*="-900/"],
+[data-theme="forest"] .olympiad-theme-route [class*="to-"][class*="-900/"],
+[data-theme="sunset"] .olympiad-theme-route [class*="to-"][class*="-900/"],
+[data-theme="light"] .olympiad-theme-route [class*="via-"][class*="-900/"],
+[data-theme="white"] .olympiad-theme-route [class*="via-"][class*="-900/"],
+[data-theme="forest"] .olympiad-theme-route [class*="via-"][class*="-900/"],
+[data-theme="sunset"] .olympiad-theme-route [class*="via-"][class*="-900/"] {
+  --tw-gradient-from: rgba(248, 250, 252, 0.96) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(241, 245, 249, 0.86) var(--tw-gradient-to-position) !important;
+  --tw-gradient-via: rgba(248, 250, 252, 0.92) var(--tw-gradient-via-position) !important;
+}
+
+/* Bilangan Bulat contains legacy inline dark gradients. Replace only those
+   dark inline surfaces; transparent SVG backgrounds remain transparent. */
+[data-theme="light"] .olympiad-theme-route [style*="rgba(30,41,59)"],
+[data-theme="white"] .olympiad-theme-route [style*="rgba(30,41,59)"],
+[data-theme="forest"] .olympiad-theme-route [style*="rgba(30,41,59)"],
+[data-theme="sunset"] .olympiad-theme-route [style*="rgba(30,41,59)"],
+[data-theme="light"] .olympiad-theme-route [style*="rgba(15,23,42)"],
+[data-theme="white"] .olympiad-theme-route [style*="rgba(15,23,42)"],
+[data-theme="forest"] .olympiad-theme-route [style*="rgba(15,23,42)"],
+[data-theme="sunset"] .olympiad-theme-route [style*="rgba(15,23,42)"] {
+  background: var(--bg-card) !important;
+}
+
 /* Buku Animasi Matematik submateri: keep the light themes readable without
    changing the space theme (data-theme="dark"). */
 [data-theme="light"] .animation-submaterial-route,

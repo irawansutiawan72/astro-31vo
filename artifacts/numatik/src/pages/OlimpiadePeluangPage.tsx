@@ -1164,7 +1164,7 @@ export default function OlimpiadePeluangPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"materi" | "latihan" | "olimpiade">("materi");
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
+    <div className="olympiad-theme-route relative min-h-screen bg-background text-foreground overflow-hidden">
       <Starfield />
       <div className="relative z-10 flex flex-col min-h-screen">
         <PageNavigation />
