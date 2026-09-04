@@ -29,8 +29,8 @@ const groupHeaders: Record<number, string> = {
   11: "🌍 Bagian D — Aplikasi di Kehidupan Nyata",
 };
 
-function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = "", lightMode = false }: {
-  r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string; lightMode?: boolean;
+function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = "", lightMode = false, showLabels = true }: {
+  r?: string; h?: string; color?: string; showSlant?: boolean; extraLabel?: string; lightMode?: boolean; showLabels?: boolean;
 }) {
   const { isDark } = useTheme();
   const isLightVariant = lightMode && !isDark;
@@ -57,13 +57,13 @@ function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = 
       <ellipse cx="110" cy="45" rx="60" ry="18" fill={capColor} fillOpacity={isLightVariant ? "0.95" : "0.25"} stroke={svgColor} strokeWidth="1.8" />
       <line x1="50" y1="45" x2="50" y2="155" stroke={svgColor} strokeWidth="1.8" />
       <line x1="170" y1="45" x2="170" y2="155" stroke={svgColor} strokeWidth="1.8" />
-      {r && (
+      {showLabels && r && (
         <>
           <line x1="110" y1="45" x2="170" y2="45" stroke={svgColor} strokeWidth="1.2" strokeDasharray="4,2" />
           <text x="140" y="38" fill={labelColor} fontSize="13" textAnchor="middle" fontFamily="monospace">r = {r}</text>
         </>
       )}
-      {h && (
+      {showLabels && h && (
         <>
           <line x1="185" y1="45" x2="185" y2="155" stroke={svgColor} strokeWidth="1.2" strokeDasharray="4,2" />
           <line x1="181" y1="45" x2="189" y2="45" stroke={svgColor} strokeWidth="1.2" />
@@ -71,7 +71,7 @@ function CylinderSVG({ r, h, color = "#22d3ee", showSlant = false, extraLabel = 
           <text x="200" y="105" fill={labelColor} fontSize="13" textAnchor="middle" fontFamily="monospace">t = {h}</text>
         </>
       )}
-      {extraLabel && (
+      {showLabels && extraLabel && (
         <text x="110" y="190" fill={labelColor} fontSize="11" textAnchor="middle" fontFamily="monospace" fillOpacity="0.7">{extraLabel}</text>
       )}
     </svg>
@@ -586,7 +586,7 @@ const questions: Q[] = [
   }),
   Qn(3, "Luas Selimut – Perhitungan", {
     content: "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 20 cm. Luas selimut tabung tersebut adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode />,
+    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "440 cm²" },
       { label: "B", text: "660 cm²" },
@@ -607,7 +607,7 @@ const questions: Q[] = [
   }),
   Qn(5, "Luas Permukaan Tabung Terbuka", {
     content: "Sebuah tabung tanpa tutup memiliki jari-jari 10 cm dan tinggi 15 cm. Luas permukaannya adalah ... (π = 3,14)",
-    diagram: <CylinderSVG r="10 cm" h="15 cm" lightMode />,
+    diagram: <CylinderSVG r="10 cm" h="15 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "942 cm²" },
       { label: "B", text: "1.099 cm²" },
@@ -641,7 +641,7 @@ const questions: Q[] = [
   // ── BAGIAN C · VOLUME ─────────────────────────────────────────────────────
   Qn(8, "Volume Tabung – Diameter Diketahui", {
     content: "Sebuah tabung memiliki diameter 14 cm dan tinggi 20 cm. Volume tabung adalah ... (π = 22/7)",
-    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode />,
+    diagram: <CylinderSVG r="7 cm" h="20 cm" lightMode showLabels={false} />,
     choices: [
       { label: "A", text: "1.540 cm³" },
       { label: "B", text: "2.310 cm³" },
