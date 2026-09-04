@@ -2,34 +2,34 @@ import type { Pembahasan } from "@/components/PembahasanCard";
 
 export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
   1: {
-    jawaban: "D. 308 $cm^2$",
+    jawaban: "B. 154 $cm^2$",
     konsepTrik:
-      "Daerah arsir biasanya berupa juring dengan sudut tertentu. Luas juring $= \\dfrac{\\alpha}{360°} \\times \\pi r^2$.",
+      "Daerah arsir pada gambar adalah juring. Luas juring merupakan bagian dari luas lingkaran yang sebanding dengan sudut pusatnya.",
     stepByStep:
-      "Luas lingkaran $= \\pi r^2 = \\dfrac{22}{7} \\times 21^2 = \\dfrac{22}{7} \\times 441 = 1386$ $cm^2$\nJika daerah arsir merupakan $\\dfrac{80°}{360°}$ dari lingkaran:\nL arsir $= \\dfrac{80}{360} \\times 1386 = \\dfrac{2}{9} \\times 1386 = 308$ $cm^2$",
+      "Dari gambar, sudut pusat juring adalah $40°$ dan $r=21$ cm.\nLuas lingkaran $= \\pi r^2 = \\dfrac{22}{7}\\times21^2 = 1386$ $cm^2$.\nLuas juring $= \\dfrac{40}{360}\\times1386 = \\dfrac{1}{9}\\times1386 = 154$ $cm^2$.",
     tips:
-      "Selalu hitung dulu luas lingkaran penuh, baru kalikan dengan rasio sudut juring.",
-    kesimpulan: "Luas daerah yang diarsir adalah $308$ $cm^2$.",
+      "Baca sudut pada gambar dengan teliti. Sudutnya 40°, bukan 80°.",
+    kesimpulan: "Luas daerah yang diarsir adalah $154$ $cm^2$.",
   },
   2: {
-    jawaban: "B. 51,33 $cm^2$",
+    jawaban: "A. 22 cm",
     konsepTrik:
-      "Luas juring $= \\dfrac{\\alpha}{360°} \\times \\pi r^2$ dengan $\\alpha$ sudut pusat dalam derajat.",
+      "Panjang busur adalah bagian dari keliling lingkaran yang sebanding dengan sudut pusat.",
     stepByStep:
-      "$\\alpha = 120°$, $r = 7$ cm, $\\pi = \\dfrac{22}{7}$\nL juring $= \\dfrac{120}{360} \\times \\dfrac{22}{7} \\times 7^2$\n$= \\dfrac{1}{3} \\times \\dfrac{22}{7} \\times 49$\n$= \\dfrac{1}{3} \\times 22 \\times 7 = \\dfrac{154}{3} \\approx 51{,}33$ $cm^2$",
+      "Dari gambar, $r=OP=21$ cm dan $\\angle POQ=60°$.\nKeliling lingkaran $=2\\pi r=2\\times\\dfrac{22}{7}\\times21=132$ cm.\nPanjang busur kecil PQ $=\\dfrac{60}{360}\\times132=22$ cm.",
     tips:
-      "Jika $r$ kelipatan 7, gunakan $\\pi = \\dfrac{22}{7}$ supaya hitungan lebih mudah.",
-    kesimpulan: "Luas juring tersebut adalah $\\dfrac{154}{3} \\approx 51{,}33$ $cm^2$.",
+      "Jangan mencampur rumus panjang busur dengan luas juring. Busur memakai keliling $2\\pi r$.",
+    kesimpulan: "Panjang busur kecil PQ adalah $22$ cm.",
   },
   3: {
-    jawaban: "B. 45 cm",
+    jawaban: "A. 40 cm",
     konsepTrik:
       "Pada lingkaran yang sama, panjang busur sebanding dengan sudut pusat: $\\dfrac{\\text{busur}_1}{\\text{busur}_2} = \\dfrac{\\angle_1}{\\angle_2}$.",
     stepByStep:
-      "Misal $\\angle POQ : \\angle QOR = 3 : 4$ (umum di soal jenis ini).\n$\\dfrac{PQ}{QR} = \\dfrac{3}{4}$\n$PQ = \\dfrac{3}{4} \\times 60 = 45$ cm",
+      "Dari gambar, $\\angle POQ=50°$ dan $\\angle QOR=75°$.\n$\\dfrac{PQ}{QR}=\\dfrac{50}{75}=\\dfrac{2}{3}$.\n$PQ=\\dfrac{2}{3}\\times60=40$ cm.",
     tips:
-      "Identifikasi rasio sudut pusat dari gambar, lalu kalikan dengan busur yang diketahui.",
-    kesimpulan: "Panjang busur $PQ = 45$ cm.",
+      "Gunakan sudut yang benar-benar tertulis pada diagram, bukan rasio yang diasumsikan.",
+    kesimpulan: "Panjang busur $PQ = 40$ cm.",
   },
   4: {
     jawaban: "C. 90 $cm^2$",
@@ -52,64 +52,64 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Panjang busur $CD = 56$ cm.",
   },
   6: {
-    jawaban: "C. 992,88 $cm^2$",
+    jawaban: "B. 614,25 $cm^2$",
     konsepTrik:
-      "Strategi: hitung luas bangun utuh lalu kurangi/tambahkan luas lingkaran/setengah lingkaran sesuai gambar.",
+      "Bangun pada gambar merupakan gabungan persegi dan setengah lingkaran. Karena diameter setengah lingkaran sama dengan sisi persegi, jari-jarinya adalah setengah sisi persegi.",
     stepByStep:
-      "Identifikasi tiap bagian (persegi panjang, setengah lingkaran, dll), lalu jumlah/kurangkan sesuai daerah arsir.\nGunakan $\\pi = 3{,}14$ jika diberikan, atau $\\dfrac{22}{7}$ jika $r$ kelipatan 7.",
+      "Luas persegi $=21\\times21=441$ $cm^2$.\nDiameter setengah lingkaran $=21$ cm, jadi $r=10{,}5$ cm.\nLuas setengah lingkaran $=\\dfrac{1}{2}\\times\\dfrac{22}{7}\\times10{,}5^2=173{,}25$ $cm^2$.\nLuas seluruh arsiran $=441+173{,}25=614{,}25$ $cm^2$.",
     tips:
-      "Pisahkan daerah arsir menjadi beberapa bagian yang luasnya mudah dihitung.",
-    kesimpulan: "Luas daerah yang diarsir $\\approx 992{,}88$ $cm^2$.",
+      "Jangan memakai 21 cm sebagai jari-jari; angka 21 cm pada gambar adalah diameter setengah lingkaran.",
+    kesimpulan: "Luas daerah yang diarsir adalah $614{,}25$ $cm^2$.",
   },
   7: {
     jawaban: "C. 119 $cm^2$",
     konsepTrik:
-      "Daerah arsir = bangun datar luar dikurangi (atau ditambah) bagian lingkaran/setengah lingkaran.",
+      "Daerah arsir adalah luas persegi dikurangi dua seperempat lingkaran yang kongruen. Masing-masing jari-jari seperempat lingkaran adalah 7 cm.",
     stepByStep:
-      "Hitung luas bangun datar luar (mis. persegi panjang).\nKurangi luas bagian lingkaran yang tidak diarsir (atau jumlahkan jika menambah).",
+      "Luas persegi $=14^2=196$ $cm^2$.\nDua seperempat lingkaran setara dengan setengah lingkaran berjari-jari 7 cm.\nLuas yang dikurangi $=\\dfrac{1}{2}\\times\\dfrac{22}{7}\\times7^2=77$ $cm^2$.\nLuas arsiran $=196-77=119$ $cm^2$.",
     tips:
-      "Cek setiap bagian setengah/seperempat lingkaran, kalikan dengan rasio luas penuh.",
+      "Gabungkan dua seperempat lingkaran menjadi satu setengah lingkaran agar hitungan lebih singkat.",
     kesimpulan: "Luas daerah yang diarsir adalah $119$ $cm^2$.",
   },
   8: {
-    jawaban: "B. 62,8 cm",
+    jawaban: "C. 78,5 cm",
     konsepTrik:
-      "Keliling daerah arsir = jumlah panjang busur + ruas garis lurus pembatas.",
+      "Batas daerah yang diarsir hanya terdiri atas tiga busur setengah lingkaran: dua busur berjari-jari 10 cm dan satu busur berjari-jari 5 cm.",
     stepByStep:
-      "Hitung tiap busur dengan rumus $L_{busur} = \\dfrac{\\alpha}{360°} \\times 2\\pi r$.\nJumlahkan dengan panjang ruas garis lurus.\nGunakan $\\pi = 3{,}14$.",
+      "Panjang busur setengah lingkaran berjari-jari $r$ adalah $\\pi r$.\n$K=\\pi(10)+\\pi(10)+\\pi(5)=25\\pi$.\nDengan $\\pi=3{,}14$, $K=25\\times3{,}14=78{,}5$ cm.",
     tips:
-      "Jangan lupakan ruas lurus — hanya menjumlahkan busur sering kali salah.",
-    kesimpulan: "Keliling daerah arsir adalah $62{,}8$ cm.",
+      "Ruas diameter yang berada di dalam bangun bukan bagian dari batas daerah yang diarsir, jadi tidak ikut dijumlahkan.",
+    kesimpulan: "Keliling daerah yang diarsir adalah $78{,}5$ cm.",
   },
   9: {
-    jawaban: "Tergantung gambar (gunakan rumus $K = \\sum \\text{busur} + \\sum \\text{ruas lurus}$).",
+    jawaban: "C. 88 cm",
     konsepTrik:
-      "Keliling daerah lengkung = jumlah panjang busur ($\\dfrac{\\alpha}{360°} \\times 2\\pi r$) ditambah ruas lurus pembatas.",
+      "Keliling arsiran dibatasi oleh satu setengah lingkaran besar dan dua setengah lingkaran kecil. Ruas diameter pada garis dasar berada di dalam daerah, bukan pada batas arsiran.",
     stepByStep:
-      "Identifikasi tiap busur dan tiap sisi lurus.\nHitung tiap busur sesuai sudut pusat dan jari-jarinya.\nJumlahkan semuanya.",
+      "Setengah lingkaran besar berdiameter 28 cm memiliki panjang busur $=\\dfrac{1}{2}\\pi\\times28=14\\pi$.\nMasing-masing setengah lingkaran kecil berdiameter 14 cm memiliki panjang busur $=7\\pi$.\n$K=14\\pi+2(7\\pi)=28\\pi=28\\times\\dfrac{22}{7}=88$ cm.",
     tips:
-      "Gambarlah dulu sketsa daerah, beri tanda tiap busur dan ruas lurus.",
-    kesimpulan: "Keliling = total panjang busur + total ruas lurus pembatas daerah.",
+      "Untuk keliling daerah berarsir, telusuri garis batas yang benar-benar mengelilingi arsiran; jangan memasukkan garis pembagi di dalamnya.",
+    kesimpulan: "Keliling daerah yang diarsir adalah $88$ cm.",
   },
   10: {
-    jawaban: "Tergantung gambar (gunakan rumus $L = \\sum L_{\\text{bangun}} \\pm \\sum L_{\\text{lingkaran}}$).",
+    jawaban: "A. 28,5 $cm^2$",
     konsepTrik:
-      "Pisahkan daerah menjadi bagian-bagian yang mudah dihitung (segitiga, persegi panjang, juring, setengah lingkaran).",
+      "Daerah arsir adalah tembereng kecil, yaitu luas juring 90° dikurangi luas segitiga siku-siku yang dibentuk oleh dua jari-jari.",
     stepByStep:
-      "Hitung luas tiap bagian.\nJumlahkan atau kurangi sesuai daerah arsir.",
+      "Luas juring 90° $=\\dfrac{90}{360}\\times3{,}14\\times10^2=78{,}5$ $cm^2$.\nKedua jari-jari saling tegak lurus, sehingga luas segitiga $=\\dfrac{1}{2}\\times10\\times10=50$ $cm^2$.\nLuas tembereng $=78{,}5-50=28{,}5$ $cm^2$.",
     tips:
-      "Gunakan simetri untuk menyederhanakan perhitungan jika memungkinkan.",
-    kesimpulan: "Luas arsir = jumlah/selisih luas bagian-bagian yang membentuk daerah.",
+      "Pada tembereng, kurangi luas segitiga dari luas juring; jangan memakai luas juring sebagai jawaban akhir.",
+    kesimpulan: "Luas daerah yang diarsir adalah $28{,}5$ $cm^2$.",
   },
   11: {
-    jawaban: "C. 253,6 cm",
+    jawaban: "A. 74,8 cm",
     konsepTrik:
-      "Keliling = panjang busur dari semua lengkungan + ruas lurus pembatas.",
+      "Keliling bangun terdiri atas dua busur setengah lingkaran dan dua ruas garis lurus yang tampak di kiri serta kanan. Diameter kedua setengah lingkaran terbaca 26 cm dan 14 cm.",
     stepByStep:
-      "Hitung tiap busur dan ruas lurus.\nGunakan $\\pi = 3{,}14$.\nJumlahkan: $253{,}6$ cm.",
+      "Jumlah panjang dua busur setengah lingkaran $=\\dfrac{1}{2}\\pi(26)+\\dfrac{1}{2}\\pi(14)=20\\pi=62{,}8$ cm.\nJumlah dua ruas garis lurus yang tampak sama dengan selisih diameter, yaitu $26-14=12$ cm.\nJadi $K=62{,}8+12=74{,}8$ cm.",
     tips:
-      "Periksa apakah sebagian busur saling berlawanan arah — jangan dihitung dua kali.",
-    kesimpulan: "Keliling bangun adalah $253{,}6$ cm.",
+      "Untuk susunan dua setengah lingkaran seperti gambar, ruas lurus luar berjumlah selisih kedua diameter, bukan jumlah keduanya.",
+    kesimpulan: "Keliling bangun adalah $74{,}8$ cm.",
   },
   12: {
     jawaban: "A. Keliling 22 cm dan luas 28 $cm^2$",
@@ -132,44 +132,44 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Keliling seluruh daerah arsir adalah 88 cm dan luasnya 112 $cm^2$.",
   },
   14: {
-    jawaban: "C. 45°",
+    jawaban: "D. 60°",
     konsepTrik:
       "Sudut pusat = $2 \\times$ sudut keliling yang menghadap busur yang sama.",
     stepByStep:
-      "Identifikasi sudut keliling yang diketahui (mis. $\\angle ACB$).\n$\\angle AOB = 2 \\times \\angle ACB$.\nJika dari gambar diperoleh $\\angle ACB = 22{,}5°$, maka $\\angle AOB = 45°$.",
+      "Sudut $\\angle ACB=30°$ adalah sudut keliling yang menghadap busur AB.\nSudut pusat yang menghadap busur yang sama dua kali sudut keliling.\n$\\angle AOB=2\\times30°=60°$.",
     tips:
-      "Kunci: kenali sudut pusat dan sudut keliling yang menghadap busur yang sama.",
-    kesimpulan: "Besar $\\angle AOB = 45°$.",
+      "Pastikan sudut 30° berada di keliling, bukan di pusat.",
+    kesimpulan: "Besar $\\angle AOB=60°$.",
   },
   15: {
-    jawaban: "C. 64°",
+    jawaban: "C. 60°",
     konsepTrik:
-      "Tiga sudut keliling $\\angle ABE$, $\\angle ACE$, $\\angle ADE$ semuanya menghadap busur $AE$, jadi semuanya sama dengan $\\dfrac{1}{2}\\angle AOE$.",
+      "Sudut $\\angle ACE$ adalah sudut keliling yang menghadap busur AE, sedangkan $\\angle AOE$ adalah sudut pusat yang menghadap busur yang sama.",
     stepByStep:
-      "$\\angle ABE = \\angle ACE = \\angle ADE = \\dfrac{1}{2}\\angle AOE$\n$3 \\times \\dfrac{1}{2}\\angle AOE = 96°$\n$\\dfrac{3}{2}\\angle AOE = 96°$\n$\\angle AOE = 96° \\times \\dfrac{2}{3} = 64°$",
+      "Dari gambar, $\\angle ACE=30°$.\nHubungan sudut pusat dan sudut keliling: $\\angle AOE=2\\times\\angle ACE$.\n$\\angle AOE=2\\times30°=60°$.",
     tips:
-      "Sudut keliling yang menghadap busur yang sama selalu sama besar.",
-    kesimpulan: "Besar $\\angle AOE = 64°$.",
+      "Jangan menjumlahkan tiga sudut yang tidak diberikan nilainya. Data pada gambar yang dipakai adalah sudut $30°$ di C.",
+    kesimpulan: "Besar $\\angle AOE=60°$.",
   },
   16: {
-    jawaban: "D. 100°",
+    jawaban: "C. 80°",
     konsepTrik:
-      "$OA = OB = OD = r$ membuat $\\triangle OAD$ dan $\\triangle OBD$ sama kaki. Sudut pusat $\\angle BOC$ dapat dihitung lewat sudut keliling.",
+      "Segitiga yang dibentuk oleh dua jari-jari adalah sama kaki. Selain itu, AC merupakan diameter karena garis AC melalui pusat O.",
     stepByStep:
-      "$\\triangle OAD$ sama kaki: $\\angle OAD = \\angle ODA = 20°$, jadi $\\angle AOD = 140°$.\n$\\triangle OBD$ sama kaki: $\\angle OBD = \\angle ODB = 30°$, jadi $\\angle BOD = 120°$.\nDengan posisi $C$ dan analisa diagram, $\\angle BOC = 100°$.",
+      "$\\triangle OAD$ sama kaki: $\\angle OAD = \\angle ODA = 20°$, jadi $\\angle AOD = 140°$.\n$\\triangle OBD$ sama kaki: $\\angle OBD = \\angle ODB = 30°$, jadi $\\angle BOD = 120°$.\nDari gambar, busur AB yang tidak memuat D bernilai $360°-140°-120°=100°$, sehingga $\\angle AOB=100°$.\nKarena AC diameter, $\\angle AOC=180°$. Maka $\\angle BOC=180°-100°=80°$.",
     tips:
       "Manfaatkan sifat segitiga sama kaki dari dua jari-jari yang bertemu di satu titik lingkaran.",
-    kesimpulan: "Besar $\\angle BOC = 100°$.",
+    kesimpulan: "Karena $\\angle AOC=180°$ dan $\\angle AOB=100°$, maka $\\angle BOC=180°-100°=80°$.",
   },
   17: {
-    jawaban: "A. 41°",
+    jawaban: "B. 49°",
     konsepTrik:
-      "Sudut keliling $= \\dfrac{1}{2} \\times$ sudut pusat yang menghadap busur yang sama.",
+      "AB adalah diameter, sehingga sudut pusat AOB merupakan sudut lurus. Sudut BDC adalah sudut keliling yang menghadap busur BC.",
     stepByStep:
-      "$\\angle BDC$ adalah sudut keliling yang menghadap busur $BC$.\n$\\angle AOC = 82°$ adalah sudut pusat yang menghadap busur $AC$ (atau $BC$ tergantung diagram).\n$\\angle BDC = \\dfrac{1}{2} \\times 82° = 41°$",
+      "$\\angle AOC=82°$ dan $\\angle AOB=180°$, sehingga $\\angle BOC=180°-82°=98°$.\n$\\angle BDC=\\dfrac{1}{2}\\angle BOC=\\dfrac{1}{2}\\times98°=49°$.",
     tips:
-      "Pastikan sudut keliling dan sudut pusat menghadap busur yang sama.",
-    kesimpulan: "Besar $\\angle BDC = 41°$.",
+      "Jangan langsung membagi 82° dengan 2 karena 82° adalah sudut AOC, bukan sudut BOC.",
+    kesimpulan: "Besar $\\angle BDC=49°$.",
   },
   18: {
     jawaban: "A. 124°",
@@ -182,24 +182,24 @@ export const lingkaranDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Besar $\\angle ABC = 124°$.",
   },
   19: {
-    jawaban: "Bergantung pada nilai sudut pada gambar. Gunakan sifat sudut keliling.",
+    jawaban: "A. $30°$, $58°$, $32°$",
     konsepTrik:
-      "Sudut keliling yang menghadap busur sama besar nilainya. Sudut keliling menghadap diameter $= 90°$.",
+      "Gunakan teorema sudut perpotongan dua tali busur dan fakta bahwa AD adalah diameter. Misalkan X titik potong AC dan BD.",
     stepByStep:
-      "Identifikasi tiap sudut keliling/pusat di gambar.\nGunakan $\\angle_{\\text{keliling}} = \\dfrac{1}{2} \\angle_{\\text{pusat}}$.\nJika ada diameter, sudut keliling menghadapnya $= 90°$.",
+      "$\\angle ADB=28° \\Rightarrow$ busur AB $=2\\times28°=56°$.\nKarena AD diameter, busur A-B-C pada setengah lingkaran adalah $180°$, sehingga busur AC melalui B bernilai $180°$.\nPada gambar, $\\angle AXB=60°=\\dfrac{1}{2}(\\text{busur AB}+\\text{busur CD})$, maka busur CD $=120°-56°=64°$.\n$\\angle BAC=\\dfrac{1}{2}\\text{busur BC}=\\dfrac{1}{2}(180°-56°-64°)=30°$.\n$\\angle ADC=\\dfrac{1}{2}\\text{busur AC melalui B}=\\dfrac{1}{2}(56°+60°)=58°$.\nKarena AD diameter, $\\angle ACD=90°$, sehingga $\\angle DAC=180°-90°-58°=32°$.",
     tips:
-      "Cari diameter dan sudut yang menghadap busur yang sama untuk identifikasi cepat.",
-    kesimpulan: "Hitung tiap sudut menggunakan hubungan sudut pusat & keliling.",
+      "Untuk sudut perpotongan tali busur, jumlahkan dua busur yang diapit oleh sudut tersebut dan sudut bertolak belakangnya.",
+    kesimpulan: "Berturut-turut, $\\angle BAC=30°$, $\\angle ADC=58°$, dan $\\angle DAC=32°$.",
   },
   20: {
-    jawaban: "Bergantung pada nilai sudut pada gambar. Gunakan sifat segiempat tali busur.",
+    jawaban: "A. $80°$, $100°$, $106°$",
     konsepTrik:
-      "Pada segiempat tali busur $ABCD$: sudut yang berhadapan saling berpelurus ($\\angle A + \\angle C = 180°$, $\\angle B + \\angle D = 180°$).",
+      "Pada segiempat tali busur, sudut-sudut yang berhadapan berjumlah 180°. Sudut luar di C membentuk pasangan berpelurus dengan sudut dalam DCB.",
     stepByStep:
-      "Catat sudut yang diketahui.\nGunakan $\\angle_{berhadapan} = 180°$.\nGunakan sifat sudut keliling jika perlu.",
+      "Sudut dalam di C: $\\angle DCB=180°-100°=80°$.\nSudut berhadapan A dan C: $\\angle BAD=180°-80°=100°$.\nSudut berhadapan B dan D: $\\angle ADC=180°-74°=106°$.",
     tips:
-      "Sifat segiempat tali busur sangat efektif: cek pasangan sudut berhadapan.",
-    kesimpulan: "Hitung sudut yang ditanyakan dari sifat segiempat tali busur.",
+      "Bedakan sudut luar 100° dengan sudut dalam di C; keduanya berpelurus, bukan sama besar.",
+    kesimpulan: "Berturut-turut, $\\angle DCB=80°$, $\\angle BAD=100°$, dan $\\angle ADC=106°$.",
   },
   21: {
     jawaban: "D. 114°",

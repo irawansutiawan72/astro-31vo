@@ -12,6 +12,7 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - Imported projects may therefore be unreachable by artifact-based screenshot/presentation tools even while the managed frontend workflow runs; use build, logs, and direct route checks as fallback verification.
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.
 - For a lockfile-only workspace setup, use `pnpm install --frozen-lockfile`; the package installer callback requires at least one package and is not a substitute for installing all workspace manifests.
+- If full workspace install is blocked by the firewall on an unrelated `lib/api-spec` dependency, install the target package graph with `pnpm install --filter @workspace/numatik... --frozen-lockfile`; this preserves the lockfile and is sufficient for Numatik verification.
 - Build and dev prehooks regenerate the tracked search index from page content; content changes can therefore legitimately update `public/search-index.json`.
   **Why:** Search needs to reflect newly added instructional text and routes after a build.
   **How to apply:** Keep the generated index synchronized when changing searchable page copy; do not mistake that diff for an unrelated source edit.
