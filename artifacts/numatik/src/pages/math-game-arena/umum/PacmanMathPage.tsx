@@ -575,34 +575,49 @@ const PacmanMathPage = ({
     ctx.save();
     ctx.translate(px, py);
     ctx.rotate(dir);
-    ctx.shadowColor = "#22d3ee";
+    ctx.shadowColor = "#67e8f9";
     ctx.shadowBlur = 18;
     const body = ctx.createLinearGradient(-r, -r, r, r);
-    body.addColorStop(0, "#a5f3fc");
-    body.addColorStop(0.45, "#22d3ee");
-    body.addColorStop(1, "#0e7490");
+    body.addColorStop(0, "#e0f2fe");
+    body.addColorStop(0.28, "#67e8f9");
+    body.addColorStop(0.7, "#06b6d4");
+    body.addColorStop(1, "#155e75");
     ctx.fillStyle = body;
     ctx.beginPath();
-    ctx.moveTo(r * 0.98, 0);
-    ctx.lineTo(r * 0.42, -r * 0.82);
-    ctx.lineTo(-r * 0.45, -r * 0.74);
-    ctx.lineTo(-r * 0.92, 0);
-    ctx.lineTo(-r * 0.45, r * 0.74);
-    ctx.lineTo(r * 0.42, r * 0.82);
+    ctx.moveTo(-r * 0.52, -r * 0.88);
+    ctx.quadraticCurveTo(0, -r * 1.12, r * 0.52, -r * 0.88);
+    ctx.quadraticCurveTo(r * 0.98, -r * 0.48, r * 0.86, r * 0.16);
+    ctx.quadraticCurveTo(r * 0.7, r * 0.92, 0, r);
+    ctx.quadraticCurveTo(-r * 0.7, r * 0.92, -r * 0.86, r * 0.16);
+    ctx.quadraticCurveTo(-r * 0.98, -r * 0.48, -r * 0.52, -r * 0.88);
     ctx.closePath();
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // The plus badge makes this a math character, not a mouth-shaped
-    // arcade mascot.
-    ctx.fillStyle = "#083344";
-    ctx.fillRect(-r * 0.18, -r * 0.08, r * 0.36, r * 0.16);
-    ctx.fillRect(-r * 0.08, -r * 0.18, r * 0.16, r * 0.36);
-    ctx.fillStyle = "#ecfeff";
+    // A dark visor and antenna make the mascot read as a small math bot,
+    // rather than a round character with the familiar arcade mouth.
+    ctx.fillStyle = "#164e63";
     ctx.beginPath();
-    ctx.arc(-r * 0.24, -r * 0.24, r * 0.12, 0, Math.PI * 2);
-    ctx.arc(r * 0.24, -r * 0.24, r * 0.12, 0, Math.PI * 2);
+    ctx.ellipse(0, -r * 0.14, r * 0.56, r * 0.27, 0, 0, Math.PI * 2);
     ctx.fill();
+    ctx.fillStyle = "#cffafe";
+    ctx.beginPath();
+    ctx.arc(-r * 0.25, -r * 0.16, r * 0.09, 0, Math.PI * 2);
+    ctx.arc(r * 0.25, -r * 0.16, r * 0.09, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#083344";
+    ctx.lineWidth = Math.max(1, r * 0.12);
+    ctx.beginPath();
+    ctx.moveTo(0, -r * 0.72);
+    ctx.lineTo(0, -r * 1.15);
+    ctx.stroke();
+    ctx.fillStyle = "#fbbf24";
+    ctx.beginPath();
+    ctx.arc(0, -r * 1.23, r * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#083344";
+    ctx.fillRect(-r * 0.16, r * 0.42, r * 0.32, r * 0.1);
+    ctx.fillRect(-r * 0.05, r * 0.31, r * 0.1, r * 0.32);
     ctx.restore();
   }
 
@@ -861,10 +876,12 @@ const PacmanMathPage = ({
                         <div className="absolute inset-0 pointer-events-none" style={{ background: variant === "integer-addition" ? "radial-gradient(circle,rgba(34,211,238,0.3) 0%,transparent 70%)" : "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
                         {variant === "integer-addition" ? (
                           <svg viewBox="0 0 72 72" className="pm-chomp relative z-10 w-16 h-16" style={{ filter: "drop-shadow(0 0 12px #22d3ee)" }} aria-label="Math Runner">
-                            <path d="M60 36 45 13 18 15 7 36l11 21 27 2Z" fill="#22d3ee" stroke="#a5f3fc" strokeWidth="3" />
-                            <circle cx="27" cy="28" r="4" fill="#ecfeff" />
-                            <circle cx="45" cy="28" r="4" fill="#ecfeff" />
-                            <path d="M29 39h14M36 32v14" stroke="#083344" strokeWidth="4" strokeLinecap="round" />
+                            <path d="M19 15Q36 6 53 15Q66 27 60 45Q53 63 36 65Q19 63 12 45Q6 27 19 15Z" fill="#22d3ee" stroke="#cffafe" strokeWidth="3" />
+                            <ellipse cx="36" cy="34" rx="18" ry="9" fill="#164e63" />
+                            <circle cx="29" cy="33" r="3" fill="#cffafe" /><circle cx="43" cy="33" r="3" fill="#cffafe" />
+                            <path d="M36 17V8" stroke="#083344" strokeWidth="3" strokeLinecap="round" />
+                            <circle cx="36" cy="6" r="3" fill="#fbbf24" />
+                            <path d="M31 49h10M36 44v10" stroke="#083344" strokeWidth="3" strokeLinecap="round" />
                           </svg>
                         ) : (
                           <div className="pm-chomp relative z-10 text-5xl" style={{ filter: "drop-shadow(0 0 16px #facc15) drop-shadow(0 0 32px #f59e0b)" }}>😁</div>
