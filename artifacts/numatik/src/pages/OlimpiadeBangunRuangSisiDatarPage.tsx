@@ -757,7 +757,7 @@ const OlimpiadeBangunRuangSisiDatarPage = () => {
   };
 
   return (
-    <div className="olympiad-theme-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="olympiad-theme-route brsd-olympiad-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <ShapeStyles />
       <Starfield />
       <PageNavigation />

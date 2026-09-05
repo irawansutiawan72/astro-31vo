@@ -4143,6 +4143,119 @@ html.light-mode .fungsi-kuadrat-practice-route [class*="to-pink-900/"] {
 [data-theme="white"] .guru-editable .border-white\/10 {
   border-color: #00b4d8 !important;
 }
+
+/* ── Bangun Ruang Sisi Datar — bright-theme text readability ──
+   The page intentionally keeps its colorful section palette, but its
+   original light-on-dark text tokens become unreadable on bright surfaces.
+   Scope these corrections to this topic so dark/space themes and other
+   Olympiad pages keep their original appearance. */
+[data-theme="light"] .brsd-olympiad-route [class*="text-white"],
+[data-theme="white"] .brsd-olympiad-route [class*="text-white"],
+[data-theme="forest"] .brsd-olympiad-route [class*="text-white"],
+[data-theme="sunset"] .brsd-olympiad-route [class*="text-white"] {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .brsd-olympiad-route .text-indigo-300,
+[data-theme="white"] .brsd-olympiad-route .text-indigo-300,
+[data-theme="forest"] .brsd-olympiad-route .text-indigo-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-indigo-300 { color: #3730a3 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-violet-300,
+[data-theme="white"] .brsd-olympiad-route .text-violet-300,
+[data-theme="forest"] .brsd-olympiad-route .text-violet-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-violet-300 { color: #5b21b6 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-amber-300,
+[data-theme="white"] .brsd-olympiad-route .text-amber-300,
+[data-theme="forest"] .brsd-olympiad-route .text-amber-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-amber-300 { color: #b45309 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-yellow-300,
+[data-theme="white"] .brsd-olympiad-route .text-yellow-300,
+[data-theme="forest"] .brsd-olympiad-route .text-yellow-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-yellow-300,
+[data-theme="light"] .brsd-olympiad-route .text-yellow-400,
+[data-theme="white"] .brsd-olympiad-route .text-yellow-400,
+[data-theme="forest"] .brsd-olympiad-route .text-yellow-400,
+[data-theme="sunset"] .brsd-olympiad-route .text-yellow-400,
+[data-theme="light"] .brsd-olympiad-route [class*="text-yellow-100"],
+[data-theme="white"] .brsd-olympiad-route [class*="text-yellow-100"],
+[data-theme="forest"] .brsd-olympiad-route [class*="text-yellow-100"],
+[data-theme="sunset"] .brsd-olympiad-route [class*="text-yellow-100"] { color: #854d0e !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-orange-300,
+[data-theme="white"] .brsd-olympiad-route .text-orange-300,
+[data-theme="forest"] .brsd-olympiad-route .text-orange-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-orange-300 { color: #c2410c !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-pink-200,
+[data-theme="white"] .brsd-olympiad-route .text-pink-200,
+[data-theme="forest"] .brsd-olympiad-route .text-pink-200,
+[data-theme="sunset"] .brsd-olympiad-route .text-pink-200,
+[data-theme="light"] .brsd-olympiad-route .text-rose-300,
+[data-theme="white"] .brsd-olympiad-route .text-rose-300,
+[data-theme="forest"] .brsd-olympiad-route .text-rose-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-rose-300 { color: #9f1239 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-sky-200,
+[data-theme="white"] .brsd-olympiad-route .text-sky-200,
+[data-theme="forest"] .brsd-olympiad-route .text-sky-200,
+[data-theme="sunset"] .brsd-olympiad-route .text-sky-200,
+[data-theme="light"] .brsd-olympiad-route .text-sky-300,
+[data-theme="white"] .brsd-olympiad-route .text-sky-300,
+[data-theme="forest"] .brsd-olympiad-route .text-sky-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-sky-300 { color: #0369a1 !important; }
+
+/* PembahasanCard uses pale text tokens over colorful translucent boxes. */
+[data-theme="light"] .brsd-olympiad-route .text-emerald-50,
+[data-theme="white"] .brsd-olympiad-route .text-emerald-50,
+[data-theme="forest"] .brsd-olympiad-route .text-emerald-50,
+[data-theme="sunset"] .brsd-olympiad-route .text-emerald-50,
+[data-theme="light"] .brsd-olympiad-route .text-emerald-300,
+[data-theme="white"] .brsd-olympiad-route .text-emerald-300,
+[data-theme="forest"] .brsd-olympiad-route .text-emerald-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-emerald-300 { color: #065f46 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-violet-50,
+[data-theme="white"] .brsd-olympiad-route .text-violet-50,
+[data-theme="forest"] .brsd-olympiad-route .text-violet-50,
+[data-theme="sunset"] .brsd-olympiad-route .text-violet-50,
+[data-theme="light"] .brsd-olympiad-route .text-violet-300,
+[data-theme="white"] .brsd-olympiad-route .text-violet-300,
+[data-theme="forest"] .brsd-olympiad-route .text-violet-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-violet-300 { color: #5b21b6 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-cyan-50,
+[data-theme="white"] .brsd-olympiad-route .text-cyan-50,
+[data-theme="forest"] .brsd-olympiad-route .text-cyan-50,
+[data-theme="sunset"] .brsd-olympiad-route .text-cyan-50,
+[data-theme="light"] .brsd-olympiad-route .text-cyan-300,
+[data-theme="white"] .brsd-olympiad-route .text-cyan-300,
+[data-theme="forest"] .brsd-olympiad-route .text-cyan-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-cyan-300 { color: #155e75 !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-amber-50,
+[data-theme="white"] .brsd-olympiad-route .text-amber-50,
+[data-theme="forest"] .brsd-olympiad-route .text-amber-50,
+[data-theme="sunset"] .brsd-olympiad-route .text-amber-50,
+[data-theme="light"] .brsd-olympiad-route .text-amber-300,
+[data-theme="white"] .brsd-olympiad-route .text-amber-300,
+[data-theme="forest"] .brsd-olympiad-route .text-amber-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-amber-300 { color: #92400e !important; }
+
+[data-theme="light"] .brsd-olympiad-route .text-rose-50,
+[data-theme="white"] .brsd-olympiad-route .text-rose-50,
+[data-theme="forest"] .brsd-olympiad-route .text-rose-50,
+[data-theme="sunset"] .brsd-olympiad-route .text-rose-50,
+[data-theme="light"] .brsd-olympiad-route .text-rose-200,
+[data-theme="white"] .brsd-olympiad-route .text-rose-200,
+[data-theme="forest"] .brsd-olympiad-route .text-rose-200,
+[data-theme="sunset"] .brsd-olympiad-route .text-rose-200,
+[data-theme="light"] .brsd-olympiad-route .text-rose-300,
+[data-theme="white"] .brsd-olympiad-route .text-rose-300,
+[data-theme="forest"] .brsd-olympiad-route .text-rose-300,
+[data-theme="sunset"] .brsd-olympiad-route .text-rose-300 { color: #9f1239 !important; }
 /* Input text in guru tables */
 [data-theme="white"] .guru-editable input,
 [data-theme="white"] .guru-editable textarea {
