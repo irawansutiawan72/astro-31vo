@@ -22,7 +22,7 @@ const packages = [
 
 const tryOutPackages = [
   { id: 1, label: "Try Out TKA Matematika Paket 1", path: "/tka/try-out-1", soal: 30, waktu: "75 menit" },
-  { id: 2, label: "Try Out TKA Matematika Paket 2", path: "/tka/try-out-2", soal: 30, waktu: "60 menit" },
+  { id: 2, label: "Try Out TKA Matematika Paket 2", path: "/tka/try-out-2", soal: 30, waktu: "75 menit" },
 ];
 
 const routes: Record<string, string> = {

@@ -286,7 +286,7 @@ const QUESTIONS: Question[] = [
   },
 ];
 
-const TOTAL_SECONDS = 60 * 60;
+const TOTAL_SECONDS = 75 * 60;
 type TryOutStage = "notice" | "biodata" | "countdown" | "exam" | "submitted";
 type SubmissionState = "idle" | "saving" | "saved" | "error";
 
@@ -482,13 +482,13 @@ const TKATryOut2Page = () => {
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/70">Pemberitahuan sebelum mulai</p>
                     <h1 className="mt-1 font-display text-xl font-bold text-white sm:text-2xl">TRY OUT TKA MATEMATIKA</h1>
-                    <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · Paket 2 · 30 soal</p>
+                    <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · Paket 2 · 30 soal · 75 menit</p>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-amber-300/25 bg-amber-500/10 p-4 text-sm leading-7 text-amber-50/85">
                   <p className="font-bold text-amber-100">Perhatikan sebelum mengikuti try out:</p>
                   <ul className="mt-2 list-disc space-y-1 pl-5 text-xs sm:text-sm">
-                    <li>Setelah dimulai, layar pengerjaan akan terkunci dalam satu sesi selama maksimal <strong>60 menit</strong>.</li>
+                    <li>Setelah dimulai, layar pengerjaan akan terkunci dalam satu sesi selama maksimal <strong>75 menit</strong>.</li>
                     <li>Waktu akan mulai dihitung setelah hitungan mundur 3–2–1 selesai.</li>
                     <li>Jika waktu habis, jawaban otomatis dikumpulkan dan tidak dapat diubah.</li>
                     <li>Isi biodata dengan nama lengkap dan asal sekolah yang benar.</li>
@@ -557,7 +557,7 @@ const TKATryOut2Page = () => {
                 <div className="my-5 flex h-36 w-36 items-center justify-center rounded-full border-4 border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_60px_rgba(34,211,238,0.25)]">
                   <span className="font-display text-7xl font-black text-cyan-100">{countdown}</span>
                 </div>
-                <p className="text-xs text-white/40">Setelah angka 1, waktu 60 menit langsung berjalan.</p>
+                <p className="text-xs text-white/40">Setelah angka 1, waktu 75 menit langsung berjalan.</p>
               </div>
             )}
           </section>
@@ -578,15 +578,18 @@ const TKATryOut2Page = () => {
       <main className="relative z-10 mx-auto w-full max-w-7xl px-3 pb-10 pt-6 sm:px-5 lg:px-8">
         <header className="mb-4 rounded-2xl border border-cyan-400/25 bg-slate-950/75 p-4 shadow-xl shadow-cyan-950/20 backdrop-blur sm:p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/75">
-                <Flag className="h-3.5 w-3.5" />
-                Try Out TKA Matematika
+            <div className="flex min-w-0 items-center gap-3">
+              <img src="/logo-numatik.png" alt="NUMATIK" className="h-12 w-12 shrink-0 rounded-xl object-contain shadow-lg shadow-cyan-950/30" />
+              <div className="min-w-0">
+                <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/75">
+                  <Flag className="h-3.5 w-3.5" />
+                  Try Out TKA Matematika
+                </div>
+                <h1 className="font-display text-lg font-bold tracking-wide text-white sm:text-2xl">
+                  Try Out TKA Matematika 2
+                </h1>
+                <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX · Batas waktu 75 menit</p>
               </div>
-              <h1 className="font-display text-lg font-bold tracking-wide text-white sm:text-2xl">
-                Try Out TKA Matematika 2
-              </h1>
-              <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX · Batas waktu 60 menit</p>
             </div>
             <div className={`flex items-center gap-2 self-start rounded-xl border px-4 py-2.5 sm:self-auto ${isUrgent ? "border-red-400/60 bg-red-500/15 text-red-200" : "border-amber-300/30 bg-amber-500/10 text-amber-100"}`}>
               <Clock3 className={`h-5 w-5 ${isUrgent ? "animate-pulse text-red-300" : "text-amber-300"}`} />

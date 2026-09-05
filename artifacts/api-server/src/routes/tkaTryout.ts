@@ -213,7 +213,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
   const school = textValue(body.school, 160);
   const answers = toAnswerMap(body.answers);
   const submittedAt = new Date().toISOString();
-  const maxDurationSeconds = 60 * 60;
+  const maxDurationSeconds = 75 * 60;
   const durationSeconds =
     typeof body.durationSeconds === "number" && Number.isFinite(body.durationSeconds)
       ? Math.max(0, Math.min(maxDurationSeconds, Math.round(body.durationSeconds)))
