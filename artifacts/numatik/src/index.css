@@ -228,6 +228,129 @@
   border-color: var(--border) !important;
 }
 
+/* Olimpiade Teorema Pythagoras diagrams use bright neon ink for the space
+   theme. Give the same SVGs a dark, high-contrast ink palette on light themes
+   so labels and construction lines remain readable against pale surfaces. */
+[data-theme="light"] .olimpiade-teorema-route svg,
+[data-theme="white"] .olimpiade-teorema-route svg,
+[data-theme="forest"] .olimpiade-teorema-route svg,
+[data-theme="sunset"] .olimpiade-teorema-route svg {
+  background: rgba(248, 250, 252, 0.9) !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#22d3ee"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#22d3ee"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#22d3ee"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#22d3ee"] {
+  stroke: #0e7490 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#fbbf24"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#fbbf24"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#fbbf24"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#fbbf24"] {
+  stroke: #a16207 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#e5e7eb"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#e5e7eb"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#e5e7eb"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#e5e7eb"] {
+  stroke: #475569 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#38bdf8"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#38bdf8"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#38bdf8"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#38bdf8"] {
+  stroke: #0369a1 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#60a5fa"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#60a5fa"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#60a5fa"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#60a5fa"] {
+  stroke: #1d4ed8 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#94a3b8"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#94a3b8"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#94a3b8"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#94a3b8"] {
+  stroke: #475569 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [stroke="#334155"],
+[data-theme="white"] .olimpiade-teorema-route svg [stroke="#334155"],
+[data-theme="forest"] .olimpiade-teorema-route svg [stroke="#334155"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [stroke="#334155"] {
+  stroke: #64748b !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#fbbf24"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#fbbf24"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#fbbf24"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#fbbf24"],
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#fde68a"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#fde68a"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#fde68a"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#fde68a"] {
+  fill: #92400e !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#e5e7eb"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#e5e7eb"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#e5e7eb"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#e5e7eb"],
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#94a3b8"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#94a3b8"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#94a3b8"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#94a3b8"] {
+  fill: #475569 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#38bdf8"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#38bdf8"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#38bdf8"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#38bdf8"] {
+  fill: #0369a1 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#22d3ee"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#22d3ee"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#22d3ee"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#22d3ee"] {
+  fill: #0e7490 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#7c3aed"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#7c3aed"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#7c3aed"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#7c3aed"] {
+  fill: #6d28d9 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#f59e0b"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#f59e0b"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#f59e0b"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#f59e0b"] {
+  fill: #b45309 !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#f472b6"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#f472b6"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#f472b6"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#f472b6"] {
+  fill: #be185d !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route svg [fill="#f87171"],
+[data-theme="white"] .olimpiade-teorema-route svg [fill="#f87171"],
+[data-theme="forest"] .olimpiade-teorema-route svg [fill="#f87171"],
+[data-theme="sunset"] .olimpiade-teorema-route svg [fill="#f87171"] {
+  fill: #b91c1c !important;
+}
+
 [data-theme="light"] .animation-submaterial-route [class*="text-white"],
 [data-theme="white"] .animation-submaterial-route [class*="text-white"],
 [data-theme="forest"] .animation-submaterial-route [class*="text-white"],
