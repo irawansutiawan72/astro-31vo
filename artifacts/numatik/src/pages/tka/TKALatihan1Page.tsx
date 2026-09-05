@@ -329,12 +329,39 @@ const TKALatihan1Page = () => {
                 <p className="font-body text-white/90 text-sm leading-relaxed mb-3">
                   Toko <span className="text-yellow-300 font-bold">"Baju Kita"</span> memberikan diskon bertingkat pada setiap transaksi. Berikut pilihan diskon yang tersedia.
                 </p>
-                <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 mb-3 text-xs font-body text-white/80 space-y-1">
-                  <p>• <span className="text-cyan-300 font-bold">Diskon A:</span> 20% s/d Rp80.000,00</p>
-                  <p>• <span className="text-cyan-300 font-bold">Diskon B:</span> 10% s/d Rp150.000,00</p>
-                  <p>• <span className="text-cyan-300 font-bold">Diskon C:</span> 15% s/d Rp50.000,00</p>
-                  <p>• <span className="text-cyan-300 font-bold">Diskon D:</span> 30% s/d Rp30.000,00</p>
-                  <p className="text-white/50 italic pt-1">Artinya, potongan yang diberikan adalah persentase dari total belanja, tetapi tidak boleh melebihi batas maksimal yang tertulis.</p>
+                <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 mb-3 overflow-x-auto">
+                  <table className="w-full min-w-[320px] text-xs font-body text-white/80 border-collapse">
+                    <thead>
+                      <tr className="bg-white/10">
+                        <th className="border border-white/15 px-3 py-2 text-left text-cyan-200">Pilihan Diskon</th>
+                        <th className="border border-white/15 px-3 py-2 text-center text-cyan-200">Persentase</th>
+                        <th className="border border-white/15 px-3 py-2 text-right text-cyan-200">Maksimal Potongan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-white/10 px-3 py-2 font-bold text-cyan-300">Diskon A</td>
+                        <td className="border border-white/10 px-3 py-2 text-center">20%</td>
+                        <td className="border border-white/10 px-3 py-2 text-right">Rp80.000,00</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-white/10 px-3 py-2 font-bold text-cyan-300">Diskon B</td>
+                        <td className="border border-white/10 px-3 py-2 text-center">10%</td>
+                        <td className="border border-white/10 px-3 py-2 text-right">Rp150.000,00</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-white/10 px-3 py-2 font-bold text-cyan-300">Diskon C</td>
+                        <td className="border border-white/10 px-3 py-2 text-center">15%</td>
+                        <td className="border border-white/10 px-3 py-2 text-right">Rp50.000,00</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-white/10 px-3 py-2 font-bold text-cyan-300">Diskon D</td>
+                        <td className="border border-white/10 px-3 py-2 text-center">30%</td>
+                        <td className="border border-white/10 px-3 py-2 text-right">Rp30.000,00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="text-white/50 italic pt-2 text-xs">Artinya, potongan yang diberikan adalah persentase dari total belanja, tetapi tidak boleh melebihi batas maksimal yang tertulis.</p>
                 </div>
                 <p className="font-body text-white/90 text-sm leading-relaxed mb-3">
                   Rani akan melakukan dua kali transaksi belanja online, masing-masing seharga Rp100.000,00. Setiap transaksi hanya boleh menggunakan satu diskon, dan setiap diskon hanya boleh dipakai satu kali. Jika Rani menginginkan potongan harga <span className="text-yellow-300 font-bold">lebih dari Rp15.000,00</span> pada setiap transaksinya, diskon mana sajakah yang boleh ia pilih?
