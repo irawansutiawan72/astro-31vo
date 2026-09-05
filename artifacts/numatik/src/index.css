@@ -374,6 +374,19 @@
   color: #0f172a !important;
 }
 
+[data-theme="light"] .olimpiade-teorema-route .important-formula .katex svg,
+[data-theme="white"] .olimpiade-teorema-route .important-formula .katex svg,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula .katex svg,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula .katex svg,
+[data-theme="light"] .olimpiade-teorema-route .important-formula .katex svg path,
+[data-theme="white"] .olimpiade-teorema-route .important-formula .katex svg path,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula .katex svg path,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula .katex svg path {
+  color: #0f172a !important;
+  fill: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
 [data-theme="light"] .olimpiade-teorema-route .important-formula > span:first-child,
 [data-theme="white"] .olimpiade-teorema-route .important-formula > span:first-child,
 [data-theme="forest"] .olimpiade-teorema-route .important-formula > span:first-child,
