@@ -8,10 +8,10 @@ import {
   ChevronRight,
   Clock3,
   Flag,
-  PanelLeftClose,
-  PanelLeftOpen,
+  Menu,
   RotateCcw,
   Send,
+  X,
 } from "lucide-react";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
@@ -264,7 +264,9 @@ const TKATryOut1Page = () => {
   const [finishedReason, setFinishedReason] = useState<"manual" | "time-up">("manual");
   const [serverScore, setServerScore] = useState<number | null>(null);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
-  const [showQuestionPanel, setShowQuestionPanel] = useState(true);
+  const [showQuestionPanel, setShowQuestionPanel] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
+  );
   const [isLandscape, setIsLandscape] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
   );
@@ -315,7 +317,7 @@ const TKATryOut1Page = () => {
     const mediaQuery = window.matchMedia("(orientation: landscape)");
     const handleOrientationChange = () => {
       setIsLandscape(mediaQuery.matches);
-      if (mediaQuery.matches) setShowQuestionPanel(true);
+      setShowQuestionPanel(mediaQuery.matches);
     };
 
     handleOrientationChange();
@@ -564,27 +566,36 @@ const TKATryOut1Page = () => {
           </section>
         )}
 
-        <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5 text-xs backdrop-blur landscape:hidden">
-          <div>
-            <p className="font-bold text-cyan-200">Panel nomor soal</p>
-            <p className="mt-0.5 text-[10px] text-white/45">Atur tampilan daftar soal di portrait</p>
-          </div>
+        {!isLandscape && showQuestionPanel && (
           <button
-            onClick={() => setShowQuestionPanel((visible) => !visible)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-cyan-300/25 bg-cyan-400/10 px-3 py-2 text-[10px] font-bold text-cyan-100 transition hover:bg-cyan-400/20"
+            aria-label="Tutup panel nomor soal"
+            onClick={() => setShowQuestionPanel(false)}
+            className="fixed inset-0 z-30 bg-slate-950/35 backdrop-blur-[1px] landscape:hidden"
+          />
+        )}
+
+        {!isLandscape && (
+          <button
+            aria-label={showQuestionPanel ? "Sembunyikan panel nomor soal" : "Tampilkan panel nomor soal"}
             aria-expanded={showQuestionPanel}
             aria-controls="question-navigation-panel"
+            onClick={() => setShowQuestionPanel((visible) => !visible)}
+            className="fixed left-3 top-20 z-50 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/35 bg-slate-950/90 text-cyan-100 shadow-xl shadow-cyan-950/30 backdrop-blur transition hover:border-cyan-200/70 hover:bg-cyan-500/20 landscape:hidden"
+            title={showQuestionPanel ? "Sembunyikan daftar soal" : "Tampilkan daftar soal"}
           >
-            {showQuestionPanel ? <PanelLeftClose className="h-3.5 w-3.5" /> : <PanelLeftOpen className="h-3.5 w-3.5" />}
-            {showQuestionPanel ? "Sembunyikan" : "Tampilkan"}
+            {showQuestionPanel ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-        </div>
+        )}
 
         <div className="grid gap-4 landscape:grid-cols-[190px_minmax(0,1fr)]">
           <aside
             id="question-navigation-panel"
-            className={`h-fit rounded-2xl border border-white/10 bg-slate-950/70 p-3 backdrop-blur landscape:sticky landscape:top-4 ${
-              isLandscape || showQuestionPanel ? "block" : "hidden"
+            className={`h-fit rounded-2xl border border-white/10 bg-slate-950/95 p-3 shadow-2xl shadow-black/30 backdrop-blur landscape:sticky landscape:top-4 ${
+              isLandscape
+                ? "relative order-1 block"
+                : showQuestionPanel
+                  ? "fixed left-3 top-20 z-40 block max-h-[calc(100vh-6rem)] w-[min(260px,calc(100vw-1.5rem))] overflow-y-auto"
+                  : "hidden"
             }`}
           >
             <div className="mb-3 flex items-center justify-between">
@@ -592,7 +603,18 @@ const TKATryOut1Page = () => {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">Daftar soal</p>
                 <p className="mt-1 text-xs text-white/70">{answeredCount} / {QUESTIONS.length} terjawab</p>
               </div>
-              <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+              <div className="flex items-center gap-2">
+                <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+                {!isLandscape && (
+                  <button
+                    aria-label="Tutup panel nomor soal"
+                    onClick={() => setShowQuestionPanel(false)}
+                    className="rounded-md p-1 text-white/55 transition hover:bg-white/10 hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
             <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-10 lg:grid-cols-5">
               {QUESTIONS.map((item, index) => {
@@ -621,7 +643,7 @@ const TKATryOut1Page = () => {
             </div>
           </aside>
 
-          <section className="order-2 min-w-0">
+          <section className="order-1 min-w-0 landscape:order-2">
             <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5 text-xs backdrop-blur sm:px-4">
               <span className="font-bold text-cyan-200">Soal {question.number}</span>
               <span className="text-white/40">{question.topic}</span>
