@@ -1,0 +1,55 @@
+Saya ingin menambahkan fitur "Mode Ujian Aman" (anti-cheat / lock-focus) pada menu 
+"TES KEMAMPUAN AKADEMIK - TRY OUT TKA MATEMATIKA 1 (2026-2027)" yang baru saja selesai 
+dibuat paket soalnya di proyek ini.
+
+Tolong cari dulu file komponen halaman kuis TKA tersebut di dalam src/, lalu tambahkan 
+fitur-fitur berikut TANPA mengubah logika soal, penilaian, atau data paket soal yang 
+sudah ada:
+
+1. FULLSCREEN LOCK SAAT MULAI
+   - Saat siswa menekan tombol "Mulai Kuis", panggil Fullscreen API 
+     (document.documentElement.requestFullscreen()) sebelum soal pertama ditampilkan.
+   - Jika perangkat/browser menolak fullscreen, tetap lanjutkan kuis tapi tampilkan 
+     peringatan kecil bahwa mode aman tidak sepenuhnya aktif.
+   - Untuk platform Android (aplikasi ini pakai Capacitor, cek dengan 
+     Capacitor.isNativePlatform()), fullscreen API browser tidak relevan — sebagai 
+     gantinya gunakan pendekatan yang sesuai untuk WebView Capacitor (immersive mode 
+     jika memungkinkan), atau lewati langkah fullscreen browser untuk native app.
+
+2. DETEKSI KELUAR FULLSCREEN / PINDAH TAB / PINDAH APLIKASI
+   - Pasang event listener 'fullscreenchange', 'visibilitychange', dan 'blur'.
+   - Setiap kali salah satu event ini terpicu SELAMA kuis sedang berjalan (belum 
+     disubmit), tambahkan 1 ke counter "pelanggaran" dan simpan di state React 
+     (bukan localStorage/sessionStorage).
+   - Tampilkan modal peringatan (pakai komponen Dialog dari shadcn/ui yang sudah 
+     dipakai di proyek ini) setiap kali pelanggaran terjadi, isinya: 
+     "Anda terdeteksi keluar dari layar ujian. Pelanggaran ke-X dari maksimal 3. 
+     Kuis akan otomatis dikumpulkan jika pelanggaran mencapai batas."
+   - Modal ini punya tombol "Kembali ke Mode Ujian" yang otomatis memicu ulang 
+     requestFullscreen().
+
+3. AUTO-SUBMIT SETELAH BATAS PELANGGARAN
+   - Jika counter pelanggaran mencapai 3, otomatis submit jawaban siswa apa adanya 
+     (pakai fungsi submit yang sudah ada di halaman ini), lalu arahkan ke halaman 
+     hasil dengan catatan tambahan "Kuis dihentikan otomatis karena pelanggaran 
+     mode ujian aman."
+
+4. CEGAH COPY-PASTE & KLIK KANAN SELAMA KUIS BERLANGSUNG
+   - Nonaktifkan klik kanan (contextmenu) dan select-text (CSS user-select: none) 
+     khusus di area soal & pilihan jawaban saja (jangan di seluruh halaman, supaya 
+     tidak mengganggu navigasi UI lain).
+   - Cegah Ctrl+C, Ctrl+V, Ctrl+U, Ctrl+Shift+I, F12 lewat keydown listener 
+     (preventDefault), khusus saat status kuis = sedang berjalan.
+
+5. UI TAMBAHAN
+   - Tampilkan badge kecil di header halaman kuis: "🔒 Mode Ujian Aman Aktif" 
+     selama kuis berlangsung.
+   - Semua teks UI harus trilingual (id/en/ja) mengikuti pola 
+     `translations = { id, en, ja }` + `useLanguage()` yang sudah dipakai di 
+     komponen-komponen lain di proyek ini — JANGAN hardcode teks bahasa Indonesia saja.
+
+PENTING:
+- Jangan ubah struktur data soal, sistem skor, atau alur submit yang sudah ada — 
+  fitur ini hanya lapisan tambahan (wrapper) di sekitar kuis yang sudah jadi.
+- Setelah selesai, tampilkan ringkasan file apa saja yang diubah/ditambahkan.
+- Jangan sentuh menu/topik lain di luar halaman TKA Try Out ini.

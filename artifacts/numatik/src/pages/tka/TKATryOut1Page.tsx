@@ -16,6 +16,7 @@ import {
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
+import { SecureExamBadge, SecureExamDialog, useSecureExam } from "@/components/tka/SecureExamGuard";
 
 type Question = {
   number: number;
@@ -261,7 +262,7 @@ const TKATryOut1Page = () => {
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [submissionError, setSubmissionError] = useState("");
   const [emailSent, setEmailSent] = useState<boolean | null>(null);
-  const [finishedReason, setFinishedReason] = useState<"manual" | "time-up">("manual");
+  const [finishedReason, setFinishedReason] = useState<"manual" | "time-up" | "security-violation">("manual");
   const [serverScore, setServerScore] = useState<number | null>(null);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [showQuestionPanel, setShowQuestionPanel] = useState(
@@ -325,7 +326,7 @@ const TKATryOut1Page = () => {
     return () => mediaQuery.removeEventListener("change", handleOrientationChange);
   }, []);
 
-  const finishExam = (reason: "manual" | "time-up") => {
+  const finishExam = (reason: "manual" | "time-up" | "security-violation") => {
     if (stage !== "exam" || finishingRef.current) return;
     finishingRef.current = true;
     setFinishedReason(reason);
@@ -363,6 +364,12 @@ const TKATryOut1Page = () => {
       });
   };
 
+  const security = useSecureExam({
+    active: stage === "exam",
+    submitted: stage === "submitted",
+    onAutoSubmit: () => finishExam("security-violation"),
+  });
+
   useEffect(() => {
     if (stage === "exam" && remaining === 0) finishExam("time-up");
   }, [remaining, stage]);
@@ -378,12 +385,13 @@ const TKATryOut1Page = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const startExam = () => {
+  const startExam = async () => {
     if (!fullName.trim() || !school.trim()) {
       setSubmissionError("Nama lengkap dan asal sekolah wajib diisi.");
       return;
     }
     setSubmissionError("");
+    await security.requestExamFullscreen();
     setCountdown(3);
     setStage("countdown");
     playPopSound();
@@ -410,6 +418,7 @@ const TKATryOut1Page = () => {
     setEmailSent(null);
     setServerScore(null);
     setShowSubmitDialog(false);
+    security.resetSecurity();
   };
 
   if (stage === "notice" || stage === "biodata" || stage === "countdown") {
@@ -536,15 +545,29 @@ const TKATryOut1Page = () => {
                 <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX · Batas waktu 75 menit</p>
               </div>
             </div>
-            <div className={`flex items-center gap-2 self-start rounded-xl border px-4 py-2.5 sm:self-auto ${isUrgent ? "border-red-400/60 bg-red-500/15 text-red-200" : "border-amber-300/30 bg-amber-500/10 text-amber-100"}`}>
-              <Clock3 className={`h-5 w-5 ${isUrgent ? "animate-pulse text-red-300" : "text-amber-300"}`} />
-              <div>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/45">Sisa waktu</p>
-                <p className="font-mono text-xl font-bold leading-none">{formatTime(remaining)}</p>
+            <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+              <SecureExamBadge
+                active={stage === "exam"}
+                isFullscreen={security.isFullscreen}
+                nativeMode={security.nativeMode}
+                violations={security.violations}
+              />
+              <div className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 ${isUrgent ? "border-red-400/60 bg-red-500/15 text-red-200" : "border-amber-300/30 bg-amber-500/10 text-amber-100"}`}>
+                <Clock3 className={`h-5 w-5 ${isUrgent ? "animate-pulse text-red-300" : "text-amber-300"}`} />
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-white/45">Sisa waktu</p>
+                  <p className="font-mono text-xl font-bold leading-none">{formatTime(remaining)}</p>
+                </div>
               </div>
             </div>
           </div>
         </header>
+
+        {security.fullscreenWarning && stage === "exam" && (
+          <div className="mb-4 rounded-xl border border-amber-300/35 bg-amber-500/10 px-4 py-2.5 text-xs font-medium text-amber-100">
+            {security.fullscreenWarning}
+          </div>
+        )}
 
         {submitted && (
           <section className="mb-4 rounded-2xl border border-emerald-400/35 bg-emerald-950/45 p-4 shadow-lg shadow-emerald-950/20 sm:p-5">
@@ -556,6 +579,9 @@ const TKATryOut1Page = () => {
                   <p className="mt-1 text-xs text-emerald-100/65">
                     Jawaban dikerjakan {answeredCount} dari {QUESTIONS.length} soal · Skor {displayedScore}/{QUESTIONS.length}
                   </p>
+                  {finishedReason === "security-violation" && (
+                    <p className="mt-2 text-xs font-semibold text-rose-200">{security.copy.autoSubmitNote}</p>
+                  )}
                   {submissionState === "saving" && <p className="mt-2 text-xs text-amber-200">Menyimpan hasil ke spreadsheet...</p>}
                   {submissionState === "saved" && emailSent !== false && <p className="mt-2 text-xs text-emerald-200">Hasil sudah masuk ke spreadsheet dan notifikasi email.</p>}
                   {submissionState === "saved" && emailSent === false && <p className="mt-2 text-xs text-amber-200">Hasil sudah masuk ke spreadsheet, tetapi notifikasi email belum terkirim.</p>}
@@ -652,7 +678,10 @@ const TKATryOut1Page = () => {
               <span className="text-white/40">{question.topic}</span>
             </div>
 
-            <article className="min-h-[430px] rounded-2xl border border-cyan-300/20 bg-slate-950/75 p-5 shadow-2xl shadow-cyan-950/15 backdrop-blur sm:p-7">
+            <article
+              onContextMenu={security.blockQuestionInteraction}
+              className="min-h-[430px] select-none rounded-2xl border border-cyan-300/20 bg-slate-950/75 p-5 shadow-2xl shadow-cyan-950/15 backdrop-blur sm:p-7"
+            >
               <div className="mb-6 flex items-start gap-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cyan-400/15 font-display text-sm font-bold text-cyan-200 ring-1 ring-cyan-300/25">
                   {question.number}
@@ -739,6 +768,14 @@ const TKATryOut1Page = () => {
           </div>
         </div>
       )}
+
+      <SecureExamDialog
+        open={security.dialogOpen}
+        violations={security.violations}
+        copy={security.copy}
+        onReturn={() => { void security.returnToExam(); }}
+        onOpenChange={() => undefined}
+      />
 
       {stage !== "exam" && (
         <button

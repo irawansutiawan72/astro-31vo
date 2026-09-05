@@ -126,7 +126,11 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
       ? Math.max(0, Math.min(MAX_DURATION_SECONDS, Math.round(body.durationSeconds)))
       : 0;
   const submitReason =
-    body.submitReason === "time-up" ? "Waktu habis (otomatis)" : "Dikumpulkan oleh peserta";
+    body.submitReason === "time-up"
+      ? "Waktu habis (otomatis)"
+      : body.submitReason === "security-violation"
+        ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
+        : "Dikumpulkan oleh peserta";
 
   if (!name || !school) {
     res.status(400).json({ message: "Nama lengkap dan asal sekolah wajib diisi." });
@@ -219,7 +223,11 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
       ? Math.max(0, Math.min(maxDurationSeconds, Math.round(body.durationSeconds)))
       : 0;
   const submitReason =
-    body.submitReason === "time-up" ? "Waktu habis (otomatis)" : "Dikumpulkan oleh peserta";
+    body.submitReason === "time-up"
+      ? "Waktu habis (otomatis)"
+      : body.submitReason === "security-violation"
+        ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
+        : "Dikumpulkan oleh peserta";
 
   if (!name || !school) {
     res.status(400).json({ message: "Nama lengkap dan asal sekolah wajib diisi." });
