@@ -48,6 +48,15 @@ type Category = {
   dot: string;
   badge: string;
   bar: string;
+  light: {
+    surface: string;
+    header: string;
+    border: string;
+    button: string;
+    icon: string;
+    badge: string;
+    bar: string;
+  };
   topics: Topic[];
 };
 
@@ -61,6 +70,15 @@ const categories: Category[] = [
     dot: "bg-blue-400",
     badge: "bg-blue-700 text-blue-200 border-blue-500",
     bar: "bg-blue-400",
+    light: {
+      surface: "bg-blue-50/90",
+      header: "bg-blue-100/80",
+      border: "border-blue-200",
+      button: "bg-white/85 border-blue-100 hover:bg-blue-100/80 hover:border-blue-300",
+      icon: "bg-blue-50 border-blue-200",
+      badge: "bg-blue-100 text-blue-800 border-blue-200",
+      bar: "bg-blue-500",
+    },
     topics: [
       { name: "Bilangan Bulat", emoji: "🔵" },
       { name: "Bilangan Rasional", emoji: "⅔" },
@@ -79,6 +97,15 @@ const categories: Category[] = [
     dot: "bg-violet-400",
     badge: "bg-violet-700 text-violet-200 border-violet-500",
     bar: "bg-violet-400",
+    light: {
+      surface: "bg-violet-50/90",
+      header: "bg-violet-100/80",
+      border: "border-violet-200",
+      button: "bg-white/85 border-violet-100 hover:bg-violet-100/80 hover:border-violet-300",
+      icon: "bg-violet-50 border-violet-200",
+      badge: "bg-violet-100 text-violet-800 border-violet-200",
+      bar: "bg-violet-500",
+    },
     topics: [
       { name: "Himpunan", emoji: "⊂" },
       { name: "Relasi dan Fungsi", emoji: "↦" },
@@ -102,6 +129,15 @@ const categories: Category[] = [
     dot: "bg-emerald-400",
     badge: "bg-emerald-700 text-emerald-200 border-emerald-500",
     bar: "bg-emerald-400",
+    light: {
+      surface: "bg-emerald-50/90",
+      header: "bg-emerald-100/80",
+      border: "border-emerald-200",
+      button: "bg-white/85 border-emerald-100 hover:bg-emerald-100/80 hover:border-emerald-300",
+      icon: "bg-emerald-50 border-emerald-200",
+      badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
+      bar: "bg-emerald-500",
+    },
     topics: [
       { name: "Garis dan Sudut", emoji: "∠" },
       { name: "Koordinat Kartesius", emoji: "⊹" },
@@ -123,6 +159,15 @@ const categories: Category[] = [
     dot: "bg-orange-400",
     badge: "bg-orange-700 text-orange-200 border-orange-500",
     bar: "bg-orange-400",
+    light: {
+      surface: "bg-orange-50/90",
+      header: "bg-orange-100/80",
+      border: "border-orange-200",
+      button: "bg-white/85 border-orange-100 hover:bg-orange-100/80 hover:border-orange-300",
+      icon: "bg-orange-50 border-orange-200",
+      badge: "bg-orange-100 text-orange-800 border-orange-200",
+      bar: "bg-orange-500",
+    },
     topics: [
       { name: "Statistika", emoji: "📉" },
       { name: "Peluang", emoji: "🎲" },
@@ -169,7 +214,16 @@ const StarChip = ({ color }: { color: string }) => (
 const OlimpiadePage = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const isLight = ["light", "white", "forest"].includes(theme);
+  const isLight = ["light", "white", "forest", "sunset"].includes(theme);
+  const pageGradient = theme === "white"
+    ? "gradient-white"
+    : theme === "forest"
+      ? "gradient-forest"
+      : theme === "sunset"
+        ? "gradient-sunset"
+        : isLight
+          ? "gradient-snow"
+          : "gradient-space";
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -179,7 +233,7 @@ const OlimpiadePage = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className={`olympiad-theme-route olympiad-index-route relative min-h-screen flex flex-col items-center ${pageGradient} overflow-hidden`}>
       <Starfield />
       <PageNavigation prevPath="/menu" />
 
@@ -190,24 +244,24 @@ const OlimpiadePage = () => {
           <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-500/20 to-yellow-400/10 border border-amber-400/30 flex items-center justify-center mb-5 shadow-[0_0_32px_rgba(251,191,36,0.2)]">
             <TrophySVG />
           </div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-white text-center mb-1"
-            style={{ textShadow: '0 0 40px rgba(251,191,36,0.5)' }}>
+          <h1 className={`font-display text-2xl md:text-3xl font-bold text-center mb-1 ${isLight ? "text-slate-900" : "text-white"}`}
+            style={{ textShadow: isLight ? "0 2px 12px rgba(30,64,175,0.12)" : "0 0 40px rgba(251,191,36,0.5)" }}>
             OLIMPIADE MATEMATIKA
           </h1>
-          <h2 className="font-display text-sm md:text-base font-semibold text-center mb-2"
-            style={{ color: '#facc15', textShadow: '0 0 20px rgba(251,191,36,0.4)' }}>
+          <h2 className={`font-display text-sm md:text-base font-semibold text-center mb-2 ${isLight ? "text-amber-700" : "text-yellow-400"}`}
+            style={{ textShadow: isLight ? "0 1px 5px rgba(180,83,9,0.14)" : "0 0 20px rgba(251,191,36,0.4)" }}>
             Oleh : Irawan Sutiawan, M.Pd
           </h2>
-          <p className="text-white/50 text-sm text-center font-body mb-4">
+          <p className={`${isLight ? "text-slate-600" : "text-white/50"} text-sm text-center font-body mb-4`}>
             Latihan soal & materi tingkat olimpiade SMP
           </p>
 
           {/* Stats row */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             {[
-              { v: "28", l: "Topik", color: "bg-amber-500/15 border-amber-400/30 text-amber-300" },
-              { v: "4", l: "Kategori", color: "bg-blue-500/15 border-blue-400/30 text-blue-300" },
-              { v: "OSN", l: "2003–2026", color: "bg-emerald-500/15 border-emerald-400/30 text-emerald-300" },
+              { v: "28", l: "Topik", color: isLight ? "bg-amber-100 text-amber-800 border-amber-200" : "bg-amber-500/15 border-amber-400/30 text-amber-300" },
+              { v: "4", l: "Kategori", color: isLight ? "bg-blue-100 text-blue-800 border-blue-200" : "bg-blue-500/15 border-blue-400/30 text-blue-300" },
+              { v: "OSN", l: "2003–2026", color: isLight ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-emerald-500/15 border-emerald-400/30 text-emerald-300" },
             ].map(({ v, l, color }) => (
               <div key={l} className={`flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full border font-body ${color}`}>
                 <span className="text-sm">{v}</span>
@@ -221,26 +275,23 @@ const OlimpiadePage = () => {
         <div className="flex flex-col gap-5 animate-slide-up">
           {categories.map((cat, ci) => (
             <div key={cat.label}
-              className={`relative rounded-2xl overflow-hidden ${isLight ? "" : `border ${cat.border}`}`}
+               className={`relative rounded-2xl overflow-hidden border ${isLight ? `${cat.light.surface} ${cat.light.border} shadow-lg shadow-slate-900/5` : cat.border}`}
               style={{
                 animationDelay: `${ci * 0.06}s`,
-                ...(isLight ? { background: "var(--bg-card)", border: "1px solid var(--border)" } : {}),
               }}>
               {/* bg gradient — dark themes only */}
               {!isLight && <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient}`} />}
 
               {/* Category header */}
               <div
-                className={`relative flex items-center gap-3 px-5 py-3.5 ${isLight ? "" : `bg-gradient-to-r ${cat.headerGrad} border-b ${cat.border}`}`}
-                style={isLight ? { background: "var(--bg-secondary)", borderBottom: "1px solid var(--border)" } : {}}>
+                className={`relative flex items-center gap-3 px-5 py-3.5 border-b ${isLight ? `${cat.light.header} ${cat.light.border}` : `bg-gradient-to-r ${cat.headerGrad} ${cat.border}`}`}>
                 <span className="text-xl leading-none">{cat.emoji}</span>
                 <div className="flex-1">
                   <p className="font-display text-sm font-bold" style={{ color: "var(--text-primary)" }}>{cat.label}</p>
                   <p className="font-body text-[10px]" style={{ color: "var(--text-secondary)" }}>{cat.topics.length} topik</p>
                 </div>
                 {isLight ? (
-                  <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full font-body"
-                    style={{ background: "var(--btn-bg)", color: "var(--text-primary)", border: "1px solid var(--border)" }}>
+                    <span className={`inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full font-body border ${cat.light.badge}`}>
                     ✦ MATERI & SOAL
                   </span>
                 ) : (
@@ -257,30 +308,26 @@ const OlimpiadePage = () => {
                       key={topic.name}
                       onClick={() => handleClick(topic.name)}
                       disabled={!hasRoute}
-                      className={`group flex items-center gap-3 rounded-xl px-4 py-3.5 text-left transition-all duration-200 shadow-md
+                        className={`olympiad-topic-button group flex items-center gap-3 rounded-xl px-4 py-3.5 text-left transition-all duration-200 shadow-md
                         ${hasRoute
                           ? isLight
-                            ? "cursor-pointer hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                            ? `cursor-pointer hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 ${cat.light.button}`
                             : "bg-white/20 hover:bg-white/30 border border-white/40 hover:border-white/70 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                           : isLight
-                            ? "cursor-not-allowed opacity-40"
+                            ? `cursor-not-allowed opacity-45 ${cat.light.button}`
                             : "bg-white/5 border border-white/10 cursor-not-allowed opacity-40"
                         }`}
                       style={{
                         animationDelay: `${(ci * 0.06) + (ti * 0.025)}s`,
-                        ...(isLight ? { background: "var(--bg-secondary)", border: "1px solid var(--border)" } : {}),
                       }}
                     >
                       {/* Colored left indicator */}
-                      <div className={`w-1.5 h-9 rounded-full shrink-0 ${cat.bar} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                      <div className={`w-1.5 h-9 rounded-full shrink-0 ${isLight ? cat.light.bar : cat.bar} opacity-80 group-hover:opacity-100 transition-opacity`} />
 
                       {/* Emoji badge */}
                       <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-base group-hover:scale-110 transition-transform"
-                        style={isLight
-                          ? { background: "var(--bg-primary)", border: "1px solid var(--border)" }
-                          : { background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.1)" }
-                        }>
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-base group-hover:scale-110 transition-transform border ${isLight ? cat.light.icon : ""}`}
+                        style={!isLight ? { background: "rgba(0,0,0,0.4)", borderColor: "rgba(255,255,255,0.1)" } : undefined}>
                         {topic.emoji}
                       </div>
 
@@ -308,17 +355,17 @@ const OlimpiadePage = () => {
 
         {/* Bottom note */}
         <div className="mt-8 flex flex-col items-center gap-3">
-          <div className="w-full bg-amber-500/8 border border-amber-400/20 rounded-xl px-4 py-3 flex items-start gap-3">
+           <div className={`w-full rounded-xl px-4 py-3 flex items-start gap-3 border ${isLight ? "bg-amber-50/90 border-amber-200 shadow-sm" : "bg-amber-500/8 border-amber-400/20"}`}>
             <span className="text-lg shrink-0">🏅</span>
-            <p className="font-body text-xs text-white/55 leading-relaxed">
-              Setiap topik memuat <span className="text-amber-300 font-semibold">materi ringkas</span>,{" "}
-              <span className="text-amber-300 font-semibold">latihan dasar</span>, dan{" "}
-              <span className="text-amber-300 font-semibold">soal OSN 2003–2026</span> dari tingkat kota hingga nasional.
+             <p className={`font-body text-xs leading-relaxed ${isLight ? "text-slate-700" : "text-white/55"}`}>
+               Setiap topik memuat <span className={`${isLight ? "text-amber-800" : "text-amber-300"} font-semibold`}>materi ringkas</span>,{" "}
+               <span className={`${isLight ? "text-amber-800" : "text-amber-300"} font-semibold`}>latihan dasar</span>, dan{" "}
+               <span className={`${isLight ? "text-amber-800" : "text-amber-300"} font-semibold`}>soal OSN 2003–2026</span> dari tingkat kota hingga nasional.
             </p>
           </div>
           <button
             onClick={() => { playPopSound(); navigate("/menu"); }}
-            className="text-sm text-white/30 hover:text-amber-400 transition-colors cursor-pointer font-body mt-1"
+             className={`text-sm transition-colors cursor-pointer font-body mt-1 ${isLight ? "text-slate-600 hover:text-amber-700" : "text-white/30 hover:text-amber-400"}`}
           >
             ← Kembali ke Menu
           </button>
