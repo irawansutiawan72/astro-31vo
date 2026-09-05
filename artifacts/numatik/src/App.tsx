@@ -1446,7 +1446,7 @@ const AppInner = () => {
           <Route path="/math-game-arena/umum/galaxy-defender" element={<GalaxyDefenderPage />} />
           <Route path="/math-game-arena/umum/math-bros" element={<MathBrosPage />} />
           <Route path="/math-game-arena/umum/zuma-math" element={<ZumaMathPage />} />
-          <Route path="/math-game-arena/umum/pacman-math" element={<PacmanMathPage />} />
+          <Route path="/math-game-arena/umum/pacman-math" element={<PacmanMathPage variant="spider" topicLabel="Math Game Arena" />} />
           <Route path="/math-game-arena/umum/bounce-math" element={<BounceMathPage />} />
           <Route path="/math-game-arena/umum/western-bar" element={<WesternBarPage />} />
           <Route path="/math-game-arena/umum/pinball-math" element={<PinballMathPage />} />

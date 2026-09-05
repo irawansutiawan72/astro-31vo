@@ -224,20 +224,21 @@ const SubmaterialGameVariantsChooserK9 = () => {
                       className="w-11 h-12 drop-shadow-[0_0_14px_rgba(236,72,153,0.8)]"
                     />
                   ) : v.variantSlug === "pac-math" ? (
-                    <svg viewBox="0 0 52 52" style={{ width: 46, height: 46, filter: "drop-shadow(0 0 10px #facc15) drop-shadow(0 0 22px #f59e0b)" }}>
-                      <defs>
-                        <radialGradient id="chs-k9-pac" cx="35%" cy="28%" r="65%">
-                          <stop offset="0%" stopColor="#fef08a"/>
-                          <stop offset="40%" stopColor="#facc15"/>
-                          <stop offset="85%" stopColor="#d97706"/>
-                          <stop offset="100%" stopColor="#92400e"/>
-                        </radialGradient>
-                      </defs>
-                      <path d="M26,26 L48,14 A22,22 0 1,0 48,38 Z" fill="url(#chs-k9-pac)"/>
-                      <circle cx="32" cy="15" r="3" fill="#1a0a00"/>
-                      <circle cx="33" cy="14" r="1.2" fill="var(--icon-color)"/>
-                      <ellipse cx="16" cy="30" rx="5" ry="3.5" fill="rgba(255,120,60,0.35)"/>
-                      <path d="M31,22 L34,27 M37,19 L38,25 M43,16 L42,22" stroke="var(--icon-stroke)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+                    <svg viewBox="0 0 92 72" style={{ width: 50, height: 46, filter: "drop-shadow(0 0 10px #22d3ee) drop-shadow(0 0 22px #0e7490)" }} aria-label="Spider Math">
+                      <g fill="none" stroke="#67e8f9" strokeWidth="3" strokeLinecap="round">
+                        <path d="M31 27 14 16 7 19M29 34 10 31 4 36M30 42 13 50 7 57M34 48 24 63 17 66" />
+                        <path d="M58 27 75 16 83 19M60 34 80 31 87 36M59 42 76 50 83 57M55 48 65 63 73 66" />
+                      </g>
+                      <ellipse cx="43" cy="43" rx="16" ry="22" fill="#06b6d4" stroke="#cffafe" strokeWidth="3" />
+                      <ellipse cx="53" cy="25" rx="15" ry="13" fill="#0e7490" stroke="#cffafe" strokeWidth="3" />
+                      <circle cx="48" cy="22" r="3.5" fill="#f0fdfa" /><circle cx="59" cy="24" r="3.5" fill="#f0fdfa" />
+                      <circle cx="49" cy="22" r="1.5" fill="#083344" /><circle cx="60" cy="24" r="1.5" fill="#083344" />
+                      <path d="M61 29Q75 33 62 39Q58 35 61 29Z" fill="#240b36" stroke="#fda4af" strokeWidth="1.5">
+                        <animate attributeName="d" dur="0.5s" repeatCount="indefinite"
+                          values="M61 29Q75 33 62 39Q58 35 61 29Z;M61 27Q78 34 62 42Q57 35 61 27Z;M61 29Q75 33 62 39Q58 35 61 29Z" />
+                      </path>
+                      <path d="M63 30 66 34 63 35M70 32 72 35 69 36" fill="#fff1f2" stroke="#fff1f2" strokeWidth="1" />
+                      <path d="M43 49h8M47 45v8" stroke="#083344" strokeWidth="2.5" strokeLinecap="round" />
                     </svg>
                   ) : (
                     <span className="text-4xl">{v.emoji}</span>

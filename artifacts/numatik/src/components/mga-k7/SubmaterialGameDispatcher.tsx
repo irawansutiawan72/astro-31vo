@@ -158,7 +158,7 @@ const SubmaterialGameDispatcher = () => {
     case "zum-math":
       return <ZumaMathPage />;
     case "pac-math":
-      return <PacmanMathPage />;
+      return <PacmanMathPage variant="spider" topicLabel={topicLabel} />;
     default:
       return (
         <div className="relative min-h-screen flex flex-col items-center justify-center bg-slate-950">

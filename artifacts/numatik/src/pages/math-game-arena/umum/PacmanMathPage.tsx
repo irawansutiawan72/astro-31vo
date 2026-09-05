@@ -92,7 +92,7 @@ const POWER_SPOTS: [number, number, number][] = [
 // ── Math questions ────────────────────────────────────────────────────────
 interface MQ { q: string; ans: number }
 interface PacmanMathPageProps {
-  variant?: "classic" | "integer-addition";
+  variant?: "classic" | "spider" | "integer-addition";
   topicLabel?: string;
 }
 function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
@@ -157,6 +157,7 @@ const PacmanMathPage = ({
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLight = theme === "light";
+  const isSpider = variant !== "classic";
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef(0);
 
@@ -246,7 +247,7 @@ const PacmanMathPage = ({
 
   // ── Start / reset ───────────────────────────────────────────────────────
   const startGame = useCallback((resetLives = true) => {
-    const mazeSource = variant === "integer-addition" ? SPIDER_NEST_MAZE : BASE_MAZE;
+    const mazeSource = isSpider ? SPIDER_NEST_MAZE : BASE_MAZE;
     const maze = mazeSource.map(r => [...r]);
     mazeRef.current = maze;
     dotsLeftRef.current = countDots(maze);
@@ -262,7 +263,7 @@ const PacmanMathPage = ({
     phaseRef.current = "playing";
     setPhase("playing");
     playPopSound();
-  }, [initGhosts, setupQ, variant]);
+  }, [initGhosts, setupQ, isSpider, variant]);
 
   // ── Ghost AI: choose next direction ─────────────────────────────────────
   const ghostAI = useCallback((g: Ghost, maze: number[][], pac: typeof pacRef.current) => {
@@ -539,7 +540,7 @@ const PacmanMathPage = ({
   // ── Draw helpers ─────────────────────────────────────────────────────────
   function drawMaze(ctx: CanvasRenderingContext2D, maze: number[][]) {
     if (!maze || maze.length < ROWS) return;
-    const isSpiderNest = variant === "integer-addition";
+    const isSpiderNest = isSpider;
     if (isSpiderNest) {
       const centerX = OX + (COLS * CELL) / 2;
       const centerY = OY + (ROWS * CELL) / 2;
@@ -611,7 +612,7 @@ const PacmanMathPage = ({
     pac: typeof pacRef.current,
     style: PacmanMathPageProps["variant"] = "classic",
   ) {
-    if (style === "integer-addition") {
+    if (style !== "classic") {
       drawSpider(ctx, px, py, pac);
       return;
     }
@@ -726,7 +727,7 @@ const PacmanMathPage = ({
     g: Ghost,
     style: PacmanMathPageProps["variant"] = "classic",
   ) {
-    if (style === "integer-addition") {
+    if (style !== "classic") {
       drawFrog(ctx, gx, gy, g);
       return;
     }
@@ -973,11 +974,11 @@ const PacmanMathPage = ({
                   </button>
                 </div>
                  <div className="pm-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>
-                   {variant === "integer-addition" ? "SPIDER MATH" : "SPIDER MATH"}
+                   {isSpider ? "SPIDER MATH" : "SPIDER MATH"}
                  </div>
                 <div className="mx-auto mt-0.5 h-0.5 w-28 rounded-full" style={{ background: "linear-gradient(to right,transparent,#facc15,#fb923c,transparent)" }} />
                  <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">
-                   {variant === "integer-addition" ? "Hitung · Jelajah · Taklukkan" : "Makan · Hindari · Taklukkan"}
+                    {isSpider ? "Hitung · Jelajah · Taklukkan" : "Makan · Hindari · Taklukkan"}
                  </p>
                  <p className="text-white/35 text-[8px] tracking-widest uppercase mt-0.5">
                    {topicLabel ? `🕹️ ${topicLabel} · Math Game Arena 🕹️` : "🕹️ Game Arkade Matematika Epik 🕹️"}
@@ -991,11 +992,11 @@ const PacmanMathPage = ({
                     {/* Spider side */}
                     <div className="flex flex-col items-center gap-0.5">
                       <div className="text-[7px] text-cyan-300/80 font-bold tracking-wider uppercase">
-                        {variant === "integer-addition" ? "SPIDER MATH" : "PAC-MAN"}
+                        {isSpider ? "SPIDER MATH" : "PAC-MAN"}
                       </div>
                       <div className="relative">
-                        <div className="absolute inset-0 pointer-events-none" style={{ background: variant === "integer-addition" ? "radial-gradient(circle,rgba(34,211,238,0.3) 0%,transparent 70%)" : "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
-                        {variant === "integer-addition" ? (
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: isSpider ? "radial-gradient(circle,rgba(34,211,238,0.3) 0%,transparent 70%)" : "radial-gradient(circle,rgba(250,204,21,0.3) 0%,transparent 70%)", transform: "scale(2.4)", borderRadius: "50%" }} />
+                        {isSpider ? (
                            <svg viewBox="0 0 92 72" className="pm-chomp relative z-10 w-16 h-16" style={{ filter: "drop-shadow(0 0 12px #22d3ee)" }} aria-label="Spider Math">
                             <g fill="none" stroke="#67e8f9" strokeWidth="3" strokeLinecap="round">
                               <path d="M31 27 14 16 7 19M29 34 10 31 4 36M30 42 13 50 7 57M34 48 24 63 17 66" />
@@ -1016,8 +1017,8 @@ const PacmanMathPage = ({
                           <div className="pm-chomp relative z-10 text-5xl" style={{ filter: "drop-shadow(0 0 16px #facc15) drop-shadow(0 0 32px #f59e0b)" }}>😁</div>
                         )}
                       </div>
-                      <div className="w-1.5 h-4 rounded-full" style={{ background: variant === "integer-addition" ? "linear-gradient(to bottom,rgba(34,211,238,0.8),transparent)" : "linear-gradient(to bottom,rgba(250,204,21,0.8),transparent)" }} />
-                       <div className="text-[8px] font-bold text-cyan-300">{variant === "integer-addition" ? "LABA-LABA" : "KAMU"}</div>
+                      <div className="w-1.5 h-4 rounded-full" style={{ background: isSpider ? "linear-gradient(to bottom,rgba(34,211,238,0.8),transparent)" : "linear-gradient(to bottom,rgba(250,204,21,0.8),transparent)" }} />
+                       <div className="text-[8px] font-bold text-cyan-300">{isSpider ? "LABA-LABA" : "KAMU"}</div>
                     </div>
 
                     <div className="flex flex-col items-center pb-4">
@@ -1037,7 +1038,7 @@ const PacmanMathPage = ({
                           <div key={g.name} className="flex flex-col items-center gap-0.5 rounded-lg p-1.5 border"
                             style={{ borderColor: g.glow + "55", background: g.glow + "12", boxShadow: `0 0 10px ${g.glow}33` }}>
                             <div className="pm-fb text-2xl" style={{ animationDelay: g.delay, filter: `drop-shadow(0 0 7px ${g.glow})` }}>
-                               {variant === "integer-addition" ? (
+                               {isSpider ? (
                                  <svg viewBox="0 0 54 34" className="w-8 h-6" aria-label={`${g.name} kodok`}>
                                    <ellipse cx="27" cy="21" rx="14" ry="8" fill={g.glow} opacity="0.9" />
                                    <circle cx="19" cy="13" r="6" fill={g.glow} /><circle cx="35" cy="13" r="6" fill={g.glow} />
@@ -1088,11 +1089,11 @@ const PacmanMathPage = ({
                   <div className="text-[7px] text-white/35 tracking-widest uppercase mb-1 font-bold text-center">📖 Cara Bermain</div>
                   <div className="space-y-1.5">
                     {[
-                      { icon: variant === "integer-addition" ? "🔷" : "🟡", text: variant === "integer-addition" ? "Kumpulkan energi dan pilih hasil penjumlahan bilangan bulat yang tepat" : "Makan semua titik kuning di labirin untuk naik level" },
+                      { icon: isSpider ? "🔷" : "🟡", text: variant === "integer-addition" ? "Kumpulkan energi dan pilih hasil penjumlahan bilangan bulat yang tepat" : isSpider ? "Kumpulkan energi dan pilih jawaban matematika yang tepat" : "Makan semua titik kuning di labirin untuk naik level" },
                       { icon: "⚡", text: "4 pelet warna besar = pilihan jawaban soal matematika" },
                       { icon: "✅", text: "Pelet BENAR = +500 poin + semua hantu ketakutan!" },
-                      { icon: variant === "integer-addition" ? "🐸" : "👻", text: variant === "integer-addition" ? "Kalahkan kodok yang melemah untuk bonus +300 poin" : "Makan hantu ketakutan (biru) = +300 poin bonus" },
-                      { icon: "❌", text: variant === "integer-addition" ? "Jangan sampai tertangkap kodok — kamu punya 3 nyawa!" : "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
+                      { icon: isSpider ? "🐸" : "👻", text: isSpider ? "Kalahkan kodok yang melemah untuk bonus +300 poin" : "Makan hantu ketakutan (biru) = +300 poin bonus" },
+                      { icon: "❌", text: isSpider ? "Jangan sampai tertangkap kodok — kamu punya 3 nyawa!" : "Jangan sampai tertangkap hantu — kamu punya 3 nyawa!" },
                     ].map(({ icon, text }) => (
                       <div key={text} className="flex items-start gap-2 px-1">
                         <span className="text-sm shrink-0 leading-none mt-0.5">{icon}</span>
@@ -1111,7 +1112,7 @@ const PacmanMathPage = ({
                         background: "linear-gradient(135deg,#facc15 0%,#fbbf24 45%,#f59e0b 100%)",
                         boxShadow: "0 0 30px rgba(250,204,21,0.85),0 0 60px rgba(245,158,11,0.35),0 4px 16px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.3)",
                       }}>
-                      {variant === "integer-addition" ? "✚ MULAI MISI" : "😁 MULAI BERMAIN"}
+                      {isSpider ? "🕷️ MULAI MISI" : "😁 MULAI BERMAIN"}
                     </button>
                     <div className="text-[7px] text-white/20 text-center leading-relaxed">
                       WASD / Panah = gerak · Joystick kiri untuk mobile
@@ -1134,7 +1135,7 @@ const PacmanMathPage = ({
               <span className="hidden sm:inline">Kembali</span>
             </button>
             <h1 className="font-display text-xl font-bold text-center flex-1" style={{ background: "linear-gradient(90deg,#facc15,#fbbf24,#fb923c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-               {variant === "integer-addition" ? "🕷️ SPIDER MATH" : "🕷️ SPIDER MATH"}
+               {isSpider ? "🕷️ SPIDER MATH" : "🕷️ SPIDER MATH"}
             </h1>
             <button onClick={() => { playPopSound(); navigate('/ruang-untuk-guru/numatik-game'); }}
               className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-display font-bold text-xs shadow-[0_0_15px_rgba(250,204,21,0.4)] hover:opacity-90 transition-opacity cursor-pointer">
