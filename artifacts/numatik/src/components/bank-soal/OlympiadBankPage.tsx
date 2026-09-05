@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Trophy } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 type OlympiadQuestion = {
   no: number;
@@ -27,19 +27,26 @@ export default function OlympiadBankPage({
 }) {
   return <main className="relative min-h-screen overflow-hidden bg-background px-4 py-10 text-foreground">
     <section className="relative z-10 mx-auto max-w-4xl">
-      <div className="mb-8 text-center">
-        <Trophy className="mx-auto mb-3 h-10 w-10 text-primary" />
-        <h1 className="text-balance text-2xl font-bold text-primary md:text-3xl">{heading || `BANK SOAL – ${title}`}</h1>
-        {topicLabel ? (
-          <p className="mt-2 text-sm font-medium text-muted-foreground">{topicLabel}</p>
-        ) : headline && (
-          <div className="mx-auto mt-5 max-w-2xl rounded-2xl border border-primary/25 bg-primary/10 px-5 py-4 shadow-sm">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Misi Materi</p>
-            <h2 className="mt-1 text-balance text-xl font-bold text-foreground md:text-2xl">{headline}</h2>
-            {headlineDescription && <p className="mt-2 text-sm leading-6 text-muted-foreground">{headlineDescription}</p>}
+      <div className="mb-8 overflow-hidden rounded-2xl border border-primary/30 bg-card shadow-[0_8px_30px_rgba(8,145,178,0.12)]">
+        <div className="h-1.5 bg-primary" />
+        <div className="px-5 py-6 text-center md:px-8 md:py-7">
+          <div className="mx-auto mb-4 flex items-center justify-center gap-3">
+            <span className="h-px w-12 bg-primary/50" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-primary">Numatik</span>
+            <span className="h-px w-12 bg-primary/50" />
           </div>
-        )}
-        {!topicLabel && <p className="mt-4 text-sm text-muted-foreground">Soal Olimpiade Matematika lengkap dengan pembahasan</p>}
+          <h1 className="text-balance text-2xl font-bold text-primary md:text-3xl">{heading || `BANK SOAL – ${title}`}</h1>
+          {topicLabel ? (
+            <p className="mt-2 text-sm font-medium text-muted-foreground">{topicLabel}</p>
+          ) : headline && (
+            <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-primary/25 bg-primary/10 px-5 py-4">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Misi Materi</p>
+              <h2 className="mt-1 text-balance text-xl font-bold text-foreground md:text-2xl">{headline}</h2>
+              {headlineDescription && <p className="mt-2 text-sm leading-6 text-muted-foreground">{headlineDescription}</p>}
+            </div>
+          )}
+          {!topicLabel && <p className="mt-4 text-sm text-muted-foreground">Soal Olimpiade Matematika lengkap dengan pembahasan</p>}
+        </div>
       </div>
       <div className="grid gap-5">{questions.map((question) => <QuestionCard key={question.no} question={question} />)}</div>
     </section>
