@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
+
+export const StarfieldVisibilityContext = createContext(true);
 
 // ── Shared RAF loop: 60fps cap + visibility pause ─────────────
 function startLoop(render: () => void, fps = 60): () => void {
@@ -340,7 +342,11 @@ const CloudCanvas = () => {
 
 // ── Theme-aware switcher ───────────────────────────────────────
 const Starfield = () => {
+  const isVisible = useContext(StarfieldVisibilityContext);
   const { theme } = useTheme();
+
+  if (!isVisible) return null;
+
   switch (theme) {
     case "light":   return <SnowCanvas />;
     case "white":   return <WhiteCanvas />;

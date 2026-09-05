@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import PageNavigation, { PageNavigationVisibilityContext } from "@/components/PageNavigation";
+import { StarfieldVisibilityContext } from "@/components/Starfield";
 
 export interface PracticeCollectionSection {
   label: string;
@@ -18,7 +19,36 @@ export default function PracticeCollectionBankPage({
   sections,
 }: PracticeCollectionBankPageProps) {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-10 text-foreground">
+    <main className="practice-collection relative min-h-screen bg-background px-4 py-10 text-foreground">
+      <style>{`
+        .practice-collection {
+          counter-reset: practice-question;
+        }
+        .practice-collection .gradient-space {
+          min-height: 0 !important;
+          overflow: visible !important;
+          background: transparent !important;
+        }
+        .practice-collection .gradient-space > .relative.z-10 {
+          width: 100% !important;
+          max-width: none !important;
+          padding: 1.25rem !important;
+        }
+        .practice-collection .gradient-space > .relative.z-10 > div:first-child {
+          display: none !important;
+        }
+        .practice-collection .gradient-space > .relative.z-10 > div.mt-10.text-center {
+          display: none !important;
+        }
+        .practice-collection span.w-6.h-6.rounded-full.flex.items-center {
+          counter-increment: practice-question;
+          font-size: 0 !important;
+        }
+        .practice-collection span.w-6.h-6.rounded-full.flex.items-center::after {
+          content: counter(practice-question);
+          font-size: 11px;
+        }
+      `}</style>
       <PageNavigation prevPath="/bank-soal" />
       <section className="relative z-10 mx-auto max-w-5xl">
         <header className="mb-8 overflow-hidden rounded-2xl border border-primary/30 bg-card shadow-[0_8px_30px_rgba(8,145,178,0.12)]">
@@ -37,16 +67,15 @@ export default function PracticeCollectionBankPage({
           </div>
         </header>
 
-        <div className="space-y-8">
-          {sections.map(({ label, Page }) => (
-            <section key={label} className="overflow-hidden rounded-2xl border border-primary/20 bg-card/30">
-              <div className="border-b border-primary/20 bg-primary/10 px-5 py-4">
-                <h2 className="text-base font-bold text-primary md:text-lg">{label}</h2>
-              </div>
+        <div>
+          {sections.map(({ Page }, index) => (
+            <div key={index}>
+              <StarfieldVisibilityContext.Provider value={false}>
               <PageNavigationVisibilityContext.Provider value={false}>
                 <Page />
               </PageNavigationVisibilityContext.Provider>
-            </section>
+              </StarfieldVisibilityContext.Provider>
+            </div>
           ))}
         </div>
       </section>
