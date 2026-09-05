@@ -518,7 +518,7 @@ const TKATryOut1Page = () => {
   return (
     <div className="relative min-h-screen gradient-space overflow-x-hidden">
       <Starfield />
-      <PageNavigation />
+      <PageNavigation hidden={stage === "exam"} />
 
       <main className="relative z-10 mx-auto w-full max-w-7xl px-3 pb-10 pt-6 sm:px-5 lg:px-8">
         <header className="mb-4 rounded-2xl border border-cyan-400/25 bg-slate-950/75 p-4 shadow-xl shadow-cyan-950/20 backdrop-blur sm:p-5">

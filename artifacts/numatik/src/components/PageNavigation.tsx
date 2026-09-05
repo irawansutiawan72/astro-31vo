@@ -8,16 +8,17 @@ import { playPopSound } from "@/hooks/useAudio";
 interface PageNavigationProps {
   prevPath?: string;
   nextPath?: string;
+  hidden?: boolean;
 }
 
 export const PageNavigationVisibilityContext = createContext(true);
 
-const PageNavigation = ({ prevPath, nextPath }: PageNavigationProps) => {
+const PageNavigation = ({ prevPath, nextPath, hidden = false }: PageNavigationProps) => {
   const isVisible = useContext(PageNavigationVisibilityContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  if (!isVisible) return null;
+  if (!isVisible || hidden) return null;
 
   return (
     <>
