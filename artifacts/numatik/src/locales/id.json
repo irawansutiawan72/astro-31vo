@@ -6378,7 +6378,7 @@
     "game_spaceImpactDesc": "Tembak musuh yang membawa jawaban benar! Kumpulkan power-up, hadapi gelombang musuh luar angkasa!",
     "game_meteorPantul": "Meteor Pantul NUMATIK",
     "game_meteorPantulDesc": "Game Meteor! Pantulkan meteor ke kristal yang membawa jawaban benar untuk menghancurkannya!",
-    "game_pacMath": "Pac Math",
+    "game_pacMath": "Spider Math",
     "game_pacMathDesc": "Makan semua titik di labirin! Temukan pelet warna jawaban BENAR untuk skor besar & hantu ketakutan!",
     "game_zumMath": "Zum Math",
     "game_zumMathDesc": "Tembak bola warna dari meriam! Cocokkan 3+ bola warna yang sama. Warna jawaban benar = BONUS besar!",
@@ -6408,7 +6408,7 @@
     "variant_pantulDesc": "Pantulkan meteor dengan pesawatmu dan hancurkan kristal asteroid! Jawab soal bonus untuk skor besar.",
     "variant_zum": "Zum Math",
     "variant_zumDesc": "Klik gelembung jawaban yang benar sebelum jatuh! Soal materi muncul setiap 25 detik.",
-    "variant_pac": "Pac Math",
+    "variant_pac": "Spider Math",
     "variant_pacDesc": "Makan semua titik dan hindari hantu! Jawab soal materi setiap 25 detik untuk poin bonus."
   },
   "referensiPage": {

@@ -120,8 +120,8 @@ const variants: GameVariant[] = [
     variantKey: "zum",
   },
   {
-    name: "Pac Math",
-    emoji: "👾",
+    name: "Spider Math",
+    emoji: "🕷️",
     description: "Gerakkan laba-laba, kumpulkan energi, dan hindari kodok hijau! Pilih hasil penjumlahan yang tepat.",
     path: "/math-game-arena/kelas-7/bilangan-bulat/penjumlahan/pac-math",
     from: "#eab308",

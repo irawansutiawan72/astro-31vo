@@ -119,7 +119,7 @@ import { useTranslation } from "react-i18next";
     variantKey: "zum",
     },
     {
-      name: "Pac Math",
+      name: "Spider Math",
       emoji: "👾",
       description: "Gerakkan Pac-Man, makan semua titik, hindari hantu! Soal muncul tiap 25 detik.",
       path: "/math-game-arena/kelas-7/bilangan-bulat/perkalian/pac-math",

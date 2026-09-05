@@ -555,7 +555,7 @@ const PacMathPage = ({
                     <span>Home</span>
                   </button>
                 </div>
-                <div className="pga-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>PAC MATH</div>
+                <div className="pga-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>SPIDER MATH</div>
                 <div className="mx-auto mt-0.5 h-0.5 w-28 rounded-full" style={{ background: "linear-gradient(to right,transparent,#facc15,#fb923c,transparent)" }} />
                 <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">Makan · Hindari · Taklukkan</p>
                 {topicLabel && <p className="text-white/35 text-[8px] tracking-widest uppercase mt-0.5">🕹️ {topicLabel} 🕹️</p>}
@@ -716,7 +716,7 @@ const PacMathPage = ({
       {isLight ? <Snowfall /> : <Starfield />}
       <div className="relative z-10 flex flex-col items-center gap-2 w-full px-2">
         <div className="text-xs text-yellow-300/70 font-body tracking-widest uppercase">
-          👾 PAC MATH · {topicLabel ?? "MATH GAME ARENA"}
+          🕷️ SPIDER MATH · {topicLabel ?? "MATH GAME ARENA"}
         </div>
         <canvas
           ref={canvasRef}

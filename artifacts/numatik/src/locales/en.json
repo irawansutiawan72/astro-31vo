@@ -6382,7 +6382,7 @@
     "game_spaceImpactDesc": "Shoot enemies carrying correct answers! Collect power-ups, face space enemy waves!",
     "game_meteorPantul": "NUMATIK Meteor Bounce",
     "game_meteorPantulDesc": "Meteor Game! Bounce the meteor to crystals carrying the correct answer to destroy them!",
-    "game_pacMath": "Pac Math",
+    "game_pacMath": "Spider Math",
     "game_pacMathDesc": "Eat all dots in the maze! Find the correct answer color pellets for big score & scared ghosts!",
     "game_zumMath": "Zum Math",
     "game_zumMathDesc": "Shoot color balls from a cannon! Match 3+ same color balls. Correct answer color = BIG BONUS!",
@@ -6412,7 +6412,7 @@
     "variant_pantulDesc": "Bounce meteors with your ship and destroy crystal asteroids! Answer bonus questions for big score.",
     "variant_zum": "Zum Math",
     "variant_zumDesc": "Click correct answer bubbles before they fall! Subject questions appear every 25 seconds.",
-    "variant_pac": "Pac Math",
+    "variant_pac": "Spider Math",
     "variant_pacDesc": "Eat all dots and avoid ghosts! Answer subject questions every 25 seconds for bonus points."
   },
   "referensiPage": {

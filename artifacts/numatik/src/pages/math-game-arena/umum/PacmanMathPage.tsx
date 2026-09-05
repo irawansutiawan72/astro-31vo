@@ -973,7 +973,7 @@ const PacmanMathPage = ({
                   </button>
                 </div>
                  <div className="pm-title-shine font-display font-black leading-none" style={{ fontSize: "clamp(1.7rem,5vw,2.4rem)" }}>
-                   {variant === "integer-addition" ? "SPIDER MATH" : "PAC MATH"}
+                   {variant === "integer-addition" ? "SPIDER MATH" : "SPIDER MATH"}
                  </div>
                 <div className="mx-auto mt-0.5 h-0.5 w-28 rounded-full" style={{ background: "linear-gradient(to right,transparent,#facc15,#fb923c,transparent)" }} />
                  <p className="text-yellow-400/70 text-[9px] font-bold tracking-wider uppercase mt-1">
@@ -1134,7 +1134,7 @@ const PacmanMathPage = ({
               <span className="hidden sm:inline">Kembali</span>
             </button>
             <h1 className="font-display text-xl font-bold text-center flex-1" style={{ background: "linear-gradient(90deg,#facc15,#fbbf24,#fb923c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-               {variant === "integer-addition" ? "🕷️ SPIDER MATH" : "😁 PAC MATH"}
+               {variant === "integer-addition" ? "🕷️ SPIDER MATH" : "🕷️ SPIDER MATH"}
             </h1>
             <button onClick={() => { playPopSound(); navigate('/ruang-untuk-guru/numatik-game'); }}
               className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-display font-bold text-xs shadow-[0_0_15px_rgba(250,204,21,0.4)] hover:opacity-90 transition-opacity cursor-pointer">

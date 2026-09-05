@@ -109,7 +109,7 @@ const VARIANTS: GameVariant[] = [
     glow: "rgba(124,58,237,0.5)",
   },
   {
-    name: "Pac Math",
+    name: "Spider Math",
     emoji: "👾",
     description: "Makan semua titik dan hindari hantu! Jawab soal materi setiap 25 detik untuk poin bonus.",
     variantSlug: "pac-math",
