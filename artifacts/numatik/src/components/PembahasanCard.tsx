@@ -9,6 +9,7 @@ import {
   Target,
 } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
+import { useTheme } from "@/contexts/ThemeContext";
 import "katex/dist/katex.min.css";
 import { InlineMath } from "react-katex";
 
@@ -46,6 +47,7 @@ interface Props {
 }
 
 const PembahasanCard = ({ pembahasan }: Props) => {
+  const { isDark } = useTheme();
   const [open, setOpen] = useState(false);
 
   const toggle = () => {
@@ -70,12 +72,12 @@ const PembahasanCard = ({ pembahasan }: Props) => {
             className="px-4 py-3 rounded-xl border-2 border-emerald-400/60 bg-emerald-950/40 shadow-lg shadow-emerald-900/20"
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300">
+              <CheckCircle2 className={`w-4 h-4 ${isDark ? "text-emerald-300" : "text-emerald-700"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? "text-emerald-300" : "text-emerald-700"}`}>
                 Jawaban
               </span>
             </div>
-            <div className="font-body text-sm text-emerald-50 font-bold leading-relaxed">
+            <div className={`font-body text-sm ${isDark ? "text-emerald-50" : "text-emerald-950"} font-bold leading-relaxed`}>
               {renderWithLatex(pembahasan.jawaban)}
             </div>
           </div>
@@ -89,12 +91,12 @@ const PembahasanCard = ({ pembahasan }: Props) => {
             }}
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <Lightbulb className="w-4 h-4 text-violet-300" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-violet-300">
+              <Lightbulb className={`w-4 h-4 ${isDark ? "text-violet-300" : "text-violet-700"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? "text-violet-300" : "text-violet-700"}`}>
                 Konsep & Trik
               </span>
             </div>
-            <div className="font-body text-xs text-violet-50/90 leading-relaxed">
+            <div className={`font-body text-xs ${isDark ? "text-violet-50/90" : "text-violet-950"} leading-relaxed`}>
               {renderMultiline(pembahasan.konsepTrik)}
             </div>
           </div>
@@ -108,12 +110,12 @@ const PembahasanCard = ({ pembahasan }: Props) => {
             }}
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <ListOrdered className="w-4 h-4 text-cyan-300" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-cyan-300">
+              <ListOrdered className={`w-4 h-4 ${isDark ? "text-cyan-300" : "text-cyan-700"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? "text-cyan-300" : "text-cyan-700"}`}>
                 Step by Step Penyelesaian
               </span>
             </div>
-            <div className="font-body text-xs text-cyan-50/90 leading-relaxed">
+            <div className={`font-body text-xs ${isDark ? "text-cyan-50/90" : "text-cyan-950"} leading-relaxed`}>
               {renderMultiline(pembahasan.stepByStep)}
             </div>
             {pembahasan.diagram && (
@@ -132,12 +134,12 @@ const PembahasanCard = ({ pembahasan }: Props) => {
             }}
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <Sparkles className="w-4 h-4 text-amber-300" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-300">
+              <Sparkles className={`w-4 h-4 ${isDark ? "text-amber-300" : "text-amber-700"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? "text-amber-300" : "text-amber-700"}`}>
                 Tips
               </span>
             </div>
-            <div className="font-body text-xs text-amber-50/90 leading-relaxed">
+            <div className={`font-body text-xs ${isDark ? "text-amber-50/90" : "text-amber-950"} leading-relaxed`}>
               {renderMultiline(pembahasan.tips)}
             </div>
           </div>
@@ -151,12 +153,12 @@ const PembahasanCard = ({ pembahasan }: Props) => {
             }}
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <Target className="w-4 h-4 text-rose-300" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-rose-300">
+              <Target className={`w-4 h-4 ${isDark ? "text-rose-300" : "text-rose-700"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? "text-rose-300" : "text-rose-700"}`}>
                 Kesimpulan
               </span>
             </div>
-            <div className="font-body text-xs text-rose-50/90 leading-relaxed font-medium">
+            <div className={`font-body text-xs ${isDark ? "text-rose-50/90" : "text-rose-950"} leading-relaxed font-medium`}>
               {renderMultiline(pembahasan.kesimpulan)}
             </div>
           </div>
