@@ -18,7 +18,11 @@ const packages = [
   { id: 5, label: "Prediksi TKA Matematika 5", path: "/tka/paket-5", soal: 30 },
   { id: 6, label: "Prediksi TKA Matematika 6", path: "/tka/paket-6", soal: 30 },
   { id: 7, label: "Prediksi TKA Matematika 7", path: "/tka/paket-7", soal: 30 },
-  { id: 8, label: "Try Out TKA Matematika Paket 2", path: "/tka/try-out-2", soal: 30 },
+];
+
+const tryOutPackages = [
+  { id: 1, label: "Try Out TKA Matematika Paket 1", path: "/tka/try-out-1", soal: 30, waktu: "75 menit" },
+  { id: 2, label: "Try Out TKA Matematika Paket 2", path: "/tka/try-out-2", soal: 30, waktu: "60 menit" },
 ];
 
 const routes: Record<string, string> = {
@@ -126,12 +130,12 @@ const TKAPage = () => {
           <div className="mt-4 flex gap-5 items-center">
             <div className="flex items-center gap-1.5 text-white/40 text-xs font-body">
               <FileText className="w-3.5 h-3.5" />
-               <span>8 Paket</span>
+               <span>7 Prediksi</span>
             </div>
             <span className="text-white/20">·</span>
             <div className="flex items-center gap-1.5 text-white/40 text-xs font-body">
               <Target className="w-3.5 h-3.5" />
-               <span>240 Soal Total</span>
+               <span>210 Soal Total</span>
             </div>
             <span className="text-white/20">·</span>
             <div className="flex items-center gap-1.5 text-white/40 text-xs font-body">
@@ -228,8 +232,8 @@ const TKAPage = () => {
               <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center shrink-0">
                 <FileText className="w-4 h-4 text-cyan-300" />
               </div>
-               <span className="font-display text-sm font-bold text-cyan-200 tracking-wide uppercase">PREDIKSI &amp; TRY OUT TKA MATEMATIKA 2026 - 2027</span>
-               <span className="text-[10px] font-body text-cyan-400/70 bg-cyan-500/10 border border-cyan-400/20 px-2 py-0.5 rounded-full">8 Paket</span>
+               <span className="font-display text-sm font-bold text-cyan-200 tracking-wide uppercase">PREDIKSI TKA MATEMATIKA 2026 - 2027</span>
+               <span className="text-[10px] font-body text-cyan-400/70 bg-cyan-500/10 border border-cyan-400/20 px-2 py-0.5 rounded-full">7 Paket</span>
             </div>
             {showPaket
               ? <ChevronUp className="w-4 h-4 text-cyan-300" />
@@ -271,25 +275,40 @@ const TKAPage = () => {
 
         {/* ── Try Out resmi (mode ujian) ── */}
         <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-          <button
-            onClick={() => { playPopSound(); navigate("/tka/try-out-1"); }}
-            className="group w-full rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-3 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-400/15">
-                <TimerReset className="h-4 w-4 text-emerald-200" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <span className="block font-display text-sm font-bold tracking-wide text-emerald-100">
-                  TRY OUT TKA MATEMATIKA 2026 - 2027
-                </span>
-                <span className="mt-1 block text-[10px] leading-relaxed text-emerald-100/60">
-                  Simulasi ujian sesungguhnya · 30 soal · Waktu 75 menit · Navigasi nomor soal
-                </span>
-              </div>
-              <ChevronRight className="h-4 w-4 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
-            </div>
-          </button>
+          <div className="mb-3 flex items-center justify-between px-1">
+            <span className="font-display text-sm font-bold tracking-wide text-emerald-100">
+              TRY OUT TKA MATEMATIKA 2026 - 2027
+            </span>
+            <span className="text-[10px] font-body text-emerald-300/70">2 Paket</span>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            {tryOutPackages.map((pkg, i) => (
+              <button
+                key={pkg.id}
+                onClick={() => { playPopSound(); navigate(pkg.path); }}
+                className="group w-full rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-3 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15 animate-slide-up"
+                style={{ animationDelay: `${i * 0.06}s` }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-400/15">
+                    <span className="text-[9px] font-body leading-none text-emerald-200/70">No.</span>
+                    <span className="font-display text-sm font-bold leading-tight text-emerald-100">
+                      {String(pkg.id).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-display text-sm font-bold tracking-wide text-emerald-100">
+                      {pkg.label}
+                    </span>
+                    <span className="mt-1 block text-[10px] leading-relaxed text-emerald-100/60">
+                      Simulasi ujian sesungguhnya · {pkg.soal} soal · Waktu {pkg.waktu}
+                    </span>
+                  </div>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ── Soal TKA Asli 2025 ── */}
