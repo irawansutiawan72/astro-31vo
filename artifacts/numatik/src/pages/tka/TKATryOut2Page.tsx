@@ -1,5 +1,18 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock3,
+  Flag,
+  Menu,
+  RotateCcw,
+  Send,
+  X,
+} from "lucide-react";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
@@ -273,15 +286,47 @@ const QUESTIONS: Question[] = [
   },
 ];
 
+const TOTAL_SECONDS = 60 * 60;
+type TryOutStage = "notice" | "biodata" | "countdown" | "exam" | "submitted";
+type SubmissionState = "idle" | "saving" | "saved" | "error";
+
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const remaining = (seconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${remaining}`;
+};
+
 const TKATryOut2Page = () => {
   const navigate = useNavigate();
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
+  const [stage, setStage] = useState<TryOutStage>("notice");
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [remaining, setRemaining] = useState(TOTAL_SECONDS);
+  const [fullName, setFullName] = useState("");
+  const [school, setSchool] = useState("");
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [startedAt, setStartedAt] = useState<string | null>(null);
+  const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
+  const [submissionError, setSubmissionError] = useState("");
+  const [emailSent, setEmailSent] = useState<boolean | null>(null);
+  const [finishedReason, setFinishedReason] = useState<"manual" | "time-up">("manual");
+  const [serverScore, setServerScore] = useState<number | null>(null);
+  const [showSubmitDialog, setShowSubmitDialog] = useState(false);
+  const [showQuestionPanel, setShowQuestionPanel] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
+  );
+  const [isLandscape, setIsLandscape] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
+  );
+  const finishingRef = useRef(false);
 
-  const selectAnswer = (questionNumber: number, optionIndex: number) => {
-    if (selectedAnswers[questionNumber] !== undefined) return;
-    playPopSound();
-    setSelectedAnswers((previous) => ({ ...previous, [questionNumber]: optionIndex }));
-  };
+  const question = QUESTIONS[current];
+  const answeredCount = Object.keys(answers).length;
+  const score = useMemo(
+    () => QUESTIONS.reduce((total, item) => total + (answers[item.number] === item.correct ? 1 : 0), 0),
+    [answers],
+  );
+  const isUrgent = remaining <= 5 * 60;
 
   const getContextForQuestion = (number: number) =>
     CONTEXTS.find((context) => {
@@ -289,139 +334,482 @@ const TKATryOut2Page = () => {
       return number >= start && number <= end;
     });
 
-  const answeredCount = Object.keys(selectedAnswers).length;
-  const correctCount = QUESTIONS.filter((question) => selectedAnswers[question.number] === question.correct).length;
+  useEffect(() => {
+    if (stage !== "countdown" || countdown === null) return;
+    const timer = window.setTimeout(() => {
+      if (countdown > 1) {
+        setCountdown(countdown - 1);
+        return;
+      }
+      setCountdown(null);
+      setStartedAt(new Date().toISOString());
+      setRemaining(TOTAL_SECONDS);
+      setStage("exam");
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [countdown, stage]);
 
-  return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden">
-      <Starfield />
-      <PageNavigation />
-      <div className="relative z-10 max-w-3xl w-full px-4 py-10">
-        <div className="bg-card/80 backdrop-blur border border-accent/30 rounded-2xl p-5 mb-6">
-          <div className="text-center">
-            <img
-              src="/logo-numatik.png"
-              alt="NUMATIK"
-              className="mx-auto mb-2 w-12 h-12 object-contain drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]"
-            />
-            <p className="font-body text-white/60 text-xs mb-1">PEMANTAPAN DAN PERSIAPAN</p>
-            <h1 className="font-display text-lg font-bold text-primary text-glow-cyan mb-1">
-              TRY OUT TKA MATEMATIKA
-            </h1>
-            <p className="font-body text-white/60 text-xs mb-3">TAHUN PELAJARAN 2026/2027</p>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-left text-xs font-body">
-            <div className="bg-white/5 rounded-lg p-2">
-              <span className="text-white/40">Mata Pelajaran:</span>
-              <span className="text-white ml-1">Matematika</span>
-            </div>
-            <div className="bg-white/5 rounded-lg p-2">
-              <span className="text-white/40">Kelas:</span>
-              <span className="text-white ml-1">IX (Sembilan)</span>
-            </div>
-            <div className="bg-white/5 rounded-lg p-2">
-              <span className="text-white/40">Paket:</span>
-              <span className="text-accent ml-1 font-bold">TRY OUT PAKET 2</span>
-            </div>
-            <div className="bg-white/5 rounded-lg p-2">
-              <span className="text-white/40">Waktu:</span>
-              <span className="text-white ml-1">60 Menit</span>
-            </div>
-          </div>
-        </div>
+  useEffect(() => {
+    if (stage !== "exam") return;
+    const timer = window.setInterval(() => {
+      setRemaining((value) => {
+        if (value <= 1) {
+          window.clearInterval(timer);
+          return 0;
+        }
+        return value - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [stage]);
 
-        <div className="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 mb-6">
-          <p className="font-body text-blue-300 text-xs font-bold mb-2">PETUNJUK UMUM</p>
-          <ol className="list-decimal list-inside space-y-1 text-white/70 text-xs font-body">
-            <li>Berdoalah sebelum dan sesudah mengerjakan try out.</li>
-            <li>Jumlah soal sebanyak 30 butir soal.</li>
-            <li>Bacalah setiap konteks dan soal dengan cermat.</li>
-            <li>Pilih satu jawaban yang paling tepat pada setiap soal.</li>
-            <li>Jawaban akan langsung menunjukkan hasil benar atau salah.</li>
-          </ol>
-        </div>
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [stage, current]);
 
-        <div className="flex flex-col gap-5">
-          {QUESTIONS.map((question, index) => {
-            const context = getContextForQuestion(question.number);
-            const previousContext = index > 0 ? getContextForQuestion(QUESTIONS[index - 1].number) : undefined;
-            const selected = selectedAnswers[question.number];
-            const answered = selected !== undefined;
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(orientation: landscape)");
+    const handleOrientationChange = () => {
+      setIsLandscape(mediaQuery.matches);
+      setShowQuestionPanel(mediaQuery.matches);
+    };
 
-            return (
-              <div key={question.number}>
-                {context && context !== previousContext && (
-                  <div className="bg-blue-950/40 border border-blue-500/30 rounded-xl p-4 mb-3">
-                    <p className="font-body text-blue-300 text-xs font-bold mb-2 uppercase tracking-wide">
-                      Perhatikan informasi berikut untuk menjawab nomor {context.range}!
-                    </p>
-                    <p className="font-body text-white/90 text-xs font-bold mb-2">{context.title}</p>
-                    <p className="font-body text-white/70 text-xs leading-relaxed">{context.body}</p>
+    handleOrientationChange();
+    mediaQuery.addEventListener("change", handleOrientationChange);
+    return () => mediaQuery.removeEventListener("change", handleOrientationChange);
+  }, []);
+
+  const finishExam = (reason: "manual" | "time-up") => {
+    if (stage !== "exam" || finishingRef.current) return;
+    finishingRef.current = true;
+    setFinishedReason(reason);
+    setStage("submitted");
+    setSubmissionState("saving");
+    setSubmissionError("");
+
+    const durationSeconds = startedAt
+      ? Math.max(0, Math.min(TOTAL_SECONDS, Math.floor((Date.now() - Date.parse(startedAt)) / 1000)))
+      : TOTAL_SECONDS - remaining;
+
+    void fetch("/api/tka/tryout/2/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: fullName,
+        school,
+        answers,
+        startedAt,
+        submittedAt: new Date().toISOString(),
+        durationSeconds,
+        submitReason: reason,
+      }),
+    })
+      .then(async (response) => {
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.message || "Hasil belum berhasil disimpan.");
+        setServerScore(typeof data.score === "number" ? data.score : null);
+        setEmailSent(data.emailSent !== false);
+        setSubmissionState("saved");
+      })
+      .catch((error: unknown) => {
+        setSubmissionState("error");
+        setSubmissionError(error instanceof Error ? error.message : "Hasil belum berhasil disimpan.");
+      });
+  };
+
+  useEffect(() => {
+    if (stage === "exam" && remaining === 0) finishExam("time-up");
+  }, [remaining, stage]);
+
+  const chooseAnswer = (optionIndex: number) => {
+    if (stage !== "exam") return;
+    playPopSound();
+    setAnswers((previous) => ({ ...previous, [question.number]: optionIndex }));
+  };
+
+  const goTo = (index: number) => {
+    setCurrent(Math.max(0, Math.min(QUESTIONS.length - 1, index)));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const startExam = () => {
+    if (!fullName.trim() || !school.trim()) {
+      setSubmissionError("Nama lengkap dan asal sekolah wajib diisi.");
+      return;
+    }
+    setSubmissionError("");
+    setCountdown(3);
+    setStage("countdown");
+    playPopSound();
+  };
+
+  const submitExam = () => {
+    setShowSubmitDialog(false);
+    playPopSound();
+    finishExam("manual");
+  };
+
+  const restartExam = () => {
+    finishingRef.current = false;
+    setStage("notice");
+    setAnswers({});
+    setCurrent(0);
+    setRemaining(TOTAL_SECONDS);
+    setFullName("");
+    setSchool("");
+    setCountdown(null);
+    setStartedAt(null);
+    setSubmissionState("idle");
+    setSubmissionError("");
+    setEmailSent(null);
+    setServerScore(null);
+    setShowSubmitDialog(false);
+  };
+
+  if (stage === "notice" || stage === "biodata" || stage === "countdown") {
+    return (
+      <div className="relative min-h-screen gradient-space overflow-x-hidden">
+        <Starfield />
+        <PageNavigation />
+        <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-2xl items-center px-4 py-10 sm:px-6">
+          <section className="w-full rounded-3xl border border-cyan-300/25 bg-slate-950/80 p-5 shadow-2xl shadow-cyan-950/25 backdrop-blur sm:p-8">
+            {stage === "notice" && (
+              <>
+                <div className="mb-5 flex items-start gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-300/35 bg-amber-400/10">
+                    <Clock3 className="h-6 w-6 text-amber-200" />
                   </div>
-                )}
-                <div className="bg-card/70 backdrop-blur border border-border rounded-xl p-5">
-                  <div className="flex gap-3">
-                    <span className="bg-accent/20 text-accent font-display font-bold text-sm w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
-                      {question.number}
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-body text-white/90 text-sm leading-relaxed mb-3">{question.prompt}</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {question.options.map((option, optionIndex) => {
-                          const isSelected = selected === optionIndex;
-                          const isCorrect = optionIndex === question.correct;
-                          let optionClass =
-                            "border rounded-lg px-3 py-2 text-xs font-body transition-all flex items-center justify-between text-left ";
-
-                          if (!answered) {
-                            optionClass +=
-                              "bg-white/5 border-white/10 text-white/80 cursor-pointer hover:bg-white/10 hover:border-cyan-500/40 active:scale-95";
-                          } else if (isCorrect) {
-                            optionClass += "bg-green-900/30 border-green-500/50 text-green-300 font-bold";
-                          } else if (isSelected) {
-                            optionClass += "bg-red-900/30 border-red-500/50 text-red-300";
-                          } else {
-                            optionClass += "bg-white/5 border-white/10 text-white/30";
-                          }
-
-                          return (
-                            <button
-                              type="button"
-                              key={option}
-                              className={optionClass}
-                              onClick={() => selectAnswer(question.number, optionIndex)}
-                              disabled={answered}
-                            >
-                              <span>{option}</span>
-                              {answered && isCorrect && <span className="ml-2 text-green-400 font-bold shrink-0">✓ Benar!</span>}
-                              {answered && isSelected && !isCorrect && <span className="ml-2 text-red-400 font-bold shrink-0">✗ Salah</span>}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/70">Pemberitahuan sebelum mulai</p>
+                    <h1 className="mt-1 font-display text-xl font-bold text-white sm:text-2xl">TRY OUT TKA MATEMATIKA</h1>
+                    <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · Paket 2 · 30 soal</p>
                   </div>
                 </div>
+                <div className="rounded-2xl border border-amber-300/25 bg-amber-500/10 p-4 text-sm leading-7 text-amber-50/85">
+                  <p className="font-bold text-amber-100">Perhatikan sebelum mengikuti try out:</p>
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-xs sm:text-sm">
+                    <li>Setelah dimulai, layar pengerjaan akan terkunci dalam satu sesi selama maksimal <strong>60 menit</strong>.</li>
+                    <li>Waktu akan mulai dihitung setelah hitungan mundur 3–2–1 selesai.</li>
+                    <li>Jika waktu habis, jawaban otomatis dikumpulkan dan tidak dapat diubah.</li>
+                    <li>Isi biodata dengan nama lengkap dan asal sekolah yang benar.</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => { setStage("biodata"); playPopSound(); }}
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500/20 px-4 py-3.5 text-sm font-bold text-cyan-100 ring-1 ring-cyan-300/40 transition hover:bg-cyan-500/30"
+                >
+                  Lanjut ke biodata <ChevronRight className="h-4 w-4" />
+                </button>
+              </>
+            )}
+
+            {stage === "biodata" && (
+              <>
+                <div className="mb-6">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/70">Langkah 1 dari 2</p>
+                  <h1 className="mt-1 font-display text-xl font-bold text-white sm:text-2xl">Isi biodata peserta</h1>
+                  <p className="mt-2 text-sm leading-6 text-white/55">Data ini dicatat bersama hasil pengerjaan di spreadsheet rekapitulasi.</p>
+                </div>
+                <div className="space-y-4">
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold text-cyan-100/80">Nama lengkap</span>
+                    <input
+                      value={fullName}
+                      onChange={(event) => setFullName(event.target.value)}
+                      placeholder="Contoh: Siti Aminah"
+                      autoComplete="name"
+                      className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/15"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold text-cyan-100/80">Asal sekolah</span>
+                    <input
+                      value={school}
+                      onChange={(event) => setSchool(event.target.value)}
+                      placeholder="Contoh: SMP Numatik"
+                      autoComplete="organization"
+                      className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/15"
+                    />
+                  </label>
+                </div>
+                {submissionError && <p className="mt-3 text-xs font-semibold text-rose-300">{submissionError}</p>}
+                <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                  <button
+                    onClick={() => { setStage("notice"); setSubmissionError(""); }}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm font-bold text-white/65 transition hover:bg-white/10"
+                  >
+                    <ChevronLeft className="h-4 w-4" /> Kembali
+                  </button>
+                  <button
+                    onClick={startExam}
+                    className="inline-flex flex-[2] items-center justify-center gap-2 rounded-xl bg-emerald-500/20 px-4 py-3.5 text-sm font-bold text-emerald-100 ring-1 ring-emerald-300/40 transition hover:bg-emerald-500/30"
+                  >
+                    Mulai Try Out <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {stage === "countdown" && (
+              <div className="flex min-h-[360px] flex-col items-center justify-center text-center">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/70">Bersiap</p>
+                <p className="mt-2 text-sm text-white/60">Try out akan dimulai dalam</p>
+                <div className="my-5 flex h-36 w-36 items-center justify-center rounded-full border-4 border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_60px_rgba(34,211,238,0.25)]">
+                  <span className="font-display text-7xl font-black text-cyan-100">{countdown}</span>
+                </div>
+                <p className="text-xs text-white/40">Setelah angka 1, waktu 60 menit langsung berjalan.</p>
               </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-6 rounded-xl border border-cyan-500/25 bg-cyan-950/20 px-4 py-3 text-center font-body text-xs text-cyan-100/75">
-          Terjawab {answeredCount} dari {QUESTIONS.length} soal
-          {answeredCount > 0 && <span className="ml-2 font-bold text-cyan-300">· Skor sementara {correctCount}/{QUESTIONS.length}</span>}
-        </div>
-
-        <div className="mt-8 text-center">
-          <button
-            type="button"
-            onClick={() => { playPopSound(); navigate("/tka"); }}
-            className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer font-body"
-          >
-            ← Kembali ke TKA
-          </button>
-        </div>
+            )}
+          </section>
+        </main>
       </div>
+    );
+  }
+
+  const submitted = stage === "submitted";
+  const displayedScore = serverScore ?? score;
+  const context = getContextForQuestion(question.number);
+
+  return (
+    <div className="relative min-h-screen gradient-space overflow-x-hidden">
+      <Starfield />
+      <PageNavigation hidden={stage === "exam"} />
+
+      <main className="relative z-10 mx-auto w-full max-w-7xl px-3 pb-10 pt-6 sm:px-5 lg:px-8">
+        <header className="mb-4 rounded-2xl border border-cyan-400/25 bg-slate-950/75 p-4 shadow-xl shadow-cyan-950/20 backdrop-blur sm:p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/75">
+                <Flag className="h-3.5 w-3.5" />
+                Try Out TKA Matematika
+              </div>
+              <h1 className="font-display text-lg font-bold tracking-wide text-white sm:text-2xl">
+                Try Out TKA Matematika 2
+              </h1>
+              <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX · Batas waktu 60 menit</p>
+            </div>
+            <div className={`flex items-center gap-2 self-start rounded-xl border px-4 py-2.5 sm:self-auto ${isUrgent ? "border-red-400/60 bg-red-500/15 text-red-200" : "border-amber-300/30 bg-amber-500/10 text-amber-100"}`}>
+              <Clock3 className={`h-5 w-5 ${isUrgent ? "animate-pulse text-red-300" : "text-amber-300"}`} />
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-white/45">Sisa waktu</p>
+                <p className="font-mono text-xl font-bold leading-none">{formatTime(remaining)}</p>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {submitted && (
+          <section className="mb-4 rounded-2xl border border-emerald-400/35 bg-emerald-950/45 p-4 shadow-lg shadow-emerald-950/20 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-emerald-300" />
+                <div>
+                  <h2 className="font-display text-base font-bold text-emerald-100">Try out selesai dikumpulkan</h2>
+                  <p className="mt-1 text-xs text-emerald-100/65">
+                    Jawaban dikerjakan {answeredCount} dari {QUESTIONS.length} soal · Skor {displayedScore}/{QUESTIONS.length}
+                  </p>
+                  {finishedReason === "time-up" && <p className="mt-2 text-xs text-amber-200">Waktu habis, jawaban dikumpulkan otomatis.</p>}
+                  {submissionState === "saving" && <p className="mt-2 text-xs text-amber-200">Menyimpan hasil ke spreadsheet...</p>}
+                  {submissionState === "saved" && emailSent !== false && <p className="mt-2 text-xs text-emerald-200">Hasil sudah masuk ke spreadsheet dan notifikasi email.</p>}
+                  {submissionState === "saved" && emailSent === false && <p className="mt-2 text-xs text-amber-200">Hasil sudah masuk ke spreadsheet, tetapi notifikasi email belum terkirim.</p>}
+                  {submissionState === "error" && <p className="mt-2 text-xs text-rose-300">{submissionError}</p>}
+                </div>
+              </div>
+              <button onClick={restartExam} className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-200 transition hover:bg-emerald-500/20">
+                <RotateCcw className="h-3.5 w-3.5" /> Ulangi try out
+              </button>
+            </div>
+          </section>
+        )}
+
+        {!isLandscape && showQuestionPanel && (
+          <button
+            aria-label="Tutup panel nomor soal"
+            onClick={() => setShowQuestionPanel(false)}
+            className="fixed inset-0 z-30 bg-slate-950/35 backdrop-blur-[1px] landscape:hidden"
+          />
+        )}
+
+        {!isLandscape && (
+          <button
+            aria-label={showQuestionPanel ? "Sembunyikan panel nomor soal" : "Tampilkan panel nomor soal"}
+            aria-expanded={showQuestionPanel}
+            aria-controls="question-navigation-panel"
+            onClick={() => setShowQuestionPanel((visible) => !visible)}
+            className="fixed left-3 top-20 z-50 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/35 bg-slate-950/90 text-cyan-100 shadow-xl shadow-cyan-950/30 backdrop-blur transition hover:border-cyan-200/70 hover:bg-cyan-500/20 landscape:hidden"
+            title={showQuestionPanel ? "Sembunyikan daftar soal" : "Tampilkan daftar soal"}
+          >
+            {showQuestionPanel ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        )}
+
+        <div className="grid gap-4 landscape:grid-cols-[190px_minmax(0,1fr)]">
+          <aside
+            id="question-navigation-panel"
+            className={`h-fit rounded-2xl border border-white/10 bg-slate-950/95 p-3 shadow-2xl shadow-black/30 backdrop-blur landscape:sticky landscape:top-4 ${
+              isLandscape
+                ? "relative order-1 block"
+                : showQuestionPanel
+                  ? "fixed left-3 top-20 z-40 block max-h-[calc(100vh-6rem)] w-[min(260px,calc(100vw-1.5rem))] overflow-y-auto"
+                  : "hidden"
+            }`}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">Daftar soal</p>
+                <p className="mt-1 text-xs text-white/70">{answeredCount} / {QUESTIONS.length} terjawab</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+                {!isLandscape && (
+                  <button
+                    aria-label="Tutup panel nomor soal"
+                    onClick={() => setShowQuestionPanel(false)}
+                    className="rounded-md p-1 text-white/55 transition hover:bg-white/10 hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-10 lg:grid-cols-5">
+              {QUESTIONS.map((item, index) => {
+                const isAnswered = answers[item.number] !== undefined;
+                const isCurrent = index === current;
+                return (
+                  <button
+                    key={item.number}
+                    onClick={() => goTo(index)}
+                    aria-label={`Buka soal ${item.number}`}
+                    className={`relative flex h-8 items-center justify-center rounded-lg border text-xs font-bold transition-all ${
+                      isAnswered
+                        ? "border-emerald-300/60 bg-emerald-500/25 text-emerald-200"
+                        : "border-white/10 bg-white/5 text-white/45 hover:border-cyan-300/40 hover:text-cyan-200"
+                    } ${isCurrent ? "ring-2 ring-cyan-300 ring-offset-1 ring-offset-slate-950" : ""}`}
+                  >
+                    {item.number}
+                    {isAnswered && <CheckCircle2 className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-slate-950 text-emerald-300" />}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-4 hidden border-t border-white/10 pt-3 text-[10px] text-white/40 lg:block">
+              <p className="mb-1 flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Sudah dijawab</p>
+              <p className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-white/20" /> Belum dijawab</p>
+            </div>
+          </aside>
+
+          <section className="order-1 min-w-0 landscape:order-2">
+            <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5 text-xs backdrop-blur sm:px-4">
+              <span className="font-bold text-cyan-200">Soal {question.number}</span>
+              <span className="text-white/40">Try Out Paket 2</span>
+            </div>
+
+            <article className="min-h-[430px] rounded-2xl border border-cyan-300/20 bg-slate-950/75 p-5 shadow-2xl shadow-cyan-950/15 backdrop-blur sm:p-7">
+              {context && (
+                <div className="mb-6 rounded-xl border border-blue-500/30 bg-blue-950/40 p-4">
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-blue-300">
+                    Perhatikan informasi berikut untuk menjawab nomor {context.range}!
+                  </p>
+                  <p className="mb-2 text-xs font-bold text-white/90">{context.title}</p>
+                  <p className="text-xs leading-relaxed text-white/70">{context.body}</p>
+                </div>
+              )}
+              <div className="mb-6 flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cyan-400/15 font-display text-sm font-bold text-cyan-200 ring-1 ring-cyan-300/25">
+                  {question.number}
+                </span>
+                <div className="pt-1 text-sm leading-7 text-white/90 sm:text-base">{question.prompt}</div>
+              </div>
+
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {question.options.map((option, index) => {
+                  const selected = answers[question.number] === index;
+                  return (
+                    <button
+                      key={option}
+                      disabled={submitted}
+                      onClick={() => chooseAnswer(index)}
+                      className={`flex min-h-14 items-center rounded-xl border px-4 py-3 text-left text-sm transition-all ${
+                        selected
+                          ? "border-cyan-300/70 bg-cyan-400/20 text-cyan-100 shadow-lg shadow-cyan-950/20"
+                          : "border-white/10 bg-white/[0.04] text-white/75 hover:border-cyan-300/40 hover:bg-cyan-400/10"
+                      } ${submitted ? "cursor-default" : "cursor-pointer"}`}
+                    >
+                      <span className={`mr-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${selected ? "border-cyan-200 bg-cyan-300 text-slate-950" : "border-white/20 text-white/45"}`}>
+                        {String.fromCharCode(65 + index)}
+                      </span>
+                      <span>{option.slice(3)}</span>
+                      {selected && <CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-cyan-200" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </article>
+
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                disabled={current === 0}
+                onClick={() => goTo(current - 1)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-bold text-white/70 transition hover:border-cyan-300/40 hover:text-cyan-100 disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronLeft className="h-4 w-4" /> Sebelumnya
+              </button>
+              <div className="order-first flex items-center justify-center gap-1 text-[10px] text-white/35 sm:order-none">
+                <span>{current + 1}</span><span>/</span><span>{QUESTIONS.length}</span>
+              </div>
+              <button
+                disabled={current === QUESTIONS.length - 1}
+                onClick={() => goTo(current + 1)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-500/20 px-4 py-3 text-xs font-bold text-cyan-100 ring-1 ring-cyan-300/30 transition hover:bg-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                Selanjutnya <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            {!submitted && (
+              <button
+                onClick={() => setShowSubmitDialog(true)}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300/30 bg-amber-500/10 px-4 py-3 text-xs font-bold text-amber-100 transition hover:bg-amber-500/20"
+              >
+                <Send className="h-4 w-4" /> Selesai dan kumpulkan jawaban
+              </button>
+            )}
+          </section>
+        </div>
+      </main>
+
+      {showSubmitDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-amber-300/30 bg-slate-900 p-5 shadow-2xl shadow-black/40">
+            <div className="mb-4 flex items-start gap-3">
+              <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-amber-300" />
+              <div>
+                <h2 className="font-display text-lg font-bold text-white">Kumpulkan try out?</h2>
+                <p className="mt-1 text-sm leading-6 text-white/60">
+                  {QUESTIONS.length - answeredCount > 0
+                    ? `Masih ada ${QUESTIONS.length - answeredCount} soal yang belum dijawab.`
+                    : "Semua soal sudah dijawab."}
+                  {" "}Setelah dikumpulkan, jawaban tidak dapat diubah.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setShowSubmitDialog(false)} className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-bold text-white/70 hover:bg-white/10">Kembali</button>
+              <button onClick={submitExam} className="flex-1 rounded-xl bg-amber-500/20 px-4 py-3 text-xs font-bold text-amber-100 ring-1 ring-amber-300/40 hover:bg-amber-500/30">Ya, kumpulkan</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {stage !== "exam" && (
+        <button
+          onClick={() => navigate("/tka")}
+          className="relative z-10 mx-auto mb-8 flex items-center gap-2 text-xs text-white/40 transition hover:text-cyan-200"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Kembali ke menu TKA
+        </button>
+      )}
     </div>
   );
 };

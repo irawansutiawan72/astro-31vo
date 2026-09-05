@@ -66,6 +66,7 @@ const sendResultEmail = async ({
   durationSeconds,
   submittedAt,
   submitReason,
+  packageNumber = 1,
 }: {
   name: string;
   school: string;
@@ -75,12 +76,14 @@ const sendResultEmail = async ({
   durationSeconds: number;
   submittedAt: string;
   submitReason: string;
+  packageNumber?: number;
 }) => {
   const durationMinutes = Math.floor(durationSeconds / 60);
   const durationRemainder = durationSeconds % 60;
-  const subject = `Hasil Try Out TKA Matematika 1 - ${name}`;
+  const packageLabel = `Try Out TKA Matematika ${packageNumber}`;
+  const subject = `Hasil ${packageLabel} - ${name}`;
   const body = [
-    "Hasil pengerjaan Try Out TKA Matematika 1",
+    `Hasil pengerjaan ${packageLabel}`,
     "",
     `Nama lengkap: ${name}`,
     `Asal sekolah: ${school}`,
@@ -192,6 +195,100 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
     });
   } catch (error) {
     req.log.error({ err: error }, "Could not save try out result");
+    res.status(502).json({
+      message: "Hasil belum berhasil disimpan. Silakan coba kumpulkan kembali.",
+    });
+  }
+});
+
+const TRYOUT_2_CORRECT_ANSWERS = [
+  2, 1, 0, 1, 2, 2, 1, 3, 2, 2,
+  1, 2, 2, 0, 2, 2, 2, 1, 2, 0,
+  2, 0, 1, 2, 2, 2, 2, 2, 1, 2,
+];
+
+router.post("/tka/tryout/2/submit", async (req, res) => {
+  const body = req.body as SubmitBody;
+  const name = textValue(body.name, 120);
+  const school = textValue(body.school, 160);
+  const answers = toAnswerMap(body.answers);
+  const submittedAt = new Date().toISOString();
+  const maxDurationSeconds = 60 * 60;
+  const durationSeconds =
+    typeof body.durationSeconds === "number" && Number.isFinite(body.durationSeconds)
+      ? Math.max(0, Math.min(maxDurationSeconds, Math.round(body.durationSeconds)))
+      : 0;
+  const submitReason =
+    body.submitReason === "time-up" ? "Waktu habis (otomatis)" : "Dikumpulkan oleh peserta";
+
+  if (!name || !school) {
+    res.status(400).json({ message: "Nama lengkap dan asal sekolah wajib diisi." });
+    return;
+  }
+
+  const score = TRYOUT_2_CORRECT_ANSWERS.reduce(
+    (total, correct, index) => total + (answers[String(index + 1)] === correct ? 1 : 0),
+    0,
+  );
+  const answeredCount = Object.keys(answers).length;
+  const percentage = Math.round((score / QUESTION_COUNT) * 100);
+
+  try {
+    const sheetResponse = await connectors.proxy(
+      "google-sheet",
+      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          values: [[
+            submittedAt,
+            name,
+            school,
+            "Try Out TKA Matematika 2",
+            QUESTION_COUNT,
+            answeredCount,
+            score,
+            percentage,
+            durationSeconds,
+            submitReason,
+          ]],
+        }),
+      },
+    );
+
+    if (!sheetResponse.ok) {
+      throw new Error(`Google Sheets append failed with status ${sheetResponse.status}`);
+    }
+
+    let emailSent = true;
+    try {
+      await sendResultEmail({
+        name,
+        school,
+        score,
+        answeredCount,
+        percentage,
+        durationSeconds,
+        submittedAt,
+        submitReason,
+        packageNumber: 2,
+      });
+    } catch (emailError) {
+      emailSent = false;
+      req.log.error({ err: emailError }, "Try out 2 result saved, but result email failed");
+    }
+
+    res.status(201).json({
+      ok: true,
+      score,
+      percentage,
+      answeredCount,
+      spreadsheetUrl: SPREADSHEET_URL,
+      emailSent,
+    });
+  } catch (error) {
+    req.log.error({ err: error }, "Could not save try out 2 result");
     res.status(502).json({
       message: "Hasil belum berhasil disimpan. Silakan coba kumpulkan kembali.",
     });
