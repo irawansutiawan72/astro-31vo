@@ -6,8 +6,8 @@ export default function BilanganBulatPage() {
     <OlympiadBankPage
       title="Bilangan Bulat"
       questions={latihanOlimpiade}
-      headline="Taklukkan Dunia Positif & Negatif!"
-      headlineDescription="Asah logikamu, kuasai garis bilangan, dan pecahkan tantangan bilangan bulat dari dasar hingga level olimpiade."
+      heading="BANK SOAL & PEMBAHASAN"
+      topicLabel="Topik: Bilangan Bulat (Tingkat SMP)"
     />
   );
 }

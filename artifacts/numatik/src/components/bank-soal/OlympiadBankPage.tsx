@@ -13,11 +13,15 @@ type OlympiadQuestion = {
 export default function OlympiadBankPage({
   title,
   questions,
+  heading,
+  topicLabel,
   headline,
   headlineDescription,
 }: {
   title: string;
   questions: OlympiadQuestion[];
+  heading?: string;
+  topicLabel?: string;
   headline?: string;
   headlineDescription?: string;
 }) {
@@ -25,15 +29,17 @@ export default function OlympiadBankPage({
     <section className="relative z-10 mx-auto max-w-4xl">
       <div className="mb-8 text-center">
         <Trophy className="mx-auto mb-3 h-10 w-10 text-primary" />
-        <h1 className="text-balance text-2xl font-bold text-primary md:text-3xl">BANK SOAL – {title}</h1>
-        {headline && (
+        <h1 className="text-balance text-2xl font-bold text-primary md:text-3xl">{heading || `BANK SOAL – ${title}`}</h1>
+        {topicLabel ? (
+          <p className="mt-2 text-sm font-medium text-muted-foreground">{topicLabel}</p>
+        ) : headline && (
           <div className="mx-auto mt-5 max-w-2xl rounded-2xl border border-primary/25 bg-primary/10 px-5 py-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Misi Materi</p>
             <h2 className="mt-1 text-balance text-xl font-bold text-foreground md:text-2xl">{headline}</h2>
             {headlineDescription && <p className="mt-2 text-sm leading-6 text-muted-foreground">{headlineDescription}</p>}
           </div>
         )}
-        <p className="mt-4 text-sm text-muted-foreground">Soal Olimpiade Matematika lengkap dengan pembahasan</p>
+        {!topicLabel && <p className="mt-4 text-sm text-muted-foreground">Soal Olimpiade Matematika lengkap dengan pembahasan</p>}
       </div>
       <div className="grid gap-5">{questions.map((question) => <QuestionCard key={question.no} question={question} />)}</div>
     </section>

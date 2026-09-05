@@ -33,7 +33,8 @@ import { playPopSound } from "@/hooks/useAudio";
 const bankSoalTopics = [
   {
     label: "BILANGAN BULAT",
-    headline: "Taklukkan Dunia Positif & Negatif!",
+    headline: "BANK SOAL & PEMBAHASAN",
+    subheadline: "Topik: Bilangan Bulat (Tingkat SMP)",
     icon: Calculator,
     path: "/bank-soal/bilangan-bulat",
     ready: true,
@@ -101,9 +102,16 @@ const BankSoalPage = () => {
                 {topic.label}
               </h3>
               {topic.headline && (
-                <p className="mt-1.5 text-[9px] sm:text-[10px] leading-snug text-primary/80">
-                  {topic.headline}
-                </p>
+                <>
+                  <p className="mt-1.5 text-[9px] sm:text-[10px] leading-snug text-primary/80">
+                    {topic.headline}
+                  </p>
+                  {topic.subheadline && (
+                    <p className="mt-1 text-[8px] sm:text-[9px] leading-snug text-muted-foreground">
+                      {topic.subheadline}
+                    </p>
+                  )}
+                </>
               )}
             </button>
           ))}
