@@ -32,7 +32,33 @@ export default function PracticeCollectionBankPage({
         .practice-collection .gradient-space > .relative.z-10 {
           width: 100% !important;
           max-width: none !important;
-          padding: 1.25rem !important;
+          padding: 0 !important;
+        }
+        .practice-questions {
+          overflow: hidden;
+          border: 1px solid hsl(var(--border));
+          border-radius: 0.75rem;
+          background: hsl(var(--card) / 0.8);
+          padding: 1.5rem;
+        }
+        .practice-questions .gradient-space > .relative.z-10 {
+          background: transparent !important;
+        }
+        .practice-questions [class~="bg-card/80"] {
+          margin: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          backdrop-filter: none !important;
+        }
+        .practice-questions [class~="text-yellow-400"] {
+          display: none !important;
+        }
+        .practice-questions [class~="border-l-2"] {
+          border-left-width: 0 !important;
+          padding-left: 0 !important;
         }
         .practice-collection .gradient-space > .relative.z-10 > div:first-child {
           display: none !important;
@@ -80,7 +106,10 @@ export default function PracticeCollectionBankPage({
           </div>
         </header>
 
-        <div>
+        <div className="practice-questions">
+          <p className="mb-6 text-sm font-body text-yellow-400">
+            Kerjakan soal-soal berikut lengkap dengan caranya.
+          </p>
           {sections.map(({ Page }, index) => (
             <div key={index}>
               <StarfieldVisibilityContext.Provider value={false}>
