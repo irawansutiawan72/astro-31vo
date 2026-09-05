@@ -221,6 +221,7 @@ const OlimpiadePeluangPage = lazy(() => import("./pages/OlimpiadePeluangPage"));
 const TKAPage = lazy(() => import("./pages/TKAPage"));
 const TKALatihan1Page = lazy(() => import("./pages/tka/TKALatihan1Page"));
 const TKATryOut1Page = lazy(() => import("./pages/tka/TKATryOut1Page"));
+const TKATryOut2Page = lazy(() => import("./pages/tka/TKATryOut2Page"));
 const TKALatihan2Page = lazy(() => import("./pages/tka/TKALatihan2Page"));
 const TKALatihan3Page = lazy(() => import("./pages/tka/TKALatihan3Page"));
 const TKALatihan4Page = lazy(() => import("./pages/tka/TKALatihan4Page"));
@@ -1156,6 +1157,7 @@ const AppInner = () => {
           <Route path="/tka/tips" element={<TKATipsPage />} />
           <Route path="/tka/paket-1" element={<TKALatihan1Page />} />
           <Route path="/tka/try-out-1" element={<TKATryOut1Page />} />
+           <Route path="/tka/try-out-2" element={<TKATryOut2Page />} />
           <Route path="/tka/paket-2" element={<TKALatihan2Page />} />
           <Route path="/tka/paket-3" element={<TKALatihan3Page />} />
           <Route path="/tka/paket-4" element={<TKALatihan4Page />} />
