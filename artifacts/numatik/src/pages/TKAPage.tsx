@@ -88,6 +88,7 @@ const TKAPage = () => {
     sessionStorage.getItem("tka_showModul") === "true"
   );
   const [showPaket, setShowPaket] = useState(false);
+  const [showTryOut, setShowTryOut] = useState(false);
 
   const handleTopicClick = (name: string) => {
     const path = routes[name];
@@ -273,42 +274,62 @@ const TKAPage = () => {
           )}
         </div>
 
-        {/* ── Try Out resmi (mode ujian) ── */}
+        {/* ── Try Out resmi (mode ujian, toggle) ── */}
         <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
-          <div className="mb-3 flex items-center justify-between px-1">
-            <span className="font-display text-sm font-bold tracking-wide text-emerald-100">
-              TRY OUT TKA MATEMATIKA 2026 - 2027
-            </span>
-            <span className="text-[10px] font-body text-emerald-300/70">2 Paket</span>
-          </div>
-          <div className="flex flex-col gap-2.5">
-            {tryOutPackages.map((pkg, i) => (
-              <button
-                key={pkg.id}
-                onClick={() => { playPopSound(); navigate(pkg.path); }}
-                className="group w-full rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-3 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15 animate-slide-up"
-                style={{ animationDelay: `${i * 0.06}s` }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-400/15">
-                    <span className="text-[9px] font-body leading-none text-emerald-200/70">No.</span>
-                    <span className="font-display text-sm font-bold leading-tight text-emerald-100">
-                      {String(pkg.id).padStart(2, "0")}
-                    </span>
+          <button
+            onClick={() => { playPopSound(); setShowTryOut(v => !v); }}
+            className={`w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl border transition-all duration-200 cursor-pointer mb-3
+              ${showTryOut
+                ? "bg-emerald-500/20 border-emerald-400/60 shadow-md shadow-emerald-500/10"
+                : "bg-emerald-500/10 border-emerald-400/30 hover:bg-emerald-500/15 hover:border-emerald-400/50"
+              }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+                <TimerReset className="w-4 h-4 text-emerald-300" />
+              </div>
+              <span className="font-display text-sm font-bold text-emerald-200 tracking-wide uppercase">
+                TRY OUT MATEMATIKA 2026 - 2027
+              </span>
+              <span className="text-[10px] font-body text-emerald-400/70 bg-emerald-500/10 border border-emerald-400/20 px-2 py-0.5 rounded-full">
+                2 Paket
+              </span>
+            </div>
+            {showTryOut
+              ? <ChevronUp className="w-4 h-4 text-emerald-300" />
+              : <ChevronDown className="w-4 h-4 text-emerald-300/60" />}
+          </button>
+
+          {showTryOut && (
+            <div className="flex flex-col gap-2.5">
+              {tryOutPackages.map((pkg, i) => (
+                <button
+                  key={pkg.id}
+                  onClick={() => { playPopSound(); navigate(pkg.path); }}
+                  className="group w-full rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-3 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15 animate-slide-up"
+                  style={{ animationDelay: `${i * 0.06}s` }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-400/15">
+                      <span className="text-[9px] font-body leading-none text-emerald-200/70">No.</span>
+                      <span className="font-display text-sm font-bold leading-tight text-emerald-100">
+                        {String(pkg.id).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="block font-display text-sm font-bold tracking-wide text-emerald-100">
+                        {pkg.label}
+                      </span>
+                      <span className="mt-1 block text-[10px] leading-relaxed text-emerald-100/60">
+                        Simulasi ujian sesungguhnya · {pkg.soal} soal · Waktu {pkg.waktu}
+                      </span>
+                    </div>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="block font-display text-sm font-bold tracking-wide text-emerald-100">
-                      {pkg.label}
-                    </span>
-                    <span className="mt-1 block text-[10px] leading-relaxed text-emerald-100/60">
-                      Simulasi ujian sesungguhnya · {pkg.soal} soal · Waktu {pkg.waktu}
-                    </span>
-                  </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
-                </div>
-              </button>
-            ))}
-          </div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Soal TKA Asli 2025 ── */}
