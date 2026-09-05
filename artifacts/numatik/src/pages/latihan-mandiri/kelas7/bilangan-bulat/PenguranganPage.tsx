@@ -15,7 +15,7 @@ interface Question {
   imageCaption?: string;
 }
 
-const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
+export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
   id: [
     {
       number: 1,

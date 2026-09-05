@@ -14,7 +14,7 @@ interface Question {
   type: string;
 }
 
-const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
+export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
   id: [
     { number: 1, title: "Perubahan Suhu", content: `Pada suatu pagi, suhu di sebuah ruangan pendingin adalah 4°C. Berapa derajat suhu di ruangan tersebut jika mengalami perubahan berikut?\na. Suhu naik 7°C.\nb. Suhu turun 12°C.`, type: "essay" },
     { number: 2, title: "Posisi Ketinggian/Kedalaman", content: `Pasangan bilangan berikut menunjukkan posisi ketinggian suatu tempat atau kedalaman penyelam dari permukaan air laut. Dari tiap-tiap pasangan bilangan berikut, manakah posisi yang lebih tinggi?\na. 15 m dan -25 m\nb. -50 m dan -10 m`, type: "essay" },

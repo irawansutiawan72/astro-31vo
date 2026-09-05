@@ -17,7 +17,7 @@ interface Question {
 }
 
 // Questions 1–7 are pure math expressions — identical across all languages.
-const MATH_QUESTIONS: Question[] = [
+export const MATH_QUESTIONS: Question[] = [
   { number: 1,  type: "math", math: "25 + 48 : (-8) = ..." },
   { number: 2,  type: "math", math: "64 - 26 \\times (-4) = ..." },
   { number: 3,  type: "math", math: "12 + 120 : 10 \\times (-5) = ..." },
@@ -27,7 +27,7 @@ const MATH_QUESTIONS: Question[] = [
   { number: 7,  type: "math", math: "(-20) + 8 \\times 5 - 18 : (-3) = ..." },
 ];
 
-const ESSAY_QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
+export const ESSAY_QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
   id: [
     { number: 8,  type: "essay", content: `Dalam kompetensi Bahasa Inggris yang terdiri dari 50 soal, peserta akan mendapatkan skor 4 untuk setiap jawaban benar, skor -2 untuk setiap jawaban salah, dan skor -1 untuk soal yang tidak dijawab. Jika Budi menjawab 44 soal dan yang benar 36 soal, maka skor yang diperoleh Budi adalah ...` },
     { number: 9,  type: "essay", content: `Dalam suatu pertandingan setiap kemenangan mendapat nilai 3, seri bernilai 1 dan kalah bernilai -2. Jika tim SMPN 28 BDG bermain sebanyak 20 kali dengan meraih 10 kemenangan dan 4 seri, maka nilai yang diperoleh SMPN 28 BDG adalah ...` },

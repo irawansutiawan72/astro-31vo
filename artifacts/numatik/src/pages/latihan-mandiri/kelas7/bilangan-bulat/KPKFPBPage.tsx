@@ -13,7 +13,7 @@ interface Question {
   type: string;
 }
 
-const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
+export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
   id: [
     { number: 1,  type: "essay", content: `a. Tulislah bilangan-bilangan kelipatan 6 dan kelipatan 8 yang kurang dari 60!\nb. Tentukan kelipatan persekutuan dari 6 dan 8!\nc. Berapakah KPK dari 6 dan 8?` },
     { number: 2,  type: "essay", content: `a. Tulislah bilangan-bilangan kelipatan 3, 6, dan 9 yang kurang dari 50!\nb. Tentukan kelipatan persekutuan dari 3, 6, dan 9!\nc. Berapakah KPK dari 3, 6, dan 9?` },
