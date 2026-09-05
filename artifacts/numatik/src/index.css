@@ -351,6 +351,30 @@
   fill: #b91c1c !important;
 }
 
+/* Olimpiade Koordinat Kartesius diagrams use light grid lines and neon ink
+   for the space theme. Use a dark ink palette on light themes so every axis,
+   construction line, point, arrow, and label remains readable. */
+[data-theme="light"] .olimpiade-koordinat-route svg,
+[data-theme="white"] .olimpiade-koordinat-route svg,
+[data-theme="forest"] .olimpiade-koordinat-route svg,
+[data-theme="sunset"] .olimpiade-koordinat-route svg {
+  background: rgba(248, 250, 252, 0.92) !important;
+}
+
+[data-theme="light"] .olimpiade-koordinat-route svg [stroke]:not([stroke="none"]),
+[data-theme="white"] .olimpiade-koordinat-route svg [stroke]:not([stroke="none"]),
+[data-theme="forest"] .olimpiade-koordinat-route svg [stroke]:not([stroke="none"]),
+[data-theme="sunset"] .olimpiade-koordinat-route svg [stroke]:not([stroke="none"]) {
+  stroke: #334155 !important;
+}
+
+[data-theme="light"] .olimpiade-koordinat-route svg [fill]:not([fill="none"]),
+[data-theme="white"] .olimpiade-koordinat-route svg [fill]:not([fill="none"]),
+[data-theme="forest"] .olimpiade-koordinat-route svg [fill]:not([fill="none"]),
+[data-theme="sunset"] .olimpiade-koordinat-route svg [fill]:not([fill="none"]) {
+  fill: #0f172a !important;
+}
+
 /* The KaTeX nodes inside the important-formula card do not always inherit
    the route's generic text-white light-theme override. */
 [data-theme="light"] .olimpiade-teorema-route .important-formula,
