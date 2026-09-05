@@ -375,6 +375,19 @@
   fill: #0f172a !important;
 }
 
+/* Labels in the Garis dan Sudut basic-practice SVGs use neon colors for the
+   space theme. Darken only those labels on bright themes. */
+[data-theme="light"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text,
+[data-theme="white"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text,
+[data-theme="forest"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text,
+[data-theme="sunset"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text,
+[data-theme="light"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text tspan,
+[data-theme="white"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text tspan,
+[data-theme="forest"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text tspan,
+[data-theme="sunset"] .olimpiade-garis-sudut-route .latihan-dasar-svg svg text tspan {
+  fill: #0f172a !important;
+}
+
 /* The KaTeX nodes inside the important-formula card do not always inherit
    the route's generic text-white light-theme override. */
 [data-theme="light"] .olimpiade-teorema-route .important-formula,

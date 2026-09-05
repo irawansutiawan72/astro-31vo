@@ -1852,7 +1852,7 @@ const OlimpiadeGarisSudutPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="olimpiade-garis-sudut-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
@@ -1994,7 +1994,7 @@ const OlimpiadeGarisSudutPage = () => {
                                 className="max-w-full rounded-lg border border-border/40 bg-white/5"
                               />
                             ) : (
-                              <div className="w-full max-w-md">{soal.image}</div>
+                              <div className="w-full max-w-md latihan-dasar-svg">{soal.image}</div>
                             )}
                           </div>
                         )}
