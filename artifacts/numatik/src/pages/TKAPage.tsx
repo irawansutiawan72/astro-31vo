@@ -272,25 +272,21 @@ const TKAPage = () => {
         <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           <button
             onClick={() => { playPopSound(); navigate("/tka/try-out-1"); }}
-            className="group w-full rounded-2xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-4 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15"
+            className="group w-full rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-cyan-500/10 p-3 text-left shadow-lg shadow-emerald-500/5 transition-all hover:border-emerald-300/70 hover:from-emerald-500/30 hover:via-teal-500/15 hover:to-cyan-500/15 hover:shadow-emerald-500/15"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-300/40 bg-emerald-400/15">
-                <TimerReset className="h-5 w-5 text-emerald-200" />
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-400/15">
+                <TimerReset className="h-4 w-4 text-emerald-200" />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="block font-display text-sm font-bold tracking-wide text-emerald-100 sm:text-base">
-                  TRY OUT TKA MATEMATIKA (2026 - 2027)
+                <span className="block font-display text-sm font-bold tracking-wide text-emerald-100">
+                  TRY OUT TKA MATEMATIKA 2026 - 2027
                 </span>
                 <span className="mt-1 block text-[10px] leading-relaxed text-emerald-100/60">
-                  Simulasi ujian sesungguhnya · 30 soal · Waktu 60 menit · Navigasi nomor soal
+                  Simulasi ujian sesungguhnya · 30 soal · Waktu 75 menit · Navigasi nomor soal
                 </span>
               </div>
-              <ChevronRight className="h-5 w-5 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
-            </div>
-            <div className="mt-3 flex items-center justify-between rounded-lg border border-emerald-300/15 bg-emerald-950/20 px-3 py-2">
-              <span className="text-xs font-semibold text-emerald-100">Try Out TKA Matematika 1</span>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300/80">Mulai ujian →</span>
+              <ChevronRight className="h-4 w-4 shrink-0 text-emerald-200 transition-transform group-hover:translate-x-1" />
             </div>
           </button>
         </div>
