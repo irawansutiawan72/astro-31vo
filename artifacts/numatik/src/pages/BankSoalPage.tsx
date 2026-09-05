@@ -31,7 +31,13 @@ import { useNavigate } from "react-router-dom";
 import { playPopSound } from "@/hooks/useAudio";
 
 const bankSoalTopics = [
-  { label: "BILANGAN BULAT", icon: Calculator, path: "/bank-soal/bilangan-bulat", ready: true },
+  {
+    label: "BILANGAN BULAT",
+    headline: "Taklukkan Dunia Positif & Negatif!",
+    icon: Calculator,
+    path: "/bank-soal/bilangan-bulat",
+    ready: true,
+  },
   { label: "BILANGAN RASIONAL", icon: Sigma, path: "/bank-soal/bilangan-rasional", ready: true },
   { label: "ALJABAR", icon: Variable, path: "/bank-soal/aljabar", ready: true },
   { label: "PERSAMAAN DAN PERTIDAKSAMAAN LINEAR SATU VARIABEL", icon: Equal, path: "/bank-soal/plsv", ready: true },
@@ -94,6 +100,11 @@ const BankSoalPage = () => {
               <h3 className="font-display text-[10px] sm:text-xs font-bold text-foreground leading-tight">
                 {topic.label}
               </h3>
+              {topic.headline && (
+                <p className="mt-1.5 text-[9px] sm:text-[10px] leading-snug text-primary/80">
+                  {topic.headline}
+                </p>
+              )}
             </button>
           ))}
         </div>
