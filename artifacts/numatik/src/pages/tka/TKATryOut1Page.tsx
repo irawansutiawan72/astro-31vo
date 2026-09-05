@@ -8,6 +8,8 @@ import {
   ChevronRight,
   Clock3,
   Flag,
+  PanelLeftClose,
+  PanelLeftOpen,
   RotateCcw,
   Send,
 } from "lucide-react";
@@ -262,6 +264,10 @@ const TKATryOut1Page = () => {
   const [finishedReason, setFinishedReason] = useState<"manual" | "time-up">("manual");
   const [serverScore, setServerScore] = useState<number | null>(null);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
+  const [showQuestionPanel, setShowQuestionPanel] = useState(true);
+  const [isLandscape, setIsLandscape] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
+  );
   const finishingRef = useRef(false);
 
   const question = QUESTIONS[current];
@@ -304,6 +310,18 @@ const TKATryOut1Page = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [stage]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(orientation: landscape)");
+    const handleOrientationChange = () => {
+      setIsLandscape(mediaQuery.matches);
+      if (mediaQuery.matches) setShowQuestionPanel(true);
+    };
+
+    handleOrientationChange();
+    mediaQuery.addEventListener("change", handleOrientationChange);
+    return () => mediaQuery.removeEventListener("change", handleOrientationChange);
+  }, []);
 
   const finishExam = (reason: "manual" | "time-up") => {
     if (stage !== "exam" || finishingRef.current) return;
@@ -546,8 +564,29 @@ const TKATryOut1Page = () => {
           </section>
         )}
 
-        <div className="grid gap-4 lg:grid-cols-[190px_minmax(0,1fr)]">
-          <aside className="order-2 h-fit rounded-2xl border border-white/10 bg-slate-950/70 p-3 backdrop-blur lg:order-1 lg:sticky lg:top-4">
+        <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5 text-xs backdrop-blur landscape:hidden">
+          <div>
+            <p className="font-bold text-cyan-200">Panel nomor soal</p>
+            <p className="mt-0.5 text-[10px] text-white/45">Atur tampilan daftar soal di portrait</p>
+          </div>
+          <button
+            onClick={() => setShowQuestionPanel((visible) => !visible)}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-cyan-300/25 bg-cyan-400/10 px-3 py-2 text-[10px] font-bold text-cyan-100 transition hover:bg-cyan-400/20"
+            aria-expanded={showQuestionPanel}
+            aria-controls="question-navigation-panel"
+          >
+            {showQuestionPanel ? <PanelLeftClose className="h-3.5 w-3.5" /> : <PanelLeftOpen className="h-3.5 w-3.5" />}
+            {showQuestionPanel ? "Sembunyikan" : "Tampilkan"}
+          </button>
+        </div>
+
+        <div className="grid gap-4 landscape:grid-cols-[190px_minmax(0,1fr)]">
+          <aside
+            id="question-navigation-panel"
+            className={`h-fit rounded-2xl border border-white/10 bg-slate-950/70 p-3 backdrop-blur landscape:sticky landscape:top-4 ${
+              isLandscape || showQuestionPanel ? "block" : "hidden"
+            }`}
+          >
             <div className="mb-3 flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">Daftar soal</p>
@@ -582,7 +621,7 @@ const TKATryOut1Page = () => {
             </div>
           </aside>
 
-          <section className="order-1 min-w-0 lg:order-2">
+          <section className="order-2 min-w-0">
             <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5 text-xs backdrop-blur sm:px-4">
               <span className="font-bold text-cyan-200">Soal {question.number}</span>
               <span className="text-white/40">{question.topic}</span>
