@@ -468,7 +468,7 @@ const TKATryOut2Page = () => {
 
   if (stage === "notice" || stage === "biodata" || stage === "countdown") {
     return (
-      <div className="relative min-h-screen gradient-space overflow-x-hidden">
+      <div className="tka-exam-page relative min-h-screen gradient-space overflow-x-hidden">
         <Starfield />
         <PageNavigation />
         <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-2xl items-center px-4 py-10 sm:px-6">
@@ -571,7 +571,7 @@ const TKATryOut2Page = () => {
   const context = getContextForQuestion(question.number);
 
   return (
-    <div className="relative min-h-screen gradient-space overflow-x-hidden">
+    <div className="tka-exam-page relative min-h-screen gradient-space overflow-x-hidden">
       <Starfield />
       <PageNavigation hidden={stage === "exam"} />
 
