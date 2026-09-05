@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AlertTriangle,
@@ -236,7 +236,9 @@ const QUESTIONS: Question[] = [
   },
 ];
 
-const TOTAL_SECONDS = 60 * 60;
+const TOTAL_SECONDS = 75 * 60;
+type TryOutStage = "notice" | "biodata" | "countdown" | "exam" | "submitted";
+type SubmissionState = "idle" | "saving" | "saved" | "error";
 
 const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -246,11 +248,21 @@ const formatTime = (seconds: number) => {
 
 const TKATryOut1Page = () => {
   const navigate = useNavigate();
+  const [stage, setStage] = useState<TryOutStage>("notice");
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [remaining, setRemaining] = useState(TOTAL_SECONDS);
-  const [submitted, setSubmitted] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [school, setSchool] = useState("");
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [startedAt, setStartedAt] = useState<string | null>(null);
+  const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
+  const [submissionError, setSubmissionError] = useState("");
+  const [emailSent, setEmailSent] = useState<boolean | null>(null);
+  const [finishedReason, setFinishedReason] = useState<"manual" | "time-up">("manual");
+  const [serverScore, setServerScore] = useState<number | null>(null);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
+  const finishingRef = useRef(false);
 
   const question = QUESTIONS[current];
   const answeredCount = Object.keys(answers).length;
@@ -261,26 +273,82 @@ const TKATryOut1Page = () => {
   const isUrgent = remaining <= 5 * 60;
 
   useEffect(() => {
-    if (submitted) return;
+    if (stage !== "countdown" || countdown === null) return;
+    const timer = window.setTimeout(() => {
+      if (countdown > 1) {
+        setCountdown(countdown - 1);
+        return;
+      }
+      setCountdown(null);
+      setStartedAt(new Date().toISOString());
+      setRemaining(TOTAL_SECONDS);
+      setStage("exam");
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [countdown, stage]);
+
+  useEffect(() => {
+    if (stage !== "exam") return;
     const timer = window.setInterval(() => {
       setRemaining((value) => {
         if (value <= 1) {
           window.clearInterval(timer);
-          setSubmitted(true);
           return 0;
         }
         return value - 1;
       });
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [submitted]);
+  }, [stage]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [stage]);
+
+  const finishExam = (reason: "manual" | "time-up") => {
+    if (stage !== "exam" || finishingRef.current) return;
+    finishingRef.current = true;
+    setFinishedReason(reason);
+    setStage("submitted");
+    setSubmissionState("saving");
+    setSubmissionError("");
+
+    const durationSeconds = startedAt
+      ? Math.max(0, Math.min(TOTAL_SECONDS, Math.floor((Date.now() - Date.parse(startedAt)) / 1000)))
+      : TOTAL_SECONDS - remaining;
+
+    void fetch("/api/tka/tryout/1/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: fullName,
+        school,
+        answers,
+        startedAt,
+        submittedAt: new Date().toISOString(),
+        durationSeconds,
+        submitReason: reason,
+      }),
+    })
+      .then(async (response) => {
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.message || "Hasil belum berhasil disimpan.");
+        setServerScore(typeof data.score === "number" ? data.score : null);
+        setEmailSent(data.emailSent !== false);
+        setSubmissionState("saved");
+      })
+      .catch((error: unknown) => {
+        setSubmissionState("error");
+        setSubmissionError(error instanceof Error ? error.message : "Hasil belum berhasil disimpan.");
+      });
+  };
+
+  useEffect(() => {
+    if (stage === "exam" && remaining === 0) finishExam("time-up");
+  }, [remaining, stage]);
 
   const chooseAnswer = (optionIndex: number) => {
-    if (submitted) return;
+    if (stage !== "exam") return;
     playPopSound();
     setAnswers((previous) => ({ ...previous, [question.number]: optionIndex }));
   };
@@ -290,20 +358,142 @@ const TKATryOut1Page = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const startExam = () => {
+    if (!fullName.trim() || !school.trim()) {
+      setSubmissionError("Nama lengkap dan asal sekolah wajib diisi.");
+      return;
+    }
+    setSubmissionError("");
+    setCountdown(3);
+    setStage("countdown");
+    playPopSound();
+  };
+
   const submitExam = () => {
     setShowSubmitDialog(false);
-    setSubmitted(true);
     playPopSound();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    finishExam("manual");
   };
 
   const restartExam = () => {
+    finishingRef.current = false;
+    setStage("notice");
     setAnswers({});
     setCurrent(0);
     setRemaining(TOTAL_SECONDS);
-    setSubmitted(false);
+    setFullName("");
+    setSchool("");
+    setCountdown(null);
+    setStartedAt(null);
+    setSubmissionState("idle");
+    setSubmissionError("");
+    setEmailSent(null);
+    setServerScore(null);
     setShowSubmitDialog(false);
   };
+
+  if (stage === "notice" || stage === "biodata" || stage === "countdown") {
+    return (
+      <div className="relative min-h-screen gradient-space overflow-x-hidden">
+        <Starfield />
+        <PageNavigation />
+        <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-2xl items-center px-4 py-10 sm:px-6">
+          <section className="w-full rounded-3xl border border-cyan-300/25 bg-slate-950/80 p-5 shadow-2xl shadow-cyan-950/25 backdrop-blur sm:p-8">
+            {stage === "notice" && (
+              <>
+                <div className="mb-5 flex items-start gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-300/35 bg-amber-400/10">
+                    <Clock3 className="h-6 w-6 text-amber-200" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/70">Pemberitahuan sebelum mulai</p>
+                    <h1 className="mt-1 font-display text-xl font-bold text-white sm:text-2xl">TRY OUT TKA MATEMATIKA</h1>
+                    <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-amber-300/25 bg-amber-500/10 p-4 text-sm leading-7 text-amber-50/85">
+                  <p className="font-bold text-amber-100">Perhatikan sebelum mengikuti try out:</p>
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-xs sm:text-sm">
+                    <li>Setelah dimulai, layar pengerjaan akan terkunci dalam satu sesi selama maksimal <strong>75 menit</strong>.</li>
+                    <li>Waktu akan mulai dihitung setelah hitungan mundur 3–2–1 selesai.</li>
+                    <li>Jika waktu habis, jawaban otomatis dikumpulkan dan tidak dapat diubah.</li>
+                    <li>Isi biodata dengan nama lengkap dan asal sekolah yang benar.</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => { setStage("biodata"); playPopSound(); }}
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500/20 px-4 py-3.5 text-sm font-bold text-cyan-100 ring-1 ring-cyan-300/40 transition hover:bg-cyan-500/30"
+                >
+                  Lanjut ke biodata <ChevronRight className="h-4 w-4" />
+                </button>
+              </>
+            )}
+
+            {stage === "biodata" && (
+              <>
+                <div className="mb-6">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/70">Langkah 1 dari 2</p>
+                  <h1 className="mt-1 font-display text-xl font-bold text-white sm:text-2xl">Isi biodata peserta</h1>
+                  <p className="mt-2 text-sm leading-6 text-white/55">Data ini dicatat bersama hasil pengerjaan di spreadsheet rekapitulasi.</p>
+                </div>
+                <div className="space-y-4">
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold text-cyan-100/80">Nama lengkap</span>
+                    <input
+                      value={fullName}
+                      onChange={(event) => setFullName(event.target.value)}
+                      placeholder="Contoh: Siti Aminah"
+                      autoComplete="name"
+                      className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/15"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold text-cyan-100/80">Asal sekolah</span>
+                    <input
+                      value={school}
+                      onChange={(event) => setSchool(event.target.value)}
+                      placeholder="Contoh: SMP Numatik"
+                      autoComplete="organization"
+                      className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/15"
+                    />
+                  </label>
+                </div>
+                {submissionError && <p className="mt-3 text-xs font-semibold text-rose-300">{submissionError}</p>}
+                <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                  <button
+                    onClick={() => { setStage("notice"); setSubmissionError(""); }}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm font-bold text-white/65 transition hover:bg-white/10"
+                  >
+                    <ChevronLeft className="h-4 w-4" /> Kembali
+                  </button>
+                  <button
+                    onClick={startExam}
+                    className="inline-flex flex-[2] items-center justify-center gap-2 rounded-xl bg-emerald-500/20 px-4 py-3.5 text-sm font-bold text-emerald-100 ring-1 ring-emerald-300/40 transition hover:bg-emerald-500/30"
+                  >
+                    Mulai Try Out <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {stage === "countdown" && (
+              <div className="flex min-h-[360px] flex-col items-center justify-center text-center">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/70">Bersiap</p>
+                <p className="mt-2 text-sm text-white/60">Try out akan dimulai dalam</p>
+                <div className="my-5 flex h-36 w-36 items-center justify-center rounded-full border-4 border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_60px_rgba(34,211,238,0.25)]">
+                  <span className="font-display text-7xl font-black text-cyan-100">{countdown}</span>
+                </div>
+                <p className="text-xs text-white/40">Setelah angka 1, waktu 75 menit langsung berjalan.</p>
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
+    );
+  }
+
+  const submitted = stage === "submitted";
+  const displayedScore = serverScore ?? score;
 
   return (
     <div className="relative min-h-screen gradient-space overflow-x-hidden">
@@ -321,7 +511,7 @@ const TKATryOut1Page = () => {
               <h1 className="font-display text-lg font-bold tracking-wide text-white sm:text-2xl">
                 Try Out TKA Matematika 1
               </h1>
-              <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX</p>
+              <p className="mt-1 text-xs text-white/50">Tahun Pelajaran 2026 / 2027 · 30 soal · Kelas IX · Batas waktu 75 menit</p>
             </div>
             <div className={`flex items-center gap-2 self-start rounded-xl border px-4 py-2.5 sm:self-auto ${isUrgent ? "border-red-400/60 bg-red-500/15 text-red-200" : "border-amber-300/30 bg-amber-500/10 text-amber-100"}`}>
               <Clock3 className={`h-5 w-5 ${isUrgent ? "animate-pulse text-red-300" : "text-amber-300"}`} />
@@ -341,8 +531,12 @@ const TKATryOut1Page = () => {
                 <div>
                   <h2 className="font-display text-base font-bold text-emerald-100">Try out selesai dikumpulkan</h2>
                   <p className="mt-1 text-xs text-emerald-100/65">
-                    Jawaban dikerjakan {answeredCount} dari {QUESTIONS.length} soal · Skor sementara {score}/{QUESTIONS.length}
+                    Jawaban dikerjakan {answeredCount} dari {QUESTIONS.length} soal · Skor {displayedScore}/{QUESTIONS.length}
                   </p>
+                  {submissionState === "saving" && <p className="mt-2 text-xs text-amber-200">Menyimpan hasil ke spreadsheet...</p>}
+                  {submissionState === "saved" && emailSent !== false && <p className="mt-2 text-xs text-emerald-200">Hasil sudah masuk ke spreadsheet dan notifikasi email.</p>}
+                  {submissionState === "saved" && emailSent === false && <p className="mt-2 text-xs text-amber-200">Hasil sudah masuk ke spreadsheet, tetapi notifikasi email belum terkirim.</p>}
+                  {submissionState === "error" && <p className="mt-2 text-xs text-rose-300">{submissionError}</p>}
                 </div>
               </div>
               <button onClick={restartExam} className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-200 transition hover:bg-emerald-500/20">
@@ -408,7 +602,7 @@ const TKATryOut1Page = () => {
                   return (
                     <button
                       key={option}
-                      disabled={submitted}
+                       disabled={submitted}
                       onClick={() => chooseAnswer(index)}
                       className={`flex min-h-14 items-center rounded-xl border px-4 py-3 text-left text-sm transition-all ${
                         selected
