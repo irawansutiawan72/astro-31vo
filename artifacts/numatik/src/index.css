@@ -351,6 +351,36 @@
   fill: #b91c1c !important;
 }
 
+/* The KaTeX nodes inside the important-formula card do not always inherit
+   the route's generic text-white light-theme override. */
+[data-theme="light"] .olimpiade-teorema-route .important-formula,
+[data-theme="white"] .olimpiade-teorema-route .important-formula,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula {
+  color: #0f172a !important;
+  background: rgba(224, 242, 254, 0.95) !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 10px 24px rgba(14, 116, 144, 0.12) !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route .important-formula .katex,
+[data-theme="white"] .olimpiade-teorema-route .important-formula .katex,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula .katex,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula .katex,
+[data-theme="light"] .olimpiade-teorema-route .important-formula .katex *,
+[data-theme="white"] .olimpiade-teorema-route .important-formula .katex *,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula .katex *,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula .katex * {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .olimpiade-teorema-route .important-formula > span:first-child,
+[data-theme="white"] .olimpiade-teorema-route .important-formula > span:first-child,
+[data-theme="forest"] .olimpiade-teorema-route .important-formula > span:first-child,
+[data-theme="sunset"] .olimpiade-teorema-route .important-formula > span:first-child {
+  color: #0369a1 !important;
+}
+
 [data-theme="light"] .animation-submaterial-route [class*="text-white"],
 [data-theme="white"] .animation-submaterial-route [class*="text-white"],
 [data-theme="forest"] .animation-submaterial-route [class*="text-white"],

@@ -1340,7 +1340,7 @@ const OlimpiadeTeoremaPage = () => {
                         }
                         if (trimmed.startsWith('$') && trimmed.endsWith('$') && trimmed.length > 2) {
                           return (
-                            <div key={i} className="my-3 px-4 py-3 rounded-xl border-2 border-cyan-400/60 bg-cyan-950/40 text-center font-bold text-white text-base shadow-lg shadow-cyan-900/30">
+                            <div key={i} className="important-formula my-3 px-4 py-3 rounded-xl border-2 border-cyan-400/60 bg-cyan-950/40 text-center font-bold text-white text-base shadow-lg shadow-cyan-900/30">
                               <span className="block text-[10px] text-cyan-400 font-semibold uppercase tracking-widest mb-1">Rumus Penting</span>
                               {renderWithLatex(trimmed)}
                             </div>
