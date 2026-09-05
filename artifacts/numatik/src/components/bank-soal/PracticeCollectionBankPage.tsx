@@ -37,6 +37,11 @@ export default function PracticeCollectionBankPage({
         .practice-collection .gradient-space > .relative.z-10 > div:first-child {
           display: none !important;
         }
+        .practice-collection .gradient-space > .relative.z-10 > svg,
+        .practice-collection .gradient-space > .relative.z-10 > h1,
+        .practice-collection .gradient-space > .relative.z-10 > p {
+          display: none !important;
+        }
         .practice-collection .gradient-space > .relative.z-10 > div.mt-10.text-center {
           display: none !important;
         }
@@ -47,6 +52,14 @@ export default function PracticeCollectionBankPage({
         .practice-collection span.w-6.h-6.rounded-full.flex.items-center::after {
           content: counter(practice-question);
           font-size: 11px;
+        }
+        .practice-collection span.font-semibold.text-accent.shrink-0 {
+          counter-increment: practice-question;
+          font-size: 0 !important;
+        }
+        .practice-collection span.font-semibold.text-accent.shrink-0::after {
+          content: counter(practice-question) ".";
+          font-size: 0.875rem;
         }
       `}</style>
       <PageNavigation prevPath="/bank-soal" />
