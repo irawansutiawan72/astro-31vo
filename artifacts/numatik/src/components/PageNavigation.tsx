@@ -1,3 +1,4 @@
+import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, ArrowRight, Home } from "lucide-react";
@@ -9,9 +10,14 @@ interface PageNavigationProps {
   nextPath?: string;
 }
 
+export const PageNavigationVisibilityContext = createContext(true);
+
 const PageNavigation = ({ prevPath, nextPath }: PageNavigationProps) => {
+  const isVisible = useContext(PageNavigationVisibilityContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  if (!isVisible) return null;
 
   return (
     <>
