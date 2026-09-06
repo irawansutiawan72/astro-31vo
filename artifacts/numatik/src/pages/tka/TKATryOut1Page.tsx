@@ -327,7 +327,15 @@ const TKATryOut1Page = () => {
   }, []);
 
   const finishExam = (reason: "manual" | "time-up" | "security-violation") => {
-    if (stage !== "exam" || finishingRef.current) return;
+    if (stage !== "exam" || finishingRef.current) {
+      console.warn("[TKA Paket 1] Submit diabaikan oleh guard frontend", {
+        stage,
+        alreadyFinishing: finishingRef.current,
+        reason,
+      });
+      return;
+    }
+
     finishingRef.current = true;
     setFinishedReason(reason);
     setStage("submitted");
@@ -337,6 +345,13 @@ const TKATryOut1Page = () => {
     const durationSeconds = startedAt
       ? Math.max(0, Math.min(TOTAL_SECONDS, Math.floor((Date.now() - Date.parse(startedAt)) / 1000)))
       : TOTAL_SECONDS - remaining;
+
+    console.log("[TKA Paket 1] Mengirim submit ke API", {
+      endpoint: "/api/tka/tryout/1/submit",
+      answeredCount,
+      durationSeconds,
+      reason,
+    });
 
     void fetch("/api/tka/tryout/1/submit", {
       method: "POST",
@@ -353,12 +368,29 @@ const TKATryOut1Page = () => {
     })
       .then(async (response) => {
         const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.message || "Hasil belum berhasil disimpan.");
+        console.log("[TKA Paket 1] Respons submit diterima", {
+          status: response.status,
+          ok: response.ok,
+          data,
+        });
+        if (!response.ok) {
+          console.error("[TKA Paket 1] API mengembalikan kegagalan submit", {
+            status: response.status,
+            data,
+          });
+          throw new Error(data.message || "Hasil belum berhasil disimpan.");
+        }
         setServerScore(typeof data.score === "number" ? data.score : null);
         setEmailSent(data.emailSent !== false);
         setSubmissionState("saved");
+        if (data.emailSent === false) {
+          console.error("[TKA Paket 1] Spreadsheet berhasil, tetapi email dilaporkan gagal", data);
+        } else {
+          console.log("[TKA Paket 1] Spreadsheet dan email dilaporkan berhasil", data);
+        }
       })
       .catch((error: unknown) => {
+        console.error("[TKA Paket 1] Error saat submit", error);
         setSubmissionState("error");
         setSubmissionError(error instanceof Error ? error.message : "Hasil belum berhasil disimpan.");
       });

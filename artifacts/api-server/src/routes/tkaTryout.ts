@@ -30,6 +30,14 @@ type SubmitBody = {
 const textValue = (value: unknown, maxLength: number) =>
   typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 
+const connectorResponseBody = async (response: Response) => {
+  try {
+    return (await response.clone().text()).slice(0, 1000);
+  } catch {
+    return "";
+  }
+};
+
 const toAnswerMap = (value: unknown) => {
   if (!value || typeof value !== "object" || Array.isArray(value)) return {};
 
@@ -104,15 +112,33 @@ const sendResultEmail = async ({
     body,
   ].join("\r\n");
 
+  console.log("[TKA][Email] Mengirim hasil", {
+    packageNumber,
+    answeredCount,
+    score,
+    percentage,
+  });
+
   const response = await connectors.proxy("google-mail", "/gmail/v1/users/me/messages/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ raw: encodeBase64Url(raw) }),
   });
 
+  const responseBody = await connectorResponseBody(response);
   if (!response.ok) {
-    throw new Error(`Gmail send failed with status ${response.status}`);
+    console.error("[TKA][Email] Gagal mengirim hasil", {
+      packageNumber,
+      status: response.status,
+      responseBody,
+    });
+    throw new Error(`Gmail send failed with status ${response.status}: ${responseBody}`);
   }
+
+  console.log("[TKA][Email] Hasil berhasil dikirim", {
+    packageNumber,
+    status: response.status,
+  });
 };
 
 router.post("/tka/tryout/1/submit", async (req, res) => {
@@ -144,7 +170,24 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
   const answeredCount = Object.keys(answers).length;
   const percentage = Math.round((score / QUESTION_COUNT) * 100);
 
+  console.log("[TKA][Paket 1] Submit diterima API", {
+    requestId: req.id,
+    hasName: Boolean(name),
+    hasSchool: Boolean(school),
+    answeredCount,
+    score,
+    percentage,
+    durationSeconds,
+    submitReason,
+  });
+
   try {
+    console.log("[TKA][Paket 1] Mengirim ke Google Spreadsheet", {
+      requestId: req.id,
+      answeredCount,
+      score,
+    });
+
     const sheetResponse = await connectors.proxy(
       "google-sheet",
       `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
@@ -168,9 +211,23 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
       },
     );
 
+    const sheetResponseBody = await connectorResponseBody(sheetResponse);
     if (!sheetResponse.ok) {
-      throw new Error(`Google Sheets append failed with status ${sheetResponse.status}`);
+      console.error("[TKA][Paket 1] Google Spreadsheet gagal menerima data", {
+        requestId: req.id,
+        status: sheetResponse.status,
+        responseBody: sheetResponseBody,
+      });
+      throw new Error(
+        `Google Sheets append failed with status ${sheetResponse.status}: ${sheetResponseBody}`,
+      );
     }
+
+    console.log("[TKA][Paket 1] Google Spreadsheet berhasil menerima data", {
+      requestId: req.id,
+      status: sheetResponse.status,
+      responseBody: sheetResponseBody,
+    });
 
     let emailSent = true;
     try {
@@ -186,8 +243,18 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
       });
     } catch (emailError) {
       emailSent = false;
+      console.error("[TKA][Paket 1] Spreadsheet tersimpan, tetapi email gagal", {
+        requestId: req.id,
+        error: emailError,
+      });
       req.log.error({ err: emailError }, "Try out result saved, but result email failed");
     }
+
+    console.log("[TKA][Paket 1] Submit selesai", {
+      requestId: req.id,
+      emailSent,
+      spreadsheetSaved: true,
+    });
 
     res.status(201).json({
       ok: true,
@@ -198,6 +265,10 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
       emailSent,
     });
   } catch (error) {
+    console.error("[TKA][Paket 1] Submit gagal", {
+      requestId: req.id,
+      error,
+    });
     req.log.error({ err: error }, "Could not save try out result");
     res.status(502).json({
       message: "Hasil belum berhasil disimpan. Silakan coba kumpulkan kembali.",
@@ -241,7 +312,24 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
   const answeredCount = Object.keys(answers).length;
   const percentage = Math.round((score / QUESTION_COUNT) * 100);
 
+  console.log("[TKA][Paket 2] Submit diterima API", {
+    requestId: req.id,
+    hasName: Boolean(name),
+    hasSchool: Boolean(school),
+    answeredCount,
+    score,
+    percentage,
+    durationSeconds,
+    submitReason,
+  });
+
   try {
+    console.log("[TKA][Paket 2] Mengirim ke Google Spreadsheet", {
+      requestId: req.id,
+      answeredCount,
+      score,
+    });
+
     const sheetResponse = await connectors.proxy(
       "google-sheet",
       `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
@@ -265,9 +353,23 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
       },
     );
 
+    const sheetResponseBody = await connectorResponseBody(sheetResponse);
     if (!sheetResponse.ok) {
-      throw new Error(`Google Sheets append failed with status ${sheetResponse.status}`);
+      console.error("[TKA][Paket 2] Google Spreadsheet gagal menerima data", {
+        requestId: req.id,
+        status: sheetResponse.status,
+        responseBody: sheetResponseBody,
+      });
+      throw new Error(
+        `Google Sheets append failed with status ${sheetResponse.status}: ${sheetResponseBody}`,
+      );
     }
+
+    console.log("[TKA][Paket 2] Google Spreadsheet berhasil menerima data", {
+      requestId: req.id,
+      status: sheetResponse.status,
+      responseBody: sheetResponseBody,
+    });
 
     let emailSent = true;
     try {
@@ -284,8 +386,18 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
       });
     } catch (emailError) {
       emailSent = false;
+      console.error("[TKA][Paket 2] Spreadsheet tersimpan, tetapi email gagal", {
+        requestId: req.id,
+        error: emailError,
+      });
       req.log.error({ err: emailError }, "Try out 2 result saved, but result email failed");
     }
+
+    console.log("[TKA][Paket 2] Submit selesai", {
+      requestId: req.id,
+      emailSent,
+      spreadsheetSaved: true,
+    });
 
     res.status(201).json({
       ok: true,
@@ -296,6 +408,10 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
       emailSent,
     });
   } catch (error) {
+    console.error("[TKA][Paket 2] Submit gagal", {
+      requestId: req.id,
+      error,
+    });
     req.log.error({ err: error }, "Could not save try out 2 result");
     res.status(502).json({
       message: "Hasil belum berhasil disimpan. Silakan coba kumpulkan kembali.",
