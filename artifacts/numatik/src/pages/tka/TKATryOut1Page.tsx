@@ -17,6 +17,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { SecureExamBadge, SecureExamDialog, useSecureExam } from "@/components/tka/SecureExamGuard";
+import { getTkaDeviceId } from "@/lib/tkaDeviceId";
 
 type Question = {
   number: number;
@@ -326,7 +327,7 @@ const TKATryOut1Page = () => {
     return () => mediaQuery.removeEventListener("change", handleOrientationChange);
   }, []);
 
-  const finishExam = (reason: "manual" | "time-up" | "security-violation") => {
+  const finishExam = async (reason: "manual" | "time-up" | "security-violation") => {
     if (stage !== "exam" || finishingRef.current) {
       console.warn("[TKA Paket 1] Submit diabaikan oleh guard frontend", {
         stage,
@@ -345,12 +346,22 @@ const TKATryOut1Page = () => {
     const durationSeconds = startedAt
       ? Math.max(0, Math.min(TOTAL_SECONDS, Math.floor((Date.now() - Date.parse(startedAt)) / 1000)))
       : TOTAL_SECONDS - remaining;
+    let deviceId: string;
+    try {
+      deviceId = await getTkaDeviceId();
+    } catch (error) {
+      console.error("[TKA Paket 1] Device ID gagal dibuat", error);
+      setSubmissionState("error");
+      setSubmissionError("Perangkat tidak dapat diverifikasi. Silakan coba lagi.");
+      return;
+    }
 
     console.log("[TKA Paket 1] Mengirim submit ke API", {
       endpoint: "/api/tka/tryout/1/submit",
       answeredCount,
       durationSeconds,
       reason,
+      deviceIdSuffix: deviceId.slice(-8),
     });
 
     void fetch("/api/tka/tryout/1/submit", {
@@ -360,6 +371,7 @@ const TKATryOut1Page = () => {
         name: fullName,
         school,
         answers,
+        deviceId,
         startedAt,
         submittedAt: new Date().toISOString(),
         durationSeconds,
@@ -374,6 +386,9 @@ const TKATryOut1Page = () => {
           data,
         });
         if (!response.ok) {
+          if (response.status === 409) {
+            console.warn("[TKA Paket 1] Submit ditolak karena sudah pernah submit", data);
+          }
           console.error("[TKA Paket 1] API mengembalikan kegagalan submit", {
             status: response.status,
             data,
@@ -399,11 +414,11 @@ const TKATryOut1Page = () => {
   const security = useSecureExam({
     active: stage === "exam",
     submitted: stage === "submitted",
-    onAutoSubmit: () => finishExam("security-violation"),
+    onAutoSubmit: () => void finishExam("security-violation"),
   });
 
   useEffect(() => {
-    if (stage === "exam" && remaining === 0) finishExam("time-up");
+    if (stage === "exam" && remaining === 0) void finishExam("time-up");
   }, [remaining, stage]);
 
   const chooseAnswer = (optionIndex: number) => {
@@ -432,7 +447,7 @@ const TKATryOut1Page = () => {
   const submitExam = () => {
     setShowSubmitDialog(false);
     playPopSound();
-    finishExam("manual");
+    void finishExam("manual");
   };
 
   const restartExam = () => {
@@ -607,7 +622,9 @@ const TKATryOut1Page = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-emerald-300" />
                 <div>
-                  <h2 className="font-display text-base font-bold text-emerald-100">Try out selesai dikumpulkan</h2>
+                  <h2 className="font-display text-base font-bold text-emerald-100">
+                    {submissionState === "error" ? "Pengumpulan ditolak" : "Try out selesai dikumpulkan"}
+                  </h2>
                   <p className="mt-1 text-xs text-emerald-100/65">
                     Jawaban dikerjakan {answeredCount} dari {QUESTIONS.length} soal · Skor {displayedScore}/{QUESTIONS.length}
                   </p>

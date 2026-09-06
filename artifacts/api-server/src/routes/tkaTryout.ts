@@ -20,6 +20,8 @@ const CORRECT_ANSWERS = [
 type SubmitBody = {
   name?: unknown;
   school?: unknown;
+  email?: unknown;
+  deviceId?: unknown;
   answers?: unknown;
   startedAt?: unknown;
   submittedAt?: unknown;
@@ -30,12 +32,107 @@ type SubmitBody = {
 const textValue = (value: unknown, maxLength: number) =>
   typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 
-const connectorResponseBody = async (response: Response) => {
+const connectorResponseText = async (response: Response) => {
   try {
-    return (await response.clone().text()).slice(0, 1000);
+    return await response.clone().text();
   } catch {
     return "";
   }
+};
+
+const connectorResponseBody = async (response: Response) =>
+  (await connectorResponseText(response)).slice(0, 1000);
+
+const findExistingSubmission = async ({
+  packageNumber,
+  deviceId,
+  email,
+  requestId,
+}: {
+  packageNumber: number;
+  deviceId: string;
+  email: string;
+  requestId: string | number | undefined;
+}) => {
+  const packageLabel = `Try Out TKA Matematika ${packageNumber}`;
+  console.log(`[TKA][Paket ${packageNumber}] Memeriksa submit sebelumnya`, {
+    requestId,
+    hasDeviceId: Boolean(deviceId),
+    hasEmail: Boolean(email),
+  });
+
+  const response = await connectors.proxy(
+    "google-sheet",
+    `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K?majorDimension=ROWS`,
+    { method: "GET" },
+  );
+  const responseText = await connectorResponseText(response);
+
+  if (!response.ok) {
+    console.error(`[TKA][Paket ${packageNumber}] Gagal membaca Google Spreadsheet`, {
+      requestId,
+      status: response.status,
+      responseBody: responseText.slice(0, 1000),
+    });
+    throw new Error(
+      `Google Sheets read failed with status ${response.status}: ${responseText.slice(0, 1000)}`,
+    );
+  }
+
+  let rows: unknown[][] = [];
+  try {
+    const payload = JSON.parse(responseText) as { values?: unknown };
+    if (Array.isArray(payload.values)) {
+      rows = payload.values.filter((row): row is unknown[] => Array.isArray(row));
+    }
+  } catch (error) {
+    console.error(`[TKA][Paket ${packageNumber}] Respons Google Spreadsheet tidak valid`, {
+      requestId,
+      error,
+    });
+    throw new Error("Google Sheets returned an invalid values response.");
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  const matchingRow = rows.find((row) => {
+    if (String(row[3] ?? "").trim() !== packageLabel) return false;
+
+    const deviceMatched =
+      Boolean(deviceId) && String(row[10] ?? "").trim() === deviceId;
+    const emailMatched =
+      Boolean(normalizedEmail) &&
+      row.some(
+        (cell) =>
+          typeof cell === "string" &&
+          cell.trim().toLowerCase() === normalizedEmail,
+      );
+
+    return deviceMatched || emailMatched;
+  });
+
+  const deviceMatched = Boolean(
+    matchingRow &&
+      deviceId &&
+      String(matchingRow[10] ?? "").trim() === deviceId,
+  );
+  const emailMatched = Boolean(
+    matchingRow &&
+      normalizedEmail &&
+      matchingRow.some(
+        (cell) =>
+          typeof cell === "string" &&
+          cell.trim().toLowerCase() === normalizedEmail,
+      ),
+  );
+
+  console.log(`[TKA][Paket ${packageNumber}] Pemeriksaan submit selesai`, {
+    requestId,
+    rowsChecked: rows.length,
+    deviceMatched,
+    emailMatched,
+  });
+
+  return { deviceMatched, emailMatched };
 };
 
 const toAnswerMap = (value: unknown) => {
@@ -145,6 +242,8 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
   const body = req.body as SubmitBody;
   const name = textValue(body.name, 120);
   const school = textValue(body.school, 160);
+  const email = textValue(body.email, 254).toLowerCase();
+  const deviceId = textValue(body.deviceId, 128);
   const answers = toAnswerMap(body.answers);
   const submittedAt = new Date().toISOString();
   const durationSeconds =
@@ -158,8 +257,10 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
         ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
         : "Dikumpulkan oleh peserta";
 
-  if (!name || !school) {
-    res.status(400).json({ message: "Nama lengkap dan asal sekolah wajib diisi." });
+  if (!name || !school || !deviceId) {
+    res.status(400).json({
+      message: "Nama lengkap, asal sekolah, dan verifikasi perangkat wajib tersedia.",
+    });
     return;
   }
 
@@ -182,6 +283,26 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
   });
 
   try {
+    const duplicate = await findExistingSubmission({
+      packageNumber: 1,
+      deviceId,
+      email,
+      requestId: req.id,
+    });
+    if (duplicate.deviceMatched || duplicate.emailMatched) {
+      console.error("[TKA][Paket 1] Ditolak — deviceId/email sudah pernah submit", {
+        requestId: req.id,
+        deviceMatched: duplicate.deviceMatched,
+        emailMatched: duplicate.emailMatched,
+      });
+      res.status(409).json({
+        ok: false,
+        code: "DUPLICATE_SUBMISSION",
+        message: "Perangkat atau akun ini sudah pernah mengerjakan Try Out ini.",
+      });
+      return;
+    }
+
     console.log("[TKA][Paket 1] Mengirim ke Google Spreadsheet", {
       requestId: req.id,
       answeredCount,
@@ -190,7 +311,7 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
 
     const sheetResponse = await connectors.proxy(
       "google-sheet",
-      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -206,6 +327,7 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
             percentage,
             durationSeconds,
             submitReason,
+            deviceId,
           ]],
         }),
       },
@@ -286,6 +408,8 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
   const body = req.body as SubmitBody;
   const name = textValue(body.name, 120);
   const school = textValue(body.school, 160);
+  const email = textValue(body.email, 254).toLowerCase();
+  const deviceId = textValue(body.deviceId, 128);
   const answers = toAnswerMap(body.answers);
   const submittedAt = new Date().toISOString();
   const maxDurationSeconds = 75 * 60;
@@ -300,8 +424,10 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
         ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
         : "Dikumpulkan oleh peserta";
 
-  if (!name || !school) {
-    res.status(400).json({ message: "Nama lengkap dan asal sekolah wajib diisi." });
+  if (!name || !school || !deviceId) {
+    res.status(400).json({
+      message: "Nama lengkap, asal sekolah, dan verifikasi perangkat wajib tersedia.",
+    });
     return;
   }
 
@@ -324,6 +450,26 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
   });
 
   try {
+    const duplicate = await findExistingSubmission({
+      packageNumber: 2,
+      deviceId,
+      email,
+      requestId: req.id,
+    });
+    if (duplicate.deviceMatched || duplicate.emailMatched) {
+      console.error("[TKA][Paket 2] Ditolak — deviceId/email sudah pernah submit", {
+        requestId: req.id,
+        deviceMatched: duplicate.deviceMatched,
+        emailMatched: duplicate.emailMatched,
+      });
+      res.status(409).json({
+        ok: false,
+        code: "DUPLICATE_SUBMISSION",
+        message: "Perangkat atau akun ini sudah pernah mengerjakan Try Out ini.",
+      });
+      return;
+    }
+
     console.log("[TKA][Paket 2] Mengirim ke Google Spreadsheet", {
       requestId: req.id,
       answeredCount,
@@ -332,7 +478,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
 
     const sheetResponse = await connectors.proxy(
       "google-sheet",
-      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -348,6 +494,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
             percentage,
             durationSeconds,
             submitReason,
+            deviceId,
           ]],
         }),
       },

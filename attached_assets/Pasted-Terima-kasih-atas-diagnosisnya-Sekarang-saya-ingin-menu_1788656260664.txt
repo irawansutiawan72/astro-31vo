@@ -1,0 +1,38 @@
+Terima kasih atas diagnosisnya. Sekarang saya ingin menutup celah yang ditemukan: guard 
+frontend (finishingRef.current) hanya mencegah submit ganda selama halaman belum di-refresh. 
+Saya ingin pencegahan yang sesungguhnya di BACKEND, di artifacts/api-server/src/routes/tkaTryout.ts, 
+untuk kedua endpoint /api/tka/tryout/1/submit dan /api/tka/tryout/2/submit.
+
+1. Tambahkan field baru "deviceId" yang dikirim dari frontend (TKATryOut1Page.tsx dan 
+   TKATryOut2Page.tsx) sebagai bagian dari body submit. Untuk sekarang, deviceId ini boleh 
+   dihasilkan dari kombinasi navigator.userAgent + screen.width/height + timezone offset, 
+   di-hash jadi satu string, dan disimpan di localStorage supaya konsisten di kunjungan 
+   berikutnya dari device yang sama.
+
+2. SEBELUM melakukan proses append ke Google Spreadsheet, tambahkan satu langkah: 
+   baca (values/Sheet1!A:J:get atau sejenisnya) data yang sudah ada di sheet untuk paket 
+   yang bersangkutan, lalu cek apakah deviceId ATAU email siswa (kolom mana pun yang 
+   menyimpan email di struktur A:J saat ini) sudah pernah tercatat sebelumnya.
+
+3. Kalau SUDAH ADA (deviceId atau email cocok dengan baris manapun) → JANGAN append ke 
+   spreadsheet, JANGAN kirim email, dan kembalikan response error yang jelas ke frontend 
+   (misalnya status 409) dengan pesan: "Perangkat atau akun ini sudah pernah mengerjakan 
+   Try Out ini."
+
+4. Kalau BELUM ADA → lanjutkan proses seperti biasa (append + kirim email), sama seperti 
+   sekarang.
+
+5. Di frontend, tangkap response 409 ini dan tampilkan pesan yang sama ke siswa dengan 
+   tampilan yang jelas (bukan silent fail), supaya siswa tahu kenapa ujiannya tidak bisa 
+   dikerjakan ulang.
+
+6. Pertahankan logging [TKA] yang sudah ditambahkan sebelumnya — tambahkan juga log baru 
+   "[TKA][Paket X] Ditolak — deviceId/email sudah pernah submit" untuk kasus ini.
+
+7. Jangan ubah guard frontend finishingRef.current yang sudah ada — itu tetap berguna 
+   untuk mencegah double-click, ini pengecekan TAMBAHAN di server yang menutup celah 
+   refresh halaman.
+
+Setelah selesai, jelaskan ke saya kolom baru apa saja yang ditambahkan ke struktur 
+spreadsheet Sheet1!A:J, dan test dengan submit dua kali dari device/browser yang sama 
+untuk memastikan submit kedua ditolak dengan benar.
