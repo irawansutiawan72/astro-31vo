@@ -17,7 +17,9 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { SecureExamBadge, SecureExamDialog, useSecureExam } from "@/components/tka/SecureExamGuard";
+import { GoogleSignInButton } from "@/components/tka/GoogleSignInButton";
 import { getTkaDeviceId } from "@/lib/tkaDeviceId";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Question = {
   number: number;
@@ -252,6 +254,7 @@ const formatTime = (seconds: number) => {
 
 const TKATryOut1Page = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [stage, setStage] = useState<TryOutStage>("notice");
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -262,6 +265,7 @@ const TKATryOut1Page = () => {
   const [startedAt, setStartedAt] = useState<string | null>(null);
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [submissionError, setSubmissionError] = useState("");
+  const [googleIdToken, setGoogleIdToken] = useState("");
   const [emailSent, setEmailSent] = useState<boolean | null>(null);
   const [finishedReason, setFinishedReason] = useState<"manual" | "time-up" | "security-violation">("manual");
   const [serverScore, setServerScore] = useState<number | null>(null);
@@ -370,6 +374,7 @@ const TKATryOut1Page = () => {
       body: JSON.stringify({
         name: fullName,
         school,
+        idToken: googleIdToken,
         answers,
         deviceId,
         startedAt,
@@ -393,7 +398,27 @@ const TKATryOut1Page = () => {
             status: response.status,
             data,
           });
-          throw new Error(data.message || "Hasil belum berhasil disimpan.");
+          const translatedMessage =
+            data.code === "GOOGLE_AUTH_REQUIRED"
+              ? language === "en"
+                ? "Sign in with Google before submitting your answers."
+                : language === "ja"
+                  ? "解答を送信する前にGoogleでログインしてください。"
+                  : "Masuk dengan Google sebelum mengumpulkan jawaban."
+              : data.code === "GOOGLE_AUTH_INVALID"
+                ? language === "en"
+                  ? "Your Google sign-in is invalid or expired. Please sign in again."
+                  : language === "ja"
+                    ? "Googleログインが無効または期限切れです。もう一度ログインしてください。"
+                    : "Login Google tidak valid atau sudah kedaluwarsa. Silakan masuk kembali."
+                : data.code === "DUPLICATE_SUBMISSION"
+                  ? language === "en"
+                    ? "This device or Google account has already submitted this try out."
+                    : language === "ja"
+                      ? "この端末またはGoogleアカウントでは、この試験をすでに提出済みです。"
+                      : "Perangkat atau akun Google ini sudah pernah mengerjakan try out ini."
+                  : data.message;
+          throw new Error(translatedMessage || "Hasil belum berhasil disimpan.");
         }
         setServerScore(typeof data.score === "number" ? data.score : null);
         setEmailSent(data.emailSent !== false);
@@ -437,6 +462,16 @@ const TKATryOut1Page = () => {
       setSubmissionError("Nama lengkap dan asal sekolah wajib diisi.");
       return;
     }
+    if (!googleIdToken) {
+      setSubmissionError(
+        language === "en"
+          ? "Sign in with Google before starting the try out."
+          : language === "ja"
+            ? "試験を始める前にGoogleでログインしてください。"
+            : "Masuk dengan Google sebelum memulai try out.",
+      );
+      return;
+    }
     setSubmissionError("");
     await security.requestExamFullscreen();
     setCountdown(3);
@@ -458,6 +493,7 @@ const TKATryOut1Page = () => {
     setRemaining(TOTAL_SECONDS);
     setFullName("");
     setSchool("");
+    setGoogleIdToken("");
     setCountdown(null);
     setStartedAt(null);
     setSubmissionState("idle");
@@ -534,6 +570,27 @@ const TKATryOut1Page = () => {
                     />
                   </label>
                 </div>
+                <div className="mt-5">
+                  <GoogleSignInButton
+                    language={language}
+                    signedIn={Boolean(googleIdToken)}
+                    onCredential={(credential) => {
+                      console.log("[TKA Paket 1] Login Google berhasil diterima frontend");
+                      setGoogleIdToken(credential);
+                      setSubmissionError("");
+                    }}
+                    onError={(errorCode) => {
+                      console.error("[TKA Paket 1] Google Sign-In gagal dimuat", { errorCode });
+                      setSubmissionError(
+                        language === "en"
+                          ? "Google Sign-In could not be loaded. Please try again."
+                          : language === "ja"
+                            ? "Googleログインを読み込めませんでした。もう一度お試しください。"
+                            : "Google Sign-In tidak dapat dimuat. Silakan coba lagi.",
+                      );
+                    }}
+                  />
+                </div>
                 {submissionError && <p className="mt-3 text-xs font-semibold text-rose-300">{submissionError}</p>}
                 <div className="mt-6 flex flex-col gap-2 sm:flex-row">
                   <button
@@ -544,7 +601,8 @@ const TKATryOut1Page = () => {
                   </button>
                   <button
                     onClick={startExam}
-                    className="inline-flex flex-[2] items-center justify-center gap-2 rounded-xl bg-emerald-500/20 px-4 py-3.5 text-sm font-bold text-emerald-100 ring-1 ring-emerald-300/40 transition hover:bg-emerald-500/30"
+                    disabled={!googleIdToken}
+                    className="inline-flex flex-[2] items-center justify-center gap-2 rounded-xl bg-emerald-500/20 px-4 py-3.5 text-sm font-bold text-emerald-100 ring-1 ring-emerald-300/40 transition hover:bg-emerald-500/30 disabled:cursor-not-allowed disabled:opacity-45"
                   >
                     Mulai Try Out <ChevronRight className="h-4 w-4" />
                   </button>

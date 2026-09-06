@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
 import { ReplitConnectors } from "@replit/connectors-sdk";
+import { OAuth2Client } from "google-auth-library";
 
 const router: IRouter = Router();
 const connectors = new ReplitConnectors();
@@ -7,6 +8,12 @@ const connectors = new ReplitConnectors();
 const SPREADSHEET_ID = "1FNUmVVqjmYrBTXF_NYhedIqUOqC-SdbVktiM4RoEQT8";
 const SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit`;
 const RECIPIENT_EMAIL = "numatik.app@gmail.com";
+const GOOGLE_OAUTH_CLIENT_ID =
+  "671247982933-b08s3havshvpnf1mhs1dm5iimm6s341l.apps.googleusercontent.com";
+const googleOAuthClient = new OAuth2Client(
+  GOOGLE_OAUTH_CLIENT_ID,
+  process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+);
 const QUESTION_COUNT = 30;
 const MAX_DURATION_SECONDS = 75 * 60;
 
@@ -20,7 +27,7 @@ const CORRECT_ANSWERS = [
 type SubmitBody = {
   name?: unknown;
   school?: unknown;
-  email?: unknown;
+  idToken?: unknown;
   deviceId?: unknown;
   answers?: unknown;
   startedAt?: unknown;
@@ -28,6 +35,16 @@ type SubmitBody = {
   durationSeconds?: unknown;
   submitReason?: unknown;
 };
+
+class GoogleVerificationError extends Error {
+  constructor(
+    public readonly code: "GOOGLE_AUTH_REQUIRED" | "GOOGLE_AUTH_INVALID",
+    message: string,
+  ) {
+    super(message);
+    this.name = "GoogleVerificationError";
+  }
+}
 
 const textValue = (value: unknown, maxLength: number) =>
   typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -63,7 +80,7 @@ const findExistingSubmission = async ({
 
   const response = await connectors.proxy(
     "google-sheet",
-    `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K?majorDimension=ROWS`,
+    `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:L?majorDimension=ROWS`,
     { method: "GET" },
   );
   const responseText = await connectorResponseText(response);
@@ -101,11 +118,7 @@ const findExistingSubmission = async ({
       Boolean(deviceId) && String(row[10] ?? "").trim() === deviceId;
     const emailMatched =
       Boolean(normalizedEmail) &&
-      row.some(
-        (cell) =>
-          typeof cell === "string" &&
-          cell.trim().toLowerCase() === normalizedEmail,
-      );
+      String(row[11] ?? "").trim().toLowerCase() === normalizedEmail;
 
     return deviceMatched || emailMatched;
   });
@@ -118,11 +131,7 @@ const findExistingSubmission = async ({
   const emailMatched = Boolean(
     matchingRow &&
       normalizedEmail &&
-      matchingRow.some(
-        (cell) =>
-          typeof cell === "string" &&
-          cell.trim().toLowerCase() === normalizedEmail,
-      ),
+      String(matchingRow[11] ?? "").trim().toLowerCase() === normalizedEmail,
   );
 
   console.log(`[TKA][Paket ${packageNumber}] Pemeriksaan submit selesai`, {
@@ -133,6 +142,53 @@ const findExistingSubmission = async ({
   });
 
   return { deviceMatched, emailMatched };
+};
+
+const verifyGoogleIdToken = async ({
+  packageNumber,
+  idToken,
+  requestId,
+}: {
+  packageNumber: number;
+  idToken: string;
+  requestId: string | number | undefined;
+}) => {
+  if (!idToken) {
+    console.error(`[TKA][Paket ${packageNumber}] Verifikasi Google gagal: token tidak tersedia`, {
+      requestId,
+    });
+    throw new GoogleVerificationError(
+      "GOOGLE_AUTH_REQUIRED",
+      "Login dengan Google wajib dilakukan sebelum mengumpulkan jawaban.",
+    );
+  }
+
+  try {
+    const ticket = await googleOAuthClient.verifyIdToken({
+      idToken,
+      audience: GOOGLE_OAUTH_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const email = payload?.email?.trim().toLowerCase();
+
+    if (!email || payload?.email_verified !== true) {
+      throw new Error("Google account email is not verified.");
+    }
+
+    console.log(`[TKA][Paket ${packageNumber}] Verifikasi Google berhasil, email: ${email}`, {
+      requestId,
+    });
+    return email;
+  } catch (error) {
+    console.error(`[TKA][Paket ${packageNumber}] Verifikasi Google gagal`, {
+      requestId,
+      error,
+    });
+    throw new GoogleVerificationError(
+      "GOOGLE_AUTH_INVALID",
+      "Login Google tidak valid atau sudah kedaluwarsa. Silakan masuk kembali dengan Google.",
+    );
+  }
 };
 
 const toAnswerMap = (value: unknown) => {
@@ -242,7 +298,7 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
   const body = req.body as SubmitBody;
   const name = textValue(body.name, 120);
   const school = textValue(body.school, 160);
-  const email = textValue(body.email, 254).toLowerCase();
+  const idToken = textValue(body.idToken, 10000);
   const deviceId = textValue(body.deviceId, 128);
   const answers = toAnswerMap(body.answers);
   const submittedAt = new Date().toISOString();
@@ -280,14 +336,20 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
     percentage,
     durationSeconds,
     submitReason,
+    hasIdToken: Boolean(idToken),
   });
 
   try {
+    const email = await verifyGoogleIdToken({
+      packageNumber: 1,
+      idToken,
+      requestId: String(req.id),
+    });
     const duplicate = await findExistingSubmission({
       packageNumber: 1,
       deviceId,
       email,
-      requestId: req.id,
+      requestId: String(req.id),
     });
     if (duplicate.deviceMatched || duplicate.emailMatched) {
       console.error("[TKA][Paket 1] Ditolak — deviceId/email sudah pernah submit", {
@@ -311,7 +373,7 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
 
     const sheetResponse = await connectors.proxy(
       "google-sheet",
-      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:L:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -328,6 +390,7 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
             durationSeconds,
             submitReason,
             deviceId,
+            email,
           ]],
         }),
       },
@@ -387,6 +450,14 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
       emailSent,
     });
   } catch (error) {
+    if (error instanceof GoogleVerificationError) {
+      res.status(401).json({
+        ok: false,
+        code: error.code,
+        message: error.message,
+      });
+      return;
+    }
     console.error("[TKA][Paket 1] Submit gagal", {
       requestId: req.id,
       error,
@@ -408,7 +479,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
   const body = req.body as SubmitBody;
   const name = textValue(body.name, 120);
   const school = textValue(body.school, 160);
-  const email = textValue(body.email, 254).toLowerCase();
+  const idToken = textValue(body.idToken, 10000);
   const deviceId = textValue(body.deviceId, 128);
   const answers = toAnswerMap(body.answers);
   const submittedAt = new Date().toISOString();
@@ -447,14 +518,20 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
     percentage,
     durationSeconds,
     submitReason,
+    hasIdToken: Boolean(idToken),
   });
 
   try {
+    const email = await verifyGoogleIdToken({
+      packageNumber: 2,
+      idToken,
+      requestId: String(req.id),
+    });
     const duplicate = await findExistingSubmission({
       packageNumber: 2,
       deviceId,
       email,
-      requestId: req.id,
+      requestId: String(req.id),
     });
     if (duplicate.deviceMatched || duplicate.emailMatched) {
       console.error("[TKA][Paket 2] Ditolak — deviceId/email sudah pernah submit", {
@@ -478,7 +555,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
 
     const sheetResponse = await connectors.proxy(
       "google-sheet",
-      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:K:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      `/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A:L:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -495,6 +572,7 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
             durationSeconds,
             submitReason,
             deviceId,
+            email,
           ]],
         }),
       },
@@ -555,6 +633,14 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
       emailSent,
     });
   } catch (error) {
+    if (error instanceof GoogleVerificationError) {
+      res.status(401).json({
+        ok: false,
+        code: error.code,
+        message: error.message,
+      });
+      return;
+    }
     console.error("[TKA][Paket 2] Submit gagal", {
       requestId: req.id,
       error,

@@ -2,3 +2,4 @@
 - [TKA Latihan 2 pembahasan](tka-latihan2-pembahasan.md) — PembahasanCard integrated Q1–10; data file pattern for TKA pages
 - [Bank Soal practice collection](bank-soal-practice-collection.md) — reuse JSX-based latihan pages when aggregating math cards with diagrams and nested prompts
 - [Vite route preview recovery](vite-route-preview-recovery.md) — restart the managed frontend workflow after dependency optimization leaves a lazy route blank
+- [TKA Google authentication](tka-google-auth.md) — shared secret and every preview/production origin must be configured before real GIS login testing
