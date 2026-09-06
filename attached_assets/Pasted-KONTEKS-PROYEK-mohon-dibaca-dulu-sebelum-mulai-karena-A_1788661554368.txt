@@ -1,0 +1,91 @@
+KONTEKS PROYEK (mohon dibaca dulu sebelum mulai, karena Anda tidak punya riwayat 
+percakapan sebelumnya di akun ini):
+
+Ini adalah proyek Numatik, aplikasi edukasi matematika untuk siswa SMP (Android + web 
+di numatik.app, dideploy via Vercel dari GitHub). Struktur teknis: Vite + TypeScript + 
+React + shadcn-ui + Tailwind untuk frontend, dengan backend terpisah di 
+artifacts/api-server (Express-style API server).
+
+Ada menu bernama "TES KEMAMPUAN AKADEMIK - TRY OUT TKA MATEMATIKA 2026-2027" dengan 
+2 paket soal:
+- Frontend: artifacts/numatik/src/pages/tka/TKATryOut1Page.tsx (Paket 1) dan 
+  TKATryOut2Page.tsx (Paket 2)
+- Backend: artifacts/api-server/src/routes/tkaTryout.ts, endpoint 
+  /api/tka/tryout/1/submit dan /api/tka/tryout/2/submit
+
+Fitur yang SUDAH BERJALAN di menu ini (jangan diubah kecuali diminta eksplisit di bawah):
+1. Mode Ujian Aman: fullscreen-lock + deteksi tab-switch/blur selama ujian berlangsung
+2. Submit kuis mengirim data ke Google Spreadsheet (append ke Sheet1!A:L, connector 
+   "google-sheet") dan email ke numatik.app@gmail.com (connector "google-mail", Gmail API)
+3. Device fingerprint (file artifacts/numatik/src/lib/tkaDeviceId.ts) dikirim saat submit 
+   untuk mencegah 1 device submit berkali-kali
+4. Google Sign-In WAJIB sebelum siswa bisa mulai ujian — pakai Google Identity Services 
+   (skrip resmi https://accounts.google.com/gsi/client, BUKAN library pihak ketiga). 
+   Backend memverifikasi id_token pakai google-auth-library (OAuth2Client.verifyIdToken). 
+   Email hasil verifikasi Google (bukan input manual) disimpan di kolom L spreadsheet 
+   ("Email Terverifikasi")
+5. Pengecekan submit ganda/duplikat aktif berdasarkan DUA hal: deviceId ATAU email Google 
+   terverifikasi — kalau salah satu cocok dengan data yang sudah ada di paket yang sama, 
+   backend menolak dengan HTTP 409 kode DUPLICATE_SUBMISSION
+6. Google OAuth Client ID: 671247982933-b08s3havshvpnf1mhs1dm5iimm6s341l.apps.googleusercontent.com 
+   (project "Numatik TKA" di Google Cloud, sudah dipublikasikan/In production). Client 
+   Secret disimpan sebagai Replit Secret bernama GOOGLE_OAUTH_CLIENT_SECRET — JANGAN 
+   PERNAH ditaruh di kode frontend atau ter-commit ke Git
+7. Semua teks UI di fitur-fitur ini trilingual (Indonesia/Inggris/Jepang) memakai pola 
+   useLanguage() custom hook yang dipakai di seluruh proyek
+
+TUGAS SEKARANG:
+
+Saya ingin menangani celah token Google Sign-In kedaluwarsa selama ujian TKA Try Out 
+berlangsung (durasi 75 menit), supaya siswa yang jujur mengerjakan sampai akhir tidak 
+gagal submit karena tokennya sudah expired.
+
+Konteks: saat ini id_token Google diambil SEKALI di awal (saat klik "Masuk dengan Google"), 
+lalu disimpan dan baru dikirim ke backend saat submit di akhir ujian. Karena token Google 
+biasanya berumur pendek (sekitar 1 jam), ada risiko token itu sudah kedaluwarsa saat 
+dikirim ke backend untuk verifikasi di akhir ujian 75 menit.
+
+Lakukan ini:
+
+1. JANGAN simpan id_token dari awal untuk dipakai di akhir. Sebagai gantinya, minta 
+   id_token yang SEGAR (fresh) tepat pada saat siswa menekan tombol submit/selesai ujian, 
+   bukan memakai token dari saat login di awal.
+
+2. Gunakan kemampuan silent re-authentication dari Google Identity Services 
+   (google.accounts.id.prompt() atau metode setara yang tersedia) untuk mendapatkan 
+   id_token baru TANPA mengharuskan siswa login ulang secara manual — selama sesi Google 
+   di browser mereka masih aktif, proses ini harus berjalan otomatis di belakang layar 
+   dalam beberapa detik.
+
+3. Kalau proses silent renewal ini GAGAL (misalnya siswa logout dari akun Google-nya di 
+   tengah ujian, atau ada masalah jaringan), TAMPILKAN dialog "Masuk dengan Google" lagi 
+   ke siswa SAAT itu juga (di layar submit), supaya mereka bisa login ulang tanpa 
+   kehilangan jawaban yang sudah mereka isi. Progres jawaban siswa yang sudah ada di 
+   state HARUS tetap tersimpan/tidak hilang selama proses re-login ini.
+
+4. Setelah token baru (hasil renewal atau re-login) didapat, baru lanjutkan proses submit 
+   normal ke backend seperti sekarang (verifikasi id_token, cek deviceId+email, kirim ke 
+   spreadsheet+email).
+
+5. Tambahkan indikator visual singkat ke siswa saat proses ini berjalan, misalnya teks 
+   kecil "Memverifikasi akun..." di tombol submit, supaya siswa tidak bingung kalau ada 
+   jeda 1-2 detik sebelum submit benar-benar terkirim.
+
+6. Terapkan ini di KEDUA halaman: TKATryOut1Page.tsx dan TKATryOut2Page.tsx.
+
+7. Semua teks baru (indikator loading, dialog re-login kalau muncul) harus tetap 
+   trilingual (id/en/ja) mengikuti pola useLanguage() yang sudah dipakai.
+
+8. Tambahkan logging baru: "[TKA][Paket X] Token berhasil diperbarui otomatis" atau 
+   "[TKA][Paket X] Perlu login ulang saat submit" supaya kalau ada masalah di lapangan 
+   nanti bisa dilacak dari log.
+
+9. Jangan ubah mekanisme verifikasi backend (OAuth2Client.verifyIdToken) atau pengecekan 
+   duplikat deviceId+email yang sudah berjalan — perubahan ini murni di sisi "kapan dan 
+   bagaimana token diambil", bukan cara backend memverifikasinya.
+
+Setelah selesai, jelaskan ke saya:
+- Apakah proses silent renewal ini butuh origin/scope tambahan yang perlu saya daftarkan 
+  di Google Cloud Console
+- Test dengan cara: buka Try Out, tunggu beberapa menit (simulasikan waktu ujian), lalu 
+  submit — pastikan proses renewal token berjalan otomatis tanpa mengganggu jawaban siswa

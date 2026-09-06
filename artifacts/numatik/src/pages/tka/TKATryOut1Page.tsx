@@ -17,7 +17,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { SecureExamBadge, SecureExamDialog, useSecureExam } from "@/components/tka/SecureExamGuard";
-import { GoogleSignInButton } from "@/components/tka/GoogleSignInButton";
+import { GoogleSignInButton, type GoogleSignInButtonHandle } from "@/components/tka/GoogleSignInButton";
 import { getTkaDeviceId } from "@/lib/tkaDeviceId";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -265,7 +265,7 @@ const TKATryOut1Page = () => {
   const [startedAt, setStartedAt] = useState<string | null>(null);
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [submissionError, setSubmissionError] = useState("");
-  const [googleIdToken, setGoogleIdToken] = useState("");
+  const [googleSignedIn, setGoogleSignedIn] = useState(false);
   const [emailSent, setEmailSent] = useState<boolean | null>(null);
   const [finishedReason, setFinishedReason] = useState<"manual" | "time-up" | "security-violation">("manual");
   const [serverScore, setServerScore] = useState<number | null>(null);
@@ -277,6 +277,11 @@ const TKATryOut1Page = () => {
     () => typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches,
   );
   const finishingRef = useRef(false);
+  const googleButtonRef = useRef<GoogleSignInButtonHandle>(null);
+  const pendingSubmitReasonRef = useRef<"manual" | "time-up" | "security-violation" | null>(null);
+  const reauthRequiredRef = useRef(false);
+  const [reauthRequired, setReauthRequired] = useState(false);
+  const [isRefreshingToken, setIsRefreshingToken] = useState(false);
 
   const question = QUESTIONS[current];
   const answeredCount = Object.keys(answers).length;
@@ -331,7 +336,10 @@ const TKATryOut1Page = () => {
     return () => mediaQuery.removeEventListener("change", handleOrientationChange);
   }, []);
 
-  const finishExam = async (reason: "manual" | "time-up" | "security-violation") => {
+  const finishExam = async (
+    reason: "manual" | "time-up" | "security-violation",
+    reauthenticatedToken?: string,
+  ) => {
     if (stage !== "exam" || finishingRef.current) {
       console.warn("[TKA Paket 1] Submit diabaikan oleh guard frontend", {
         stage,
@@ -343,9 +351,31 @@ const TKATryOut1Page = () => {
 
     finishingRef.current = true;
     setFinishedReason(reason);
-    setStage("submitted");
     setSubmissionState("saving");
     setSubmissionError("");
+    setIsRefreshingToken(true);
+
+    let freshGoogleIdToken = reauthenticatedToken;
+    try {
+      if (!freshGoogleIdToken) {
+        if (!googleButtonRef.current) throw new Error("google-button-unavailable");
+        freshGoogleIdToken = await googleButtonRef.current.requestFreshCredential();
+        console.log("[TKA][Paket 1] Token berhasil diperbarui otomatis");
+      }
+    } catch (error) {
+      console.warn("[TKA][Paket 1] Perlu login ulang saat submit", {
+        reason: error instanceof Error ? error.message : error,
+      });
+      pendingSubmitReasonRef.current = reason;
+      reauthRequiredRef.current = true;
+      finishingRef.current = false;
+      setIsRefreshingToken(false);
+      setSubmissionState("idle");
+      setReauthRequired(true);
+      return;
+    }
+    setIsRefreshingToken(false);
+    setStage("submitted");
 
     const durationSeconds = startedAt
       ? Math.max(0, Math.min(TOTAL_SECONDS, Math.floor((Date.now() - Date.parse(startedAt)) / 1000)))
@@ -374,7 +404,7 @@ const TKATryOut1Page = () => {
       body: JSON.stringify({
         name: fullName,
         school,
-        idToken: googleIdToken,
+        idToken: freshGoogleIdToken,
         answers,
         deviceId,
         startedAt,
@@ -436,6 +466,32 @@ const TKATryOut1Page = () => {
       });
   };
 
+  const handleGoogleCredential = (credential: string) => {
+    console.log("[TKA Paket 1] Login Google berhasil diterima frontend");
+    setGoogleSignedIn(true);
+    setSubmissionError("");
+
+    if (!reauthRequiredRef.current) return;
+    reauthRequiredRef.current = false;
+    setReauthRequired(false);
+    const pendingReason = pendingSubmitReasonRef.current;
+    pendingSubmitReasonRef.current = null;
+    if (pendingReason) {
+      window.setTimeout(() => void finishExam(pendingReason, credential), 0);
+    }
+  };
+
+  const handleGoogleError = (errorCode: "google-script" | "google-init") => {
+    console.error("[TKA Paket 1] Google Sign-In gagal dimuat", { errorCode });
+    setSubmissionError(
+      language === "en"
+        ? "Google Sign-In could not be loaded. Please try again."
+        : language === "ja"
+          ? "Googleログインを読み込めませんでした。もう一度お試しください。"
+          : "Google Sign-In tidak dapat dimuat. Silakan coba lagi.",
+    );
+  };
+
   const security = useSecureExam({
     active: stage === "exam",
     submitted: stage === "submitted",
@@ -462,7 +518,7 @@ const TKATryOut1Page = () => {
       setSubmissionError("Nama lengkap dan asal sekolah wajib diisi.");
       return;
     }
-    if (!googleIdToken) {
+    if (!googleSignedIn) {
       setSubmissionError(
         language === "en"
           ? "Sign in with Google before starting the try out."
@@ -480,6 +536,7 @@ const TKATryOut1Page = () => {
   };
 
   const submitExam = () => {
+    if (isRefreshingToken) return;
     setShowSubmitDialog(false);
     playPopSound();
     void finishExam("manual");
@@ -493,7 +550,7 @@ const TKATryOut1Page = () => {
     setRemaining(TOTAL_SECONDS);
     setFullName("");
     setSchool("");
-    setGoogleIdToken("");
+    setGoogleSignedIn(false);
     setCountdown(null);
     setStartedAt(null);
     setSubmissionState("idle");
@@ -501,6 +558,10 @@ const TKATryOut1Page = () => {
     setEmailSent(null);
     setServerScore(null);
     setShowSubmitDialog(false);
+    setReauthRequired(false);
+    reauthRequiredRef.current = false;
+    pendingSubmitReasonRef.current = null;
+    setIsRefreshingToken(false);
     security.resetSecurity();
   };
 
@@ -573,22 +634,9 @@ const TKATryOut1Page = () => {
                 <div className="mt-5">
                   <GoogleSignInButton
                     language={language}
-                    signedIn={Boolean(googleIdToken)}
-                    onCredential={(credential) => {
-                      console.log("[TKA Paket 1] Login Google berhasil diterima frontend");
-                      setGoogleIdToken(credential);
-                      setSubmissionError("");
-                    }}
-                    onError={(errorCode) => {
-                      console.error("[TKA Paket 1] Google Sign-In gagal dimuat", { errorCode });
-                      setSubmissionError(
-                        language === "en"
-                          ? "Google Sign-In could not be loaded. Please try again."
-                          : language === "ja"
-                            ? "Googleログインを読み込めませんでした。もう一度お試しください。"
-                            : "Google Sign-In tidak dapat dimuat. Silakan coba lagi.",
-                      );
-                    }}
+                    signedIn={googleSignedIn}
+                    onCredential={handleGoogleCredential}
+                    onError={handleGoogleError}
                   />
                 </div>
                 {submissionError && <p className="mt-3 text-xs font-semibold text-rose-300">{submissionError}</p>}
@@ -601,7 +649,7 @@ const TKATryOut1Page = () => {
                   </button>
                   <button
                     onClick={startExam}
-                    disabled={!googleIdToken}
+                    disabled={!googleSignedIn}
                     className="inline-flex flex-[2] items-center justify-center gap-2 rounded-xl bg-emerald-500/20 px-4 py-3.5 text-sm font-bold text-emerald-100 ring-1 ring-emerald-300/40 transition hover:bg-emerald-500/30 disabled:cursor-not-allowed disabled:opacity-45"
                   >
                     Mulai Try Out <ChevronRight className="h-4 w-4" />
@@ -844,14 +892,62 @@ const TKATryOut1Page = () => {
             {!submitted && (
               <button
                 onClick={() => setShowSubmitDialog(true)}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300/30 bg-amber-500/10 px-4 py-3 text-xs font-bold text-amber-100 transition hover:bg-amber-500/20"
+                 disabled={isRefreshingToken}
+                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300/30 bg-amber-500/10 px-4 py-3 text-xs font-bold text-amber-100 transition hover:bg-amber-500/20 disabled:cursor-wait disabled:opacity-70"
               >
-                <Send className="h-4 w-4" /> Selesai dan kumpulkan jawaban
+                 {isRefreshingToken
+                   ? language === "en"
+                     ? "Verifying account..."
+                     : language === "ja"
+                       ? "アカウントを確認中…"
+                       : "Memverifikasi akun…"
+                   : <><Send className="h-4 w-4" /> Selesai dan kumpulkan jawaban</>}
               </button>
             )}
           </section>
         </div>
       </main>
+
+      {stage === "exam" && (
+        <div
+          className={
+            reauthRequired
+              ? "fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm"
+              : "pointer-events-none fixed -left-[10000px] top-0 h-px w-px overflow-hidden"
+          }
+          role={reauthRequired ? "dialog" : undefined}
+          aria-modal={reauthRequired ? true : undefined}
+          aria-hidden={!reauthRequired}
+        >
+          <div className={reauthRequired ? "w-full max-w-md rounded-2xl border border-cyan-300/30 bg-slate-900 p-5 shadow-2xl shadow-black/50" : undefined}>
+            {reauthRequired && (
+              <div className="mb-4">
+                <h2 className="font-display text-lg font-bold text-white">
+                  {language === "en"
+                    ? "Sign in with Google again"
+                    : language === "ja"
+                      ? "Googleに再ログインしてください"
+                      : "Masuk dengan Google lagi"}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-white/65">
+                  {language === "en"
+                    ? "Automatic account verification did not finish. Sign in again to submit your answers. Your answers are still saved."
+                    : language === "ja"
+                      ? "アカウントの自動確認を完了できませんでした。解答を提出するには、もう一度Googleでログインしてください。解答は保存されています。"
+                      : "Verifikasi akun otomatis tidak selesai. Masuk lagi dengan Google untuk mengirim jawaban. Jawaban Anda tetap tersimpan."}
+                </p>
+              </div>
+            )}
+            <GoogleSignInButton
+              ref={googleButtonRef}
+              language={language}
+              signedIn={false}
+              onCredential={handleGoogleCredential}
+              onError={handleGoogleError}
+            />
+          </div>
+        </div>
+      )}
 
       {showSubmitDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
@@ -870,7 +966,19 @@ const TKATryOut1Page = () => {
             </div>
             <div className="flex gap-2">
               <button onClick={() => setShowSubmitDialog(false)} className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-bold text-white/70 hover:bg-white/10">Kembali</button>
-              <button onClick={submitExam} className="flex-1 rounded-xl bg-amber-500/20 px-4 py-3 text-xs font-bold text-amber-100 ring-1 ring-amber-300/40 hover:bg-amber-500/30">Ya, kumpulkan</button>
+               <button
+                 onClick={submitExam}
+                 disabled={isRefreshingToken}
+                 className="flex-1 rounded-xl bg-amber-500/20 px-4 py-3 text-xs font-bold text-amber-100 ring-1 ring-amber-300/40 hover:bg-amber-500/30 disabled:cursor-wait disabled:opacity-60"
+               >
+                 {isRefreshingToken
+                   ? language === "en"
+                     ? "Verifying account..."
+                     : language === "ja"
+                       ? "アカウントを確認中…"
+                       : "Memverifikasi akun…"
+                   : "Ya, kumpulkan"}
+               </button>
             </div>
           </div>
         </div>

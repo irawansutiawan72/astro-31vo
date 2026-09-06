@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { Language } from "@/contexts/LanguageContext";
 
 const GOOGLE_CLIENT_ID =
@@ -29,7 +29,14 @@ type GoogleAccountsId = {
       locale?: string;
     },
   ) => void;
+  prompt: (listener?: (notification: GooglePromptNotification) => void) => void;
   cancel: () => void;
+};
+
+type GooglePromptNotification = {
+  isNotDisplayed: () => boolean;
+  isSkippedMoment: () => boolean;
+  isDismissedMoment: () => boolean;
 };
 
 type GoogleNamespace = {
@@ -79,26 +86,79 @@ const loadGoogleScript = () => {
   return window.__numatikGoogleScriptPromise;
 };
 
-export const GoogleSignInButton = ({
-  language,
-  signedIn,
-  onCredential,
-  onError,
-}: {
+export type GoogleSignInButtonHandle = {
+  requestFreshCredential: () => Promise<string>;
+};
+
+type GoogleSignInButtonProps = {
   language: Language;
   signedIn: boolean;
   onCredential: (credential: string) => void;
   onError: (errorCode: "google-script" | "google-init") => void;
-}) => {
+};
+
+export const GoogleSignInButton = forwardRef<GoogleSignInButtonHandle, GoogleSignInButtonProps>(
+  ({ language, signedIn, onCredential, onError }, ref) => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const credentialHandlerRef = useRef(onCredential);
   const errorHandlerRef = useRef(onError);
+  const pendingCredentialRef = useRef<{
+    resolve: (credential: string) => void;
+    reject: (error: Error) => void;
+    timeoutId: number;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     credentialHandlerRef.current = onCredential;
     errorHandlerRef.current = onError;
   }, [onCredential, onError]);
+
+  const handleCredential = (credential: string) => {
+    const pendingCredential = pendingCredentialRef.current;
+    if (pendingCredential) {
+      window.clearTimeout(pendingCredential.timeoutId);
+      pendingCredentialRef.current = null;
+      pendingCredential.resolve(credential);
+    }
+    credentialHandlerRef.current(credential);
+  };
+
+  useImperativeHandle(ref, () => ({
+    requestFreshCredential: async () => {
+      await loadGoogleScript();
+      if (!window.google?.accounts?.id) {
+        throw new Error("google-init");
+      }
+
+      return new Promise<string>((resolve, reject) => {
+        if (pendingCredentialRef.current) {
+          window.clearTimeout(pendingCredentialRef.current.timeoutId);
+          pendingCredentialRef.current.reject(new Error("google-refresh-replaced"));
+        }
+
+        const timeoutId = window.setTimeout(() => {
+          pendingCredentialRef.current = null;
+          reject(new Error("google-refresh-timeout"));
+        }, 8000);
+        pendingCredentialRef.current = { resolve, reject, timeoutId };
+
+        window.google?.accounts.id.prompt((notification) => {
+          if (
+            notification.isNotDisplayed() ||
+            notification.isSkippedMoment() ||
+            notification.isDismissedMoment()
+          ) {
+            const pending = pendingCredentialRef.current;
+            if (!pending) return;
+            window.clearTimeout(pending.timeoutId);
+            pendingCredentialRef.current = null;
+            reject(new Error("google-refresh-unavailable"));
+          }
+        });
+      });
+    },
+  }), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -112,7 +172,7 @@ export const GoogleSignInButton = ({
         window.google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: ({ credential }) => {
-            if (credential) credentialHandlerRef.current(credential);
+             if (credential) handleCredential(credential);
           },
           auto_select: false,
           cancel_on_tap_outside: true,
@@ -138,6 +198,12 @@ export const GoogleSignInButton = ({
 
     return () => {
       cancelled = true;
+      const pendingCredential = pendingCredentialRef.current;
+      if (pendingCredential) {
+        window.clearTimeout(pendingCredential.timeoutId);
+        pendingCredentialRef.current = null;
+        pendingCredential.reject(new Error("google-button-unmounted"));
+      }
       window.google?.accounts?.id.cancel();
     };
   }, [language]);
@@ -191,4 +257,7 @@ export const GoogleSignInButton = ({
       )}
     </div>
   );
-};
+  },
+);
+
+GoogleSignInButton.displayName = "GoogleSignInButton";
