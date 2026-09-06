@@ -1,0 +1,109 @@
+Saya ingin mengganti pengecekan email manual pada TKA Try Out (Paket 1 dan Paket 2) 
+
+dengan Google Sign-In sungguhan, supaya email yang tercatat pasti asli dan terverifikasi 
+
+dari Google — bukan cuma diketik manual.
+
+KONFIGURASI GOOGLE OAUTH SAYA:
+
+- Google OAuth Client ID: 671247982933-b08s3havshvpnf1mhs1dm5iimm6s341l.apps.googleusercontent.com
+
+- Client Secret sudah saya simpan di Replit Secrets dengan nama: GOOGLE_OAUTH_CLIENT_SECRET
+
+- Authorized JavaScript origins yang sudah didaftarkan: https://numatik.app, 
+
+  https://www.numatik.vercel.app, https://numatik.vercel.app (dan domain preview 
+
+  Replit ini kalau perlu ditambahkan, beri tahu saya alamatnya supaya saya daftarkan juga)
+
+- Status aplikasi OAuth: sudah dipublikasikan (Publishing status: In production), 
+
+  jadi siswa dengan akun Google apa pun sudah bisa login, tidak terbatas ke test users
+
+PENTING: JANGAN pernah menaruh Client Secret langsung di kode/file manapun yang bisa 
+
+terlihat di frontend atau ter-commit ke Git. Selalu baca dari environment variable/Replit 
+
+Secrets.
+
+Lakukan berurutan:
+
+1. Tambahkan tombol "Masuk dengan Google" di halaman TKATryOut1Page.tsx dan 
+
+   TKATryOut2Page.tsx, ditampilkan SEBELUM tombol "Mulai Kuis". Siswa wajib login 
+
+   dulu sebelum bisa mulai mengerjakan.
+
+2. Gunakan Google Identity Services (skrip resmi Google google.accounts.id, bukan 
+
+   library pihak ketiga yang berat) untuk proses login di frontend, dengan Client ID 
+
+   di atas. Setelah siswa login, dapatkan credential/id_token dari Google.
+
+3. Kirim id_token ini ke backend (artifacts/api-server/src/routes/tkaTryout.ts) sebagai 
+
+   bagian dari body submit, bersama deviceId yang sudah ada sekarang (dari 
+
+   artifacts/numatik/src/lib/tkaDeviceId.ts).
+
+4. Di backend, verifikasi id_token menggunakan library resmi Google (google-auth-library, 
+
+   fungsi OAuth2Client.verifyIdToken) dengan Client ID di atas sebagai audience. 
+
+   JANGAN percaya begitu saja email yang dikirim dari frontend tanpa verifikasi ini — 
+
+   ambil email HANYA dari hasil verifikasi token, bukan dari body request mentah.
+
+5. Setelah email terverifikasi, gunakan email itu untuk pengecekan duplikat: cek apakah 
+
+   email ini SUDAH PERNAH submit untuk paket yang sama (baca data existing di 
+
+   Sheet1!A:L). Kalau SUDAH ADA → tolak dengan HTTP 409 DUPLICATE_SUBMISSION, sama 
+
+   seperti mekanisme deviceId yang sudah jalan sekarang. Kedua pengecekan (deviceId 
+
+   DAN email) tetap aktif bersamaan — kalau salah satu cocok dengan data yang sudah 
+
+   ada, submit ditolak.
+
+6. Tambahkan kolom baru "Email Terverifikasi" (kolom L, setelah kolom K deviceId yang 
+
+   sudah ada) ke struktur spreadsheet, isi dengan email hasil verifikasi Google — 
+
+   BUKAN dari input manual siswa.
+
+7. Kalau verifikasi id_token gagal (token palsu/kedaluwarsa) atau siswa belum login 
+
+   sama sekali, tolak submit dengan pesan error yang jelas ke frontend, jangan diam-diam 
+
+   lolos atau membiarkan submit tanpa email terverifikasi.
+
+8. Pastikan proses login Google ini juga trilingual (id/en/ja) mengikuti pola 
+
+   useLanguage() yang sudah dipakai di komponen lain di proyek ini — teks tombol 
+
+   "Masuk dengan Google" dan semua pesan error harus ikut 3 bahasa.
+
+9. Pertahankan logging [TKA] yang sudah ada sebelumnya, tambahkan log baru untuk 
+
+   tahap verifikasi Google (contoh: "[TKA][Paket X] Verifikasi Google berhasil, 
+
+   email: ...", "[TKA][Paket X] Verifikasi Google gagal: ...").
+
+10. Jangan hapus mekanisme deviceId yang sudah ada — email terverifikasi Google ini 
+
+    pengecekan TAMBAHAN yang lebih kuat, keduanya jalan berdampingan.
+
+Setelah selesai:
+
+- Jelaskan library npm apa saja yang ditambahkan (frontend dan backend)
+
+- Sebutkan kalau ada domain/origin tambahan yang perlu saya daftarkan di Google Cloud 
+
+  Console (misalnya alamat preview Replit ini)
+
+- Test alur lengkap: login Google → submit → cek spreadsheet ada kolom Email 
+
+  Terverifikasi (kolom L) terisi benar → coba submit kedua dengan akun Google yang 
+
+  sama → harus ditolak 409
