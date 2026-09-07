@@ -101,9 +101,9 @@ const questions: Q[] = [
       { label: "a.", math: "25^{0.5} = \\ldots" },
       { label: "b.", math: "8^{0.\\overline{3}} = \\ldots" },
       { label: "c.", math: "16^{0.75} = \\ldots" },
-      { label: "d.", math: "64^{0{,}75} = \\ldots \\quad \\text{(hitung nilainya!)}" },
-      { label: "e.", math: "8^{0{,}\\overline{3}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
-      { label: "f.", math: "27^{0{,}\\overline{6}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
+      { label: "d.", math: "64^{0{,}75} = \\ldots" },
+      { label: "e.", math: "8^{0{,}\\overline{3}} = \\ldots" },
+      { label: "f.", math: "27^{0{,}\\overline{6}} = \\ldots" },
     ],
   }),
   Qn(6, "Gabungan Semua Jenis Pangkat", {
