@@ -41,9 +41,9 @@ const questions: Q[] = [
     content: "Ubahlah bentuk notasi ilmiah berikut ke bentuk biasa!",
     parts: [
       { label: "a.", math: "6{,}02 \\times 10^{23} = \\ldots" },
-      { label: "b.", math: "3{,}0 \\times 10^8 = \\ldots \\text{ (kecepatan cahaya, m/s)}" },
-      { label: "c.", math: "9{,}46 \\times 10^{12} = \\ldots \\text{ km (satu tahun cahaya)}" },
-      { label: "d.", math: "1{,}67 \\times 10^{-27} = \\ldots \\text{ (massa proton, kg)}" },
+      { label: "b.", math: "3{,}0 \\times 10^8 = \\ldots" },
+      { label: "c.", math: "9{,}46 \\times 10^{12} = \\ldots" },
+      { label: "d.", math: "1{,}67 \\times 10^{-27} = \\ldots" },
       { label: "e.", text: "Jarak rata-rata Bumi ke Bulan adalah 3,84 × 10⁵ km. Tuliskan dalam bentuk biasa!" },
       { label: "f.", text: "Ukuran sebuah atom hidrogen adalah 1,2 × 10⁻¹⁰ m. Tuliskan dalam bentuk biasa!" },
     ],
