@@ -81,7 +81,7 @@ const questions: Q[] = [
       { label: "g.", math: "3\\sqrt{8} + 2\\sqrt{2} = \\ldots" },
       { label: "h.", math: "2\\sqrt{12} + 3\\sqrt{27} = \\ldots" },
       { label: "i.", text: "Panjang dua tali masing-masing 3√2 m dan 5√2 m disambung. Berapa total panjang kedua tali?" },
-      { label: "k.", text: "Sebuah persegi panjang memiliki panjang √3 cm dan lebar √12 cm. Hitung luas persegi panjang tersebut dalam bentuk paling sederhana!" },
+      { label: "k.", text: "Sebuah persegi panjang memiliki panjang √3 cm dan lebar √12 cm. Hitung keliling persegi panjang tersebut dalam bentuk paling sederhana!" },
     ],
   }),
   Qn(4, "Perkalian & Pembagian Bentuk Akar – UN/ANBK/TKA", {
