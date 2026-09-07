@@ -595,12 +595,24 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 ];
 
 const nomorPythagorasDihapus = new Set([1, 2, 6, 8, 9, 10, 13, 15, 17, 18, 19, 20, 21, 24, 25, 33, 34]);
+const toPembahasanText = (soalNo: number) => {
+  const pembahasan = teoremaPythagorasDasarPembahasan[soalNo];
+  if (!pembahasan) return undefined;
+
+  return [
+    `Konsep & Trik: ${pembahasan.konsepTrik}`,
+    `Step-by-Step Penyelesaian:\n${pembahasan.stepByStep}`,
+    `Tips: ${pembahasan.tips}`,
+    `Kesimpulan: ${pembahasan.kesimpulan}`,
+  ].join("\n\n");
+};
+
 const latihanDasarPythagoras = latihanDasarOlimpiade
   .filter((soal) => !nomorPythagorasDihapus.has(soal.no))
   .map((soal, index) => ({
     ...soal,
     no: index + 1,
-    pembahasan: teoremaPythagorasDasarPembahasan[soal.no],
+    pembahasan: toPembahasanText(soal.no),
     gambar: latihanDasarGambarMap[soal.no],
   }));
 
