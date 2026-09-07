@@ -555,52 +555,48 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 19,
-    soal: "Diketahui $3 + 3^2 + 3^3 + ... + 3^n = 120$. Nilai $3n$ yang memenuhi adalah ...",
-    options: ["A. 3", "B. 6", "C. 12", "D. 15"],
-    jawaban: "C. 12",
+    soal: "$3^4 + 3^4 + 3^4 = ...$",
+    options: ["A. $3^{12}$", "B. $3^5$", "C. $3^4$", "D. $3^3$"],
+    jawaban: "B. $3^5$",
     pembahasan: {
-      konsep: "Gunakan rumus deret geometri untuk mencari nilai $n$.",
+      konsep: "Tiga suku yang sama dapat ditulis sebagai $3 \\times 3^4$, lalu gunakan sifat perkalian bilangan berpangkat.",
       langkah: [
-        "Deret geometri: $3 + 3^2 + 3^3 + ... + 3^n = \\frac{3(3^n - 1)}{3 - 1} = \\frac{3(3^n-1)}{2} = 120$",
-        "$3(3^n - 1) = 240$",
-        "$3^n - 1 = 80$",
-        "$3^n = 81 = 3^4$",
-        "$n = 4$",
-        "Nilai $3n = 3 \\times 4 = 12$"
+        "$3^4 + 3^4 + 3^4 = 3 \\times 3^4$",
+        "$3 = 3^1$, sehingga $3 \\times 3^4 = 3^1 \\times 3^4$",
+        "$3^1 \\times 3^4 = 3^{1+4} = 3^5$"
       ],
-      rumus: "Deret geometri: $S_n = \\frac{a(r^n - 1)}{r - 1}$ dengan $a = 3$, $r = 3$"
+      rumus: "$a^m \\times a^n = a^{m+n}$"
     }
   },
   {
     no: 20,
-    soal: "Jika nilai $(x+y)^2 = 324$ dan $(x-y)^2 = 16$, maka nilai dari $xy$ adalah ...",
-    options: ["A. 33", "B. 55", "C. 77", "D. 99"],
-    jawaban: "C. 77",
+    soal: "Jika $2^3 + 3(2^3) + 4(2^3) = 2^n$, maka nilai $n$ adalah ...",
+    options: ["A. 6", "B. 8", "C. 9", "D. 12"],
+    jawaban: "A. 6",
     pembahasan: {
-      konsep: "Gunakan identitas aljabar: $(x+y)^2 - (x-y)^2 = 4xy$.",
+      konsep: "Faktorkan $2^3$ dari semua suku, kemudian ubah koefisien hasilnya menjadi bentuk pangkat 2.",
       langkah: [
-        "$(x+y)^2 - (x-y)^2 = 4xy$",
-        "$324 - 16 = 4xy$",
-        "$308 = 4xy$",
-        "$xy = \\frac{308}{4} = 77$"
+        "$2^3 + 3(2^3) + 4(2^3) = (1+3+4)(2^3)$",
+        "$(1+3+4)(2^3) = 8 \\times 2^3$",
+        "$8 = 2^3$, sehingga $2^3 \\times 2^3 = 2^{3+3} = 2^6$",
+        "Jadi, $n = 6$"
       ],
-      rumus: "$(x+y)^2 - (x-y)^2 = 4xy$"
+      rumus: "$a^m \\times a^n = a^{m+n}$"
     }
   },
   {
     no: 21,
-    soal: "Jika $n + \\frac{1}{n} = 3$ maka nilai $n^2 + \\frac{1}{n^2}$ adalah ...",
-    options: ["A. 11", "B. 9", "C. 7", "D. 5"],
-    jawaban: "C. 7",
+    soal: "Nilai $2^4 + 7(2^4) = ...$",
+    options: ["A. $2^7$", "B. $2^9$", "C. $2^{12}$", "D. $4^7$"],
+    jawaban: "A. $2^7$",
     pembahasan: {
-      konsep: "Kuadratkan persamaan yang diketahui untuk mendapatkan ekspresi yang dicari.",
+      konsep: "Jumlahkan koefisien yang mengalikan $2^4$, lalu ubah hasilnya menjadi pangkat 2.",
       langkah: [
-        "Kuadratkan: $\\left(n + \\frac{1}{n}\\right)^2 = 3^2 = 9$",
-        "$n^2 + 2 \\cdot n \\cdot \\frac{1}{n} + \\frac{1}{n^2} = 9$",
-        "$n^2 + 2 + \\frac{1}{n^2} = 9$",
-        "$n^2 + \\frac{1}{n^2} = 9 - 2 = 7$"
+        "$2^4 + 7(2^4) = (1+7)(2^4)$",
+        "$(1+7)(2^4) = 8 \\times 2^4$",
+        "$8 = 2^3$, sehingga $2^3 \\times 2^4 = 2^{3+4} = 2^7$"
       ],
-      rumus: "$\\left(a + \\frac{1}{a}\\right)^2 = a^2 + 2 + \\frac{1}{a^2}$"
+      rumus: "$a^m \\times a^n = a^{m+n}$"
     }
   },
   {
