@@ -1,0 +1,47 @@
+Saya ingin 2 penyesuaian pada menu TES KEMAMPUAN AKADEMIK - TRY OUT TKA MATEMATIKA 
+2026-2027 (Paket 1 dan Paket 2), di TKATryOut1Page.tsx dan TKATryOut2Page.tsx:
+
+PENYESUAIAN 1 — Tombol Kumpulkan/Submit hanya di nomor terakhir
+1. Saat ini (kalau tombol submit muncul di setiap nomor soal atau di navigasi umum), 
+   ubah supaya tombol "Kumpulkan"/"Submit" HANYA muncul saat siswa berada di soal 
+   NOMOR TERAKHIR dari paket yang sedang dikerjakan.
+2. Di nomor-nomor soal sebelum nomor terakhir, yang tampil hanya tombol navigasi biasa 
+   (Sebelumnya/Selanjutnya), TANPA tombol submit.
+3. Siswa tetap harus bisa bebas berpindah-pindah nomor soal (maju/mundur) sebelum sampai 
+   ke nomor terakhir, seperti alur yang sudah ada sekarang — perubahan ini HANYA soal 
+   kapan tombol submit ditampilkan, bukan mengunci urutan pengerjaan soal.
+4. Kalau ada indikator "X dari Y soal terjawab" atau semacamnya, boleh tetap ditampilkan 
+   di semua nomor seperti biasa.
+
+PENYESUAIAN 2 — Pastikan auto-submit 3x pelanggaran benar-benar mengirim ke email & spreadsheet
+1. Cari kode Mode Ujian Aman yang sudah ada (deteksi fullscreen-exit/tab-switch/blur) di 
+   kedua halaman ini, dan tunjukkan ke saya bagaimana persis penghitungan pelanggarannya 
+   bekerja sekarang.
+2. PASTIKAN: begitu pelanggaran mencapai 3 kali, sistem MEMANGGIL fungsi submit yang 
+   SAMA PERSIS dengan yang dipanggil saat siswa klik tombol "Kumpulkan" manual di nomor 
+   terakhir — bukan fungsi terpisah atau placeholder yang tidak benar-benar mengirim data.
+3. Jawaban yang sudah diisi siswa sampai saat itu (meskipun belum semua nomor terjawab) 
+   harus ikut terkirim apa adanya ke Google Spreadsheet dan email, sama seperti submit 
+   normal — termasuk proses verifikasi Google Sign-In (ambil token segar) dan pengecekan 
+   deviceId+email yang sudah berjalan, TIDAK dilewati untuk kasus auto-submit ini.
+4. Tambahkan penanda khusus di kolom J (Alasan submit) yang sudah ada di spreadsheet: 
+   isi dengan teks seperti "Dikumpulkan otomatis - pelanggaran Mode Ujian Aman" untuk 
+   kasus auto-submit ini, supaya beda dari submit manual biasa ("Dikumpulkan oleh peserta").
+5. Setelah auto-submit terjadi, tampilkan pesan jelas ke siswa di layar (bukan diam-diam 
+   pindah halaman): "Ujian telah dikumpulkan otomatis karena mendeteksi 3 kali keluar 
+   dari mode ujian aman."
+6. Tambahkan log baru: "[TKA][Paket X] Auto-submit terpicu — pelanggaran ke-3 Mode Ujian 
+   Aman" untuk memudahkan pelacakan kalau ada masalah nanti.
+7. Semua teks baru tetap trilingual (id/en/ja) mengikuti pola useLanguage() yang sudah 
+   dipakai.
+
+Jangan ubah mekanisme deviceId, Google Sign-In, atau pengecekan duplikat yang sudah 
+berjalan — dua penyesuaian ini murni soal KAPAN tombol submit muncul dan MEMASTIKAN 
+auto-submit benar-benar terhubung ke alur submit yang sama.
+
+Setelah selesai, jelaskan ke saya:
+- Bagaimana penghitungan pelanggaran bekerja sekarang (di mana kode-nya, apakah reset 
+  kalau siswa refresh halaman)
+- Test dengan cara: keluar dari fullscreen/pindah tab sebanyak 3 kali secara sengaja saat 
+  testing, lalu konfirmasi data benar-benar masuk ke spreadsheet+email dengan kolom J 
+  menunjukkan alasan auto-submit

@@ -310,8 +310,12 @@ router.post("/tka/tryout/1/submit", async (req, res) => {
     body.submitReason === "time-up"
       ? "Waktu habis (otomatis)"
       : body.submitReason === "security-violation"
-        ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
+        ? "Dikumpulkan otomatis - pelanggaran Mode Ujian Aman"
         : "Dikumpulkan oleh peserta";
+
+  if (body.submitReason === "security-violation") {
+    console.log("[TKA][Paket 1] Auto-submit terpicu — pelanggaran ke-3 Mode Ujian Aman");
+  }
 
   if (!name || !school || !deviceId) {
     res.status(400).json({
@@ -492,8 +496,12 @@ router.post("/tka/tryout/2/submit", async (req, res) => {
     body.submitReason === "time-up"
       ? "Waktu habis (otomatis)"
       : body.submitReason === "security-violation"
-        ? "Dihentikan otomatis karena pelanggaran mode ujian aman"
+        ? "Dikumpulkan otomatis - pelanggaran Mode Ujian Aman"
         : "Dikumpulkan oleh peserta";
+
+  if (body.submitReason === "security-violation") {
+    console.log("[TKA][Paket 2] Auto-submit terpicu — pelanggaran ke-3 Mode Ujian Aman");
+  }
 
   if (!name || !school || !deviceId) {
     res.status(400).json({

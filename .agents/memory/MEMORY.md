@@ -3,3 +3,5 @@
 - [Bank Soal practice collection](bank-soal-practice-collection.md) — reuse JSX-based latihan pages when aggregating math cards with diagrams and nested prompts
 - [Vite route preview recovery](vite-route-preview-recovery.md) — restart the managed frontend workflow after dependency optimization leaves a lazy route blank
 - [TKA Google authentication](tka-google-auth.md) — shared secret and every preview/production origin must be configured before real GIS login testing
+- [Production diagnostic logs](production-diagnostic-logs.md) — critical frontend diagnostics must avoid console methods stripped by the production minifier
+- [Imported API workflow](imported-api-workflow.md) — API artifact metadata may exist while the API workflow is absent after GitHub import

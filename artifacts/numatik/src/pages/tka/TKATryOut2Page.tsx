@@ -546,16 +546,6 @@ const TKATryOut2Page = () => {
     );
   };
 
-  const security = useSecureExam({
-    active: stage === "exam",
-    submitted: stage === "submitted",
-    onAutoSubmit: () => void finishExam("security-violation"),
-  });
-
-  useEffect(() => {
-    if (stage === "exam" && remaining === 0) void finishExam("time-up");
-  }, [remaining, stage]);
-
   const chooseAnswer = (optionIndex: number) => {
     if (stage !== "exam") return;
     playPopSound();
@@ -589,12 +579,25 @@ const TKATryOut2Page = () => {
     playPopSound();
   };
 
-  const submitExam = () => {
+  const submitExam = (reason: "manual" | "security-violation" = "manual") => {
     if (isRefreshingToken) return;
     setShowSubmitDialog(false);
     playPopSound();
-    void finishExam("manual");
+    void finishExam(reason);
   };
+
+  const security = useSecureExam({
+    active: stage === "exam",
+    submitted: stage === "submitted",
+    onAutoSubmit: () => {
+      console.error("[TKA][Paket 2] Auto-submit terpicu — pelanggaran ke-3 Mode Ujian Aman");
+      submitExam("security-violation");
+    },
+  });
+
+  useEffect(() => {
+    if (stage === "exam" && remaining === 0) void finishExam("time-up");
+  }, [remaining, stage]);
 
   const restartExam = () => {
     finishingRef.current = false;
@@ -954,7 +957,7 @@ const TKATryOut2Page = () => {
               </button>
             </div>
 
-            {!submitted && (
+            {!submitted && current === QUESTIONS.length - 1 && (
               <button
                 onClick={() => setShowSubmitDialog(true)}
                  disabled={isRefreshingToken}

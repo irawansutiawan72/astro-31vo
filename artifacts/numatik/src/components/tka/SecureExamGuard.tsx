@@ -31,7 +31,7 @@ export const SECURE_EXAM_COPY: Record<"id" | "en" | "ja", SecureExamLanguageCopy
       `Anda terdeteksi keluar dari layar ujian. Pelanggaran ke-${count} dari maksimal 3. Kuis akan otomatis dikumpulkan jika pelanggaran mencapai batas.`,
     returnToExam: "Kembali ke Mode Ujian",
     fullscreenUnavailable: "Fullscreen tidak tersedia atau ditolak browser. Mode aman tetap berjalan, tetapi pengawasan perangkat diperlukan.",
-    autoSubmitNote: "Kuis dihentikan otomatis karena pelanggaran mode ujian aman.",
+    autoSubmitNote: "Ujian telah dikumpulkan otomatis karena mendeteksi 3 kali keluar dari mode ujian aman.",
   },
   en: {
     badge: "Secure Exam Mode Active",
@@ -41,7 +41,7 @@ export const SECURE_EXAM_COPY: Record<"id" | "en" | "ja", SecureExamLanguageCopy
       `You were detected leaving the exam screen. Violation ${count} of a maximum of 3. The quiz will be submitted automatically when the limit is reached.`,
     returnToExam: "Return to Exam Mode",
     fullscreenUnavailable: "Fullscreen is unavailable or was denied by the browser. Secure mode is still running, but device supervision is required.",
-    autoSubmitNote: "The quiz was stopped automatically because of a secure exam mode violation.",
+    autoSubmitNote: "The exam was submitted automatically after detecting 3 exits from secure exam mode.",
   },
   ja: {
     badge: "安全な試験モード 有効",
@@ -51,7 +51,7 @@ export const SECURE_EXAM_COPY: Record<"id" | "en" | "ja", SecureExamLanguageCopy
       `試験画面から離れたことが検出されました。違反 ${count} 回目（最大 3 回）。上限に達すると解答が自動提出されます。`,
     returnToExam: "試験モードに戻る",
     fullscreenUnavailable: "フルスクリーンを利用できないか、ブラウザに拒否されました。安全モードは継続しますが、端末の監督が必要です。",
-    autoSubmitNote: "安全な試験モード違反のため、解答は自動的に提出されました。",
+    autoSubmitNote: "安全な試験モードから3回退出したため、試験は自動的に提出されました。",
   },
 };
 
