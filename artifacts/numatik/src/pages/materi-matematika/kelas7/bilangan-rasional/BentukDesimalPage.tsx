@@ -61,6 +61,28 @@ const translations = {
     ex9Body: "6 angka di belakang koma, penyebut = 1000000",
     ex9KaTeX: "0{,}000289 = \\frac{289}{1000000}",
     ex9Ans: "Jadi, 0,000289 = 289/1000000",
+    sec4Title: "4. Desimal Berulang ke Pecahan",
+    sec4SummaryBody: "Desimal berulang adalah desimal yang memiliki satu angka atau lebih yang terus berulang tanpa berhenti. Gunakan garis di atas angka yang berulang, misalnya 0,3̅ = 0,3333...",
+    sec4NotationTitle: "Cara mengenali dan menuliskannya:",
+    sec4Notation: [
+      "0,3̅ = 0,3333... (angka 3 berulang)",
+      "0,2̅7̅ = 0,272727... (kelompok 27 berulang)",
+      "0,16̅ = 0,1666... (angka 6 berulang setelah 1)",
+    ],
+    ex10Q: "Ubah 0,3̅ menjadi pecahan!",
+    ex10Body: "Misalkan x = 0,3333.... Kalikan 10 karena 1 angka yang berulang.",
+    ex10KaTeX: "x=0{,}\\overline{3}\\quad\\Rightarrow\\quad 10x=3{,}\\overline{3}\\quad\\Rightarrow\\quad 10x-x=3\\quad\\Rightarrow\\quad 9x=3\\quad\\Rightarrow\\quad x=\\frac{3}{9}=\\frac{1}{3}",
+    ex10Ans: "Jadi, 0,3̅ = 1/3.",
+    ex11Q: "Ubah 0,2̅7̅ menjadi pecahan!",
+    ex11Body: "Ada 2 angka yang berulang, jadi kalikan x dengan 100 agar bagian berulang sejajar.",
+    ex11KaTeX: "x=0{,}\\overline{27}\\quad\\Rightarrow\\quad 100x=27{,}\\overline{27}\\quad\\Rightarrow\\quad 100x-x=27\\quad\\Rightarrow\\quad 99x=27\\quad\\Rightarrow\\quad x=\\frac{27}{99}=\\frac{3}{11}",
+    ex11Ans: "Jadi, 0,2̅7̅ = 3/11.",
+    ex12Q: "Ubah 0,16̅ menjadi pecahan!",
+    ex12Body: "Ada 1 angka tidak berulang dan 1 angka berulang. Gunakan 10x dan 100x, lalu kurangkan.",
+    ex12KaTeX: "x=0{,}1\\overline{6}\\quad\\Rightarrow\\quad 10x=1{,}\\overline{6}\\quad\\Rightarrow\\quad 100x=16{,}\\overline{6}\\quad\\Rightarrow\\quad 100x-10x=15\\quad\\Rightarrow\\quad 90x=15\\quad\\Rightarrow\\quad x=\\frac{15}{90}=\\frac{1}{6}",
+    ex12Ans: "Jadi, 0,16̅ = 1/6.",
+    sec4TipLabel: "Pola cepat:",
+    sec4TipBody: "Jika semua angka setelah koma berulang, penyebut awalnya terdiri dari angka 9. Jika ada angka yang tidak berulang di depan, tambahkan angka 0 pada penyebut untuk setiap angka tersebut.",
     sumTitle: "🔢 RANGKUMAN LENGKAP",
     sumSubtitle: "Bentuk Desimal — Kelas 7",
     sumSec1: "Konsep Bentuk Desimal",
@@ -138,6 +160,28 @@ const translations = {
     ex9Body: "6 digits after the decimal point, denominator = 1,000,000",
     ex9KaTeX: "0.000289 = \\frac{289}{1000000}",
     ex9Ans: "So, 0.000289 = 289/1,000,000",
+    sec4Title: "4. Repeating Decimals to Fractions",
+    sec4SummaryBody: "A repeating decimal has one digit or a group of digits that repeats forever. Use a bar above the repeating digits, for example 0.3̅ = 0.3333...",
+    sec4NotationTitle: "How to recognise and write them:",
+    sec4Notation: [
+      "0.3̅ = 0.3333... (digit 3 repeats)",
+      "0.2̅7̅ = 0.272727... (the group 27 repeats)",
+      "0.16̅ = 0.1666... (digit 6 repeats after 1)",
+    ],
+    ex10Q: "Convert 0.3̅ to a fraction!",
+    ex10Body: "Let x = 0.3333.... Multiply by 10 because 1 digit repeats.",
+    ex10KaTeX: "x=0.\\overline{3}\\quad\\Rightarrow\\quad 10x=3.\\overline{3}\\quad\\Rightarrow\\quad 10x-x=3\\quad\\Rightarrow\\quad 9x=3\\quad\\Rightarrow\\quad x=\\frac{3}{9}=\\frac{1}{3}",
+    ex10Ans: "Therefore, 0.3̅ = 1/3.",
+    ex11Q: "Convert 0.2̅7̅ to a fraction!",
+    ex11Body: "There are 2 repeating digits, so multiply x by 100 to align the repeating parts.",
+    ex11KaTeX: "x=0.\\overline{27}\\quad\\Rightarrow\\quad 100x=27.\\overline{27}\\quad\\Rightarrow\\quad 100x-x=27\\quad\\Rightarrow\\quad 99x=27\\quad\\Rightarrow\\quad x=\\frac{27}{99}=\\frac{3}{11}",
+    ex11Ans: "Therefore, 0.2̅7̅ = 3/11.",
+    ex12Q: "Convert 0.16̅ to a fraction!",
+    ex12Body: "There is 1 non-repeating digit and 1 repeating digit. Use 10x and 100x, then subtract.",
+    ex12KaTeX: "x=0.1\\overline{6}\\quad\\Rightarrow\\quad 10x=1.\\overline{6}\\quad\\Rightarrow\\quad 100x=16.\\overline{6}\\quad\\Rightarrow\\quad 100x-10x=15\\quad\\Rightarrow\\quad 90x=15\\quad\\Rightarrow\\quad x=\\frac{15}{90}=\\frac{1}{6}",
+    ex12Ans: "Therefore, 0.16̅ = 1/6.",
+    sec4TipLabel: "Quick pattern:",
+    sec4TipBody: "If all digits after the decimal point repeat, the initial denominator is made of 9s. If non-repeating digits come first, add one 0 to the denominator for each non-repeating digit.",
     sumTitle: "🔢 COMPLETE SUMMARY",
     sumSubtitle: "Decimal Form — Grade 7",
     sumSec1: "Decimal Concepts",
@@ -215,6 +259,28 @@ const translations = {
     ex9Body: "小数点以下 6 桁、分母 = 1,000,000",
     ex9KaTeX: "0.000289 = \\frac{289}{1000000}",
     ex9Ans: "よって、0.000289 = 289/1,000,000",
+    sec4Title: "4. 循環小数を分数に変換する",
+    sec4SummaryBody: "循環小数とは、1つまたは複数の数字が無限に繰り返される小数です。繰り返す数字の上に線を付けます。例：0.3̅ = 0.3333...",
+    sec4NotationTitle: "見分け方と書き方：",
+    sec4Notation: [
+      "0.3̅ = 0.3333...（数字 3 が繰り返す）",
+      "0.2̅7̅ = 0.272727...（27 の組が繰り返す）",
+      "0.16̅ = 0.1666...（1 の後で数字 6 が繰り返す）",
+    ],
+    ex10Q: "0.3̅ を分数に変換せよ！",
+    ex10Body: "x = 0.3333... とおきます。1桁が繰り返すので 10 倍します。",
+    ex10KaTeX: "x=0.\\overline{3}\\quad\\Rightarrow\\quad 10x=3.\\overline{3}\\quad\\Rightarrow\\quad 10x-x=3\\quad\\Rightarrow\\quad 9x=3\\quad\\Rightarrow\\quad x=\\frac{3}{9}=\\frac{1}{3}",
+    ex10Ans: "よって、0.3̅ = 1/3 です。",
+    ex11Q: "0.2̅7̅ を分数に変換せよ！",
+    ex11Body: "繰り返す数字が2桁なので、繰り返す部分をそろえるため x を 100 倍します。",
+    ex11KaTeX: "x=0.\\overline{27}\\quad\\Rightarrow\\quad 100x=27.\\overline{27}\\quad\\Rightarrow\\quad 100x-x=27\\quad\\Rightarrow\\quad 99x=27\\quad\\Rightarrow\\quad x=\\frac{27}{99}=\\frac{3}{11}",
+    ex11Ans: "よって、0.2̅7̅ = 3/11 です。",
+    ex12Q: "0.16̅ を分数に変換せよ！",
+    ex12Body: "繰り返さない数字が1桁、繰り返す数字が1桁あります。10x と 100x を使って引き算します。",
+    ex12KaTeX: "x=0.1\\overline{6}\\quad\\Rightarrow\\quad 10x=1.\\overline{6}\\quad\\Rightarrow\\quad 100x=16.\\overline{6}\\quad\\Rightarrow\\quad 100x-10x=15\\quad\\Rightarrow\\quad 90x=15\\quad\\Rightarrow\\quad x=\\frac{15}{90}=\\frac{1}{6}",
+    ex12Ans: "よって、0.16̅ = 1/6 です。",
+    sec4TipLabel: "すぐに使えるパターン：",
+    sec4TipBody: "小数点以下がすべて循環する場合、最初の分母は 9 の並びになります。循環しない数字が前にある場合は、その桁数だけ分母に 0 を付けます。",
     sumTitle: "🔢 完全まとめ",
     sumSubtitle: "小数の形 — 中学1年",
     sumSec1: "小数の概念",
@@ -419,6 +485,71 @@ const BentukDesimalPage = () => {
               </div>
             </div>
           )}
+        </div>
+
+        {/* Section 4 */}
+        <div className="bg-card/80 backdrop-blur rounded-xl mb-4 overflow-hidden border border-border">
+          <div className="w-full flex items-center p-4">
+            <div className="flex items-center gap-3">
+              <RefreshCw className="text-cyan-400" size={24} />
+              <span className="font-semibold text-lg">{c.sec4Title}</span>
+            </div>
+          </div>
+          <div className="p-4 border-t border-border space-y-4">
+            <div className="bg-cyan-900/30 border-l-4 border-cyan-400 p-4 rounded-r-lg">
+              <p className="font-medium text-cyan-300">{c.summaryLabel}</p>
+              <p className="text-slate-300 mt-1">{c.sec4SummaryBody}</p>
+            </div>
+
+            <div className="bg-card/60 rounded-lg p-4">
+              <p className="font-medium mb-3">{c.sec4NotationTitle}</p>
+              <ul className="space-y-2 text-sm text-slate-300">
+                {c.sec4Notation.map((item) => (
+                  <li key={item} className="rounded-lg bg-slate-900/40 px-3 py-2">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-green-900/20 border border-green-700 rounded-lg p-4">
+              <span className="bg-green-600 text-white text-xs px-2 py-1 rounded mb-2 inline-block">{c.badgeEasy}</span>
+              <p className="font-medium mb-2">{c.ex10Q}</p>
+              <div className="bg-card/90 rounded p-3 mt-2">
+                <p className="text-sm text-slate-400 mb-1">{c.discussLabel}</p>
+                <p>{c.ex10Body}</p>
+                <BlockMath math={c.ex10KaTeX} />
+                <p className="text-cyan-400 font-semibold mt-2">{c.ex10Ans}</p>
+              </div>
+            </div>
+
+            <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-4">
+              <span className="bg-yellow-600 text-white text-xs px-2 py-1 rounded mb-2 inline-block">{c.badgeMedium}</span>
+              <p className="font-medium mb-2">{c.ex11Q}</p>
+              <div className="bg-card/90 rounded p-3 mt-2">
+                <p className="text-sm text-slate-400 mb-1">{c.discussLabel}</p>
+                <p>{c.ex11Body}</p>
+                <BlockMath math={c.ex11KaTeX} />
+                <p className="text-cyan-400 font-semibold mt-2">{c.ex11Ans}</p>
+              </div>
+            </div>
+
+            <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
+              <span className="bg-red-600 text-white text-xs px-2 py-1 rounded mb-2 inline-block">{c.badgeHard}</span>
+              <p className="font-medium mb-2">{c.ex12Q}</p>
+              <div className="bg-card/90 rounded p-3 mt-2">
+                <p className="text-sm text-slate-400 mb-1">{c.discussLabel}</p>
+                <p>{c.ex12Body}</p>
+                <BlockMath math={c.ex12KaTeX} />
+                <p className="text-cyan-400 font-semibold mt-2">{c.ex12Ans}</p>
+              </div>
+            </div>
+
+            <div className="bg-amber-900/20 border border-amber-600 rounded-lg p-3">
+              <p className="text-amber-300 font-medium">{c.sec4TipLabel}</p>
+              <p className="text-sm mt-1">{c.sec4TipBody}</p>
+            </div>
+          </div>
         </div>
 
         {/* Summary */}

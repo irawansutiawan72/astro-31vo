@@ -96,14 +96,14 @@ const questions: Q[] = [
   }),
   Qn(5, "Pangkat Desimal", {
     type: "mixed",
-    content: "Pangkat desimal sama dengan pangkat pecahan:",
+    content: "Hitung nilai bilangan berpangkat desimal berikut:",
     parts: [
-      { label: "a.", math: "25^{0.5} = 25^{\\frac{1}{2}} = \\ldots" },
-      { label: "b.", math: "8^{0.\\overline{3}} = 8^{\\frac{1}{3}} = \\ldots" },
-      { label: "c.", math: "16^{0.75} = 16^{\\frac{3}{4}} = \\ldots" },
-      { label: "d.", math: "64^{0{,}75} = 64^{\\frac{3}{4}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
-      { label: "e.", math: "8^{0{,}\\overline{3}} = 8^{\\frac{1}{3}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
-      { label: "f.", math: "27^{0{,}\\overline{6}} = 27^{\\frac{2}{3}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
+      { label: "a.", math: "25^{0.5} = \\ldots" },
+      { label: "b.", math: "8^{0.\\overline{3}} = \\ldots" },
+      { label: "c.", math: "16^{0.75} = \\ldots" },
+      { label: "d.", math: "64^{0{,}75} = \\ldots \\quad \\text{(hitung nilainya!)}" },
+      { label: "e.", math: "8^{0{,}\\overline{3}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
+      { label: "f.", math: "27^{0{,}\\overline{6}} = \\ldots \\quad \\text{(hitung nilainya!)}" },
     ],
   }),
   Qn(6, "Gabungan Semua Jenis Pangkat", {
