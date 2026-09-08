@@ -197,3 +197,8 @@ Pecahan soal components are JSX components (not data arrays). Key differences:
 ## Shared statistics question data
 - The TKA Statistika module reuses question data exported by the Olimpiade Statistika page. Apply TKA-only removals by filtering in `tka/modul-pemantapan/StatistikaPage.tsx`, not by editing the shared source.
 - **Why:** The same source questions feed the Olimpiade page, so direct deletion would unintentionally change another user-facing module.
+
+## Practice header labels
+- Practice subtopic pages contain several legacy, hardcoded grade breadcrumbs and badges rather than one shared label component.
+- **Why:** Removing a grade label consistently across the practice route requires targeting the route-level header patterns; changing one locale key or one landing page leaves other subtopic headers visible.
+- **How to apply:** Keep any future global presentation change scoped to `.latihan-mandiri-route` and match only complete grade-label strings so question content containing “Kelas 7/8/9” remains visible.

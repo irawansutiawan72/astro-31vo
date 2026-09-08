@@ -912,6 +912,18 @@ const ScrollToTop = () => {
   return null;
 };
 
+const hidePracticeGradeLabels = () => {
+  const practiceRoute = document.querySelector(".latihan-mandiri-route");
+  if (!practiceRoute) return;
+
+  practiceRoute.querySelectorAll<HTMLElement>("p, span").forEach((element) => {
+    const text = element.textContent?.trim().replace(/\s+/g, " ");
+    if (text && /^(?:✦\s*)?(?:Kelas|Grade)\s+[789](?:\s*(?:·|—|-).*)?$/.test(text)) {
+      element.hidden = true;
+    }
+  });
+};
+
 const AppInner = () => {
   useEffect(() => {
     const handleInteraction = () => {
@@ -931,6 +943,13 @@ const AppInner = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     trackPageView(pathname);
+  }, [pathname]);
+
+  useEffect(() => {
+    hidePracticeGradeLabels();
+    const observer = new MutationObserver(hidePracticeGradeLabels);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
   }, [pathname]);
 
   return (
