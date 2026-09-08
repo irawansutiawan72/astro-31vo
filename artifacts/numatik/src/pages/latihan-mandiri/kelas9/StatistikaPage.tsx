@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@/contexts/ThemeContext";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
@@ -86,6 +87,7 @@ const subtopics = [
 const StatistikaPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
@@ -126,8 +128,8 @@ const StatistikaPage = () => {
                   <Icon className={`w-5 h-5 ${s.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`font-body text-sm font-bold ${s.text} leading-tight mb-1`}>{s.label}</p>
-                  <p className="text-white/40 text-[10px] font-body leading-snug">{s.desc}</p>
+                  <p className={`font-body text-sm font-bold ${isDark ? s.text : "text-slate-800"} leading-tight mb-1`}>{s.label}</p>
+                  <p className={`${isDark ? "text-white/40" : "text-slate-600"} text-[10px] font-body leading-snug`}>{s.desc}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s.badge}`}>{s.soal} {t('practice.suffixSoal')}</span>
