@@ -8,6 +8,7 @@ type OlympiadQuestion = {
   category?: string;
   type?: "pg" | "mcma" | "pgkbs";
   options?: string[];
+  diagram?: "numberLine";
   correctIndex?: number;
   correctIndices?: number[];
   statementAnswers?: boolean[];
@@ -26,6 +27,7 @@ export default function OlympiadBankPage({
   backPath,
   questionLabel = "Olimpiade Matematika",
   showDiscussion = true,
+  showQuestionCategory = true,
 }: {
   title: string;
   questions: OlympiadQuestion[];
@@ -36,6 +38,7 @@ export default function OlympiadBankPage({
   backPath?: string;
   questionLabel?: string;
   showDiscussion?: boolean;
+  showQuestionCategory?: boolean;
 }) {
   return <main className="relative min-h-screen overflow-hidden bg-background px-4 py-10 text-foreground">
     {backPath && <PageNavigation prevPath={backPath} />}
@@ -61,7 +64,7 @@ export default function OlympiadBankPage({
           {!topicLabel && <p className="mt-4 text-sm text-muted-foreground">Soal Olimpiade Matematika lengkap dengan pembahasan</p>}
         </div>
       </div>
-      <div className="grid gap-5">{questions.map((question) => <QuestionCard key={question.no} question={question} questionLabel={questionLabel} showDiscussion={showDiscussion} />)}</div>
+      <div className="grid gap-5">{questions.map((question) => <QuestionCard key={question.no} question={question} questionLabel={questionLabel} showDiscussion={showDiscussion} showQuestionCategory={showQuestionCategory} />)}</div>
     </section>
   </main>;
 }
@@ -70,10 +73,12 @@ function QuestionCard({
   question,
   questionLabel,
   showDiscussion,
+  showQuestionCategory,
 }: {
   question: OlympiadQuestion;
   questionLabel: string;
   showDiscussion: boolean;
+  showQuestionCategory: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -99,9 +104,10 @@ function QuestionCard({
     question.correctIndices?.includes(index) ?? false;
 
   return <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-    <div className="mb-3 flex items-center justify-between gap-3"><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Soal {question.no}</span><span className="text-right text-xs text-muted-foreground">{question.category || questionLabel}</span></div>
+    <div className="mb-3 flex items-center justify-between gap-3"><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Soal {question.no}</span>{showQuestionCategory && <span className="text-right text-xs text-muted-foreground">{question.category || questionLabel}</span>}</div>
     <p className="whitespace-pre-line text-base leading-7">{question.soal}</p>
     {question.image && <img src={question.image} alt={`Gambar soal ${question.no}`} className="mx-auto my-4 max-h-72 max-w-full rounded-lg object-contain" />}
+    {question.diagram === "numberLine" && <IntegerNumberLine />}
     {isInteractive && question.type === "pg" && question.correctIndex !== undefined && (
       <div className="mt-4 grid gap-2">
         {question.options?.map((option, index) => {
@@ -235,6 +241,38 @@ function QuestionCard({
     {showDiscussion && <button type="button" onClick={() => setOpen((value) => !value)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/20">{open ? "Sembunyikan Pembahasan" : "Lihat Pembahasan"}{open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</button>}
     {showDiscussion && open && <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm leading-7"><p className="font-semibold text-primary">Jawaban: {question.jawaban || "Tidak tersedia"}</p>{question.pembahasan?.konsep && <p className="mt-2"><strong>Konsep:</strong> {question.pembahasan.konsep}</p>}{question.pembahasan?.langkah?.map((step, index) => <p key={`${question.no}-${index}`} className="mt-1">{index + 1}. {step}</p>)}{question.pembahasan?.rumus && <p className="mt-2"><strong>Rumus:</strong> {question.pembahasan.rumus}</p>}</div>}
   </article>;
+}
+
+function IntegerNumberLine() {
+  const values = Array.from({ length: 13 }, (_, index) => index - 6);
+  const xFor = (value: number) => 34 + (value + 6) * 38;
+  const points = [
+    { label: "P", value: -4, color: "#22d3ee" },
+    { label: "Q", value: -2, color: "#a78bfa" },
+    { label: "R", value: 1, color: "#34d399" },
+    { label: "S", value: 3, color: "#fbbf24" },
+  ];
+
+  return (
+    <div className="my-4 overflow-x-auto rounded-xl border border-primary/20 bg-primary/5 px-3 py-2" aria-label="Garis bilangan dengan P di minus 4, Q di minus 2, R di 1, dan S di 3">
+      <svg viewBox="0 0 524 112" className="mx-auto h-auto min-w-[440px] max-w-full" role="img">
+        <line x1="24" y1="58" x2="500" y2="58" stroke="currentColor" strokeWidth="2" className="text-primary" />
+        <path d="M24 58 L34 52 L34 64 Z M500 58 L490 52 L490 64 Z" fill="currentColor" className="text-primary" />
+        {values.map((value) => (
+          <g key={value}>
+            <line x1={xFor(value)} y1="50" x2={xFor(value)} y2="66" stroke="currentColor" strokeWidth="1.5" className="text-muted-foreground" />
+            <text x={xFor(value)} y="84" textAnchor="middle" fontSize="12" fill="currentColor" className="text-muted-foreground">{value}</text>
+          </g>
+        ))}
+        {points.map((point) => (
+          <g key={point.label}>
+            <circle cx={xFor(point.value)} cy="58" r="7" fill={point.color} />
+            <text x={xFor(point.value)} y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill={point.color}>{point.label}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
 }
 
 export type { OlympiadQuestion };

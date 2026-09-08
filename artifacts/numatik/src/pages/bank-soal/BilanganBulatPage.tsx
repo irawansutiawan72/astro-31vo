@@ -25,10 +25,10 @@ const tkaQuestionPrompts: OlympiadQuestion[] = [
     category: "TKA Bilangan Bulat · Pilihan Ganda Kompleks",
     soal: "Manakah pernyataan-pernyataan berikut yang BENAR? Klik semua yang benar!",
     options: [
-      "A. (−3) × (−5) = 15",
-      "B. 7 + (−7) = 14",
-      "C. (−12) ÷ 4 = −3",
-      "D. (−2)³ = −8",
+      "(−3) × (−5) = 15",
+      "7 + (−7) = 14",
+      "(−12) ÷ 4 = −3",
+      "(−2)³ = −8",
     ],
   },
   {
@@ -37,7 +37,7 @@ const tkaQuestionPrompts: OlympiadQuestion[] = [
     soal: "Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
     options: [
       "a. (−7) × 4 = −28",
-      "b. (−2)³ = 8",
+      "b. −9 − (−7) = −16",
       "c. 0 adalah bilangan bulat yang bukan positif dan bukan negatif",
     ],
   },
@@ -84,6 +84,7 @@ const tkaQuestionPrompts: OlympiadQuestion[] = [
     no: 9,
     category: "TKA Bilangan Bulat · Pilihan Ganda",
     soal: "Perhatikan garis bilangan: titik P di −4, titik Q di −2, titik R di 1, dan titik S di 3. Pernyataan yang BENAR adalah .... (i) P < R, (ii) Q = −2, (iii) nilai terbesar adalah R, (iv) P < Q, Q > R, dan R < S.",
+    diagram: "numberLine",
     options: ["A. (i) dan (ii)", "B. (ii) dan (iii)", "C. (ii) dan (iv)", "D. (iii) dan (iv)"],
   },
   {
@@ -304,7 +305,6 @@ const withLegacyInteraction = (question: OlympiadQuestion): OlympiadQuestion => 
   if (!interaction) return question;
   return {
     ...question,
-    soal: `Versi Bank Soal:\n${question.soal}`,
     ...interaction,
   };
 };
@@ -357,6 +357,7 @@ export default function BilanganBulatPage() {
       backPath="/bank-soal"
       questionLabel="Tugas-Latihan Mandiri"
       showDiscussion={false}
+      showQuestionCategory={false}
     />
   );
 }
