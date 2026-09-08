@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@/contexts/ThemeContext";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
@@ -188,6 +189,7 @@ const questions: Q[] = [
 const MedianModusPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
@@ -201,30 +203,30 @@ const MedianModusPage = () => {
             style={{ textShadow: '0 0 20px rgba(167,139,250,0.7)' }}>
             UKURAN PEMUSATAN DATA
           </h1>
-          <p className="text-violet-200/70 text-sm text-center font-body mb-1">Median dan Modus</p>
-          <p className="text-white/50 text-xs text-center font-body">Kelas 9 · Statistika · {t('practice.breadcrumb')}</p>
+          <p className={`${isDark ? "text-violet-200/70" : "text-violet-600/80"} text-sm text-center font-body mb-1`}>Median dan Modus</p>
+          <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs text-center font-body`}>Kelas 9 · Statistika · {t('practice.breadcrumb')}</p>
           <div className="mt-3 flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-lg px-4 py-2">
             <span className="text-violet-400 text-xs font-bold">📋 10 {t('practice.suffixSoal')}</span>
-            <span className="text-white/30 text-xs">·</span>
-            <span className="text-white/50 text-xs">UN / ANBK / TKA</span>
+            <span className={`${isDark ? "text-white/30" : "text-gray-400"} text-xs`}>·</span>
+            <span className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs`}>UN / ANBK / TKA</span>
           </div>
         </div>
 
-        <div className="mb-5 bg-violet-900/20 border border-violet-500/20 rounded-xl p-4">
+        <div className={`mb-5 ${isDark ? "bg-violet-900/20" : "bg-violet-50"} border border-violet-500/20 rounded-xl p-4`}>
           <p className="text-violet-300 text-xs font-bold mb-3">{t('practice.keyFormula')}</p>
           <div className="grid grid-cols-1 gap-2">
             {[
               { name: "Median (n ganjil)", math: "Me = x_{\\frac{n+1}{2}}" },
               { name: "Median (n genap)", math: "Me = \\frac{x_{n/2} + x_{n/2+1}}{2}" },
             ].map(r => (
-              <div key={r.name} className="bg-white/5 rounded-lg px-3 py-2 flex items-center gap-3">
+              <div key={r.name} className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2 flex items-center gap-3`}>
                 <div className="text-violet-400 text-[9px] uppercase font-bold min-w-[120px]">{r.name}</div>
-                <div className="text-violet-200 text-xs overflow-x-auto"><InlineMath math={r.math} /></div>
+                <div className={`${isDark ? "text-violet-200" : "text-violet-700"} text-xs overflow-x-auto`}><InlineMath math={r.math} /></div>
               </div>
             ))}
-            <div className="bg-white/5 rounded-lg px-3 py-2 flex items-start gap-3">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2 flex items-start gap-3`}>
               <div className="text-violet-400 text-[9px] uppercase font-bold min-w-[120px] pt-0.5">Modus</div>
-              <div className="text-violet-200 text-xs leading-relaxed">Nilai yang paling sering muncul, atau nilai dengan frekuensi terbesar dalam data</div>
+              <div className={`${isDark ? "text-violet-200" : "text-violet-700"} text-xs leading-relaxed`}>Nilai yang paling sering muncul, atau nilai dengan frekuensi terbesar dalam data</div>
             </div>
           </div>
         </div>
@@ -232,7 +234,7 @@ const MedianModusPage = () => {
         <div className="flex flex-col gap-4 animate-slide-up">
           {questions.map((q, i) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: `${i * 0.02}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-slate-900/80 to-purple-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-violet-900/30 via-slate-900/80 to-purple-900/30" : "from-violet-50/60 via-white/80 to-purple-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-violet-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-violet-400 to-purple-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -242,13 +244,13 @@ const MedianModusPage = () => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className="text-violet-400 text-[10px] font-bold uppercase tracking-wider bg-violet-500/10 px-2 py-0.5 rounded inline-block mb-2">{q.title}</span>
-                    {q.diagram && <div className="mb-3 flex justify-center bg-white/5 rounded-xl p-3 overflow-x-auto">{q.diagram}</div>}
+                    {q.diagram && <div className={`mb-3 flex justify-center ${isDark ? "bg-white/5" : "bg-gray-50"} rounded-xl p-3 overflow-x-auto`}>{q.diagram}</div>}
                     {q.mathContent && (
-                      <div className="mb-3 bg-violet-900/20 border border-violet-500/20 rounded-lg px-4 py-3 flex justify-center overflow-x-auto">
+                      <div className={`mb-3 ${isDark ? "bg-violet-900/20" : "bg-violet-50"} border border-violet-500/20 rounded-lg px-4 py-3 flex justify-center overflow-x-auto`}>
                         <InlineMath math={q.mathContent} />
                       </div>
                     )}
-                    <p className="font-body text-sm text-white/90 leading-relaxed">{q.content}</p>
+                    <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-gray-800"} leading-relaxed`}>{q.content}</p>
                   </div>
                 </div>
               </div>
