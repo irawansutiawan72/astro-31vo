@@ -132,8 +132,8 @@ const StatistikaPage = () => {
                   <p className={`${isDark ? "text-white/40" : "text-slate-600"} text-[10px] font-body leading-snug`}>{s.desc}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s.badge}`}>{s.soal} {t('practice.suffixSoal')}</span>
-                  <ChevronRight className={`w-4 h-4 ${s.iconColor} group-hover:translate-x-1 transition-transform`} />
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isDark ? s.badge : "bg-slate-100 text-slate-700 border border-slate-300"}`}>{s.soal} {t('practice.suffixSoal')}</span>
+                  <ChevronRight className={`w-4 h-4 ${isDark ? s.iconColor : "text-slate-700"} group-hover:translate-x-1 transition-transform`} />
                 </div>
               </button>
             );
