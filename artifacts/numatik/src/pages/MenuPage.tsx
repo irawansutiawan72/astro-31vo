@@ -90,7 +90,7 @@ const MenuPage = () => {
     { key: "animatedBook",icon: BookOpen,        path: "/buku-animasi-matematika" },
     { key: "practice",    icon: ClipboardList,  path: "/latihan-mandiri" },
     { key: "academic",    icon: Brain,          path: "/tka" },
-    { key: "examBrowser", icon: ShieldCheck,     path: "/exam-browser" },
+    { key: "examBrowser", icon: ClipboardCheck,  path: "/exam-browser" },
     { key: "gameArena",   icon: Gamepad2,       path: "/math-game-arena" },
     { key: "ai",          icon: Bot,            path: "/chat-ai" },
     { key: "questionBank",icon: FileText,       path: "/bank-soal" },
