@@ -120,7 +120,7 @@ const StatistikaPage = () => {
                 key={s.label}
                 onClick={() => { playPopSound(); navigate(s.path); }}
                 className={`group relative flex items-center gap-4 bg-gradient-to-r ${s.gradient} backdrop-blur border ${s.border} rounded-2xl px-5 py-4
-                  hover:scale-[1.015] hover:shadow-lg transition-all duration-300 cursor-pointer text-left overflow-hidden animate-slide-up`}
+                  statistika-subtopic-button hover:scale-[1.015] hover:shadow-lg transition-all duration-300 cursor-pointer text-left overflow-hidden animate-slide-up`}
                 style={{ animationDelay: `${i * 0.06}s` }}
               >
                 <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${s.accent} rounded-l-2xl`} />
@@ -128,12 +128,12 @@ const StatistikaPage = () => {
                   <Icon className={`w-5 h-5 ${s.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`font-body text-sm font-bold ${isDark ? s.text : "text-slate-800"} leading-tight mb-1`}>{s.label}</p>
-                  <p className={`${isDark ? "text-white/40" : "text-slate-600"} text-[10px] font-body leading-snug`}>{s.desc}</p>
+                  <p className={`statistika-subtopic-title font-body text-sm font-bold ${isDark ? s.text : "text-slate-800"} leading-tight mb-1`}>{s.label}</p>
+                  <p className={`statistika-subtopic-description ${isDark ? "text-white/40" : "text-slate-600"} text-[10px] font-body leading-snug`}>{s.desc}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isDark ? s.badge : "bg-slate-100 text-slate-700 border border-slate-300"}`}>{s.soal} {t('practice.suffixSoal')}</span>
-                  <ChevronRight className={`w-4 h-4 ${isDark ? s.iconColor : "text-slate-700"} group-hover:translate-x-1 transition-transform`} />
+                  <span className={`statistika-subtopic-count text-[10px] font-bold px-2 py-0.5 rounded-full ${isDark ? s.badge : "bg-slate-100 text-slate-700 border border-slate-300"}`}>{s.soal} {t('practice.suffixSoal')}</span>
+                  <ChevronRight className={`statistika-subtopic-arrow w-4 h-4 ${isDark ? s.iconColor : "text-slate-700"} group-hover:translate-x-1 transition-transform`} />
                 </div>
               </button>
             );

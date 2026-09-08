@@ -27,6 +27,7 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - Hook: `import { useTheme } from "@/contexts/ThemeContext"` → `const { isDark } = useTheme()`
 - Sub-components defined **outside** the main page component can call `useTheme()` directly (they're React components) as long as they are written as proper function bodies (`() => { ... }`, not arrow `() => (...)` shorthand — the shorthand cannot contain hook calls).
 - Reference files: `RangkumanSection.tsx`, `DiskriminanPage.tsx`, `PolaKhususPage.tsx`.
+- For legacy route-level light-theme fixes, prefer `html.light-mode` selectors when the desired result must survive component accent classes; this class is applied directly by `ThemeContext` for every non-dark theme.
 
 ## Light-mode color mapping (dark → light)
 | Dark class/value | Light equivalent |
