@@ -101,7 +101,7 @@ const questions: Q[] = [
       { label: "a.", math: "25^{0.5} = \\ldots" },
       { label: "b.", math: "8^{0.\\overline{3}} = \\ldots" },
       { label: "c.", math: "16^{0.75} = \\ldots" },
-      { label: "d.", math: "64^{0{,}75} = \\ldots" },
+      { label: "d.", math: "64^{0{,}\\overline{18}} = \\ldots" },
       { label: "e.", math: "8^{0{,}\\overline{3}} = \\ldots" },
       { label: "f.", math: "27^{0{,}\\overline{6}} = \\ldots" },
     ],
@@ -110,11 +110,8 @@ const questions: Q[] = [
     type: "mixed",
     parts: [
       { label: "a.", math: "2^{-2} \\times 4^{\\frac{3}{2}} + 3^0 = \\ldots" },
-      { label: "b.", math: "27^{\\frac{2}{3}} - 4^{-1} + 2^0 = \\ldots" },
       { label: "c.", math: "\\frac{8^{\\frac{2}{3}} \\times 2^{-1}}{4^0} = \\ldots" },
-      { label: "d.", math: "2^{-2} \\times 4^{\\frac{3}{2}} + 3^0 = \\ldots \\quad \\text{(energi ilmuwan, hitung hasilnya!)}" },
-      { label: "e.", math: "27^{\\frac{2}{3}} - 4^{-1} + 2^0 = \\ldots \\quad \\text{(luas peta, satuan persegi)}" },
-      { label: "f.", math: "\\frac{8^{\\frac{2}{3}} \\times 2^{-1}}{4^0} = \\ldots \\quad \\text{(indeks pertumbuhan ekonomi)}" },
+      { label: "e.", math: "27^{\\frac{2}{3}} - 4^{-1} + 2^0 = \\ldots" },
     ],
   }),
 ];
