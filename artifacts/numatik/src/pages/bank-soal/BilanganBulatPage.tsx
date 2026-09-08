@@ -253,6 +253,62 @@ const tkaQuestions: OlympiadQuestion[] = tkaQuestionPrompts.map((question) => ({
   ...tkaAnswerKeys[question.no],
 }));
 
+const legacyInteractiveKeys: Record<number, Pick<OlympiadQuestion, "type" | "options" | "correctIndex" | "correctIndices" | "statementAnswers">> = {
+  24: { type: "pg", options: ["A. −8°C", "B. 3°C", "C. 11°C", "D. 16°C"], correctIndex: 2 },
+  25: { type: "mcma", options: ["A. 15 m lebih tinggi daripada −25 m", "B. −50 m lebih tinggi daripada −10 m", "C. −10 m lebih tinggi daripada −50 m", "D. −25 m lebih rendah daripada 15 m"], correctIndices: [0, 2, 3] },
+  26: { type: "pg", options: ["A. −58°C", "B. −8°C", "C. 8°C", "D. 58°C"], correctIndex: 1 },
+  27: { type: "pgkbs", options: ["a. 18°C lebih tinggi daripada 14°C", "b. −3°C lebih tinggi daripada −1°C", "c. 2°C lebih tinggi daripada −8°C"], statementAnswers: [true, false, true] },
+  28: { type: "mcma", options: ["A. 52 > −31", "B. 74 < −92", "C. −41 < 55", "D. −95 > 112"], correctIndices: [0, 2] },
+  29: { type: "pg", options: ["A. −7 < 0 < 15", "B. 15 < 0 < −7", "C. 0 < −7 < 15", "D. −7 < 15 < 0"], correctIndex: 0 },
+  30: { type: "mcma", options: ["A. 4 + 6 = 10", "B. 8 + (−3) = 11", "C. 6 + (−10) = −4", "D. −4 + 7 = 3"], correctIndices: [0, 2, 3] },
+  31: { type: "pg", options: ["A. −122", "B. −106", "C. −90", "D. 106"], correctIndex: 1 },
+  32: { type: "pgkbs", options: ["a. 7 − 15 = −8", "b. −12 − 6 = −18", "c. 30 − (−9) = 21"], statementAnswers: [true, true, false] },
+  33: { type: "mcma", options: ["A. Selisih posisi A dan B adalah 100 m", "B. Selisih posisi C dan B adalah 30 m", "C. Selisih posisi A dan C adalah 130 m", "D. Posisi C lebih tinggi daripada posisi A"], correctIndices: [0, 1, 2] },
+  34: { type: "pg", options: ["A. −13", "B. 2", "C. 18", "D. 44"], correctIndex: 1 },
+  35: { type: "mcma", options: ["A. Kecepatan searah angin menjadi 280 km/jam", "B. Kecepatan melawan angin menjadi 220 km/jam", "C. Selisih kedua kecepatan adalah 30 km/jam", "D. Kecepatan melawan angin lebih besar daripada searah angin"], correctIndices: [0, 1] },
+  36: { type: "pg", options: ["A. 1.235°C", "B. 1.250°C", "C. 1.265°C", "D. 1.275°C"], correctIndex: 2 },
+  37: { type: "pgkbs", options: ["a. 7 × (−9) = −63", "b. (−6) × (−11) = 66", "c. (−4) × 0 × (−25) = −100"], statementAnswers: [true, true, false] },
+  38: { type: "pg", options: ["A. p = 9, q = −8, r = −2, s = −3", "B. p = −9, q = 8, r = 2, s = 3", "C. p = 9, q = 8, r = −2, s = 3", "D. p = −9, q = −8, r = 2, s = −3"], correctIndex: 0 },
+  39: { type: "pgkbs", options: ["a. −7 × (−25 + 14) = 77", "b. [−15 − (−40)] × (−12) = −300", "c. [18 × (−6)] + [−22 × (−5)] = −2"], statementAnswers: [true, true, false] },
+  40: { type: "pg", options: ["A. −18°C", "B. 0°C", "C. 6°C", "D. 12°C"], correctIndex: 2 },
+  41: { type: "pg", options: ["A. 97", "B. 103", "C. 109", "D. 121"], correctIndex: 2 },
+  42: { type: "pg", options: ["A. −19", "B. −13", "C. 13", "D. 19"], correctIndex: 3 },
+  43: { type: "pg", options: ["A. −168", "B. −40", "C. 64", "D. 168"], correctIndex: 3 },
+  44: { type: "pg", options: ["A. −60", "B. −48", "C. 0", "D. 72"], correctIndex: 1 },
+  45: { type: "pg", options: ["A. −33", "B. −12", "C. 21", "D. 33"], correctIndex: 3 },
+  46: { type: "pg", options: ["A. −109", "B. −83", "C. 83", "D. 109"], correctIndex: 1 },
+  47: { type: "pg", options: ["A. −284", "B. −182", "C. −80", "D. 284"], correctIndex: 0 },
+  48: { type: "pg", options: ["A. 14", "B. 20", "C. 26", "D. 32"], correctIndex: 2 },
+  49: { type: "pg", options: ["A. 106", "B. 114", "C. 122", "D. 130"], correctIndex: 2 },
+  50: { type: "pg", options: ["A. 18", "B. 20", "C. 22", "D. 24"], correctIndex: 2 },
+  51: { type: "pg", options: ["A. 13 orang", "B. 15 orang", "C. 17 orang", "D. 19 orang"], correctIndex: 2 },
+  52: { type: "mcma", options: ["A. Selisih Wina dan Soul adalah −6°C", "B. Selisih Baghdad dan Wina adalah 30°C", "C. Selisih Surabaya dan Soul adalah 34°C", "D. Selisih Surabaya dan Wina adalah 39°C"], correctIndices: [0, 2] },
+  53: { type: "pg", options: ["A. Rp5.000", "B. Rp8.000", "C. Rp10.000", "D. Rp12.000"], correctIndex: 2 },
+  54: { type: "pg", options: ["A. −5°C", "B. −1°C", "C. 5°C", "D. 7°C"], correctIndex: 0 },
+  55: { type: "pg", options: ["A. 21", "B. 30", "C. 33", "D. 45"], correctIndex: 2 },
+  56: { type: "pg", options: ["A. −28", "B. −12", "C. 12", "D. 28"], correctIndex: 1 },
+  57: { type: "pg", options: ["A. 14", "B. 18", "C. 24", "D. 48"], correctIndex: 2 },
+  58: { type: "pg", options: ["A. 9", "B. 12", "C. 18", "D. 27"], correctIndex: 2 },
+  59: { type: "pg", options: ["A. 7", "B. 12", "C. 14", "D. 28"], correctIndex: 2 },
+  60: { type: "pg", options: ["A. 10", "B. 20", "C. 25", "D. 40"], correctIndex: 1 },
+  61: { type: "pg", options: ["A. 45", "B. 60", "C. 90", "D. 180"], correctIndex: 2 },
+  62: { type: "pg", options: ["A. 12", "B. 18", "C. 24", "D. 36"], correctIndex: 2 },
+  63: { type: "pg", options: ["A. 20.00", "B. 20.30", "C. 21.00", "D. 22.00"], correctIndex: 2 },
+  64: { type: "pg", options: ["A. 30 Mei", "B. 15 Juni", "C. 30 Juni", "D. 1 Juli"], correctIndex: 2 },
+  65: { type: "pg", options: ["A. 9 wadah", "B. 12 wadah", "C. 18 wadah", "D. 36 wadah"], correctIndex: 2 },
+  66: { type: "pg", options: ["A. 20 orang", "B. 30 orang", "C. 40 orang", "D. 60 orang"], correctIndex: 2 },
+};
+
+const withLegacyInteraction = (question: OlympiadQuestion): OlympiadQuestion => {
+  const interaction = legacyInteractiveKeys[question.no];
+  if (!interaction) return question;
+  return {
+    ...question,
+    soal: `Versi Bank Soal:\n${question.soal}`,
+    ...interaction,
+  };
+};
+
 const bankQuestions: OlympiadQuestion[] = [
   ...tkaQuestions,
   ...penjumlahanQuestions.id.map((question) => ({
@@ -289,7 +345,7 @@ const bankQuestions: OlympiadQuestion[] = [
     category: "KPK dan FPB",
     soal: question.content,
   })),
-];
+].map(withLegacyInteraction);
 
 export default function BilanganBulatPage() {
   return (
