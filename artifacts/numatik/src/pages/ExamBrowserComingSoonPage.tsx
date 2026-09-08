@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   CheckCircle2,
+  ClipboardCheck,
   CloudLightning,
   EyeOff,
   LockKeyhole,
@@ -90,9 +91,9 @@ const ExamBrowserComingSoonPage = () => {
               <div className="absolute inset-8 rounded-full border border-dashed border-violet-300/20 motion-safe:animate-[spin_18s_linear_infinite]" />
               <div className="absolute inset-16 rounded-full bg-cyan-400/10 blur-2xl" />
               <div className="relative flex h-36 w-36 items-center justify-center rounded-[2rem] border border-cyan-200/40 bg-slate-950/70 shadow-[0_0_45px_rgba(34,211,238,0.25)] sm:h-44 sm:w-44">
-                <LockKeyhole className="h-16 w-16 text-cyan-200 sm:h-20 sm:w-20" strokeWidth={1.4} aria-hidden="true" />
+                <ClipboardCheck className="h-16 w-16 text-cyan-200 sm:h-20 sm:w-20" strokeWidth={1.4} aria-hidden="true" />
                 <span className="absolute -bottom-3 rounded-full border border-cyan-200/25 bg-slate-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-200">
-                  Secure by design
+                  Exam ready
                 </span>
               </div>
             </div>
@@ -166,7 +167,7 @@ const ExamBrowserComingSoonPage = () => {
               isDark ? "border-white/10 bg-white/5 text-white/60" : "border-border bg-background/40 text-muted-foreground"
             }`}>
               <CheckCircle2 className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-              Sedang dalam tahap pengembangan
+              Mode ujian aman, fokus dengan proteksi maksimal
             </span>
           </div>
         </section>
