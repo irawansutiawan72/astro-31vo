@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@/contexts/ThemeContext";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
@@ -7,25 +8,28 @@ import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { BarChart3 } from "lucide-react";
 
-const FreqTable = ({ headers, rows, caption }: { headers: string[]; rows: (string | number)[][]; caption?: string }) => (
+const FreqTable = ({ headers, rows, caption }: { headers: string[]; rows: (string | number)[][]; caption?: string }) => {
+  const { isDark } = useTheme();
+  return (
   <div className="overflow-x-auto rounded-xl border border-amber-500/30 my-2">
     {caption && <div className="text-[10px] text-amber-300/70 font-bold text-center pt-2 px-2">{caption}</div>}
     <table className="min-w-full text-xs font-body">
       <thead>
-        <tr className="bg-amber-900/40">
+        <tr className={`${isDark ? "bg-amber-900/40" : "bg-amber-50"} `}>
           {headers.map((h, i) => <th key={i} className="px-3 py-2 text-amber-200 font-bold text-center border-b border-amber-500/30">{h}</th>)}
         </tr>
       </thead>
       <tbody>
         {rows.map((row, ri) => (
-          <tr key={ri} className={ri % 2 === 0 ? "bg-white/3" : "bg-amber-900/10"}>
-            {row.map((cell, ci) => <td key={ci} className="px-3 py-2 text-center text-white/80 border-b border-white/5">{cell}</td>)}
+          <tr key={ri} className={ri % 2 === 0 ? (isDark ? "bg-white/3" : "bg-gray-50") : (isDark ? "bg-amber-900/10" : "bg-amber-50/60")}>
+            {row.map((cell, ci) => <td key={ci} className={`px-3 py-2 text-center ${isDark ? "text-white/80 border-white/5" : "text-gray-700 border-gray-200"} border-b`}>{cell}</td>)}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
-);
+  );
+};
 
 const renderOpt = (opt: string) => {
   if (opt.includes('\\')) return <InlineMath math={opt} />;
@@ -159,6 +163,7 @@ const OPTS = ["A", "B", "C", "D"];
 const PeluangEmpirikPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
@@ -172,24 +177,24 @@ const PeluangEmpirikPage = () => {
           <h1 className="font-display text-xl md:text-2xl font-bold text-amber-300 text-center mb-1" style={{ textShadow: "0 0 20px rgba(251,191,36,0.7)" }}>
             PELUANG EMPIRIK & FREKUENSI RELATIF
           </h1>
-          <p className="text-white/50 text-xs text-center font-body">Kelas 9 · Peluang · {t('practice.breadcrumb')}</p>
+          <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs text-center font-body`}>Kelas 9 · Peluang · {t('practice.breadcrumb')}</p>
           <div className="mt-3 flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-2">
             <span className="text-amber-400 text-xs font-bold">📋 {questions.length} {t('practice.suffixSoal')} {t('practice.multipleChoice')}</span>
-            <span className="text-white/30 text-xs">·</span>
-            <span className="text-white/50 text-xs">UN / ANBK / TKA</span>
+            <span className={`${isDark ? "text-white/30" : "text-gray-400"} text-xs`}>·</span>
+            <span className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs`}>UN / ANBK / TKA</span>
           </div>
         </div>
-        <div className="mb-5 bg-amber-900/20 border border-amber-500/20 rounded-xl p-4">
+        <div className={`mb-5 ${isDark ? "bg-amber-900/20" : "bg-amber-50"} border border-amber-500/20 rounded-xl p-4`}>
           <p className="text-amber-300 text-xs font-bold mb-2">📌 Rumus Utama</p>
-          <div className="bg-white/5 rounded-lg px-3 py-2 text-center">
+          <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2 text-center`}>
             <BlockMath math="P_{empirik}(A) = \frac{\text{Frekuensi kejadian } A}{\text{Banyak percobaan}}" />
           </div>
-          <p className="text-white/50 text-xs font-body text-center mt-1">Semakin besar n, semakin mendekati peluang teoretik</p>
+          <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs font-body text-center mt-1`}>Semakin besar n, semakin mendekati peluang teoretik</p>
         </div>
         <div className="flex flex-col gap-5 animate-slide-up">
           {questions.map((q, qi) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden" style={{ animationDelay: `${qi * 0.02}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-slate-900/80 to-orange-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-amber-900/30 via-slate-900/80 to-orange-900/30" : "from-amber-50/60 via-white/80 to-orange-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-amber-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-400 to-orange-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -200,14 +205,14 @@ const PeluangEmpirikPage = () => {
                   <div className="flex-1 min-w-0">
                     <span className="text-amber-400 text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 px-2 py-0.5 rounded inline-block mb-2">{q.title}</span>
                     {q.diagram && <div className="mb-3">{q.diagram}</div>}
-                    <p className="font-body text-sm text-white/90 leading-relaxed mb-4">{q.content}</p>
+                    <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-gray-800"} leading-relaxed mb-4`}>{q.content}</p>
                     <div className="flex flex-col gap-1.5">
                       {q.options.map((opt, oi) => (
-                        <div key={oi} className="flex items-center gap-3 rounded-xl px-4 py-2.5 bg-white/5 border border-white/10">
-                          <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 border bg-white/10 border-white/20 text-white/70">
+                        <div key={oi} className={`flex items-center gap-3 rounded-xl px-4 py-2.5 ${isDark ? "bg-white/5 border-white/10" : "bg-gray-50 border-gray-200"} border`}>
+                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 border ${isDark ? "bg-white/10 border-white/20 text-white/70" : "bg-white border-gray-300 text-gray-600"}`}>
                             {OPTS[oi]}
                           </span>
-                          <span className="font-body text-sm text-white/80 overflow-x-auto">{renderOpt(opt)}</span>
+                          <span className={`font-body text-sm ${isDark ? "text-white/80" : "text-gray-700"} overflow-x-auto`}>{renderOpt(opt)}</span>
                         </div>
                       ))}
                     </div>

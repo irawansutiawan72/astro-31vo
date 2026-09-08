@@ -9,25 +9,28 @@ import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Calculator } from "lucide-react";
 
-const FreqTable = ({ headers, rows, caption }: { headers: string[]; rows: (string | number)[][]; caption?: string }) => (
+const FreqTable = ({ headers, rows, caption }: { headers: string[]; rows: (string | number)[][]; caption?: string }) => {
+  const { isDark } = useTheme();
+  return (
   <div className="overflow-x-auto rounded-xl border border-violet-500/30 my-2">
     {caption && <div className="text-[10px] text-violet-300/70 font-bold text-center pt-2 px-2">{caption}</div>}
     <table className="min-w-full text-xs font-body">
       <thead>
-        <tr className="bg-violet-900/40">
+        <tr className={isDark ? "bg-violet-900/40" : "bg-violet-50"}>
           {headers.map((h, i) => <th key={i} className="px-3 py-2 text-violet-200 font-bold text-center border-b border-violet-500/30">{h}</th>)}
         </tr>
       </thead>
       <tbody>
         {rows.map((row, ri) => (
-          <tr key={ri} className={ri % 2 === 0 ? "bg-white/3" : "bg-violet-900/10"}>
-            {row.map((cell, ci) => <td key={ci} className="px-3 py-2 text-center text-white/80 border-b border-white/5">{cell}</td>)}
+          <tr key={ri} className={ri % 2 === 0 ? (isDark ? "bg-white/3" : "bg-gray-50") : (isDark ? "bg-violet-900/10" : "bg-violet-50/60")}>
+            {row.map((cell, ci) => <td key={ci} className={`px-3 py-2 text-center ${isDark ? "text-white/80 border-white/5" : "text-gray-700 border-gray-200"} border-b`}>{cell}</td>)}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
-);
+  );
+};
 
 const renderOpt = (opt: string) => {
   if (opt.includes('\\')) return <InlineMath math={opt} />;
@@ -208,21 +211,21 @@ const PeluangTeoretikPage = () => {
           <h1 className="font-display text-xl md:text-2xl font-bold text-violet-300 text-center mb-1" style={{ textShadow: "0 0 20px rgba(167,139,250,0.7)" }}>
             PELUANG TEORETIK
           </h1>
-          <p className="text-white/50 text-xs text-center font-body">Kelas 9 · Peluang · {t('practice.breadcrumb')}</p>
+          <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs text-center font-body`}>Kelas 9 · Peluang · {t('practice.breadcrumb')}</p>
           <div className="mt-3 flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-lg px-4 py-2">
             <span className="text-violet-400 text-xs font-bold">📋 {questions.length} {t('practice.suffixSoal')} {t('practice.multipleChoice')}</span>
-            <span className="text-white/30 text-xs">·</span>
-            <span className="text-white/50 text-xs">UN / ANBK / TKA</span>
+            <span className={`${isDark ? "text-white/30" : "text-gray-400"} text-xs`}>·</span>
+            <span className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs`}>UN / ANBK / TKA</span>
           </div>
           {totalRevealed > 0 && (
-            <div className="mt-2 bg-violet-900/30 border border-violet-500/30 rounded-lg px-4 py-1.5 text-xs font-body text-violet-300">
+              <div className={`mt-2 ${isDark ? "bg-violet-900/30 text-violet-300" : "bg-violet-50 text-violet-700"} border border-violet-500/30 rounded-lg px-4 py-1.5 text-xs font-body`}>
               Skor: {score} / {totalRevealed} soal dijawab
             </div>
           )}
         </div>
         <div className={isDark ? "mb-5 bg-violet-900/20 border border-violet-500/20 rounded-xl p-4" : "mb-5 bg-violet-50 border border-violet-500/20 rounded-xl p-4"}>
           <p className="text-violet-300 text-xs font-bold mb-2">📌 Rumus Utama</p>
-          <div className="bg-white/5 rounded-lg px-3 py-2 text-center">
+          <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2 text-center`}>
             <BlockMath math="P(A) = \frac{n(A)}{n(S)}, \quad 0 \leq P(A) \leq 1" />
           </div>
         </div>
@@ -243,22 +246,22 @@ const PeluangTeoretikPage = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <span className="text-violet-400 text-[10px] font-bold uppercase tracking-wider bg-violet-500/10 px-2 py-0.5 rounded inline-block mb-2">{q.title}</span>
-                      {q.diagram && <div className="mb-3">{q.diagram}</div>}
-                      <p className="font-body text-sm text-white/90 leading-relaxed mb-4">{q.content}</p>
+                      {q.diagram && <div className={`mb-3 ${isDark ? "bg-white/5" : "bg-gray-50"} rounded-xl p-3 overflow-x-auto`}>{q.diagram}</div>}
+                      <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-gray-800"} leading-relaxed mb-4`}>{q.content}</p>
                       <div className="flex flex-col gap-2">
                         {q.options.map((opt, oi) => {
-                          let cls = "bg-white/5 border border-white/10 text-white/80";
+                          let cls = isDark ? "bg-white/5 border border-white/10 text-white/80" : "bg-gray-50 border border-gray-200 text-gray-700";
                           if (isRevealed) {
                             if (oi === q.answer) cls = "bg-emerald-500/20 border border-emerald-400/60 text-emerald-300 font-bold";
                             else if (oi === sel) cls = "bg-red-500/20 border border-red-400/60 text-red-300";
-                            else cls = "bg-white/3 border border-white/5 text-white/40";
+                            else cls = isDark ? "bg-white/3 border border-white/5 text-white/40" : "bg-gray-50 border border-gray-200 text-gray-400";
                           } else if (hasSel && oi === sel) {
                             cls = "bg-violet-500/25 border border-violet-400/60 text-violet-200";
                           }
                           return (
                             <button key={oi} onClick={() => handleSelect(q.n, oi)}
                               className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-left transition-all duration-200 ${cls} ${!isRevealed ? "cursor-pointer hover:border-violet-400/40" : "cursor-default"}`}>
-                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 border ${isRevealed && oi === q.answer ? "bg-emerald-500/30 border-emerald-400" : isRevealed && oi === sel ? "bg-red-500/30 border-red-400" : hasSel && oi === sel ? "bg-violet-500/30 border-violet-400" : "bg-white/10 border-white/20"}`}>
+                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 border ${isRevealed && oi === q.answer ? "bg-emerald-500/30 border-emerald-400" : isRevealed && oi === sel ? "bg-red-500/30 border-red-400" : hasSel && oi === sel ? "bg-violet-500/30 border-violet-400" : isDark ? "bg-white/10 border-white/20" : "bg-white border-gray-300"}`}>
                                 {OPTS[oi]}
                               </span>
                               <span className="font-body text-sm overflow-x-auto">{renderOpt(opt)}</span>
