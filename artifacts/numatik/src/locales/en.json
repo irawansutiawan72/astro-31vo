@@ -111,6 +111,10 @@
       "label": "ACADEMIC ABILITY TEST",
       "desc": "Test your academic abilities"
     },
+    "examBrowser": {
+      "label": "NUMATIK EXAM BROWSER",
+      "desc": "A secure, focused exam mode"
+    },
     "conversion": {
       "label": "UNIT CONVERSION",
       "desc": "Convert various measurement units"

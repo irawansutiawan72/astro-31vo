@@ -18,6 +18,7 @@ import PageLoader from "@/components/PageLoader";
 
 // ── Lazy-loaded pages ──────────────────────────────────────────────────────
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+const ExamBrowserComingSoonPage = lazy(() => import("./pages/ExamBrowserComingSoonPage"));
 
   const UjiMandiriPage = lazy(() => import("./pages/UjiMandiriPage"));
 
@@ -943,6 +944,7 @@ const AppInner = () => {
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/exam-browser" element={<ExamBrowserComingSoonPage />} />
   <Route path="/uji-mandiri" element={<UjiMandiriPage />} />
           <Route path="/lkpd" element={<LKPDMenuPage />} />
           <Route path="/lkpd/kelas-7" element={<LKPDKelas7Page />} />

@@ -111,6 +111,10 @@
       "label": "TES KEMAMPUAN AKADEMIK",
       "desc": "Uji kemampuan akademikmu"
     },
+    "examBrowser": {
+      "label": "EXAMBROWSER NUMATIK",
+      "desc": "Mode ujian aman dan fokus"
+    },
     "conversion": {
       "label": "KONVERSI SATUAN",
       "desc": "Konversi berbagai satuan pengukuran"

@@ -111,6 +111,10 @@
       "label": "学力テスト",
       "desc": "学力を試してみよう"
     },
+    "examBrowser": {
+      "label": "NUMATIK 試験ブラウザ",
+      "desc": "安全で集中できる試験モード"
+    },
     "conversion": {
       "label": "単位変換",
       "desc": "各種単位を変換する"
