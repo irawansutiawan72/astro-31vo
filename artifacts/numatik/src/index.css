@@ -5887,12 +5887,3 @@ html.light-mode .pola-geometri-materi-route .katex {
     grid-template-columns: minmax(0, 1fr);
   }
 }
-
-/* Statistika latihan-mandiri: every subtopic label stays readable in bright
-   themes, regardless of the accent colors used by the dark space theme. */
-html.light-mode .statistika-subtopic-button .statistika-subtopic-title,
-html.light-mode .statistika-subtopic-button .statistika-subtopic-description,
-html.light-mode .statistika-subtopic-button .statistika-subtopic-count,
-html.light-mode .statistika-subtopic-button .statistika-subtopic-arrow {
-  color: #0f172a !important;
-}

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "@/contexts/ThemeContext";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
@@ -13,14 +12,12 @@ const subtopics = [
     soal: 10,
     icon: BookOpen,
     desc: "Populasi, sampel, jenis data, teknik pengumpulan, tabel distribusi, diagram batang, garis, lingkaran",
-    color: "cyan",
-    gradient: "from-cyan-500/20 to-teal-500/10",
+    gradient: "from-cyan-900/40 to-teal-900/30",
     border: "border-cyan-500/30",
-    text: "text-cyan-300",
-    badge: "bg-cyan-500/15 text-cyan-400",
+    badge: "bg-cyan-500/20 text-cyan-300 border-cyan-400/40",
     iconBg: "bg-cyan-500/20",
     iconColor: "text-cyan-400",
-    accent: "from-cyan-400 to-teal-400",
+    leftBar: "from-cyan-400 to-teal-500",
   },
   {
     label: "UKURAN PEMUSATAN DATA (RATA-RATA DAN RATA-RATA GABUNGAN)",
@@ -28,14 +25,12 @@ const subtopics = [
     soal: 18,
     icon: PieChart,
     desc: "Mean tunggal, berbobot, berkelompok, rata-rata gabungan",
-    color: "blue",
-    gradient: "from-blue-500/20 to-indigo-500/10",
+    gradient: "from-blue-900/40 to-indigo-900/30",
     border: "border-blue-500/30",
-    text: "text-blue-300",
-    badge: "bg-blue-500/15 text-blue-400",
+    badge: "bg-blue-500/20 text-blue-300 border-blue-400/40",
     iconBg: "bg-blue-500/20",
     iconColor: "text-blue-400",
-    accent: "from-blue-400 to-indigo-400",
+    leftBar: "from-blue-400 to-indigo-500",
   },
   {
     label: "UKURAN PEMUSATAN DATA (MEDIAN DAN MODUS)",
@@ -43,14 +38,12 @@ const subtopics = [
     soal: 10,
     icon: Target,
     desc: "Median dan modus data tunggal dan berkelompok, interpretasi",
-    color: "violet",
-    gradient: "from-violet-500/20 to-purple-500/10",
+    gradient: "from-violet-900/40 to-purple-900/30",
     border: "border-violet-500/30",
-    text: "text-violet-300",
-    badge: "bg-violet-500/15 text-violet-400",
+    badge: "bg-violet-500/20 text-violet-300 border-violet-400/40",
     iconBg: "bg-violet-500/20",
     iconColor: "text-violet-400",
-    accent: "from-violet-400 to-purple-400",
+    leftBar: "from-violet-400 to-purple-500",
   },
   {
     label: "UKURAN LETAK DATA (KUARTIL)",
@@ -58,14 +51,12 @@ const subtopics = [
     soal: 12,
     icon: BoxSelect,
     desc: "Q₁, Q₂, Q₃, IQR, box plot, persentil, desil, deteksi pencilan",
-    color: "green",
-    gradient: "from-green-500/20 to-emerald-500/10",
-    border: "border-green-500/30",
-    text: "text-green-300",
-    badge: "bg-green-500/15 text-green-400",
-    iconBg: "bg-green-500/20",
-    iconColor: "text-green-400",
-    accent: "from-green-400 to-emerald-400",
+    gradient: "from-emerald-900/40 to-green-900/30",
+    border: "border-emerald-500/30",
+    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-400/40",
+    iconBg: "bg-emerald-500/20",
+    iconColor: "text-emerald-400",
+    leftBar: "from-emerald-400 to-green-500",
   },
   {
     label: "UKURAN PENYEBARAN DATA (JANGKAUAN, JANGKAUAN INTERKUARTIL, SIMPANGAN KUARTIL)",
@@ -73,21 +64,18 @@ const subtopics = [
     soal: 22,
     icon: TrendingDown,
     desc: "Jangkauan, IQR, SQ, simpangan rata-rata, varians, simpangan baku",
-    color: "orange",
-    gradient: "from-orange-500/20 to-red-500/10",
+    gradient: "from-orange-900/40 to-red-900/30",
     border: "border-orange-500/30",
-    text: "text-orange-300",
-    badge: "bg-orange-500/15 text-orange-400",
+    badge: "bg-orange-500/20 text-orange-300 border-orange-400/40",
     iconBg: "bg-orange-500/20",
     iconColor: "text-orange-400",
-    accent: "from-orange-400 to-red-400",
+    leftBar: "from-orange-400 to-red-500",
   },
 ];
 
 const StatistikaPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { isDark } = useTheme();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
@@ -112,28 +100,35 @@ const StatistikaPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 animate-slide-up">
+        <div className="flex flex-col gap-4 animate-slide-up">
           {subtopics.map((s, i) => {
             const Icon = s.icon;
             return (
               <button
                 key={s.label}
                 onClick={() => { playPopSound(); navigate(s.path); }}
-                className={`group relative flex items-center gap-4 bg-gradient-to-r ${s.gradient} backdrop-blur border ${s.border} rounded-2xl px-5 py-4
-                  statistika-subtopic-button hover:scale-[1.015] hover:shadow-lg transition-all duration-300 cursor-pointer text-left overflow-hidden animate-slide-up`}
-                style={{ animationDelay: `${i * 0.06}s` }}
+                className="group relative rounded-2xl overflow-hidden text-left transition-all duration-300 hover:scale-[1.01] animate-slide-up"
+                style={{ animationDelay: `${i * 0.07}s` }}
               >
-                <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${s.accent} rounded-l-2xl`} />
-                <div className={`w-10 h-10 rounded-xl ${s.iconBg} border ${s.border} flex items-center justify-center shrink-0`}>
-                  <Icon className={`w-5 h-5 ${s.iconColor}`} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className={`statistika-subtopic-title font-body text-sm font-bold ${isDark ? s.text : "text-slate-800"} leading-tight mb-1`}>{s.label}</p>
-                  <p className={`statistika-subtopic-description ${isDark ? "text-white/40" : "text-slate-600"} text-[10px] font-body leading-snug`}>{s.desc}</p>
-                </div>
-                <div className="flex flex-col items-end gap-1 shrink-0">
-                  <span className={`statistika-subtopic-count text-[10px] font-bold px-2 py-0.5 rounded-full ${isDark ? s.badge : "bg-slate-100 text-slate-700 border border-slate-300"}`}>{s.soal} {t('practice.suffixSoal')}</span>
-                  <ChevronRight className={`statistika-subtopic-arrow w-4 h-4 ${isDark ? s.iconColor : "text-slate-700"} group-hover:translate-x-1 transition-transform`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.gradient} backdrop-blur`} />
+                <div className={`absolute inset-0 border ${s.border} rounded-2xl group-hover:border-opacity-60 transition-colors`} />
+                <div className={`absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b ${s.leftBar} rounded-l-2xl`} />
+                <div className="relative px-5 py-4 flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-xl ${s.iconBg} border ${s.border} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-6 h-6 ${s.iconColor}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-display text-sm font-bold text-white">{s.label}</span>
+                    </div>
+                    <p className="text-white/40 text-xs font-body">{s.desc}</p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-full border ${s.badge}`}>
+                      {s.soal} {t('practice.suffixSoal')}
+                    </span>
+                    <ChevronRight className={`w-4 h-4 ${s.iconColor} group-hover:translate-x-1 transition-transform`} />
+                  </div>
                 </div>
               </button>
             );
