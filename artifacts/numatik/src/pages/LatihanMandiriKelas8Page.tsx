@@ -28,7 +28,7 @@ const LatihanMandiriKelas8Page = () => {
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
         <GraduationCap className="w-12 h-12 text-accent mx-auto mb-4" />
         <h1 className="font-display text-2xl md:text-3xl font-bold text-primary text-glow-cyan mb-2 text-center">
-          {t('practice.titleGrade8')}
+          {t('practice.title')}
         </h1>
         <p className="text-white/60 text-sm text-center mb-8 font-body">
           {t('practice.selectTopic')}
