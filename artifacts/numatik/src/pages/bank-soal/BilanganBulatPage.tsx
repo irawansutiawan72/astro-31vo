@@ -18,7 +18,7 @@ const toReadableMath = (math: string) =>
 
 const TKA_QUESTION_COUNT = 23;
 
-const tkaQuestions: OlympiadQuestion[] = [
+const tkaQuestionPrompts: OlympiadQuestion[] = [
   { no: 1, category: "TKA Bilangan Bulat · Pilihan Ganda", soal: "Hasil dari −18 + 42 ÷ (−6) × 3 adalah ....", options: ["A. −39", "B. −33", "C. 3", "D. 33"] },
   {
     no: 2,
@@ -209,6 +209,49 @@ const tkaQuestions: OlympiadQuestion[] = [
     ],
   },
 ];
+
+const tkaAnswerKeys: Record<number, Pick<OlympiadQuestion, "type" | "correctIndex" | "correctIndices" | "statementAnswers">> = {
+  1: { type: "pg", correctIndex: 0 },
+  2: { type: "mcma", correctIndices: [0, 2, 3] },
+  3: { type: "pgkbs", statementAnswers: [true, false, true] },
+  4: { type: "pg", correctIndex: 2 },
+  5: { type: "pg", correctIndex: 0 },
+  6: { type: "pg", correctIndex: 1 },
+  7: { type: "mcma", correctIndices: [0, 2, 3] },
+  8: { type: "pgkbs", statementAnswers: [true, false, false] },
+  9: { type: "pg", correctIndex: 0 },
+  10: { type: "mcma", correctIndices: [0, 2] },
+  11: { type: "pg", correctIndex: 2 },
+  12: { type: "pg", correctIndex: 0 },
+  13: { type: "pgkbs", statementAnswers: [true, false, true] },
+  14: { type: "mcma", correctIndices: [0, 1, 2] },
+  15: { type: "pgkbs", statementAnswers: [true, false, true] },
+  16: { type: "pg", correctIndex: 0 },
+  17: { type: "pg", correctIndex: 2 },
+  18: { type: "mcma", correctIndices: [0, 1, 3] },
+  19: { type: "pg", correctIndex: 2 },
+  20: { type: "pg", correctIndex: 2 },
+  21: { type: "pg", correctIndex: 2 },
+  22: { type: "mcma", correctIndices: [0, 1, 2] },
+  23: { type: "mcma", correctIndices: [0, 1, 2] },
+};
+
+const editTkaQuestion = (question: OlympiadQuestion): OlympiadQuestion => ({
+  ...question,
+  soal: question.soal
+    .replace(/^Hasil dari/, "Tentukan nilai")
+    .replace(/Manakah pernyataan-pernyataan berikut yang BENAR\? Klik semua yang benar!/, "Pilih semua pernyataan yang tepat berdasarkan informasi berikut.")
+    .replace(/Tentukan Benar atau Salah untuk setiap pernyataan berikut!/, "Nilailah setiap pernyataan berikut dengan memilih Benar atau Salah.")
+    .replace(/Tentukan Benar atau Salah untuk setiap pernyataan tentang suhu berikut!/, "Nilailah setiap pernyataan suhu berikut dengan memilih Benar atau Salah.")
+    .replace(/Pilihlah semua pernyataan yang BENAR!/, "Pilih semua pernyataan yang tepat.")
+    .replace(/Pilih semua pernyataan yang BENAR!/, "Pilih semua pernyataan yang tepat.")
+    .replace(/Pilih semua estimasi yang benar/, "Tentukan semua estimasi yang masuk akal"),
+});
+
+const tkaQuestions: OlympiadQuestion[] = tkaQuestionPrompts.map((question) => ({
+  ...editTkaQuestion(question),
+  ...tkaAnswerKeys[question.no],
+}));
 
 const bankQuestions: OlympiadQuestion[] = [
   ...tkaQuestions,
