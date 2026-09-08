@@ -6,6 +6,7 @@ import { playPopSound } from "@/hooks/useAudio";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Shuffle } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import GSLDiagram from "./GSLDiagram";
 
 type Part = { label: string; math?: string; text?: string };
@@ -27,6 +28,7 @@ const diffColor: Record<string, string> = {
 const GSPDPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const p = 'practice.garisSinggungLingkaran.gspd';
 
   const diffLabels: Record<string, string> = {
@@ -100,7 +102,7 @@ const GSPDPage = () => {
 
         <div className="mb-5 bg-rose-900/20 border border-rose-500/20 rounded-xl p-4">
           <p className="text-rose-300 text-xs font-bold mb-2">{t(`${p}.formulaBoxTitle`)}</p>
-          <div className="bg-white/5 rounded-lg px-3 py-3 mb-2 flex justify-center">
+          <div className={`${isDark ? "bg-white/5 text-white" : "bg-gray-50 text-gray-900"} rounded-lg px-3 py-3 mb-2 flex justify-center`}>
             <BlockMath math="d_{GSPD} = \sqrt{p^2 - (R + r)^2}" />
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs">
@@ -110,9 +112,9 @@ const GSPDPage = () => {
               { l: t(`${p}.legendSyaratL`), v: "p > R + r" },
               { l: "GSPD < GSPL", v: t(`${p}.legendRelation`) },
             ].map(x => (
-              <div key={x.l} className="bg-white/5 rounded-lg px-2 py-2">
+              <div key={x.l} className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-2 py-2`}>
                 <span className="text-rose-400 font-bold">{x.l}: </span>
-                <span className="text-white/60">{x.v}</span>
+                <span className={isDark ? "text-white/60" : "text-gray-600"}>{x.v}</span>
               </div>
             ))}
           </div>
@@ -122,7 +124,7 @@ const GSPDPage = () => {
           {questions.map((q, i) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-900/30 via-slate-900/80 to-pink-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-rose-900/30 via-slate-900/80 to-pink-900/30" : "from-rose-50/60 via-white/80 to-pink-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-rose-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-rose-400 to-pink-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -141,9 +143,9 @@ const GSPDPage = () => {
                         </span>
                       )}
                     </div>
-                    {q.content && <p className="font-body text-sm text-white/90 leading-relaxed mb-3 whitespace-pre-line">{q.content}</p>}
+                    {q.content && <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-gray-800"} leading-relaxed mb-3 whitespace-pre-line`}>{q.content}</p>}
                     {q.mathContent && (
-                      <div className="mb-3 bg-rose-500/10 border border-rose-500/20 rounded-lg px-4 py-2 flex justify-center">
+                      <div className={`mb-3 ${isDark ? "bg-rose-500/10 text-white" : "bg-rose-50 text-gray-900"} border border-rose-500/20 rounded-lg px-4 py-2 flex justify-center`}>
                         <BlockMath math={q.mathContent} />
                       </div>
                     )}
@@ -151,11 +153,11 @@ const GSPDPage = () => {
                     {q.parts && (
                       <div className="flex flex-col gap-2">
                         {q.parts.map((part, pi) => (
-                          <div key={pi} className="flex items-start gap-2 rounded-lg px-3 py-2 bg-white/5">
+                          <div key={pi} className={`flex items-start gap-2 rounded-lg px-3 py-2 ${isDark ? "bg-white/5" : "bg-gray-50"}`}>
                             <span className="text-rose-300 text-xs font-bold shrink-0 mt-0.5 min-w-[28px]">{part.label}</span>
                             {part.math
-                              ? <div className="text-white text-sm overflow-x-auto"><InlineMath math={part.math} /></div>
-                              : <p className="font-body text-sm text-white/80">{part.text}</p>
+                              ? <div className={`${isDark ? "text-white" : "text-gray-900"} text-sm overflow-x-auto`}><InlineMath math={part.math} /></div>
+                              : <p className={`font-body text-sm ${isDark ? "text-white/80" : "text-gray-700"}`}>{part.text}</p>
                             }
                           </div>
                         ))}

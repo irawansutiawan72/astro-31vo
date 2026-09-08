@@ -6,6 +6,7 @@ import { playPopSound } from "@/hooks/useAudio";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { RefreshCw } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type Part = { label: string; math?: string; text?: string };
 type Q = {
@@ -17,7 +18,7 @@ type Q = {
 };
 const Qn = (n: number, title: string, rest: Omit<Q, "n" | "title">): Q => ({ n, title, ...rest });
 
-const BG = "rgba(2,8,23,0.97)";
+const BG = "var(--diagram-bg)";
 const VC = "#a78bfa";
 
 /* ─── helpers ─────────────────────────────────────────── */
@@ -393,8 +394,12 @@ const diffColor: Record<string, string> = {
 const SabukLilitanPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   return (
-    <div className="animation-submaterial-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div
+      className="animation-submaterial-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden"
+      style={{ "--diagram-bg": isDark ? "rgba(2,8,23,0.97)" : "rgba(241,245,249,0.97)", "--diagram-text": isDark ? "#e2e8f0" : "#475569" } as React.CSSProperties}
+    >
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
@@ -417,32 +422,32 @@ const SabukLilitanPage = () => {
         <div className="mb-5 bg-violet-900/20 border border-violet-500/20 rounded-xl p-4">
           <p className="text-violet-300 text-xs font-bold mb-2">📌 Rumus Panjang Sabuk Lilitan Minimal</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="bg-white/5 rounded-lg px-3 py-2">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
               <p className="text-violet-300 text-[10px] font-bold mb-1">n lingkaran sama besar (berjejer):</p>
               <div className="flex justify-center">
                 <BlockMath math="L = 2(n-1)(2r) + 2\pi r" />
               </div>
             </div>
-            <div className="bg-white/5 rounded-lg px-3 py-2">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
               <p className="text-violet-300 text-[10px] font-bold mb-1">Susunan grid m × n:</p>
               <div className="flex justify-center">
                 <BlockMath math="L = 2(n{-}1)(2r) + 2(m{-}1)(2r) + 2\pi r" />
               </div>
             </div>
-            <div className="bg-white/5 rounded-lg px-3 py-2">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
               <p className="text-violet-300 text-[10px] font-bold mb-1">Susunan segitiga sama sisi:</p>
               <div className="flex justify-center">
                 <BlockMath math="L = 3(2r) + 2\pi r" />
               </div>
             </div>
-            <div className="bg-white/5 rounded-lg px-3 py-2">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
               <p className="text-violet-300 text-[10px] font-bold mb-1">Dua lingkaran berbeda (pendekatan):</p>
               <div className="flex justify-center">
                 <BlockMath math="L \approx 2\,d_{\text{GSPL}} + \pi(R+r)" />
               </div>
             </div>
           </div>
-          <div className="mt-2 bg-white/5 rounded-lg px-3 py-2 text-xs text-white/60 font-body">
+          <div className={`mt-2 ${isDark ? "bg-white/5 text-white/60" : "bg-gray-50 text-gray-600"} rounded-lg px-3 py-2 text-xs font-body`}>
             <span className="text-violet-300 font-bold">Kunci: </span>
             Panjang tali = Bagian lurus + Bagian busur. Busur total untuk semua susunan simetris selalu = 2πr (satu keliling penuh).
           </div>
@@ -452,7 +457,7 @@ const SabukLilitanPage = () => {
           {questions.map((q, i) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-slate-900/80 to-purple-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-violet-900/30 via-slate-900/80 to-purple-900/30" : "from-violet-50/60 via-white/80 to-purple-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-violet-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-violet-400 to-fuchsia-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -471,16 +476,16 @@ const SabukLilitanPage = () => {
                         </span>
                       )}
                     </div>
-                    {q.content && <p className="font-body text-sm text-white/90 leading-relaxed mb-3 whitespace-pre-line">{q.content}</p>}
+                    {q.content && <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-gray-800"} leading-relaxed mb-3 whitespace-pre-line`}>{q.content}</p>}
                     {q.diagram && <div className="mb-3 flex justify-center">{q.diagram}</div>}
                     {q.parts && (
                       <div className="flex flex-col gap-2">
                         {q.parts.map((p, pi) => (
-                          <div key={pi} className="flex items-start gap-2 rounded-lg px-3 py-2 bg-white/5">
+                          <div key={pi} className={`flex items-start gap-2 rounded-lg px-3 py-2 ${isDark ? "bg-white/5" : "bg-gray-50"}`}>
                             <span className="text-violet-300 text-xs font-bold shrink-0 mt-0.5 min-w-[28px]">{p.label}</span>
                             {p.math
-                              ? <div className="text-white text-sm overflow-x-auto"><InlineMath math={p.math} /></div>
-                              : <p className="font-body text-sm text-white/80">{p.text}</p>
+                              ? <div className={`${isDark ? "text-white" : "text-gray-900"} text-sm overflow-x-auto`}><InlineMath math={p.math} /></div>
+                              : <p className={`font-body text-sm ${isDark ? "text-white/80" : "text-gray-700"}`}>{p.text}</p>
                             }
                           </div>
                         ))}
