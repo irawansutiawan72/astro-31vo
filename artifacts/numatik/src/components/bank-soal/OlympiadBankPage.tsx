@@ -8,7 +8,7 @@ type OlympiadQuestion = {
   category?: string;
   type?: "pg" | "mcma" | "pgkbs";
   options?: string[];
-  diagram?: "numberLine";
+  diagram?: "numberLine" | "temperatureGlasses";
   correctIndex?: number;
   correctIndices?: number[];
   statementAnswers?: boolean[];
@@ -108,6 +108,7 @@ function QuestionCard({
     <p className="whitespace-pre-line text-base leading-7">{question.soal}</p>
     {question.image && <img src={question.image} alt={`Gambar soal ${question.no}`} className="mx-auto my-4 max-h-72 max-w-full rounded-lg object-contain" />}
     {question.diagram === "numberLine" && <IntegerNumberLine />}
+    {question.diagram === "temperatureGlasses" && <TemperatureGlassesDiagram />}
     {isInteractive && question.type === "pg" && question.correctIndex !== undefined && (
       <div className="mt-4 grid gap-2">
         {question.options?.map((option, index) => {
@@ -268,6 +269,32 @@ function IntegerNumberLine() {
           <g key={point.label}>
             <circle cx={xFor(point.value)} cy="58" r="7" fill={point.color} />
             <text x={xFor(point.value)} y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill={point.color}>{point.label}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function TemperatureGlassesDiagram() {
+  const glasses = [
+    { label: "W", temperature: "18°C", x: 28, color: "#fbbf24", fill: "#f59e0b", level: 102 },
+    { label: "X", temperature: "−25°C", x: 148, color: "#60a5fa", fill: "#2563eb", level: 122 },
+    { label: "Y", temperature: "−4°C", x: 268, color: "#a78bfa", fill: "#7c3aed", level: 114 },
+    { label: "Z", temperature: "7°C", x: 388, color: "#34d399", fill: "#059669", level: 108 },
+  ];
+
+  return (
+    <div className="my-4 overflow-x-auto rounded-xl border border-primary/20 bg-primary/5 px-3 py-2" aria-label="Ilustrasi empat gelas dengan suhu W 18 derajat Celsius, X minus 25 derajat Celsius, Y minus 4 derajat Celsius, dan Z 7 derajat Celsius">
+      <svg viewBox="0 0 520 180" className="mx-auto h-auto min-w-[440px] max-w-full" role="img">
+        <text x="260" y="18" textAnchor="middle" fontSize="13" fontWeight="700" fill="currentColor">Perbandingan suhu air dalam gelas</text>
+        {glasses.map((glass) => (
+          <g key={glass.label}>
+            <text x={glass.x + 42} y="43" textAnchor="middle" fontSize="15" fontWeight="700" fill={glass.color}>{glass.label}</text>
+            <path d={`M${glass.x + 12} 55 L${glass.x + 72} 55 L${glass.x + 64} 143 Q${glass.x + 42} 158 ${glass.x + 20} 143 Z`} fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
+            <path d={`M${glass.x + 20} ${glass.level} L${glass.x + 64} ${glass.level} L${glass.x + 61} 140 Q${glass.x + 42} 151 ${glass.x + 23} 140 Z`} fill={glass.fill} fillOpacity="0.7" />
+            <line x1={glass.x + 20} y1={glass.level} x2={glass.x + 64} y2={glass.level} stroke={glass.color} strokeWidth="2" />
+            <text x={glass.x + 42} y="174" textAnchor="middle" fontSize="12" fontWeight="600" fill="currentColor">{glass.temperature}</text>
           </g>
         ))}
       </svg>
