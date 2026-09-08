@@ -4,12 +4,14 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { Circle } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type SubPart = { label: string; img: string; alt: string };
 
 const KaitanBangunDatarPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const p = 'practice.lingkaran.kaitanBangunDatar';
 
   const parts: SubPart[] = [
@@ -48,7 +50,7 @@ const KaitanBangunDatarPage = () => {
         </div>
 
         <div className="relative rounded-2xl overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-slate-900/80 to-purple-900/30 backdrop-blur" />
+          <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-violet-900/30 via-slate-900/80 to-purple-900/30" : "from-violet-50/60 via-white/90 to-purple-50/40"} backdrop-blur`} />
           <div className="absolute inset-0 border border-violet-500/20 rounded-2xl" />
           <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-violet-400 to-purple-500 rounded-l-2xl" />
           <div className="relative px-5 py-5">
@@ -60,12 +62,12 @@ const KaitanBangunDatarPage = () => {
                 <span className="text-violet-400 text-[10px] font-bold uppercase tracking-wider bg-violet-500/10 px-2 py-0.5 rounded inline-block mb-3">
                   {t(`${p}.questionTitle`)}
                 </span>
-                <p className="font-body text-sm text-white/90 leading-relaxed mb-4">
+                <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-slate-700"} leading-relaxed mb-4`}>
                   {t(`${p}.content`)}
                 </p>
                 <div className="flex flex-col gap-5">
                   {parts.map((pt) => (
-                    <div key={pt.label} className="bg-white/5 rounded-xl p-3">
+                    <div key={pt.label} className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-xl p-3`}>
                       <span className="text-violet-300 text-xs font-bold mb-3 block">{pt.label}</span>
                       <div className="flex justify-center bg-white/95 rounded-lg p-3 [@media(orientation:landscape)]:w-fit [@media(orientation:landscape)]:mx-auto">
                         <img

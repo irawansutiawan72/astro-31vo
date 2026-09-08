@@ -6,6 +6,7 @@ import { playPopSound } from "@/hooks/useAudio";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Circle } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import CircleDiagram, { CircleDiagramProps } from "./CircleDiagram";
 
 type Part = { label: string; math?: string; text?: string };
@@ -21,6 +22,7 @@ const Qf = (n: number, title: string, rest: Omit<Q, "n" | "title">): Q => ({ n, 
 const PenerapanKontekstualPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const lp = "practice.lingkaran.penerapanKontekstual";
 
   const refFormulas = [
@@ -216,9 +218,9 @@ const PenerapanKontekstualPage = () => {
           <p className="text-rose-300 text-xs font-bold mb-2">{t(`${lp}.refBoxTitle`)}</p>
           <div className="grid grid-cols-2 gap-2 text-xs font-body">
             {refFormulas.map(r => (
-              <div key={r.n} className="bg-white/5 rounded-lg px-3 py-2">
+              <div key={r.n} className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
                 <span className={`font-bold ${r.c}`}>{r.n}: </span>
-                <span className="text-white/60">{r.d}</span>
+                <span className={isDark ? "text-white/60" : "text-slate-600"}>{r.d}</span>
               </div>
             ))}
           </div>
@@ -228,7 +230,7 @@ const PenerapanKontekstualPage = () => {
           {questions.map((q, i) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${i * 0.02}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-900/30 via-slate-900/80 to-pink-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-rose-900/30 via-slate-900/80 to-pink-900/30" : "from-rose-50/60 via-white/90 to-pink-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-rose-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-rose-400 to-pink-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -245,13 +247,13 @@ const PenerapanKontekstualPage = () => {
                         <img src={q.img} alt={q.imgAlt ?? ""} className="max-w-[220px] w-full object-contain rounded-lg bg-white/90 p-2" />
                         {q.imgCaption && (
                           <a href={q.imgCaption} target="_blank" rel="noopener noreferrer"
-                            className="text-[10px] text-white/40 hover:text-rose-300 transition-colors break-all text-center font-body">
+                            className={`text-[10px] ${isDark ? "text-white/40" : "text-slate-500"} hover:text-rose-300 transition-colors break-all text-center font-body`}>
                             {q.imgCaption}
                           </a>
                         )}
                       </div>
                     )}
-                    {q.content && <p className="font-body text-sm text-white/90 whitespace-pre-line leading-relaxed mb-3">{q.content}</p>}
+                    {q.content && <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-slate-700"} whitespace-pre-line leading-relaxed mb-3`}>{q.content}</p>}
                     {q.diagram && (
                       <div className="mb-3 flex justify-center">
                         <CircleDiagram {...q.diagram} />
@@ -260,11 +262,11 @@ const PenerapanKontekstualPage = () => {
                     {q.parts && (
                       <div className="flex flex-col gap-2">
                         {q.parts.map((pt, pi) => (
-                          <div key={pi} className="flex items-start gap-2 bg-white/5 rounded-lg px-3 py-2">
+                          <div key={pi} className={`flex items-start gap-2 ${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
                             <span className="text-rose-300 text-xs font-bold shrink-0 mt-0.5 min-w-[28px]">{pt.label}</span>
                             {pt.math
-                              ? <div className="text-white text-sm overflow-x-auto"><InlineMath math={pt.math} /></div>
-                              : <p className="font-body text-sm text-white/80 whitespace-pre-line">{pt.text}</p>
+                              ? <div className={`${isDark ? "text-white" : "text-slate-800"} text-sm overflow-x-auto`}><InlineMath math={pt.math} /></div>
+                              : <p className={`font-body text-sm ${isDark ? "text-white/80" : "text-slate-700"} whitespace-pre-line`}>{pt.text}</p>
                             }
                           </div>
                         ))}

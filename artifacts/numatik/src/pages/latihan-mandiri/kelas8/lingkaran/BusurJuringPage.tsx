@@ -4,6 +4,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { Circle } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type Choice = { label: string; text: string };
 type Soal = {
@@ -18,6 +19,7 @@ type Soal = {
 const BusurJuringPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const p = "practice.lingkaran.busurJuring";
 
   const soalList: Soal[] = [
@@ -125,7 +127,7 @@ const BusurJuringPage = () => {
               className="relative rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${i * 0.05}s` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/30 via-slate-900/80 to-amber-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-yellow-900/30 via-slate-900/80 to-amber-900/30" : "from-yellow-50/60 via-white/90 to-amber-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-yellow-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-yellow-400 to-amber-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -134,7 +136,7 @@ const BusurJuringPage = () => {
                     <span className="text-yellow-300 text-xs font-bold">{soal.n}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-body text-sm text-white/90 leading-relaxed mb-1">{soal.question}</p>
+                    <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-slate-700"} leading-relaxed mb-1`}>{soal.question}</p>
                     {soal.note && (
                       <p className="text-yellow-300/70 text-xs mb-3">{soal.note}</p>
                     )}
@@ -152,9 +154,9 @@ const BusurJuringPage = () => {
                     {soal.choices && (
                       <div className="flex flex-col gap-1.5 mt-3">
                         {soal.choices.map((c) => (
-                          <div key={c.label} className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2">
+                          <div key={c.label} className={`flex items-center gap-2 ${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
                             <span className="text-yellow-300 text-xs font-bold shrink-0 min-w-[20px]">{c.label}</span>
-                            <span className="font-body text-sm text-white/80">{c.text}</span>
+                            <span className={`font-body text-sm ${isDark ? "text-white/80" : "text-slate-700"}`}>{c.text}</span>
                           </div>
                         ))}
                       </div>

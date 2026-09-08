@@ -6,6 +6,7 @@ import { playPopSound } from "@/hooks/useAudio";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Circle } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import CircleDiagram, { CircleDiagramProps } from "./CircleDiagram";
 
 type Part = { label: string; math?: string; text?: string };
@@ -20,6 +21,7 @@ const Qf = (n: number, title: string, rest: Omit<Q, "n" | "title">): Q => ({ n, 
 const SudutPusatKelilingPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const p = 'practice.lingkaran.sudutPusatKeliling';
   const tp = (key: string) => t(`${p}.${key}`);
 
@@ -447,14 +449,14 @@ const SudutPusatKelilingPage = () => {
         <div className="mb-5 bg-violet-900/20 border border-violet-500/20 rounded-xl p-4">
           <p className="text-violet-300 text-xs font-bold mb-3">{tp('refBox.label')}</p>
           <div className="grid grid-cols-1 gap-3">
-            <div className="bg-white/5 rounded-xl p-3 text-center">
+            <div className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-xl p-3 text-center`}>
               <BlockMath math={`\\angle \\text{${pusatText}} = 2 \\times \\angle \\text{${kelilingText}} \\text{${busurSamaText}}`} />
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs font-body">
               {refCards.map(r => (
-                <div key={r.n} className="bg-white/5 rounded-lg px-3 py-2">
+                <div key={r.n} className={`${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
                   <span className={`font-bold ${r.c}`}>{r.n}: </span>
-                  <span className="text-white/60">{r.d}</span>
+                  <span className={isDark ? "text-white/60" : "text-slate-600"}>{r.d}</span>
                 </div>
               ))}
             </div>
@@ -465,7 +467,7 @@ const SudutPusatKelilingPage = () => {
           {questions.map((q, i) => (
             <div key={q.n} className="relative rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${i * 0.02}s` }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-slate-900/80 to-purple-900/30 backdrop-blur" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? "from-violet-900/30 via-slate-900/80 to-purple-900/30" : "from-violet-50/60 via-white/90 to-purple-50/40"} backdrop-blur`} />
               <div className="absolute inset-0 border border-violet-500/20 rounded-2xl" />
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-violet-400 to-purple-500 rounded-l-2xl" />
               <div className="relative px-5 py-4">
@@ -477,7 +479,7 @@ const SudutPusatKelilingPage = () => {
                     <span className="text-violet-400 text-[10px] font-bold uppercase tracking-wider bg-violet-500/10 px-2 py-0.5 rounded inline-block mb-2">
                       {q.title}
                     </span>
-                    {q.content && <p className="font-body text-sm text-white/90 whitespace-pre-line leading-relaxed mb-3">{q.content}</p>}
+                    {q.content && <p className={`font-body text-sm ${isDark ? "text-white/90" : "text-slate-700"} whitespace-pre-line leading-relaxed mb-3`}>{q.content}</p>}
                     {q.diagram && (
                       <div className="mb-3 flex justify-center">
                         <CircleDiagram {...q.diagram} />
@@ -486,11 +488,11 @@ const SudutPusatKelilingPage = () => {
                     {q.parts && (
                       <div className="flex flex-col gap-2">
                         {q.parts.map((part, pi) => (
-                          <div key={pi} className="flex items-start gap-2 bg-white/5 rounded-lg px-3 py-2">
+                          <div key={pi} className={`flex items-start gap-2 ${isDark ? "bg-white/5" : "bg-gray-50"} rounded-lg px-3 py-2`}>
                             <span className="text-violet-300 text-xs font-bold shrink-0 mt-0.5 min-w-[36px]">{part.label}</span>
                             {part.math
-                              ? <div className="text-white text-sm overflow-x-auto"><InlineMath math={part.math} /></div>
-                              : <p className="font-body text-sm text-white/80 whitespace-pre-line">{part.text}</p>
+                              ? <div className={`${isDark ? "text-white" : "text-slate-800"} text-sm overflow-x-auto`}><InlineMath math={part.math} /></div>
+                              : <p className={`font-body text-sm ${isDark ? "text-white/80" : "text-slate-700"} whitespace-pre-line`}>{part.text}</p>
                             }
                           </div>
                         ))}
