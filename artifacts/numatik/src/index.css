@@ -941,6 +941,9 @@
 
 .tka-responsive-image-half-content {
   max-height: 210px;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain;
 }
 
 .tka-responsive-image-small {
@@ -956,6 +959,18 @@
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Keep every visual's intrinsic ratio when its responsive wrapper changes
+   width. This covers both native <img> elements and AsyncImage's picture. */
+.tka-responsive-image-half img,
+.tka-responsive-image-small img,
+.tka-responsive-option-image img,
+.tka-responsive-diagram img,
+.tka-responsive-diagram svg {
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain;
 }
 
 @media (orientation: landscape) {
