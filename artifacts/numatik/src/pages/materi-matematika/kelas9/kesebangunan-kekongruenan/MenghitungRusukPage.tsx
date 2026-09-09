@@ -145,14 +145,14 @@ const DiagramContoh4Soal = () => (
     <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔRPQ</text>
 
     {/* Segitiga ABC — siku-siku di A */}
-    <polygon points="42,190 42,105 212,190" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polygon points="42,190 42,40 112,190" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
     <polyline points="42,178 54,178 54,190" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
     <text x="29" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
-    <text x="29" y="101" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
-    <text x="216" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
-    <text x="28" y="151" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
-    <text x="127" y="207" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
-    <text x="135" y="135" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(27 135 135)">13 cm</text>
+    <text x="116" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="29" y="36" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="77" y="207" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
+    <text x="28" y="116" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
+    <text x="79" y="116" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(-65 79 116)">13 cm</text>
 
     {/* Segitiga RPQ — siku-siku di R, arahnya berbeda */}
     <polygon points="470,90 270,190 470,190" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
@@ -175,23 +175,24 @@ const DiagramContoh4GambarUlang = () => (
     <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔR′P′Q′</text>
 
     {/* Segitiga ABC — arah acuan */}
-    <polygon points="42,175 42,95 222,175" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polygon points="42,175 42,45 102,175" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
     <polyline points="42,163 54,163 54,175" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
     <text x="29" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
-    <text x="29" y="91" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
-    <text x="226" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
-    <text x="28" y="137" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
-    <text x="132" y="192" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
+    <text x="106" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="29" y="41" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="72" y="192" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
+    <text x="28" y="112" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
+    <text x="69" y="111" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(-65 69 111)">13 cm</text>
 
     {/* Segitiga R′P′Q′ — digambar ulang dengan arah sama */}
-    <polygon points="282,175 282,75 482,175" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
+    <polygon points="282,175 362,175 282,45" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
     <polyline points="282,163 294,163 294,175" fill="none" stroke="#86efac" strokeWidth="1.5"/>
     <text x="269" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">R′</text>
-    <text x="269" y="71" fontSize="10" fill="#bbf7d0" fontWeight="bold">P′</text>
-    <text x="486" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q′</text>
-    <text x="267" y="127" textAnchor="middle" fontSize="9" fill="#86efac">10 cm</text>
-    <text x="382" y="192" textAnchor="middle" fontSize="9" fill="#86efac">24 cm</text>
-    <text x="382" y="118" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(27 382 118)">26 cm</text>
+    <text x="366" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">P′</text>
+    <text x="269" y="41" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q′</text>
+    <text x="322" y="192" textAnchor="middle" fontSize="9" fill="#86efac">10 cm</text>
+    <text x="267" y="112" textAnchor="middle" fontSize="9" fill="#86efac">24 cm</text>
+    <text x="332" y="111" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(-58 332 111)">26 cm</text>
 
     <text x="260" y="214" textAnchor="middle" fontSize="9" fill="#facc15">RP′ ↔ AB, RQ′ ↔ AC, P′Q′ ↔ BC</text>
   </svg>
