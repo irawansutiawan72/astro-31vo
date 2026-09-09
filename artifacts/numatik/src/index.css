@@ -961,19 +961,19 @@
 @media (orientation: landscape) {
   .tka-responsive-image-half,
   .tka-responsive-diagram {
-    width: 30%;
+    width: 52.5%;
   }
 
   .tka-responsive-image-half-content {
-    max-height: 140px;
+    max-height: 245px;
   }
 
   .tka-responsive-image-small {
-    width: 30%;
+    width: 70%;
   }
 
   .tka-responsive-option-image {
-    max-width: 36px;
+    max-width: 63px;
   }
 }
 
