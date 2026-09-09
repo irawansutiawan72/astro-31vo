@@ -139,6 +139,64 @@ const DiagramContoh2 = () => (
   </svg>
 );
 
+const DiagramContoh4Soal = () => (
+  <svg viewBox="0 0 520 245" className="w-full max-w-2xl mx-auto" role="img" aria-label="Dua segitiga siku-siku sebangun dengan arah berbeda">
+    <text x="130" y="20" textAnchor="middle" fontSize="11" fill="#93c5fd" fontWeight="bold">ΔABC</text>
+    <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔRPQ</text>
+
+    {/* Segitiga ABC — siku-siku di A */}
+    <polygon points="42,190 42,76 194,190" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polyline points="42,178 54,178 54,190" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
+    <text x="29" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
+    <text x="29" y="72" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="198" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="28" y="137" textAnchor="middle" fontSize="9" fill="#7dd3fc">6 cm</text>
+    <text x="118" y="207" textAnchor="middle" fontSize="9" fill="#7dd3fc">8 cm</text>
+    <text x="126" y="123" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(36 126 123)">10 cm</text>
+
+    {/* Segitiga RPQ — siku-siku di R, arahnya berbeda */}
+    <polygon points="424,70 310,190 424,190" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
+    <polyline points="412,178 412,190 424,190" fill="none" stroke="#86efac" strokeWidth="1.5"/>
+    <text x="428" y="66" fontSize="10" fill="#bbf7d0" fontWeight="bold">P</text>
+    <text x="299" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q</text>
+    <text x="428" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">R</text>
+    <text x="444" y="134" textAnchor="middle" fontSize="9" fill="#86efac">RP = ?</text>
+    <text x="367" y="207" textAnchor="middle" fontSize="9" fill="#86efac">RQ = 20 cm</text>
+    <text x="359" y="121" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(-46 359 121)">PQ = ?</text>
+
+    <line x1="252" y1="48" x2="252" y2="214" stroke="#475569" strokeDasharray="4 4" />
+    <text x="260" y="235" textAnchor="middle" fontSize="9" fill="#facc15">arah kedua segitiga berbeda</text>
+  </svg>
+);
+
+const DiagramContoh4GambarUlang = () => (
+  <svg viewBox="0 0 520 220" className="w-full max-w-2xl mx-auto" role="img" aria-label="Gambar ulang dua segitiga siku-siku dengan arah yang sama">
+    <text x="130" y="20" textAnchor="middle" fontSize="11" fill="#93c5fd" fontWeight="bold">ΔABC</text>
+    <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔR′P′Q′</text>
+
+    {/* Segitiga ABC — arah acuan */}
+    <polygon points="42,175 42,70 182,175" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polyline points="42,163 54,163 54,175" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
+    <text x="29" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
+    <text x="29" y="66" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="186" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="28" y="127" textAnchor="middle" fontSize="9" fill="#7dd3fc">6 cm</text>
+    <text x="112" y="192" textAnchor="middle" fontSize="9" fill="#7dd3fc">8 cm</text>
+
+    {/* Segitiga R′P′Q′ — digambar ulang dengan arah sama */}
+    <polygon points="302,175 302,55 462,175" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
+    <polyline points="302,163 314,163 314,175" fill="none" stroke="#86efac" strokeWidth="1.5"/>
+    <text x="289" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">R′</text>
+    <text x="289" y="51" fontSize="10" fill="#bbf7d0" fontWeight="bold">P′</text>
+    <text x="466" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q′</text>
+    <text x="287" y="117" textAnchor="middle" fontSize="9" fill="#86efac">15 cm</text>
+    <text x="382" y="192" textAnchor="middle" fontSize="9" fill="#86efac">20 cm</text>
+    <text x="378" y="105" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(37 378 105)">25 cm</text>
+
+    <text x="260" y="214" textAnchor="middle" fontSize="9" fill="#facc15">RP′ ↔ AB, RQ′ ↔ AC, P′Q′ ↔ BC</text>
+  </svg>
+);
+
 const ShadowAnimation = () => {
   const [angleDeg, setAngleDeg] = useState(63);
   const angleRad = (angleDeg * Math.PI) / 180;
@@ -382,15 +440,15 @@ const MenghitungRusukPage = () => {
                   <div className="bg-slate-900/60 rounded-lg p-4">
                     <BlockMath math="\frac{a}{p} = \frac{b}{q} \Rightarrow a \times q = b \times p" />
                   </div>
-                  <div className="bg-slate-900/60 rounded-lg p-3">
-                    <p className="font-body text-xs font-semibold text-green-300 mb-1">Kasus Bayangan (Kontekstual):</p>
-                    <BlockMath math="\frac{\text{tinggi orang}}{\text{tinggi pohon}} = \frac{\text{tinggi bayangan orang}}{\text{tinggi bayangan pohon}}" />
-                  </div>
                 </div>
                 <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-4">
                   <p className="font-body text-xs font-semibold text-slate-300 mb-2">🌳 ILUSTRASI BAYANGAN:</p>
                   <img src="/bayangan-orang-pohon.png" alt="Ilustrasi bayangan orang dan pohon" className="w-full max-w-lg mx-auto rounded-lg block" />
                   <p className="font-body text-xs text-white/40 text-center mt-2">gemini.google.com/app</p>
+                  <div className="bg-slate-900/60 rounded-lg p-3 mt-3">
+                    <p className="font-body text-xs font-semibold text-green-300 mb-1">Kasus Bayangan (Kontekstual):</p>
+                    <BlockMath math="\frac{\text{tinggi orang}}{\text{tinggi pohon}} = \frac{\text{tinggi bayangan orang}}{\text{tinggi bayangan pohon}}" />
+                  </div>
                 </div>
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
                   <p className="font-body text-sm text-yellow-200">
@@ -512,6 +570,41 @@ const MenghitungRusukPage = () => {
                         <BlockMath math="x = \frac{4 \times 3}{2} = \frac{12}{2} = 6 \text{ m}" />
                       </div>
                       <p><strong className="text-primary">Tinggi pohon = 6 m.</strong></p>
+                    </div>
+                  </div>
+                </div>
+                {/* SULIT — ARAH SEGITIGA BERBEDA */}
+                <div className="border-l-4 border-purple-500 pl-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-purple-500/20 text-purple-400 text-xs font-bold px-2 py-1 rounded">SULIT</span>
+                    <span className="font-body font-semibold text-white">Contoh 4</span>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-lg p-4">
+                    <p className="font-body text-sm text-white">
+                      Segitiga siku-siku <InlineMath math="\triangle ABC" /> dan <InlineMath math="\triangle RPQ" /> saling sebangun. Pada <InlineMath math="\triangle ABC" /> diketahui <InlineMath math="AB = 6" /> cm, <InlineMath math="AC = 8" /> cm, dan <InlineMath math="BC = 10" /> cm. Pada <InlineMath math="\triangle RPQ" /> diketahui <InlineMath math="RQ = 20" /> cm. Tentukan panjang <InlineMath math="RP" /> dan <InlineMath math="PQ" />! Perhatikan bahwa arah gambar kedua segitiga belum sama.
+                    </p>
+                  </div>
+                  <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
+                    <DiagramContoh4Soal />
+                  </div>
+                  <div className="bg-purple-500/5 border border-purple-500/20 rounded-lg p-4">
+                    <p className="font-body text-xs font-semibold text-purple-400 mb-3">PEMBAHASAN:</p>
+                    <div className="space-y-3 font-body text-sm text-white/80">
+                      <p><strong>1. Tentukan pasangan titik yang bersesuaian.</strong> Karena kedua segitiga sama-sama siku-siku, sudut siku-siku A bersesuaian dengan R. Dari urutan nama segitiga, diperoleh <InlineMath math="\triangle ABC \sim \triangle RPQ" />, sehingga <InlineMath math="AB \leftrightarrow RP" />, <InlineMath math="AC \leftrightarrow RQ" />, dan <InlineMath math="BC \leftrightarrow PQ" />.</p>
+                      <p><strong>2. Gambar ulang dengan arah yang sama.</strong> Memutar atau membalik gambar tidak mengubah ukuran segitiga. Gambar ulang membantu kita melihat pasangan sisi yang bersesuaian dengan jelas:</p>
+                      <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
+                        <DiagramContoh4GambarUlang />
+                      </div>
+                      <p><strong>3. Hitung faktor skala.</strong> Sisi <InlineMath math="AC" /> bersesuaian dengan <InlineMath math="RQ" />.</p>
+                      <div className="bg-slate-900/50 rounded p-3">
+                        <BlockMath math="k = \frac{RQ}{AC} = \frac{20}{8} = \frac{5}{2}" />
+                      </div>
+                      <p><strong>4. Tentukan sisi yang ditanyakan.</strong></p>
+                      <div className="bg-slate-900/50 rounded p-3">
+                        <BlockMath math="RP = k \times AB = \frac{5}{2} \times 6 = 15 \text{ cm}" />
+                        <BlockMath math="PQ = k \times BC = \frac{5}{2} \times 10 = 25 \text{ cm}" />
+                      </div>
+                      <p><strong className="text-purple-300">Jadi, RP = 15 cm dan PQ = 25 cm.</strong> Kunci utamanya adalah mencocokkan sisi berdasarkan pasangan titik, bukan berdasarkan arah gambar.</p>
                     </div>
                   </div>
                 </div>

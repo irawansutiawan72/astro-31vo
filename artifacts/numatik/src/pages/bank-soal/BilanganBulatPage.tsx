@@ -83,8 +83,14 @@ const tkaQuestionPrompts: OlympiadQuestion[] = [
   {
     no: 9,
     category: "TKA Bilangan Bulat · Pilihan Ganda",
-    soal: "Perhatikan garis bilangan berikut. Pernyataan yang BENAR adalah .... (i) P < R, (ii) Q = −2, (iii) nilai terbesar adalah R, (iv) P < Q, Q > R, dan R < S.",
+    soal: "Perhatikan gambar berikut. Pernyataan yang BENAR adalah ....",
     diagram: "numberLine",
+    statementList: [
+      "(i) P < R",
+      "(ii) Q = −2",
+      "(iii) Nilai terbesar adalah R",
+      "(iv) P < Q, Q > R, dan R < S",
+    ],
     options: ["A. (i) dan (ii)", "B. (ii) dan (iii)", "C. (ii) dan (iv)", "D. (iii) dan (iv)"],
   },
   {
@@ -123,13 +129,13 @@ const tkaQuestionPrompts: OlympiadQuestion[] = [
   {
     no: 14,
     category: "TKA Bilangan Bulat · Pilihan Ganda Kompleks",
-    soal: "Empat gelas diberi nama W, X, Y, dan Z. Suhunya W = 18°C, X = −25°C, Y = −4°C, dan Z = 7°C. Pilihlah semua pernyataan yang BENAR!",
+    soal: "Empat gelas diberi nama W, X, Y, dan Z. Pilihlah semua pernyataan yang BENAR berdasarkan gambar!",
     diagram: "temperatureGlasses",
     options: [
-      "A. Gelas dengan suhu air terendah adalah gelas X",
-      "B. Selisih suhu gelas X dan gelas Y adalah 21°C",
-      "C. Urutan suhu dari terendah ke tertinggi adalah X, Y, Z, W",
-      "D. Suhu rata-rata keempat gelas adalah −1°C",
+      "Gelas dengan suhu air terendah adalah gelas X",
+      "Selisih suhu gelas X dan gelas Y adalah 21°C",
+      "Urutan suhu dari terendah ke tertinggi adalah X, Y, Z, W",
+      "Suhu rata-rata keempat gelas adalah −1°C",
     ],
   },
   {

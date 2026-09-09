@@ -9,6 +9,7 @@ type OlympiadQuestion = {
   type?: "pg" | "mcma" | "pgkbs";
   options?: string[];
   diagram?: "numberLine" | "temperatureGlasses";
+  statementList?: string[];
   correctIndex?: number;
   correctIndices?: number[];
   statementAnswers?: boolean[];
@@ -109,6 +110,11 @@ function QuestionCard({
     {question.image && <img src={question.image} alt={`Gambar soal ${question.no}`} className="mx-auto my-4 max-h-72 max-w-full rounded-lg object-contain" />}
     {question.diagram === "numberLine" && <IntegerNumberLine />}
     {question.diagram === "temperatureGlasses" && <TemperatureGlassesDiagram />}
+    {question.statementList && (
+      <ol className="mt-3 grid gap-1 pl-6 text-base leading-7 marker:font-semibold marker:text-primary">
+        {question.statementList.map((statement) => <li key={statement}>{statement}</li>)}
+      </ol>
+    )}
     {isInteractive && question.type === "pg" && question.correctIndex !== undefined && (
       <div className="mt-4 grid gap-2">
         {question.options?.map((option, index) => {
