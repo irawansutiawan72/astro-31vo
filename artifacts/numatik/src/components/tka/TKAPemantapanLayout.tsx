@@ -54,7 +54,7 @@ interface Props {
   gambarMap?: Record<number, React.ReactNode>;
   autoRevealOnAnswer?: boolean;
   showImageSourceLinks?: boolean;
-  imageScale?: "default" | "half";
+  imageScale?: "default" | "half" | "responsiveHalf";
 }
 
 const getGoogleDriveFileId = (value: string) => {
@@ -82,11 +82,24 @@ const isImageUrl = (value: string) => {
     || /blob\.vusercontent\.net|images\.|image\.|imgur\.com|cloudinary\.com|unsplash\.com|googleusercontent\.com/i.test(trimmed);
 };
 
-const renderQuestionImage = (source: string, soalNo: number, imageScale: "default" | "half" = "default") => {
+type ImageScale = NonNullable<Props["imageScale"]>;
+
+const renderQuestionImage = (source: string, soalNo: number, imageScale: ImageScale = "default") => {
   const imageUrl = normalizeImageUrl(source);
-  const isHalf = imageScale === "half";
+  const isHalf = imageScale !== "default";
+  const isResponsiveHalf = imageScale === "responsiveHalf";
+  const imageWrapperClass = isResponsiveHalf
+    ? "tka-responsive-image-half"
+    : isHalf
+      ? "max-w-[50%]"
+      : "max-w-xl";
+  const imageHeightClass = isResponsiveHalf
+    ? "tka-responsive-image-half-content"
+    : isHalf
+      ? "max-h-[210px]"
+      : "max-h-[420px]";
   return (
-    <div className={`mx-auto w-full ${isHalf ? "max-w-[50%]" : "max-w-xl"}`}>
+    <div className={`mx-auto w-full ${imageWrapperClass}`}>
       <a
         href={imageUrl}
         target="_blank"
@@ -98,7 +111,7 @@ const renderQuestionImage = (source: string, soalNo: number, imageScale: "defaul
           src={imageUrl}
           alt={`Gambar soal ${soalNo}`}
           wrapperClassName="rounded-xl"
-          className={`${isHalf ? "max-h-[210px]" : "max-h-[420px]"} w-full rounded-xl object-contain bg-white p-2`}
+          className={`${imageHeightClass} w-full rounded-xl object-contain bg-white p-2`}
           showSkeleton
         />
       </a>
@@ -114,13 +127,19 @@ const renderQuestionImage = (source: string, soalNo: number, imageScale: "defaul
   );
 };
 
-const renderWithLatex = (text: string, imageScale: "default" | "half" = "default") => {
+const renderWithLatex = (text: string, imageScale: ImageScale = "default") => {
   const trimmed = text.trim();
   if (isImageUrl(trimmed)) {
-    const imageWrapperClass = imageScale === "half" ? "my-3 mx-auto w-1/2 max-w-xl rounded-xl" : "my-3 mx-auto max-w-xl rounded-xl";
-    const imageClass = imageScale === "half"
-      ? "max-h-[210px] w-full object-contain rounded-xl bg-white p-2"
-      : "max-h-[420px] w-full object-contain rounded-xl bg-white p-2";
+    const imageWrapperClass = imageScale === "responsiveHalf"
+      ? "my-3 mx-auto tka-responsive-image-half rounded-xl"
+      : imageScale === "half"
+        ? "my-3 mx-auto w-1/2 max-w-xl rounded-xl"
+        : "my-3 mx-auto max-w-xl rounded-xl";
+    const imageClass = imageScale === "responsiveHalf"
+      ? "tka-responsive-image-half-content w-full object-contain rounded-xl bg-white p-2"
+      : imageScale === "half"
+        ? "max-h-[210px] w-full object-contain rounded-xl bg-white p-2"
+        : "max-h-[420px] w-full object-contain rounded-xl bg-white p-2";
     return (
       <AsyncImage
         src={normalizeImageUrl(trimmed)}
@@ -416,8 +435,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         const imgMatch = trimmed.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
                         if (imgMatch) {
                           const sizeClass = imgMatch[2] === 'small'
-                            ? (imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
-                            : (imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm');
+                            ? (imageScale === "responsiveHalf"
+                              ? 'tka-responsive-image-small'
+                              : imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
+                            : (imageScale === "responsiveHalf"
+                              ? 'tka-responsive-image-half'
+                              : imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm');
                           return (
                             <div key={i} className="my-3 flex justify-center">
                               <div className={`${sizeClass} w-full`}>
@@ -429,10 +452,10 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                     className="block rounded-xl shadow-lg transition-transform hover:scale-[1.01]"
                                     title="Buka gambar sumber"
                                   >
-                                    <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt="Gambar materi" wrapperClassName="rounded-xl" className={`${imageScale === "half" ? "max-h-[210px]" : "max-h-[420px]"} w-full rounded-xl object-contain bg-white p-2`} />
+                                    <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt="Gambar materi" wrapperClassName="rounded-xl" className={`${imageScale === "responsiveHalf" ? "tka-responsive-image-half-content" : imageScale === "half" ? "max-h-[210px]" : "max-h-[420px]"} w-full rounded-xl object-contain bg-white p-2`} />
                                   </a>
                                 ) : (
-                                  <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt="Gambar materi" wrapperClassName="rounded-xl" className={`${imageScale === "half" ? "max-h-[210px]" : "max-h-[420px]"} w-full rounded-xl object-contain bg-white p-2`} />
+                                  <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt="Gambar materi" wrapperClassName="rounded-xl" className={`${imageScale === "responsiveHalf" ? "tka-responsive-image-half-content" : imageScale === "half" ? "max-h-[210px]" : "max-h-[420px]"} w-full rounded-xl object-contain bg-white p-2`} />
                                 )}
                                 {showImageSourceLinks && (
                                   <a
@@ -569,7 +592,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             <Fragment key={lineIdx}>
                               {lineIdx > 0 && <br />}
                               {line.trim() === "[DIAGRAM]" ? (
-                                <div className="my-2 min-w-0 max-w-full overflow-x-auto">{diagram}</div>
+                                <div className={`my-2 min-w-0 max-w-full overflow-x-auto ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                               ) : contentRenderer(line)}
                             </Fragment>
                           ))}
@@ -580,7 +603,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── Optional diagram/image, placed after the statements ── */}
                     {!hasInlineVisual && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
-                        <div className="min-w-0 max-w-full">{diagram}</div>
+                        <div className={`min-w-0 max-w-full ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
                     )}
 
@@ -891,11 +914,15 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               // a fallback visual supplied through soalSvg/gambarMap.
                               diagramInserted = true;
                               const sizeClass = imgMatch[2] === 'small'
-                                ? (imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
-                                : (imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm w-full');
+                            ? (imageScale === "responsiveHalf"
+                              ? 'tka-responsive-image-small'
+                              : imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
+                            : (imageScale === "responsiveHalf"
+                              ? 'tka-responsive-image-half'
+                              : imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm w-full');
                               return (
                                 <div key={lineIdx} className="my-2 flex justify-center">
-                                  <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt={`Soal ${soal.no}`} wrapperClassName={`${sizeClass} rounded-xl`} className={`${imageScale === "half" ? "max-h-[210px]" : ""} w-full rounded-xl object-contain`} />
+                                  <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt={`Soal ${soal.no}`} wrapperClassName={`${sizeClass} rounded-xl`} className={`${imageScale === "responsiveHalf" ? "tka-responsive-image-half-content" : imageScale === "half" ? "max-h-[210px]" : ""} w-full rounded-xl object-contain`} />
                                 </div>
                               );
                             }
@@ -914,7 +941,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 {!hasInlineVisual && !diagramInserted && diagram && /berikut/i.test(line) && (
                                   (() => {
                                     diagramInserted = true;
-                                    return <div className="my-2 min-w-0 max-w-full overflow-x-auto">{diagram}</div>;
+                                    return <div className={`my-2 min-w-0 max-w-full overflow-x-auto ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>;
                                   })()
                                 )}
                               </Fragment>
@@ -976,7 +1003,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── Optional diagram/image, placed after the statements ── */}
                     {!diagramInserted && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
-                        <div className="min-w-0 max-w-full">{diagram}</div>
+                        <div className={`min-w-0 max-w-full ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
                     )}
 
@@ -1044,7 +1071,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 const pipeIdx = opt.indexOf('|');
                                 const isImg = pipeIdx !== -1 && (opt[pipeIdx + 1] === '/' || opt.slice(pipeIdx + 1, pipeIdx + 5) === 'http');
                                 if (isImg) {
-                                  return <AsyncImage src={normalizeImageUrl(opt.slice(pipeIdx + 1))} alt={`Pilihan ${letter}`} wrapperClassName={`${imageScale === "half" ? "max-w-[70px]" : "max-w-[140px]"} w-full`} className="w-full rounded bg-white p-1 object-contain" />;
+                                  return <AsyncImage src={normalizeImageUrl(opt.slice(pipeIdx + 1))} alt={`Pilihan ${letter}`} wrapperClassName={`${imageScale === "responsiveHalf" ? "tka-responsive-option-image" : imageScale === "half" ? "max-w-[70px]" : "max-w-[140px]"} w-full`} className="w-full rounded bg-white p-1 object-contain" />;
                                 }
                                 return <span className="leading-snug">{optionSvgMap?.[opt] ?? contentRenderer(opt.replace(/^[A-E]\.\s*/, ''))}</span>;
                               })()}
