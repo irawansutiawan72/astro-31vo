@@ -145,24 +145,24 @@ const DiagramContoh4Soal = () => (
     <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔRPQ</text>
 
     {/* Segitiga ABC — siku-siku di A */}
-    <polygon points="42,190 42,76 194,190" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polygon points="42,190 42,105 212,190" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
     <polyline points="42,178 54,178 54,190" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
     <text x="29" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
-    <text x="29" y="72" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
-    <text x="198" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
-    <text x="28" y="137" textAnchor="middle" fontSize="9" fill="#7dd3fc">6 cm</text>
-    <text x="118" y="207" textAnchor="middle" fontSize="9" fill="#7dd3fc">8 cm</text>
-    <text x="126" y="123" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(36 126 123)">10 cm</text>
+    <text x="29" y="101" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="216" y="202" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="28" y="151" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
+    <text x="127" y="207" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
+    <text x="135" y="135" textAnchor="middle" fontSize="9" fill="#7dd3fc" transform="rotate(27 135 135)">13 cm</text>
 
     {/* Segitiga RPQ — siku-siku di R, arahnya berbeda */}
-    <polygon points="424,70 310,190 424,190" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
-    <polyline points="412,178 412,190 424,190" fill="none" stroke="#86efac" strokeWidth="1.5"/>
-    <text x="428" y="66" fontSize="10" fill="#bbf7d0" fontWeight="bold">P</text>
-    <text x="299" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q</text>
-    <text x="428" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">R</text>
-    <text x="444" y="134" textAnchor="middle" fontSize="9" fill="#86efac">RP = ?</text>
-    <text x="367" y="207" textAnchor="middle" fontSize="9" fill="#86efac">RQ = 20 cm</text>
-    <text x="359" y="121" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(-46 359 121)">PQ = ?</text>
+    <polygon points="470,90 270,190 470,190" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
+    <polyline points="458,178 458,190 470,190" fill="none" stroke="#86efac" strokeWidth="1.5"/>
+    <text x="474" y="86" fontSize="10" fill="#bbf7d0" fontWeight="bold">P</text>
+    <text x="259" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q</text>
+    <text x="474" y="202" fontSize="10" fill="#bbf7d0" fontWeight="bold">R</text>
+    <text x="488" y="142" textAnchor="middle" fontSize="9" fill="#86efac">RP = ?</text>
+    <text x="370" y="207" textAnchor="middle" fontSize="9" fill="#86efac">RQ = 24 cm</text>
+    <text x="365" y="130" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(-27 365 130)">PQ = ?</text>
 
     <line x1="252" y1="48" x2="252" y2="214" stroke="#475569" strokeDasharray="4 4" />
     <text x="260" y="235" textAnchor="middle" fontSize="9" fill="#facc15">arah kedua segitiga berbeda</text>
@@ -175,23 +175,23 @@ const DiagramContoh4GambarUlang = () => (
     <text x="390" y="20" textAnchor="middle" fontSize="11" fill="#86efac" fontWeight="bold">ΔR′P′Q′</text>
 
     {/* Segitiga ABC — arah acuan */}
-    <polygon points="42,175 42,70 182,175" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
+    <polygon points="42,175 42,95 222,175" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="2"/>
     <polyline points="42,163 54,163 54,175" fill="none" stroke="#93c5fd" strokeWidth="1.5"/>
     <text x="29" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">A</text>
-    <text x="29" y="66" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
-    <text x="186" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
-    <text x="28" y="127" textAnchor="middle" fontSize="9" fill="#7dd3fc">6 cm</text>
-    <text x="112" y="192" textAnchor="middle" fontSize="9" fill="#7dd3fc">8 cm</text>
+    <text x="29" y="91" fontSize="10" fill="#bfdbfe" fontWeight="bold">B</text>
+    <text x="226" y="188" fontSize="10" fill="#bfdbfe" fontWeight="bold">C</text>
+    <text x="28" y="137" textAnchor="middle" fontSize="9" fill="#7dd3fc">5 cm</text>
+    <text x="132" y="192" textAnchor="middle" fontSize="9" fill="#7dd3fc">12 cm</text>
 
     {/* Segitiga R′P′Q′ — digambar ulang dengan arah sama */}
-    <polygon points="302,175 302,55 462,175" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
-    <polyline points="302,163 314,163 314,175" fill="none" stroke="#86efac" strokeWidth="1.5"/>
-    <text x="289" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">R′</text>
-    <text x="289" y="51" fontSize="10" fill="#bbf7d0" fontWeight="bold">P′</text>
-    <text x="466" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q′</text>
-    <text x="287" y="117" textAnchor="middle" fontSize="9" fill="#86efac">15 cm</text>
-    <text x="382" y="192" textAnchor="middle" fontSize="9" fill="#86efac">20 cm</text>
-    <text x="378" y="105" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(37 378 105)">25 cm</text>
+    <polygon points="282,175 282,75 482,175" fill="#22c55e" fillOpacity="0.2" stroke="#4ade80" strokeWidth="2"/>
+    <polyline points="282,163 294,163 294,175" fill="none" stroke="#86efac" strokeWidth="1.5"/>
+    <text x="269" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">R′</text>
+    <text x="269" y="71" fontSize="10" fill="#bbf7d0" fontWeight="bold">P′</text>
+    <text x="486" y="188" fontSize="10" fill="#bbf7d0" fontWeight="bold">Q′</text>
+    <text x="267" y="127" textAnchor="middle" fontSize="9" fill="#86efac">10 cm</text>
+    <text x="382" y="192" textAnchor="middle" fontSize="9" fill="#86efac">24 cm</text>
+    <text x="382" y="118" textAnchor="middle" fontSize="9" fill="#fbbf24" transform="rotate(27 382 118)">26 cm</text>
 
     <text x="260" y="214" textAnchor="middle" fontSize="9" fill="#facc15">RP′ ↔ AB, RQ′ ↔ AC, P′Q′ ↔ BC</text>
   </svg>
@@ -581,7 +581,7 @@ const MenghitungRusukPage = () => {
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4">
                     <p className="font-body text-sm text-white">
-                      Segitiga siku-siku <InlineMath math="\triangle ABC" /> dan <InlineMath math="\triangle RPQ" /> saling sebangun. Pada <InlineMath math="\triangle ABC" /> diketahui <InlineMath math="AB = 6" /> cm, <InlineMath math="AC = 8" /> cm, dan <InlineMath math="BC = 10" /> cm. Pada <InlineMath math="\triangle RPQ" /> diketahui <InlineMath math="RQ = 20" /> cm. Tentukan panjang <InlineMath math="RP" /> dan <InlineMath math="PQ" />! Perhatikan bahwa arah gambar kedua segitiga belum sama.
+                      Segitiga siku-siku <InlineMath math="\triangle ABC" /> dan <InlineMath math="\triangle RPQ" /> saling sebangun. Pada <InlineMath math="\triangle ABC" /> diketahui <InlineMath math="AB = 5" /> cm, <InlineMath math="AC = 12" /> cm, dan <InlineMath math="BC = 13" /> cm. Pada <InlineMath math="\triangle RPQ" /> diketahui <InlineMath math="RQ = 24" /> cm. Tentukan panjang <InlineMath math="RP" /> dan <InlineMath math="PQ" />! Perhatikan bahwa arah gambar kedua segitiga belum sama.
                     </p>
                   </div>
                   <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
@@ -597,14 +597,14 @@ const MenghitungRusukPage = () => {
                       </div>
                       <p><strong>3. Hitung faktor skala.</strong> Sisi <InlineMath math="AC" /> bersesuaian dengan <InlineMath math="RQ" />.</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="k = \frac{RQ}{AC} = \frac{20}{8} = \frac{5}{2}" />
+                        <BlockMath math="k = \frac{RQ}{AC} = \frac{24}{12} = 2" />
                       </div>
                       <p><strong>4. Tentukan sisi yang ditanyakan.</strong></p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="RP = k \times AB = \frac{5}{2} \times 6 = 15 \text{ cm}" />
-                        <BlockMath math="PQ = k \times BC = \frac{5}{2} \times 10 = 25 \text{ cm}" />
+                        <BlockMath math="RP = k \times AB = 2 \times 5 = 10 \text{ cm}" />
+                        <BlockMath math="PQ = k \times BC = 2 \times 13 = 26 \text{ cm}" />
                       </div>
-                      <p><strong className="text-purple-300">Jadi, RP = 15 cm dan PQ = 25 cm.</strong> Kunci utamanya adalah mencocokkan sisi berdasarkan pasangan titik, bukan berdasarkan arah gambar.</p>
+                      <p><strong className="text-purple-300">Jadi, RP = 10 cm dan PQ = 26 cm.</strong> Kunci utamanya adalah mencocokkan sisi berdasarkan pasangan titik, bukan berdasarkan arah gambar.</p>
                     </div>
                   </div>
                 </div>
