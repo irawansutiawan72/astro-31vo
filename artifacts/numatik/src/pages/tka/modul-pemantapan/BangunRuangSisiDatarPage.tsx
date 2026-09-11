@@ -4,6 +4,18 @@ import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { latihanDasar as latihanDasarOlimpiade, dasarImages } from "@/pages/OlimpiadeBangunRuangSisiDatarPage";
 import { bangunRuangSisiDatarDasarPembahasan } from "@/data/pembahasan/bangunRuangSisiDatarDasar";
 
+const toPembahasanText = (soalNo: number) => {
+  const pembahasan = bangunRuangSisiDatarDasarPembahasan[soalNo];
+  if (!pembahasan) return undefined;
+
+  return [
+    `Konsep & Trik: ${pembahasan.konsepTrik}`,
+    `Step-by-Step Penyelesaian:\n${pembahasan.stepByStep}`,
+    `Tips: ${pembahasan.tips}`,
+    `Kesimpulan: ${pembahasan.kesimpulan}`,
+  ].join("\n\n");
+};
+
 const materiSections: MateriSection[] = [
   { heading: "A. Kubus", content: `Kubus: bangun ruang berisi 6 sisi berbentuk persegi, 12 rusuk sama panjang, 8 titik sudut.\n\nJika rusuk = s:\n- Luas permukaan = $6s^2$\n- Volume = $s^3$\n- Diagonal ruang = $s\\sqrt{3}$\n- Diagonal sisi = $s\\sqrt{2}$` },
   { heading: "B. Balok", content: `Balok: bangun ruang dengan 6 sisi berbentuk persegi panjang (tiga pasang), 12 rusuk, 8 titik sudut.\n\nJika panjang = p, lebar = l, tinggi = t:\n- Luas permukaan = $2(pl + pt + lt)$\n- Volume = $p \\times l \\times t$\n- Diagonal ruang = $\\sqrt{p^2 + l^2 + t^2}$` },
@@ -66,7 +78,7 @@ const latihanDasarBangunRuang = latihanDasarOlimpiade
   .map((soal, index) => ({
     ...soal,
     no: index + 1,
-    pembahasan: bangunRuangSisiDatarDasarPembahasan[soal.no],
+    pembahasan: toPembahasanText(soal.no),
     gambar: dasarImages[soal.no] ? <img src={dasarImages[soal.no]} alt={`Gambar soal ${soal.no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" /> : undefined,
   }));
 
