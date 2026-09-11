@@ -989,7 +989,7 @@ const SegitigaSebangunPage = () => {
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4">
                     <p className="font-body text-sm text-white">
-                      Segitiga ABC siku-siku di A. Titik D pada AC dengan <InlineMath math="AD = 15" /> cm dan <InlineMath math="DC = 10" /> cm. Titik E pada BC sehingga <InlineMath math="DE \perp AC" />, <InlineMath math="DE = 8" /> cm, dan <InlineMath math="EC = 12" /> cm. Tentukan nilai <InlineMath math="x" /> (panjang BE) dan <InlineMath math="y" /> (panjang AB)!
+                      Pada gambar, <InlineMath math="D" /> terletak pada <InlineMath math="AC" /> dan <InlineMath math="E" /> terletak pada <InlineMath math="BC" />. Diketahui <InlineMath math="AD = 15" /> cm, <InlineMath math="DC = 10" /> cm, <InlineMath math="DE = 8" /> cm, dan <InlineMath math="EC = 12" /> cm. Tanda busur menunjukkan <InlineMath math="\angle ABC = \angle CDE" />, sedangkan sudut di <InlineMath math="C" /> merupakan sudut yang sama. Tentukan nilai <InlineMath math="x" /> (panjang BE) dan <InlineMath math="y" /> (panjang AB)!
                     </p>
                   </div>
                   <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
@@ -999,21 +999,23 @@ const SegitigaSebangunPage = () => {
                   <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
                     <p className="font-body text-xs font-semibold text-yellow-400 mb-3">PEMBAHASAN:</p>
                     <div className="space-y-2 font-body text-sm text-white/80">
-                      <p>Karena <InlineMath math="DE \perp AC" /> dan <InlineMath math="BA \perp AC" />, maka <InlineMath math="DE \parallel BA" />. Sehingga <InlineMath math="\triangle DEC \sim \triangle BAC" />.</p>
+                      <p>Berdasarkan tanda busur pada gambar, <InlineMath math="\angle CDE = \angle ABC" />. Selain itu, sudut di <InlineMath math="C" /> merupakan sudut yang sama, yaitu <InlineMath math="\angle DCE = \angle BCA" />. Jadi, berdasarkan kriteria AA, <InlineMath math="\triangle DEC \sim \triangle BAC" /> dengan pasangan titik <InlineMath math="D \leftrightarrow B" />, <InlineMath math="E \leftrightarrow A" />, dan <InlineMath math="C \leftrightarrow C" />.</p>
                       <p><strong>Langkah 1:</strong> Tentukan AC:</p>
                       <div className="bg-slate-900/50 rounded p-3">
                         <BlockMath math="AC = AD + DC = 15 + 10 = 25 \text{ cm}" />
                       </div>
                       <p><strong>Langkah 2:</strong> Cari y = AB:</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="\frac{DE}{BA} = \frac{DC}{AC} \Rightarrow \frac{8}{y} = \frac{10}{25} \Rightarrow y = \frac{8 \times 25}{10} = 20 \text{ cm}" />
+                        <BlockMath math="\frac{DE}{BA} = \frac{EC}{AC} \Rightarrow \frac{8}{y} = \frac{12}{25} \Rightarrow y = \frac{8 \times 25}{12} = \frac{50}{3} \text{ cm}" />
                       </div>
                       <p><strong>Langkah 3:</strong> Cari x = BE:</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="\frac{EC}{BC} = \frac{DC}{AC} \Rightarrow \frac{12}{BC} = \frac{10}{25} \Rightarrow BC = 30 \text{ cm}" />
-                        <BlockMath math="x = BE = BC - EC = 30 - 12 = 18 \text{ cm}" />
+                        <BlockMath math="\frac{DC}{BC} = \frac{EC}{AC} \Rightarrow \frac{10}{BC} = \frac{12}{25} \Rightarrow BC = \frac{125}{6} \text{ cm}" />
+                        <BlockMath math="x = BE = BC - EC = \frac{125}{6} - 12 = \frac{53}{6} \text{ cm}" />
                       </div>
-                      <p><strong className="text-yellow-300">x = BE = 18 cm dan y = AB = 20 cm.</strong></p>
+                      <p className="text-yellow-300 font-semibold">
+                        <strong><InlineMath math="x = BE = \frac{53}{6}" /> cm dan <InlineMath math="y = AB = \frac{50}{3}" /> cm.</strong>
+                      </p>
                     </div>
                   </div>
                 </div>

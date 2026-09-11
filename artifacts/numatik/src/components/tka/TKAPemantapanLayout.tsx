@@ -811,11 +811,11 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
             {answeredCount > 0 && (
               <div className="mb-4 px-4 py-3 rounded-xl flex items-center gap-3"
                 style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)" }}>
-                <div className="text-2xl font-display font-bold text-white">
-                  {correctCount}<span className="text-sm text-white/40">/{answeredCount}</span>
+                <div className="text-2xl font-display font-bold" style={{ color: isLightTheme ? "var(--text-primary)" : "#ffffff" }}>
+                  {correctCount}<span className="text-sm" style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.4)" }}>/{answeredCount}</span>
                 </div>
                 <div className="flex-1">
-                  <p className="font-body text-xs text-white/60">Soal terjawab benar</p>
+                  <p className="font-body text-xs" style={{ color: isLightTheme ? "var(--text-secondary)" : "rgba(255,255,255,0.6)" }}>Soal terjawab benar</p>
                   <div className="mt-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
                     <div className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -906,7 +906,10 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           {typeBadge.label}
                         </span>
                         {/* Soal text */}
-                        <div className="font-body text-sm text-white/90 leading-relaxed">
+                        <div
+                          className="font-body text-sm leading-relaxed"
+                          style={{ color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.9)" }}
+                        >
                           {soal.soal.split('\n').map((line, lineIdx) => {
                             const imgMatch = line.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
                             if (imgMatch) {
@@ -963,12 +966,13 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             type="button"
                             disabled={isRevealed}
                             onClick={() => soal.jawabanPGK && handleSelectPGK(soal.no, pi)}
-                            className="w-full min-w-0 flex items-start gap-2 text-left text-xs font-body text-white/80 leading-relaxed rounded-lg px-2 py-1 transition-colors"
+                            className="w-full min-w-0 flex items-start gap-2 text-left text-xs font-body leading-relaxed rounded-lg px-2 py-1 transition-colors"
                             style={{
                               background: isRevealed
                                 ? isCorrectPGK ? "rgba(34,197,94,0.12)" : isSelectedPGK ? "rgba(239,68,68,0.12)" : "transparent"
                                 : isSelectedPGK ? "rgba(245,158,11,0.14)" : "transparent",
                               cursor: soal.jawabanPGK && !isRevealed ? "pointer" : "default",
+                              color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.8)",
                             }}
                           >
                             <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 aspect-square rounded-[3px] border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
@@ -1118,7 +1122,10 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                     style={{ background: "rgba(6,182,212,0.15)", color: "#67e8f9" }}>
                                     {pi + 1}
                                   </span>
-                                  <span className="font-body text-xs text-white/80 leading-snug flex-1 min-w-0">
+                                  <span
+                                    className="font-body text-xs leading-snug flex-1 min-w-0"
+                                    style={{ color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.8)" }}
+                                  >
                                     {contentRenderer(p)}
                                   </span>
                                   {rowEvaluated && (
