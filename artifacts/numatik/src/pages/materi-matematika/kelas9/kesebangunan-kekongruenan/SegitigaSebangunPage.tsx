@@ -126,7 +126,36 @@ const DiagramContoh1 = () => (
   </svg>
 );
 
-const DiagramContoh2 = () => {
+const DiagramContoh2 = () => (
+  <svg viewBox="0 0 340 220" className="w-full max-w-sm mx-auto">
+    {/* Dua segitiga bertolak belakang: AB // CD dan diagonal berpotongan di E */}
+    <polygon points="90,35 210,35 150,89" fill="#3b82f6" fillOpacity="0.15" stroke="#60a5fa" strokeWidth="2"/>
+    <polygon points="240,170 60,170 150,89" fill="#22c55e" fillOpacity="0.15" stroke="#4ade80" strokeWidth="2"/>
+    <line x1="90" y1="35" x2="240" y2="170" stroke="#94a3b8" strokeWidth="1.2" strokeDasharray="4,3"/>
+    <line x1="210" y1="35" x2="60" y2="170" stroke="#94a3b8" strokeWidth="1.2" strokeDasharray="4,3"/>
+    {/* Tanda AB // CD */}
+    <polygon points="147,32 156,35 147,38" fill="#fde68a"/>
+    <polygon points="147,167 156,170 147,173" fill="#fde68a"/>
+    {/* Sudut bertolak belakang di E */}
+    <path d="M 140,80 A 13 13 0 0 1 160,80" fill="none" stroke="#fbbf24" strokeWidth="1.8"/>
+    <path d="M 140,98 A 13 13 0 0 0 160,98" fill="none" stroke="#fbbf24" strokeWidth="1.8"/>
+    <circle cx="150" cy="89" r="3.5" fill="#fbbf24"/>
+    {/* Titik dan label */}
+    <text x="78" y="31" fontSize="13" fill="#93c5fd" fontWeight="bold">A</text>
+    <text x="213" y="31" fontSize="13" fill="#93c5fd" fontWeight="bold">B</text>
+    <text x="243" y="175" fontSize="13" fill="#86efac" fontWeight="bold">C</text>
+    <text x="45" y="175" fontSize="13" fill="#86efac" fontWeight="bold">D</text>
+    <text x="155" y="87" fontSize="12" fill="#fde68a" fontWeight="bold">E</text>
+    {/* Ukuran yang diketahui */}
+    <text x="150" y="22" textAnchor="middle" fontSize="11" fill="#f97316" fontWeight="bold">AB = ?</text>
+    <text x="150" y="191" textAnchor="middle" fontSize="11" fill="#4ade80" fontWeight="bold">CD = 18 cm</text>
+    <text x="108" y="66" fontSize="10.5" fill="#fbbf24" fontWeight="bold">AE = 4 cm</text>
+    <text x="177" y="128" fontSize="10.5" fill="#fbbf24" fontWeight="bold">CE = 6 cm</text>
+    <text x="150" y="210" textAnchor="middle" fontSize="8.5" fill="#fde68a">AB ∥ CD · sudut di E bertolak belakang</text>
+  </svg>
+);
+
+const DiagramContoh3 = () => {
   // Oblique triangle: B top-center, A bottom-left, C bottom-right
   // AD=12, DC=8, AC=20. DE=6, EC=10, BE=6(x), AB=12(y)
   const A = { x: 28,  y: 195 };
@@ -262,7 +291,7 @@ const ArrowRight = ({ cx,cy,color="#fbbf24" }:{cx:number,cy:number,color?:string
   <path d={`M ${cx-7},${cy-5} L ${cx+7},${cy} L ${cx-7},${cy+5}`} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
 );
 
-const DiagramContoh3 = () => {
+const DiagramContoh4 = () => {
   // Trapesium ABCD: A bottom-left, B bottom-right, C top-right, D top-left
   // AB=51 (bottom), DC=36 (top). Parallel sides: AB // PQ // DC
   // AP=12, PD=8, AD=20. P on AD, Q on BC.
@@ -310,7 +339,7 @@ const DiagramContoh3 = () => {
   );
 };
 
-const DiagramContoh3b = () => {
+const DiagramContoh4b = () => {
   // Same trapesium + diagonal BD + point M for pembahasan
   const A={x:35, y:198}, B={x:290,y:198};
   const D={x:75, y:38},  C={x:250,y:38};
@@ -1062,11 +1091,47 @@ const SegitigaSebangunPage = () => {
                     </div>
                   </div>
                 </div>
-                {/* SEDANG */}
+                {/* SEDANG — contoh baru berdasarkan soal nomor 6 Latihan Mandiri */}
                 <div className="border-l-4 border-yellow-500 pl-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="bg-yellow-500/20 text-yellow-400 text-xs font-bold px-2 py-1 rounded">SEDANG</span>
                     <span className="font-body font-semibold text-white">Contoh 2</span>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-lg p-4">
+                    <p className="font-body text-sm text-white">
+                      Perhatikan gambar dua segitiga yang bertolak belakang di titik <InlineMath math="E" />. Diketahui <InlineMath math="AB \parallel CD" />, <InlineMath math="AE = 4" /> cm, <InlineMath math="CE = 6" /> cm, dan <InlineMath math="CD = 18" /> cm. Tentukan panjang <InlineMath math="AB" />!
+                    </p>
+                  </div>
+                  <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
+                    <p className="font-body text-xs font-semibold text-slate-300 mb-2">📐 ILUSTRASI:</p>
+                    <DiagramContoh2 />
+                  </div>
+                  <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
+                    <p className="font-body text-xs font-semibold text-yellow-400 mb-3">PEMBAHASAN:</p>
+                    <div className="space-y-2 font-body text-sm text-white/80">
+                      <p>
+                        Karena <InlineMath math="AB \parallel CD" />, sudut-sudut yang terbentuk oleh garis potong bersesuaian sama besar.
+                        Selain itu, <InlineMath math="\angle AEB = \angle CED" /> karena merupakan sudut bertolak belakang.
+                        Jadi, berdasarkan kriteria AA, <InlineMath math="\triangle ABE \sim \triangle CDE" /> dengan pasangan titik
+                        <InlineMath math="A \leftrightarrow C" />, <InlineMath math="B \leftrightarrow D" />, dan <InlineMath math="E \leftrightarrow E" />.
+                      </p>
+                      <p><strong>Gunakan perbandingan sisi yang bersesuaian:</strong></p>
+                      <div className="bg-slate-900/50 rounded p-3">
+                        <BlockMath math="\frac{AE}{CE} = \frac{AB}{CD}" />
+                        <BlockMath math="\frac{4}{6} = \frac{AB}{18}" />
+                        <BlockMath math="AB = \frac{4 \times 18}{6} = 12 \text{ cm}" />
+                      </div>
+                      <p className="text-yellow-300 font-semibold">
+                        Jadi, panjang <InlineMath math="AB = 12" /> cm ✓
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* SEDANG — contoh lama digeser menjadi contoh 3 */}
+                <div className="border-l-4 border-yellow-500 pl-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-yellow-500/20 text-yellow-400 text-xs font-bold px-2 py-1 rounded">SEDANG</span>
+                    <span className="font-body font-semibold text-white">Contoh 3</span>
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4">
                     <p className="font-body text-sm text-white">
@@ -1075,7 +1140,7 @@ const SegitigaSebangunPage = () => {
                   </div>
                   <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
                     <p className="font-body text-xs font-semibold text-slate-300 mb-2">📐 ILUSTRASI:</p>
-                    <DiagramContoh2 />
+                      <DiagramContoh3 />
                   </div>
                   <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
                     <p className="font-body text-xs font-semibold text-yellow-400 mb-3">PEMBAHASAN:</p>
@@ -1112,7 +1177,7 @@ const SegitigaSebangunPage = () => {
                 <div className="border-l-4 border-red-500 pl-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded">SULIT</span>
-                    <span className="font-body font-semibold text-white">Contoh 3</span>
+                    <span className="font-body font-semibold text-white">Contoh 4</span>
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4 space-y-2">
                     <p className="font-body text-sm text-white font-semibold">
@@ -1124,7 +1189,7 @@ const SegitigaSebangunPage = () => {
                   </div>
                   <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
                     <p className="font-body text-xs font-semibold text-slate-300 mb-2">📐 ILUSTRASI:</p>
-                    <DiagramContoh3 />
+                    <DiagramContoh4 />
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4">
                     <p className="font-body text-sm text-white">
@@ -1141,7 +1206,7 @@ const SegitigaSebangunPage = () => {
                         Berdasarkan aturan kesebangunan diperoleh:
                       </p>
                       <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3 mb-2">
-                        <DiagramContoh3b />
+                        <DiagramContoh4b />
                       </div>
                       <p><strong>Langkah 1:</strong> Cari AD:</p>
                       <div className="bg-slate-900/50 rounded p-3">
