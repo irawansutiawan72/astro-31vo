@@ -181,7 +181,6 @@ const SubmarineDepthDiagramSVG = ({ isDark }: { isDark: boolean }) => {
         <path d="M70 14 l12 -7 v14 z" fill={colors.final} />
       </g>
       <line x1="180" y1="286" x2="326" y2="286" stroke={colors.final} strokeDasharray="4 4" strokeWidth="1.5" />
-      <text x="335" y="290" fontSize="12" fontWeight="700" fill={colors.final}>Akhir: −8 − 12 = −20 m</text>
 
     </svg>
   );

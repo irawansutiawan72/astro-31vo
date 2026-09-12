@@ -23,8 +23,15 @@ const materiSections: MateriSection[] = [
   { heading: "D. Limas", content: `Limas: bangun ruang dengan satu sisi alas dan sisi tegak berbentuk segitiga bertemu di satu titik (puncak).\n\n- Luas permukaan = $L_{alas} + \\sum L_{sisi\\ tegak}$\n- Volume = $\\frac{1}{3} \\times L_{alas} \\times t$\n\nUntuk limas segi empat beraturan:\n- Tinggi sisi tegak: apotema\n- Luas sisi tegak = $\\frac{1}{2} \\times alas \\times apotema$` },
 ];
 
+const kubusNetQuestionOneOptions = [
+  <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
+];
+
 const latihanDasarTkaLama: LatihanSoal[] = [
-  { no: 1, soal: "Pada rangkaian persegi berikut yang merupakan jaring-jaring kubus adalah ...", options: ["A. Gambar A", "B. Gambar B", "C. Gambar C", "D. Gambar D"] },
+  { no: 1, soal: "Pada rangkaian persegi berikut yang merupakan jaring-jaring kubus adalah ...", options: ["A. Gambar A", "B. Gambar B", "C. Gambar C", "D. Gambar D"], optionsJsx: kubusNetQuestionOneOptions },
   { no: 2, soal: "Perhatikan gambar!\nAgar dapat membentuk balok, persegipanjang yang harus dihilangkan bernomor ....", options: ["A. 5 dan 6", "B. 5 dan 7", "C. 1 dan 7", "D. 1 dan 8"] },
   { no: 3, soal: "Daerah yang diarsir pada gambar disebut ....", options: ["A. Diagonal bidang", "B. Bidang diagonal", "C. Diagonal ruang", "D. Diagonal sisi"] },
   { no: 4, soal: "Banyaknya diagonal ruang dan bidang diagonal balok adalah ...", options: ["A. 4 dan 6", "B. 4 dan 12", "C. 6 dan 4", "D. 12 dan 4"] },
