@@ -16,7 +16,7 @@ const translations = {
     title: "NOTASI DAN RUMUS FUNGSI",
     subtitle: "Bahasa Matematika Untuk Mengekspresikan Fungsi!",
     backBtn: "← Kembali ke Relasi dan Fungsi",
-    sec_intro_title: "🌟 Notasi Fungsi — Bahasa Singkat yang Powerful",
+    sec_intro_title: "🌟 Notasi Fungsi",
     sec_notasi_title: "📘 Bentuk Notasi dan Cara Membaca",
     sec_operasi_title: "🔧 Operasi pada Fungsi",
     sec_contoh1_title: "✏️ Contoh 1 — Tingkat Mudah",
@@ -28,7 +28,6 @@ const translations = {
     badge_medium: "SEDANG",
     badge_hard: "SULIT",
     badge_challenge: "TANTANGAN",
-    intro_p: "Daripada selalu menulis \"fungsi yang memetakan x menjadi dua kali x tambah tiga\", matematikawan menggunakan notasi singkat yang universal. Notasi ini memungkinkan kita mengomunikasikan aturan fungsi secara efisien dan presisi.",
     intro_anatomi: "📖 Anatomi Notasi Fungsi",
     symbols: [
       { simbol: "f", arti: "Nama fungsi (bisa juga g, h, p, dll.)" },
@@ -151,7 +150,7 @@ const translations = {
     title: "FUNCTION NOTATION AND FORMULAS",
     subtitle: "The Mathematical Language for Expressing Functions!",
     backBtn: "← Back to Relations and Functions",
-    sec_intro_title: "🌟 Function Notation — A Powerful Shorthand",
+    sec_intro_title: "🌟 Function Notation",
     sec_notasi_title: "📘 Notation Forms and How to Read Them",
     sec_operasi_title: "🔧 Operations on Functions",
     sec_contoh1_title: "✏️ Example 1 — Basic Level",
@@ -163,7 +162,6 @@ const translations = {
     badge_medium: "MEDIUM",
     badge_hard: "HARD",
     badge_challenge: "CHALLENGE",
-    intro_p: "Instead of always writing \"the function that maps x to two times x plus three\", mathematicians use a concise universal notation. This notation lets us communicate function rules efficiently and precisely.",
     intro_anatomi: "📖 Anatomy of Function Notation",
     symbols: [
       { simbol: "f", arti: "Name of the function (can also be g, h, p, etc.)" },
@@ -286,7 +284,7 @@ const translations = {
     title: "関数の表記と公式",
     subtitle: "関数を表現するための数学的言語！",
     backBtn: "← 関係と関数に戻る",
-    sec_intro_title: "🌟 関数の表記 — 強力な省略記法",
+    sec_intro_title: "🌟 関数の表記",
     sec_notasi_title: "📘 表記の形式と読み方",
     sec_operasi_title: "🔧 関数の演算",
     sec_contoh1_title: "✏️ 例題 1 — 基本レベル",
@@ -298,7 +296,6 @@ const translations = {
     badge_medium: "標準",
     badge_hard: "発展",
     badge_challenge: "チャレンジ",
-    intro_p: "「xを2倍して3を加えた値に対応する関数」といちいち書く代わりに、数学者は簡潔で万国共通の表記を使います。この表記により、関数の規則を効率的かつ正確に伝えることができます。",
     intro_anatomi: "📖 関数表記の解剖",
     symbols: [
       { simbol: "f", arti: "関数の名前（g, h, p なども可）" },
@@ -473,7 +470,6 @@ const NotasiFungsiPage = () => {
             <SectionHeader id="intro" icon={<Lightbulb className="w-5 h-5" />} iconColor="text-yellow-400" title={t.sec_intro_title} />
             {expandedSections.includes("intro") && (
               <div className="px-5 pb-5 space-y-4">
-                <p className="font-body text-sm text-white/80 leading-relaxed">{t.intro_p}</p>
                 <div className="bg-slate-800/60 border border-cyan-500/20 rounded-xl p-4">
                   <p className="font-body text-xs font-bold text-cyan-300 uppercase mb-3">{t.intro_anatomi}</p>
                   <div className="text-center">
@@ -540,44 +536,6 @@ const NotasiFungsiPage = () => {
                 </div>
 
                 <FunctionMachineAnimation />
-              </div>
-            )}
-          </div>
-
-          {/* OPERASI */}
-          <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
-            <SectionHeader id="operasi" icon={<BookOpen className="w-5 h-5" />} iconColor="text-orange-400" title={t.sec_operasi_title} />
-            {expandedSections.includes("operasi") && (
-              <div className="px-5 pb-5 space-y-4">
-                <p className="font-body text-sm text-white/70 leading-relaxed">{t.ops_intro}</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs font-body border-collapse">
-                    <thead>
-                      <tr className="bg-orange-900/40">
-                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col1}</th>
-                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col2}</th>
-                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col3}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {t.ops_rows.map(([op, not, def], i) => (
-                        <tr key={i} className={i % 2 === 0 ? "bg-slate-800/30" : "bg-slate-700/20"}>
-                          <td className="border border-white/10 px-3 py-2 text-orange-300 font-semibold">{op}</td>
-                          <td className="border border-white/10 px-3 py-2 text-cyan-300 font-mono">{not}</td>
-                          <td className="border border-white/10 px-3 py-2 text-white/70">{def}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="bg-slate-800/60 border border-orange-500/20 rounded-xl p-4">
-                  <p className="font-body text-xs font-bold text-orange-300 mb-2">{t.ops_example}</p>
-                  <div className="space-y-1 text-xs">
-                    <div className="text-white/70"><BlockMath math="(f+g)(x) = (3x+1) + (x-2) = 4x - 1" /></div>
-                    <div className="text-white/70"><BlockMath math="(f-g)(x) = (3x+1) - (x-2) = 2x + 3" /></div>
-                    <div className="text-white/70"><BlockMath math="(f \cdot g)(x) = (3x+1)(x-2) = 3x^2 - 5x - 2" /></div>
-                  </div>
-                </div>
               </div>
             )}
           </div>
@@ -787,6 +745,44 @@ const NotasiFungsiPage = () => {
                   <p className="font-body text-xs text-yellow-100 leading-relaxed">
                     <strong>{t.domain_range_note_label}</strong> {t.domain_range_note}
                   </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* OPERASI */}
+          <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
+            <SectionHeader id="operasi" icon={<BookOpen className="w-5 h-5" />} iconColor="text-orange-400" title={t.sec_operasi_title} />
+            {expandedSections.includes("operasi") && (
+              <div className="px-5 pb-5 space-y-4">
+                <p className="font-body text-sm text-white/70 leading-relaxed">{t.ops_intro}</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs font-body border-collapse">
+                    <thead>
+                      <tr className="bg-orange-900/40">
+                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col1}</th>
+                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col2}</th>
+                        <th className="border border-orange-500/30 px-3 py-2 text-orange-200 text-left">{t.ops_col3}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {t.ops_rows.map(([op, not, def], i) => (
+                        <tr key={i} className={i % 2 === 0 ? "bg-slate-800/30" : "bg-slate-700/20"}>
+                          <td className="border border-white/10 px-3 py-2 text-orange-300 font-semibold">{op}</td>
+                          <td className="border border-white/10 px-3 py-2 text-cyan-300 font-mono">{not}</td>
+                          <td className="border border-white/10 px-3 py-2 text-white/70">{def}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="bg-slate-800/60 border border-orange-500/20 rounded-xl p-4">
+                  <p className="font-body text-xs font-bold text-orange-300 mb-2">{t.ops_example}</p>
+                  <div className="space-y-1 text-xs">
+                    <div className="text-white/70"><BlockMath math="(f+g)(x) = (3x+1) + (x-2) = 4x - 1" /></div>
+                    <div className="text-white/70"><BlockMath math="(f-g)(x) = (3x+1) - (x-2) = 2x + 3" /></div>
+                    <div className="text-white/70"><BlockMath math="(f \cdot g)(x) = (3x+1)(x-2) = 3x^2 - 5x - 2" /></div>
+                  </div>
                 </div>
               </div>
             )}
