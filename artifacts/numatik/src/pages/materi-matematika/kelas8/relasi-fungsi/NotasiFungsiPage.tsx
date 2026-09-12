@@ -128,11 +128,8 @@ const translations = {
     domain_range_example_easy_problem: "Diketahui fungsi f(x) = ax + b dan f(1) = 4 serta f(3) = 8. Tentukan rumus fungsi f(x)!",
     domain_range_example_easy_answer: "Dari f(1) = 4 diperoleh a + b = 4 ...(1), dan dari f(3) = 8 diperoleh 3a + b = 8 ...(2). Eliminasi b: (2) − (1) menghasilkan 2a = 4, jadi a = 2. Substitusi ke (1): b = 2. Jadi, f(x) = 2x + 2.",
     domain_range_example_medium_title: "Contoh sedang — domain memuat bilangan negatif",
-    domain_range_example_medium_problem: "Diketahui D = {−1, 2, 5} dengan pasangan (−1, 4), (2, 10), (5, 16). Tentukan rumus f(x)!",
-    domain_range_example_medium_answer: "Misalkan f(x) = ax + b. Dari (−1, 4) diperoleh −a + b = 4 ...(1), dan dari (2, 10) diperoleh 2a + b = 10 ...(2). Eliminasi b: (2) − (1) menghasilkan 3a = 6, jadi a = 2. Substitusi ke (1): b = 6. Jadi, f(x) = 2x + 6. Cek: f(5) = 16.",
-    domain_range_example_hard_title: "Contoh sulit — menemukan fungsi kuadrat",
-    domain_range_example_hard_problem: "Diketahui pasangan (−1, 6), (0, 3), (1, 2), dan (2, 3). Jika bentuknya f(x) = ax² + bx + c, tentukan rumus f(x)!",
-    domain_range_example_hard_answer: "Substitusi (0, 3) memberi c = 3. Dari (1, 2) diperoleh a + b + c = 2, sehingga a + b = −1 ...(1). Dari (−1, 6) diperoleh a − b + c = 6, sehingga a − b = 3 ...(2). Eliminasi b dengan menjumlahkan (1) dan (2): 2a = 2, jadi a = 1. Maka b = −2 dan c = 3. Jadi, f(x) = x² − 2x + 3. Cek: f(2) = 3.",
+     domain_range_example_medium_problem: "Diketahui sebuah fungsi linear dengan bentuk umum f(x) = ax + b dengan f(−1) = 4 dan f(2) = 10. Tentukan nilai a + b!",
+     domain_range_example_medium_answer: "Dari f(−1) = 4 diperoleh −a + b = 4 ...(1), dan dari f(2) = 10 diperoleh 2a + b = 10 ...(2). Eliminasi b: (2) − (1) menghasilkan 3a = 6, jadi a = 2. Substitusi ke (1): b = 6. Jadi, a + b = 8.",
     domain_range_note: "Catatan: jika hanya diketahui himpunan domain dan range tanpa pasangan pemetaan atau asumsi bentuk fungsi, rumusnya bisa lebih dari satu. Pasangan input-output dan informasi bentuk fungsi diperlukan untuk memperoleh rumus yang pasti.",
     sum_title: "📚 Rangkuman Materi",
     sum_items: [
@@ -268,11 +265,8 @@ const translations = {
     domain_range_example_easy_problem: "Given function f(x) = ax + b, f(1) = 4, and f(3) = 8. Find the formula of f(x)!",
     domain_range_example_easy_answer: "From f(1) = 4, we get a + b = 4 ...(1); from f(3) = 8, we get 3a + b = 8 ...(2). Eliminate b: (2) − (1) gives 2a = 4, so a = 2. Substitute into (1): b = 2. Therefore, f(x) = 2x + 2.",
     domain_range_example_medium_title: "Medium example — a domain with negative numbers",
-    domain_range_example_medium_problem: "Given D = {−1, 2, 5} with pairs (−1, 4), (2, 10), (5, 16), find f(x)!",
-    domain_range_example_medium_answer: "Let f(x) = ax + b. From (−1, 4), −a + b = 4 ...(1); from (2, 10), 2a + b = 10 ...(2). Eliminate b: (2) − (1) gives 3a = 6, so a = 2. Substitute into (1): b = 6. Therefore, f(x) = 2x + 6. Check: f(5) = 16.",
-    domain_range_example_hard_title: "Hard example — finding a quadratic function",
-    domain_range_example_hard_problem: "Given the pairs (−1, 6), (0, 3), (1, 2), and (2, 3). If f(x) = ax² + bx + c, find f(x)!",
-    domain_range_example_hard_answer: "Substituting (0, 3) gives c = 3. From (1, 2), a + b + c = 2, so a + b = −1 ...(1). From (−1, 6), a − b + c = 6, so a − b = 3 ...(2). Eliminate b by adding (1) and (2): 2a = 2, so a = 1. Then b = −2 and c = 3. Therefore, f(x) = x² − 2x + 3. Check: f(2) = 3.",
+     domain_range_example_medium_problem: "Given a linear function in the general form f(x) = ax + b, with f(−1) = 4 and f(2) = 10, find the value of a + b!",
+     domain_range_example_medium_answer: "From f(−1) = 4, we get −a + b = 4 ...(1); from f(2) = 10, we get 2a + b = 10 ...(2). Eliminate b: (2) − (1) gives 3a = 6, so a = 2. Substitute into (1): b = 6. Therefore, a + b = 8.",
     domain_range_note: "Note: if only the domain and range sets are known, without the mapping pairs or an assumed function form, more than one formula may be possible. Input-output pairs and the function form are needed to determine a formula.",
     sum_title: "📚 Material Summary",
     sum_items: [
@@ -408,11 +402,8 @@ const translations = {
     domain_range_example_easy_problem: "関数 f(x) = ax + b、f(1) = 4、f(3) = 8 のとき、f(x) の公式を求めなさい。",
     domain_range_example_easy_answer: "f(1) = 4 より a + b = 4 ...(1)、f(3) = 8 より 3a + b = 8 ...(2)。bを消去すると (2) − (1) より 2a = 4、a = 2。(1)に代入して b = 2。したがって f(x) = 2x + 2。",
     domain_range_example_medium_title: "標準例 — 負の数を含む定義域",
-    domain_range_example_medium_problem: "D = {−1, 2, 5}、対応する組が (−1, 4), (2, 10), (5, 16) のとき、f(x) を求めなさい。",
-    domain_range_example_medium_answer: "f(x) = ax + b とする。(−1, 4)より −a + b = 4 ...(1)、(2, 10)より 2a + b = 10 ...(2)。bを消去すると (2) − (1) より 3a = 6、a = 2。(1)に代入して b = 6。したがって f(x) = 2x + 6。確認：f(5) = 16。",
-    domain_range_example_hard_title: "発展例 — 二次関数を求める",
-    domain_range_example_hard_problem: "対応する組が (−1, 6), (0, 3), (1, 2), (2, 3) で、f(x) = ax² + bx + c のとき、f(x) を求めなさい。",
-    domain_range_example_hard_answer: "(0, 3)を代入すると c = 3。(1, 2)より a + b + c = 2、つまり a + b = −1 ...(1)。 (−1, 6)より a − b + c = 6、つまり a − b = 3 ...(2)。(1)と(2)を加えて bを消去すると 2a = 2、a = 1。よって b = −2、c = 3。したがって f(x) = x² − 2x + 3。確認：f(2) = 3。",
+     domain_range_example_medium_problem: "一次関数 f(x) = ax + b があり、f(−1) = 4、f(2) = 10 のとき、a + b の値を求めなさい。",
+     domain_range_example_medium_answer: "f(−1) = 4 より −a + b = 4 ...(1)、f(2) = 10 より 2a + b = 10 ...(2)。bを消去すると (2) − (1) より 3a = 6、a = 2。(1)に代入して b = 6。したがって a + b = 8。",
     domain_range_note: "注意：対応する組や関数の形の仮定なしに、定義域と値域の集合だけが与えられた場合、公式は一つとは限りません。公式を決めるには入力と出力の対応、そして関数の形が必要です。",
     sum_title: "📚 学習内容のまとめ",
     sum_items: [
@@ -761,18 +752,8 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_medium} color="bg-amber-700/60 text-amber-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_medium_problem}</p>
-                    <BlockMath math={"\\begin{aligned} -a+b &= 4 \\\\ 2a+b &= 10 \\\\ \\hline 3a &= 6 \\\\ a &= 2 \\\\ b &= 6 \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} -a+b &= 4 \\\\ 2a+b &= 10 \\\\ \\hline 3a &= 6 \\\\ a &= 2 \\\\ b &= 6 \\\\ a+b &= 8 \\end{aligned}"} />
                     <p className="font-body text-sm text-amber-100 leading-relaxed">{t.domain_range_example_medium_answer}</p>
-                  </div>
-
-                  <div className="bg-slate-800/60 border border-purple-500/30 rounded-xl p-4 space-y-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-body text-sm font-bold text-purple-300">{t.domain_range_example_hard_title}</p>
-                      <Badge label={t.badge_hard} color="bg-purple-700/60 text-purple-100" />
-                    </div>
-                    <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_hard_problem}</p>
-                    <BlockMath math={"\\begin{aligned} a+b &= -1 \\\\ a-b &= 3 \\\\ \\hline 2a &= 2 \\\\ a &= 1 \\\\ b &= -2,\\qquad c=3 \\end{aligned}"} />
-                    <p className="font-body text-sm text-purple-100 leading-relaxed">{t.domain_range_example_hard_answer}</p>
                   </div>
                 </div>
 
