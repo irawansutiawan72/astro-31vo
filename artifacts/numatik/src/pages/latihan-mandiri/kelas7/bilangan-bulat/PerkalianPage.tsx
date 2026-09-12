@@ -61,7 +61,7 @@ export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
     },
     {
       number: 5,
-      content: `Dalam sebuah olimpiade matematika tingkat daerah yang terdiri dari 40 soal, peserta akan mendapat nilai 4 untuk setiap jawaban yang benar, nilai -2 untuk setiap jawaban yang salah, dan nilai -1 untuk soal yang dibiarkan kosong (tidak dijawab). Jika seorang peserta berhasil menjawab 31 soal dengan benar dan ada 3 soal yang tidak dijawab, berapakah total nilai akhir yang diperoleh peserta tersebut?`,
+      content: `Dalam sebuah tes kemampuan akademik yang terdiri dari 40 soal, peserta akan mendapat nilai 4 untuk setiap jawaban yang benar, nilai -2 untuk setiap jawaban yang salah, dan nilai -1 untuk soal yang dibiarkan kosong (tidak dijawab). Jika seorang peserta berhasil menjawab 31 soal dengan benar dan ada 3 soal yang tidak dijawab, berapakah total nilai akhir yang diperoleh peserta tersebut?`,
       type: "essay",
     },
   ],
@@ -104,7 +104,7 @@ export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
     },
     {
       number: 5,
-      content: `In a regional mathematics olympiad consisting of 40 problems, a participant gets 4 points for each correct answer, −2 points for each wrong answer, and −1 point for each unanswered question. If a participant answers 31 questions correctly and leaves 3 questions unanswered, what is the total final score obtained?`,
+      content: `In an academic ability test consisting of 40 problems, a participant gets 4 points for each correct answer, −2 points for each wrong answer, and −1 point for each unanswered question. If a participant answers 31 questions correctly and leaves 3 questions unanswered, what is the total final score obtained?`,
       type: "essay",
     },
   ],
@@ -147,7 +147,7 @@ export const QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
     },
     {
       number: 5,
-      content: `40問で構成される地区数学オリンピックで、正解1問につき4点、不正解1問につき −2点、未回答1問につき −1点が与えられます。ある参加者が31問を正解し、3問を未回答にした場合、合計得点は何点ですか？`,
+      content: `40問で構成される学力テストで、正解1問につき4点、不正解1問につき −2点、未回答1問につき −1点が与えられます。ある参加者が31問を正解し、3問を未回答にした場合、合計得点は何点ですか？`,
       type: "essay",
     },
   ],
