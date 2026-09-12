@@ -71,16 +71,10 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 46, soal: "Sebuah bak mandi berukuran panjang = 80 cm, lebar = 40 cm, tinggi 60 cm, berisi air setinggi 40 cm, jika 3 buah kubus yang panjang rusuknya 20 cm, dimasukkan ke dalam bak tersebut sehingga tenggelam, tentukan tinggi air sekarang!", options: [] },
 ];
 
-const nomorBangunRuangDihapus = new Set([2, 3, 4, 7, 10, 18, 23, 25, 26, 31, 32, 37, 38, 41, 42, 46]);
+const nomorBangunRuangDihapus = new Set([2, 3, 4, 7, 10, 13, 14, 18, 19, 23, 25, 26, 30, 31, 32, 37, 38, 41, 42, 46]);
 const dasarImages: Record<number, string> = {
-  3: "https://drive.google.com/thumbnail?id=1yqriGhIiWSbjOi2dJIJUAL62xDZrpaLA&sz=w400",
-  9: "https://drive.google.com/thumbnail?id=1KhnFzUd0gEwKwrczQfayCRJhiU_qUdBB&sz=w400",
-  10: "https://drive.google.com/thumbnail?id=1DJL1UuCm0HUxh3Wb8tK0GLH-NWNkTv-A&sz=w400",
-  11: "https://drive.google.com/thumbnail?id=1m98FEp6ZgVNYZCmXbj68c1frPqKuEGRr&sz=w400",
-  17: "https://drive.google.com/thumbnail?id=1DtOQXoOzI9Dtct6BC2aQ0_AZBDr5_q8u&sz=w400",
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
   26: "https://drive.google.com/thumbnail?id=14eSPhOINHkKHXOa2lWtjFVmn9gFchdrL&sz=w400",
-  30: "https://drive.google.com/thumbnail?id=14KNDo_DQDp6a0HxOQMcpTbDVA1sZOhsl&sz=w400",
   36: "https://drive.google.com/thumbnail?id=1mx3YCPfcN9gFNDS8yYjps-JoSBHLCSf6&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
   43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
