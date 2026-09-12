@@ -183,16 +183,6 @@ const SubmarineDepthDiagramSVG = ({ isDark }: { isDark: boolean }) => {
       <line x1="180" y1="286" x2="326" y2="286" stroke={colors.final} strokeDasharray="4 4" strokeWidth="1.5" />
       <text x="335" y="290" fontSize="12" fontWeight="700" fill={colors.final}>Akhir: −8 − 12 = −20 m</text>
 
-      {/* Ringkasan jarak */}
-      <text x="516" y="136" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>Ringkasan data soal</text>
-      <text x="410" y="165" fontSize="12" fill={colors.text}>Posisi helikopter</text>
-      <text x="620" y="165" textAnchor="end" fontSize="12" fontWeight="700" fill={colors.helicopter}>+45 m</text>
-      <text x="410" y="193" fontSize="12" fill={colors.text}>Posisi akhir kapal selam</text>
-      <text x="620" y="193" textAnchor="end" fontSize="12" fontWeight="700" fill={colors.final}>−20 m</text>
-      <line x1="410" y1="207" x2="622" y2="207" stroke={colors.border} />
-      <text x="410" y="232" fontSize="12" fill={colors.text}>Jarak keduanya</text>
-      <text x="620" y="232" textAnchor="end" fontSize="14" fontWeight="700" fill={colors.initial}>45 − (−20) = 65 m</text>
-      <text x="516" y="258" textAnchor="middle" fontSize="10" fontStyle="italic" fill={colors.muted}>diukur dari +45 ke −20</text>
     </svg>
   );
 };
