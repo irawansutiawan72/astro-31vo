@@ -53,7 +53,7 @@ const NumberLineSVG = () => (
   </svg>
 );
 
-const CalculationDiagramSVG = ({ isDark }: { isDark: boolean }) => {
+const SubmarineDepthDiagramSVG = ({ isDark }: { isDark: boolean }) => {
   const colors = isDark
     ? {
         surface: "#111827",
@@ -61,12 +61,12 @@ const CalculationDiagramSVG = ({ isDark }: { isDark: boolean }) => {
         border: "#334155",
         text: "#f8fafc",
         muted: "#94a3b8",
-        p: "#a78bfa",
-        pSurface: "#2e1065",
-        q: "#38bdf8",
-        qSurface: "#082f49",
-        result: "#4ade80",
-        resultSurface: "#14532d",
+        sea: "#0c4a6e",
+        seaLine: "#38bdf8",
+        helicopter: "#fbbf24",
+        submarine: "#a78bfa",
+        initial: "#38bdf8",
+        final: "#f87171",
         axis: "#64748b",
       }
     : {
@@ -75,105 +75,101 @@ const CalculationDiagramSVG = ({ isDark }: { isDark: boolean }) => {
         border: "#cbd5e1",
         text: "#0f172a",
         muted: "#475569",
-        p: "#7c3aed",
-        pSurface: "#f5f3ff",
-        q: "#0369a1",
-        qSurface: "#f0f9ff",
-        result: "#15803d",
-        resultSurface: "#f0fdf4",
+        sea: "#e0f2fe",
+        seaLine: "#0369a1",
+        helicopter: "#b45309",
+        submarine: "#7c3aed",
+        initial: "#0369a1",
+        final: "#dc2626",
         axis: "#64748b",
       };
 
-  const Arrow = ({ x }: { x: number }) => (
-    <g>
-      <line x1={x} y1="84" x2={x + 24} y2="84" stroke={colors.muted} strokeWidth="1.5" />
-      <polygon points={`${x + 30},84 ${x + 22},80 ${x + 22},88`} fill={colors.muted} />
-    </g>
-  );
-
-  const StepBox = ({
-    x,
-    y,
-    width,
-    label,
-    fill,
-    stroke,
-    emphasis = false,
-  }: {
-    x: number;
-    y: number;
-    width: number;
-    label: string;
-    fill: string;
-    stroke: string;
-    emphasis?: boolean;
-  }) => (
-    <g>
-      <rect x={x} y={y} width={width} height="42" rx="9" fill={fill} stroke={stroke} strokeWidth={emphasis ? 2 : 1} />
-      <text x={x + width / 2} y={y + 26} textAnchor="middle" fontSize={emphasis ? "16" : "14"} fontWeight={emphasis ? "700" : "600"} fill={colors.text}>
-        {label}
-      </text>
-    </g>
-  );
-
   return (
     <svg
-      viewBox="0 0 680 350"
+      viewBox="0 0 680 380"
       className="w-full my-4"
       role="img"
-      aria-labelledby="calculation-diagram-title calculation-diagram-desc"
-      style={{ maxHeight: 390 }}
+      aria-labelledby="submarine-diagram-title submarine-diagram-desc"
+      style={{ maxHeight: 410 }}
     >
-      <title id="calculation-diagram-title">Diagram perhitungan nilai p dan q</title>
-      <desc id="calculation-diagram-desc">
-        Nilai p dihitung dari negatif enam dikali empat lalu dibagi delapan sehingga hasilnya negatif tiga.
-        Nilai q dihitung dari sebelas dikurangi enam belas lalu dikurangi negatif delapan sehingga hasilnya tiga.
+      <title id="submarine-diagram-title">Diagram posisi kapal selam dan helikopter</title>
+      <desc id="submarine-diagram-desc">
+        Helikopter berada di ketinggian positif 45 meter. Kapal selam berada 8 meter di bawah permukaan,
+        kemudian menyelam 12 meter lebih dalam hingga berada di posisi negatif 20 meter. Jarak helikopter
+        dari posisi akhir kapal selam adalah 65 meter.
       </desc>
 
-      <rect x="1" y="1" width="678" height="348" rx="16" fill={colors.surface} stroke={colors.border} strokeWidth="2" />
+      <rect x="1" y="1" width="678" height="378" rx="16" fill={colors.surface} stroke={colors.border} strokeWidth="2" />
       <text x="340" y="25" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>
-        VISUALISASI LANGKAH PERHITUNGAN
+        POSISI TERHADAP PERMUKAAN LAUT
       </text>
 
-      <rect x="16" y="40" width="648" height="93" rx="12" fill={colors.pSurface} stroke={colors.p} strokeOpacity="0.55" />
-      <text x="34" y="62" fontSize="13" fontWeight="700" fill={colors.p}>Nilai p</text>
-      <StepBox x={34} y={76} width={142} label="−6 × 4" fill={colors.surfaceAlt} stroke={colors.p} />
-      <Arrow x={184} />
-      <StepBox x={220} y={76} width={92} label="−24" fill={colors.surfaceAlt} stroke={colors.p} />
-      <Arrow x={320} />
-      <StepBox x={356} y={76} width={92} label="÷ 8" fill={colors.surfaceAlt} stroke={colors.p} />
-      <Arrow x={456} />
-      <StepBox x={492} y={76} width={142} label="p = −3" fill={colors.resultSurface} stroke={colors.result} emphasis />
+      {/* Air dan garis permukaan laut */}
+      <rect x="42" y="188" width="280" height="151" rx="10" fill={colors.sea} opacity="0.45" />
+      <line x1="38" y1="188" x2="326" y2="188" stroke={colors.seaLine} strokeWidth="3" />
+      <text x="52" y="180" fontSize="11" fontWeight="700" fill={colors.seaLine}>Permukaan laut = 0 m</text>
+      <path d="M55 204 q12 -8 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" fill="none" stroke={colors.seaLine} strokeOpacity="0.55" strokeWidth="1.5" />
 
-      <rect x="16" y="145" width="648" height="93" rx="12" fill={colors.qSurface} stroke={colors.q} strokeOpacity="0.55" />
-      <text x="34" y="167" fontSize="13" fontWeight="700" fill={colors.q}>Nilai q</text>
-      <StepBox x={34} y={181} width={142} label="11 − 16" fill={colors.surfaceAlt} stroke={colors.q} />
-      <Arrow x={184} />
-      <StepBox x={220} y={181} width={92} label="−5" fill={colors.surfaceAlt} stroke={colors.q} />
-      <Arrow x={320} />
-      <StepBox x={356} y={181} width={92} label="− (−8)" fill={colors.surfaceAlt} stroke={colors.q} />
-      <Arrow x={456} />
-      <StepBox x={492} y={181} width={142} label="q = 3" fill={colors.resultSurface} stroke={colors.result} emphasis />
-
-      <text x="340" y="266" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>
-        HASIL PADA GARIS BILANGAN
-      </text>
-      <line x1="74" y1="300" x2="606" y2="300" stroke={colors.axis} strokeWidth="2" />
-      <polygon points="616,300 604,294 604,306" fill={colors.axis} />
-      <polygon points="64,300 76,294 76,306" fill={colors.axis} />
-      {[-4, -3, -2, -1, 0, 1, 2, 3, 4].map((n) => {
-        const x = 102 + (n + 4) * 54;
+      {/* Garis bilangan vertikal */}
+      <line x1="180" y1="52" x2="180" y2="326" stroke={colors.axis} strokeWidth="2" />
+      <polygon points="180,42 174,54 186,54" fill={colors.axis} />
+      <polygon points="180,336 174,324 186,324" fill={colors.axis} />
+      {[45, 30, 15, 0, -8, -20].map((value) => {
+        const y = value === 45 ? 72 : value === 30 ? 125 : value === 15 ? 166 : value === 0 ? 188 : value === -8 ? 221 : 286;
         return (
-          <g key={n}>
-            <line x1={x} y1="293" x2={x} y2="307" stroke={colors.axis} strokeWidth="1.5" />
-            <text x={x} y="323" textAnchor="middle" fontSize="12" fontWeight="600" fill={colors.text}>{n}</text>
+          <g key={value}>
+            <line x1="171" y1={y} x2="189" y2={y} stroke={colors.axis} strokeWidth="1.5" />
+            <text x="161" y={y + 4} textAnchor="end" fontSize="11" fontWeight="600" fill={colors.text}>{value > 0 ? `+${value}` : value}</text>
           </g>
         );
       })}
-      <circle cx="156" cy="300" r="7" fill={colors.p} stroke={colors.surface} strokeWidth="2" />
-      <text x="156" y="285" textAnchor="middle" fontSize="11" fontWeight="700" fill={colors.p}>p = −3</text>
-      <circle cx="480" cy="300" r="7" fill={colors.q} stroke={colors.surface} strokeWidth="2" />
-      <text x="480" y="285" textAnchor="middle" fontSize="11" fontWeight="700" fill={colors.q}>q = 3</text>
+
+      {/* Helikopter pada +45 m */}
+      <g transform="translate(97 55)">
+        <line x1="0" y1="0" x2="54" y2="0" stroke={colors.helicopter} strokeWidth="2" strokeLinecap="round" />
+        <rect x="17" y="8" width="25" height="10" rx="5" fill={colors.helicopter} />
+        <line x1="29" y1="18" x2="29" y2="27" stroke={colors.helicopter} strokeWidth="2" />
+        <path d="M20 27 q9 7 18 0" fill="none" stroke={colors.helicopter} strokeWidth="2" />
+      </g>
+      <line x1="180" y1="72" x2="326" y2="72" stroke={colors.helicopter} strokeDasharray="4 4" strokeWidth="1.5" />
+      <text x="335" y="76" fontSize="12" fontWeight="700" fill={colors.helicopter}>Helikopter: +45 m</text>
+
+      {/* Kapal selam awal pada -8 m */}
+      <g transform="translate(92 207)">
+        <ellipse cx="36" cy="14" rx="35" ry="13" fill={colors.submarine} />
+        <rect x="28" y="0" width="16" height="10" rx="3" fill={colors.submarine} />
+        <circle cx="34" cy="4" r="2" fill={colors.surface} />
+        <path d="M70 14 l12 -7 v14 z" fill={colors.submarine} />
+      </g>
+      <line x1="180" y1="221" x2="326" y2="221" stroke={colors.initial} strokeDasharray="4 4" strokeWidth="1.5" />
+      <text x="335" y="225" fontSize="12" fontWeight="700" fill={colors.initial}>Awal: −8 m</text>
+
+      {/* Panah menyelam 12 m */}
+      <line x1="280" y1="230" x2="280" y2="278" stroke={colors.final} strokeWidth="2.5" />
+      <polygon points="280,288 273,276 287,276" fill={colors.final} />
+      <text x="291" y="259" fontSize="11" fontWeight="700" fill={colors.final}>turun 12 m</text>
+
+      {/* Kapal selam akhir pada -20 m */}
+      <g transform="translate(92 272)">
+        <ellipse cx="36" cy="14" rx="35" ry="13" fill={colors.final} />
+        <rect x="28" y="0" width="16" height="10" rx="3" fill={colors.final} />
+        <circle cx="34" cy="4" r="2" fill={colors.surface} />
+        <path d="M70 14 l12 -7 v14 z" fill={colors.final} />
+      </g>
+      <line x1="180" y1="286" x2="326" y2="286" stroke={colors.final} strokeDasharray="4 4" strokeWidth="1.5" />
+      <text x="335" y="290" fontSize="12" fontWeight="700" fill={colors.final}>Akhir: −8 − 12 = −20 m</text>
+
+      {/* Ringkasan jarak */}
+      <rect x="390" y="112" width="252" height="166" rx="12" fill={colors.surfaceAlt} stroke={colors.border} />
+      <text x="516" y="136" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>Ringkasan data soal</text>
+      <text x="410" y="165" fontSize="12" fill={colors.text}>Posisi helikopter</text>
+      <text x="620" y="165" textAnchor="end" fontSize="12" fontWeight="700" fill={colors.helicopter}>+45 m</text>
+      <text x="410" y="193" fontSize="12" fill={colors.text}>Posisi akhir kapal selam</text>
+      <text x="620" y="193" textAnchor="end" fontSize="12" fontWeight="700" fill={colors.final}>−20 m</text>
+      <line x1="410" y1="207" x2="622" y2="207" stroke={colors.border} />
+      <text x="410" y="232" fontSize="12" fill={colors.text}>Jarak keduanya</text>
+      <text x="620" y="232" textAnchor="end" fontSize="14" fontWeight="700" fill={colors.initial}>45 − (−20) = 65 m</text>
+      <text x="516" y="258" textAnchor="middle" fontSize="10" fontStyle="italic" fill={colors.muted}>diukur dari +45 ke −20</text>
     </svg>
   );
 };
@@ -1709,7 +1705,6 @@ const BilanganBulatPage = () => {
               Diketahui <InlineMath math="p = -6 \times 4 \div 8" /> dan <InlineMath math="q = 11 - 16 - (-8)" />. Pilihlah semua pernyataan yang <span className={`font-bold ${isDark ? "text-amber-300" : "text-amber-600"}`}>BENAR</span>!
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
-            <CalculationDiagramSVG isDark={isDark} />
             <MCMA qn={17} items={[
               { text: <span>Nilai <InlineMath math="p" /> adalah <InlineMath math="-3" /></span>, benar: true },
               { text: <span>Nilai <InlineMath math="q" /> adalah <InlineMath math="-3" /></span>, benar: false },
@@ -1994,6 +1989,7 @@ const BilanganBulatPage = () => {
               Sebuah kapal selam berada pada kedalaman <InlineMath math="8\text{ m}" /> di bawah permukaan laut. Sebuah helikopter berada tepat di atas kapal selam pada ketinggian <InlineMath math="45\text{ m}" /> dari permukaan laut. Kapal selam kemudian menyelam <InlineMath math="12\text{ m}" /> lebih dalam. Pilihlah semua pernyataan yang <span className={`font-bold ${isDark ? "text-amber-300" : "text-amber-600"}`}>BENAR</span>!
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
+            <SubmarineDepthDiagramSVG isDark={isDark} />
             <MCMA qn={27} items={[
               { text: <span>Posisi awal kapal selam pada garis bilangan adalah <InlineMath math="-8" />.</span>, benar: true },
               { text: <span>Ketinggian helikopter dari permukaan laut adalah <InlineMath math="45\text{ m}" />.</span>, benar: true },
