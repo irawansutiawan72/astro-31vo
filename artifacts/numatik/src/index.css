@@ -2087,6 +2087,13 @@ html.light-mode .fungsi-kuadrat-practice-route [class*="to-pink-900/"] {
 .light-mode .text-amber-200       { color: #b45309 !important; }
 .light-mode .text-yellow-100      { color: #92400e !important; }
 .light-mode .text-yellow-200      { color: #b45309 !important; }
+
+/* The calculator warning uses an opacity variant that needs stronger contrast
+   on the light yellow panel background. */
+html.light-mode .division-zero-calculator-title,
+html.light-mode .division-zero-calculator-copy {
+  color: #713f12 !important;
+}
 .light-mode .text-green-100       { color: #14532d !important; }
 .light-mode .text-green-200       { color: #15803d !important; }
 .light-mode .text-emerald-100     { color: #064e3b !important; }

@@ -961,8 +961,8 @@ const PembagianBilanganBulatPage = () => {
                   <div className="flex items-start gap-3">
                     <Calculator className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-body text-sm font-semibold text-yellow-300 mb-2">{c.divZeroCalcTitle}</p>
-                      <p className="font-body text-sm text-yellow-200/80">
+                      <p className="division-zero-calculator-title font-body text-sm font-semibold text-yellow-300 mb-2">{c.divZeroCalcTitle}</p>
+                      <p className="division-zero-calculator-copy font-body text-sm text-yellow-200/80">
                         {c.divZeroCalcBody1}<InlineMath math="-9 \div 0" />{c.divZeroCalcBody2}<code className="bg-slate-800 px-2 py-0.5 rounded text-red-400">MATH ERROR</code>{c.divZeroCalcOr}<code className="bg-slate-800 px-2 py-0.5 rounded text-red-400">Error</code>{c.divZeroCalcBody3}
                       </p>
                     </div>
