@@ -1,7 +1,6 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { latihanDasar as latihanDasarOlimpiade, dasarImages } from "@/pages/OlimpiadeBangunRuangSisiDatarPage";
 import { bangunRuangSisiDatarDasarPembahasan } from "@/data/pembahasan/bangunRuangSisiDatarDasar";
 
 const toPembahasanText = (soalNo: number) => {
@@ -73,13 +72,26 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 ];
 
 const nomorBangunRuangDihapus = new Set([2, 3, 4, 7, 10, 18, 23, 25, 26, 31, 32, 37, 38, 41, 42, 46]);
+const dasarImages: Record<number, string> = {
+  3: "https://drive.google.com/thumbnail?id=1yqriGhIiWSbjOi2dJIJUAL62xDZrpaLA&sz=w400",
+  9: "https://drive.google.com/thumbnail?id=1KhnFzUd0gEwKwrczQfayCRJhiU_qUdBB&sz=w400",
+  10: "https://drive.google.com/thumbnail?id=1DJL1UuCm0HUxh3Wb8tK0GLH-NWNkTv-A&sz=w400",
+  11: "https://drive.google.com/thumbnail?id=1m98FEp6ZgVNYZCmXbj68c1frPqKuEGRr&sz=w400",
+  17: "https://drive.google.com/thumbnail?id=1DtOQXoOzI9Dtct6BC2aQ0_AZBDr5_q8u&sz=w400",
+  25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
+  26: "https://drive.google.com/thumbnail?id=14eSPhOINHkKHXOa2lWtjFVmn9gFchdrL&sz=w400",
+  30: "https://drive.google.com/thumbnail?id=14KNDo_DQDp6a0HxOQMcpTbDVA1sZOhsl&sz=w400",
+  36: "https://drive.google.com/thumbnail?id=1mx3YCPfcN9gFNDS8yYjps-JoSBHLCSf6&sz=w400",
+  39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
+  43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
+};
 const kubusNetQuestionOneOptions = [
   <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
   <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
   <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
   <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
 ];
-const latihanDasarBangunRuang = latihanDasarOlimpiade
+const latihanDasarBangunRuang = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
   .map((soal, index) => ({
     ...soal,
