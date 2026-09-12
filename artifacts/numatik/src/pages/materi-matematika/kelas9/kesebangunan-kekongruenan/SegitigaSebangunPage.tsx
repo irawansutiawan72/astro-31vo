@@ -128,15 +128,15 @@ const DiagramContoh1 = () => (
 
 const DiagramContoh2 = () => {
   // Oblique triangle: B top-center, A bottom-left, C bottom-right
-  // AD=15, DC=10, AC=25. DE⊥AC (vertical). DE=8, EC=12, BE=18(x), AB=20(y)
+  // AD=12, DC=8, AC=20. DE=6, EC=10, BE=6(x), AB=12(y)
   const A = { x: 28,  y: 195 };
   const B = { x: 105, y: 18  };
   const C = { x: 308, y: 195 };
-  // D on AC: AD/AC = 15/25 = 0.6
+  // D on AC: AD/AC = 12/20 = 0.6
   const D = { x: Math.round(28 + 0.6 * 280), y: 195 }; // x=196
-  // E on BC at t=0.5 — diagonal DE (not vertical, not parallel to AB)
-  const tE = 0.5;
-  const E = { x: Math.round(105 + tE * (308 - 105)), y: Math.round(18 + tE * (195 - 18)) }; // ≈(207,107)
+  // E on BC: BE/BC = 6/16 = 0.375
+  const tE = 0.375;
+  const E = { x: Math.round(105 + tE * (308 - 105)), y: Math.round(18 + tE * (195 - 18)) }; // ≈(181,84)
 
   // Arc helper (inline, same logic as ap)
   const arc = (cx:number,cy:number,p1x:number,p1y:number,p2x:number,p2y:number,r:number) => {
@@ -168,14 +168,41 @@ const DiagramContoh2 = () => {
 
       {/* Side labels */}
       <text x="50"  y="115" fontSize="12" fill="#c084fc" fontWeight="bold">y</text>
-      <text x="100" y="210" fontSize="11" fill="#f97316" fontWeight="bold">15 cm</text>
-      <text x="235" y="210" fontSize="11" fill="#f97316" fontWeight="bold">10 cm</text>
-      <text x={D.x+16} y={(D.y+E.y)/2+5} fontSize="11" fill="#4ade80" fontWeight="bold">8 cm</text>
-      <text x={(E.x+C.x)/2+8} y={(E.y+C.y)/2-5} fontSize="11" fill="#86efac" fontWeight="bold">12 cm</text>
+      <text x="100" y="210" fontSize="11" fill="#f97316" fontWeight="bold">12 cm</text>
+      <text x="235" y="210" fontSize="11" fill="#f97316" fontWeight="bold">8 cm</text>
+      <text x={D.x+16} y={(D.y+E.y)/2+5} fontSize="11" fill="#4ade80" fontWeight="bold">6 cm</text>
+      <text x={(E.x+C.x)/2+8} y={(E.y+C.y)/2-5} fontSize="11" fill="#86efac" fontWeight="bold">10 cm</text>
       <text x={(B.x+E.x)/2-4} y={(B.y+E.y)/2-4} fontSize="12" fill="#fbbf24" fontWeight="bold">x</text>
     </svg>
   );
 };
+
+const DiagramTrikArahSama = () => (
+  <svg viewBox="0 0 420 145" className="w-full max-w-lg mx-auto">
+    {/* Both triangles use the same orientation: top-left, bottom-left, top-right. */}
+    <polygon points="50,18 50,63 110,18" fill="#facc15" fillOpacity="0.16" stroke="#fbbf24" strokeWidth="2" />
+    <text x="44" y="13" fontSize="11" fill="#fde68a" fontWeight="bold">D</text>
+    <text x="43" y="77" fontSize="11" fill="#fde68a" fontWeight="bold">E</text>
+    <text x="113" y="13" fontSize="11" fill="#fde68a" fontWeight="bold">C</text>
+    <text x="38" y="43" fontSize="10" fill="#fbbf24" fontWeight="bold">6</text>
+    <text x="80" y="13" textAnchor="middle" fontSize="10" fill="#fbbf24" fontWeight="bold">8</text>
+    <text x="84" y="48" fontSize="10" fill="#fbbf24" fontWeight="bold">10</text>
+    <text x="80" y="88" textAnchor="middle" fontSize="8.5" fill="#fde68a">△DEC</text>
+
+    <text x="190" y="48" textAnchor="middle" fontSize="18" fill="#facc15" fontWeight="bold">~</text>
+
+    <polygon points="270,10 270,100 390,10" fill="#3b82f6" fillOpacity="0.16" stroke="#60a5fa" strokeWidth="2" />
+    <text x="264" y="5" fontSize="11" fill="#93c5fd" fontWeight="bold">B</text>
+    <text x="263" y="114" fontSize="11" fill="#93c5fd" fontWeight="bold">A</text>
+    <text x="393" y="5" fontSize="11" fill="#93c5fd" fontWeight="bold">C</text>
+    <text x="258" y="58" fontSize="10" fill="#60a5fa" fontWeight="bold">12</text>
+    <text x="330" y="5" textAnchor="middle" fontSize="10" fill="#60a5fa" fontWeight="bold">16</text>
+    <text x="337" y="63" fontSize="10" fill="#60a5fa" fontWeight="bold">20</text>
+    <text x="330" y="135" textAnchor="middle" fontSize="8.5" fill="#93c5fd">△BAC</text>
+
+    <text x="190" y="15" textAnchor="middle" fontSize="8.5" fill="#c4b5fd">D ↔ B, E ↔ A, C ↔ C</text>
+  </svg>
+);
 
 /* Tick mark helper: draws a cross (×) at midpoint of segment for equal-length marking */
 const CrossTick = ({ x1,y1,x2,y2,color="white",offset=0 }:{x1:number,y1:number,x2:number,y2:number,color?:string,offset?:number}) => {
@@ -989,7 +1016,7 @@ const SegitigaSebangunPage = () => {
                   </div>
                   <div className="bg-slate-800/50 rounded-lg p-4">
                     <p className="font-body text-sm text-white">
-                      Pada gambar, <InlineMath math="D" /> terletak pada <InlineMath math="AC" /> dan <InlineMath math="E" /> terletak pada <InlineMath math="BC" />. Diketahui <InlineMath math="AD = 15" /> cm, <InlineMath math="DC = 10" /> cm, <InlineMath math="DE = 8" /> cm, dan <InlineMath math="EC = 12" /> cm. Tanda busur menunjukkan <InlineMath math="\angle ABC = \angle CDE" />, sedangkan sudut di <InlineMath math="C" /> merupakan sudut yang sama. Tentukan nilai <InlineMath math="x" /> (panjang BE) dan <InlineMath math="y" /> (panjang AB)!
+                      Pada gambar, <InlineMath math="D" /> terletak pada <InlineMath math="AC" /> dan <InlineMath math="E" /> terletak pada <InlineMath math="BC" />. Diketahui <InlineMath math="AD = 12" /> cm, <InlineMath math="DC = 8" /> cm, <InlineMath math="DE = 6" /> cm, dan <InlineMath math="EC = 10" /> cm. Tanda busur menunjukkan <InlineMath math="\angle ABC = \angle CDE" />, sedangkan sudut di <InlineMath math="C" /> merupakan sudut yang sama. Tentukan nilai <InlineMath math="x" /> (panjang BE) dan <InlineMath math="y" /> (panjang AB)!
                     </p>
                   </div>
                   <div className="bg-slate-800/60 border border-slate-600/40 rounded-lg p-3">
@@ -1000,21 +1027,29 @@ const SegitigaSebangunPage = () => {
                     <p className="font-body text-xs font-semibold text-yellow-400 mb-3">PEMBAHASAN:</p>
                     <div className="space-y-2 font-body text-sm text-white/80">
                       <p>Berdasarkan tanda busur pada gambar, <InlineMath math="\angle CDE = \angle ABC" />. Selain itu, sudut di <InlineMath math="C" /> merupakan sudut yang sama, yaitu <InlineMath math="\angle DCE = \angle BCA" />. Jadi, berdasarkan kriteria AA, <InlineMath math="\triangle DEC \sim \triangle BAC" /> dengan pasangan titik <InlineMath math="D \leftrightarrow B" />, <InlineMath math="E \leftrightarrow A" />, dan <InlineMath math="C \leftrightarrow C" />.</p>
+                      <div className="bg-purple-500/10 border border-purple-400/30 rounded-lg p-3 space-y-2">
+                        <p className="text-purple-200 font-semibold">💡 Trik: gambar ulang dengan arah yang sama</p>
+                        <p>Supaya pasangan sisi tidak tertukar, gambar ulang kedua segitiga dengan arah yang sama. Letakkan titik yang bersesuaian pada posisi yang sama: <InlineMath math="D" /> di atas <InlineMath math="B" />, <InlineMath math="E" /> di kiri bawah <InlineMath math="A" />, dan <InlineMath math="C" /> di kanan bawah.</p>
+                        <DiagramTrikArahSama />
+                        <p>Dengan susunan ini, pasangan sisinya langsung terlihat:</p>
+                        <BlockMath math="DE \leftrightarrow BA,\qquad EC \leftrightarrow AC,\qquad DC \leftrightarrow BC" />
+                        <p className="text-purple-200 text-xs">Urutan nama segitiga harus mengikuti pasangan titik: <InlineMath math="\triangle DEC \sim \triangle BAC" />.</p>
+                      </div>
                       <p><strong>Langkah 1:</strong> Tentukan AC:</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="AC = AD + DC = 15 + 10 = 25 \text{ cm}" />
+                        <BlockMath math="AC = AD + DC = 12 + 8 = 20 \text{ cm}" />
                       </div>
                       <p><strong>Langkah 2:</strong> Cari y = AB:</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="\frac{DE}{BA} = \frac{EC}{AC} \Rightarrow \frac{8}{y} = \frac{12}{25} \Rightarrow y = \frac{8 \times 25}{12} = \frac{50}{3} \text{ cm}" />
+                        <BlockMath math="\frac{DE}{BA} = \frac{EC}{AC} \Rightarrow \frac{6}{y} = \frac{10}{20} \Rightarrow y = \frac{6 \times 20}{10} = 12 \text{ cm}" />
                       </div>
                       <p><strong>Langkah 3:</strong> Cari x = BE:</p>
                       <div className="bg-slate-900/50 rounded p-3">
-                        <BlockMath math="\frac{DC}{BC} = \frac{EC}{AC} \Rightarrow \frac{10}{BC} = \frac{12}{25} \Rightarrow BC = \frac{125}{6} \text{ cm}" />
-                        <BlockMath math="x = BE = BC - EC = \frac{125}{6} - 12 = \frac{53}{6} \text{ cm}" />
+                        <BlockMath math="\frac{DC}{BC} = \frac{EC}{AC} \Rightarrow \frac{8}{BC} = \frac{10}{20} \Rightarrow BC = 16 \text{ cm}" />
+                        <BlockMath math="x = BE = BC - EC = 16 - 10 = 6 \text{ cm}" />
                       </div>
                       <p className="text-yellow-300 font-semibold">
-                        <strong><InlineMath math="x = BE = \frac{53}{6}" /> cm dan <InlineMath math="y = AB = \frac{50}{3}" /> cm.</strong>
+                        <strong><InlineMath math="x = BE = 6" /> cm dan <InlineMath math="y = AB = 12" /> cm.</strong>
                       </p>
                     </div>
                   </div>
