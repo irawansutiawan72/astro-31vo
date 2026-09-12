@@ -124,12 +124,36 @@ const SubmarineDepthDiagramSVG = ({ isDark }: { isDark: boolean }) => {
         );
       })}
 
-      {/* Helikopter pada +45 m */}
-      <g transform="translate(97 55)">
-        <line x1="0" y1="0" x2="54" y2="0" stroke={colors.helicopter} strokeWidth="2" strokeLinecap="round" />
-        <rect x="17" y="8" width="25" height="10" rx="5" fill={colors.helicopter} />
-        <line x1="29" y1="18" x2="29" y2="27" stroke={colors.helicopter} strokeWidth="2" />
-        <path d="M20 27 q9 7 18 0" fill="none" stroke={colors.helicopter} strokeWidth="2" />
+      {/* Helikopter pada +45 m — dibuat dengan siluet yang lebih realistis */}
+      <g transform="translate(70 47)" fill="none" stroke={colors.helicopter} strokeLinecap="round" strokeLinejoin="round">
+        {/* Bilah rotor utama, tiang, dan hub */}
+        <line x1="5" y1="0" x2="76" y2="0" strokeWidth="2.2" />
+        <line x1="40.5" y1="0" x2="40.5" y2="10" strokeWidth="2" />
+        <circle cx="40.5" cy="0" r="2.7" fill={colors.helicopter} strokeWidth="1.2" />
+
+        {/* Badan, hidung, dan kaca kokpit */}
+        <path
+          d="M18 18 C21 11 29 9 39 10 L50 11 C56 12 60 16 62 20
+             L55 27 L27 27 C22 27 18 24 18 18 Z"
+          fill={colors.helicopter}
+          strokeWidth="1.3"
+        />
+        <path d="M23 17 C27 12 34 11 39 12 L39 21 L22 21 Z" fill={colors.surface} strokeWidth="1.1" />
+        <path d="M42 12 L50 13 C54 14 57 16 59 20 L42 20 Z" fill={colors.surface} strokeWidth="1.1" />
+        <line x1="40.5" y1="11" x2="40.5" y2="21" strokeWidth="1" />
+
+        {/* Ekor dan sirip ekor */}
+        <path d="M55 20 L78 14 L91 15" strokeWidth="3" />
+        <path d="M76 15 L82 7 L87 14" fill={colors.helicopter} strokeWidth="1.2" />
+        {/* Rotor ekor */}
+        <line x1="88" y1="7" x2="88" y2="23" strokeWidth="1.6" />
+        <line x1="82" y1="15" x2="94" y2="15" strokeWidth="1.6" />
+        <circle cx="88" cy="15" r="2" fill={colors.helicopter} strokeWidth="1" />
+
+        {/* Roda pendaratan model skid */}
+        <path d="M28 27 L25 36 M51 27 L54 36" strokeWidth="1.5" />
+        <path d="M19 36 Q27 39 35 36 M45 36 Q53 39 61 36" strokeWidth="1.8" />
+        <line x1="25" y1="36" x2="54" y2="36" strokeWidth="1.1" opacity="0.8" />
       </g>
       <line x1="180" y1="72" x2="326" y2="72" stroke={colors.helicopter} strokeDasharray="4 4" strokeWidth="1.5" />
       <text x="335" y="76" fontSize="12" fontWeight="700" fill={colors.helicopter}>Helikopter: +45 m</text>
@@ -160,7 +184,6 @@ const SubmarineDepthDiagramSVG = ({ isDark }: { isDark: boolean }) => {
       <text x="335" y="290" fontSize="12" fontWeight="700" fill={colors.final}>Akhir: −8 − 12 = −20 m</text>
 
       {/* Ringkasan jarak */}
-      <rect x="390" y="112" width="252" height="166" rx="12" fill={colors.surfaceAlt} stroke={colors.border} />
       <text x="516" y="136" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>Ringkasan data soal</text>
       <text x="410" y="165" fontSize="12" fill={colors.text}>Posisi helikopter</text>
       <text x="620" y="165" textAnchor="end" fontSize="12" fontWeight="700" fill={colors.helicopter}>+45 m</text>
