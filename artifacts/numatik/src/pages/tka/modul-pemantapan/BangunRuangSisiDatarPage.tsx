@@ -55,7 +55,6 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 31, soal: "Sebuah kubus mempunyai panjang diagonal ruang adalah $5\\sqrt{3}$ cm. maka volumenya adalah", options: ["A. 150 $cm^3$", "B. 125 $cm^3$", "C. 75 $cm^3$", "D. 45 $cm^3$"] },
   { no: 32, soal: "Luas salah satu sisi pada kubus adalah 25 $cm^2$. Maka volume kubus tersebut adalah ...", options: ["A. 625 $cm^3$", "B. 150 $cm^3$", "C. 125 $cm^3$", "D. 50 $cm^3$"] },
   { no: 33, soal: "Perbandingan panjang rusuk-rusuk sebuah balok 2 : 3 : 4, jika luas permukaan balok tersebut 248 $cm^2$, maka volumenya adalah ....", options: ["A. 24 $cm^3$", "B. 32 $cm^3$", "C. 180 $cm^3$", "D. 192 $cm^3$"] },
-  { no: 34, soal: "Sebuah kaleng roti berbentuk prisma tegak yang alasnya persegipanjang dengan panjang 12 cm, dan lebar 8 cm, jika tinggi prisma 10 cm. maka volume kaleng roti tersebut adalah ....", options: ["A. 320 $cm^3$", "B. 480 $cm^3$", "C. 960 $cm^3$", "D. 1440 $cm^3$"] },
   { no: 35, soal: "Pada sebuah prisma yang alasnya belahketupat, diketahui panjang sisinya 13 cm, panjang salah satu diagonalnya 10 cm, dan tinggi prisma 15 cm, volume prisma adalah ...", options: ["A. 1.800 $cm^3$", "B. 1.200 $cm^3$", "C. 650 $cm^3$", "D. 600 $cm^3$"] },
   { no: 36, soal: "Perhatikan gambar prisma berikut!\nVolumenya adalah ....", options: ["A. 800 $cm^3$", "B. 1.600 $cm^3$", "C. 2.400 $cm^3$", "D. 3.200 $cm^3$"] },
   { no: 37, soal: "Sebuah prisma alasnya berbentuk jajar genjang dengan panjang alas 15 cm dan tinggi 8 cm. Jika tinggi prisma 20 cm, volume prisma tersebut adalah ....", options: ["A. 2.400 $cm^3$", "B. 2.100 $cm^3$", "C. 1.800 $cm^3$", "D. 800 $cm^3$"] },
@@ -65,12 +64,11 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 41, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 60 cm dan panjang salah satu diagonalnya 18 cm, jika tinggi limas 20 cm, maka volume limas tersebut adalah....", options: ["A. 1440 $cm^3$", "B. 1800 $cm^3$", "C. 2160 $cm^3$", "D. 2880 $cm^3$"] },
   { no: 42, soal: "Sebuah limas mempunyai alas berbentuk jajargenjang yang panjang salah satu sisinya 12 cm dan jarak antara sisi itu dengan sisi sejajarnya adalah 15 cm. Jika volumnya 600 $cm^3$, maka tinggi limas tersebut adalah ....", options: ["A. 30 cm", "B. 10 cm", "C. 6,6 cm", "D. 3,3 cm"] },
   { no: 43, soal: "Perhatikan gambar berikut!\nVolume bangun di atas adalah....", options: ["A. 144 $cm^3$", "B. 576 $cm^3$", "C. 644 $cm^3$", "D. 720 $cm^3$"] },
-  { no: 44, soal: "Sebuah kubus besar yang volumenya 27 $m^3$ dapat disusun dari kubus-kubus kecil dengan panjang rusuk 0,75 m sebanyak ....", options: ["A. 64 buah", "B. 48 buah", "C. 42 buah", "D. 32 buah"] },
   { no: 45, soal: "Sebuah bak air berbentuk balok dengan panjang 1,2 m, lebar 0,8 m dan tinggi 0,5 m berisi air $\\frac{3}{4}$ bagian. Air tersebut akan dituangkan ke dalam wadah berbentuk kubus dengan panjang rusuk 20 cm. Maka banyak kubus yang diperlukan untuk menampung air adalah.....", options: ["A. 20 buah", "B. 25 buah", "C. 40 buah", "D. 45 buah"] },
   { no: 46, soal: "Sebuah bak mandi berukuran panjang = 80 cm, lebar = 40 cm, tinggi 60 cm, berisi air setinggi 40 cm, jika 3 buah kubus yang panjang rusuknya 20 cm, dimasukkan ke dalam bak tersebut sehingga tenggelam, tentukan tinggi air sekarang!", options: [] },
 ];
 
-const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 35, 36, 37, 38, 41, 42, 46]);
+const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 34, 35, 36, 37, 38, 41, 42, 44, 46]);
 const dasarImagesByOriginalNo: Record<number, string> = {
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
@@ -78,8 +76,6 @@ const dasarImagesByOriginalNo: Record<number, string> = {
 };
 const dasarImagesByDisplayedNo: Record<number, string> = {
   3: "/bangun-ruang-sisi-datar-q3-kubus.png",
-  8: "/bangun-ruang-sisi-datar-q8-prisma-segitiga.svg",
-  9: "/bangun-ruang-sisi-datar-q9-prisma-belah-ketupat.svg",
 };
 const kubusNetQuestionOneOptions = [
   <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
