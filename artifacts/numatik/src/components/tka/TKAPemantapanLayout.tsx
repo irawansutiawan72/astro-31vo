@@ -55,6 +55,7 @@ interface Props {
   autoRevealOnAnswer?: boolean;
   showImageSourceLinks?: boolean;
   imageScale?: "default" | "half" | "responsiveHalf";
+  imageScaleExceptQuestionNo?: number;
 }
 
 const getGoogleDriveFileId = (value: string) => {
@@ -203,7 +204,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; bor
   },
 };
 
-const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, autoRevealOnAnswer = false, showImageSourceLinks = true, imageScale = "default" }: Props) => {
+const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, autoRevealOnAnswer = false, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
@@ -548,13 +549,14 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
             <div className="space-y-4">
               {contohSoal.map((soal) => {
                 const type = soal.type ?? "pg";
+                const soalImageScale = soal.no === imageScaleExceptQuestionNo ? "default" : imageScale;
                 const selected = selectedContohAnswers[soal.no];
                 const bsArr = pgkbsContohAnswers[soal.no] ?? Array(soal.pernyataan?.length ?? 3).fill(null);
                 const typeBadge = TYPE_BADGE[type];
                 const diagram = soal.gambar
                   ?? (soal.soalSvg && soalSvgMap?.[soal.soalSvg])
                   ?? (typeof gambarMap?.[soal.no] === "string"
-                    ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, imageScale)
+                    ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, soalImageScale)
                     : gambarMap?.[soal.no]);
                 const hasInlineVisual = soal.soal.split('\n').some((line) =>
                   line.trim() === "[DIAGRAM]" || /^\[IMAGE:[^|]+(?:\|\w+)?\]$/.test(line.trim())
@@ -834,6 +836,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
             <div className="space-y-4">
               {latihanDasar.map((soal) => {
                 const type = soal.type ?? "pg";
+                const soalImageScale = soal.no === imageScaleExceptQuestionNo ? "default" : imageScale;
                 const selected = selectedAnswers[soal.no];
                 const selectedPGK = pgkAnswers[soal.no] ?? [];
                 const isRevealed = revealedAnswers.has(soal.no);
@@ -865,7 +868,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                 const diagram = soal.gambar
                   ?? (soal.soalSvg && soalSvgMap?.[soal.soalSvg])
                   ?? (typeof gambarMap?.[soal.no] === "string"
-                    ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, imageScale)
+                    ? renderQuestionImage(gambarMap[soal.no] as string, soal.no, soalImageScale)
                     : gambarMap?.[soal.no]);
                 const hasInlineVisual = soal.soal.split('\n').some((line) =>
                   line.trim() === "[DIAGRAM]" || /^\[IMAGE:[^|]+(?:\|\w+)?\]$/.test(line.trim())
@@ -916,16 +919,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               // An explicit visual in the question takes precedence over
                               // a fallback visual supplied through soalSvg/gambarMap.
                               diagramInserted = true;
-                              const sizeClass = imgMatch[2] === 'small'
-                            ? (imageScale === "responsiveHalf"
+                             const sizeClass = imgMatch[2] === 'small'
+                             ? (soalImageScale === "responsiveHalf"
                               ? 'tka-responsive-image-small'
-                              : imageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
-                            : (imageScale === "responsiveHalf"
+                               : soalImageScale === "half" ? 'max-w-[80px]' : 'max-w-[160px]')
+                             : (soalImageScale === "responsiveHalf"
                               ? 'tka-responsive-image-half'
-                              : imageScale === "half" ? 'max-w-[192px]' : 'max-w-sm w-full');
+                               : soalImageScale === "half" ? 'max-w-[192px]' : 'max-w-sm w-full');
                               return (
                                 <div key={lineIdx} className="my-2 flex justify-center">
-                                  <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt={`Soal ${soal.no}`} wrapperClassName={`${sizeClass} rounded-xl`} className={`${imageScale === "responsiveHalf" ? "tka-responsive-image-half-content" : imageScale === "half" ? "max-h-[210px]" : ""} w-full rounded-xl object-contain`} />
+                                   <AsyncImage src={normalizeImageUrl(imgMatch[1])} alt={`Soal ${soal.no}`} wrapperClassName={`${sizeClass} rounded-xl`} className={`${soalImageScale === "responsiveHalf" ? "tka-responsive-image-half-content" : soalImageScale === "half" ? "max-h-[210px]" : ""} w-full rounded-xl object-contain`} />
                                 </div>
                               );
                             }
@@ -944,7 +947,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 {!hasInlineVisual && !diagramInserted && diagram && /berikut/i.test(line) && (
                                   (() => {
                                     diagramInserted = true;
-                                    return <div className={`my-2 min-w-0 max-w-full overflow-x-auto ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>;
+                                   return <div className={`my-2 min-w-0 max-w-full overflow-x-auto ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>;
                                   })()
                                 )}
                               </Fragment>
@@ -1007,7 +1010,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── Optional diagram/image, placed after the statements ── */}
                     {!diagramInserted && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
-                        <div className={`min-w-0 max-w-full ${imageScale === "responsiveHalf" ? "tka-responsive-diagram" : imageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
+                         <div className={`min-w-0 max-w-full ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
                     )}
 

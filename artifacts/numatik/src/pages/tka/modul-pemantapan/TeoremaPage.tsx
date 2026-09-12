@@ -624,8 +624,10 @@ const TeoremaPage = () => (
     materiSections={materiSections}
     contohSoal={contohSoal}
     soalSvgMap={contohSvgMap}
-  latihanDasar={latihanDasarPythagoras}
-  gambarMap={latihanDasarGambarMap}
+    latihanDasar={latihanDasarPythagoras}
+    gambarMap={latihanDasarGambarMap}
+    imageScale="half"
+    imageScaleExceptQuestionNo={13}
   />
 );
 
