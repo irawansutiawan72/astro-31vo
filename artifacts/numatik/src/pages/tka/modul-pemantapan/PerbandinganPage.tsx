@@ -314,9 +314,9 @@ const materiSections: MateriSection[] = [
 
 const DenahKebunQ11 = (
   <svg
-    viewBox="0 0 760 300"
+    viewBox="0 0 360 300"
     role="img"
-    aria-label="Denah kebun berbentuk persegi panjang berskala 1 banding 200, berukuran 7 cm kali 4,5 cm pada denah dan 14 m kali 9 m sebenarnya"
+    aria-label="Denah kebun berbentuk persegi panjang berskala 1 banding 200, berukuran 7 cm kali 4,5 cm pada denah"
     className="mx-auto my-3 h-auto w-full max-w-2xl rounded-xl border border-border bg-background p-3 text-foreground"
   >
     <defs>
@@ -338,21 +338,6 @@ const DenahKebunQ11 = (
     <line x1="58" y1="105" x2="58" y2="231" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
     <text x="43" y="171" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b" transform="rotate(-90 43 171)">4,5 cm</text>
 
-    <line x1="362" y1="150" x2="398" y2="150" stroke="currentColor" strokeOpacity="0.55" strokeWidth="2.5" markerEnd="url(#q11-arrow)" />
-    <text x="380" y="134" textAnchor="middle" fontSize="12" fill="currentColor" fillOpacity="0.65">× 200</text>
-
-    <rect x="414" y="14" width="332" height="272" rx="16" fill="currentColor" fillOpacity="0.04" stroke="currentColor" strokeOpacity="0.16" />
-    <text x="580" y="42" textAnchor="middle" fontSize="17" fontWeight="700" fill="currentColor">UKURAN SEBENARNYA</text>
-    <text x="580" y="64" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.65">setiap 1 cm = 200 cm = 2 m</text>
-
-    <rect x="476" y="105" width="208" height="126" rx="4" fill="#34d399" fillOpacity="0.18" stroke="#059669" strokeWidth="3" />
-    <text x="580" y="166" textAnchor="middle" fontSize="15" fontWeight="700" fill="currentColor">KEBUN</text>
-    <text x="580" y="186" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.72">ukuran sebenarnya</text>
-
-    <line x1="476" y1="88" x2="684" y2="88" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
-    <text x="580" y="80" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b">14 m</text>
-    <line x1="458" y1="105" x2="458" y2="231" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
-    <text x="443" y="171" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b" transform="rotate(-90 443 171)">9 m</text>
   </svg>
 );
 
