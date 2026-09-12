@@ -312,6 +312,50 @@ const materiSections: MateriSection[] = [
   },
 ];
 
+const DenahKebunQ11 = (
+  <svg
+    viewBox="0 0 760 300"
+    role="img"
+    aria-label="Denah kebun berbentuk persegi panjang berskala 1 banding 200, berukuran 7 cm kali 4,5 cm pada denah dan 14 m kali 9 m sebenarnya"
+    className="mx-auto my-3 h-auto w-full max-w-2xl rounded-xl border border-border bg-background p-3 text-foreground"
+  >
+    <defs>
+      <marker id="q11-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" />
+      </marker>
+    </defs>
+
+    <rect x="14" y="14" width="332" height="272" rx="16" fill="currentColor" fillOpacity="0.04" stroke="currentColor" strokeOpacity="0.16" />
+    <text x="180" y="42" textAnchor="middle" fontSize="17" fontWeight="700" fill="currentColor">DENAH</text>
+    <text x="180" y="64" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.65">skala 1 : 200</text>
+
+    <rect x="76" y="105" width="208" height="126" rx="4" fill="#38bdf8" fillOpacity="0.18" stroke="#0284c7" strokeWidth="3" />
+    <text x="180" y="166" textAnchor="middle" fontSize="15" fontWeight="700" fill="currentColor">KEBUN</text>
+    <text x="180" y="186" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.72">pada denah</text>
+
+    <line x1="76" y1="88" x2="284" y2="88" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
+    <text x="180" y="80" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b">7 cm</text>
+    <line x1="58" y1="105" x2="58" y2="231" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
+    <text x="43" y="171" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b" transform="rotate(-90 43 171)">4,5 cm</text>
+
+    <line x1="362" y1="150" x2="398" y2="150" stroke="currentColor" strokeOpacity="0.55" strokeWidth="2.5" markerEnd="url(#q11-arrow)" />
+    <text x="380" y="134" textAnchor="middle" fontSize="12" fill="currentColor" fillOpacity="0.65">× 200</text>
+
+    <rect x="414" y="14" width="332" height="272" rx="16" fill="currentColor" fillOpacity="0.04" stroke="currentColor" strokeOpacity="0.16" />
+    <text x="580" y="42" textAnchor="middle" fontSize="17" fontWeight="700" fill="currentColor">UKURAN SEBENARNYA</text>
+    <text x="580" y="64" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.65">setiap 1 cm = 200 cm = 2 m</text>
+
+    <rect x="476" y="105" width="208" height="126" rx="4" fill="#34d399" fillOpacity="0.18" stroke="#059669" strokeWidth="3" />
+    <text x="580" y="166" textAnchor="middle" fontSize="15" fontWeight="700" fill="currentColor">KEBUN</text>
+    <text x="580" y="186" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.72">ukuran sebenarnya</text>
+
+    <line x1="476" y1="88" x2="684" y2="88" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
+    <text x="580" y="80" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b">14 m</text>
+    <line x1="458" y1="105" x2="458" y2="231" stroke="#f59e0b" strokeWidth="2" markerStart="url(#q11-arrow)" markerEnd="url(#q11-arrow)" />
+    <text x="443" y="171" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f59e0b" transform="rotate(-90 443 171)">9 m</text>
+  </svg>
+);
+
 const latihanDasar: LatihanSoal[] = [
   /* ── Soal 1–20: PG biasa (1,4,7,10,13,16,19) · PGK (2,5,8,11,14,17,20) · PGKBS (3,6,9,12,15,18) ── */
   { no: 1, type: "pg" as const, soal: "Sebuah toko menjual beberapa jenis kue. Untuk membuat 12 loyang kue bolu diperlukan 3 kg mentega. Mentega yang diperlukan untuk membuat 20 loyang kue bolu adalah ...", options: ["A. 4 kg", "B. 5 kg", "C. 6 kg", "D. 8 kg"], jawaban: "B", pembahasan: "Perbandingan senilai: loyang bertambah → mentega bertambah\n$\\frac{12}{20} = \\frac{3}{x}$\n$12x = 60$\n$x = 5$ kg → Jawaban B" },
@@ -325,7 +369,7 @@ const latihanDasar: LatihanSoal[] = [
   { no: 9, type: "pgkbs" as const, soal: "Perbandingan jumlah tabungan Narda dan Rizki adalah 3 : 4, sedangkan perbandingan tabungan Narda dan Lutfi adalah 5 : 2. Jumlah tabungan mereka bertiga adalah Rp8.200.000,00.\n\nBerdasarkan informasi tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut!", pernyataan: ["Perbandingan gabungan N : R : L adalah $3 : 4 : 2$.", "Nilai satu satuan (k) dalam perbandingan adalah Rp200.000,00.", "Selisih tabungan Rizki dan Lutfi adalah Rp2.800.000,00."], jawabanBS: ["S", "B", "B"], pembahasan: "N:R $= 3:4 = 15:20$; N:L $= 5:2 = 15:6$\nN:R:L $= 15:20:6$ (bukan $3:4:2$)\n(1) N:R:L yang benar adalah $15:20:6$ → SALAH\n$41k = 8.200.000 \\Rightarrow k = 200.000$\n(2) $k = \\text{Rp}200.000$ → BENAR\n(3) Rizki $= 4.000.000$; Lutfi $= 1.200.000$; selisih $= \\text{Rp}2.800.000$ → BENAR" },
   { no: 10, type: "pg" as const, soal: "Jarak dua kota pada peta adalah 20 cm. Jika skala peta 1 : 600.000, jarak dua kota sebenarnya adalah ...", options: ["A. 1.200 km", "B. 120 km", "C. 30 km", "D. 12 km"], jawaban: "B", pembahasan: "Skala $1 : 600.000$\nJarak sebenarnya $= 20 \\times 600.000 = 12.000.000$ cm $= 120$ km → Jawaban B" },
   { no: 11, type: "pgk" as const, soal: "Sebuah denah kebun dibuat dengan skala $1 : 500$. Ukuran kebun pada denah adalah $10\\text{ cm} \\times 8\\text{ cm}$.\n\nPernyataan yang BENAR adalah ...", pernyataan: ["Panjang kebun sebenarnya adalah 50 m.", "Lebar kebun sebenarnya adalah 40 m.", "Luas kebun sebenarnya adalah 2.000 m².", "Keliling kebun sebenarnya adalah 100 m."], options: ["A. 1 dan 2", "B. 1, 2, dan 3", "C. 2, 3, dan 4", "D. 1, 2, 3, dan 4"], jawaban: "B", pembahasan: "Skala $1:500 \\Rightarrow$ setiap 1 cm pada denah $= 500$ cm $= 5$ m sebenarnya.\n(1) Panjang $= 10 \\times 500 = 5.000$ cm $= 50$ m → BENAR\n(2) Lebar $= 8 \\times 500 = 4.000$ cm $= 40$ m → BENAR\n(3) Luas $= 50 \\times 40 = 2.000$ m² → BENAR\n(4) Keliling $= 2 \\times (50+40) = 180$ m (bukan 100 m) → SALAH\nJawaban B" },
-  { no: 12, type: "pgkbs" as const, soal: "Pada denah skala 1 : 200 terdapat gambar kebun berbentuk persegi panjang dengan ukuran 7 cm × 4,5 cm.\n\nBerdasarkan informasi tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut!", pernyataan: ["Panjang kebun sebenarnya adalah 14 m.", "Lebar kebun sebenarnya adalah 4,5 m.", "Luas kebun sebenarnya adalah 126 m²."], jawabanBS: ["B", "S", "B"], pembahasan: "Skala $1:200$:\nPanjang $= 7 \\times 200 = 1.400$ cm $= 14$ m\nLebar $= 4{,}5 \\times 200 = 900$ cm $= 9$ m\n(1) Panjang $= 14$ m → BENAR\n(2) Lebar $= 9$ m (bukan 4,5 m; itu ukuran di denah, bukan sebenarnya) → SALAH\n(3) Luas $= 14 \\times 9 = 126$ m² → BENAR" },
+  { no: 12, type: "pgkbs" as const, soal: "Pada denah skala 1 : 200 terdapat gambar kebun berbentuk persegi panjang dengan ukuran 7 cm × 4,5 cm.\n\nBerdasarkan informasi tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut!", gambar: DenahKebunQ11, pernyataan: ["Panjang kebun sebenarnya adalah 14 m.", "Lebar kebun sebenarnya adalah 4,5 m.", "Luas kebun sebenarnya adalah 126 m²."], jawabanBS: ["B", "S", "B"], pembahasan: "Skala $1:200$:\nPanjang $= 7 \\times 200 = 1.400$ cm $= 14$ m\nLebar $= 4{,}5 \\times 200 = 900$ cm $= 9$ m\n(1) Panjang $= 14$ m → BENAR\n(2) Lebar $= 9$ m (bukan 4,5 m; itu ukuran di denah, bukan sebenarnya) → SALAH\n(3) Luas $= 14 \\times 9 = 126$ m² → BENAR" },
   { no: 13, type: "pg" as const, soal: "Perhatikan denah sebuah rumah berikut!\n[IMAGE:https://drive.google.com/thumbnail?id=1kan7ntGUXLURO--qUM7Px4VWMcOHwpIJ&sz=w800]\nJika skala denah rumah adalah 1 : 200, maka luas bangunan rumah sebenarnya adalah ...", options: ["A. 46 $m^2$", "B. 92 $m^2$", "C. 184 $m^2$", "D. 368 $m^2$"], jawaban: "C", pembahasan: "Skala $1:200$\nLuas sebenarnya $=$ Luas denah $\\times (200)^2 = 46 \\times 40.000 = 1.840.000$ cm² $= 184$ m² → Jawaban C" },
   { no: 14, type: "pgk" as const, soal: "Denah sebuah gedung dibuat dengan skala $1 : 300$. Luas denah adalah $125\\text{ cm}^2$.\n\nPernyataan yang BENAR adalah ...", pernyataan: ["Skala $1:300$ berarti setiap $1\\text{ cm}^2$ pada denah mewakili $90.000\\text{ cm}^2$ luas sebenarnya.", "Luas gedung sebenarnya adalah $11.250.000\\text{ cm}^2$.", "Luas gedung sebenarnya adalah $1.125\\text{ m}^2$.", "Jika skala diubah menjadi $1:600$, luas sebenarnya untuk denah yang sama menjadi $2.250\\text{ m}^2$."], options: ["A. 1 saja", "B. 1 dan 2", "C. 1, 2, dan 3", "D. 1, 2, 3, dan 4"], jawaban: "C", pembahasan: "(1) $300^2 = 90.000$ → BENAR\n(2) Luas $= 125 \\times 90.000 = 11.250.000$ cm² → BENAR\n(3) $11.250.000$ cm² $= 1.125$ m² → BENAR\n(4) Skala $1:600$: Luas $= 125 \\times 360.000 = 45.000.000$ cm² $= 4.500$ m² (bukan $2.250$ m²) → SALAH\nJawaban C" },
   { no: 15, type: "pgkbs" as const, soal: "Diketahui denah sebuah rumah digambar dengan skala 1 : 30. Ukuran kamar mandi yang berbentuk persegi panjang pada denah adalah 5 cm × 7 cm.\n\nBerdasarkan informasi tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut!", pernyataan: ["Panjang kamar mandi sebenarnya adalah 1,5 m.", "Lebar kamar mandi sebenarnya adalah 2,1 m.", "Luas kamar mandi sebenarnya adalah 10,5 m²."], jawabanBS: ["B", "B", "S"], pembahasan: "Skala $1:30$:\nPanjang $= 5 \\times 30 = 150$ cm $= 1{,}5$ m\nLebar $= 7 \\times 30 = 210$ cm $= 2{,}1$ m\n(1) Panjang $= 1{,}5$ m → BENAR\n(2) Lebar $= 2{,}1$ m → BENAR\n(3) Luas $= 1{,}5 \\times 2{,}1 = 3{,}15$ m² (bukan 10,5 m²) → SALAH" },
