@@ -177,33 +177,36 @@ const DiagramContoh2 = () => {
   );
 };
 
-const DiagramTrikArahSama = () => (
-  <svg viewBox="0 0 360 155" className="w-full max-w-lg mx-auto">
-    {/* The small triangle is redrawn with the same upright direction as the large one. */}
-    <polygon points="68,20 28,128 108,128" fill="#facc15" fillOpacity="0.16" stroke="#fbbf24" strokeWidth="2" />
-    <text x="68" y="13" textAnchor="middle" fontSize="11" fill="#fde68a" fontWeight="bold">D</text>
-    <text x="20" y="140" fontSize="11" fill="#fde68a" fontWeight="bold">E</text>
-    <text x="111" y="140" fontSize="11" fill="#fde68a" fontWeight="bold">C</text>
-    <text x="42" y="77" fontSize="10" fill="#fbbf24" fontWeight="bold">6</text>
-    <text x="68" y="143" textAnchor="middle" fontSize="10" fill="#fbbf24" fontWeight="bold">10</text>
-    <text x="91" y="77" fontSize="10" fill="#fbbf24" fontWeight="bold">8</text>
-    <text x="68" y="151" textAnchor="middle" fontSize="8.5" fill="#fde68a">△DEC</text>
+const DiagramTrikArahSama = () => {
+  // Exact copy of the ABC outline from DiagramContoh2, without the DEC construction.
+  const A = { x: 28, y: 195 };
+  const B = { x: 105, y: 18 };
+  const C = { x: 308, y: 195 };
 
-    <text x="180" y="83" textAnchor="middle" fontSize="18" fill="#facc15" fontWeight="bold">~</text>
+  const arc = (cx:number,cy:number,p1x:number,p1y:number,p2x:number,p2y:number,r:number) => {
+    const d1x=p1x-cx,d1y=p1y-cy,l1=Math.sqrt(d1x*d1x+d1y*d1y);
+    const d2x=p2x-cx,d2y=p2y-cy,l2=Math.sqrt(d2x*d2x+d2y*d2y);
+    const u1x=d1x/l1,u1y=d1y/l1,u2x=d2x/l2,u2y=d2y/l2;
+    const sw=(u1x*u2y-u1y*u2x)>0?1:0;
+    return `M ${(cx+r*u1x).toFixed(1)} ${(cy+r*u1y).toFixed(1)} A ${r} ${r} 0 0 ${sw} ${(cx+r*u2x).toFixed(1)} ${(cy+r*u2y).toFixed(1)}`;
+  };
 
-    {/* The large triangle keeps the same upright form as the Contoh 2 diagram. */}
-    <polygon points="292,20 226,128 358,128" fill="#3b82f6" fillOpacity="0.16" stroke="#60a5fa" strokeWidth="2" />
-    <text x="292" y="13" textAnchor="middle" fontSize="11" fill="#93c5fd" fontWeight="bold">B</text>
-    <text x="218" y="140" fontSize="11" fill="#93c5fd" fontWeight="bold">A</text>
-    <text x="361" y="140" fontSize="11" fill="#93c5fd" fontWeight="bold">C</text>
-    <text x="251" y="77" fontSize="10" fill="#60a5fa" fontWeight="bold">12</text>
-    <text x="292" y="143" textAnchor="middle" fontSize="10" fill="#60a5fa" fontWeight="bold">20</text>
-    <text x="329" y="77" fontSize="10" fill="#60a5fa" fontWeight="bold">16</text>
-    <text x="292" y="151" textAnchor="middle" fontSize="8.5" fill="#93c5fd">△BAC</text>
-
-    <text x="180" y="15" textAnchor="middle" fontSize="8.5" fill="#c4b5fd">D ↔ B, E ↔ A, C ↔ C</text>
-  </svg>
-);
+  return (
+    <svg viewBox="0 0 340 220" className="w-full max-w-sm mx-auto">
+      <polygon
+        points={`${A.x},${A.y} ${B.x},${B.y} ${C.x},${C.y}`}
+        fill="#3b82f6"
+        fillOpacity="0.12"
+        stroke="#60a5fa"
+        strokeWidth="2.5"
+      />
+      <path d={arc(B.x,B.y, A.x,A.y, C.x,C.y, 22)} fill="none" stroke="#f97316" strokeWidth="2" strokeLinecap="round"/>
+      <text x={A.x-13} y={A.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">A</text>
+      <text x={B.x-4} y={B.y-6} fontSize="13" fill="#93c5fd" fontWeight="bold">B</text>
+      <text x={C.x+4} y={C.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">C</text>
+    </svg>
+  );
+};
 
 /* Tick mark helper: draws a cross (×) at midpoint of segment for equal-length marking */
 const CrossTick = ({ x1,y1,x2,y2,color="white",offset=0 }:{x1:number,y1:number,x2:number,y2:number,color?:string,offset?:number}) => {
@@ -1061,9 +1064,9 @@ const SegitigaSebangunPage = () => {
                       <p>Berdasarkan tanda busur pada gambar, <InlineMath math="\angle CDE = \angle ABC" />. Selain itu, sudut di <InlineMath math="C" /> merupakan sudut yang sama, yaitu <InlineMath math="\angle DCE = \angle BCA" />. Jadi, berdasarkan kriteria AA, <InlineMath math="\triangle DEC \sim \triangle BAC" /> dengan pasangan titik <InlineMath math="D \leftrightarrow B" />, <InlineMath math="E \leftrightarrow A" />, dan <InlineMath math="C \leftrightarrow C" />.</p>
                       <div className="bg-purple-500/10 border border-purple-400/30 rounded-lg p-3 space-y-2">
                         <p className="text-purple-200 font-semibold">💡 Trik: gambar ulang dengan arah yang sama</p>
-                        <p>Supaya pasangan sisi tidak tertukar, gambar ulang kedua segitiga dengan arah yang sama. Letakkan titik yang bersesuaian pada posisi yang sama: <InlineMath math="D" /> di atas <InlineMath math="B" />, <InlineMath math="E" /> di kiri bawah <InlineMath math="A" />, dan <InlineMath math="C" /> di kanan bawah.</p>
+                        <p>Untuk melihat arah segitiga dengan jelas, gambar ulang segitiga <InlineMath math="ABC" /> persis seperti pada soal. Pada gambar ulang ini garis <InlineMath math="DE" /> dan label <InlineMath math="D" /> serta <InlineMath math="E" /> dihilangkan, sehingga fokus pada bentuk dan arah segitiga besar.</p>
                         <DiagramTrikArahSama />
-                        <p>Dengan susunan ini, pasangan sisinya langsung terlihat:</p>
+                        <p>Pasangan titik dari gambar soal tetap digunakan dalam pembahasan:</p>
                         <BlockMath math="DE \leftrightarrow BA,\qquad EC \leftrightarrow AC,\qquad DC \leftrightarrow BC" />
                         <p className="text-purple-200 text-xs">Urutan nama segitiga harus mengikuti pasangan titik: <InlineMath math="\triangle DEC \sim \triangle BAC" />.</p>
                       </div>
