@@ -758,18 +758,7 @@ const questions: Q[] = [
     contentNode: <>Perhatikan gambar segitiga ABC berikut. Diketahui <InlineMath math="\angle ABC = \angle EDC" /> dengan AD = 9 cm, DC = 6 cm, DE = 5 cm, dan EC = 8 cm. Carilah nilai x (= BE) dan y (= AB)!</>,
     diagram: <SoalQ7New />,
   }),
-  Qn(11, "Trapesium – Cari EF – TKA", {
-    type: "mixed",
-    content: "Jika panjang PQ = 8 cm, RS = 18 cm, QF = 3 cm, dan FS = 2 cm, maka panjang EF adalah ....",
-    diagram: <Q10TrapSVG />,
-    parts: [
-      { label: "A.", text: "10 cm" },
-      { label: "B.", text: "11 cm" },
-      { label: "C.", text: "12 cm" },
-      { label: "D.", text: "14 cm" },
-    ],
-  }),
-  Qn(12, "Trapesium – Garis Sejajar – Cari EF", {
+  Qn(11, "Trapesium – Garis Sejajar – Cari EF", {
     type: "mixed",
     content: "Perhatikan trapesium ABCD dengan AB ∥ EF ∥ DC. Titik E berada di sisi AD dan F berada di sisi BC sehingga AE : ED = 2 : 3. Jika AB = 5 cm dan DC = 20 cm, maka panjang EF adalah…",
     diagram: <SoalQ3 />,
@@ -778,28 +767,6 @@ const questions: Q[] = [
       { label: "B.", text: "11 cm" },
       { label: "C.", text: "12,5 cm" },
       { label: "D.", text: "13 cm" },
-    ],
-  }),
-  Qn(13, "Garis-Garis Sejajar – Cari CF", {
-    type: "mixed",
-    content: "Perhatikan gambar berikut. Jika panjang BC = CD = DE = 15 cm dan AB = 11 cm, panjang CF adalah…",
-    diagram: <SoalQ7 />,
-    parts: [
-      { label: "A.", text: "2 cm" },
-      { label: "B.", text: "8 cm" },
-      { label: "C.", text: "12 cm" },
-      { label: "D.", text: "13 cm" },
-    ],
-  }),
-  Qn(14, "Garis Sejajar Bersilang – Cari BC", {
-    type: "mixed",
-    content: "Perhatikan gambar berikut. Diketahui AB // DF, BD // GF, dan AB = BD = DF = 16 cm. Jika FG = 6 cm, maka panjang BC adalah…",
-    diagram: <SoalQ8 />,
-    parts: [
-      { label: "A.", text: "8 cm" },
-      { label: "B.", text: "9 cm" },
-      { label: "C.", text: "10 cm" },
-      { label: "D.", text: "11 cm" },
     ],
   }),
 ];
@@ -823,7 +790,7 @@ const SegitigaSebangunPage = () => {
           </h1>
           <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs text-center font-body`}>Kelas 9 · Kesebangunan & Kekongruenan · {t('practice.breadcrumb')}</p>
           <div className="mt-3 flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-lg px-4 py-2">
-            <span className="text-violet-400 text-xs font-bold">📋 14 {t('practice.suffixSoal')}</span>
+            <span className="text-violet-400 text-xs font-bold">📋 11 {t('practice.suffixSoal')}</span>
             <span className={`${isDark ? "text-white/30" : "text-gray-400"} text-xs`}>·</span>
             <span className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs`}>UN / ANBK / TKA</span>
           </div>
