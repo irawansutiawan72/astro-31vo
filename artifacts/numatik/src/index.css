@@ -228,6 +228,67 @@
   border-color: var(--border) !important;
 }
 
+/* Integer animation book: SVG labels need their own light surface because
+   SVG text does not inherit the page's Tailwind text-color overrides. */
+[data-theme="light"] .integer-animation-book-route .integer-animation-svg-shell,
+[data-theme="white"] .integer-animation-book-route .integer-animation-svg-shell,
+[data-theme="forest"] .integer-animation-book-route .integer-animation-svg-shell,
+[data-theme="sunset"] .integer-animation-book-route .integer-animation-svg-shell {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .integer-animation-book-route .integer-animation-book-svg,
+[data-theme="white"] .integer-animation-book-route .integer-animation-book-svg,
+[data-theme="forest"] .integer-animation-book-route .integer-animation-book-svg,
+[data-theme="sunset"] .integer-animation-book-route .integer-animation-book-svg {
+  background: #f8fafc !important;
+  border-radius: 0.75rem;
+}
+
+[data-theme="light"] .integer-animation-book-route .integer-animation-book-svg text,
+[data-theme="white"] .integer-animation-book-route .integer-animation-book-svg text,
+[data-theme="forest"] .integer-animation-book-route .integer-animation-book-svg text,
+[data-theme="sunset"] .integer-animation-book-route .integer-animation-book-svg text {
+  fill: #0f172a !important;
+}
+
+/* Replace the dark gradient stops used by the calculator header and rules
+   card with pale surfaces while preserving the space/ocean themes. */
+[data-theme="light"] .integer-animation-book-route [class*="from-"][class*="-700/"],
+[data-theme="white"] .integer-animation-book-route [class*="from-"][class*="-700/"],
+[data-theme="forest"] .integer-animation-book-route [class*="from-"][class*="-700/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="from-"][class*="-700/"],
+[data-theme="light"] .integer-animation-book-route [class*="to-"][class*="-700/"],
+[data-theme="white"] .integer-animation-book-route [class*="to-"][class*="-700/"],
+[data-theme="forest"] .integer-animation-book-route [class*="to-"][class*="-700/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="to-"][class*="-700/"],
+[data-theme="light"] .integer-animation-book-route [class*="via-"][class*="-700/"],
+[data-theme="white"] .integer-animation-book-route [class*="via-"][class*="-700/"] ,
+[data-theme="forest"] .integer-animation-book-route [class*="via-"][class*="-700/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="via-"][class*="-700/"] {
+  --tw-gradient-from: rgba(224, 242, 254, 0.96) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(224, 231, 255, 0.88) var(--tw-gradient-to-position) !important;
+  --tw-gradient-via: rgba(239, 246, 255, 0.92) var(--tw-gradient-via-position) !important;
+}
+
+[data-theme="light"] .integer-animation-book-route [class*="from-"][class*="-900/"],
+[data-theme="white"] .integer-animation-book-route [class*="from-"][class*="-900/"],
+[data-theme="forest"] .integer-animation-book-route [class*="from-"][class*="-900/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="from-"][class*="-900/"],
+[data-theme="light"] .integer-animation-book-route [class*="to-"][class*="-900/"],
+[data-theme="white"] .integer-animation-book-route [class*="to-"][class*="-900/"],
+[data-theme="forest"] .integer-animation-book-route [class*="to-"][class*="-900/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="to-"][class*="-900/"],
+[data-theme="light"] .integer-animation-book-route [class*="via-"][class*="-900/"],
+[data-theme="white"] .integer-animation-book-route [class*="via-"][class*="-900/"],
+[data-theme="forest"] .integer-animation-book-route [class*="via-"][class*="-900/"],
+[data-theme="sunset"] .integer-animation-book-route [class*="via-"][class*="-900/"] {
+  --tw-gradient-from: rgba(248, 250, 252, 0.96) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(241, 245, 249, 0.86) var(--tw-gradient-to-position) !important;
+  --tw-gradient-via: rgba(248, 250, 252, 0.92) var(--tw-gradient-via-position) !important;
+}
+
 /* Olimpiade Teorema Pythagoras diagrams use bright neon ink for the space
    theme. Give the same SVGs a dark, high-contrast ink palette on light themes
    so labels and construction lines remain readable against pale surfaces. */

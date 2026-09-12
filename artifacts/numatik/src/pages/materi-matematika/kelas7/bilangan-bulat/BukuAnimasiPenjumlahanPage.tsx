@@ -4,6 +4,7 @@ import { ArrowLeft, BookOpen, ChevronLeft, ChevronRight, Play, RotateCcw } from 
 import { InlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /* ───────────────────────────────────────────────────────────────
    PRESET EXAMPLES
@@ -95,6 +96,8 @@ interface NumberLineProps {
 }
 
 const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineProps) => {
+  const { isDark } = useTheme();
+  const lightMode = !isDark;
   const result = a + b;
   const steps = Math.abs(b);
   const dir = b >= 0 ? 1 : -1;
@@ -123,9 +126,14 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
   const arcH = Math.min(48, Math.max(20, unitPx * 0.7));
   const isDone = phase === "done";
   const visibleArcs = phase === "idle" ? 0 : animStep;
+  const axisColor = lightMode ? "#64748b" : "#FFD700";
+  const lightLabelBackground = "#f8fafc";
+  const lightLabelBorder = "#cbd5e1";
 
   return (
-    <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} width="100%" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
+    <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} width="100%" xmlns="http://www.w3.org/2000/svg"
+      className="integer-animation-book-svg"
+      style={{ overflow: "visible", background: lightMode ? lightLabelBackground : undefined }}>
       <defs>
         <style>{`
           @keyframes arcDown {
@@ -174,10 +182,10 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
 
         {/* axis arrows */}
         <marker id="ax-r" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
-          <polygon points="0 0,9 3.5,0 7" fill="#FFD700"/>
+          <polygon points="0 0,9 3.5,0 7" fill={axisColor}/>
         </marker>
         <marker id="ax-l" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto-start-reverse">
-          <polygon points="0 0,9 3.5,0 7" fill="#FFD700"/>
+          <polygon points="0 0,9 3.5,0 7" fill={axisColor}/>
         </marker>
         {/* arc arrow */}
         <marker id={`arc-arr-${arcColor.replace("#","")}`} markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
@@ -187,9 +195,9 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
 
       {/* number line axis */}
       <line x1={12} y1={LINE_Y} x2={SVG_W - 12} y2={LINE_Y}
-        stroke="#FFD700" strokeWidth="2.5"
+        stroke={axisColor} strokeWidth="2.5"
         markerEnd="url(#ax-r)" markerStart="url(#ax-l)"
-        style={{ filter: "drop-shadow(0 0 3px #FFD70099)" }}
+        style={{ filter: lightMode ? undefined : "drop-shadow(0 0 3px #FFD70099)" }}
       />
 
       {/* ticks & labels */}
@@ -199,10 +207,15 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
         const isA    = n === a;
         const isRes  = isDone && n === result;
         const prominent = isZero || isA || isRes;
-        const tickColor = isRes ? "#fbbf24" : isA ? "#c084fc" : isZero ? "#fff" : "#FFD700";
-        const textColor = isRes ? "#fbbf24" : isA ? "#c084fc" : isZero ? "#fff" : "#FFE57F";
+        const tickColor = lightMode ? "#64748b" : isRes ? "#fbbf24" : isA ? "#c084fc" : isZero ? "#fff" : "#FFD700";
+        const textColor = lightMode ? "#0f172a" : isRes ? "#fbbf24" : isA ? "#c084fc" : isZero ? "#fff" : "#FFE57F";
         return (
           <g key={n}>
+            {lightMode && (
+              <rect x={x - (prominent ? 15 : 12)} y={LINE_Y - 34}
+                width={prominent ? 30 : 24} height="18" rx="4"
+                fill={lightLabelBackground} stroke={lightLabelBorder} strokeWidth="0.8" />
+            )}
             <line
               x1={x} y1={prominent ? LINE_Y - 10 : LINE_Y - 5}
               x2={x} y2={prominent ? LINE_Y + 10 : LINE_Y + 5}
@@ -257,8 +270,12 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
               markerEnd={`url(#arc-arr-${arcColor.replace("#","")})`}
             />
             {/* step number label */}
+            {lightMode && (
+              <rect x={mx - 14} y={cy + 7} width="28" height="17" rx="4"
+                fill={lightLabelBackground} stroke={lightLabelBorder} strokeWidth="0.8" />
+            )}
             <text x={mx} y={cy + 18} textAnchor="middle"
-              fill={arcColor} fontSize="10" fontWeight="bold"
+              fill={lightMode ? "#334155" : arcColor} fontSize="10" fontWeight="bold"
               fontFamily="monospace" opacity="0.85"
               className="arc-down"
               style={{ animationDelay: `${i * (ARC_DUR_MS / 1000) + 0.3}s` }}
@@ -298,13 +315,19 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
 
       {/* result label */}
       {isDone && (
-        <text x={toX(result)} y={LINE_Y - 22}
-          textAnchor="middle" fontSize="12" fontWeight="bold"
-          fill="#fbbf24" fontFamily="monospace"
-          style={{ filter: "drop-shadow(0 0 6px #fbbf24aa)" }}
-        >
-          = {result}
-        </text>
+        <g>
+          {lightMode && (
+            <rect x={toX(result) - 24} y="0" width="48" height="18" rx="4"
+              fill={lightLabelBackground} stroke={lightLabelBorder} strokeWidth="0.8" />
+          )}
+          <text x={toX(result)} y={14}
+            textAnchor="middle" fontSize="12" fontWeight="bold"
+            fill={lightMode ? "#0f172a" : "#fbbf24"} fontFamily="monospace"
+            style={{ filter: lightMode ? undefined : "drop-shadow(0 0 6px #fbbf24aa)" }}
+          >
+            = {result}
+          </text>
+        </g>
       )}
     </svg>
   );
@@ -314,6 +337,7 @@ const NumberLineAnim = ({ a, b, arcColor, glowId, phase, animStep }: NumberLineP
    INTERACTIVE CALCULATOR SECTION
 ─────────────────────────────────────────────────────────────── */
 const KalkulatorInteraktif = () => {
+  const { isDark } = useTheme();
   const [inputA, setInputA] = useState("");
   const [inputB, setInputB] = useState("");
   const [phase, setPhase] = useState<"idle" | "animating" | "done">("idle");
@@ -378,7 +402,9 @@ const KalkulatorInteraktif = () => {
     <div className="rounded-2xl border border-cyan-500/30 bg-slate-900/80 overflow-hidden">
       <div className="bg-gradient-to-r from-cyan-700/60 via-blue-700/50 to-indigo-700/60 px-5 py-3 flex items-center gap-2.5">
         <span className="text-lg">🧮</span>
-        <span className="font-display text-sm font-bold text-white tracking-wide">Kalkulator Garis Bilangan Interaktif</span>
+        <span className={`font-display text-sm font-bold tracking-wide ${isDark ? "text-white" : "text-slate-900"}`}>
+          Kalkulator Garis Bilangan Interaktif
+        </span>
       </div>
 
       <div className="px-5 py-5 space-y-5">
@@ -440,7 +466,7 @@ const KalkulatorInteraktif = () => {
         )}
 
         {/* SVG */}
-        <div className="bg-slate-950/60 rounded-xl border border-white/10 p-3">
+        <div className="integer-animation-svg-shell bg-slate-950/60 rounded-xl border border-white/10 p-3">
           <NumberLineAnim
             a={a} b={b}
             arcColor={arcColor} glowId={glowId}
@@ -569,7 +595,7 @@ const ExampleCard = ({ ex, animKey }: ExampleCardProps) => {
       </div>
 
       {/* number line */}
-      <div className="px-4 py-4 bg-slate-950/40">
+      <div className="integer-animation-svg-shell px-4 py-4 bg-slate-950/40">
         <NumberLineAnim
           a={a} b={b}
           arcColor={arcColor} glowId={glowId}
@@ -630,7 +656,7 @@ const BukuAnimasiPenjumlahanPage = () => {
   const ex = EXAMPLES[selected];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
+    <div className="animation-submaterial-route integer-animation-book-route relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
       <Starfield />
 
       <div className="relative z-10 w-full max-w-3xl px-4 pt-5 pb-12">
