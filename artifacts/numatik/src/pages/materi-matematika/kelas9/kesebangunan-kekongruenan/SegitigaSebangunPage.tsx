@@ -178,29 +178,30 @@ const DiagramContoh2 = () => {
 };
 
 const DiagramTrikArahSama = () => (
-  <svg viewBox="0 0 420 145" className="w-full max-w-lg mx-auto">
-    {/* Both triangles use the same orientation: top-left, bottom-left, top-right. */}
-    <polygon points="50,18 50,63 110,18" fill="#facc15" fillOpacity="0.16" stroke="#fbbf24" strokeWidth="2" />
-    <text x="44" y="13" fontSize="11" fill="#fde68a" fontWeight="bold">D</text>
-    <text x="43" y="77" fontSize="11" fill="#fde68a" fontWeight="bold">E</text>
-    <text x="113" y="13" fontSize="11" fill="#fde68a" fontWeight="bold">C</text>
-    <text x="38" y="43" fontSize="10" fill="#fbbf24" fontWeight="bold">6</text>
-    <text x="80" y="13" textAnchor="middle" fontSize="10" fill="#fbbf24" fontWeight="bold">8</text>
-    <text x="84" y="48" fontSize="10" fill="#fbbf24" fontWeight="bold">10</text>
-    <text x="80" y="88" textAnchor="middle" fontSize="8.5" fill="#fde68a">△DEC</text>
+  <svg viewBox="0 0 360 155" className="w-full max-w-lg mx-auto">
+    {/* The small triangle is redrawn with the same upright direction as the large one. */}
+    <polygon points="68,20 28,128 108,128" fill="#facc15" fillOpacity="0.16" stroke="#fbbf24" strokeWidth="2" />
+    <text x="68" y="13" textAnchor="middle" fontSize="11" fill="#fde68a" fontWeight="bold">D</text>
+    <text x="20" y="140" fontSize="11" fill="#fde68a" fontWeight="bold">E</text>
+    <text x="111" y="140" fontSize="11" fill="#fde68a" fontWeight="bold">C</text>
+    <text x="42" y="77" fontSize="10" fill="#fbbf24" fontWeight="bold">6</text>
+    <text x="68" y="143" textAnchor="middle" fontSize="10" fill="#fbbf24" fontWeight="bold">10</text>
+    <text x="91" y="77" fontSize="10" fill="#fbbf24" fontWeight="bold">8</text>
+    <text x="68" y="151" textAnchor="middle" fontSize="8.5" fill="#fde68a">△DEC</text>
 
-    <text x="190" y="48" textAnchor="middle" fontSize="18" fill="#facc15" fontWeight="bold">~</text>
+    <text x="180" y="83" textAnchor="middle" fontSize="18" fill="#facc15" fontWeight="bold">~</text>
 
-    <polygon points="270,10 270,100 390,10" fill="#3b82f6" fillOpacity="0.16" stroke="#60a5fa" strokeWidth="2" />
-    <text x="264" y="5" fontSize="11" fill="#93c5fd" fontWeight="bold">B</text>
-    <text x="263" y="114" fontSize="11" fill="#93c5fd" fontWeight="bold">A</text>
-    <text x="393" y="5" fontSize="11" fill="#93c5fd" fontWeight="bold">C</text>
-    <text x="258" y="58" fontSize="10" fill="#60a5fa" fontWeight="bold">12</text>
-    <text x="330" y="5" textAnchor="middle" fontSize="10" fill="#60a5fa" fontWeight="bold">16</text>
-    <text x="337" y="63" fontSize="10" fill="#60a5fa" fontWeight="bold">20</text>
-    <text x="330" y="135" textAnchor="middle" fontSize="8.5" fill="#93c5fd">△BAC</text>
+    {/* The large triangle keeps the same upright form as the Contoh 2 diagram. */}
+    <polygon points="292,20 226,128 358,128" fill="#3b82f6" fillOpacity="0.16" stroke="#60a5fa" strokeWidth="2" />
+    <text x="292" y="13" textAnchor="middle" fontSize="11" fill="#93c5fd" fontWeight="bold">B</text>
+    <text x="218" y="140" fontSize="11" fill="#93c5fd" fontWeight="bold">A</text>
+    <text x="361" y="140" fontSize="11" fill="#93c5fd" fontWeight="bold">C</text>
+    <text x="251" y="77" fontSize="10" fill="#60a5fa" fontWeight="bold">12</text>
+    <text x="292" y="143" textAnchor="middle" fontSize="10" fill="#60a5fa" fontWeight="bold">20</text>
+    <text x="329" y="77" fontSize="10" fill="#60a5fa" fontWeight="bold">16</text>
+    <text x="292" y="151" textAnchor="middle" fontSize="8.5" fill="#93c5fd">△BAC</text>
 
-    <text x="190" y="15" textAnchor="middle" fontSize="8.5" fill="#c4b5fd">D ↔ B, E ↔ A, C ↔ C</text>
+    <text x="180" y="15" textAnchor="middle" fontSize="8.5" fill="#c4b5fd">D ↔ B, E ↔ A, C ↔ C</text>
   </svg>
 );
 
