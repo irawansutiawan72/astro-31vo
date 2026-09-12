@@ -682,18 +682,7 @@ const questions: Q[] = [
       { label: "D.", text: "10 cm" },
     ],
   }),
-  Qn(3, "Garis Sejajar – Perbandingan AQ : QC – TKA", {
-    type: "mixed",
-    content: "Diketahui △ABC. Titik P pada AB dan titik Q pada AC sedemikian sehingga PQ // BC. Jika panjang AP = 6 cm dan AB = 10 cm, maka AQ : QC adalah ....",
-    diagram: <SoalQ11Parallel />,
-    parts: [
-      { label: "A.", math: "2 : 3" },
-      { label: "B.", math: "3 : 2" },
-      { label: "C.", math: "3 : 5" },
-      { label: "D.", math: "5 : 3" },
-    ],
-  }),
-  Qn(4, "Segitiga Sebangun – Garis Sejajar – Cari CE", {
+  Qn(3, "Segitiga Sebangun – Garis Sejajar – Cari CE", {
     type: "mixed",
     content: "Perhatikan gambar berikut! Panjang CE adalah…",
     diagram: <SoalQNew1 />,
@@ -704,12 +693,12 @@ const questions: Q[] = [
       { label: "D.", text: "10 cm" },
     ],
   }),
-  Qn(5, "Garis Sejajar dalam Segitiga – Cari CD dan CE", {
+  Qn(4, "Garis Sejajar dalam Segitiga – Cari CD dan CE", {
     type: "mixed",
     content: "Perhatikan gambar segitiga besar CAB dengan garis DE sejajar AB (DE ∥ AB). Diketahui DA = 4 cm, EB = 3 cm, DE = 8 cm, dan AB = 12 cm. Tentukan nilai c = CD dan d = CE!",
     diagram: <SoalQ2 />,
   }),
-  Qn(6, "Dua Segitiga Bertolak Belakang – Cari AB", {
+  Qn(5, "Dua Segitiga Bertolak Belakang – Cari AB", {
     type: "mixed",
     content: "Perhatikan gambar dua segitiga yang bertolak belakang di titik E. Diketahui AE = 3 cm, CE = 5 cm, dan CD = 15 cm. Panjang AB adalah…",
     diagram: <SoalQ5 />,
@@ -720,7 +709,7 @@ const questions: Q[] = [
       { label: "D.", text: "15 cm" },
     ],
   }),
-  Qn(7, "Trapesium – Diagonal Berpotongan – Cari CE", {
+  Qn(6, "Trapesium – Diagonal Berpotongan – Cari CE", {
     type: "mixed",
     content: "Perhatikan gambar trapesium ABCD berikut. Diagonal AC dan BD berpotongan di titik E. Jika AB = 8 cm, DC = 12 cm, dan AE = 4 cm, maka panjang CE adalah…",
     diagram: <SoalQ1 />,
@@ -731,7 +720,7 @@ const questions: Q[] = [
       { label: "D.", text: "10 cm" },
     ],
   }),
-  Qn(8, "Dua Segitiga Berpotongan – Nilai x – UN", {
+  Qn(7, "Dua Segitiga Berpotongan – Nilai x – UN", {
     type: "mixed",
     content: "Pada gambar di bawah ini, AB // CD. Nilai OB adalah ....",
     diagram: <Q3CrossLinesSVG />,
@@ -742,7 +731,7 @@ const questions: Q[] = [
       { label: "D.", text: "10 cm" },
     ],
   }),
-  Qn(9, "Lebar Sungai – Aplikasi Segitiga Sebangun", {
+  Qn(8, "Lebar Sungai – Aplikasi Segitiga Sebangun", {
     type: "mixed",
     content: "Untuk mengukur lebar sungai, seorang siswa menancapkan tongkat di titik B, C, D, dan E di tepi sungai. Titik A adalah benda di seberang sungai. Diketahui bahwa D, C, A segaris, BC = 12 m, CE = 4 m, dan DE = 3 m. Lebar sungai AB adalah…",
     diagram: <SoalQ4 />,
@@ -753,12 +742,12 @@ const questions: Q[] = [
       { label: "D.", text: "7 m" },
     ],
   }),
-  Qn(10, "Segitiga Sebangun – Cari x dan y", {
+  Qn(9, "Segitiga Sebangun – Cari x dan y", {
     type: "mixed",
     contentNode: <>Perhatikan gambar segitiga ABC berikut. Diketahui <InlineMath math="\angle ABC = \angle EDC" /> dengan AD = 9 cm, DC = 6 cm, DE = 5 cm, dan EC = 8 cm. Carilah nilai x (= BE) dan y (= AB)!</>,
     diagram: <SoalQ7New />,
   }),
-  Qn(11, "Trapesium – Garis Sejajar – Cari EF", {
+  Qn(10, "Trapesium – Garis Sejajar – Cari EF", {
     type: "mixed",
     content: "Perhatikan trapesium ABCD dengan AB ∥ EF ∥ DC. Titik E berada di sisi AD dan F berada di sisi BC sehingga AE : ED = 2 : 3. Jika AB = 5 cm dan DC = 20 cm, maka panjang EF adalah…",
     diagram: <SoalQ3 />,
@@ -790,7 +779,7 @@ const SegitigaSebangunPage = () => {
           </h1>
           <p className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs text-center font-body`}>Kelas 9 · Kesebangunan & Kekongruenan · {t('practice.breadcrumb')}</p>
           <div className="mt-3 flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-lg px-4 py-2">
-            <span className="text-violet-400 text-xs font-bold">📋 11 {t('practice.suffixSoal')}</span>
+            <span className="text-violet-400 text-xs font-bold">📋 10 {t('practice.suffixSoal')}</span>
             <span className={`${isDark ? "text-white/30" : "text-gray-400"} text-xs`}>·</span>
             <span className={`${isDark ? "text-white/50" : "text-gray-500"} text-xs`}>UN / ANBK / TKA</span>
           </div>
