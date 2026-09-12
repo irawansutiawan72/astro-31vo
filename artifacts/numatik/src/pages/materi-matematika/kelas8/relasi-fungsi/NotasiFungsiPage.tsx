@@ -108,6 +108,26 @@ const translations = {
     c4b_verify: "Verifikasi: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
     c4_remember: "💡 Ingat:",
     c4_remember_p: "\"Bayangan dari x adalah k\" sama artinya dengan f(x) = k. Tinggal substitusi dan selesaikan persamaannya untuk mencari x!",
+    domain_range_title: "🧩 Menentukan Rumus f(x) dari Domain dan Range",
+    domain_range_intro: "Domain adalah kumpulan nilai masukan x, sedangkan range adalah kumpulan nilai keluaran y. Domain dan range saja belum tentu menentukan satu rumus yang unik. Pada materi ini kita mengasumsikan pasangan x dan y diketahui serta bentuk fungsinya linear atau kuadrat.",
+    domain_range_rule_title: "Langkah umum",
+    domain_range_linear_label: "Untuk fungsi linear:",
+    domain_range_note_label: "Catatan penting:",
+    domain_range_steps: [
+      "Tuliskan pasangan berurutan (x, y) dari domain dan range sesuai pemetaannya.",
+      "Jika f(x) = ax + b, gunakan dua pasangan: a = (y₂ − y₁)/(x₂ − x₁), lalu b = y₁ − ax₁.",
+      "Tuliskan rumus f(x), kemudian uji dengan pasangan lain yang tersedia.",
+    ],
+    domain_range_example_easy_title: "Contoh mudah — fungsi linear",
+    domain_range_example_easy_problem: "Diketahui D = {1, 2, 3} dan pasangan petanya (1, 4), (2, 6), (3, 8). Tentukan rumus f(x)!",
+    domain_range_example_easy_answer: "Karena fungsinya linear, ambil dua pasangan: a = (6 − 4)/(2 − 1) = 2 dan b = 4 − 2(1) = 2. Jadi, f(x) = 2x + 2. Cek: f(3) = 8.",
+    domain_range_example_medium_title: "Contoh sedang — domain memuat bilangan negatif",
+    domain_range_example_medium_problem: "Diketahui D = {−1, 2, 5} dengan pasangan (−1, 4), (2, 10), (5, 16). Tentukan rumus f(x)!",
+    domain_range_example_medium_answer: "Gradiennya a = (10 − 4)/(2 − (−1)) = 2. Gunakan pasangan (−1, 4): 4 = 2(−1) + b, sehingga b = 6. Jadi, f(x) = 2x + 6. Cek: f(5) = 16.",
+    domain_range_example_hard_title: "Contoh sulit — menemukan fungsi kuadrat",
+    domain_range_example_hard_problem: "Diketahui pasangan (−1, 6), (0, 3), (1, 2), dan (2, 3). Jika bentuknya f(x) = ax² + bx + c, tentukan rumus f(x)!",
+    domain_range_example_hard_answer: "Dari f(0) = 3 diperoleh c = 3. Dari f(1) = 2 diperoleh a + b = −1, sedangkan f(−1) = 6 memberi a − b = 3. Maka a = 1 dan b = −2. Jadi, f(x) = x² − 2x + 3. Cek: f(2) = 3.",
+    domain_range_note: "Catatan: jika hanya diketahui himpunan domain dan range tanpa pasangan pemetaan atau asumsi bentuk fungsi, rumusnya bisa lebih dari satu. Pasangan input-output dan informasi bentuk fungsi diperlukan untuk memperoleh rumus yang pasti.",
     sum_title: "📚 Rangkuman Materi",
     sum_items: [
       { icon: "📐", label: "Notasi Fungsi", desc: "Ditulis f : A → B atau f(x) = ... Cara ringkas menyatakan aturan fungsi." },
@@ -222,6 +242,26 @@ const translations = {
     c4b_verify: "Verify: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
     c4_remember: "💡 Remember:",
     c4_remember_p: "\"The image of x is k\" means f(x) = k. Just substitute and solve the equation to find x!",
+    domain_range_title: "🧩 Finding f(x) from the Domain and Range",
+    domain_range_intro: "The domain is the set of input values x, while the range is the set of output values y. The domain and range alone do not always determine one unique formula. Here we assume the x-y pairs are known and the function is linear or quadratic.",
+    domain_range_rule_title: "General steps",
+    domain_range_linear_label: "For a linear function:",
+    domain_range_note_label: "Important note:",
+    domain_range_steps: [
+      "Write the ordered pairs (x, y) from the domain and range according to the mapping.",
+      "If f(x) = ax + b, use two pairs: a = (y₂ − y₁)/(x₂ − x₁), then b = y₁ − ax₁.",
+      "Write the formula f(x), then test it with another available pair.",
+    ],
+    domain_range_example_easy_title: "Easy example — linear function",
+    domain_range_example_easy_problem: "Given D = {1, 2, 3} and mapped pairs (1, 4), (2, 6), (3, 8), find f(x)!",
+    domain_range_example_easy_answer: "Because the function is linear, use two pairs: a = (6 − 4)/(2 − 1) = 2 and b = 4 − 2(1) = 2. Therefore, f(x) = 2x + 2. Check: f(3) = 8.",
+    domain_range_example_medium_title: "Medium example — a domain with negative numbers",
+    domain_range_example_medium_problem: "Given D = {−1, 2, 5} with pairs (−1, 4), (2, 10), (5, 16), find f(x)!",
+    domain_range_example_medium_answer: "The slope is a = (10 − 4)/(2 − (−1)) = 2. Use (−1, 4): 4 = 2(−1) + b, so b = 6. Therefore, f(x) = 2x + 6. Check: f(5) = 16.",
+    domain_range_example_hard_title: "Hard example — finding a quadratic function",
+    domain_range_example_hard_problem: "Given the pairs (−1, 6), (0, 3), (1, 2), and (2, 3). If f(x) = ax² + bx + c, find f(x)!",
+    domain_range_example_hard_answer: "From f(0) = 3, c = 3. From f(1) = 2, a + b = −1, while f(−1) = 6 gives a − b = 3. Thus a = 1 and b = −2. Therefore, f(x) = x² − 2x + 3. Check: f(2) = 3.",
+    domain_range_note: "Note: if only the domain and range sets are known, without the mapping pairs or an assumed function form, more than one formula may be possible. Input-output pairs and the function form are needed to determine a formula.",
     sum_title: "📚 Material Summary",
     sum_items: [
       { icon: "📐", label: "Function Notation", desc: "Written f : A → B or f(x) = ... A concise way to express the function rule." },
@@ -336,6 +376,26 @@ const translations = {
     c4b_verify: "確認：g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
     c4_remember: "💡 覚えよう：",
     c4_remember_p: "「xの像がk」はf(x) = kと同じ意味です。代入して方程式を解けばxが求まります！",
+    domain_range_title: "🧩 定義域と値域から f(x) の公式を求める",
+    domain_range_intro: "定義域は入力値 x の集合、値域は出力値 y の集合です。定義域と値域だけでは、公式が一つに決まらない場合があります。ここでは x と y の対応がわかっていて、関数が一次関数または二次関数であると仮定します。",
+    domain_range_rule_title: "一般的な手順",
+    domain_range_linear_label: "一次関数の場合：",
+    domain_range_note_label: "重要な注意：",
+    domain_range_steps: [
+      "対応に従って、定義域と値域から順序対 (x, y) を書く。",
+      "f(x) = ax + b のとき、2組を使う。a = (y₂ − y₁)/(x₂ − x₁)、その後 b = y₁ − ax₁。",
+      "公式 f(x) を書き、別の対応する組で確かめる。",
+    ],
+    domain_range_example_easy_title: "基本例 — 一次関数",
+    domain_range_example_easy_problem: "定義域 D = {1, 2, 3}、対応する組が (1, 4), (2, 6), (3, 8) のとき、f(x) を求めなさい。",
+    domain_range_example_easy_answer: "一次関数なので2組を使う。a = (6 − 4)/(2 − 1) = 2、b = 4 − 2(1) = 2。したがって f(x) = 2x + 2。確認：f(3) = 8。",
+    domain_range_example_medium_title: "標準例 — 負の数を含む定義域",
+    domain_range_example_medium_problem: "D = {−1, 2, 5}、対応する組が (−1, 4), (2, 10), (5, 16) のとき、f(x) を求めなさい。",
+    domain_range_example_medium_answer: "傾きは a = (10 − 4)/(2 − (−1)) = 2。(−1, 4)を使うと 4 = 2(−1) + b より b = 6。したがって f(x) = 2x + 6。確認：f(5) = 16。",
+    domain_range_example_hard_title: "発展例 — 二次関数を求める",
+    domain_range_example_hard_problem: "対応する組が (−1, 6), (0, 3), (1, 2), (2, 3) で、f(x) = ax² + bx + c のとき、f(x) を求めなさい。",
+    domain_range_example_hard_answer: "f(0) = 3 より c = 3。f(1) = 2 より a + b = −1、f(−1) = 6 より a − b = 3。よって a = 1, b = −2。したがって f(x) = x² − 2x + 3。確認：f(2) = 3。",
+    domain_range_note: "注意：対応する組や関数の形の仮定なしに、定義域と値域の集合だけが与えられた場合、公式は一つとは限りません。公式を決めるには入力と出力の対応、そして関数の形が必要です。",
     sum_title: "📚 学習内容のまとめ",
     sum_items: [
       { icon: "📐", label: "関数の表記", desc: "f : A → B または f(x) = ... と書く。関数の規則を簡潔に表す方法。" },
@@ -363,7 +423,7 @@ const NotasiFungsiPage = () => {
   const t = translations[language];
 
   const [expandedSections, setExpandedSections] = useState<string[]>([
-     "intro", "notasi", "operasi", "contoh1", "contoh2", "contoh4", "rangkuman",
+     "intro", "notasi", "operasi", "contoh1", "contoh2", "contoh4", "domainRange", "rangkuman",
   ]);
 
   const toggleSection = (section: string) => {
@@ -650,6 +710,77 @@ const NotasiFungsiPage = () => {
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
                   <p className="font-body text-xs text-yellow-200">
                     <strong>{t.c4_remember}</strong> {t.c4_remember_p}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* MENENTUKAN RUMUS DARI DOMAIN DAN RANGE */}
+          <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
+            <SectionHeader
+              id="domainRange"
+              icon={<Target className="w-5 h-5" />}
+              iconColor="text-emerald-400"
+              title={t.domain_range_title}
+            />
+            {expandedSections.includes("domainRange") && (
+              <div className="px-5 pb-6 space-y-4">
+                <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_intro}</p>
+
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4">
+                  <p className="font-body text-sm font-bold text-emerald-300 mb-3">{t.domain_range_rule_title}</p>
+                  <div className="space-y-2">
+                    {t.domain_range_steps.map((step, index) => (
+                      <div key={step} className="flex gap-3 items-start">
+                        <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-500/25 text-emerald-200 flex items-center justify-center text-xs font-bold">
+                          {index + 1}
+                        </span>
+                        <p className="font-body text-sm text-white/75 leading-relaxed">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 rounded-lg bg-slate-900/40 border border-emerald-400/20 p-3">
+                    <p className="font-body text-xs text-emerald-200 mb-2">{t.domain_range_linear_label}</p>
+                    <BlockMath math="f(x)=ax+b,\qquad a=\frac{y_2-y_1}{x_2-x_1},\qquad b=y_1-ax_1" />
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  <div className="bg-slate-800/60 border border-cyan-500/30 rounded-xl p-4 space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="font-body text-sm font-bold text-cyan-300">{t.domain_range_example_easy_title}</p>
+                      <Badge label={t.badge_easy} color="bg-cyan-700/60 text-cyan-100" />
+                    </div>
+                    <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_easy_problem}</p>
+                    <BlockMath math="a=\frac{6-4}{2-1}=2,\qquad b=4-2(1)=2" />
+                    <p className="font-body text-sm text-cyan-100 leading-relaxed">{t.domain_range_example_easy_answer}</p>
+                  </div>
+
+                  <div className="bg-slate-800/60 border border-amber-500/30 rounded-xl p-4 space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="font-body text-sm font-bold text-amber-300">{t.domain_range_example_medium_title}</p>
+                      <Badge label={t.badge_medium} color="bg-amber-700/60 text-amber-100" />
+                    </div>
+                    <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_medium_problem}</p>
+                    <BlockMath math="a=\frac{10-4}{2-(-1)}=2,\qquad 4=2(-1)+b\Rightarrow b=6" />
+                    <p className="font-body text-sm text-amber-100 leading-relaxed">{t.domain_range_example_medium_answer}</p>
+                  </div>
+
+                  <div className="bg-slate-800/60 border border-purple-500/30 rounded-xl p-4 space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="font-body text-sm font-bold text-purple-300">{t.domain_range_example_hard_title}</p>
+                      <Badge label={t.badge_hard} color="bg-purple-700/60 text-purple-100" />
+                    </div>
+                    <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_hard_problem}</p>
+                    <BlockMath math="c=3,\qquad a+b=-1,\qquad a-b=3\Rightarrow a=1,\ b=-2" />
+                    <p className="font-body text-sm text-purple-100 leading-relaxed">{t.domain_range_example_hard_answer}</p>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+                  <p className="font-body text-xs text-yellow-100 leading-relaxed">
+                    <strong>{t.domain_range_note_label}</strong> {t.domain_range_note}
                   </p>
                 </div>
               </div>
