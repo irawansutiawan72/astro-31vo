@@ -163,7 +163,7 @@ const MateriMockup = () => {
 const LatihanMockup = () => {
   const { language } = useLanguage();
   const m = {
-    id: { frameTitle: "TUGAS - LATIHAN MANDIRI", sectionTitle: "TUGAS - LATIHAN MANDIRI", grades: ["KELAS 7", "KELAS 8", "KELAS 9"], action: "BUKA" },
+    id: { frameTitle: "TUGAS-LATIHAN MANDIRI", sectionTitle: "TUGAS-LATIHAN MANDIRI", grades: ["KELAS 7", "KELAS 8", "KELAS 9"], action: "BUKA" },
     en: { frameTitle: "PRACTICE TASKS",          sectionTitle: "PRACTICE TASKS",          grades: ["GRADE 7", "GRADE 8", "GRADE 9"], action: "OPEN" },
     ja: { frameTitle: "練習課題",                  sectionTitle: "練習課題",                  grades: ["中学1年",  "中学2年",  "中学3年"],  action: "開く" },
   }[language];
@@ -938,10 +938,10 @@ function getSlides(language: Language): Slide[] {
     (() => {
       const s5 = {
         id: {
-          title: "Tugas - Latihan Mandiri",
+          title: "TUGAS-LATIHAN MANDIRI",
           desc: "Latihan soal per topik untuk menguji pemahaman kamu. Tersedia soal latihan untuk setiap bab dengan langsung diberikan jawaban dan pembahasannya.",
           steps: [
-            "Pilih 'TUGAS - LATIHAN MANDIRI' dari Menu Utama",
+            "Pilih 'TUGAS-LATIHAN MANDIRI' dari Menu Utama",
             "Pilih kelas (7, 8, atau 9) yang sesuai",
             "Pilih topik/bab yang ingin dilatih",
             "Kerjakan soal dan periksa jawabanmu",

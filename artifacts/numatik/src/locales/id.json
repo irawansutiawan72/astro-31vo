@@ -72,7 +72,7 @@
       "desc": "Pelajari materi matematika lengkap"
     },
     "practice": {
-      "label": "TUGAS - LATIHAN MANDIRI",
+      "label": "TUGAS-LATIHAN MANDIRI",
       "desc": "Latihan soal per topik"
     },
     "gameArena": {
@@ -298,7 +298,7 @@
     "welcomeMsg": "Halo, Sobat Numatik! 🚀 Aku NUMATIK AI, asisten matematika pintarmu di galaksi ini! ✨\n\nAku siap membantu kamu belajar matematika dengan cara yang seru dan mudah dipahami. Mau tanya apa hari ini? 😊"
   },
   "practice": {
-    "title": "TUGAS - LATIHAN MANDIRI",
+    "title": "TUGAS-LATIHAN MANDIRI",
     "selectGrade": "Pilih kelas untuk memulai latihan",
     "selectTopic": "Pilih topik untuk memulai latihan",
     "grade7Label": "KELAS 7",
@@ -307,17 +307,17 @@
     "grade7Desc": "Materi kelas 7 SMP",
     "grade8Desc": "Materi kelas 8 SMP",
     "grade9Desc": "Materi kelas 9 SMP",
-    "titleGrade7": "TUGAS - LATIHAN MANDIRI - KELAS 7",
-    "titleGrade8": "TUGAS - LATIHAN MANDIRI - KELAS 8",
-    "titleGrade9": "TUGAS - LATIHAN MANDIRI - KELAS 9",
+    "titleGrade7": "TUGAS-LATIHAN MANDIRI - KELAS 7",
+    "titleGrade8": "TUGAS-LATIHAN MANDIRI - KELAS 8",
+    "titleGrade9": "TUGAS-LATIHAN MANDIRI - KELAS 9",
     "openButton": "BUKA",
     "backToMenu": "Kembali ke Menu",
-    "backToPractice": "Kembali ke Tugas - Latihan Mandiri",
+    "backToPractice": "Kembali ke TUGAS-LATIHAN MANDIRI",
     "backToGrade7": "← Kembali ke Kelas 7",
     "backToGrade8": "← Kembali ke Kelas 8",
     "backToGrade9": "← Kembali ke Kelas 9",
     "backTo": "← Kembali ke",
-    "breadcrumb": "Tugas - Latihan Mandiri",
+    "breadcrumb": "TUGAS-LATIHAN MANDIRI",
     "suffixSoal": "Soal",
     "suffixSoalTotal": "Soal Total",
     "suffixSubTopik": "Sub Topik",
@@ -330,7 +330,7 @@
       "title": "BILANGAN BULAT",
       "soalTotal": "48 Soal Total · UN / TKA / ANBK",
       "enrichmentNoteDesc": "Soal mencakup operasi dasar hingga HOTS berbasis kisi-kisi UN, TKA, dan ANBK. Setiap subtopik dilengkapi soal kontekstual dan visualisasi garis bilangan.",
-      "pageSubtitle": "Kelas 7 · Bilangan Bulat · Latihan Mandiri",
+      "pageSubtitle": "Kelas 7 · Bilangan Bulat · TUGAS-LATIHAN MANDIRI",
       "backTo": "← Kembali ke Bilangan Bulat",
       "subtopics": {
         "penjumlahan": {
@@ -371,7 +371,7 @@
       "title": "PECAHAN",
       "soalTotal": "480 Soal Total · UN / TKA / ANBK",
       "enrichmentNoteDesc": "Soal-soal dirancang berdasarkan kisi-kisi UN, TKA, dan ANBK, mencakup pecahan dan bilangan desimal dari konsep dasar hingga penalaran tinggi (HOTS).",
-      "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+      "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
       "backTo": "← Kembali ke Pecahan",
       "subtopics": {
         "artiPecahan": {
@@ -430,7 +430,7 @@
       "penjumlahanPecahan": {
         "pageTitle1": "PENJUMLAHAN PECAHAN",
         "pageTitle2": "DAN PENGURANGAN PECAHAN",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "9 Soal Essay",
         "banner": "📌 Untuk soal nomor <strong>1 sampai dengan 6</strong>, tentukan hasil penjumlahan atau pengurangannya.",
         "calcInstruction": "Tentukan hasil penjumlahan atau pengurangannya!",
@@ -465,7 +465,7 @@
       "perkalianPecahan": {
         "pageTitle1": "PERKALIAN PECAHAN",
         "pageTitle2": "DAN SIFAT OPERASINYA",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "6 Soal Essay",
         "banner": "📌 Untuk soal nomor <strong>1 sampai dengan 3</strong>, sederhanakan bentuk-bentuk perkalian pecahan berikut!",
         "tags": {
@@ -489,7 +489,7 @@
       "pembagianPecahan": {
         "pageTitle1": "PEMBAGIAN PECAHAN",
         "pageTitle2": "DAN SIFAT OPERASINYA",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "calcInstruction": "Hitunglah hasil operasi pecahan berikut!",
         "tags": {
@@ -524,7 +524,7 @@
       "bentukDesimal": {
         "pageTitle1": "BENTUK DESIMAL",
         "pageTitle2": "PECAHAN & BILANGAN DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "Konversi Dasar",
@@ -577,7 +577,7 @@
       "pecahanCampuran": {
         "pageTitle1": "PECAHAN CAMPURAN DAN PERSEN",
         "pageTitle2": "SERTA BENTUK DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "10 Soal Essay",
         "tags": {
           "q1": "Pecahan Campuran",
@@ -634,7 +634,7 @@
       "artiSenilai": {
         "pageTitle1": "ARTI PECAHAN, PECAHAN SENILAI",
         "pageTitle2": "DAN MEMBANDINGKAN PECAHAN",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "Gambar",
@@ -682,7 +682,7 @@
       "penjumlahanDesimal": {
         "pageTitle1": "PENJUMLAHAN DAN PENGURANGAN",
         "pageTitle2": "BENTUK DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "Penjumlahan",
@@ -749,7 +749,7 @@
       },
       "perkalianDesimal": {
         "pageTitle": "PERKALIAN DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "Pangkat 10",
@@ -802,7 +802,7 @@
       },
       "pembagianDesimal": {
         "pageTitle": "PEMBAGIAN DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "Pangkat 10",
@@ -851,7 +851,7 @@
       },
       "pembulatanDesimal": {
         "pageTitle": "PEMBULATAN DESIMAL",
-        "pageSubtitle": "Kelas 7 · Pecahan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Pecahan · TUGAS-LATIHAN MANDIRI",
         "badgeSoal": "8 Soal Essay",
         "tags": {
           "q1": "1 Desimal",
@@ -1734,7 +1734,7 @@
       },
       "perbandinganUmum": {
         "title": "PERBANDINGAN UMUM, SATUAN PEMBANDING DAN RASIO",
-        "pageSubtitle": "Kelas 7 · Perbandingan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Perbandingan · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Perbandingan",
         "q1": "Tinggi Gedung A adalah 120 meter dan tinggi Gedung B adalah 150 meter. Tentukan rasio tinggi Gedung B terhadap Gedung A dalam bentuk paling sederhana!",
@@ -1783,7 +1783,7 @@
       },
       "perbandinganBertingkat": {
         "title": "PERBANDINGAN BERTINGKAT",
-        "pageSubtitle": "Kelas 7 · Perbandingan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Perbandingan · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Perbandingan",
         "q1": {
@@ -1839,7 +1839,7 @@
       },
       "perbandinganSenilai": {
         "title": "PERBANDINGAN SENILAI DAN BERBALIK NILAI",
-        "pageSubtitle": "Kelas 7 · Perbandingan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Perbandingan · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Perbandingan",
         "q1": {
@@ -1893,7 +1893,7 @@
       },
       "perbandinganSkala": {
         "title": "SKALA",
-        "pageSubtitle": "Kelas 7 · Perbandingan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Perbandingan · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Perbandingan",
         "q1": {
@@ -1999,7 +1999,7 @@
       },
       "perbandinganCampuran": {
         "title": "PERBANDINGAN CAMPURAN",
-        "pageSubtitle": "Kelas 7 · Perbandingan · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Perbandingan · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Perbandingan",
         "q1": "Tujuh ekor kambing menghasilkan rumput seluas 7 kali ukuran lapangan sepak bola dalam waktu 7 hari. Waktu yang diperlukan oleh 3 ekor kambing untuk menghabiskan rumput seluas 3 kali ukuran lapangan sepak bola adalah ... hari",
@@ -2062,7 +2062,7 @@
       },
       "jualBeliUntungRugi": {
         "title": "JUAL BELI, UNTUNG DAN RUGI",
-        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": "Seorang penjual tas membeli sebuah tas ransel seharga Rp150.000,00. Ia kemudian berhasil menjual tas tersebut kepada pelanggannya dengan harga Rp180.000,00. Hitunglah berapa rupiah keuntungan yang didapatkan oleh penjual tersebut! Nyatakan pula keuntungan itu dalam bentuk persentase.",
@@ -2078,7 +2078,7 @@
       },
       "ppn": {
         "title": "PAJAK PERTAMBAHAN NILAI (PPN)",
-        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": {
@@ -2154,7 +2154,7 @@
       },
       "pph": {
         "title": "PAJAK PENGHASILAN (PPH)",
-        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 · Aritmetika Sosial · TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": {
@@ -2230,7 +2230,7 @@
       },
       "diskon": {
         "title": "DISKON",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Aritmetika Sosial",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Aritmetika Sosial",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": {
@@ -2325,7 +2325,7 @@
       },
       "brutoNettoTara": {
         "title": "BRUTO, NETTO DAN TARA",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Aritmetika Sosial",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Aritmetika Sosial",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": {
@@ -2439,7 +2439,7 @@
       },
       "bungaTunggal": {
         "title": "BUNGA TUNGGAL",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Aritmetika Sosial",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Aritmetika Sosial",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya",
         "backTo": "Kembali ke Aritmetika Sosial",
         "q1": {
@@ -2602,7 +2602,7 @@
       "sifatSudutSejajar": {
         "title1": "SIFAT SUDUT DUA GARIS SEJAJAR",
         "title2": "JIKA DIPOTONG GARIS LAIN",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Garis dan Sudut",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Garis dan Sudut",
         "instruction": "Kerjakan soal-soal berikut lengkap dengan caranya!",
         "backTo": "Kembali ke Garis dan Sudut",
         "q1": {
@@ -2683,7 +2683,7 @@
       },
       "jumlahSudutSegiBanyak": {
         "title": "JUMLAH SUDUT PADA SEGI BANYAK",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Garis dan Sudut",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Garis dan Sudut",
         "sectionI": "Bagian I — Isian Pendek",
         "instructionI": "Tentukan nilai sudut yang belum diketahui pada bangun datar berikut.",
         "instructionII": "Kerjakan soal-soal berikut lengkap dengan caranya",
@@ -2768,7 +2768,7 @@
       },
       "sudutPelurus": {
         "title": "SUDUT PELURUS, SUDUT PENYIKU DAN SUDUT BERTOLAK BELAKANG",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Garis dan Sudut",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Garis dan Sudut",
         "sectionI": "Bagian I — Isian Pendek",
         "instructionI": "Tentukan nilai sudut yang belum diketahui. Kerjakan lengkap dengan caranya!",
         "instructionII": "Kerjakan soal-soal berikut lengkap dengan caranya",
@@ -2899,8 +2899,8 @@
       },
       "hubunganDuaGaris": {
         "title": "HUBUNGAN 2 GARIS",
-        "pageSubtitle": "Kelas 7 - Latihan Mandiri - Garis dan Sudut",
-        "sectionTitle": "Latihan Mandiri",
+        "pageSubtitle": "Kelas 7 - TUGAS-LATIHAN MANDIRI - Garis dan Sudut",
+        "sectionTitle": "TUGAS-LATIHAN MANDIRI",
         "instruction": "Pilihlah jawaban yang benar.",
         "backTo": "Kembali ke Garis dan Sudut",
         "q1": {
@@ -3039,8 +3039,8 @@
       },
       "garisBeratBagiTinggi": {
         "title": "GARIS BERAT, GARIS BAGI DAN GARIS TINGGI PADA SEGITIGA",
-        "subtitle": "Kelas 7 – Latihan Mandiri – Segitiga dan Segiempat",
-        "sectionTitle": "Latihan Mandiri",
+        "subtitle": "Kelas 7 – TUGAS-LATIHAN MANDIRI – Segitiga dan Segiempat",
+        "sectionTitle": "TUGAS-LATIHAN MANDIRI",
         "instruction": "Pilihlah jawaban yang benar.",
         "back": "Kembali ke Segitiga dan Segiempat",
         "q1": "Diketahui segitiga KLM. Titik O berada pada sisi KL. Jika O dihubungkan dengan titik M dengan sebuah garis, maka garis MO tegak lurus dengan sisi KL. Garis MO disebut ...",
@@ -3068,8 +3068,8 @@
       },
       "kelilingSegitigaSegiempat": {
         "title": "KELILING SEGITIGA DAN SEGIEMPAT",
-        "subtitle": "Kelas 7 – Latihan Mandiri – Segitiga dan Segiempat",
-        "sectionTitle": "Latihan Mandiri",
+        "subtitle": "Kelas 7 – TUGAS-LATIHAN MANDIRI – Segitiga dan Segiempat",
+        "sectionTitle": "TUGAS-LATIHAN MANDIRI",
         "instruction": "Kerjakan soal-soal berikut dengan teliti.",
         "back": "Kembali ke Segitiga dan Segiempat",
         "q1": "Tentukan keliling bangun segitiga berikut.",
@@ -3122,7 +3122,7 @@
       },
       "luasSegitiga": {
         "title": "LUAS SEGITIGA",
-        "subtitle": "Kelas 7 – Latihan Mandiri – Segitiga dan Segiempat",
+        "subtitle": "Kelas 7 – TUGAS-LATIHAN MANDIRI – Segitiga dan Segiempat",
         "formulaReminder": "Ingat!",
         "formulaLabel": "Rumus luas segitiga:",
         "sectionI": "Bagian I · Soal Isian Pendek",
@@ -3171,7 +3171,7 @@
       },
       "luasSegiempat": {
         "title": "LUAS SEGIEMPAT",
-        "subtitle": "Kelas 7 · Latihan Mandiri · Segitiga dan Segiempat",
+        "subtitle": "Kelas 7 · TUGAS-LATIHAN MANDIRI · Segitiga dan Segiempat",
         "formulaTitle": "Rumus Luas Segiempat",
         "formulaSquare": "• Persegi:",
         "formulaRect": "• Persegi panjang:",
@@ -3256,7 +3256,7 @@
       },
       "kelilingLuasBangunTakBeraturan": {
         "title": "KELILING & LUAS BANGUN TAK BERATURAN",
-        "subtitle": "Kelas 7 · Latihan Mandiri · Segitiga dan Segiempat",
+        "subtitle": "Kelas 7 · TUGAS-LATIHAN MANDIRI · Segitiga dan Segiempat",
         "tipTitle": "Strategi Menyelesaikan Bangun Tak Beraturan",
         "tip1": "Urai bangun menjadi bangun-bangun sederhana (persegi, segitiga, dll.)",
         "tip2": "Hitung luas masing-masing bagian lalu jumlahkan (atau kurangkan).",

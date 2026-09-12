@@ -90,7 +90,7 @@ const StatistikaPage = () => {
             style={{ textShadow: '0 0 24px rgba(34,211,238,0.6)' }}>
             STATISTIKA
           </h1>
-          <p className="text-white/50 text-xs text-center font-body mb-3">Kelas 9 — Latihan Mandiri</p>
+          <p className="text-white/50 text-xs text-center font-body mb-3">Kelas 9 — TUGAS-LATIHAN MANDIRI</p>
           <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-5 py-2">
             <span className="text-white/70 text-xs font-body">5 {t('practice.suffixSubTopik')}</span>
             <span className="text-white/20">·</span>
