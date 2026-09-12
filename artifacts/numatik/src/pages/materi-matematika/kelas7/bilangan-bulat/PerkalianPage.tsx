@@ -44,7 +44,7 @@ const makePatternSVG = (
     const numArcs = Math.min(step, nArcs);
 
     return (
-      <svg viewBox={`0 0 490 ${svgH}`} width="100%" xmlns="http://www.w3.org/2000/svg">
+      <svg className="integer-animation-book-svg" viewBox={`0 0 490 ${svgH}`} width="100%" xmlns="http://www.w3.org/2000/svg">
         {rows.map((label, i) => (
           <g key={i}>
             <rect x="12" y={rowY(i) - 18} width="374" height="34" rx="6"
@@ -150,7 +150,7 @@ const NegTimesPosPatternSVG = () => {
   const numArcs = Math.min(step, 6);
 
   return (
-    <svg viewBox="0 0 490 490" width="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg className="integer-animation-book-svg" viewBox="0 0 490 490" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect
         x="10" y={rowY(4) - 22} width="388" height={52 * 3 + 18}
         rx="8" fill="#450a0a18" stroke="#dc262630" strokeWidth="1"
@@ -263,7 +263,7 @@ const NegTimesNegPatternSVG = () => {
   const numArcs = Math.min(step, 5);
 
   return (
-    <svg viewBox="0 0 490 452" width="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg className="integer-animation-book-svg" viewBox="0 0 490 452" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect
         x="10" y={rowY(3) - 22} width="388" height={56 * 3 + 18}
         rx="8" fill="#78350f18" stroke="#d9770630" strokeWidth="1"
@@ -875,7 +875,7 @@ const PerkalianBilanganBulatPage = () => {
   const c = translations[language];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className="animation-submaterial-route integer-animation-book-route integer-multiplication-book-route relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">

@@ -253,6 +253,26 @@
   fill: #0f172a !important;
 }
 
+/* Perkalian Bilangan Bulat uses inline dark SVG row fills. Keep every
+   animated label on a pale surface in the light themes so the dark labels
+   remain readable while the dark space theme is unchanged. */
+[data-theme="light"] .integer-multiplication-book-route .integer-animation-book-svg rect,
+[data-theme="white"] .integer-multiplication-book-route .integer-animation-book-svg rect,
+[data-theme="forest"] .integer-multiplication-book-route .integer-animation-book-svg rect,
+[data-theme="sunset"] .integer-multiplication-book-route .integer-animation-book-svg rect {
+  fill: #f8fafc !important;
+}
+
+/* The neutral rows use a nearly transparent white stroke in the space
+   palette. Give those rows a visible slate outline on pale surfaces so the
+   first rows are boxed just like the highlighted rows below them. */
+[data-theme="light"] .integer-multiplication-book-route .integer-animation-book-svg rect[stroke="#ffffff15"],
+[data-theme="white"] .integer-multiplication-book-route .integer-animation-book-svg rect[stroke="#ffffff15"],
+[data-theme="forest"] .integer-multiplication-book-route .integer-animation-book-svg rect[stroke="#ffffff15"],
+[data-theme="sunset"] .integer-multiplication-book-route .integer-animation-book-svg rect[stroke="#ffffff15"] {
+  stroke: #94a3b8 !important;
+}
+
 /* Replace the dark gradient stops used by the calculator header and rules
    card with pale surfaces while preserving the space/ocean themes. */
 [data-theme="light"] .integer-animation-book-route [class*="from-"][class*="-700/"],
