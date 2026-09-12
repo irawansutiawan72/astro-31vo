@@ -112,21 +112,22 @@ const translations = {
     domain_range_intro: "Domain adalah kumpulan nilai masukan x, sedangkan range adalah kumpulan nilai keluaran y. Domain dan range saja belum tentu menentukan satu rumus yang unik. Pada materi ini kita mengasumsikan pasangan x dan y diketahui serta bentuk fungsinya linear atau kuadrat.",
     domain_range_rule_title: "Langkah umum",
     domain_range_linear_label: "Untuk fungsi linear:",
+    domain_range_elimination_label: "Bentuk persamaan dan eliminasi:",
     domain_range_note_label: "Catatan penting:",
     domain_range_steps: [
       "Tuliskan pasangan berurutan (x, y) dari domain dan range sesuai pemetaannya.",
-      "Jika f(x) = ax + b, gunakan dua pasangan: a = (y₂ − y₁)/(x₂ − x₁), lalu b = y₁ − ax₁.",
-      "Tuliskan rumus f(x), kemudian uji dengan pasangan lain yang tersedia.",
+      "Substitusikan setiap pasangan ke bentuk yang diasumsikan, misalnya f(x) = ax + b, sehingga terbentuk sistem persamaan.",
+      "Eliminasi salah satu koefisien, tentukan koefisien lainnya, lalu substitusikan kembali dan uji dengan pasangan lain.",
     ],
     domain_range_example_easy_title: "Contoh mudah — fungsi linear",
     domain_range_example_easy_problem: "Diketahui D = {1, 2, 3} dan pasangan petanya (1, 4), (2, 6), (3, 8). Tentukan rumus f(x)!",
-    domain_range_example_easy_answer: "Karena fungsinya linear, ambil dua pasangan: a = (6 − 4)/(2 − 1) = 2 dan b = 4 − 2(1) = 2. Jadi, f(x) = 2x + 2. Cek: f(3) = 8.",
+    domain_range_example_easy_answer: "Misalkan f(x) = ax + b. Dari (1, 4) diperoleh a + b = 4 ...(1), dan dari (2, 6) diperoleh 2a + b = 6 ...(2). Eliminasi b: (2) − (1) menghasilkan a = 2. Substitusi ke (1): b = 2. Jadi, f(x) = 2x + 2. Cek: f(3) = 8.",
     domain_range_example_medium_title: "Contoh sedang — domain memuat bilangan negatif",
     domain_range_example_medium_problem: "Diketahui D = {−1, 2, 5} dengan pasangan (−1, 4), (2, 10), (5, 16). Tentukan rumus f(x)!",
-    domain_range_example_medium_answer: "Gradiennya a = (10 − 4)/(2 − (−1)) = 2. Gunakan pasangan (−1, 4): 4 = 2(−1) + b, sehingga b = 6. Jadi, f(x) = 2x + 6. Cek: f(5) = 16.",
+    domain_range_example_medium_answer: "Misalkan f(x) = ax + b. Dari (−1, 4) diperoleh −a + b = 4 ...(1), dan dari (2, 10) diperoleh 2a + b = 10 ...(2). Eliminasi b: (2) − (1) menghasilkan 3a = 6, jadi a = 2. Substitusi ke (1): b = 6. Jadi, f(x) = 2x + 6. Cek: f(5) = 16.",
     domain_range_example_hard_title: "Contoh sulit — menemukan fungsi kuadrat",
     domain_range_example_hard_problem: "Diketahui pasangan (−1, 6), (0, 3), (1, 2), dan (2, 3). Jika bentuknya f(x) = ax² + bx + c, tentukan rumus f(x)!",
-    domain_range_example_hard_answer: "Dari f(0) = 3 diperoleh c = 3. Dari f(1) = 2 diperoleh a + b = −1, sedangkan f(−1) = 6 memberi a − b = 3. Maka a = 1 dan b = −2. Jadi, f(x) = x² − 2x + 3. Cek: f(2) = 3.",
+    domain_range_example_hard_answer: "Substitusi (0, 3) memberi c = 3. Dari (1, 2) diperoleh a + b + c = 2, sehingga a + b = −1 ...(1). Dari (−1, 6) diperoleh a − b + c = 6, sehingga a − b = 3 ...(2). Eliminasi b dengan menjumlahkan (1) dan (2): 2a = 2, jadi a = 1. Maka b = −2 dan c = 3. Jadi, f(x) = x² − 2x + 3. Cek: f(2) = 3.",
     domain_range_note: "Catatan: jika hanya diketahui himpunan domain dan range tanpa pasangan pemetaan atau asumsi bentuk fungsi, rumusnya bisa lebih dari satu. Pasangan input-output dan informasi bentuk fungsi diperlukan untuk memperoleh rumus yang pasti.",
     sum_title: "📚 Rangkuman Materi",
     sum_items: [
@@ -246,21 +247,22 @@ const translations = {
     domain_range_intro: "The domain is the set of input values x, while the range is the set of output values y. The domain and range alone do not always determine one unique formula. Here we assume the x-y pairs are known and the function is linear or quadratic.",
     domain_range_rule_title: "General steps",
     domain_range_linear_label: "For a linear function:",
+    domain_range_elimination_label: "Set up equations and eliminate:",
     domain_range_note_label: "Important note:",
     domain_range_steps: [
       "Write the ordered pairs (x, y) from the domain and range according to the mapping.",
-      "If f(x) = ax + b, use two pairs: a = (y₂ − y₁)/(x₂ − x₁), then b = y₁ − ax₁.",
-      "Write the formula f(x), then test it with another available pair.",
+      "Substitute each pair into the assumed form, such as f(x) = ax + b, to form a system of equations.",
+      "Eliminate one coefficient, find the other coefficients, substitute back, and test another available pair.",
     ],
     domain_range_example_easy_title: "Easy example — linear function",
     domain_range_example_easy_problem: "Given D = {1, 2, 3} and mapped pairs (1, 4), (2, 6), (3, 8), find f(x)!",
-    domain_range_example_easy_answer: "Because the function is linear, use two pairs: a = (6 − 4)/(2 − 1) = 2 and b = 4 − 2(1) = 2. Therefore, f(x) = 2x + 2. Check: f(3) = 8.",
+    domain_range_example_easy_answer: "Let f(x) = ax + b. From (1, 4), a + b = 4 ...(1); from (2, 6), 2a + b = 6 ...(2). Eliminate b: (2) − (1) gives a = 2. Substitute into (1): b = 2. Therefore, f(x) = 2x + 2. Check: f(3) = 8.",
     domain_range_example_medium_title: "Medium example — a domain with negative numbers",
     domain_range_example_medium_problem: "Given D = {−1, 2, 5} with pairs (−1, 4), (2, 10), (5, 16), find f(x)!",
-    domain_range_example_medium_answer: "The slope is a = (10 − 4)/(2 − (−1)) = 2. Use (−1, 4): 4 = 2(−1) + b, so b = 6. Therefore, f(x) = 2x + 6. Check: f(5) = 16.",
+    domain_range_example_medium_answer: "Let f(x) = ax + b. From (−1, 4), −a + b = 4 ...(1); from (2, 10), 2a + b = 10 ...(2). Eliminate b: (2) − (1) gives 3a = 6, so a = 2. Substitute into (1): b = 6. Therefore, f(x) = 2x + 6. Check: f(5) = 16.",
     domain_range_example_hard_title: "Hard example — finding a quadratic function",
     domain_range_example_hard_problem: "Given the pairs (−1, 6), (0, 3), (1, 2), and (2, 3). If f(x) = ax² + bx + c, find f(x)!",
-    domain_range_example_hard_answer: "From f(0) = 3, c = 3. From f(1) = 2, a + b = −1, while f(−1) = 6 gives a − b = 3. Thus a = 1 and b = −2. Therefore, f(x) = x² − 2x + 3. Check: f(2) = 3.",
+    domain_range_example_hard_answer: "Substituting (0, 3) gives c = 3. From (1, 2), a + b + c = 2, so a + b = −1 ...(1). From (−1, 6), a − b + c = 6, so a − b = 3 ...(2). Eliminate b by adding (1) and (2): 2a = 2, so a = 1. Then b = −2 and c = 3. Therefore, f(x) = x² − 2x + 3. Check: f(2) = 3.",
     domain_range_note: "Note: if only the domain and range sets are known, without the mapping pairs or an assumed function form, more than one formula may be possible. Input-output pairs and the function form are needed to determine a formula.",
     sum_title: "📚 Material Summary",
     sum_items: [
@@ -380,21 +382,22 @@ const translations = {
     domain_range_intro: "定義域は入力値 x の集合、値域は出力値 y の集合です。定義域と値域だけでは、公式が一つに決まらない場合があります。ここでは x と y の対応がわかっていて、関数が一次関数または二次関数であると仮定します。",
     domain_range_rule_title: "一般的な手順",
     domain_range_linear_label: "一次関数の場合：",
+    domain_range_elimination_label: "方程式を立てて消去する：",
     domain_range_note_label: "重要な注意：",
     domain_range_steps: [
       "対応に従って、定義域と値域から順序対 (x, y) を書く。",
-      "f(x) = ax + b のとき、2組を使う。a = (y₂ − y₁)/(x₂ − x₁)、その後 b = y₁ − ax₁。",
-      "公式 f(x) を書き、別の対応する組で確かめる。",
+      "f(x) = ax + b など仮定した形に各組を代入し、連立方程式を作る。",
+      "一つの係数を消去して他の係数を求め、戻して代入し、別の組で確認する。",
     ],
     domain_range_example_easy_title: "基本例 — 一次関数",
     domain_range_example_easy_problem: "定義域 D = {1, 2, 3}、対応する組が (1, 4), (2, 6), (3, 8) のとき、f(x) を求めなさい。",
-    domain_range_example_easy_answer: "一次関数なので2組を使う。a = (6 − 4)/(2 − 1) = 2、b = 4 − 2(1) = 2。したがって f(x) = 2x + 2。確認：f(3) = 8。",
+    domain_range_example_easy_answer: "f(x) = ax + b とする。(1, 4)より a + b = 4 ...(1)、(2, 6)より 2a + b = 6 ...(2)。bを消去すると (2) − (1) より a = 2。(1)に代入して b = 2。したがって f(x) = 2x + 2。確認：f(3) = 8。",
     domain_range_example_medium_title: "標準例 — 負の数を含む定義域",
     domain_range_example_medium_problem: "D = {−1, 2, 5}、対応する組が (−1, 4), (2, 10), (5, 16) のとき、f(x) を求めなさい。",
-    domain_range_example_medium_answer: "傾きは a = (10 − 4)/(2 − (−1)) = 2。(−1, 4)を使うと 4 = 2(−1) + b より b = 6。したがって f(x) = 2x + 6。確認：f(5) = 16。",
+    domain_range_example_medium_answer: "f(x) = ax + b とする。(−1, 4)より −a + b = 4 ...(1)、(2, 10)より 2a + b = 10 ...(2)。bを消去すると (2) − (1) より 3a = 6、a = 2。(1)に代入して b = 6。したがって f(x) = 2x + 6。確認：f(5) = 16。",
     domain_range_example_hard_title: "発展例 — 二次関数を求める",
     domain_range_example_hard_problem: "対応する組が (−1, 6), (0, 3), (1, 2), (2, 3) で、f(x) = ax² + bx + c のとき、f(x) を求めなさい。",
-    domain_range_example_hard_answer: "f(0) = 3 より c = 3。f(1) = 2 より a + b = −1、f(−1) = 6 より a − b = 3。よって a = 1, b = −2。したがって f(x) = x² − 2x + 3。確認：f(2) = 3。",
+    domain_range_example_hard_answer: "(0, 3)を代入すると c = 3。(1, 2)より a + b + c = 2、つまり a + b = −1 ...(1)。 (−1, 6)より a − b + c = 6、つまり a − b = 3 ...(2)。(1)と(2)を加えて bを消去すると 2a = 2、a = 1。よって b = −2、c = 3。したがって f(x) = x² − 2x + 3。確認：f(2) = 3。",
     domain_range_note: "注意：対応する組や関数の形の仮定なしに、定義域と値域の集合だけが与えられた場合、公式は一つとは限りません。公式を決めるには入力と出力の対応、そして関数の形が必要です。",
     sum_title: "📚 学習内容のまとめ",
     sum_items: [
@@ -742,7 +745,10 @@ const NotasiFungsiPage = () => {
                   </div>
                   <div className="mt-4 rounded-lg bg-slate-900/40 border border-emerald-400/20 p-3">
                     <p className="font-body text-xs text-emerald-200 mb-2">{t.domain_range_linear_label}</p>
-                    <BlockMath math="f(x)=ax+b,\qquad a=\frac{y_2-y_1}{x_2-x_1},\qquad b=y_1-ax_1" />
+                    <BlockMath math="f(x)=ax+b" />
+                    <p className="font-body text-xs text-emerald-100/80 mt-2">{t.domain_range_elimination_label}</p>
+                    <BlockMath math="y_1=ax_1+b,\qquad y_2=ax_2+b" />
+                    <BlockMath math="(2)-(1):\quad y_2-y_1=a(x_2-x_1)" />
                   </div>
                 </div>
 
@@ -753,7 +759,8 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_easy} color="bg-cyan-700/60 text-cyan-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_easy_problem}</p>
-                    <BlockMath math="a=\frac{6-4}{2-1}=2,\qquad b=4-2(1)=2" />
+                    <BlockMath math="a+b=4\ (1),\qquad 2a+b=6\ (2)" />
+                    <BlockMath math="(2)-(1):\quad a=2,\qquad b=4-a=2" />
                     <p className="font-body text-sm text-cyan-100 leading-relaxed">{t.domain_range_example_easy_answer}</p>
                   </div>
 
@@ -763,7 +770,8 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_medium} color="bg-amber-700/60 text-amber-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_medium_problem}</p>
-                    <BlockMath math="a=\frac{10-4}{2-(-1)}=2,\qquad 4=2(-1)+b\Rightarrow b=6" />
+                    <BlockMath math="-a+b=4\ (1),\qquad 2a+b=10\ (2)" />
+                    <BlockMath math="(2)-(1):\quad 3a=6\Rightarrow a=2,\qquad b=6" />
                     <p className="font-body text-sm text-amber-100 leading-relaxed">{t.domain_range_example_medium_answer}</p>
                   </div>
 
@@ -773,7 +781,8 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_hard} color="bg-purple-700/60 text-purple-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_hard_problem}</p>
-                    <BlockMath math="c=3,\qquad a+b=-1,\qquad a-b=3\Rightarrow a=1,\ b=-2" />
+                    <BlockMath math="c=3,\qquad a+b=-1\ (1),\qquad a-b=3\ (2)" />
+                    <BlockMath math="(1)+(2):\quad 2a=2\Rightarrow a=1,\qquad b=-2" />
                     <p className="font-body text-sm text-purple-100 leading-relaxed">{t.domain_range_example_hard_answer}</p>
                   </div>
                 </div>
