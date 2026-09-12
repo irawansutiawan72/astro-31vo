@@ -53,6 +53,131 @@ const NumberLineSVG = () => (
   </svg>
 );
 
+const CalculationDiagramSVG = ({ isDark }: { isDark: boolean }) => {
+  const colors = isDark
+    ? {
+        surface: "#111827",
+        surfaceAlt: "#0f172a",
+        border: "#334155",
+        text: "#f8fafc",
+        muted: "#94a3b8",
+        p: "#a78bfa",
+        pSurface: "#2e1065",
+        q: "#38bdf8",
+        qSurface: "#082f49",
+        result: "#4ade80",
+        resultSurface: "#14532d",
+        axis: "#64748b",
+      }
+    : {
+        surface: "#ffffff",
+        surfaceAlt: "#f8fafc",
+        border: "#cbd5e1",
+        text: "#0f172a",
+        muted: "#475569",
+        p: "#7c3aed",
+        pSurface: "#f5f3ff",
+        q: "#0369a1",
+        qSurface: "#f0f9ff",
+        result: "#15803d",
+        resultSurface: "#f0fdf4",
+        axis: "#64748b",
+      };
+
+  const Arrow = ({ x }: { x: number }) => (
+    <g>
+      <line x1={x} y1="84" x2={x + 24} y2="84" stroke={colors.muted} strokeWidth="1.5" />
+      <polygon points={`${x + 30},84 ${x + 22},80 ${x + 22},88`} fill={colors.muted} />
+    </g>
+  );
+
+  const StepBox = ({
+    x,
+    y,
+    width,
+    label,
+    fill,
+    stroke,
+    emphasis = false,
+  }: {
+    x: number;
+    y: number;
+    width: number;
+    label: string;
+    fill: string;
+    stroke: string;
+    emphasis?: boolean;
+  }) => (
+    <g>
+      <rect x={x} y={y} width={width} height="42" rx="9" fill={fill} stroke={stroke} strokeWidth={emphasis ? 2 : 1} />
+      <text x={x + width / 2} y={y + 26} textAnchor="middle" fontSize={emphasis ? "16" : "14"} fontWeight={emphasis ? "700" : "600"} fill={colors.text}>
+        {label}
+      </text>
+    </g>
+  );
+
+  return (
+    <svg
+      viewBox="0 0 680 350"
+      className="w-full my-4"
+      role="img"
+      aria-labelledby="calculation-diagram-title calculation-diagram-desc"
+      style={{ maxHeight: 390 }}
+    >
+      <title id="calculation-diagram-title">Diagram perhitungan nilai p dan q</title>
+      <desc id="calculation-diagram-desc">
+        Nilai p dihitung dari negatif enam dikali empat lalu dibagi delapan sehingga hasilnya negatif tiga.
+        Nilai q dihitung dari sebelas dikurangi enam belas lalu dikurangi negatif delapan sehingga hasilnya tiga.
+      </desc>
+
+      <rect x="1" y="1" width="678" height="348" rx="16" fill={colors.surface} stroke={colors.border} strokeWidth="2" />
+      <text x="340" y="25" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>
+        VISUALISASI LANGKAH PERHITUNGAN
+      </text>
+
+      <rect x="16" y="40" width="648" height="93" rx="12" fill={colors.pSurface} stroke={colors.p} strokeOpacity="0.55" />
+      <text x="34" y="62" fontSize="13" fontWeight="700" fill={colors.p}>Nilai p</text>
+      <StepBox x={34} y={76} width={142} label="−6 × 4" fill={colors.surfaceAlt} stroke={colors.p} />
+      <Arrow x={184} />
+      <StepBox x={220} y={76} width={92} label="−24" fill={colors.surfaceAlt} stroke={colors.p} />
+      <Arrow x={320} />
+      <StepBox x={356} y={76} width={92} label="÷ 8" fill={colors.surfaceAlt} stroke={colors.p} />
+      <Arrow x={456} />
+      <StepBox x={492} y={76} width={142} label="p = −3" fill={colors.resultSurface} stroke={colors.result} emphasis />
+
+      <rect x="16" y="145" width="648" height="93" rx="12" fill={colors.qSurface} stroke={colors.q} strokeOpacity="0.55" />
+      <text x="34" y="167" fontSize="13" fontWeight="700" fill={colors.q}>Nilai q</text>
+      <StepBox x={34} y={181} width={142} label="11 − 16" fill={colors.surfaceAlt} stroke={colors.q} />
+      <Arrow x={184} />
+      <StepBox x={220} y={181} width={92} label="−5" fill={colors.surfaceAlt} stroke={colors.q} />
+      <Arrow x={320} />
+      <StepBox x={356} y={181} width={92} label="− (−8)" fill={colors.surfaceAlt} stroke={colors.q} />
+      <Arrow x={456} />
+      <StepBox x={492} y={181} width={142} label="q = 3" fill={colors.resultSurface} stroke={colors.result} emphasis />
+
+      <text x="340" y="266" textAnchor="middle" fontSize="12" fontWeight="700" fill={colors.muted}>
+        HASIL PADA GARIS BILANGAN
+      </text>
+      <line x1="74" y1="300" x2="606" y2="300" stroke={colors.axis} strokeWidth="2" />
+      <polygon points="616,300 604,294 604,306" fill={colors.axis} />
+      <polygon points="64,300 76,294 76,306" fill={colors.axis} />
+      {[-4, -3, -2, -1, 0, 1, 2, 3, 4].map((n) => {
+        const x = 102 + (n + 4) * 54;
+        return (
+          <g key={n}>
+            <line x1={x} y1="293" x2={x} y2="307" stroke={colors.axis} strokeWidth="1.5" />
+            <text x={x} y="323" textAnchor="middle" fontSize="12" fontWeight="600" fill={colors.text}>{n}</text>
+          </g>
+        );
+      })}
+      <circle cx="156" cy="300" r="7" fill={colors.p} stroke={colors.surface} strokeWidth="2" />
+      <text x="156" y="285" textAnchor="middle" fontSize="11" fontWeight="700" fill={colors.p}>p = −3</text>
+      <circle cx="480" cy="300" r="7" fill={colors.q} stroke={colors.surface} strokeWidth="2" />
+      <text x="480" y="285" textAnchor="middle" fontSize="11" fontWeight="700" fill={colors.q}>q = 3</text>
+    </svg>
+  );
+};
+
 const BilanganBulatPage = () => {
   const navigate = useNavigate();
   const { isDark, theme } = useTheme();
@@ -1584,6 +1709,7 @@ const BilanganBulatPage = () => {
               Diketahui <InlineMath math="p = -6 \times 4 \div 8" /> dan <InlineMath math="q = 11 - 16 - (-8)" />. Pilihlah semua pernyataan yang <span className={`font-bold ${isDark ? "text-amber-300" : "text-amber-600"}`}>BENAR</span>!
             </p>
             <p className={`${hint} ${isDark ? "text-amber-300" : "text-amber-600"}`}>Jawaban benar lebih dari satu.</p>
+            <CalculationDiagramSVG isDark={isDark} />
             <MCMA qn={17} items={[
               { text: <span>Nilai <InlineMath math="p" /> adalah <InlineMath math="-3" /></span>, benar: true },
               { text: <span>Nilai <InlineMath math="q" /> adalah <InlineMath math="-3" /></span>, benar: false },
