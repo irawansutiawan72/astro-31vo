@@ -36,7 +36,6 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 11, soal: "Gambar berikut adalah mainan anak-anak yang berbentuk balok, tersusun dari kubus-kubus satuan yang kongruen. Jika seluruh permukaan balok tersebut dicat, banyaknya kubus satuan yang terkena cat pada dua sisinya saja adalah ....", options: ["A. 16", "B. 18", "C. 24", "D. 28"] },
   { no: 12, soal: "Via akan membuat kerangka balok dari kawat. Jika kerangka balok yang akan dibuat berukuran 10 cm x 6 cm x 4 cm dan panjang kawat yang tersedia 7,2 m, maka banyak kerangka balok yang dapat dibuat oleh Via adalah ....", options: ["A. 6 buah", "B. 8 buah", "C. 9 buah", "D. 12 buah"] },
   { no: 13, soal: "Pak Dani membuat kerangka berbentuk balok yang terbuat dari alumunium dengan ukuran 60 cm x 50 cm x 80 cm. jika harga alumunium Rp40.000,00 tiap meter maka biaya yang diperlukan untuk membeli alumunium adalah...", options: ["A. Rp72.000,00", "B. Rp96.000,00", "C. Rp288.000,00", "D. Rp960.000,00"] },
-  { no: 14, soal: "Sebuah kerangka aquarium berbentuk prisma segitiga dengan tinggi 60 cm dibuat dari alumunium. Panjang sisi-sisi segitiga itu 30 cm, 40 cm, dan 50 cm. Jika harga 1m alumunium adalah Rp30.000,00, harga alumunium untuk membuat kerangka tersebut adalah ....", options: ["A. Rp120.000,00", "B. Rp126.000,00", "C. Rp140.000,00", "D. Rp160.000,00"] },
   { no: 15, soal: "Rosa akan membuat model kerangka limas dan prisma masing-masing satu buah. Model kerangka limas alasnya berbentuk persegi panjang dengan ukuran 8 cm x 6 cm dengan tinggi limas 12 cm. Sedangkan kerangka prisma alasnya berbentuk segi enam beraturan dengan panjang sisi 12 cm dan tinggi prisma 20 cm. Jika Rosa memiliki persediaan kawat 4 m, maka sisa kawat yang tidak terpakai adalah...", options: ["A. 50 cm", "B. 54 cm", "C. 58 cm", "D. 60 cm"] },
   { no: 16, soal: "Ardian akan membuat sebuah model kerangka limas yang alasnya berbentuk persegi, dengan panjang sisi 8 cm, jika panjang rusuk tegak limas 10 cm, maka panjang kawat yang diperlukan adalah ....", options: ["A. 36 cm", "B. 40 cm", "C. 72 cm", "D. 80 cm"] },
   { no: 17, soal: "Apri mendapat tugas untuk membuat kerangka lampu hias yang berbentuk kerangka limas seperti pada gambar. Jika kerangka limas tersebut dibuat dari rotan dan harga 1 m rotan adalah Rp20.000,00, maka biaya yang dibutuhkan seluruhnya adalah ...", options: ["A. Rp64.000,00", "B. Rp52.000,00", "C. Rp44.000,00", "D. Rp22.000,00"] },
@@ -71,19 +70,22 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 46, soal: "Sebuah bak mandi berukuran panjang = 80 cm, lebar = 40 cm, tinggi 60 cm, berisi air setinggi 40 cm, jika 3 buah kubus yang panjang rusuknya 20 cm, dimasukkan ke dalam bak tersebut sehingga tenggelam, tentukan tinggi air sekarang!", options: [] },
 ];
 
-const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 35, 37, 38, 41, 42, 46]);
-const dasarImages: Record<number, string> = {
-  9: "/bangun-ruang-sisi-datar-q9-kubus.svg",
+const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 35, 36, 37, 38, 41, 42, 46]);
+const dasarImagesByOriginalNo: Record<number, string> = {
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
-  36: "https://drive.google.com/thumbnail?id=1mx3YCPfcN9gFNDS8yYjps-JoSBHLCSf6&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
   43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
 };
+const dasarImagesByDisplayedNo: Record<number, string> = {
+  3: "/bangun-ruang-sisi-datar-q3-kubus.png",
+  8: "/bangun-ruang-sisi-datar-q8-prisma-segitiga.svg",
+  9: "/bangun-ruang-sisi-datar-q9-prisma-belah-ketupat.svg",
+};
 const kubusNetQuestionOneOptions = [
   <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
   <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
 ];
 const latihanDasarBangunRuang = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
@@ -91,7 +93,9 @@ const latihanDasarBangunRuang = latihanDasarTkaLama
     ...soal,
     no: index + 1,
     pembahasan: toPembahasanText(soal.no),
-    gambar: dasarImages[soal.no] ? <img src={dasarImages[soal.no]} alt={`Gambar soal ${soal.no}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" /> : undefined,
+    gambar: (dasarImagesByDisplayedNo[index + 1] ?? dasarImagesByOriginalNo[soal.no])
+      ? <img src={dasarImagesByDisplayedNo[index + 1] ?? dasarImagesByOriginalNo[soal.no]} alt={`Gambar soal ${index + 1}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />
+      : undefined,
     optionsJsx: soal.no === 1 ? kubusNetQuestionOneOptions : undefined,
   }));
 
@@ -101,7 +105,6 @@ const BangunRuangSisiDatarPage = () => (
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-datar")}
     latihanDasar={latihanDasarBangunRuang}
-    gambarMap={Object.fromEntries(Object.entries(dasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
   />
 );
 
