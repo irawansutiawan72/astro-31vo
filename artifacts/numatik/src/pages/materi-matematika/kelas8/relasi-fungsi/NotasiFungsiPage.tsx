@@ -719,7 +719,7 @@ const NotasiFungsiPage = () => {
             )}
           </div>
 
-          {/* MENENTUKAN RUMUS DARI DOMAIN DAN RANGE */}
+          {/* MENENTUKAN RUMUS f(x) DARI DOMAIN DAN RANGE */}
           <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
             <SectionHeader
               id="domainRange"
@@ -745,9 +745,9 @@ const NotasiFungsiPage = () => {
                   </div>
                   <div className="mt-4 rounded-lg bg-slate-900/40 border border-emerald-400/20 p-3">
                     <p className="font-body text-xs text-emerald-200 mb-2">{t.domain_range_linear_label}</p>
-                    <BlockMath math="f(x)=ax+b" />
+                    <BlockMath math="f(x) = ax + b" />
                     <p className="font-body text-xs text-emerald-100/80 mt-2">{t.domain_range_elimination_label}</p>
-                    <BlockMath math={"\\begin{aligned} y_1 &= ax_1+b \\\\ y_2 &= ax_2+b \\\\ \\text{(2)}-\\text{(1)}:\quad y_2-y_1 &= a(x_2-x_1) \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} y_1 &= ax_1+b \\\\ y_2 &= ax_2+b \\\\ \\hline y_2-y_1 &= a(x_2-x_1) \\end{aligned}"} />
                   </div>
                 </div>
 
@@ -758,7 +758,7 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_easy} color="bg-cyan-700/60 text-cyan-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_easy_problem}</p>
-                    <BlockMath math={"\\begin{aligned} a+b &= 4 && (1) \\\\ 2a+b &= 6 && (2) \\\\ \\text{(2)}-\\text{(1)}:\quad a &= 2 \\\\ b &= 4-a=2 \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} a+b &= 4 \\\\ 2a+b &= 6 \\\\ \\hline a &= 2 \\\\ b &= 4-a=2 \\end{aligned}"} />
                     <p className="font-body text-sm text-cyan-100 leading-relaxed">{t.domain_range_example_easy_answer}</p>
                   </div>
 
@@ -768,7 +768,7 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_medium} color="bg-amber-700/60 text-amber-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_medium_problem}</p>
-                    <BlockMath math={"\\begin{aligned} -a+b &= 4 && (1) \\\\ 2a+b &= 10 && (2) \\\\ \\text{(2)}-\\text{(1)}:\quad 3a &= 6 \\\\ a &= 2 \\\\ b &= 6 \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} -a+b &= 4 \\\\ 2a+b &= 10 \\\\ \\hline 3a &= 6 \\\\ a &= 2 \\\\ b &= 6 \\end{aligned}"} />
                     <p className="font-body text-sm text-amber-100 leading-relaxed">{t.domain_range_example_medium_answer}</p>
                   </div>
 
@@ -778,7 +778,7 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_hard} color="bg-purple-700/60 text-purple-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_hard_problem}</p>
-                    <BlockMath math={"\\begin{aligned} a+b &= -1 && (1) \\\\ a-b &= 3 && (2) \\\\ \\text{(1)}+\\text{(2)}:\quad 2a &= 2 \\\\ a &= 1 \\\\ b &= -2,\qquad c=3 \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} a+b &= -1 \\\\ a-b &= 3 \\\\ \\hline 2a &= 2 \\\\ a &= 1 \\\\ b &= -2,\\qquad c=3 \\end{aligned}"} />
                     <p className="font-body text-sm text-purple-100 leading-relaxed">{t.domain_range_example_hard_answer}</p>
                   </div>
                 </div>
