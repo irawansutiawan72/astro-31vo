@@ -32,9 +32,9 @@ const translations = {
     intro_anatomi: "📖 Anatomi Notasi Fungsi",
     symbols: [
       { simbol: "f", arti: "Nama fungsi (bisa juga g, h, p, dll.)" },
-      { simbol: "A → B", arti: "Fungsi memetakan dari himpunan A ke himpunan B" },
+      { simbol: "x → ax + b", arti: "Setiap nilai x dipetakan ke ax + b" },
       { simbol: "f(x)", arti: "Nilai fungsi f saat input adalah x (dibaca: 'f dari x')" },
-      { simbol: "2x + 3", arti: "Aturan/rumus yang menghubungkan x dengan nilai keluarannya" },
+      { simbol: "ax + b", arti: "Aturan/rumus yang menghubungkan x dengan nilai keluarannya" },
     ],
     notasi_summary: "🎯 Ringkasan Intisari",
     notasi_p: (a: string, b: string, c: string, d: string, e: string, f2: string, g: string, h: string, k: string) =>
@@ -71,10 +71,10 @@ const translations = {
     ],
     hasil_label: "Hasil:",
     c1_answer: "✅ f(0) = -3, f(4) = 17, f(-2) = -13",
-    c2_soal_p: <>Diketahui <InlineMath math="f(x) = 3x - 2" /> dan <InlineMath math="g(x) = x^2 + 1" />. Tentukan:</>,
+    c2_soal_p: <>Diketahui fungsi <InlineMath math="f(x) = 2x^2 - 3x - 1" />, hitunglah:</>,
     c2_disc: "🔍 Pembahasan",
-    c2_calc_intro: "Hitung dulu f(3) dan g(3):",
-    c2_answer: "✅ (f+g)(3) = 17, (f-g)(-1) = -7, (f·g)(2) = 20",
+    c2_calc_intro: "Substitusikan nilai x ke dalam rumus fungsi:",
+    c2_answer: "✅ f(0) = -1, f(2) = 1, dan f(-2) = 13",
     c3_soal_p: <>Diketahui fungsi <InlineMath math="f(x) = px + q" />. Jika <InlineMath math="f(3) = 11" /> dan <InlineMath math="f(5) = 17" />, tentukan:</>,
     c3_a_label: "a) Nilai p dan q",
     c3_b_label: "b) Rumus fungsi f(x)",
@@ -89,6 +89,11 @@ const translations = {
     c3_answer: "✅ p = 3, q = 2, f(x) = 3x + 2, dan x = 9 saat f(x) = 29",
     c4_concept: "🎯 Konsep:",
     c4_concept_p: "Jika diketahui fungsi f(x) dan bayangan (nilai f(x)), kita bisa mencari nilai x dengan menyelesaikan persamaan. Bayangan = hasil keluaran dari fungsi.",
+    c4_domain_title: "📚 Materi: Menentukan Domain dari Rumus Fungsi dan Range",
+    c4_domain_intro: "Jika rumus fungsi f(x) dan bayangan atau range diketahui, tentukan domain dengan mencari nilai x yang menghasilkan setiap nilai pada range. Untuk setiap nilai y pada range, susun persamaan f(x) = y, lalu selesaikan persamaan tersebut.",
+    c4_domain_example: "Contoh: diketahui f(x) = 2x + 3 dengan range R_f = {7, 11, 15}.",
+    c4_domain_result: "Jadi, domainnya adalah D_f = {2, 4, 6}.",
+    c4_domain_interval: "Jika range berupa interval, gunakan pertidaksamaan. Misalnya 7 ≤ f(x) ≤ 15 menghasilkan 7 ≤ 2x + 3 ≤ 15, sehingga 2 ≤ x ≤ 6.",
     c4a_soal: "📝 Soal a",
     c4a_soal_p: <>Diketahui fungsi <InlineMath math="f(x) = 4x - 6" />. Jika bayangan dari <InlineMath math="x" /> adalah <InlineMath math="18" />, tentukan nilai <InlineMath math="x" />!</>,
     c4a_disc: "🔍 Penyelesaian a",
@@ -141,9 +146,9 @@ const translations = {
     intro_anatomi: "📖 Anatomy of Function Notation",
     symbols: [
       { simbol: "f", arti: "Name of the function (can also be g, h, p, etc.)" },
-      { simbol: "A → B", arti: "The function maps from set A to set B" },
+      { simbol: "x → ax + b", arti: "Each value of x is mapped to ax + b" },
       { simbol: "f(x)", arti: "Value of function f when input is x (read: 'f of x')" },
-      { simbol: "2x + 3", arti: "The rule/formula connecting x to its output value" },
+      { simbol: "ax + b", arti: "The rule/formula connecting x to its output value" },
     ],
     notasi_summary: "🎯 Key Summary",
     notasi_p: (a: string, b: string, c: string, d: string, e: string, f2: string, g: string, h: string, k: string) =>
@@ -180,10 +185,10 @@ const translations = {
     ],
     hasil_label: "Result:",
     c1_answer: "✅ f(0) = -3, f(4) = 17, f(-2) = -13",
-    c2_soal_p: <>Given <InlineMath math="f(x) = 3x - 2" /> and <InlineMath math="g(x) = x^2 + 1" />. Find:</>,
+    c2_soal_p: <>Given function <InlineMath math="f(x) = 2x^2 - 3x - 1" />. Calculate:</>,
     c2_disc: "🔍 Solution",
-    c2_calc_intro: "First compute f(3) and g(3):",
-    c2_answer: "✅ (f+g)(3) = 17, (f-g)(-1) = -7, (f·g)(2) = 20",
+    c2_calc_intro: "Substitute each x-value into the function formula:",
+    c2_answer: "✅ f(0) = -1, f(2) = 1, and f(-2) = 13",
     c3_soal_p: <>Given function <InlineMath math="f(x) = px + q" />. If <InlineMath math="f(3) = 11" /> and <InlineMath math="f(5) = 17" />, find:</>,
     c3_a_label: "a) The values of p and q",
     c3_b_label: "b) The formula of f(x)",
@@ -198,6 +203,11 @@ const translations = {
     c3_answer: "✅ p = 3, q = 2, f(x) = 3x + 2, and x = 9 when f(x) = 29",
     c4_concept: "🎯 Concept:",
     c4_concept_p: "If we know the function f(x) and its image (value of f(x)), we can find x by solving the equation. Image = output of the function.",
+    c4_domain_title: "📚 Material: Finding the Domain from a Function Formula and Range",
+    c4_domain_intro: "If the function formula f(x) and its image or range are known, find the domain by finding the x-value that produces each value in the range. For every y-value in the range, set up f(x) = y and solve the equation.",
+    c4_domain_example: "Example: given f(x) = 2x + 3 with range R_f = {7, 11, 15}.",
+    c4_domain_result: "Therefore, the domain is D_f = {2, 4, 6}.",
+    c4_domain_interval: "If the range is an interval, use an inequality. For example, 7 ≤ f(x) ≤ 15 gives 7 ≤ 2x + 3 ≤ 15, so 2 ≤ x ≤ 6.",
     c4a_soal: "📝 Problem a",
     c4a_soal_p: <>Given function <InlineMath math="f(x) = 4x - 6" />. If the image of <InlineMath math="x" /> is <InlineMath math="18" />, find the value of <InlineMath math="x" />!</>,
     c4a_disc: "🔍 Solution a",
@@ -250,9 +260,9 @@ const translations = {
     intro_anatomi: "📖 関数表記の解剖",
     symbols: [
       { simbol: "f", arti: "関数の名前（g, h, p なども可）" },
-      { simbol: "A → B", arti: "関数が集合Aから集合Bへ対応付ける" },
+      { simbol: "x → ax + b", arti: "各xの値をax + bに対応させる" },
       { simbol: "f(x)", arti: "入力がxのときの関数fの値（「fのx」と読む）" },
-      { simbol: "2x + 3", arti: "xと出力値を結ぶ規則/公式" },
+      { simbol: "ax + b", arti: "xと出力値を結ぶ規則/公式" },
     ],
     notasi_summary: "🎯 要点まとめ",
     notasi_p: (a: string, b: string, c: string, d: string, e: string, f2: string, g: string, h: string, k: string) =>
@@ -289,10 +299,10 @@ const translations = {
     ],
     hasil_label: "答え：",
     c1_answer: "✅ f(0) = -3、f(4) = 17、f(-2) = -13",
-    c2_soal_p: <><InlineMath math="f(x) = 3x - 2" />、<InlineMath math="g(x) = x^2 + 1" /> が与えられています。次を求めなさい：</>,
+    c2_soal_p: <>関数 <InlineMath math="f(x) = 2x^2 - 3x - 1" /> が与えられています。次を計算しなさい：</>,
     c2_disc: "🔍 解説",
-    c2_calc_intro: "まずf(3)とg(3)を計算する：",
-    c2_answer: "✅ (f+g)(3) = 17、(f-g)(-1) = -7、(f·g)(2) = 20",
+    c2_calc_intro: "関数の公式にそれぞれのxの値を代入する：",
+    c2_answer: "✅ f(0) = -1、f(2) = 1、f(-2) = 13",
     c3_soal_p: <>関数 <InlineMath math="f(x) = px + q" /> が与えられています。<InlineMath math="f(3) = 11" />、<InlineMath math="f(5) = 17" /> のとき、次を求めなさい：</>,
     c3_a_label: "a) p と q の値",
     c3_b_label: "b) f(x) の公式",
@@ -307,6 +317,11 @@ const translations = {
     c3_answer: "✅ p = 3、q = 2、f(x) = 3x + 2、f(x) = 29 のとき x = 9",
     c4_concept: "🎯 概念：",
     c4_concept_p: "関数f(x)とその像（f(x)の値）がわかれば、方程式を解いてxを求めることができます。像 = 関数の出力値。",
+    c4_domain_title: "📚 教材：関数の公式と値域から定義域を求める",
+    c4_domain_intro: "関数の公式f(x)と像または値域がわかっている場合、値域の各値を生み出すxの値を求めて定義域を決定します。値域の各yについてf(x) = yという方程式を立てて解きます。",
+    c4_domain_example: "例：f(x) = 2x + 3、値域R_f = {7, 11, 15} とする。",
+    c4_domain_result: "したがって、定義域はD_f = {2, 4, 6}です。",
+    c4_domain_interval: "値域が区間の場合は不等式を使います。例えば7 ≤ f(x) ≤ 15なら、7 ≤ 2x + 3 ≤ 15となり、2 ≤ x ≤ 6です。",
     c4a_soal: "📝 問題 a",
     c4a_soal_p: <>関数 <InlineMath math="f(x) = 4x - 6" /> において、<InlineMath math="x" /> の像が <InlineMath math="18" /> のとき、<InlineMath math="x" /> の値を求めなさい！</>,
     c4a_disc: "🔍 解法 a",
@@ -348,7 +363,7 @@ const NotasiFungsiPage = () => {
   const t = translations[language];
 
   const [expandedSections, setExpandedSections] = useState<string[]>([
-    "intro", "notasi", "operasi", "contoh1", "contoh2", "contoh3", "contoh4", "rangkuman",
+     "intro", "notasi", "operasi", "contoh1", "contoh2", "contoh4", "rangkuman",
   ]);
 
   const toggleSection = (section: string) => {
@@ -399,7 +414,7 @@ const NotasiFungsiPage = () => {
                 <div className="bg-slate-800/60 border border-cyan-500/20 rounded-xl p-4">
                   <p className="font-body text-xs font-bold text-cyan-300 uppercase mb-3">{t.intro_anatomi}</p>
                   <div className="text-center">
-                    <BlockMath math="f : A \to B,\ f(x) = 2x + 3" />
+                   <BlockMath math="f : x \to ax + b,\quad f(x) = ax + b" />
                   </div>
                   <div className="grid grid-cols-1 gap-2 text-xs font-body mt-3">
                     {[
@@ -556,24 +571,11 @@ const NotasiFungsiPage = () => {
                 <div className="bg-slate-700/40 border border-white/10 rounded-xl p-4 space-y-3">
                   <p className="font-body text-sm font-semibold text-cyan-300">{t.c2_disc}</p>
                   <div className="space-y-3 text-sm font-body">
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-cyan-300 font-semibold mb-2">a) (f + g)(3):</p>
-                      <p className="text-white/60 text-xs mb-1">{t.c2_calc_intro}</p>
-                      <BlockMath math="f(3) = 3(3) - 2 = 7" />
-                      <BlockMath math="g(3) = 3^2 + 1 = 10" />
-                      <BlockMath math="(f+g)(3) = f(3) + g(3) = 7 + 10 = 17" />
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-violet-300 font-semibold mb-2">b) (f - g)(-1):</p>
-                      <BlockMath math="f(-1) = 3(-1) - 2 = -5" />
-                      <BlockMath math="g(-1) = (-1)^2 + 1 = 2" />
-                      <BlockMath math="(f-g)(-1) = -5 - 2 = -7" />
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-orange-300 font-semibold mb-2">c) (f · g)(2):</p>
-                      <BlockMath math="f(2) = 3(2) - 2 = 4" />
-                      <BlockMath math="g(2) = 2^2 + 1 = 5" />
-                      <BlockMath math="(f \cdot g)(2) = 4 \times 5 = 20" />
+                     <div className="bg-slate-800/50 rounded-lg p-3">
+                       <p className="text-cyan-300 font-semibold mb-2">{t.c2_calc_intro}</p>
+                       <BlockMath math="a)\quad f(0) = 2(0)^2 - 3(0) - 1 = -1" />
+                       <BlockMath math="b)\quad f(2) = 2(2)^2 - 3(2) - 1 = 8 - 6 - 1 = 1" />
+                       <BlockMath math="c)\quad f(-2) = 2(-2)^2 - 3(-2) - 1 = 8 + 6 - 1 = 13" />
                     </div>
                     <div className="bg-yellow-500/10 border border-yellow-500/40 rounded-lg p-3">
                       <p className="font-body text-sm font-bold text-yellow-300">{t.c2_answer}</p>
@@ -584,51 +586,26 @@ const NotasiFungsiPage = () => {
             )}
           </div>
 
-          {/* CONTOH 3 */}
-          <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
-            <SectionHeader id="contoh3" icon={<Target className="w-5 h-5" />} iconColor="text-red-400" title={t.sec_contoh3_title} />
-            {expandedSections.includes("contoh3") && (
-              <div className="px-5 pb-5 space-y-4">
-                <Badge label={t.badge_hard} color="bg-red-700/60 text-red-200" />
-                <div className="bg-slate-800/60 border border-red-500/30 rounded-xl p-4">
-                  <p className="font-body text-sm font-semibold text-red-300 mb-2">{t.c1_soal}</p>
-                  <p className="font-body text-sm text-white/85 leading-relaxed">
-                    {t.c3_soal_p}
-                    <br />a) {t.c3_a_label}
-                    <br />b) {t.c3_b_label}
-                    <br />{t.c3_c_label("f(x) = 29")}
-                  </p>
-                </div>
-                <div className="bg-slate-700/40 border border-white/10 rounded-xl p-4 space-y-3">
-                  <p className="font-body text-sm font-semibold text-cyan-300">{t.c3_disc}</p>
-                  <div className="space-y-3 text-sm font-body">
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-cyan-300 font-semibold mb-2">{t.c3_a_title}</p>
-                      <p className="text-white/60 text-xs mb-1">{t.c3_a_sub}</p>
-                      <BlockMath math="f(3) = 3p + q = 11 \quad \cdots (1)" />
-                      <BlockMath math="f(5) = 5p + q = 17 \quad \cdots (2)" />
-                      <p className="text-white/60 text-xs mt-1 mb-1">{t.c3_elim}</p>
-                      <BlockMath math="2p = 6 \implies p = 3" />
-                      <p className="text-white/60 text-xs mb-1">{t.c3_sub_p}</p>
-                      <BlockMath math="3(3) + q = 11 \implies 9 + q = 11 \implies q = 2" />
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-violet-300 font-semibold mb-1">{t.c3_b_title}</p>
-                      <BlockMath math="f(x) = 3x + 2" />
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-3">
-                      <p className="text-green-300 font-semibold mb-1">{t.c3_c_title}</p>
-                      <BlockMath math="3x + 2 = 29" />
-                      <BlockMath math="3x = 27 \implies x = 9" />
-                    </div>
-                    <div className="bg-red-500/10 border border-red-500/40 rounded-lg p-3">
-                      <p className="font-body text-sm font-bold text-red-300">{t.c3_answer}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+           {/* MATERI SEBELUM CONTOH 4 */}
+           <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
+             <div className="px-5 py-4 flex items-center gap-3">
+               <Lightbulb className="w-5 h-5 text-emerald-400" />
+               <span className="font-body font-semibold text-white">{t.c4_domain_title}</span>
+             </div>
+             <div className="px-5 pb-5 space-y-3">
+               <p className="font-body text-sm text-white/80 leading-relaxed">{t.c4_domain_intro}</p>
+               <div className="bg-slate-800/60 border border-emerald-500/30 rounded-xl p-4 space-y-2">
+                 <p className="font-body text-sm font-semibold text-emerald-300">{t.c4_domain_example}</p>
+                 <BlockMath math="f(x)=7 \Rightarrow 2x+3=7 \Rightarrow x=2" />
+                 <BlockMath math="f(x)=11 \Rightarrow 2x+3=11 \Rightarrow x=4" />
+                 <BlockMath math="f(x)=15 \Rightarrow 2x+3=15 \Rightarrow x=6" />
+                 <p className="font-body text-sm font-semibold text-emerald-300">{t.c4_domain_result}</p>
+               </div>
+               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                 <p className="font-body text-xs text-emerald-100 leading-relaxed">{t.c4_domain_interval}</p>
+               </div>
+             </div>
+           </div>
 
           {/* CONTOH 4 */}
           <div className="bg-card/80 backdrop-blur border border-border rounded-xl overflow-hidden">
@@ -636,12 +613,6 @@ const NotasiFungsiPage = () => {
             {expandedSections.includes("contoh4") && (
               <div className="px-5 pb-5 space-y-4">
                 <Badge label={t.badge_challenge} color="bg-purple-700/60 text-purple-200" />
-                <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
-                  <p className="font-body text-xs text-purple-200 leading-relaxed">
-                    <strong>{t.c4_concept}</strong> {t.c4_concept_p}
-                  </p>
-                </div>
-
                 <div className="bg-slate-800/60 border border-purple-500/30 rounded-xl p-4">
                   <p className="font-body text-sm font-semibold text-purple-300 mb-2">{t.c4a_soal}</p>
                   <p className="font-body text-sm text-white/85 leading-relaxed">{t.c4a_soal_p}</p>
