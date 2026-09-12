@@ -86,9 +86,8 @@ const kubusNetQuestionOneOptions = [
 ];
 const latihanDasarBangunRuang = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
-  .map((soal, index) => ({
+  .map((soal) => ({
     ...soal,
-    no: index + 1,
     pembahasan: toPembahasanText(soal.no),
     gambar: dasarImages[soal.no] ? <img src={dasarImages[soal.no]} alt={`Gambar soal ${soal.no}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" /> : undefined,
     optionsJsx: soal.no === 1 ? kubusNetQuestionOneOptions : undefined,
