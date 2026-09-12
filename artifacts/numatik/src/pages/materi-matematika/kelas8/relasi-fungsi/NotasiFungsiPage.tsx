@@ -22,7 +22,7 @@ const translations = {
     sec_contoh1_title: "✏️ Contoh 1 — Tingkat Mudah",
     sec_contoh2_title: "✏️ Contoh 2 — Tingkat Sedang",
     sec_contoh3_title: "✏️ Contoh 3 — Tingkat Sulit",
-    sec_contoh4_title: "✏️ Contoh 4 — Mencari Nilai x dari Bayangan",
+    sec_contoh4_title: "✏️ Contoh 1 — Mencari Nilai x dari Bayangan",
     sec_rangkuman_title: "📌 Rangkuman & Kesimpulan",
     badge_easy: "MUDAH",
     badge_medium: "SEDANG",
@@ -88,7 +88,7 @@ const translations = {
     c3_answer: "✅ p = 3, q = 2, f(x) = 3x + 2, dan x = 9 saat f(x) = 29",
     c4_concept: "🎯 Konsep:",
     c4_concept_p: "Jika diketahui fungsi f(x) dan bayangan (nilai f(x)), kita bisa mencari nilai x dengan menyelesaikan persamaan. Bayangan = hasil keluaran dari fungsi.",
-    c4_domain_title: "📚 Materi: Menentukan Domain dari Rumus Fungsi dan Range",
+    c4_domain_title: "📚 Menentukan Domain dari Rumus Fungsi dan Range",
     c4_domain_intro: "Jika rumus fungsi f(x) dan bayangan atau range diketahui, tentukan domain dengan mencari nilai x yang menghasilkan setiap nilai pada range. Untuk setiap nilai y pada range, susun persamaan f(x) = y, lalu selesaikan persamaan tersebut.",
     c4_domain_example: "Contoh: diketahui f(x) = 2x + 3 dengan range R_f = {7, 11, 15}.",
     c4_domain_result: "Jadi, domainnya adalah D_f = {2, 4, 6}.",
@@ -100,11 +100,17 @@ const translations = {
     c4a_answer: "✅ Nilai x = 6",
     c4a_verify: "Verifikasi: f(6) = 4(6) − 6 = 24 − 6 = 18 ✓",
     c4b_soal: "📝 Soal b",
-    c4b_soal_p: <>Diketahui fungsi <InlineMath math="g(x) = 3x + 5" />. Bayangan dari <InlineMath math="x" /> oleh fungsi <InlineMath math="g" /> adalah <InlineMath math="-7" />. Tentukan nilai <InlineMath math="x" />!</>,
+    c4b_soal_p: <>Diketahui fungsi <InlineMath math="g(x) = 3x + 5" /> dan <InlineMath math="g(a) = -7" />. Tentukan nilai <InlineMath math="a" />!</>,
     c4b_disc: "🔍 Penyelesaian b",
     c4b_disc_p: "Bayangan −7 berarti g(x) = −7:",
-    c4b_answer: "✅ Nilai x = −4",
-    c4b_verify: "Verifikasi: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
+    c4b_answer: "✅ Nilai a = −4",
+    c4b_verify: "Verifikasi: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓, jadi a = −4",
+    c4c_soal: "📝 Soal c",
+    c4c_soal_p: <>Diketahui fungsi <InlineMath math="f(x) = -2x + 3" /> dan <InlineMath math="f(n) = 9" />. Tentukan nilai <InlineMath math="n" />!</>,
+    c4c_disc: "🔍 Penyelesaian c",
+    c4c_disc_p: "Diketahui f(n) = 9, sehingga:",
+    c4c_answer: "✅ Nilai n = −3",
+    c4c_verify: "Verifikasi: f(−3) = −2(−3) + 3 = 6 + 3 = 9 ✓",
     c4_remember: "💡 Ingat:",
     c4_remember_p: "\"Bayangan dari x adalah k\" sama artinya dengan f(x) = k. Tinggal substitusi dan selesaikan persamaannya untuk mencari x!",
     domain_range_title: "🧩 Menentukan Rumus f(x) dari Domain dan Range",
@@ -119,8 +125,8 @@ const translations = {
       "Eliminasi salah satu koefisien, tentukan koefisien lainnya, lalu substitusikan kembali dan uji dengan pasangan lain.",
     ],
     domain_range_example_easy_title: "Contoh mudah — fungsi linear",
-    domain_range_example_easy_problem: "Diketahui D = {1, 2, 3} dan pasangan petanya (1, 4), (2, 6), (3, 8). Tentukan rumus f(x)!",
-    domain_range_example_easy_answer: "Misalkan f(x) = ax + b. Dari (1, 4) diperoleh a + b = 4 ...(1), dan dari (2, 6) diperoleh 2a + b = 6 ...(2). Eliminasi b: (2) − (1) menghasilkan a = 2. Substitusi ke (1): b = 2. Jadi, f(x) = 2x + 2. Cek: f(3) = 8.",
+    domain_range_example_easy_problem: "Diketahui fungsi f(x) = ax + b dan f(1) = 4 serta f(3) = 8. Tentukan rumus fungsi f(x)!",
+    domain_range_example_easy_answer: "Dari f(1) = 4 diperoleh a + b = 4 ...(1), dan dari f(3) = 8 diperoleh 3a + b = 8 ...(2). Eliminasi b: (2) − (1) menghasilkan 2a = 4, jadi a = 2. Substitusi ke (1): b = 2. Jadi, f(x) = 2x + 2.",
     domain_range_example_medium_title: "Contoh sedang — domain memuat bilangan negatif",
     domain_range_example_medium_problem: "Diketahui D = {−1, 2, 5} dengan pasangan (−1, 4), (2, 10), (5, 16). Tentukan rumus f(x)!",
     domain_range_example_medium_answer: "Misalkan f(x) = ax + b. Dari (−1, 4) diperoleh −a + b = 4 ...(1), dan dari (2, 10) diperoleh 2a + b = 10 ...(2). Eliminasi b: (2) − (1) menghasilkan 3a = 6, jadi a = 2. Substitusi ke (1): b = 6. Jadi, f(x) = 2x + 6. Cek: f(5) = 16.",
@@ -156,7 +162,7 @@ const translations = {
     sec_contoh1_title: "✏️ Example 1 — Basic Level",
     sec_contoh2_title: "✏️ Example 2 — Medium Level",
     sec_contoh3_title: "✏️ Example 3 — Advanced Level",
-    sec_contoh4_title: "✏️ Example 4 — Finding x from the Image",
+    sec_contoh4_title: "✏️ Example 1 — Finding x from the Image",
     sec_rangkuman_title: "📌 Summary & Conclusion",
     badge_easy: "EASY",
     badge_medium: "MEDIUM",
@@ -222,7 +228,7 @@ const translations = {
     c3_answer: "✅ p = 3, q = 2, f(x) = 3x + 2, and x = 9 when f(x) = 29",
     c4_concept: "🎯 Concept:",
     c4_concept_p: "If we know the function f(x) and its image (value of f(x)), we can find x by solving the equation. Image = output of the function.",
-    c4_domain_title: "📚 Material: Finding the Domain from a Function Formula and Range",
+    c4_domain_title: "📚 Finding the Domain from a Function Formula and Range",
     c4_domain_intro: "If the function formula f(x) and its image or range are known, find the domain by finding the x-value that produces each value in the range. For every y-value in the range, set up f(x) = y and solve the equation.",
     c4_domain_example: "Example: given f(x) = 2x + 3 with range R_f = {7, 11, 15}.",
     c4_domain_result: "Therefore, the domain is D_f = {2, 4, 6}.",
@@ -234,11 +240,17 @@ const translations = {
     c4a_answer: "✅ x = 6",
     c4a_verify: "Verify: f(6) = 4(6) − 6 = 24 − 6 = 18 ✓",
     c4b_soal: "📝 Problem b",
-    c4b_soal_p: <>Given function <InlineMath math="g(x) = 3x + 5" />. The image of <InlineMath math="x" /> under function <InlineMath math="g" /> is <InlineMath math="-7" />. Find the value of <InlineMath math="x" />!</>,
+    c4b_soal_p: <>Given function <InlineMath math="g(x) = 3x + 5" /> and <InlineMath math="g(a) = -7" />. Find the value of <InlineMath math="a" />!</>,
     c4b_disc: "🔍 Solution b",
     c4b_disc_p: "Image −7 means g(x) = −7:",
-    c4b_answer: "✅ x = −4",
-    c4b_verify: "Verify: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
+    c4b_answer: "✅ a = −4",
+    c4b_verify: "Verify: g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓, so a = −4",
+    c4c_soal: "📝 Problem c",
+    c4c_soal_p: <>Given function <InlineMath math="f(x) = -2x + 3" /> and <InlineMath math="f(n) = 9" />. Find the value of <InlineMath math="n" />!</>,
+    c4c_disc: "🔍 Solution c",
+    c4c_disc_p: "Given f(n) = 9, therefore:",
+    c4c_answer: "✅ n = −3",
+    c4c_verify: "Verify: f(−3) = −2(−3) + 3 = 6 + 3 = 9 ✓",
     c4_remember: "💡 Remember:",
     c4_remember_p: "\"The image of x is k\" means f(x) = k. Just substitute and solve the equation to find x!",
     domain_range_title: "🧩 Finding f(x) from the Domain and Range",
@@ -253,8 +265,8 @@ const translations = {
       "Eliminate one coefficient, find the other coefficients, substitute back, and test another available pair.",
     ],
     domain_range_example_easy_title: "Easy example — linear function",
-    domain_range_example_easy_problem: "Given D = {1, 2, 3} and mapped pairs (1, 4), (2, 6), (3, 8), find f(x)!",
-    domain_range_example_easy_answer: "Let f(x) = ax + b. From (1, 4), a + b = 4 ...(1); from (2, 6), 2a + b = 6 ...(2). Eliminate b: (2) − (1) gives a = 2. Substitute into (1): b = 2. Therefore, f(x) = 2x + 2. Check: f(3) = 8.",
+    domain_range_example_easy_problem: "Given function f(x) = ax + b, f(1) = 4, and f(3) = 8. Find the formula of f(x)!",
+    domain_range_example_easy_answer: "From f(1) = 4, we get a + b = 4 ...(1); from f(3) = 8, we get 3a + b = 8 ...(2). Eliminate b: (2) − (1) gives 2a = 4, so a = 2. Substitute into (1): b = 2. Therefore, f(x) = 2x + 2.",
     domain_range_example_medium_title: "Medium example — a domain with negative numbers",
     domain_range_example_medium_problem: "Given D = {−1, 2, 5} with pairs (−1, 4), (2, 10), (5, 16), find f(x)!",
     domain_range_example_medium_answer: "Let f(x) = ax + b. From (−1, 4), −a + b = 4 ...(1); from (2, 10), 2a + b = 10 ...(2). Eliminate b: (2) − (1) gives 3a = 6, so a = 2. Substitute into (1): b = 6. Therefore, f(x) = 2x + 6. Check: f(5) = 16.",
@@ -290,7 +302,7 @@ const translations = {
     sec_contoh1_title: "✏️ 例題 1 — 基本レベル",
     sec_contoh2_title: "✏️ 例題 2 — 標準レベル",
     sec_contoh3_title: "✏️ 例題 3 — 発展レベル",
-    sec_contoh4_title: "✏️ 例題 4 — 像からxを求める",
+    sec_contoh4_title: "✏️ 例題 1 — 像からxを求める",
     sec_rangkuman_title: "📌 まとめ・結論",
     badge_easy: "基本",
     badge_medium: "標準",
@@ -356,7 +368,7 @@ const translations = {
     c3_answer: "✅ p = 3、q = 2、f(x) = 3x + 2、f(x) = 29 のとき x = 9",
     c4_concept: "🎯 概念：",
     c4_concept_p: "関数f(x)とその像（f(x)の値）がわかれば、方程式を解いてxを求めることができます。像 = 関数の出力値。",
-    c4_domain_title: "📚 教材：関数の公式と値域から定義域を求める",
+    c4_domain_title: "📚 関数の公式と値域から定義域を求める",
     c4_domain_intro: "関数の公式f(x)と像または値域がわかっている場合、値域の各値を生み出すxの値を求めて定義域を決定します。値域の各yについてf(x) = yという方程式を立てて解きます。",
     c4_domain_example: "例：f(x) = 2x + 3、値域R_f = {7, 11, 15} とする。",
     c4_domain_result: "したがって、定義域はD_f = {2, 4, 6}です。",
@@ -368,11 +380,17 @@ const translations = {
     c4a_answer: "✅ x = 6",
     c4a_verify: "確認：f(6) = 4(6) − 6 = 24 − 6 = 18 ✓",
     c4b_soal: "📝 問題 b",
-    c4b_soal_p: <>関数 <InlineMath math="g(x) = 3x + 5" /> において、関数 <InlineMath math="g" /> による <InlineMath math="x" /> の像が <InlineMath math="-7" /> のとき、<InlineMath math="x" /> の値を求めなさい！</>,
+    c4b_soal_p: <>関数 <InlineMath math="g(x) = 3x + 5" />、<InlineMath math="g(a) = -7" /> のとき、<InlineMath math="a" /> の値を求めなさい！</>,
     c4b_disc: "🔍 解法 b",
     c4b_disc_p: "像が−7ということはg(x) = −7を意味します：",
-    c4b_answer: "✅ x = −4",
-    c4b_verify: "確認：g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓",
+    c4b_answer: "✅ a = −4",
+    c4b_verify: "確認：g(−4) = 3(−4) + 5 = −12 + 5 = −7 ✓、よって a = −4",
+    c4c_soal: "📝 問題 c",
+    c4c_soal_p: <>関数 <InlineMath math="f(x) = -2x + 3" />、<InlineMath math="f(n) = 9" /> のとき、<InlineMath math="n" /> の値を求めなさい！</>,
+    c4c_disc: "🔍 解法 c",
+    c4c_disc_p: "f(n) = 9 より：",
+    c4c_answer: "✅ n = −3",
+    c4c_verify: "確認：f(−3) = −2(−3) + 3 = 6 + 3 = 9 ✓",
     c4_remember: "💡 覚えよう：",
     c4_remember_p: "「xの像がk」はf(x) = kと同じ意味です。代入して方程式を解けばxが求まります！",
     domain_range_title: "🧩 定義域と値域から f(x) の公式を求める",
@@ -387,8 +405,8 @@ const translations = {
       "一つの係数を消去して他の係数を求め、戻して代入し、別の組で確認する。",
     ],
     domain_range_example_easy_title: "基本例 — 一次関数",
-    domain_range_example_easy_problem: "定義域 D = {1, 2, 3}、対応する組が (1, 4), (2, 6), (3, 8) のとき、f(x) を求めなさい。",
-    domain_range_example_easy_answer: "f(x) = ax + b とする。(1, 4)より a + b = 4 ...(1)、(2, 6)より 2a + b = 6 ...(2)。bを消去すると (2) − (1) より a = 2。(1)に代入して b = 2。したがって f(x) = 2x + 2。確認：f(3) = 8。",
+    domain_range_example_easy_problem: "関数 f(x) = ax + b、f(1) = 4、f(3) = 8 のとき、f(x) の公式を求めなさい。",
+    domain_range_example_easy_answer: "f(1) = 4 より a + b = 4 ...(1)、f(3) = 8 より 3a + b = 8 ...(2)。bを消去すると (2) − (1) より 2a = 4、a = 2。(1)に代入して b = 2。したがって f(x) = 2x + 2。",
     domain_range_example_medium_title: "標準例 — 負の数を含む定義域",
     domain_range_example_medium_problem: "D = {−1, 2, 5}、対応する組が (−1, 4), (2, 10), (5, 16) のとき、f(x) を求めなさい。",
     domain_range_example_medium_answer: "f(x) = ax + b とする。(−1, 4)より −a + b = 4 ...(1)、(2, 10)より 2a + b = 10 ...(2)。bを消去すると (2) − (1) より 3a = 6、a = 2。(1)に代入して b = 6。したがって f(x) = 2x + 6。確認：f(5) = 16。",
@@ -659,12 +677,29 @@ const NotasiFungsiPage = () => {
                   <p className="font-body text-sm font-semibold text-cyan-300">{t.c4b_disc}</p>
                   <p className="font-body text-xs text-white/60">{t.c4b_disc_p}</p>
                   <BlockMath math="g(x) = -7" />
-                  <BlockMath math="3x + 5 = -7" />
-                  <BlockMath math="3x = -7 - 5 = -12" />
-                  <BlockMath math="x = \frac{-12}{3} = -4" />
+                  <BlockMath math="3a + 5 = -7" />
+                  <BlockMath math="3a = -7 - 5 = -12" />
+                  <BlockMath math="a = \frac{-12}{3} = -4" />
                   <div className="bg-purple-500/10 border border-purple-500/40 rounded-lg p-3 mt-2">
                     <p className="font-body text-sm font-bold text-purple-300">{t.c4b_answer}</p>
                     <p className="font-body text-xs text-white/50 mt-1">{t.c4b_verify}</p>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/60 border border-purple-500/30 rounded-xl p-4">
+                  <p className="font-body text-sm font-semibold text-purple-300 mb-2">{t.c4c_soal}</p>
+                  <p className="font-body text-sm text-white/85 leading-relaxed">{t.c4c_soal_p}</p>
+                </div>
+                <div className="bg-slate-700/40 border border-white/10 rounded-xl p-4 space-y-2">
+                  <p className="font-body text-sm font-semibold text-cyan-300">{t.c4c_disc}</p>
+                  <p className="font-body text-xs text-white/60">{t.c4c_disc_p}</p>
+                  <BlockMath math="f(n) = 9" />
+                  <BlockMath math="-2n + 3 = 9" />
+                  <BlockMath math="-2n = 9 - 3 = 6" />
+                  <BlockMath math="n = \frac{6}{-2} = -3" />
+                  <div className="bg-purple-500/10 border border-purple-500/40 rounded-lg p-3 mt-2">
+                    <p className="font-body text-sm font-bold text-purple-300">{t.c4c_answer}</p>
+                    <p className="font-body text-xs text-white/50 mt-1">{t.c4c_verify}</p>
                   </div>
                 </div>
 
@@ -716,7 +751,7 @@ const NotasiFungsiPage = () => {
                       <Badge label={t.badge_easy} color="bg-cyan-700/60 text-cyan-100" />
                     </div>
                     <p className="font-body text-sm text-white/80 leading-relaxed">{t.domain_range_example_easy_problem}</p>
-                    <BlockMath math={"\\begin{aligned} a+b &= 4 \\\\ 2a+b &= 6 \\\\ \\hline a &= 2 \\\\ b &= 4-a=2 \\end{aligned}"} />
+                    <BlockMath math={"\\begin{aligned} a+b &= 4 \\\\ 3a+b &= 8 \\\\ \\hline 2a &= 4 \\\\ a &= 2 \\\\ b &= 4-a=2 \\end{aligned}"} />
                     <p className="font-body text-sm text-cyan-100 leading-relaxed">{t.domain_range_example_easy_answer}</p>
                   </div>
 
