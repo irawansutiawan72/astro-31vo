@@ -818,7 +818,7 @@ const POLA_KURANG_ROWS = [
   { bLabel: "(-2)", bColor: "#f87171", res: 4,  resColor: "#4ade80" },
 ];
 
-const PolaPercobaanKurang = () => {
+const PolaPercobaanKurang = ({ lightMode = false }: { lightMode?: boolean }) => {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -844,8 +844,12 @@ const PolaPercobaanKurang = () => {
   const ARC_R_CX = XRES + 34;
 
   return (
-    <div className="rounded-xl border border-orange-500/30 bg-slate-900/70 p-4 mb-4">
-      <p className="text-xs font-body text-orange-300/80 mb-2 text-center font-semibold">
+    <div className={`rounded-xl border p-4 mb-4 ${
+      lightMode ? "bg-white/80 border-orange-200" : "bg-slate-900/70 border-orange-500/30"
+    }`}>
+      <p className={`text-xs font-body mb-2 text-center font-semibold ${
+        lightMode ? "text-slate-800" : "text-orange-300/80"
+      }`}>
         🔍 Perhatikan — apa yang terjadi saat bilangan yang dikurang berkurang 1?
       </p>
       <div className="flex justify-center overflow-x-auto">
@@ -876,11 +880,11 @@ const PolaPercobaanKurang = () => {
             const y = 18 + i * ROW_H + ROW_H / 2;
             return (
               <g key={i}>
-                <text x={X2}   y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill="#c084fc" fontFamily="monospace">2</text>
-                <text x={XMIN} y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill="#ffffff70" fontFamily="monospace">−</text>
+                <text x={X2}   y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill={lightMode ? "#334155" : "#c084fc"} fontFamily="monospace">2</text>
+                <text x={XMIN} y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill={lightMode ? "#475569" : "#ffffff70"} fontFamily="monospace">−</text>
                 <text x={XB}   y={y+7} textAnchor="middle" fontSize="20" fontWeight="bold" fill={bColor}
                   fontFamily="monospace" style={{ filter: `drop-shadow(0 0 5px ${bColor}99)` }}>{bLabel}</text>
-                <text x={XEQ}  y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill="#ffffff70" fontFamily="monospace">=</text>
+                <text x={XEQ}  y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill={lightMode ? "#475569" : "#ffffff70"} fontFamily="monospace">=</text>
                 <text x={XRES} y={y+7} textAnchor="middle" fontSize="22" fontWeight="bold" fill={resColor}
                   fontFamily="monospace" style={{ filter: `drop-shadow(0 0 6px ${resColor}99)` }}>{res}</text>
               </g>
@@ -903,7 +907,7 @@ const PolaPercobaanKurang = () => {
                   style={{ filter: "drop-shadow(0 0 5px #818cf8aa)" }}
                 />
                 <text x={ARC_L_CX - 10} y={mid+5} textAnchor="middle" fontSize="11"
-                  fontWeight="bold" fill="#a5b4fc" fontFamily="monospace" className="lbl-k">−1</text>
+                  fontWeight="bold" fill={lightMode ? "#4338ca" : "#a5b4fc"} fontFamily="monospace" className="lbl-k">−1</text>
 
                 {/* right arc — result increases */}
                 <path d={`M ${XRES} ${y1} Q ${ARC_R_CX} ${mid} ${XRES} ${y2}`}
@@ -913,18 +917,18 @@ const PolaPercobaanKurang = () => {
                   style={{ filter: "drop-shadow(0 0 5px #fb923caa)" }}
                 />
                 <text x={ARC_R_CX + 10} y={mid+5} textAnchor="middle" fontSize="11"
-                  fontWeight="bold" fill="#fed7aa" fontFamily="monospace" className="lbl-k">+1</text>
+                  fontWeight="bold" fill={lightMode ? "#c2410c" : "#fed7aa"} fontFamily="monospace" className="lbl-k">+1</text>
               </g>
             );
           })}
         </svg>
       </div>
       <div className="flex justify-center gap-6 mt-1 text-xs font-body">
-        <span className="flex items-center gap-1 text-indigo-300">
+        <span className={`flex items-center gap-1 ${lightMode ? "text-indigo-700" : "text-indigo-300"}`}>
           <svg width="18" height="8"><path d="M 0 4 Q 9 0 18 4" fill="none" stroke="#818cf8" strokeWidth="2"/></svg>
           bilangan pengurang berkurang 1
         </span>
-        <span className="flex items-center gap-1 text-orange-300">
+        <span className={`flex items-center gap-1 ${lightMode ? "text-orange-700" : "text-orange-300"}`}>
           <svg width="18" height="8"><path d="M 0 4 Q 9 0 18 4" fill="none" stroke="#fb923c" strokeWidth="2"/></svg>
           hasil bertambah 1
         </span>
@@ -1649,7 +1653,7 @@ const PenguranganBilanganBulatPage = () => {
 
                 <InteraktifPengurangan lightMode={lightMode} />
 
-                <PolaPercobaanKurang />
+                <PolaPercobaanKurang lightMode={lightMode} />
 
                 <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 mt-4">
                   <p className="font-body text-sm font-semibold text-purple-300 mb-3">{c.patternTitle}</p>
