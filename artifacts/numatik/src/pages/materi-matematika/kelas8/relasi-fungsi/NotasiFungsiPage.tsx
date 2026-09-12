@@ -563,9 +563,9 @@ const NotasiFungsiPage = () => {
                   <p className="font-body text-sm font-semibold text-yellow-300 mb-2">{t.c1_soal}</p>
                   <p className="font-body text-sm text-white/85 leading-relaxed">
                     {t.c2_soal_p}
-                    <br />a) <InlineMath math="(f + g)(3)" />
-                    <br />b) <InlineMath math="(f - g)(-1)" />
-                    <br />c) <InlineMath math="(f \cdot g)(2)" />
+                    <br />a) <InlineMath math="f(0)" />
+                    <br />b) <InlineMath math="f(2)" />
+                    <br />c) <InlineMath math="f(-2)" />
                   </p>
                 </div>
                 <div className="bg-slate-700/40 border border-white/10 rounded-xl p-4 space-y-3">
