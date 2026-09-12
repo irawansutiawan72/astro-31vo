@@ -73,6 +73,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 
 const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 35, 37, 38, 41, 42, 46]);
 const dasarImages: Record<number, string> = {
+  9: "/bangun-ruang-sisi-datar-q9-kubus.svg",
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
   36: "https://drive.google.com/thumbnail?id=1mx3YCPfcN9gFNDS8yYjps-JoSBHLCSf6&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
