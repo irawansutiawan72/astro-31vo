@@ -958,12 +958,43 @@ const SegitigaSebangunPage = () => {
                 </div>
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 space-y-3">
                   <p className="font-body text-sm font-semibold text-yellow-300">🎯 Ringkasan Intisari</p>
-                  <p className="font-body text-sm text-white/80">Jika sebuah garis ditarik sejajar salah satu sisi segitiga sehingga memotong dua sisi lainnya, maka:</p>
+                  <p className="font-body text-sm text-white/80">
+                    Jika <InlineMath math="DE \parallel BC" />, maka <InlineMath math="\angle ADE = \angle ABC" /> dan
+                    <InlineMath math="\angle AED = \angle ACB" />. Bersama sudut <InlineMath math="A" /> yang sama,
+                    kedua segitiga memenuhi syarat <strong>Sudut-Sudut (Sd, Sd)</strong>:
+                  </p>
                   <div className="bg-slate-900/60 rounded-lg p-4 space-y-2">
-                    <BlockMath math="\text{Jika } DE \parallel BC, \text{ maka } \frac{AD}{DB} = \frac{AE}{EC}" />
-                    <p className="font-body text-xs text-white/60">Juga berlaku kebalikannya: Jika AD/DB = AE/EC, maka DE // BC</p>
+                    <BlockMath math="\triangle ADE \sim \triangle ABC" />
+                    <BlockMath math="\frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC}" />
                   </div>
-                  <p className="font-body text-sm text-white/80">Selain itu: △ADE ~ △ABC dengan perbandingan rusuk <InlineMath math="\frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC}" /></p>
+                  <p className="font-body text-sm text-white/80">
+                    Untuk mendapatkan bentuk dalil garis sejajar, kita gunakan dua perbandingan pertama dan ingat bahwa
+                    ruas penuh tersusun dari bagian-bagiannya:
+                  </p>
+                  <div className="bg-slate-900/60 rounded-lg p-4 space-y-2">
+                    <BlockMath math="\frac{AD}{AB} = \frac{AE}{AC}" />
+                    <BlockMath math="AB = AD + DB \quad \text{dan} \quad AC = AE + EC" />
+                    <BlockMath math="\frac{AD}{AD+DB} = \frac{AE}{AE+EC}" />
+                    <BlockMath math="AD(AE+EC) = AE(AD+DB)" />
+                    <BlockMath math="AD\cdot AE + AD\cdot EC = AE\cdot AD + AE\cdot DB" />
+                    <p className="font-body text-xs text-yellow-200">
+                      Suku <InlineMath math="AD\cdot AE" /> muncul di kedua ruas, sehingga dapat dikurangi:
+                    </p>
+                    <BlockMath math="AD\cdot EC = AE\cdot DB" />
+                    <BlockMath math="\boxed{\frac{AD}{DB} = \frac{AE}{EC}}" />
+                  </div>
+                  <p className="font-body text-sm text-white/80">
+                    Jadi, kesebangunan menghasilkan perbandingan seluruh sisi. Setelah sisi penuh
+                    <InlineMath math="AB" /> dan <InlineMath math="AC" /> diuraikan menjadi bagian-bagiannya,
+                    perbandingan berubah menjadi perbandingan ruas yang berhadapan:
+                    <strong> <InlineMath math="AD/DB = AE/EC" /></strong>. Inilah <strong>Dalil Garis Sejajar dalam Segitiga</strong>.
+                  </p>
+                  <div className="bg-slate-900/60 rounded-lg p-3">
+                    <p className="font-body text-xs text-white/60">
+                      Kebalikannya juga berlaku: jika <InlineMath math="AD/DB = AE/EC" />, maka
+                      <InlineMath math="DE \parallel BC" /> (dengan posisi titik seperti pada gambar).
+                    </p>
+                  </div>
                 </div>
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
                   <p className="font-body text-sm text-yellow-200">
