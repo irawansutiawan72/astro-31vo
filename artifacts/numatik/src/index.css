@@ -1071,6 +1071,10 @@
   .tka-responsive-option-image {
     max-width: 63px;
   }
+
+  .bangun-ruang-sisi-datar-question-image {
+    max-width: 50% !important;
+  }
 }
 
 @layer base {

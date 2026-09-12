@@ -71,19 +71,18 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 46, soal: "Sebuah bak mandi berukuran panjang = 80 cm, lebar = 40 cm, tinggi 60 cm, berisi air setinggi 40 cm, jika 3 buah kubus yang panjang rusuknya 20 cm, dimasukkan ke dalam bak tersebut sehingga tenggelam, tentukan tinggi air sekarang!", options: [] },
 ];
 
-const nomorBangunRuangDihapus = new Set([2, 3, 4, 7, 10, 13, 14, 18, 19, 23, 25, 26, 30, 31, 32, 37, 38, 41, 42, 46]);
+const nomorBangunRuangDihapus = new Set([2, 3, 4, 7, 10, 11, 13, 14, 18, 19, 23, 25, 26, 30, 31, 32, 37, 38, 41, 42, 46]);
 const dasarImages: Record<number, string> = {
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
-  26: "https://drive.google.com/thumbnail?id=14eSPhOINHkKHXOa2lWtjFVmn9gFchdrL&sz=w400",
   36: "https://drive.google.com/thumbnail?id=1mx3YCPfcN9gFNDS8yYjps-JoSBHLCSf6&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
   43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
 };
 const kubusNetQuestionOneOptions = [
-  <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
 ];
 const latihanDasarBangunRuang = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
@@ -91,7 +90,7 @@ const latihanDasarBangunRuang = latihanDasarTkaLama
     ...soal,
     no: index + 1,
     pembahasan: toPembahasanText(soal.no),
-    gambar: dasarImages[soal.no] ? <img src={dasarImages[soal.no]} alt={`Gambar soal ${soal.no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" /> : undefined,
+    gambar: dasarImages[soal.no] ? <img src={dasarImages[soal.no]} alt={`Gambar soal ${soal.no}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" /> : undefined,
     optionsJsx: soal.no === 1 ? kubusNetQuestionOneOptions : undefined,
   }));
 
@@ -101,7 +100,7 @@ const BangunRuangSisiDatarPage = () => (
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-datar")}
     latihanDasar={latihanDasarBangunRuang}
-    gambarMap={Object.fromEntries(Object.entries(dasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
+    gambarMap={Object.fromEntries(Object.entries(dasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
   />
 );
 
