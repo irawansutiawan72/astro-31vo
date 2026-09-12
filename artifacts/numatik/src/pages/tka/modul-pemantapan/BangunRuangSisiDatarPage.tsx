@@ -70,12 +70,10 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 
 const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 34, 35, 36, 37, 38, 41, 42, 44, 46]);
 const dasarImagesByOriginalNo: Record<number, string> = {
+  9: "/bangun-ruang-sisi-datar-q3-kubus.png",
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
   39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
   43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
-};
-const dasarImagesByDisplayedNo: Record<number, string> = {
-  3: "/bangun-ruang-sisi-datar-q3-kubus.png",
 };
 const kubusNetQuestionOneOptions = [
   <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
@@ -83,14 +81,28 @@ const kubusNetQuestionOneOptions = [
   <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
   <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
 ];
+const urutanSoalBangunRuang = [
+  // Kubus
+  1,
+  // Balok
+  9, 12, 27, 33, 45,
+  // Prisma
+  21, 22, 28,
+  // Limas
+  5, 16, 17, 29, 39, 40,
+  // Gabungan
+  15, 43,
+];
+const urutanSoalBangunRuangIndex = new Map(urutanSoalBangunRuang.map((no, index) => [no, index]));
 const latihanDasarBangunRuang = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
+  .sort((a, b) => (urutanSoalBangunRuangIndex.get(a.no) ?? Number.MAX_SAFE_INTEGER) - (urutanSoalBangunRuangIndex.get(b.no) ?? Number.MAX_SAFE_INTEGER))
   .map((soal, index) => ({
     ...soal,
     no: index + 1,
     pembahasan: toPembahasanText(soal.no),
-    gambar: (dasarImagesByDisplayedNo[index + 1] ?? dasarImagesByOriginalNo[soal.no])
-      ? <img src={dasarImagesByDisplayedNo[index + 1] ?? dasarImagesByOriginalNo[soal.no]} alt={`Gambar soal ${index + 1}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />
+    gambar: dasarImagesByOriginalNo[soal.no]
+      ? <img src={dasarImagesByOriginalNo[soal.no]} alt={`Gambar soal ${index + 1}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />
       : undefined,
     optionsJsx: soal.no === 1 ? kubusNetQuestionOneOptions : undefined,
   }));
