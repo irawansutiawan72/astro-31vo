@@ -12,8 +12,7 @@ const materiSections: MateriSection[] = [
   { heading: "G. Layang-layang", content: `Dua pasang sisi berdekatan sama panjang.\n\n- Keliling = $2(a + b)$\n- Luas = $\\frac{1}{2} d_1 \\times d_2$\n- Salah satu diagonal merupakan sumbu simetri` },
 ];
 
-// ─── Gambar soal — diduplikasi dari OlimpiadeSegitigaSegiempatPage.tsx
-// (menu OLIMPIADE MATEMATIKA > SEGITIGA DAN SEGIEMPAT > LATIHAN DASAR). ───
+// ─── Gambar soal latihan TKA ──────────────────────────────────────────────────
 const SoalImage = ({ src, alt }: { src: string; alt: string }) => (
   <div className="flex justify-center my-1">
     <div className="bg-white rounded-lg p-3 shadow-md max-w-sm w-full flex justify-center">
