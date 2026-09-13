@@ -442,6 +442,7 @@ const PersamaanGarisPage = () => (
       ...soal,
       pembahasan: typeof soal.pembahasan === "string" ? soal.pembahasan : String(soal.pembahasan ?? ""),
     }))}
+    soalSvgMap={garisSvgMap}
     optionSvgMap={garisSvgMap}
   />
 );
