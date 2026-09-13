@@ -1,7 +1,5 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
-import { latihanDasar as latihanDasarOlimpiade, latihanDasarGambarMap } from "@/pages/OlimpiadeTeoremaPage";
-import { teoremaPythagorasDasarPembahasan } from "@/data/pembahasan/teoremaPythagorasDasar";
 
 // ─── Materi ───────────────────────────────────────────────────────────────────
 
@@ -122,7 +120,7 @@ Pada segitiga siku-siku sama kaki dengan sudut $45°$, $45°$, dan $90°$:
 // ─── Latihan Soal — 30 soal merata: 10 PG · 10 PGK · 10 PGKBS ──────────────
 // Pola susunan: PG (ganjil/1,4,7,...) · PGK (2,5,8,...) · PGKBS (3,6,9,...)
 
-const latihanDasarTkaLama: LatihanSoal[] = [
+const latihanDasarTka: LatihanSoal[] = [
   // ── SOAL 1 — PG ────────────────────────────────────────────────────────────
   {
     no: 1,
@@ -594,29 +592,8 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
 ];
 
-const nomorPythagorasDihapus = new Set([1, 2, 6, 8, 9, 10, 13, 15, 17, 18, 19, 20, 21, 24, 25, 33, 34]);
-const toPembahasanText = (soalNo: number) => {
-  const pembahasan = teoremaPythagorasDasarPembahasan[soalNo];
-  if (!pembahasan) return undefined;
-
-  return [
-    `Konsep & Trik: ${pembahasan.konsepTrik}`,
-    `Step-by-Step Penyelesaian:\n${pembahasan.stepByStep}`,
-    `Tips: ${pembahasan.tips}`,
-    `Kesimpulan: ${pembahasan.kesimpulan}`,
-  ].join("\n\n");
-};
-
-const latihanDasarPythagoras = latihanDasarOlimpiade
-  .filter((soal) => !nomorPythagorasDihapus.has(soal.no))
-  .map((soal, index) => ({
-    ...soal,
-    no: index + 1,
-    pembahasan: toPembahasanText(soal.no),
-    gambar: latihanDasarGambarMap[soal.no],
-  }));
-
-export const bankSoalTeoremaPythagoras = latihanDasarPythagoras;
+// Dataset TKA ini sengaja dimiliki modul Pemantapan sendiri.
+export const bankSoalTeoremaPythagoras = latihanDasarTka;
 
 const TeoremaPage = () => (
   <TKAPemantapanLayout
@@ -624,8 +601,7 @@ const TeoremaPage = () => (
     materiSections={materiSections}
     contohSoal={contohSoal}
     soalSvgMap={contohSvgMap}
-    latihanDasar={latihanDasarPythagoras}
-    gambarMap={latihanDasarGambarMap}
+    latihanDasar={latihanDasarTka}
     imageScale="half"
     imageScaleExceptQuestionNo={13}
   />
