@@ -1,7 +1,7 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { latihanDasar as olimpiadeHimpunan } from "@/pages/OlimpiadeHimpunanPage";
+import { latihanDasarHimpunanTka } from "@/data/tka/himpunanLatihanDasar";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Pengertian Himpunan", content: `Himpunan adalah kumpulan objek yang terdefinisi dengan jelas.\n\nCara menyatakan himpunan:\n1. Dengan kata-kata: "Himpunan bilangan genap"\n2. Dengan notasi pembentuk himpunan: $A = \\{x | x$ bilangan genap$\\}$\n3. Dengan mendaftar anggotanya: $A = \\{2, 4, 6, 8, ...\\}$` },
@@ -10,7 +10,7 @@ const materiSections: MateriSection[] = [
   { heading: "D. Diagram Venn", content: `Diagram Venn digunakan untuk menyatakan hubungan antar himpunan secara visual.\n\nRumus kardinalitas untuk tiga himpunan:\n$n(A \\cup B \\cup C) = n(A) + n(B) + n(C) - n(A \\cap B) - n(A \\cap C) - n(B \\cap C) + n(A \\cap B \\cap C)$` },
 ];
 
-const latihanDasar: LatihanSoal[] = olimpiadeHimpunan.map((item) => ({
+const latihanDasar: LatihanSoal[] = latihanDasarHimpunanTka.map((item) => ({
   no: item.no,
   soal: item.soal,
   image: item.image,

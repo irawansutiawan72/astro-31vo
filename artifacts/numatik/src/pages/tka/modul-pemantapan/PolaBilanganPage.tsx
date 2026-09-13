@@ -1,12 +1,12 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { LatihanSoal, MateriSection } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import {
-  latihanDasar as latihanDasarOlimpiade,
-  materiSection as materiOlimpiade,
-  soalSVGMap as soalSVGMapOlimpiade,
-} from "@/pages/OlimpiadePolaBilanganPage";
 import { polaBilanganDasarPembahasan } from "@/data/pembahasan/polaBilanganDasar";
+import {
+  latihanDasarPolaBilanganTka,
+  polaBilanganMateriSections,
+  polaBilanganSoalSvgMap,
+} from "@/data/tka/polaBilanganLatihan";
 
 const kunciJawaban = [
   "C", "C", "A", "D", "C", "B", "B", "A", "D", "C", "C", "D", "D", "A",
@@ -25,31 +25,15 @@ const toPembahasanText = (soalNo: number) => {
   ].join("\n\n");
 };
 
-const materiSections: MateriSection[] = materiOlimpiade.sections
-  .filter(({ heading }) => ![
-    "F. Deret Geometri Tak Hingga",
-    "G. Deret Teleskopik",
-    "H. Barisan Satu dan Dua Tingkat",
-  ].includes(heading))
-  .map(({ heading, content }) => ({
-    heading,
-    content,
-  }));
+const materiSections: MateriSection[] = polaBilanganMateriSections;
 
-const soalSvgMap = Object.fromEntries(
-  Object.entries(soalSVGMapOlimpiade).map(([key, value]) => [key, value]),
-);
-
-const latihanYangDihapus = new Set([2, 22, 23, 24, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]);
-
-const latihanDasar: LatihanSoal[] = latihanDasarOlimpiade
-  .filter((soal) => !latihanYangDihapus.has(soal.no))
+const latihanDasar: LatihanSoal[] = latihanDasarPolaBilanganTka
   .map((soal) => ({
   ...soal,
   type: "pg",
   jawaban: kunciJawaban[soal.no - 1],
   pembahasan: toPembahasanText(soal.no),
-  soalSvg: soalSvgMap[String(soal.no)] ? String(soal.no) : undefined,
+  soalSvg: polaBilanganSoalSvgMap[String(soal.no)] ? String(soal.no) : undefined,
 }));
 
 const PolaBilanganPage = () => (
@@ -58,7 +42,7 @@ const PolaBilanganPage = () => (
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("pola-bilangan")}
     latihanDasar={latihanDasar}
-    soalSvgMap={soalSvgMap}
+    soalSvgMap={polaBilanganSoalSvgMap}
   />
 );
 

@@ -6,3 +6,4 @@
 - [Production diagnostic logs](production-diagnostic-logs.md) — critical frontend diagnostics must avoid console methods stripped by the production minifier
 - [Imported API workflow](imported-api-workflow.md) — API artifact metadata may exist while the API workflow is absent after GitHub import
 - [Numatik typecheck baseline](numatik-typecheck-baseline.md) — full typecheck currently has pre-existing readonly locale typing errors even when the Vite build succeeds
+- [TKA data isolation](tka-data-isolation.md) — TKA module exercise data should live outside route pages so each menu can evolve independently
