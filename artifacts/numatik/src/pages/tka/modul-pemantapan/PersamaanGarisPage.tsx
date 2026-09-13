@@ -1,6 +1,5 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
-import { latihanDasar as latihanOlimpiade, soalSvgMap as garisSvgMap } from "@/pages/OlimpiadePersamaanGarisPage";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Gradien (Kemiringan) Garis", content: `Gradien (m) menyatakan kemiringan garis lurus.\n\n1. Dari dua titik $(x_1, y_1)$ dan $(x_2, y_2)$:\n$m = \\dfrac{y_2 - y_1}{x_2 - x_1}$\n\n2. Dari persamaan $y = mx + c$: gradien = m\n\n3. Dari persamaan $ax + by + c = 0$:\n$m = -\\dfrac{a}{b}$\n\nCatatan:\n- Garis naik (kiri ke kanan): m > 0\n- Garis turun (kiri ke kanan): m < 0\n- Garis mendatar: m = 0\n- Garis tegak: m tidak terdefinisi` },
@@ -9,14 +8,88 @@ const materiSections: MateriSection[] = [
 ];
 
 /* ============================================================
-   Ilustrasi grafik untuk soal No. 3, 4, 16, 17, 20-24 — disalin
-   persis dari OlimpiadePersamaanGarisPage.tsx supaya identik.
-   Ditempel ke field `gambar` (ReactNode) pada LatihanSoal, karena
-   field lama `soalSvg` yang dipakai sebelumnya TIDAK dibaca oleh
-   TKAPemantapanLayout (hanya `gambar` yang dirender).
+   Ilustrasi grafik latihan TKA.
+   Semua SVG disimpan di halaman ini agar modul TKA dapat berdiri
+   sendiri tanpa memuat halaman/menu Olimpiade Matematika.
    ============================================================ */
 const _axisBlue = "#3B82F6";
 const _lineYellow = "#FACC15";
+
+type GrafikOpsiGarisProps = {
+  line: { x1: number; y1: number; x2: number; y2: number };
+  points: Array<{ cx: number; cy: number; label: string; labelX: number; labelY: number }>;
+};
+
+const GrafikOpsiGaris = ({ line, points }: GrafikOpsiGarisProps) => (
+  <svg viewBox="0 0 200 200" width="150" height="150" style={{ display: "block", margin: "0 auto" }}>
+    <line x1="10" y1="110" x2="186" y2="110" stroke={_axisBlue} strokeWidth="1.5" />
+    <polygon points="190,110 182,106 182,114" fill={_axisBlue} />
+    <line x1="80" y1="190" x2="80" y2="12" stroke={_axisBlue} strokeWidth="1.5" />
+    <polygon points="80,8 76,16 84,16" fill={_axisBlue} />
+    <text x="188" y="115" fill="var(--icon-color)" fontSize="11" fontFamily="sans-serif" fontStyle="italic">x</text>
+    <text x="83" y="10" fill="var(--icon-color)" fontSize="11" fontFamily="sans-serif" fontStyle="italic">y</text>
+    <text x="66" y="122" fill="var(--icon-color)" fontSize="9" fontFamily="sans-serif">0</text>
+    <line x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke={_lineYellow} strokeWidth="2" />
+    <polygon points={`${line.x2},${line.y2} ${line.x2 - 2},${line.y2 + 12} ${line.x2 - 9},${line.y2 + 9}`} fill={_lineYellow} />
+    <polygon points={`${line.x1},${line.y1} ${line.x1 + 9},${line.y1 - 9} ${line.x1 + 2},${line.y1 - 12}`} fill={_lineYellow} />
+    {points.map((point) => (
+      <g key={point.label}>
+        <circle cx={point.cx} cy={point.cy} r="2.8" fill={_lineYellow} />
+        <text x={point.labelX} y={point.labelY} fill="var(--icon-color)" fontSize="8.5" fontFamily="sans-serif">{point.label}</text>
+      </g>
+    ))}
+  </svg>
+);
+
+const GrafikSoal1A = () => (
+  <GrafikOpsiGaris
+    line={{ x1: 70, y1: 190, x2: 142, y2: 46 }}
+    points={[
+      { cx: 80, cy: 170, label: "(0,-3)", labelX: 82, labelY: 168 },
+      { cx: 120, cy: 90, label: "(2,1)", labelX: 124, labelY: 89 },
+    ]}
+  />
+);
+
+const GrafikSoal1B = () => (
+  <GrafikOpsiGaris
+    line={{ x1: 70, y1: 30, x2: 142, y2: 174 }}
+    points={[
+      { cx: 80, cy: 50, label: "(0,3)", labelX: 82, labelY: 48 },
+      { cx: 120, cy: 130, label: "(2,-1)", labelX: 124, labelY: 132 },
+    ]}
+  />
+);
+
+const GrafikSoal1C = () => (
+  <GrafikOpsiGaris
+    line={{ x1: 8, y1: 122, x2: 118, y2: 12 }}
+    points={[
+      { cx: 80, cy: 50, label: "(0,3)", labelX: 82, labelY: 48 },
+      { cx: 40, cy: 90, label: "(-2,1)", labelX: 2, labelY: 88 },
+    ]}
+  />
+);
+
+const GrafikSoal1D = () => (
+  <GrafikOpsiGaris
+    line={{ x1: 8, y1: 26, x2: 90, y2: 190 }}
+    points={[
+      { cx: 40, cy: 90, label: "(-2,1)", labelX: 2, labelY: 88 },
+      { cx: 80, cy: 170, label: "(0,-3)", labelX: 82, labelY: 168 },
+    ]}
+  />
+);
+
+const GrafikSoal2C = () => (
+  <GrafikOpsiGaris
+    line={{ x1: 18, y1: 174, x2: 100, y2: 10 }}
+    points={[
+      { cx: 80, cy: 50, label: "(0,3)", labelX: 82, labelY: 48 },
+      { cx: 40, cy: 130, label: "(-2,-1)", labelX: 2, labelY: 128 },
+    ]}
+  />
+);
 
 // No. 3 — line h through (-2, 0) and (0, 3), gradient = 3/2
 const GrafikSoal3 = () => (
@@ -260,20 +333,40 @@ const GrafikSoal24 = () => (
   </svg>
 );
 
+const garisSvgMap: Record<string, JSX.Element> = {
+  "SVG:SOAL1A": <GrafikSoal1A />,
+  "SVG:SOAL1B": <GrafikSoal1B />,
+  "SVG:SOAL1C": <GrafikSoal1C />,
+  "SVG:SOAL1D": <GrafikSoal1D />,
+  "SVG:SOAL2A": <GrafikSoal1A />,
+  "SVG:SOAL2B": <GrafikSoal1B />,
+  "SVG:SOAL2C": <GrafikSoal2C />,
+  "SVG:SOAL2D": <GrafikSoal1D />,
+  SOAL3: <GrafikSoal3 />,
+  SOAL4: <GrafikSoal4 />,
+  SOAL16: <GrafikSoal16 />,
+  SOAL17: <GrafikSoal17 />,
+  SOAL20: <GrafikSoal20 />,
+  SOAL21: <GrafikSoal21 />,
+  SOAL22: <GrafikSoal22 />,
+  SOAL23: <GrafikSoal23 />,
+  SOAL24: <GrafikSoal24 />,
+};
+
 const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 1,
     soal: "Grafik garis dengan persamaan $2x - y = 3$, x dan y $\\in$ R adalah ...",
     options: ["SVG:SOAL1A", "SVG:SOAL1B", "SVG:SOAL1C", "SVG:SOAL1D"],
     jawaban: "A",
-    pembahasan: "Ubah ke bentuk $y = mx + c$:\n$2x - y = 3 \\Rightarrow y = 2x - 3$\nGradien $m = 2$ (positif → garis naik), titik potong sumbu-y di $(0, -3)$.\nTitik potong sumbu-x: $y = 0 \\Rightarrow 2x = 3 \\Rightarrow x = 1{,}5$.\nUji titik lain $x = 2$: $y = 2(2) - 3 = 1 \\Rightarrow (2, 1)$.\nGrafik yang melalui $(0, -3)$ dan $(2, 1)$ dengan gradien positif → Pilihan A.\n\n[Catatan: opsi berupa 4 grafik berbeda belum bisa ditampilkan sebagai gambar di modul ini — perlu penyesuaian pada TKAPemantapanLayout agar opsi jawaban mendukung ReactNode/gambar per opsi.]",
+    pembahasan: "Ubah ke bentuk $y = mx + c$:\n$2x - y = 3 \\Rightarrow y = 2x - 3$\nGradien $m = 2$ (positif → garis naik), titik potong sumbu-y di $(0, -3)$.\nTitik potong sumbu-x: $y = 0 \\Rightarrow 2x = 3 \\Rightarrow x = 1{,}5$.\nUji titik lain $x = 2$: $y = 2(2) - 3 = 1 \\Rightarrow (2, 1)$.\nGrafik yang melalui $(0, -3)$ dan $(2, 1)$ dengan gradien positif → Pilihan A.",
   },
   {
     no: 2,
     soal: "Grafik garis dengan persamaan $2x - y = 3$, x dan y $\\in$ R adalah ...",
     options: ["SVG:SOAL2A", "SVG:SOAL2B", "SVG:SOAL2C", "SVG:SOAL2D"],
     jawaban: "A",
-    pembahasan: "Sama seperti soal no. 1: $y = 2x - 3$ dengan $m = 2$ dan titik potong $(0, -3)$ dan $(2, 1)$.\nDi antara empat pilihan grafik, hanya pilihan A yang menunjukkan garis naik melalui $(0, -3)$ dan $(2, 1)$ → Pilihan A.\n\n[Catatan: sama seperti soal No. 1, opsi berupa 4 grafik berbeda belum bisa ditampilkan sebagai gambar di modul ini.]",
+    pembahasan: "Sama seperti soal no. 1: $y = 2x - 3$ dengan $m = 2$ dan titik potong $(0, -3)$ dan $(2, 1)$.\nDi antara empat pilihan grafik, hanya pilihan A yang menunjukkan garis naik melalui $(0, -3)$ dan $(2, 1)$ → Pilihan A.",
   },
   {
     no: 3,
@@ -438,10 +531,7 @@ const PersamaanGarisPage = () => (
     title="PERSAMAAN GARIS LURUS"
     materiSections={materiSections}
     contohSoal={contohSoal}
-    latihanDasar={latihanOlimpiade.map((soal) => ({
-      ...soal,
-      pembahasan: typeof soal.pembahasan === "string" ? soal.pembahasan : String(soal.pembahasan ?? ""),
-    }))}
+    latihanDasar={latihanDasarTkaLama}
     soalSvgMap={garisSvgMap}
     optionSvgMap={garisSvgMap}
   />
