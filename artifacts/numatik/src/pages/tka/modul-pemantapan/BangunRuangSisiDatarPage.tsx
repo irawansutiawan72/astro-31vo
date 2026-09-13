@@ -68,7 +68,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 46, soal: "Sebuah bak mandi berukuran panjang = 80 cm, lebar = 40 cm, tinggi 60 cm, berisi air setinggi 40 cm, jika 3 buah kubus yang panjang rusuknya 20 cm, dimasukkan ke dalam bak tersebut sehingga tenggelam, tentukan tinggi air sekarang!", options: [] },
 ];
 
-const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 30, 31, 32, 34, 35, 36, 37, 38, 41, 42, 44, 46]);
+const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 28, 30, 31, 32, 34, 35, 36, 37, 38, 41, 42, 44, 46]);
 const dasarImagesByOriginalNo: Record<number, string> = {
   9: "/bangun-ruang-sisi-datar-q3-kubus.png",
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
@@ -94,7 +94,7 @@ const urutanSoalBangunRuang = [
   15, 43,
 ];
 const urutanSoalBangunRuangIndex = new Map(urutanSoalBangunRuang.map((no, index) => [no, index]));
-const latihanDasarBangunRuang = latihanDasarTkaLama
+const latihanDasarBangunRuangDasar = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
   .sort((a, b) => (urutanSoalBangunRuangIndex.get(a.no) ?? Number.MAX_SAFE_INTEGER) - (urutanSoalBangunRuangIndex.get(b.no) ?? Number.MAX_SAFE_INTEGER))
   .map((soal, index) => ({
@@ -106,6 +106,41 @@ const latihanDasarBangunRuang = latihanDasarTkaLama
       : undefined,
     optionsJsx: soal.no === 1 ? kubusNetQuestionOneOptions : undefined,
   }));
+
+const soalBalokMainanDasar = latihanDasarTkaLama.find((soal) => soal.no === 11);
+if (!soalBalokMainanDasar) {
+  throw new Error("Soal sumber nomor 11 untuk balok mainan tidak ditemukan.");
+}
+
+const soalBalokMainan = {
+  no: 3,
+  soal: soalBalokMainanDasar.soal,
+  options: soalBalokMainanDasar.options,
+  pembahasan: toPembahasanText(11),
+  gambar: <img src="/bangun-ruang-sisi-datar-q3-balok.png" alt="Gambar balok mainan dari kubus satuan" className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
+};
+
+const soalAquariumPrismaSegitiga = {
+  no: 7,
+  soal: "Sebuah kerangka aquarium berbentuk prisma segitiga dengan tinggi 60 cm dibuat dari alumunium. Panjang sisi-sisi segitiga itu 30 cm, 40 cm, dan 50 cm. Jika harga 1m alumunium adalah Rp30.000,00, harga alumunium untuk membuat kerangka tersebut adalah ....",
+  options: ["A. Rp120.000,00", "B. Rp126.000,00", "C. Rp140.000,00", "D. Rp160.000,00"],
+  pembahasan: toPembahasanText(14),
+};
+
+const latihanDasarBangunRuangDenganBalokMainan = [
+  ...latihanDasarBangunRuangDasar.slice(0, 2),
+  soalBalokMainan,
+  ...latihanDasarBangunRuangDasar.slice(2),
+];
+
+const latihanDasarBangunRuang = [
+  ...latihanDasarBangunRuangDenganBalokMainan.slice(0, 6),
+  soalAquariumPrismaSegitiga,
+  ...latihanDasarBangunRuangDenganBalokMainan.slice(6),
+].map((soal, index) => ({
+  ...soal,
+  no: index + 1,
+}));
 
 const BangunRuangSisiDatarPage = () => (
   <TKAPemantapanLayout
