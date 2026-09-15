@@ -2251,7 +2251,7 @@ const BilanganBulatPage = () => {
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => { playPopSound(); navigate("/tka/modul-pemantapan"); }}
+            onClick={() => { playPopSound(); navigate(-1); }}
             className={`text-sm hover:text-blue-400 transition-colors cursor-pointer font-body ${isDark ? "text-muted-foreground" : "text-gray-500"}`}
           >
             ← Kembali ke Modul Pemantapan
