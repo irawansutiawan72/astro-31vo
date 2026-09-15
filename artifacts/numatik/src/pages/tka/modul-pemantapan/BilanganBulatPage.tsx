@@ -320,7 +320,7 @@ const BilanganBulatPage = () => {
                         "Pernyataan Benar / Salah";
     const deletedTelaahNumbers = new Set([1, 4, 12]);
     if (deletedTelaahNumbers.has(num)) return null;
-    const telaahOrder: Record<number, number> = { 2: 1, 3: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7, 10: 8, 11: 9, 13: 10 };
+    const telaahOrder: Record<number, number> = { 2: 1, 3: 2, 5: 6, 6: 4, 7: 5, 8: 3, 9: 7, 10: 8, 11: 9, 13: 10 };
     return (
       <div style={{ order: telaahOrder[num] ?? 99 }} className={`rounded-xl p-5 ${
         isDark ? "bg-card/70 backdrop-blur border border-border" : "bg-white border border-gray-200 shadow-sm"
@@ -862,7 +862,7 @@ const BilanganBulatPage = () => {
                           Angka &lt; 5 → Tetap (bulatkan ke bawah)
                         </p>
                         <div className={`text-xs font-body space-y-0.5 ${isDark ? "text-white/70" : "text-gray-700"}`}>
-                          <div>83.3<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>3</span>00 → 83.000</div>
+                          <div>83.<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>3</span>00 → 83.000</div>
                           <div>2.<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>2</span> → 2</div>
                           <div>4<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>1</span> → 40</div>
                         </div>
@@ -1068,8 +1068,8 @@ const BilanganBulatPage = () => {
               </div>
             </TelaahSoal>
 
-            {/* ══ TELAAH 5 — BS ══ */}
-            <TelaahSoal num={5} tipe="BS">
+            {/* ══ TELAAH 8 — BS (dipindahkan dari nomor 5) ══ */}
+            <TelaahSoal num={8} tipe="BS">
               <p className={qText}>
                 Sebuah termometer menunjukkan suhu ruangan sebesar <span className={`font-bold ${isDark?"text-amber-300":"text-amber-600"}`}>31°C</span> pada pukul 15.00.
                 Perubahan waktu akan memengaruhi besar suhu ruangan.
@@ -1151,7 +1151,8 @@ const BilanganBulatPage = () => {
               </div>
             </TelaahSoal>
 
-            <TelaahSoal num={8} tipe="MCMA">
+            {/* ══ TELAAH 5 — MCMA (dipindahkan dari nomor 8) ══ */}
+            <TelaahSoal num={5} tipe="MCMA">
               <p className={qText}>
                 <span className="font-bold">Studi Kasus Alur Pelayanan Samsat</span><br />
                 Pada layanan Samsat, Eko mulai melakukan proses cek fisik tepat pukul 10.00 dan selesai pada menit ke-15 (pukul 10.15). Rina dan Gilang tiba di tempat dan mengantre di urutan berikutnya secara berurutan seperti pada ilustrasi berikut.

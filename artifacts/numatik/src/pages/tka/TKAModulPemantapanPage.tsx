@@ -174,7 +174,7 @@ const TKAModulPemantapanPage = () => {
 
                   {/* Name */}
                   <span className="flex-1 font-body text-sm font-medium leading-snug transition-colors"
-                    style={{ color: isWhite ? "#ffffff" : undefined }}>
+                    style={{ color: isWhite ? "var(--text-primary)" : undefined }}>
                     {topic.name}
                   </span>
 
