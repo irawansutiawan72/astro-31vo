@@ -320,7 +320,7 @@ const BilanganBulatPage = () => {
                         "Pernyataan Benar / Salah";
     const deletedTelaahNumbers = new Set([1, 4, 12]);
     if (deletedTelaahNumbers.has(num)) return null;
-    const telaahOrder: Record<number, number> = { 2: 1, 3: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7, 10: 8, 11: 9 };
+    const telaahOrder: Record<number, number> = { 2: 1, 3: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7, 10: 8, 11: 9, 13: 10 };
     return (
       <div style={{ order: telaahOrder[num] ?? 99 }} className={`rounded-xl p-5 ${
         isDark ? "bg-card/70 backdrop-blur border border-border" : "bg-white border border-gray-200 shadow-sm"
@@ -754,7 +754,7 @@ const BilanganBulatPage = () => {
                     {/* ── a. Tertutup ── */}
                     <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(99,102,241,0.4)", background: "rgba(99,102,241,0.08)" }}>
                       <div className="px-3 py-2 border-b flex items-center gap-2" style={{ borderColor: "rgba(99,102,241,0.25)", background: "rgba(99,102,241,0.18)" }}>
-                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: "#a5b4fc" }}>a. Sifat Tertutup</span>
+                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: isDark ? "#a5b4fc" : "#312e81" }}>a. Sifat Tertutup</span>
                       </div>
                       <div className="px-4 py-3 flex flex-wrap justify-center gap-x-5 gap-y-1">
                         <InlineMath math="a + b \in \mathbb{Z}" />
@@ -767,7 +767,7 @@ const BilanganBulatPage = () => {
                     {/* ── b. Komutatif ── */}
                     <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(139,92,246,0.4)", background: "rgba(139,92,246,0.08)" }}>
                       <div className="px-3 py-2 border-b flex items-center gap-2" style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(139,92,246,0.18)" }}>
-                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: "#c4b5fd" }}>b. Sifat Komutatif</span>
+                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: isDark ? "#c4b5fd" : "#4c1d95" }}>b. Sifat Komutatif</span>
                       </div>
                       <div className="px-4 py-3 flex flex-wrap justify-center gap-x-6 gap-y-1">
                         <InlineMath math="a + b = b + a" />
@@ -778,7 +778,7 @@ const BilanganBulatPage = () => {
                     {/* ── c. Identitas ── */}
                     <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(20,184,166,0.4)", background: "rgba(20,184,166,0.08)" }}>
                       <div className="px-3 py-2 border-b flex items-center gap-2" style={{ borderColor: "rgba(20,184,166,0.25)", background: "rgba(20,184,166,0.18)" }}>
-                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: "#5eead4" }}>c. Unsur Identitas</span>
+                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: isDark ? "#5eead4" : "#115e59" }}>c. Unsur Identitas</span>
                       </div>
                       <div className="px-4 py-3 flex flex-wrap justify-center gap-x-6 gap-y-1">
                         <InlineMath math="a + 0 = 0 + a = a" />
@@ -790,7 +790,7 @@ const BilanganBulatPage = () => {
                     {/* ── d. Asosiatif ── */}
                     <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)" }}>
                       <div className="px-3 py-2 border-b flex items-center gap-2" style={{ borderColor: "rgba(245,158,11,0.25)", background: "rgba(245,158,11,0.18)" }}>
-                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: "#fcd34d" }}>d. Sifat Asosiatif</span>
+                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: isDark ? "#fcd34d" : "#78350f" }}>d. Sifat Asosiatif</span>
                       </div>
                       <div className="px-4 py-3 flex flex-col items-center gap-2">
                         <InlineMath math="(a + b) + c = a + (b + c)" />
@@ -801,7 +801,7 @@ const BilanganBulatPage = () => {
                     {/* ── e. Distributif ── */}
                     <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(236,72,153,0.4)", background: "rgba(236,72,153,0.08)" }}>
                       <div className="px-3 py-2 border-b flex items-center gap-2" style={{ borderColor: "rgba(236,72,153,0.25)", background: "rgba(236,72,153,0.18)" }}>
-                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: "#f9a8d4" }}>e. Sifat Distributif</span>
+                        <span className="text-[10px] font-bold font-display tracking-wide" style={{ color: isDark ? "#f9a8d4" : "#831843" }}>e. Sifat Distributif</span>
                       </div>
                       <div className="px-4 py-3 flex flex-col items-center gap-2">
                         <InlineMath math="a \times (b + c) = (a \times b) + (a \times c)" />
@@ -854,7 +854,7 @@ const BilanganBulatPage = () => {
                         <div className={`text-xs font-body space-y-0.5 ${isDark ? "text-white/70" : "text-gray-700"}`}>
                           <div>83.6<span className={`font-bold ${isDark ? "text-emerald-300" : "text-emerald-600"}`}>7</span>00 → 83.700</div>
                           <div>2.<span className={`font-bold ${isDark ? "text-emerald-300" : "text-emerald-600"}`}>8</span> → 3</div>
-                          <div>4<span className={`font-bold ${isDark ? "text-emerald-300" : "text-emerald-600"}`}>5</span> → 50</div>
+                          <div>3<span className={`font-bold ${isDark ? "text-emerald-300" : "text-emerald-600"}`}>5</span> → 40</div>
                         </div>
                       </div>
                       <div className={`rounded-xl p-3 border ${isDark ? "bg-sky-900/20 border-sky-500/30" : "bg-sky-50 border-sky-200"}`}>
@@ -862,7 +862,7 @@ const BilanganBulatPage = () => {
                           Angka &lt; 5 → Tetap (bulatkan ke bawah)
                         </p>
                         <div className={`text-xs font-body space-y-0.5 ${isDark ? "text-white/70" : "text-gray-700"}`}>
-                          <div>83.6<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>3</span>00 → 83.600</div>
+                          <div>83.3<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>3</span>00 → 83.000</div>
                           <div>2.<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>2</span> → 2</div>
                           <div>4<span className={`font-bold ${isDark ? "text-sky-300" : "text-sky-600"}`}>1</span> → 40</div>
                         </div>
@@ -1188,9 +1188,21 @@ const BilanganBulatPage = () => {
               <p className={qText}>Siti memasukkan air hangat bersuhu <InlineMath math="30°C" /> ke kulkas pukul 14.00. Tentukan Benar atau Salah!</p>
               <TFTable qn={59} rows={[
                 { key: "a", text: <span>Suhu turun <InlineMath math="3°C" /> tiap 2 jam, sehingga pukul 18.00 menjadi <InlineMath math="24°C" />.</span>, correct: "Benar" },
-                { key: "b", text: <span>Dalam 5 jam suhu berkurang <InlineMath math="8°C" />, sehingga pukul 19.00 menjadi <InlineMath math="22°C" />.</span>, correct: "Benar" },
-                { key: "c", text: <span>Suhu turun <InlineMath math="2°C" /> tiap jam sampai pukul 20.00, sehingga suhunya <InlineMath math="16°C" />.</span>, correct: "Benar" },
+                { key: "b", text: <span>Dalam 5 jam suhu berkurang <InlineMath math="8°C" />, sehingga pukul 19.00 menjadi <InlineMath math="22°C" />.</span>, correct: "Salah" },
+                { key: "c", text: <span>Suhu turun <InlineMath math="2°C" /> tiap jam sampai pukul 20.00, sehingga suhunya <InlineMath math="16°C" />.</span>, correct: "Salah" },
               ]} />
+              <div className="mt-3 space-y-2">
+                <PBJawaban>(a) Benar &nbsp;|&nbsp; (b) Salah &nbsp;|&nbsp; (c) Salah</PBJawaban>
+                <PBKonsep>
+                  <p>Gunakan waktu berlalu untuk menentukan banyaknya penurunan suhu, lalu kurangkan dari suhu awal.</p>
+                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: ubah selisih waktu menjadi banyak interval sebelum menghitung perubahan suhu.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p>Dari pukul 14.00 ke 18.00 ada 4 jam = 2 interval. Penurunan suhu <InlineMath math="2\times3=6°C" />, sehingga <InlineMath math="30-6=24°C" /> → <span className={`font-bold ${isDark ? "text-green-300" : "text-green-700"}`}>BENAR ✓</span></p></S>
+                  <S n={2}><p>Penurunan <InlineMath math="8°C" /> dalam 5 jam tidak mengikuti laju <InlineMath math="3°C" /> tiap 2 jam; pernyataan pukul 19.00 menjadi <InlineMath math="22°C" /> tidak dapat dibenarkan → <span className={`font-bold ${isDark ? "text-red-300" : "text-red-600"}`}>SALAH ✗</span></p></S>
+                  <S n={3}><p>Dari pukul 14.00 ke 20.00 ada 6 jam. Jika turun <InlineMath math="2°C" /> tiap jam, penurunan <InlineMath math="6\times2=12°C" />, sehingga suhu <InlineMath math="30-12=18°C" />, bukan <InlineMath math="16°C" /> → <span className={`font-bold ${isDark ? "text-red-300" : "text-red-600"}`}>SALAH ✗</span></p></S>
+                </PBSteps>
+              </div>
             </TelaahSoal>
             <TelaahSoal num={10} tipe="MCMA">
               <p className={qText}>Diberikan <InlineMath math="14^2-4^2" />, <InlineMath math="10^2+44" />, dan <InlineMath math="12\times9" />. Faktor persekutuan ketiganya adalah ....</p>
@@ -1198,19 +1210,36 @@ const BilanganBulatPage = () => {
                 { text: <InlineMath math="2\times3" />, benar: true }, { text: <InlineMath math="2^2\times3" />, benar: true },
                 { text: <InlineMath math="3" />, benar: true }, { text: <InlineMath math="2^3" />, benar: false },
               ]} />
+              <div className="mt-3 space-y-2">
+                <PBJawaban>Semua pernyataan kecuali <InlineMath math="2^3" /> benar</PBJawaban>
+                <PBKonsep>
+                  <p>Hitung ketiga bilangan terlebih dahulu, kemudian tentukan faktor persekutuan terbesarnya.</p>
+                  <p><InlineMath math="\\operatorname{FPB}(180,144,108)=36" />. Jadi, semua faktor dari 36 merupakan faktor persekutuan ketiganya.</p>
+                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: faktorkan atau cari FPB lebih dulu; setelah itu cek setiap pilihan dengan membagi bilangan asal.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p><InlineMath math="14^2-4^2=(14-4)(14+4)=10\times18=180" />.</p></S>
+                  <S n={2}><p><InlineMath math="10^2+44=100+44=144" /> dan <InlineMath math="12\times9=108" />.</p></S>
+                  <S n={3}><p>FPB dari <InlineMath math="180,144,108" /> adalah <InlineMath math="36" />.</p></S>
+                  <S n={4}><p><InlineMath math="2\times3=6" />, <InlineMath math="2^2\times3=12" />, dan <InlineMath math="3" /> membagi 36. Sementara <InlineMath math="2^3=8" /> bukan faktor 36 → <span className={`font-bold ${isDark ? "text-green-300" : "text-green-700"}`}>pilihan (1), (2), dan (3) benar ✓</span></p></S>
+                </PBSteps>
+              </div>
             </TelaahSoal>
             <TelaahSoal num={11} tipe="PGS">
               <p className={qText}>Andi membeli bola basket Rp150.000, 2 celana training Rp90.000 per buah, dan 2 kaos Rp75.000 per buah. Setiap pembelian 5 barang gratis 1 barang termurah. Total setelah promo adalah ....</p>
-              <MCQ qn={61} correct={1} options={["A. Rp405.000", "B. Rp425.000", "C. Rp480.000", "D. Rp505.000"]} />
-            </TelaahSoal>
-            <TelaahSoal num={12} tipe="MCMA">
-              <p className={qText}>Pada layanan Samsat, Eko sudah selesai cek fisik pada menit ke-5. Rina dan Gilang mengantre setelahnya. Pernyataan yang pasti benar adalah ....</p>
-              <MCMA qn={62} items={[
-                { text: "Eko selesai pembayaran sebelum Rina memulai cek fisik.", benar: true },
-                { text: "Rina memulai pembayaran sebelum Gilang memulai pendaftaran.", benar: true },
-                { text: "Gilang mencetak STNK setelah Eko mengambil plat.", benar: true },
-                { text: "Total waktu kurang dari 60 menit.", benar: false },
-              ]} />
+              <MCQ qn={61} correct={0} options={["A. Rp405.000", "B. Rp425.000", "C. Rp480.000", "D. Rp505.000"]} />
+              <div className="mt-3 space-y-2">
+                <PBJawaban>A. Rp405.000</PBJawaban>
+                <PBKonsep>
+                  <p>Jumlah barang yang dibeli tepat 5, sehingga 1 barang termurah menjadi gratis. Barang termurah adalah kaos seharga Rp75.000.</p>
+                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: hitung total normal, lalu kurangi harga barang termurah yang mendapat promo.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p>Total sebelum promo: <InlineMath math="150.000+(2\times90.000)+(2\times75.000)=480.000" />.</p></S>
+                  <S n={2}><p>Harga barang termurah = <InlineMath math="75.000" />.</p></S>
+                  <S n={3}><p>Total setelah promo: <InlineMath math="480.000-75.000=405.000" />.</p></S>
+                </PBSteps>
+              </div>
             </TelaahSoal>
             <TelaahSoal num={13} tipe="MCMA">
               <p className={qText}>Harga Pertamax Rp13.850 per liter. Pak Anton membeli <InlineMath math="18{,}2" /> liter. Estimasi yang tepat adalah ....</p>
@@ -1218,6 +1247,20 @@ const BilanganBulatPage = () => {
                 { text: "Total biaya kurang dari Rp270.000,00", benar: true }, { text: "Total biaya lebih dari Rp230.000,00", benar: true },
                 { text: <span>Estimasi dapat dihitung dengan <InlineMath math="18\times Rp14.000" /></span>, benar: true }, { text: "Nilainya mendekati Rp300.000,00", benar: false },
               ]} />
+              <div className="mt-3 space-y-2">
+                <PBJawaban>Pernyataan (1), (2), dan (3) benar</PBJawaban>
+                <PBKonsep>
+                  <p>Bulatkan <InlineMath math="18{,}2" /> liter menjadi 18 liter dan Rp13.850 menjadi sekitar Rp14.000 agar perhitungan lebih mudah.</p>
+                  <p>Hasil estimasi <InlineMath math="18\times Rp14.000=Rp252.000" /> dekat dengan nilai sebenarnya, sehingga pilihan Rp300.000 tidak tepat.</p>
+                  <p className={`text-[10px] italic ${isDark ? "text-violet-300/70" : "text-violet-500"}`}>💡 Trik: untuk estimasi biaya, bulatkan jumlah dan harga ke angka yang mudah dikalikan, lalu cek apakah hasilnya masih masuk akal.</p>
+                </PBKonsep>
+                <PBSteps>
+                  <S n={1}><p>Harga sebenarnya kira-kira <InlineMath math="18{,}2\times Rp13.850=Rp252.070" />, jadi berada di antara Rp230.000 dan Rp270.000.</p></S>
+                  <S n={2}><p>Bulatkan kedua bilangan: <InlineMath math="18{,}2\approx18" /> dan <InlineMath math="Rp13.850\approx Rp14.000" />.</p></S>
+                  <S n={3}><div><BlockMath math="18\times Rp14.000=Rp252.000" /></div></S>
+                  <S n={4}><p>Rp252.000 lebih dekat ke Rp252.070 daripada Rp300.000, sehingga pernyataan (1), (2), dan (3) benar.</p></S>
+                </PBSteps>
+              </div>
             </TelaahSoal>
 
           </div>
