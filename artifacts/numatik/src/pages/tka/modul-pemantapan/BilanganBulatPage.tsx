@@ -5,7 +5,7 @@ import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { InlineMath, BlockMath } from "react-katex";
 import { useTheme } from "@/contexts/ThemeContext";
-import { BookMarked } from "lucide-react";
+import { ArrowLeft, BookMarked } from "lucide-react";
 import "katex/dist/katex.min.css";
 
 const renderWithLatex = (text: string) => {
@@ -2251,10 +2251,15 @@ const BilanganBulatPage = () => {
 
         <div className="mt-6 text-center">
           <button
+            type="button"
             onClick={() => { playPopSound(); navigate("/tka/modul-pemantapan"); }}
-            className={`text-sm hover:text-blue-400 transition-colors cursor-pointer font-body ${isDark ? "text-muted-foreground" : "text-gray-500"}`}
+            className="w-11 h-11 rounded-full bg-card/80 backdrop-blur border border-border
+              flex items-center justify-center text-primary hover:border-primary/60
+              hover:box-glow-cyan transition-all duration-300 cursor-pointer mx-auto"
+            title="Kembali ke Modul Pemantapan"
+            aria-label="Kembali ke Modul Pemantapan"
           >
-            ← Kembali ke Modul Pemantapan
+            <ArrowLeft className="w-5 h-5" />
           </button>
         </div>
 
