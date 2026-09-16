@@ -200,7 +200,7 @@ const DiagramContoh3 = () => {
       <text x="50"  y="115" fontSize="12" fill="#c084fc" fontWeight="bold">y</text>
       <text x="100" y="210" fontSize="11" fill="#f97316" fontWeight="bold">12 cm</text>
       <text x="235" y="210" fontSize="11" fill="#f97316" fontWeight="bold">8 cm</text>
-      <text x={D.x+16} y={(D.y+E.y)/2+5} fontSize="11" fill="#4ade80" fontWeight="bold">6 cm</text>
+      <text x={D.x-8} y={(D.y+E.y)/2+5} textAnchor="end" fontSize="11" fill="#4ade80" fontWeight="bold">6 cm</text>
       <text x={(E.x+C.x)/2+8} y={(E.y+C.y)/2-5} fontSize="11" fill="#86efac" fontWeight="bold">10 cm</text>
       <text x={(B.x+E.x)/2-4} y={(B.y+E.y)/2-4} fontSize="12" fill="#fbbf24" fontWeight="bold">x</text>
     </svg>
@@ -239,7 +239,10 @@ const DiagramTrikArahSama = () => {
       <text x={A.x-13} y={A.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">A</text>
       <text x={B.x-4} y={B.y-6} fontSize="13" fill="#93c5fd" fontWeight="bold">B</text>
       <text x={C.x+4} y={C.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">C</text>
-      <text x="168" y="214" textAnchor="middle" fontSize="10" fill="#93c5fd">△ABC</text>
+      <text x="52" y="110" fontSize="10" fill="#93c5fd" fontWeight="bold">AB = 12 cm</text>
+      <text x="214" y="110" fontSize="10" fill="#93c5fd" fontWeight="bold">BC = 16 cm</text>
+      <text x="168" y="204" textAnchor="middle" fontSize="10" fill="#93c5fd" fontWeight="bold">AC = 20 cm</text>
+      <text x="168" y="218" textAnchor="middle" fontSize="10" fill="#93c5fd">△ABC</text>
 
       <polygon
         points={`${D.x},${D.y} ${E.x},${E.y} ${Ckecil.x},${Ckecil.y}`}
@@ -252,7 +255,10 @@ const DiagramTrikArahSama = () => {
       <text x={D.x} y={D.y-7} textAnchor="middle" fontSize="12" fill="#fde68a" fontWeight="bold">D</text>
       <text x={E.x-10} y={E.y+13} fontSize="12" fill="#fde68a" fontWeight="bold">E</text>
       <text x={Ckecil.x+5} y={Ckecil.y+13} fontSize="12" fill="#fde68a" fontWeight="bold">C</text>
-      <text x="505" y="184" textAnchor="middle" fontSize="10" fill="#fde68a">△CDE</text>
+      <text x="408" y="120" fontSize="10" fill="#fde68a" fontWeight="bold">DE = 6 cm</text>
+      <text x="505" y="179" textAnchor="middle" fontSize="10" fill="#fde68a" fontWeight="bold">EC = 10 cm</text>
+      <text x="538" y="116" fontSize="10" fill="#fde68a" fontWeight="bold">DC = 8 cm</text>
+      <text x="505" y="196" textAnchor="middle" fontSize="10" fill="#fde68a">△CDE</text>
     </svg>
   );
 };
