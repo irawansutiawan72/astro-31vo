@@ -184,18 +184,17 @@ const SoalQ5 = () => {
 };
 
 const SoalQ6 = () => {
-  // △ABC right-angled at B: AB=6, BC=8, CA=10 (6-8-10 Pythagorean triple)
+  // Keep both figures right-angled like the original exercise.
+  // Only the drawn BC and PQ legs are made longer for readability.
   // Scale: 7 px/cm
-  // Shift base up to y=108 so R (tallest point) sits near y=24 — no wasted top space
   const base = 108;
   const Av={x:18,  y:base};
   const Bv={x:60,  y:base};
-  const Cv={x:60,  y:base-56}; // BC=8 → 56px
-  // PQR rotated: PQ vertical (P top, Q bottom-right), QR horizontal (R to left of Q)
-  // PQ=9 → 63px vertical; QR=12 → 84px horizontal
-  const Qv={x:258, y:base};       // right angle at Q (bottom-right)
-  const Pv={x:258, y:base-63};    // P above Q (PQ vertical)
-  const Rv={x:174, y:base};       // R left of Q (QR horizontal)
+  const Cv={x:60,  y:34}; // BC is the longer vertical leg
+  // PQR rotated: PQ vertical (P top, Q bottom-right), QR horizontal.
+  const Qv={x:258, y:base};       // bottom-right vertex
+  const Pv={x:258, y:30};         // PQ is slightly longer than in the original
+  const Rv={x:174, y:base};       // QR keeps its original horizontal length
   const sq = 7;
   return (
     <svg viewBox="0 0 300 128" className="w-full max-w-sm mx-auto">
@@ -211,7 +210,7 @@ const SoalQ6 = () => {
       <text x={Cv.x+4}  y={Cv.y+5}  fontSize="12" fill="#93c5fd" fontWeight="bold">C</text>
       {/* Side labels */}
       <text x={(Av.x+Bv.x)/2} y={Av.y+14} textAnchor="middle" fontSize="10" fill="#f97316" fontWeight="bold">AB=6</text>
-      <text x={Cv.x+4}        y={(Bv.y+Cv.y)/2+4} fontSize="10" fill="#4ade80" fontWeight="bold">BC=8</text>
+      <text x={Cv.x+6}        y={(Bv.y+Cv.y)/2+4} fontSize="10" fill="#4ade80" fontWeight="bold">BC=10</text>
       <text x={(Av.x+Cv.x)/2-22} y={(Av.y+Cv.y)/2} fontSize="10" fill="#fde68a" fontWeight="bold">CA=10</text>
 
       {/* ~ symbol between triangles */}
@@ -220,7 +219,7 @@ const SoalQ6 = () => {
       {/* ── Triangle PQR (PQ vertical) ── */}
       <polygon points={`${Pv.x},${Pv.y} ${Qv.x},${Qv.y} ${Rv.x},${Rv.y}`}
         fill="#22c55e" fillOpacity="0.15" stroke="#4ade80" strokeWidth="2"/>
-      {/* Right-angle mark at Q — between QP (up) and QR (left): square top-left of Q */}
+      {/* Right-angle mark at Q */}
       <path d={`M ${Qv.x},${Qv.y-sq} L ${Qv.x-sq},${Qv.y-sq} L ${Qv.x-sq},${Qv.y}`}
         fill="none" stroke="#ffffff" strokeWidth="1.4"/>
       {/* Vertex labels */}
@@ -228,7 +227,7 @@ const SoalQ6 = () => {
       <text x={Qv.x+4}  y={Qv.y+13} fontSize="12" fill="#86efac" fontWeight="bold">Q</text>
       <text x={Rv.x-16} y={Rv.y+13} fontSize="12" fill="#86efac" fontWeight="bold">R</text>
       {/* Side labels */}
-      <text x={Pv.x+4} y={(Pv.y+Qv.y)/2+4} fontSize="10" fill="#f97316" fontWeight="bold">PQ=9</text>
+      <text x={Pv.x+4} y={(Pv.y+Qv.y)/2+4} fontSize="10" fill="#f97316" fontWeight="bold">PQ=15</text>
       <text x={(Rv.x+Pv.x)/2-8} y={(Rv.y+Pv.y)/2-6} fontSize="10" fill="#ef4444" fontWeight="bold">PR=?</text>
     </svg>
   );
@@ -662,13 +661,13 @@ const Q10TrapSVG = () => (
 const questions: Q[] = [
   Qn(1, "Dua Segitiga Sebangun – Cari PR", {
     type: "mixed",
-    content: "Diketahui △ABC ~ △PQR. Jika AB = 6 cm, BC = 8 cm, CA = 10 cm, dan PQ = 9 cm, maka panjang PR adalah…",
+    content: "Diketahui △ABC ~ △PQR. Jika AB = 6 cm, BC = 10 cm, CA = 10 cm, dan PQ = 15 cm, maka panjang PR adalah…",
     diagram: <SoalQ6 />,
     parts: [
-      { label: "A.", text: "12 cm" },
-      { label: "B.", text: "15 cm" },
-      { label: "C.", text: "18 cm" },
-      { label: "D.", text: "20 cm" },
+      { label: "A.", text: "20 cm" },
+      { label: "B.", text: "22,5 cm" },
+      { label: "C.", text: "25 cm" },
+      { label: "D.", text: "30 cm" },
     ],
   }),
   Qn(2, "Segitiga Sebangun – Cari ST – UN", {

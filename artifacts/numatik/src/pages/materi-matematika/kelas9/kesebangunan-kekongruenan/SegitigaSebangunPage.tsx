@@ -4,6 +4,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { BookOpen, Lightbulb, Calculator, Target } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
+import { useTheme } from "@/contexts/ThemeContext";
 import "katex/dist/katex.min.css";
 import { InlineMath, BlockMath } from "react-katex";
 
@@ -657,7 +658,6 @@ const DiagSudutBerimpit = () => {
 
 /* ── Posisi Sebangun Section ────────────────────────────── */
 const PosisiSebangunSection = () => {
-  const [tab, setTab] = useState(0);
   const configs = [
     {
       title: 'Terpisah',
@@ -720,26 +720,29 @@ const PosisiSebangunSection = () => {
       syarat: '∠P bersekutu + ∠PTS = ∠PQR → Sd, Sd terpenuhi → △PTS ~ △PQR',
     },
   ];
-  const c = configs[tab];
   return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 gap-2">
-        {configs.map((cfg, i) => (
-          <button key={i} onClick={() => setTab(i)}
-            className={`rounded-lg border p-2 text-left transition-all font-body ${
-              configs.length % 2 !== 0 && i === configs.length - 1 ? 'col-span-2' : ''
-            } ${tab === i ? cfg.active : 'bg-slate-800/60 border-slate-700 hover:border-slate-500'}`}>
-            <p className="text-xs font-semibold" style={{ color: tab === i ? cfg.color : '#94a3b8' }}>{cfg.title}</p>
-            <p className="text-xs text-white/40">{cfg.sub}</p>
-          </button>
-        ))}
-      </div>
-      {c.diagram}
-      <div className="rounded-lg p-3 space-y-1" style={{ background: `color-mix(in srgb, ${c.color} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${c.color} 30%, transparent)` }}>
-        <p className="font-body text-xs font-semibold" style={{ color: c.color }}>📐 {c.title}</p>
-        <p className="font-body text-xs text-white/70 leading-relaxed">{c.info}</p>
-        <p className="font-body text-xs text-white/40 pt-1">✅ Syarat terpenuhi: <span className="text-white/60">{c.syarat}</span></p>
-      </div>
+    <div className="space-y-4">
+      {configs.map((cfg, i) => (
+        <section
+          key={cfg.title}
+          className="rounded-xl border p-3 space-y-3"
+          style={{
+            background: `color-mix(in srgb, ${cfg.color} 7%, transparent)`,
+            borderColor: `color-mix(in srgb, ${cfg.color} 30%, transparent)`,
+          }}
+        >
+          <div className="flex items-baseline gap-2">
+            <span className="font-body text-xs font-bold" style={{ color: cfg.color }}>Bagian {i + 1}</span>
+            <h3 className="font-body text-sm font-semibold" style={{ color: cfg.color }}>{cfg.title}</h3>
+            <span className="font-body text-xs text-white/40">— {cfg.sub}</span>
+          </div>
+          {cfg.diagram}
+          <div className="rounded-lg p-3 space-y-1" style={{ background: `color-mix(in srgb, ${cfg.color} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${cfg.color} 30%, transparent)` }}>
+            <p className="font-body text-xs text-white/70 leading-relaxed">{cfg.info}</p>
+            <p className="font-body text-xs text-white/40 pt-1">✅ Syarat terpenuhi: <span className="text-white/60">{cfg.syarat}</span></p>
+          </div>
+        </section>
+      ))}
     </div>
   );
 };
@@ -928,6 +931,7 @@ const InteraktifSebangunDemo = () => {
 
 const SegitigaSebangunPage = () => {
   const navigate = useNavigate();
+  const { isDark } = useTheme();
   const Header = ({ icon, color, label }: { icon: React.ReactNode; color: string; label: string }) => (
     <div className="w-full flex items-center px-5 py-4">
       <div className="flex items-center gap-3"><span style={{ color }}>{icon}</span><span className="font-body font-semibold text-white">{label}</span></div>
@@ -1235,15 +1239,15 @@ const SegitigaSebangunPage = () => {
           <div className="space-y-4">
 
             {/* Rangkuman */}
-            <div className="bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-blue-500/30 rounded-xl p-5 space-y-4">
-              <p className="font-body text-base font-bold text-blue-300">📋 Rangkuman — Segitiga Sebangun</p>
+            <div className={`${isDark ? "bg-gradient-to-br from-blue-900/40 to-indigo-900/40" : "bg-gradient-to-br from-blue-50 to-indigo-50"} border border-blue-500/30 rounded-xl p-5 space-y-4`}>
+              <p className={`font-body text-base font-bold ${isDark ? "text-blue-300" : "text-blue-700"}`}>📋 Rangkuman — Segitiga Sebangun</p>
               <div className="overflow-x-auto">
-                <table className="w-full font-body text-xs text-white/80">
+                <table className={`w-full font-body text-xs ${isDark ? "text-white/80" : "text-gray-700"}`}>
                   <thead>
                     <tr className="border-b border-blue-500/30">
-                      <th className="text-left py-2 pr-4 text-blue-300">Syarat</th>
-                      <th className="text-left py-2 pr-4 text-blue-300">Yang Diperlukan</th>
-                      <th className="text-left py-2 text-blue-300">Contoh</th>
+                       <th className={`text-left py-2 pr-4 ${isDark ? "text-blue-300" : "text-blue-700"}`}>Syarat</th>
+                       <th className={`text-left py-2 pr-4 ${isDark ? "text-blue-300" : "text-blue-700"}`}>Yang Diperlukan</th>
+                       <th className={`text-left py-2 ${isDark ? "text-blue-300" : "text-blue-700"}`}>Contoh</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-700">
@@ -1265,7 +1269,7 @@ const SegitigaSebangunPage = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-900/60 rounded-lg p-3 space-y-1 font-body text-xs text-white/75">
+               <div className={`${isDark ? "bg-slate-900/60 text-white/75" : "bg-white/80 text-gray-700"} rounded-lg p-3 space-y-1 font-body text-xs`}>
                 <p>📌 <strong className="text-blue-300">Teorema Garis Sejajar:</strong> Jika <InlineMath math="XY \parallel BC" /> pada △ABC, maka <InlineMath math="\frac{AX}{XB} = \frac{AY}{YC}" /> dan △AXY ~ △ABC</p>
                 <p>📌 <strong className="text-blue-300">Sudut ketiga:</strong> Jika dua sudut sudah sama, sudut ketiga otomatis sama (jumlah sudut segitiga = 180°)</p>
                 <p>📌 <strong className="text-blue-300">Rasio k:</strong> Jika △ABC ~ △PQR dengan rasio k, maka <InlineMath math="AB=k \cdot PQ,\;BC=k \cdot QR,\;AC=k \cdot PR" /></p>
