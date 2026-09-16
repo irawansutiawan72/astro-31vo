@@ -1279,11 +1279,11 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
         {/* ── Back button ── */}
         <div className="mt-10 flex justify-center">
           <button
-            onClick={() => { playPopSound(); navigate(backPath); }}
+            onClick={() => { playPopSound(); navigate(-1); }}
             className="group flex items-center gap-2 font-body text-sm text-white/30 hover:text-violet-300 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            Kembali ke Modul Pemantapan TKA
+            ← Kembali ke Modul Pemantapan
           </button>
         </div>
       </div>
