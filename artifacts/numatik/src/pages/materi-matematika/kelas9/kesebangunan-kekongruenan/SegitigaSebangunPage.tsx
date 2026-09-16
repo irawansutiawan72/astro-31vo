@@ -239,8 +239,6 @@ const DiagramTrikArahSama = () => {
       <text x={A.x-13} y={A.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">A</text>
       <text x={B.x-4} y={B.y-6} fontSize="13" fill="#93c5fd" fontWeight="bold">B</text>
       <text x={C.x+4} y={C.y+12} fontSize="13" fill="#93c5fd" fontWeight="bold">C</text>
-      <text x="52" y="110" fontSize="10" fill="#93c5fd" fontWeight="bold">AB = 12 cm</text>
-      <text x="214" y="110" fontSize="10" fill="#93c5fd" fontWeight="bold">BC = 16 cm</text>
       <text x="168" y="204" textAnchor="middle" fontSize="10" fill="#93c5fd" fontWeight="bold">AC = 20 cm</text>
       <text x="168" y="218" textAnchor="middle" fontSize="10" fill="#93c5fd">△ABC</text>
 
