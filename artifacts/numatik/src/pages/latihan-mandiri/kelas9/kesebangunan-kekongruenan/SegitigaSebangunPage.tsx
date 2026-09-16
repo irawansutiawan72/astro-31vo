@@ -194,7 +194,7 @@ const SoalQ6 = () => {
   // PQR rotated: PQ vertical (P top, Q bottom-right), QR horizontal.
   const Qv={x:258, y:base};       // bottom-right vertex
   const Pv={x:258, y:30};         // PQ is slightly longer than in the original
-  const Rv={x:174, y:base};       // QR keeps its original horizontal length
+  const Rv={x:142, y:base};       // QR is extended horizontally
   const sq = 7;
   return (
     <svg viewBox="0 0 300 128" className="w-full max-w-sm mx-auto">
@@ -209,9 +209,9 @@ const SoalQ6 = () => {
       <text x={Bv.x+3}  y={Bv.y+13} fontSize="12" fill="#93c5fd" fontWeight="bold">B</text>
       <text x={Cv.x+4}  y={Cv.y+5}  fontSize="12" fill="#93c5fd" fontWeight="bold">C</text>
       {/* Side labels */}
-      <text x={(Av.x+Bv.x)/2} y={Av.y+14} textAnchor="middle" fontSize="10" fill="#f97316" fontWeight="bold">AB=6</text>
-      <text x={Cv.x+6}        y={(Bv.y+Cv.y)/2+4} fontSize="10" fill="#4ade80" fontWeight="bold">BC=10</text>
-      <text x={(Av.x+Cv.x)/2-22} y={(Av.y+Cv.y)/2} fontSize="10" fill="#fde68a" fontWeight="bold">CA=10</text>
+      <text x={(Av.x+Bv.x)/2} y={Av.y+14} textAnchor="middle" fontSize="10" fill="#f97316" fontWeight="bold">AB = 6 cm</text>
+      <text x={Cv.x+6}        y={(Bv.y+Cv.y)/2+4} fontSize="10" fill="#4ade80" fontWeight="bold">BC = 8 cm</text>
+      <text x={(Av.x+Cv.x)/2-22} y={(Av.y+Cv.y)/2} fontSize="10" fill="#fde68a" fontWeight="bold">CA = 10 cm</text>
 
       {/* ~ symbol between triangles */}
       <text x="117" y={base-14} textAnchor="middle" fontSize="16" fill="#facc15">~</text>
@@ -227,8 +227,8 @@ const SoalQ6 = () => {
       <text x={Qv.x+4}  y={Qv.y+13} fontSize="12" fill="#86efac" fontWeight="bold">Q</text>
       <text x={Rv.x-16} y={Rv.y+13} fontSize="12" fill="#86efac" fontWeight="bold">R</text>
       {/* Side labels */}
-      <text x={Pv.x+4} y={(Pv.y+Qv.y)/2+4} fontSize="10" fill="#f97316" fontWeight="bold">PQ=15</text>
-      <text x={(Rv.x+Pv.x)/2-8} y={(Rv.y+Pv.y)/2-6} fontSize="10" fill="#ef4444" fontWeight="bold">PR=?</text>
+      <text x={Pv.x+4} y={(Pv.y+Qv.y)/2+4} fontSize="10" fill="#f97316" fontWeight="bold">PQ = 15 cm</text>
+      <text x={(Rv.x+Pv.x)/2-8} y={(Rv.y+Pv.y)/2-6} fontSize="10" fill="#ef4444" fontWeight="bold">PR = ? cm</text>
     </svg>
   );
 };
@@ -661,7 +661,7 @@ const Q10TrapSVG = () => (
 const questions: Q[] = [
   Qn(1, "Dua Segitiga Sebangun – Cari PR", {
     type: "mixed",
-    content: "Diketahui △ABC ~ △PQR. Jika AB = 6 cm, BC = 10 cm, CA = 10 cm, dan PQ = 15 cm, maka panjang PR adalah…",
+    content: "Diketahui △ABC ~ △PQR. Jika AB = 6 cm, BC = 8 cm, CA = 10 cm, dan PQ = 15 cm, maka panjang PR adalah…",
     diagram: <SoalQ6 />,
     parts: [
       { label: "A.", text: "20 cm" },
