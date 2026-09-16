@@ -210,7 +210,7 @@ const SoalQ6 = () => {
       <text x={Cv.x+4}  y={Cv.y+5}  fontSize="12" fill="#93c5fd" fontWeight="bold">C</text>
       {/* Side labels */}
       <text x={(Av.x+Bv.x)/2} y={Av.y+14} textAnchor="middle" fontSize="10" fill="#f97316" fontWeight="bold">AB = 6 cm</text>
-      <text x={Cv.x+6}        y={(Bv.y+Cv.y)/2+4} fontSize="10" fill="#4ade80" fontWeight="bold">BC = 8 cm</text>
+      <text x={Cv.x+6}        y={(Bv.y+Cv.y)/2+14} fontSize="10" fill="#4ade80" fontWeight="bold">BC = 8 cm</text>
       <text x={(Av.x+Cv.x)/2-22} y={(Av.y+Cv.y)/2} fontSize="10" fill="#fde68a" fontWeight="bold">CA = 10 cm</text>
 
       {/* ~ symbol between triangles */}
@@ -512,11 +512,11 @@ const Q1TriSTSVG = () => (
   <svg viewBox="0 0 320 140" width="310" height="135" className="lm-kkg-svg" style={{ background: "var(--card)", borderRadius: 8 }}>
     <polygon points="160,15 20,115 300,115" fill="rgba(167,139,250,0.1)" stroke="#a78bfa" strokeWidth="1.5"/>
     <line x1="104" y1="55" x2="216" y2="55" stroke="#c084fc" strokeWidth="1.8"/>
-    <text x="155" y="11" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">R</text>
-    <text x="6" y="122" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">P</text>
-    <text x="302" y="122" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">Q</text>
-    <text x="88" y="53" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">S</text>
-    <text x="219" y="53" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">T</text>
+    <text x="155" y="11" fill="#f8fafc" fontSize="12" fontWeight="bold" fontFamily="serif">R</text>
+    <text x="6" y="122" fill="#f8fafc" fontSize="12" fontWeight="bold" fontFamily="serif">P</text>
+    <text x="302" y="122" fill="#f8fafc" fontSize="12" fontWeight="bold" fontFamily="serif">Q</text>
+    <text x="88" y="53" fill="#f8fafc" fontSize="12" fontWeight="bold" fontFamily="serif">S</text>
+    <text x="219" y="53" fill="#f8fafc" fontSize="12" fontWeight="bold" fontFamily="serif">T</text>
     <text x="78" y="32" fill="#c084fc" fontSize="10" fontWeight="bold">RS = 4 cm</text>
     <text x="10" y="82" fill="#c084fc" fontSize="10" fontWeight="bold">SP = 6 cm</text>
     <text x="143" y="131" fill="#fbbf24" fontSize="10" fontWeight="bold">PQ = 20 cm</text>
@@ -548,11 +548,17 @@ const Q3CrossLinesSVG = () => (
     <line x1="215" y1="10" x2="102" y2="123" stroke="#7c3aed" strokeWidth="1.5"/>
     <line x1="136" y1="21" x2="215" y2="10" stroke="#c084fc" strokeWidth="1.3"/>
     <line x1="221" y1="106" x2="102" y2="123" stroke="#c084fc" strokeWidth="1.3"/>
-    <text x="122" y="18" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">A</text>
-    <text x="218" y="8" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">B</text>
-    <text x="173" y="68" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">O</text>
-    <text x="225" y="112" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">C</text>
-    <text x="88" y="128" fill="var(--card-foreground)" fontSize="11" fontStyle="italic" fontFamily="serif">D</text>
+    {/* Bright vertex markers and labels remain readable on dark backgrounds. */}
+    <circle cx="136" cy="21" r="3.5" fill="#93c5fd"/>
+    <circle cx="215" cy="10" r="3.5" fill="#93c5fd"/>
+    <circle cx="170" cy="55" r="3.5" fill="#fbbf24"/>
+    <circle cx="221" cy="106" r="3.5" fill="#86efac"/>
+    <circle cx="102" cy="123" r="3.5" fill="#86efac"/>
+    <text x="122" y="18" fill="#93c5fd" fontSize="12" fontWeight="bold" fontFamily="serif">A</text>
+    <text x="218" y="8" fill="#93c5fd" fontSize="12" fontWeight="bold" fontFamily="serif">B</text>
+    <text x="173" y="68" fill="#fbbf24" fontSize="12" fontWeight="bold" fontFamily="serif">O</text>
+    <text x="225" y="112" fill="#86efac" fontSize="12" fontWeight="bold" fontFamily="serif">C</text>
+    <text x="88" y="128" fill="#86efac" fontSize="12" fontWeight="bold" fontFamily="serif">D</text>
     <text x="98" y="38" fill="#c084fc" fontSize="10" fontWeight="bold">OA = 6 cm</text>
     <text x="198" y="28" fill="#fbbf24" fontSize="10" fontWeight="bold">OB = x</text>
     <text x="215" y="86" fill="#c084fc" fontSize="10" fontWeight="bold">OC = 9 cm</text>
