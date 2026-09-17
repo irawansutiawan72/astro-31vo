@@ -182,6 +182,48 @@ const optionLetters = ['A', 'B', 'C', 'D', 'E'];
 const normalizeStatementText = (value: string) =>
   value.replace(/^\s*(?:(?:\(\d+\)|\d+[.)])|(?:\([ivx]+\)|[ivx]+[.)]))\s*/i, "");
 
+const romanToIndex = (value: string) => {
+  const romanValues: Record<string, number> = { i: 0, ii: 1, iii: 2, iv: 3, v: 4 };
+  return romanValues[value.toLowerCase()];
+};
+
+/**
+ * Older TKA datasets stored PG Kompleks keys as a regular answer letter
+ * (for example, "C" for "C. (1), (2), dan (3)") even though the displayed
+ * content is a set of statements. Keep those datasets usable as checkbox
+ * questions without requiring every page to duplicate its answer key.
+ */
+const getPgkCorrectIndices = (soal: LatihanSoal) => {
+  if (soal.jawabanPGK?.length) return soal.jawabanPGK;
+  if (soal.type !== "pgk" || !soal.pernyataan?.length) return [];
+
+  const answerText = soal.jawaban?.trim() ?? "";
+  const answerLetter = answerText.match(/^[A-E](?=[.)\s]|$)/i)?.[0]?.toUpperCase();
+  const answerOption = answerLetter
+    ? soal.options?.find((option) => new RegExp(`^${answerLetter}[.)]\\s*`, "i").test(option))
+    : undefined;
+  const source = answerOption ?? answerText;
+
+  if (/semua|keempat|seluruh/i.test(source)) {
+    return soal.pernyataan.map((_, index) => index);
+  }
+
+  const indices = new Set<number>();
+  for (const match of source.matchAll(/\(\s*(\d+|[ivx]+)\s*\)/gi)) {
+    const value = /^\d+$/.test(match[1]) ? Number(match[1]) - 1 : romanToIndex(match[1]);
+    if (typeof value === "number" && value >= 0 && value < soal.pernyataan.length) indices.add(value);
+  }
+
+  if (indices.size === 0) {
+    for (const match of source.matchAll(/(?:pernyataan|statement)\s*(?:ke[-\s]*)?(\d+)/gi)) {
+      const value = Number(match[1]) - 1;
+      if (value >= 0 && value < soal.pernyataan.length) indices.add(value);
+    }
+  }
+
+  return [...indices].sort((a, b) => a - b);
+};
+
 /* ── Type badge config ── */
 const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; border: string }> = {
   pg: {
@@ -263,7 +305,6 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
     playPopSound();
     setPgkAnswers(prev => {
       const current = prev[soalNo] ?? [];
-      if (autoRevealOnAnswer && current.includes(idx)) return prev;
       const next = current.includes(idx)
         ? current.filter(item => item !== idx)
         : [...current, idx].sort((a, b) => a - b);
@@ -316,17 +357,18 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   const isCorrectForSoal = (s: LatihanSoal): boolean => {
     const hasAnyAnswer = s.type === "pgkbs"
       ? (pgkbsAnswers[s.no] ?? []).some(answer => answer !== null)
-      : s.type === "pgk" && s.jawabanPGK
+      : s.type === "pgk" && s.pernyataan
         ? (pgkAnswers[s.no] ?? []).length > 0
         : selectedAnswers[s.no] !== undefined;
     if (!revealedAnswers.has(s.no) && !(autoRevealOnAnswer && hasAnyAnswer)) return false;
     if (s.type === "pgkbs") {
       return (s.jawabanBS?.every((ans, i) => pgkbsAnswers[s.no]?.[i] === ans) ?? false);
     }
-    if (s.type === "pgk" && s.jawabanPGK) {
+    if (s.type === "pgk" && s.pernyataan) {
+      const correctIndices = getPgkCorrectIndices(s);
       const selected = pgkAnswers[s.no] ?? [];
-      return selected.length === s.jawabanPGK.length
-        && selected.every(index => s.jawabanPGK?.includes(index));
+      return selected.length === correctIndices.length
+        && selected.every(index => correctIndices.includes(index));
     }
     return selectedAnswers[s.no] === s.jawaban;
   };
@@ -336,7 +378,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
     if (revealedAnswers.has(s.no)) return true;
     if (!autoRevealOnAnswer) return false;
     if (s.type === "pgkbs") return (pgkbsAnswers[s.no] ?? []).some(answer => answer !== null);
-    if (s.type === "pgk" && s.jawabanPGK) return (pgkAnswers[s.no] ?? []).length > 0;
+    if (s.type === "pgk" && s.pernyataan) return (pgkAnswers[s.no] ?? []).length > 0;
     return selectedAnswers[s.no] !== undefined;
   }).length;
   const conceptTip = title.toLowerCase().includes("rasional")
@@ -653,7 +695,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     )}
 
                     {/* ── PG & PGK: options (correct always highlighted green) ── */}
-                    {(type === "pg" || type === "pgk") && soal.options && soal.options.length > 0 && (
+                    {type === "pg" && soal.options && soal.options.length > 0 && (
                       <div className="px-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {soal.options.map((opt, j) => {
                           const letter = optionLetters[j];
@@ -864,6 +906,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                 const soalImageScale = soal.no === imageScaleExceptQuestionNo ? "default" : imageScale;
                 const selected = selectedAnswers[soal.no];
                 const selectedPGK = pgkAnswers[soal.no] ?? [];
+                const correctPGK = getPgkCorrectIndices(soal);
                 const isRevealed = revealedAnswers.has(soal.no);
                 const bsArr = pgkbsAnswers[soal.no] ?? Array(soal.pernyataan?.length ?? 3).fill(null);
                 const bsAllAnswered = type === "pgkbs"
@@ -871,7 +914,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                   : false;
                 const hasAnswered = type === "pgkbs"
                   ? bsAllAnswered
-                  : type === "pgk" && soal.jawabanPGK
+                  : type === "pgk" && soal.pernyataan
                     ? selectedPGK.length > 0
                     : !!selected;
                 const hasAnyAnswer = type === "pgkbs"
@@ -879,9 +922,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                   : hasAnswered;
                 const isCorrect = type === "pgkbs"
                   ? (soal.jawabanBS?.every((ans, i) => bsArr[i] === ans) ?? false)
-                  : type === "pgk" && soal.jawabanPGK
-                    ? selectedPGK.length === soal.jawabanPGK.length
-                      && selectedPGK.every(index => soal.jawabanPGK?.includes(index))
+                  : type === "pgk" && soal.pernyataan
+                    ? selectedPGK.length === correctPGK.length
+                      && selectedPGK.every(index => correctPGK.includes(index))
                   : selected === soal.jawaban;
                 const typeBadge = TYPE_BADGE[type];
                 const conceptPembahasan = soal.pembahasan
@@ -987,14 +1030,14 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       <div className="px-5 pb-2 space-y-1.5 ml-11 min-w-0">
                         {soal.pernyataan.map((p, pi) => {
                           const isSelectedPGK = selectedPGK.includes(pi);
-                          const isCorrectPGK = soal.jawabanPGK?.includes(pi) ?? false;
+                          const isCorrectPGK = correctPGK.includes(pi);
                           const isEvaluatedPGK = isRevealed || (autoRevealOnAnswer && isSelectedPGK);
                           return (
                           <button
                             key={pi}
                             type="button"
                             disabled={isRevealed}
-                            onClick={() => soal.jawabanPGK && handleSelectPGK(soal.no, pi)}
+                            onClick={() => correctPGK.length > 0 && handleSelectPGK(soal.no, pi)}
                             className="w-full min-w-0 flex items-start gap-2 text-left text-xs font-body leading-relaxed rounded-lg px-2 py-1 transition-colors"
                             style={{
                               background: isRevealed
@@ -1002,7 +1045,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 : isSelectedPGK
                                   ? isCorrectPGK ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)"
                                   : "transparent",
-                              cursor: soal.jawabanPGK && !isRevealed ? "pointer" : "default",
+                              cursor: correctPGK.length > 0 && !isRevealed ? "pointer" : "default",
                               color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.8)",
                             }}
                           >
@@ -1028,9 +1071,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           );
                         })}
                         <p className="text-[11px] font-body text-amber-300/60 mt-2 italic">
-                          {soal.jawabanPGK
-                            ? <>Pilih <span className="font-bold not-italic text-amber-300/80">semua pernyataan yang benar</span> (jawaban lebih dari satu).</>
-                            : <>Pernyataan yang <span className="font-bold not-italic text-amber-300/80">BENAR</span> adalah ...</>}
+                          <>Pilih <span className="font-bold not-italic text-amber-300/80">semua pernyataan yang benar</span> (jawaban lebih dari satu).</>
                         </p>
                       </div>
                     )}
@@ -1043,7 +1084,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     )}
 
                     {/* ── PG & PGK: A-D combo options grid ── */}
-                    {(type === "pg" || (type === "pgk" && !soal.jawabanPGK)) && soal.options && soal.options.length > 0 && (
+                    {type === "pg" && soal.options && soal.options.length > 0 && (
                       <div className={`px-5 pb-3 grid gap-2 ${soal.optionsJsx ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2"}`}>
                         {soal.options.map((opt, j) => {
                           const letter = optionLetters[j];
