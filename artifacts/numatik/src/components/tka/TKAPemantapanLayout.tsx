@@ -52,7 +52,6 @@ interface Props {
   soalSvgMap?: Record<string, React.ReactNode>;
   optionSvgMap?: Record<string, React.ReactNode>;
   gambarMap?: Record<number, React.ReactNode>;
-  autoRevealOnAnswer?: boolean;
   showImageSourceLinks?: boolean;
   imageScale?: "default" | "half" | "responsiveHalf";
   imageScaleExceptQuestionNo?: number;
@@ -246,7 +245,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; bor
   },
 };
 
-const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, autoRevealOnAnswer = true, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
+const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
@@ -267,37 +266,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
     if (revealedAnswers.has(soalNo)) return;
     playPopSound();
     setSelectedAnswers(prev => ({ ...prev, [soalNo]: letter }));
-    if (autoRevealOnAnswer) {
-      setRevealedAnswers(prev => {
-        const next = new Set(prev);
-        next.add(soalNo);
-        return next;
-      });
-    }
   };
 
   const handleSelectBS = (soalNo: number, idx: number, val: "B" | "S", count: number) => {
     if (revealedAnswers.has(soalNo)) return;
     playPopSound();
-    const nextAnswers = (() => {
-      const current: ("B" | "S" | null)[] = pgkbsAnswers[soalNo]
-        ? [...pgkbsAnswers[soalNo]]
-        : Array(count).fill(null);
-      current[idx] = val;
-      return current;
-    })();
     setPgkbsAnswers(prev => {
       const current: ("B" | "S" | null)[] = prev[soalNo] ? [...prev[soalNo]] : Array(count).fill(null);
       current[idx] = val;
       return { ...prev, [soalNo]: current };
     });
-    if (autoRevealOnAnswer && nextAnswers.every(answer => answer !== null)) {
-      setRevealedAnswers(prev => {
-        const next = new Set(prev);
-        next.add(soalNo);
-        return next;
-      });
-    }
   };
 
   const handleSelectPGK = (soalNo: number, idx: number) => {
@@ -360,7 +338,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
       : s.type === "pgk" && s.pernyataan
         ? (pgkAnswers[s.no] ?? []).length > 0
         : selectedAnswers[s.no] !== undefined;
-    if (!revealedAnswers.has(s.no) && !(autoRevealOnAnswer && hasAnyAnswer)) return false;
+    if (!hasAnyAnswer && !revealedAnswers.has(s.no)) return false;
     if (s.type === "pgkbs") {
       return (s.jawabanBS?.every((ans, i) => pgkbsAnswers[s.no]?.[i] === ans) ?? false);
     }
@@ -375,8 +353,6 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
 
   const correctCount = latihanDasar.filter(isCorrectForSoal).length;
   const answeredCount = latihanDasar.filter((s) => {
-    if (revealedAnswers.has(s.no)) return true;
-    if (!autoRevealOnAnswer) return false;
     if (s.type === "pgkbs") return (pgkbsAnswers[s.no] ?? []).some(answer => answer !== null);
     if (s.type === "pgk" && s.pernyataan) return (pgkAnswers[s.no] ?? []).length > 0;
     return selectedAnswers[s.no] !== undefined;
@@ -1031,7 +1007,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         {soal.pernyataan.map((p, pi) => {
                           const isSelectedPGK = selectedPGK.includes(pi);
                           const isCorrectPGK = correctPGK.includes(pi);
-                          const isEvaluatedPGK = isRevealed || (autoRevealOnAnswer && isSelectedPGK);
+                          // Evaluate a clicked statement immediately, while keeping
+                          // the full explanation behind the separate reveal button.
+                          const isEvaluatedPGK = isRevealed || isSelectedPGK;
                           return (
                           <button
                             key={pi}
@@ -1091,6 +1069,8 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           const isSelected = selected === letter;
                           const isThisCorrect = letter === soal.jawaban;
 
+                          const isEvaluated = isRevealed || !!selected;
+                          const isCorrectChoiceVisible = isRevealed || (isSelected && isThisCorrect);
                           let optStyle: React.CSSProperties = isLightTheme ? {
                             background: "var(--bg-secondary)",
                             border: "1px solid var(--border)",
@@ -1100,8 +1080,8 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             border: "1px solid rgba(255,255,255,0.1)",
                             color: "rgba(255,255,255,0.7)",
                           };
-                          if (isRevealed) {
-                            if (isThisCorrect) {
+                          if (isEvaluated) {
+                            if (isCorrectChoiceVisible && isThisCorrect) {
                               optStyle = isLightTheme ? {
                                 background: "#dcfce7", border: "1px solid rgba(34,197,94,0.5)", color: "#15803d",
                               } : {
@@ -1151,8 +1131,8 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 }
                                 return <span className="leading-snug">{optionSvgMap?.[opt] ?? contentRenderer(opt.replace(/^[A-E]\.\s*/, ''))}</span>;
                               })()}
-                              {isRevealed && isThisCorrect && <CheckCircle2 className="w-3.5 h-3.5 shrink-0 ml-auto text-green-400" />}
-                              {isRevealed && isSelected && !isThisCorrect && <XCircle className="w-3.5 h-3.5 shrink-0 ml-auto text-red-400" />}
+                              {isCorrectChoiceVisible && isThisCorrect && <CheckCircle2 className="w-3.5 h-3.5 shrink-0 ml-auto text-green-400" />}
+                              {isEvaluated && isSelected && !isThisCorrect && <XCircle className="w-3.5 h-3.5 shrink-0 ml-auto text-red-400" />}
                             </button>
                           );
                         })}
@@ -1175,7 +1155,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           {soal.pernyataan.map((p, pi) => {
                             const userAns = bsArr[pi];
                             const correctAns = soal.jawabanBS?.[pi];
-                            const rowEvaluated = isRevealed || (autoRevealOnAnswer && userAns !== null && userAns !== undefined);
+                             const rowEvaluated = isRevealed || (userAns !== null && userAns !== undefined);
                             const rowCorrect = rowEvaluated && userAns === correctAns;
                             const rowWrong = rowEvaluated && userAns !== correctAns;
 
@@ -1303,7 +1283,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     </div>}
 
                     {/* ── Pembahasan ── */}
-                    {(isRevealed || (autoRevealOnAnswer && hasAnyAnswer)) && soal.pembahasan && (
+                    {isRevealed && soal.pembahasan && (
                       <div className="mx-4 mb-4 space-y-2.5 animate-slide-up">
                         {(soal.jawaban || soal.jawabanBS) && (
                           <div className={`rounded-xl px-4 py-3 flex items-center gap-3 border ${isLightTheme ? "bg-green-50 border-green-300" : "bg-gradient-to-r from-green-900/60 to-emerald-900/30 border-green-500/60"}`}>
