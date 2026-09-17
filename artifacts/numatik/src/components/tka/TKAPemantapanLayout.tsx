@@ -204,7 +204,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; bor
   },
 };
 
-const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, autoRevealOnAnswer = false, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
+const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, autoRevealOnAnswer = true, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
@@ -263,6 +263,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
     playPopSound();
     setPgkAnswers(prev => {
       const current = prev[soalNo] ?? [];
+      if (autoRevealOnAnswer && current.includes(idx)) return prev;
       const next = current.includes(idx)
         ? current.filter(item => item !== idx)
         : [...current, idx].sort((a, b) => a - b);
@@ -313,7 +314,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   };
 
   const isCorrectForSoal = (s: LatihanSoal): boolean => {
-    if (!revealedAnswers.has(s.no)) return false;
+    const hasAnyAnswer = s.type === "pgkbs"
+      ? (pgkbsAnswers[s.no] ?? []).some(answer => answer !== null)
+      : s.type === "pgk" && s.jawabanPGK
+        ? (pgkAnswers[s.no] ?? []).length > 0
+        : selectedAnswers[s.no] !== undefined;
+    if (!revealedAnswers.has(s.no) && !(autoRevealOnAnswer && hasAnyAnswer)) return false;
     if (s.type === "pgkbs") {
       return (s.jawabanBS?.every((ans, i) => pgkbsAnswers[s.no]?.[i] === ans) ?? false);
     }
@@ -326,7 +332,13 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   };
 
   const correctCount = latihanDasar.filter(isCorrectForSoal).length;
-  const answeredCount = revealedAnswers.size;
+  const answeredCount = latihanDasar.filter((s) => {
+    if (revealedAnswers.has(s.no)) return true;
+    if (!autoRevealOnAnswer) return false;
+    if (s.type === "pgkbs") return (pgkbsAnswers[s.no] ?? []).some(answer => answer !== null);
+    if (s.type === "pgk" && s.jawabanPGK) return (pgkAnswers[s.no] ?? []).length > 0;
+    return selectedAnswers[s.no] !== undefined;
+  }).length;
   const conceptTip = title.toLowerCase().includes("rasional")
     ? "Samakan bentuk bilangan terlebih dahulu (pecahan, desimal, atau persen), lalu gunakan operasi dan urutan pengerjaan yang sesuai."
     : "Kenali konsep utama pada soal, tuliskan informasi yang diketahui, lalu pilih operasi atau rumus yang sesuai.";
@@ -976,6 +988,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         {soal.pernyataan.map((p, pi) => {
                           const isSelectedPGK = selectedPGK.includes(pi);
                           const isCorrectPGK = soal.jawabanPGK?.includes(pi) ?? false;
+                          const isEvaluatedPGK = isRevealed || (autoRevealOnAnswer && isSelectedPGK);
                           return (
                           <button
                             key={pi}
@@ -986,7 +999,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             style={{
                               background: isRevealed
                                 ? isCorrectPGK ? "rgba(34,197,94,0.12)" : isSelectedPGK ? "rgba(239,68,68,0.12)" : "transparent"
-                                : isSelectedPGK ? "rgba(245,158,11,0.14)" : "transparent",
+                                : isSelectedPGK
+                                  ? isCorrectPGK ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)"
+                                  : "transparent",
                               cursor: soal.jawabanPGK && !isRevealed ? "pointer" : "default",
                               color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.8)",
                             }}
@@ -994,17 +1009,17 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             <span aria-hidden="true" className="flex-shrink-0 w-5 h-5 aspect-square rounded-[3px] border flex items-center justify-center text-[10px] font-bold font-display mt-0.5"
                               style={{
                                 background: isSelectedPGK
-                                  ? isRevealed
+                                  ? isEvaluatedPGK
                                     ? isCorrectPGK ? "rgba(34,197,94,0.3)" : "rgba(239,68,68,0.3)"
                                     : "rgba(245,158,11,0.35)"
                                   : "rgba(245,158,11,0.08)",
-                                borderColor: isRevealed && isCorrectPGK ? "rgba(34,197,94,0.6)" : isRevealed && isSelectedPGK ? "rgba(239,68,68,0.6)" : "rgba(245,158,11,0.45)",
-                                color: isRevealed && isCorrectPGK ? "#86efac" : isRevealed && isSelectedPGK ? "#fca5a5" : "#fcd34d",
+                                borderColor: isEvaluatedPGK && isCorrectPGK ? "rgba(34,197,94,0.6)" : isEvaluatedPGK && isSelectedPGK ? "rgba(239,68,68,0.6)" : "rgba(245,158,11,0.45)",
+                                color: isEvaluatedPGK && isCorrectPGK ? "#86efac" : isEvaluatedPGK && isSelectedPGK ? "#fca5a5" : "#fcd34d",
                               }}>
-                              {isSelectedPGK ? "✓" : ""}
+                              {isSelectedPGK ? (isEvaluatedPGK && !isCorrectPGK ? "✗" : "✓") : ""}
                             </span>
                             <span className="min-w-0">{contentRenderer(normalizeStatementText(p))}</span>
-                            {isRevealed && (isCorrectPGK
+                            {isEvaluatedPGK && (isCorrectPGK
                               ? <CheckCircle2 className="w-3.5 h-3.5 ml-auto shrink-0 text-green-400" />
                               : isSelectedPGK
                                 ? <XCircle className="w-3.5 h-3.5 ml-auto shrink-0 text-red-400" />
