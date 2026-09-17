@@ -91,8 +91,18 @@ export const RangkumanSection: React.FC<RangkumanSectionProps> = ({
             <div className="grid grid-cols-1 gap-2">
               {rumus.map((r, i) => (
                 <div key={i} className={`${r.bg} border ${r.border} rounded-xl px-4 py-2`}>
-                  <p className={`font-mono font-bold text-xs mb-1 ${r.labelColor}`}>{r.label}</p>
-                  <div className="overflow-x-auto"><BlockMath math={r.rumus} /></div>
+                  <p
+                    className={`font-mono font-bold text-xs mb-1 ${r.labelColor}`}
+                    style={!isDark ? { color: "#111827" } : undefined}
+                  >
+                    {r.label}
+                  </p>
+                  <div
+                    className="overflow-x-auto"
+                    style={!isDark ? { color: "#111827" } : undefined}
+                  >
+                    <BlockMath math={r.rumus} />
+                  </div>
                 </div>
               ))}
             </div>

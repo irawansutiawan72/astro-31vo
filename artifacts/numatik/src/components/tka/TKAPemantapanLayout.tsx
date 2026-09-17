@@ -487,9 +487,18 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           return (
                             <div key={i} className="my-4 flex justify-center">
                               <div className="min-w-[220px] rounded-xl border-2 border-amber-400/60 bg-amber-400/10 px-6 py-4 text-center">
-                                <div className="mb-3 text-xs font-bold uppercase tracking-widest text-amber-300">{formulaBoxMatch[1]}</div>
+                                <div
+                                  className={`mb-3 text-xs font-bold uppercase tracking-widest ${isLightTheme ? "text-gray-900" : "text-amber-300"}`}
+                                >
+                                  {formulaBoxMatch[1]}
+                                </div>
                                 {formulaBoxMatch[2].split('|').map((formula, formulaIndex) => (
-                                  <div key={formulaIndex} className="mb-1 text-base font-semibold text-white">{contentRenderer(formula)}</div>
+                                  <div
+                                    key={formulaIndex}
+                                    className={`mb-1 text-base font-semibold ${isLightTheme ? "text-gray-900" : "text-white"}`}
+                                  >
+                                    {contentRenderer(formula)}
+                                  </div>
                                 ))}
                               </div>
                             </div>
@@ -509,11 +518,15 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                   <div className="h-px flex-1 max-w-[40px]"
                                     style={{ background: "rgba(245,158,11,0.4)" }} />
                                   <span className="text-[9px] font-bold tracking-widest uppercase"
-                                    style={{ color: "#fbbf24" }}>⭐ Rumus Penting</span>
+                                    style={{ color: isLightTheme ? "#111827" : "#fbbf24" }}>⭐ Rumus Penting</span>
                                   <div className="h-px flex-1 max-w-[40px]"
                                     style={{ background: "rgba(245,158,11,0.4)" }} />
                                 </div>
-                                <span className="text-base font-bold text-white">{contentRenderer(trimmed)}</span>
+                                <span
+                                  className={`text-base font-bold ${isLightTheme ? "text-gray-900" : "text-white"}`}
+                                >
+                                  {contentRenderer(trimmed)}
+                                </span>
                               </div>
                             </div>
                           );
