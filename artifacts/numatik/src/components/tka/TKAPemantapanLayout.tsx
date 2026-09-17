@@ -220,6 +220,17 @@ const getPgkCorrectIndices = (soal: LatihanSoal) => {
     }
   }
 
+  // Some older options omit parentheses: "B. 1 dan 2" or
+  // "C. 1, 2, dan 4". The option contains only statement numbers, so
+  // collecting its standalone numbers is safe and keeps those checkboxes
+  // interactive as well.
+  if (indices.size === 0) {
+    for (const match of source.matchAll(/\b(\d+)\b/g)) {
+      const value = Number(match[1]) - 1;
+      if (value >= 0 && value < soal.pernyataan.length) indices.add(value);
+    }
+  }
+
   return [...indices].sort((a, b) => a - b);
 };
 
@@ -1015,7 +1026,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             key={pi}
                             type="button"
                             disabled={isRevealed}
-                            onClick={() => correctPGK.length > 0 && handleSelectPGK(soal.no, pi)}
+                            onClick={() => handleSelectPGK(soal.no, pi)}
                             className="w-full min-w-0 flex items-start gap-2 text-left text-xs font-body leading-relaxed rounded-lg px-2 py-1 transition-colors"
                             style={{
                               background: isRevealed
@@ -1023,7 +1034,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 : isSelectedPGK
                                   ? isCorrectPGK ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)"
                                   : "transparent",
-                              cursor: correctPGK.length > 0 && !isRevealed ? "pointer" : "default",
+                              cursor: !isRevealed ? "pointer" : "default",
                               color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.8)",
                             }}
                           >
