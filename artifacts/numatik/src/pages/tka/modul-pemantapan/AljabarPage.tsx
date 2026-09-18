@@ -338,7 +338,7 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 31, type: "pgk",
-    soal: "Suatu daerah persegi panjang dibagi menjadi 4 sub-daerah (I, II, III, dan IV) dengan panjang komponen sisinya masing-masing $x$ dan $5$ pada sisi panjang, serta $x$ dan $2$ pada sisi lebar.\n\nPilihlah semua pernyataan yang benar terkait luas daerah tersebut!",
+    soal: "Sebuah persegi panjang memiliki panjang $(x+5)$ dan lebar $(x+2)$. Persegi panjang itu dibagi menjadi kisi 2 × 2: baris atas memiliki tinggi $x$, baris bawah memiliki tinggi $2$, sedangkan kolom kiri memiliki lebar $x$ dan kolom kanan memiliki lebar $5$. Daerah I adalah kiri atas, daerah II kanan atas, daerah III kiri bawah, dan daerah IV kanan bawah.\n\nPilihlah semua pernyataan yang benar terkait luas daerah tersebut!",
     pernyataan: [
       "Luas daerah I adalah $x^2$.",
       "Luas daerah II adalah $5x$.",

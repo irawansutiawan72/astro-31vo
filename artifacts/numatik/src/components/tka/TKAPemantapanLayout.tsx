@@ -607,6 +607,10 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                 const selected = selectedContohAnswers[soal.no];
                 const bsArr = pgkbsContohAnswers[soal.no] ?? Array(soal.pernyataan?.length ?? 3).fill(null);
                 const typeBadge = TYPE_BADGE[type];
+                const correctContohPGK = getPgkCorrectIndices(soal);
+                const pgkAnswerLabel = type === "pgk" && correctContohPGK.length > 0
+                  ? correctContohPGK.map(index => `(${index + 1})`).join(", ")
+                  : "";
                 const diagram = soal.gambar
                   ?? (soal.soalSvg && soalSvgMap?.[soal.soalSvg])
                   ?? (typeof gambarMap?.[soal.no] === "string"
@@ -814,7 +818,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── Pembahasan: selalu ditampilkan pada Contoh Soal ── */}
                     {soal.pembahasan && (
                       <div className="mx-4 mb-4 space-y-2.5">
-                        {(soal.jawaban || soal.jawabanBS) && (
+                        {(soal.jawaban || soal.jawabanBS || pgkAnswerLabel) && (
                           <div className={`rounded-xl px-4 py-3 flex items-center gap-3 border ${isLightTheme ? "bg-green-50 border-green-300" : "bg-gradient-to-r from-green-900/60 to-emerald-900/30 border-green-500/60"}`}>
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-base border ${isLightTheme ? "bg-green-100 border-green-300" : "bg-green-500/20 border-green-400/40"}`}>
                               <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -822,7 +826,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             <div>
                               <p className={`text-[9px] font-bold uppercase tracking-widest mb-0.5 ${isLightTheme ? "text-green-600" : "text-green-400"}`}>① Jawaban</p>
                               <div className={`font-bold text-xs leading-snug ${isLightTheme ? "text-green-800" : "text-green-200"}`}>
-                                {soal.jawaban ? soal.jawaban : soal.jawabanBS?.map((ans, i) => <span key={i} className="mr-2">({i + 1}) {ans}</span>)}
+                                {soal.jawaban
+                                  ? <>
+                                      {soal.jawaban}
+                                      {type === "pgk" && pgkAnswerLabel && !soal.jawaban.toLowerCase().includes("pernyataan") && (
+                                        <span className="font-normal"> — pernyataan {pgkAnswerLabel} benar</span>
+                                      )}
+                                    </>
+                                  : type === "pgk" && pgkAnswerLabel
+                                    ? <>Pernyataan {pgkAnswerLabel} benar</>
+                                    : soal.jawabanBS?.map((ans, i) => <span key={i} className="mr-2">({i + 1}) {ans}</span>)}
                               </div>
                             </div>
                           </div>
@@ -914,6 +927,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       && selectedPGK.every(index => correctPGK.includes(index))
                   : selected === soal.jawaban;
                 const typeBadge = TYPE_BADGE[type];
+                const pgkAnswerLabel = type === "pgk" && correctPGK.length > 0
+                  ? correctPGK.map(index => `(${index + 1})`).join(", ")
+                  : "";
                 const conceptPembahasan = soal.pembahasan
                   ? getPembahasanPart(soal.pembahasan, "Konsep & Trik", ["Step-by-Step Penyelesaian", "Tips", "Kesimpulan"])
                   : "";
@@ -1015,6 +1031,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── PGK: checkbox statement list ── */}
                     {(type === "pgk") && soal.pernyataan && (
                       <div className="px-5 pb-2 space-y-1.5 ml-11 min-w-0">
+                        <div
+                          className="rounded-lg px-3 py-2 mb-2 text-[11px] font-body leading-relaxed"
+                          style={{
+                            color: isLightTheme ? "#92400e" : "rgba(253,230,138,0.9)",
+                            background: isLightTheme ? "#fffbeb" : "rgba(245,158,11,0.08)",
+                            border: isLightTheme ? "1px solid #fcd34d" : "1px solid rgba(245,158,11,0.25)",
+                          }}
+                        >
+                          Pilih semua box pernyataan yang benar. Jawaban PG Kompleks dapat lebih dari satu.
+                        </div>
                         {soal.pernyataan.map((p, pi) => {
                           const isSelectedPGK = selectedPGK.includes(pi);
                           const isCorrectPGK = correctPGK.includes(pi);
