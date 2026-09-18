@@ -162,18 +162,18 @@ const latihanDasar: LatihanSoal[] = [
     soal: "Perhatikan pertidaksamaan $6x - 4 \\geq 20 + 8x$. Pernyataan-pernyataan berikut berkaitan dengan penyelesaiannya.",
     pernyataan: [
       "Setelah pengelompokan suku, diperoleh $-2x \\geq 24$.",
-      "Ketika membagi kedua ruas dengan $-2$, tanda pertidaksamaan harus dibalik menjadi $x \\leq -12$.",
+      "Ketika membagi kedua ruas dengan $-2$, tanda pertidaksamaan harus dibalik menjadi $x \\geq -12$.",
       "Nilai $x = -12$ memenuhi pertidaksamaan tersebut.",
       "Nilai $x = -11$ termasuk dalam himpunan penyelesaian.",
     ],
     options: [
-      "A. 1 dan 2",
+      "A. 1 dan 3",
       "B. 1 dan 4",
       "C. 2 dan 4",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Langkah penyelesaian:\n$6x - 4 \\geq 20 + 8x$\n$6x - 8x \\geq 20 + 4$\n$-2x \\geq 24$ → Pernyataan (1) BENAR\nBagi dengan $-2$ (negatif) → tanda dibalik: $x \\leq -12$ → Pernyataan (2) BENAR\nCek $x = -12$: $6(-12)-4 = -76$; $20+8(-12) = -76$. $-76 \\geq -76$ ✓ → Pernyataan (3) BENAR\nCek $x = -11$: $-11 > -12$, tidak memenuhi $x \\leq -12$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "A",
+    pembahasan: "Langkah penyelesaian:\n$6x - 4 \\geq 20 + 8x$\n$6x - 8x \\geq 20 + 4$\n$-2x \\geq 24$ → Pernyataan (1) BENAR.\n\nBagi dengan $-2$ (negatif), tanda harus dibalik sehingga diperoleh $x \\leq -12$, bukan $x \\geq -12$ → Pernyataan (2) SALAH.\n\nCek $x=-12$: $6(-12)-4=-76$ dan $20+8(-12)=-76$, sehingga memenuhi → Pernyataan (3) BENAR.\nCek $x=-11$: karena $-11>-12$, nilai ini tidak memenuhi $x\\leq-12$ → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 3 → Jawaban A",
   },
 
   // ── No. 3 — PGKBS ───────────────────────────────────────────────────────────
@@ -205,17 +205,17 @@ const latihanDasar: LatihanSoal[] = [
     pernyataan: [
       "Mengalikan kedua ruas dengan 2 menghasilkan $x - 6 = 4 + 6x$.",
       "Koefisien $x$ setelah pengelompokan suku adalah $-5$.",
-      "Penyelesaian persamaan adalah $x = -2$.",
+      "Penyelesaian persamaan adalah $x = -3$.",
       "Nilai $x + 5 = -7$ untuk nilai $x$ yang diperoleh.",
     ],
     options: [
-      "A. 1 dan 4",
-      "B. 2 dan 4",
+      "A. 1 dan 2",
+      "B. 1 dan 4",
       "C. 1, 2, dan 3",
       "D. 2, 3, dan 4",
     ],
-    jawaban: "C",
-    pembahasan: "Kalikan 2: $x - 6 = 4 + 6x$ → Pernyataan (1) BENAR\nKelompokkan: $x - 6x = 4 + 6$ → $-5x = 10$ → koefisien $-5$ → Pernyataan (2) BENAR\n$x = -2$ → Pernyataan (3) BENAR\n$x + 5 = -2 + 5 = 3 \\neq -7$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban C",
+    jawaban: "A",
+    pembahasan: "Kalikan kedua ruas dengan 2:\n$x - 6 = 4 + 6x$ → Pernyataan (1) BENAR.\n\nKelompokkan suku:\n$x-6x=4+6 \\Rightarrow -5x=10$, sehingga koefisien $x$ adalah $-5$ → Pernyataan (2) BENAR.\n\nDari $-5x=10$ diperoleh $x=-2$, bukan $x=-3$ → Pernyataan (3) SALAH.\nUntuk $x=-2$, $x+5=3$, bukan $-7$ → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 2 → Jawaban A",
   },
 
   // ── No. 6 — PGKBS ───────────────────────────────────────────────────────────
@@ -246,9 +246,9 @@ const latihanDasar: LatihanSoal[] = [
     soal: "Perhatikan persamaan $\\dfrac{x + 3}{2} - \\dfrac{x - 1}{4} = 3$. Pernyataan-pernyataan berikut berkaitan dengan penyelesaiannya.",
     pernyataan: [
       "KPK dari penyebut 2 dan 4 pada persamaan tersebut adalah 4.",
-      "Setelah mengalikan dengan KPK, diperoleh $2(x + 3) - (x - 1) = 12$.",
-      "Penyelesaian persamaan tersebut adalah $x = 5$.",
-      "Nilai $\\dfrac{x - 1}{4}$ untuk nilai $x$ yang diperoleh adalah 2.",
+      "Setelah mengalikan dengan KPK, diperoleh $2(x + 3) - (x - 1) = 8$.",
+      "Penyelesaian persamaan tersebut adalah $x = 4$.",
+      "Nilai $\\dfrac{x - 1}{4}$ untuk nilai $x$ yang diperoleh adalah 1.",
     ],
     options: [
       "A. 1 dan 4",
@@ -256,8 +256,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 1, 2, dan 3",
       "D. 2, 3, dan 4",
     ],
-    jawaban: "C",
-    pembahasan: "KPK(2, 4) = 4 → Pernyataan (1) BENAR\nKalikan 4: $2(x+3) - (x-1) = 12$ → Pernyataan (2) BENAR\n$2x + 6 - x + 1 = 12 \\Rightarrow x + 7 = 12 \\Rightarrow x = 5$ → Pernyataan (3) BENAR\n$\\frac{5-1}{4} = \\frac{4}{4} = 1 \\neq 2$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban C",
+    jawaban: "A",
+    pembahasan: "KPK(2,4)=4 → Pernyataan (1) BENAR.\n\nSetelah kedua ruas dikalikan 4, diperoleh $2(x+3)-(x-1)=12$, bukan $8$ → Pernyataan (2) SALAH.\n\nSederhanakan persamaan yang benar:\n$2x+6-x+1=12 \\Rightarrow x+7=12 \\Rightarrow x=5$, bukan $4$ → Pernyataan (3) SALAH.\n\nUntuk $x=5$, $\\frac{x-1}{4}=\\frac{4}{4}=1$ → Pernyataan (4) BENAR.\n\nPernyataan yang benar adalah 1 dan 4 → Jawaban A",
   },
 
   // ── No. 9 — PGKBS ───────────────────────────────────────────────────────────
@@ -294,17 +294,17 @@ const latihanDasar: LatihanSoal[] = [
     pernyataan: [
       "Jika harga bolpoin $x$ rupiah, maka harga buku $(x + 4.000)$ rupiah.",
       "Model matematika yang tepat adalah $3x + 8.000 = 26.000$.",
-      "Harga bolpoin adalah Rp6.000,00.",
+      "Harga bolpoin adalah Rp7.000,00.",
       "Harga buku adalah Rp12.000,00.",
     ],
     options: [
-      "A. 1 dan 4",
+      "A. 1 dan 2",
       "B. 2 dan 4",
       "C. 1, 2, dan 3",
       "D. 1, 3, dan 4",
     ],
-    jawaban: "C",
-    pembahasan: "Harga buku = $x + 4.000$ → Pernyataan (1) BENAR\n$2(x + 4.000) + x = 26.000 \\Rightarrow 3x + 8.000 = 26.000$ → Pernyataan (2) BENAR\n$3x = 18.000 \\Rightarrow x = 6.000$ → harga bolpoin Rp6.000 → Pernyataan (3) BENAR\nHarga buku $= 6.000 + 4.000 = 10.000 \\neq 12.000$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban C",
+    jawaban: "A",
+    pembahasan: "Harga buku $=x+4.000$ → Pernyataan (1) BENAR.\n\nModel pembelian:\n$2(x+4.000)+x=26.000 \\Rightarrow 3x+8.000=26.000$ → Pernyataan (2) BENAR.\n\n$3x=18.000 \\Rightarrow x=6.000$, sehingga harga bolpoin Rp6.000,00, bukan Rp7.000,00 → Pernyataan (3) SALAH.\nHarga buku $=6.000+4.000=10.000$, bukan Rp12.000,00 → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 2 → Jawaban A",
   },
 
   // ── No. 12 — PGKBS ──────────────────────────────────────────────────────────
@@ -339,7 +339,7 @@ const latihanDasar: LatihanSoal[] = [
     no: 14, type: "pgk",
     soal: "Jumlah tiga bilangan ganjil berurutan adalah 45. Pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
     pernyataan: [
-      "Jika bilangan tengah adalah $n$, maka persamaannya adalah $3n = 45$.",
+      "Jika bilangan terkecil adalah $n$, maka persamaannya adalah $3n = 45$.",
       "Bilangan tengah dari ketiga bilangan tersebut adalah 15.",
       "Tiga bilangan ganjil berurutan tersebut adalah 13, 15, dan 17.",
       "Jumlah bilangan terbesar dan terkecil adalah 32.",
@@ -350,8 +350,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 2 dan 3",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Misalkan tiga bilangan: $(n-2), n, (n+2)$\nJumlah: $3n = 45 \\Rightarrow n = 15$ → Pernyataan (1) dan (2) BENAR\nBilangan: 13, 15, 17 → Pernyataan (3) BENAR\nTerbesar + terkecil $= 17 + 13 = 30 \\neq 32$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "C",
+    pembahasan: "Misalkan bilangan tengah adalah $n$. Karena bilangan-bilangannya ganjil berurutan, ketiganya dapat ditulis sebagai $(n-2), n, (n+2)$.\nJumlahnya $3n=45 \\Rightarrow n=15$.\n\nPernyataan (1) SALAH karena jika $n$ menyatakan bilangan terkecil, jumlahnya bukan $3n$; bentuknya harus $n+(n+2)+(n+4)=45$.\nPernyataan (2) BENAR karena bilangan tengah adalah $15$.\nPernyataan (3) BENAR karena bilangannya $13,15,17$.\nPernyataan (4) SALAH karena $17+13=30$, bukan $32$.\n\nPernyataan yang benar adalah 2 dan 3 → Jawaban C",
   },
 
   // ── No. 15 — PGKBS ──────────────────────────────────────────────────────────
@@ -387,18 +387,18 @@ const latihanDasar: LatihanSoal[] = [
     soal: "Kebun Pak Hartono berbentuk persegi panjang. Panjang dan lebarnya berturut-turut dinyatakan sebagai $(4x - 10)$ meter dan $(3x - 5)$ meter. Jika keliling kebun $110$ meter, pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
     pernyataan: [
       "Persamaan yang terbentuk adalah $2\\big((4x - 10) + (3x - 5)\\big)=110$.",
-      "Nilai $x$ yang memenuhi adalah $x = 10$.",
+      "Nilai $x$ yang memenuhi adalah $x = 11$.",
       "Panjang kebun Pak Hartono adalah $30$ meter.",
       "Lebar kebun Pak Hartono adalah $20$ meter.",
     ],
     options: [
       "A. 1 dan 4",
-      "B. 1 dan 2",
+      "B. 1 dan 3",
       "C. 2, 3, dan 4",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Gunakan rumus keliling persegi panjang:\n$2\\big((4x - 10)+(3x - 5)\\big)=110$\n$2(7x-15)=110$\n$14x-30=110 \\Rightarrow 14x=140 \\Rightarrow x=10$.\nJadi, pernyataan (1) dan (2) BENAR.\n\nPanjang $=4(10)-10=30$ meter → Pernyataan (3) BENAR.\nLebar $=3(10)-5=25$ meter, bukan $20$ meter → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1, 2, dan 3 → Jawaban D",
+    jawaban: "B",
+    pembahasan: "Gunakan rumus keliling persegi panjang:\n$2\\big((4x - 10)+(3x - 5)\\big)=110$\n$2(7x-15)=110$\n$14x-30=110 \\Rightarrow 14x=140 \\Rightarrow x=10$.\nJadi, pernyataan (1) BENAR, sedangkan pernyataan (2) SALAH karena nilai $x$ adalah $10$, bukan $11$.\n\nPanjang $=4(10)-10=30$ meter → Pernyataan (3) BENAR.\nLebar $=3(10)-5=25$ meter, bukan $20$ meter → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 3 → Jawaban B",
   },
 
   // ── No. 18 — PGKBS ──────────────────────────────────────────────────────────
@@ -430,17 +430,17 @@ const latihanDasar: LatihanSoal[] = [
     pernyataan: [
       "Pertidaksamaan yang terbentuk adalah $28x - 28 \\geq 140$.",
       "Nilai $x$ yang memenuhi adalah $x \\geq 6$.",
-      "Panjang taman $(p)$ yang memenuhi adalah $p \\geq 50$ meter.",
+      "Panjang taman $(p)$ yang memenuhi adalah $p \\leq 50$ meter.",
       "Lebar taman $(6x - 16)$ untuk nilai $x = 6$ adalah 22 meter.",
     ],
     options: [
-      "A. 2 dan 4",
+      "A. 1 dan 2",
       "B. 1 dan 3",
       "C. 1, 2, dan 4",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "$2[(8x+2)+(6x-16)] \\geq 140$\n$2(14x-14) \\geq 140 \\Rightarrow 28x - 28 \\geq 140$ → Pernyataan (1) BENAR\n$28x \\geq 168 \\Rightarrow x \\geq 6$ → Pernyataan (2) BENAR\n$p = 8x+2 \\geq 8(6)+2 = 50$ meter → Pernyataan (3) BENAR\nLebar $= 6(6)-16 = 36-16 = 20 \\neq 22$ meter → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "A",
+    pembahasan: "$2[(8x+2)+(6x-16)] \\geq 140$\n$2(14x-14) \\geq 140 \\Rightarrow 28x - 28 \\geq 140$ → Pernyataan (1) BENAR.\n\n$28x \\geq 168 \\Rightarrow x \\geq 6$ → Pernyataan (2) BENAR.\n\nKarena $x\\geq6$, panjang $p=8x+2\\geq8(6)+2=50$ meter, bukan $p\\leq50$ → Pernyataan (3) SALAH.\nLebar saat $x=6$ adalah $6(6)-16=20$, bukan $22$ meter → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 2 → Jawaban A",
   },
 
   // ── No. 21 — PGKBS ──────────────────────────────────────────────────────────
@@ -461,7 +461,7 @@ const latihanDasar: LatihanSoal[] = [
     no: 23, type: "pgk",
     soal: "Perhatikan pertidaksamaan $\\dfrac{1}{2}(2x - 6) \\geq \\dfrac{1}{3}(x - 4)$. Pernyataan-pernyataan berikut berkaitan dengan penyelesaiannya.",
     pernyataan: [
-      "Penyederhanaan ruas kiri menghasilkan $x - 3$.",
+      "Penyederhanaan ruas kiri menghasilkan $x - 2$.",
       "Mengalikan kedua ruas dengan 3 menghasilkan $3(x - 3) \\geq x - 4$.",
       "Penyelesaian pertidaksamaan adalah $x \\geq \\dfrac{5}{2}$.",
       "Nilai $x = 2$ (bilangan bulat) memenuhi pertidaksamaan tersebut.",
@@ -469,11 +469,11 @@ const latihanDasar: LatihanSoal[] = [
     options: [
       "A. 1 dan 4",
       "B. 2 dan 4",
-      "C. 1 dan 3",
+      "C. 2 dan 3",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "$\\frac{1}{2}(2x-6) = x - 3$ → Pernyataan (1) BENAR\nKalikan 3: $3(x-3) \\geq x - 4$ → Pernyataan (2) BENAR\n$3x - 9 \\geq x - 4 \\Rightarrow 2x \\geq 5 \\Rightarrow x \\geq \\frac{5}{2}$ → Pernyataan (3) BENAR\nUji $x = 2$: $2 < 2{,}5$, tidak memenuhi $x \\geq \\frac{5}{2}$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "C",
+    pembahasan: "$\\frac{1}{2}(2x-6)=x-3$, bukan $x-2$ → Pernyataan (1) SALAH.\n\nKalikan kedua ruas dengan 3:\n$3(x-3)\\geq x-4$ → Pernyataan (2) BENAR.\n\n$3x-9\\geq x-4 \\Rightarrow 2x\\geq5 \\Rightarrow x\\geq\\frac{5}{2}$ → Pernyataan (3) BENAR.\n\nUntuk $x=2$, ruas kiri $=-2$ sedangkan ruas kanan $=-\\frac{2}{3}$, sehingga $-2\\not\\geq-\\frac{2}{3}$ → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 2 dan 3 → Jawaban C",
   },
 
   // ── No. 24 — PG ─────────────────────────────────────────────────────────────
@@ -491,7 +491,7 @@ const latihanDasar: LatihanSoal[] = [
     soal: "Diberikan persamaan $9x - 4 = 5x + 12$. Pernyataan-pernyataan berikut berkaitan dengan penyelesaian dan nilai-nilai turunannya.",
     pernyataan: [
       "Nilai $x$ yang memenuhi persamaan tersebut adalah $x = 4$.",
-      "Nilai $x + 7 = 11$ untuk penyelesaian yang diperoleh.",
+      "Nilai $x + 7 = 12$ untuk penyelesaian yang diperoleh.",
       "Nilai $2x - 3 = 5$ untuk penyelesaian yang diperoleh.",
       "Nilai $x^2 - 5 = 9$ untuk penyelesaian yang diperoleh.",
     ],
@@ -501,8 +501,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 1 dan 3",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "$9x - 4 = 5x + 12 \\Rightarrow 4x = 16 \\Rightarrow x = 4$ → Pernyataan (1) BENAR\n$x + 7 = 4 + 7 = 11$ → Pernyataan (2) BENAR\n$2x - 3 = 8 - 3 = 5$ → Pernyataan (3) BENAR\n$x^2 - 5 = 16 - 5 = 11 \\neq 9$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "C",
+    pembahasan: "$9x - 4 = 5x + 12 \\Rightarrow 4x = 16 \\Rightarrow x = 4$ → Pernyataan (1) BENAR.\n\n$x+7=4+7=11$, bukan $12$ → Pernyataan (2) SALAH.\n$2x-3=8-3=5$ → Pernyataan (3) BENAR.\n$x^2-5=16-5=11$, bukan $9$ → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1 dan 3 → Jawaban C",
   },
 
   // ── No. 26 — PGKBS ──────────────────────────────────────────────────────────
@@ -533,9 +533,9 @@ const latihanDasar: LatihanSoal[] = [
     soal: "Perhatikan pertidaksamaan $\\dfrac{1}{4}(3x - 8) \\leq \\dfrac{1}{2}(x + 2)$. Pernyataan-pernyataan berikut berkaitan dengan penyelesaiannya.",
     pernyataan: [
       "Mengalikan kedua ruas dengan 4 menghasilkan $3x - 8 \\leq 2(x + 2)$.",
-      "Penyelesaian pertidaksamaan adalah $x \\leq 12$.",
-      "Nilai $x = 13$ tidak memenuhi pertidaksamaan tersebut.",
-      "Himpunan penyelesaian untuk bilangan bulat adalah $\\{13, 14, 15, \\ldots\\}$.",
+      "Penyelesaian pertidaksamaan adalah $x \\geq 12$.",
+      "Nilai $x = 13$ memenuhi pertidaksamaan tersebut.",
+      "Himpunan penyelesaian untuk bilangan bulat adalah $\\{\\ldots, 10, 11, 12\\}$.",
     ],
     options: [
       "A. 1 dan 4",
@@ -543,8 +543,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 1 dan 3",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Kalikan dengan 4: $3x - 8 \\leq 2(x + 2)$ → Pernyataan (1) BENAR\n$3x - 8 \\leq 2x + 4 \\Rightarrow x \\leq 12$ → Pernyataan (2) BENAR\nUji $x = 13$: $13 > 12$, tidak memenuhi → Pernyataan (3) BENAR\nHP bilangan bulat: $\\{\\ldots, 10, 11, 12\\}$, bukan $\\{13, 14, \\ldots\\}$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "A",
+    pembahasan: "Kalikan dengan 4:\n$3x-8\\leq2(x+2)$ → Pernyataan (1) BENAR.\n\n$3x-8\\leq2x+4 \\Rightarrow x\\leq12$, bukan $x\\geq12$ → Pernyataan (2) SALAH.\nUntuk $x=13$, diperoleh $13\\leq12$ yang salah, sehingga $x=13$ tidak memenuhi → Pernyataan (3) SALAH.\n\nHimpunan penyelesaian bilangan bulat adalah $\\{\\ldots,10,11,12\\}$ → Pernyataan (4) BENAR.\n\nPernyataan yang benar adalah 1 dan 4 → Jawaban A",
   },
 
   // ── No. 29 — PGKBS ──────────────────────────────────────────────────────────
@@ -574,10 +574,10 @@ const latihanDasar: LatihanSoal[] = [
     no: 31, type: "pgk",
     soal: "Riko memiliki 5 bilangan ganjil berurutan dengan jumlah 65. Sari memiliki 5 bilangan genap berurutan dengan jumlah 5 lebih banyak dari jumlah bilangan Riko. Pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
     pernyataan: [
-      "Bilangan tengah dari kelima bilangan ganjil berurutan milik Riko adalah 13.",
+      "Bilangan tengah dari kelima bilangan ganjil berurutan milik Riko adalah 15.",
       "Jumlah seluruh bilangan milik Sari adalah 70.",
-      "Selisih bilangan terkecil milik Sari dan terkecil milik Riko adalah 1.",
-      "Bilangan terbesar milik Sari adalah 20.",
+      "Selisih bilangan terkecil milik Sari dan terkecil milik Riko adalah 2.",
+      "Bilangan terbesar milik Sari adalah 18.",
     ],
     options: [
       "A. 1 dan 4",
@@ -585,8 +585,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 1, 2, dan 4",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Misalkan tengah Riko $= n$: $5n = 65 \\Rightarrow n = 13$ → Pernyataan (1) BENAR\nBilangan Riko: 9, 11, 13, 15, 17\nJumlah Sari $= 65 + 5 = 70$ → Pernyataan (2) BENAR; tengah Sari $= m$: $5m = 70 \\Rightarrow m = 14$\nBilangan Sari: 10, 12, 14, 16, 18\nTerkecil Sari $= 10$, terkecil Riko $= 9$; selisih $= 1$ → Pernyataan (3) BENAR\nTerbesar Sari $= 18 \\neq 20$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "B",
+    pembahasan: "Untuk lima bilangan ganjil berurutan, bilangan tengah adalah rata-ratanya:\n$5n=65 \\Rightarrow n=13$. Jadi pernyataan (1) SALAH karena bilangan tengahnya $13$, bukan $15$.\n\nJumlah bilangan Sari $=65+5=70$ → Pernyataan (2) BENAR. Bilangan genap berurutannya adalah $10,12,14,16,18$.\n\nBilangan terkecil Sari $10$ dan terkecil Riko $9$, sehingga selisihnya $1$, bukan $2$ → Pernyataan (3) SALAH.\nBilangan terbesar Sari adalah $18$ → Pernyataan (4) BENAR.\n\nPernyataan yang benar adalah 2 dan 4 → Jawaban B",
   },
 
   // ── No. 32 — PGKBS ──────────────────────────────────────────────────────────
@@ -616,7 +616,7 @@ const latihanDasar: LatihanSoal[] = [
     no: 34, type: "pgk",
     soal: "Umur kakak $k$ tahun, sedangkan kakak 8 tahun lebih tua dari adik. Jumlah umur keduanya adalah 48 tahun. Pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
     pernyataan: [
-      "Model matematika dari situasi tersebut adalah $2k - 8 = 48$.",
+      "Model matematika dari situasi tersebut adalah $2k + 8 = 48$.",
       "Umur kakak saat ini adalah 28 tahun.",
       "Umur adik saat ini adalah 20 tahun.",
       "Empat tahun yang lalu, umur kakak adalah 26 tahun.",
@@ -627,8 +627,8 @@ const latihanDasar: LatihanSoal[] = [
       "C. 2 dan 3",
       "D. 1, 2, dan 3",
     ],
-    jawaban: "D",
-    pembahasan: "Umur adik $= k - 8$\n$k + (k - 8) = 48 \\Rightarrow 2k - 8 = 48$ → Pernyataan (1) BENAR\n$2k = 56 \\Rightarrow k = 28$ → Pernyataan (2) BENAR\nAdik $= 28 - 8 = 20$ tahun → Pernyataan (3) BENAR\nEmpat tahun lalu: $28 - 4 = 24 \\neq 26$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    jawaban: "C",
+    pembahasan: "Umur adik $=k-8$, sehingga model yang benar adalah $k+(k-8)=48 \\Rightarrow 2k-8=48$, bukan $2k+8=48$ → Pernyataan (1) SALAH.\n\n$2k=56 \\Rightarrow k=28$ → Pernyataan (2) BENAR.\nUmur adik $=28-8=20$ tahun → Pernyataan (3) BENAR.\nEmpat tahun lalu umur kakak $=28-4=24$, bukan $26$ → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 2 dan 3 → Jawaban C",
   },
 
   // ── No. 35 — PGKBS ──────────────────────────────────────────────────────────
