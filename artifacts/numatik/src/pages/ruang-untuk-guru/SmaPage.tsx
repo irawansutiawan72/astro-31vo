@@ -14,7 +14,7 @@ import { playPopSound } from "@/hooks/useAudio";
 
 const smaMenuItems = [
   {
-    label: "BUKU ANIMASI",
+    label: "BUKU ANIMASI MATEMATIKA",
     icon: BookOpen,
     path: "/ruang-untuk-guru/sma/buku-animasi",
     desc: "Pelajari konsep matematika secara visual dan interaktif",

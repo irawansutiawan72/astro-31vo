@@ -159,6 +159,8 @@ const GuruLayout = lazy(() => import("./components/GuruLayout"));
 const RuangUntukGuruPage = lazy(() => import("./pages/RuangUntukGuruPage"));
 const SmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPage"));
 const SmaComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaComingSoonPage"));
+const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMenuPage"));
+const SmaSubtopicComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSubtopicComingSoonPage"));
 const NumatikGamePage = lazy(() => import("./pages/ruang-untuk-guru/NumatikGamePage"));
 const KeyakinanKelasPage = lazy(() => import("./pages/ruang-untuk-guru/KeyakinanKelasPage"));
 const PenilaianPembelajaranPage = lazy(() => import("./pages/ruang-untuk-guru/PenilaianPembelajaranPage"));
@@ -1110,8 +1112,9 @@ const AppInner = () => {
           <Route element={<GuruLayout />}>
             <Route path="/ruang-untuk-guru" element={<RuangUntukGuruPage />} />
             <Route path="/ruang-untuk-guru/sma" element={<SmaPage />} />
-            <Route path="/ruang-untuk-guru/sma/buku-animasi" element={<SmaComingSoonPage />} />
-            <Route path="/ruang-untuk-guru/sma/tugas-latihan-mandiri" element={<SmaComingSoonPage />} />
+            <Route path="/ruang-untuk-guru/sma/:mode" element={<SmaTopicMenuPage />} />
+            <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug" element={<SmaTopicMenuPage />} />
+            <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/tes-kemampuan-akademik" element={<SmaComingSoonPage />} />
             <Route path="/ruang-untuk-guru/exam-browser" element={<ExamBrowserComingSoonPage />} />

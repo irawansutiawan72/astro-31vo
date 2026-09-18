@@ -1,0 +1,103 @@
+•	Eksponen dan Logaritma 
+o	Sifat-sifat Eksponen (Bilangan Berpangkat) 
+o	Pertumbuhan dan Peluruhan Eksponensial 
+o	Bentuk Akar dan Merasionalkan Penyebut 
+o	Konsep dan Sifat-sifat Logaritma 
+•	Barisan dan Deret 
+o	Barisan dan Deret Aritmatika 
+o	Barisan dan Deret Geometri 
+o	Deret Geometri Tak Hingga 
+•	Vektor dan Operasinya 
+o	Konsep Dasar Vektor (Notasi, Panjang, dan Arah Vektor) 
+o	Operasi Vektor secara Geometris (Segitiga, Jajar Genjang, Poligon)
+o	Vektor pada Sistem Koordinat Kartesius (Komponen Vektor Dimensi 2 & 3) 
+o	Operasi Aljabar pada Vektor
+•	Perbandingan Trigonometri
+o	Perbandingan Trigonometri pada Segitiga Siku-Siku (Sin, Cos, Tan, Sec, Cosec, Cotan)
+o	Sudut-Sudut Istimewa dan Relasi Sudut
+o	Penerapan dan Pemodelan Trigonometri (Aturan Sinus & Cosinus)
+•	Sistem Persamaan dan Pertidaksamaan Linear
+o	Sistem Persamaan Linear Tiga Variabel (SPLTV)
+o	Sistem Pertidaksamaan Linear Dua Variabel (SPtLDV)
+•	Fungsi Kuadrat 
+o	Karakteristik dan Unsur Grafik Fungsi Kuadrat 
+o	Mengkonstruksi/Membentuk Persamaan Fungsi Kuadrat 
+o	Pemecahan Masalah Nyata dengan Fungsi Kuadrat 
+•	Statistika
+o	Penyajian Data (Histogram, Frekuensi Relatif, Ogive) 
+o	Ukuran Pemusatan Data (Mean, Median, Modus) 
+o	Ukuran Penempatan/Penyebaran Data (Kuartil, Jangkauan Interkuartil, Simpangan Baku) 
+•	Peluang 
+o	Ruang Sampel dan Distribusi Peluang Kejadian
+o	Aturan Penjumlahan Peluang (Kejadian Saling Lepas & Tidak Saling Lepas) 
+•	Komposisi Fungsi dan Fungsi Invers 
+o	Konsep Fungsi, Domain, Kodomain, dan Range 
+o	Operasi Aljabar pada Fungsi
+o	Fungsi Komposisi 
+o	Fungsi Invers 
+•	Lingkaran 
+o	Unsur-Unsur Lingkaran, Panjang Busur, dan Luas Juring 
+o	Sudut Pusat dan Sudut Keliling (Sifat Tali Busur) 
+o	Garis Singgung Lingkaran 
+•	Statistika (Data Bivariat) 
+o	Diagram Pencar (Scatter Plot)
+o	Regresi Linear Utama / Metode Kuadrat Terkecil (Least Squares)
+o	Analisis Korelasi (Korelasi Product Moment dan Koefisien Determinasi) 
+•	Bilangan Kompleks (Peminatan MIPA)
+o	Konsep dan Bentuk Bilangan Kompleks (Kartesius, Polar, Eksponensial) 
+o	Operasi Aljabar Bilangan Kompleks 
+o	Konjugat, Modulus, dan Argumen Bilangan Kompleks 
+•	Polinomial (Peminatan MIPA)
+o	Konsep Dasar dan Operasi Aljabar Polinomial
+o	Pembagian Polinomial (Metode Bersusun dan Horner)
+o	Teorema Sisa dan Teorema Faktor 
+o	Persamaan Polinomial dan Teorema Vieta
+•	Matriks (Peminatan MIPA)
+o	Konsep, Jenis, Kesamaan, dan Transpose Matriks 
+o	Operasi Aljabar Matriks (Penjumlahan, Pengurangan, Perkalian)
+o	Determinan dan Invers Matriks 
+o	Penerapan Matriks pada Sistem Persamaan Linear (SPL)
+•	Transformasi Geometri (Peminatan MIPA)
+o	Translasi (Pergeseran) & Refleksi (Pencerminan) 
+o	Rotasi (Perputaran) & Dilatasi (Perbesaran/Pengecilan) 
+o	Transformasi Menggunakan Matriks
+o	Komposisi Transformasi Geometri
+•	Fungsi dan Pemodelannya (Peminatan MIPA)
+o	Fungsi Trigonometri dan Grafiknya 
+o	Fungsi Nilai Mutlak, Fungsi Tangga, dan Fungsi Piecewise 
+o	Pemodelan Fenomena Nyata Menggunakan Fungsi
+•	Geometri Ruang 
+o	Jarak Antartitik, Titik ke Garis, dan Titik ke Bidang
+o	Jarak Antargaris dan Garis ke Bidang
+o	Sudut dalam Ruang (Sudut Antaragaris, Garis-Bidang, dan Bidang-Bidang)
+•	Limit Fungsi
+o	Konsep dan Sifat-Sifat Limit Fungsi Aljabar
+o	Menentukan Nilai Limit Fungsi Aljabar (Metode Subtitusi, Pemfaktoran, Merasionalkan)
+o	Limit Fungsi Tak Hingga ($x \to \infty$)
+•	Turunan Fungsi (Diferensial)
+o	Konsep Turunan dan Sifat-Sifat Turunan Fungsi Aljabar
+o	Penerapan Turunan: Persamaan Garis Singgung Kurva
+o	Fungsi Naik, Fungsi Turun, dan Nilai Stasioner (Maksimum/Minimum)
+•	Integral Fungsi
+o	Konsep Integral Tak Tentu dan Sifat-Sifatnya
+o	Integral Tentu
+o	Penerapan Integral (Luas Daerah di Bawah Kurva)
+•	Limit dan Kontinuitas (Peminatan MIPA)
+o	Limit Fungsi Trigonometri
+o	Limit di Ketakhinggaan Fungsi Aljabar & Trigonometri
+o	Kekontineuan Fungsi
+•	Turunan Fungsi Trigonometri (Peminatan MIPA)
+o	Turunan Fungsi Trigonometri dasar dan aturan rantai
+o	Garis Singgung dan Garis Normal Kurva Trigonometri
+o	Kecekungan Kurva dan Pengaplikasian Turunan Trigonometri
+•	Integral Fungsi Trigonometri & Teknik Pengintegralan (Peminatan MIPA)
+o	Integral Fungsi Trigonometri
+o	Teknik Pengintegralan (Integral Substitusi dan Integral Parsial)
+o	Penerapan Integral: Luas Daerah dan Volume Benda Putar
+•	Irisan Kerucut (Peminatan MIPA)
+o	Parabola, Elips, dan Hiperbola (Persamaan dan Sifat-Sifat Geometrisnya)
+o	Penerapan Irisan Kerucut dalam Kehidupan Nyata
+•	Geometri Analitik / Vektor Dimensi Tiga (Lanjutan) (Peminatan MIPA)
+o	Persamaan Garis dan Bidang Datar dalam Ruang Tiga Dimensi
+o	Aplikasi Vektor pada Pemodelan Geometri Ruang
+
