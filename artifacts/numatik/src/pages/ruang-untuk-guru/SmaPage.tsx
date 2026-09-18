@@ -16,13 +16,13 @@ const smaMenuItems = [
   {
     label: "BUKU ANIMASI",
     icon: BookOpen,
-    path: "/buku-animasi-matematika",
+    path: "/ruang-untuk-guru/sma/buku-animasi",
     desc: "Pelajari konsep matematika secara visual dan interaktif",
   },
   {
     label: "TUGAS-LATIHAN MANDIRI",
     icon: ClipboardList,
-    path: "/latihan-mandiri",
+    path: "/ruang-untuk-guru/sma/tugas-latihan-mandiri",
     desc: "Latihan soal untuk memperkuat pemahaman materi",
   },
   {
@@ -34,13 +34,13 @@ const smaMenuItems = [
   {
     label: "OLIMPIADE MATEMATIKA SMA",
     icon: Medal,
-    path: "/olimpiade",
+    path: "/ruang-untuk-guru/sma/olimpiade",
     desc: "Tantangan matematika untuk mengasah penalaran",
   },
   {
     label: "TES KEMAMPUAN AKADEMIK SMA",
     icon: Brain,
-    path: "/tka",
+    path: "/ruang-untuk-guru/sma/tes-kemampuan-akademik",
     desc: "Uji kemampuan akademik matematika",
   },
 ];
