@@ -190,12 +190,54 @@ const latihanDasar: LatihanSoal[] = [
   },
 
   // ─── 2 · PGK ──────────────────────────────────────────────────────────────
+  {
+    no: 2,
+    type: "pgk",
+    soal: "Diketahui bilangan $a=\\dfrac{3}{4}$, $b=0{,}6$, $c=45\\%$, dan $d=\\dfrac{4}{5}$. Pilihlah semua pernyataan yang benar.",
+    pernyataan: [
+      "$a+b=\\dfrac{27}{20}$",
+      "$d-c=\\dfrac{7}{20}$",
+      "$b\\div c=\\dfrac{4}{3}$",
+      "$a\\times d=\\dfrac{2}{5}$",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (3)",
+      "(1), (3), dan (4)",
+      "(1), (2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 2],
+    pembahasan:
+      "$a=\\frac{3}{4}=0{,}75$, $b=0{,}6=\\frac{3}{5}$, $c=45\\%=\\frac{9}{20}$, dan $d=\\frac{4}{5}$.\n\n" +
+      "(1) $a+b=\\frac{3}{4}+\\frac{3}{5}=\\frac{15+12}{20}=\\frac{27}{20}$ ✓ BENAR\n" +
+      "(2) $d-c=\\frac{4}{5}-\\frac{9}{20}=\\frac{16-9}{20}=\\frac{7}{20}$ ✓ BENAR\n" +
+      "(3) $b\\div c=\\frac{3}{5}\\div\\frac{9}{20}=\\frac{3}{5}\\times\\frac{20}{9}=\\frac{4}{3}$ ✓ BENAR\n" +
+      "(4) $a\\times d=\\frac{3}{4}\\times\\frac{4}{5}=\\frac{3}{5}$, bukan $\\frac{2}{5}$ ✗ SALAH\n\n" +
+      "Jadi pernyataan yang benar adalah (1), (2), dan (3) → B.",
+  },
 
   // ─── 3 · PGKBS ────────────────────────────────────────────────────────────
+  {
+    no: 3,
+    type: "pgkbs",
+    soal: "Ibu Sari memiliki $12\\dfrac{1}{2}$ kg tepung. Sebanyak $\\dfrac{2}{5}$ bagian digunakan untuk membuat kue dan $30\\%$ bagian digunakan untuk membuat roti. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Tepung untuk membuat kue sebanyak $5$ kg.",
+      "Tepung untuk membuat roti sebanyak $3\\dfrac{3}{4}$ kg.",
+      "Sisa tepung setelah membuat kue dan roti adalah $4$ kg.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan:
+      "Ubah jumlah tepung menjadi pecahan biasa: $12\\frac{1}{2}=\\frac{25}{2}$ kg.\n\n" +
+      "(1) Tepung untuk kue $=\\frac{2}{5}\\times\\frac{25}{2}=5$ kg ✓ BENAR\n" +
+      "(2) Tepung untuk roti $=30\\%\\times\\frac{25}{2}=\\frac{3}{10}\\times\\frac{25}{2}=\\frac{15}{4}=3\\frac{3}{4}$ kg ✓ BENAR\n" +
+      "(3) Sisa $=12\\frac{1}{2}-5-3\\frac{3}{4}=3\\frac{3}{4}$ kg, bukan $4$ kg ✗ SALAH",
+  },
 
   // ─── 4 · PG ───────────────────────────────────────────────────────────────
   {
-    no: 2,
+    no: 4,
     type: "pg",
     soal: "Urutan bilangan dari terkecil ke terbesar dari $0,6$ ; $55\\%$ ; $\\dfrac{2}{3}$ ; $0,54$ adalah ...",
     options: [
@@ -214,7 +256,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 5 · PGK ──────────────────────────────────────────────────────────────
   {
-    no: 3,
+    no: 5,
     type: "pgk",
     soal: "Perhatikan pernyataan-pernyataan berikut!",
     pernyataan: [
@@ -230,6 +272,7 @@ const latihanDasar: LatihanSoal[] = [
       "(2), (3), dan (4)",
     ],
     jawaban: "C",
+    jawabanPGK: [0, 1, 2],
     pembahasan:
       "(1) $0,45 < 0,78$ ✓\n" +
       "(2) $0,78 < 0,85$ ✓\n" +
@@ -239,10 +282,25 @@ const latihanDasar: LatihanSoal[] = [
   },
 
   // ─── 6 · PGKBS ────────────────────────────────────────────────────────────
+  {
+    no: 6,
+    type: "pgkbs",
+    soal: "Sebuah toko memberikan diskon $20\\%$ untuk tas seharga Rp250.000,00. Setelah diskon, dikenakan pajak layanan sebesar $10\\%$ dari harga setelah diskon. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Besar diskon adalah Rp50.000,00.",
+      "Harga tas setelah diskon adalah Rp200.000,00.",
+      "Harga yang harus dibayar setelah pajak adalah Rp220.000,00.",
+    ],
+    jawabanBS: ["B", "B", "B"],
+    pembahasan:
+      "(1) Diskon $=20\\%\\times\\text{Rp}250.000,00=\\text{Rp}50.000,00$ ✓ BENAR\n" +
+      "(2) Harga setelah diskon $=\\text{Rp}250.000,00-\\text{Rp}50.000,00=\\text{Rp}200.000,00$ ✓ BENAR\n" +
+      "(3) Pajak $=10\\%\\times\\text{Rp}200.000,00=\\text{Rp}20.000,00$, sehingga total bayar $=\\text{Rp}220.000,00$ ✓ BENAR",
+  },
 
   // ─── 7 · PG ───────────────────────────────────────────────────────────────
   {
-    no: 4,
+    no: 7,
     type: "pg",
     soal: "Hasil dari $\\dfrac{\\dfrac{2}{1} - \\dfrac{3}{4}}{\\dfrac{1}{1} + \\dfrac{4}{2}}$ adalah ...",
     options: [
@@ -260,7 +318,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 8 · PGK ──────────────────────────────────────────────────────────────
   {
-    no: 5,
+    no: 8,
     type: "pgk",
     soal: "Pak Hari mempunyai sejumlah uang. Seperlimanya untuk membeli kaos, duapertiganya untuk membeli baju, dan sisanya Rp60.000,00 untuk membeli topi.\nPerhatikan pernyataan-pernyataan berikut!",
     pernyataan: [
@@ -276,6 +334,7 @@ const latihanDasar: LatihanSoal[] = [
       "(1), (2), (3), dan (4)",
     ],
     jawaban: "C",
+    jawabanPGK: [0, 1, 2],
     pembahasan:
       "(1) $\\frac{1}{5}+\\frac{2}{3}=\\frac{3}{15}+\\frac{10}{15}=\\frac{13}{15}$ ✓\n" +
       "(2) Sisa $=1-\\frac{13}{15}=\\frac{2}{15}$ ✓\n" +
@@ -286,7 +345,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 9 · PGKBS ────────────────────────────────────────────────────────────
   {
-    no: 6,
+    no: 9,
     type: "pgkbs",
     soal: "Ibu membeli gula $6\\frac{2}{3}$ kg. Di rumah masih ada $10\\frac{5}{6}$ kg. Semua gula dimasukkan ke kantong plastik masing-masing $1\\frac{3}{4}$ kg.\nTentukan benar atau salah setiap pernyataan berikut!",
     pernyataan: [
@@ -303,7 +362,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 10 · PG ──────────────────────────────────────────────────────────────
   {
-    no: 7,
+    no: 10,
     type: "pg",
     soal: "Pada kegiatan sosial diterima terigu sebanyak $21\\frac{3}{4}$ kg dan $23\\frac{1}{4}$ kg. Setiap warga menerima $2\\frac{1}{2}$ kg. Banyak warga yang menerima terigu tersebut adalah ...",
     options: ["21 orang", "20 orang", "18 orang", "15 orang"],
@@ -316,26 +375,170 @@ const latihanDasar: LatihanSoal[] = [
   },
 
   // ─── 11 · PGK ─────────────────────────────────────────────────────────────
+  {
+    no: 11,
+    type: "pgk",
+    soal: "Diberikan $P=\\dfrac{5}{6}+\\dfrac{1}{4}$, $Q=\\dfrac{7}{8}-\\dfrac{1}{3}$, $R=\\dfrac{2}{3}\\times\\dfrac{9}{4}$, dan $S=\\dfrac{5}{6}\\div\\dfrac{10}{9}$. Pilihlah semua pernyataan yang benar.",
+    pernyataan: [
+      "$P=\\dfrac{13}{12}$",
+      "$Q=\\dfrac{13}{24}$",
+      "$R=\\dfrac{3}{2}$",
+      "$S=\\dfrac{2}{3}$",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (3)",
+      "(1), (3), dan (4)",
+      "(2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 2],
+    pembahasan:
+      "$P=\\frac{5}{6}+\\frac{1}{4}=\\frac{10}{12}+\\frac{3}{12}=\\frac{13}{12}$ ✓\n" +
+      "$Q=\\frac{7}{8}-\\frac{1}{3}=\\frac{21}{24}-\\frac{8}{24}=\\frac{13}{24}$ ✓\n" +
+      "$R=\\frac{2}{3}\\times\\frac{9}{4}=\\frac{18}{12}=\\frac{3}{2}$ ✓\n" +
+      "$S=\\frac{5}{6}\\div\\frac{10}{9}=\\frac{5}{6}\\times\\frac{9}{10}=\\frac{3}{4}$, bukan $\\frac{2}{3}$ ✗\n\n" +
+      "Pernyataan yang benar adalah (1), (2), dan (3) → B.",
+  },
 
   // ─── 12 · PGKBS ───────────────────────────────────────────────────────────
+  {
+    no: 12,
+    type: "pgkbs",
+    soal: "Sebuah kotak berisi $250$ kelereng. Sebanyak $20\\%$ kelereng berwarna merah dan $\\dfrac{3}{10}$ berwarna biru. Sisanya berwarna hijau. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Kelereng merah berjumlah $50$ buah.",
+      "Kelereng biru berjumlah $75$ buah.",
+      "Kelereng hijau berjumlah $150$ buah.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan:
+      "(1) Merah $=20\\%\\times250=50$ buah ✓ BENAR\n" +
+      "(2) Biru $=\\frac{3}{10}\\times250=75$ buah ✓ BENAR\n" +
+      "(3) Hijau $=250-50-75=125$ buah, bukan $150$ buah ✗ SALAH",
+  },
 
   // ─── 13 · PG ──────────────────────────────────────────────────────────────
+  {
+    no: 13,
+    type: "pg",
+    soal: "Hasil dari $\\dfrac{3}{4}+0{,}35$ adalah ....",
+    options: ["A. $0{,}95$", "B. $1{,}05$", "C. $1{,}10$", "D. $1{,}25$"],
+    jawaban: "C",
+    pembahasan: "$\\frac{3}{4}=0{,}75$, sehingga $0{,}75+0{,}35=1{,}10$, bukan $1{,}05$. Jawaban yang benar adalah C.",
+  },
 
   // ─── 14 · PGK ─────────────────────────────────────────────────────────────
+  {
+    no: 14,
+    type: "pgk",
+    soal: "Diketahui $A=-\\dfrac{3}{4}$, $B=-0{,}7$, $C=\\dfrac{2}{3}$, dan $D=65\\%$. Pilihlah semua pernyataan yang benar.",
+    pernyataan: [
+      "$A<B$",
+      "$B<C$",
+      "$D>C$",
+      "$A+D=-\\dfrac{1}{10}$",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (4)",
+      "(1), (3), dan (4)",
+      "(2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 3],
+    pembahasan:
+      "Ubah ke desimal jika diperlukan: $A=-0{,}75$, $B=-0{,}7$, $C\\approx0{,}667$, dan $D=0{,}65$.\n\n" +
+      "(1) $-0{,}75<-0{,}7$ ✓ BENAR\n" +
+      "(2) $-0{,}7<0{,}667$ ✓ BENAR\n" +
+      "(3) $0{,}65<0{,}667$, sehingga $D>C$ ✗ SALAH\n" +
+      "(4) $A+D=-\\frac{3}{4}+\\frac{13}{20}=-\\frac{15}{20}+\\frac{13}{20}=-\\frac{1}{10}$ ✓ BENAR\n\n" +
+      "Pernyataan yang benar adalah (1), (2), dan (4) → B.",
+  },
 
   // ─── 15 · PGKBS ───────────────────────────────────────────────────────────
+  {
+    no: 15,
+    type: "pgkbs",
+    soal: "Sebuah tangki berkapasitas $15$ liter diisi air hingga $\\dfrac{3}{5}$ bagian. Kemudian $\\dfrac{1}{4}$ dari air di dalam tangki digunakan. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Volume air mula-mula adalah $9$ liter.",
+      "Volume air yang tersisa adalah $6\\dfrac{3}{4}$ liter.",
+      "Volume air yang tersisa sama dengan $\\dfrac{3}{4}$ kapasitas tangki.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan:
+      "(1) Volume mula-mula $=\\frac{3}{5}\\times15=9$ liter ✓ BENAR\n" +
+      "(2) Air yang digunakan $=\\frac{1}{4}\\times9=2\\frac{1}{4}$ liter, sehingga sisa $=9-2\\frac{1}{4}=6\\frac{3}{4}$ liter ✓ BENAR\n" +
+      "(3) Perbandingan sisa terhadap kapasitas $=6\\frac{3}{4}\\div15=\\frac{27}{60}=\\frac{9}{20}$, bukan $\\frac{3}{4}$ ✗ SALAH",
+  },
 
   // ─── 16 · PG ──────────────────────────────────────────────────────────────
+  {
+    no: 16,
+    type: "pg",
+    soal: "Bentuk persen dari $0{,}875$ adalah ....",
+    options: ["A. $0{,}875\\%$", "B. $8{,}75\\%$", "C. $87{,}5\\%$", "D. $875\\%$"],
+    jawaban: "C",
+    pembahasan: "$0{,}875\\times100\\%=87{,}5\\%$. Jadi jawabannya C.",
+  },
 
   // ─── 17 · PGK ─────────────────────────────────────────────────────────────
+  {
+    no: 17,
+    type: "pgk",
+    soal: "Seutas tali panjangnya $6\\dfrac{1}{2}$ m. Tali itu dipotong menjadi dua bagian, masing-masing sepanjang $\\dfrac{3}{4}$ m dan $\\dfrac{2}{5}$ m. Pilihlah semua pernyataan yang benar.",
+    pernyataan: [
+      "Panjang tali mula-mula adalah $\\dfrac{13}{2}$ m.",
+      "Total panjang tali yang dipotong adalah $\\dfrac{23}{20}$ m.",
+      "Sisa tali adalah $5\\dfrac{7}{20}$ m.",
+      "Sisa tali kurang dari $5$ m.",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (3)",
+      "(1), (3), dan (4)",
+      "(2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 2],
+    pembahasan:
+      "$6\\frac{1}{2}=\\frac{13}{2}$ m.\n" +
+      "Total yang dipotong $=\\frac{3}{4}+\\frac{2}{5}=\\frac{15}{20}+\\frac{8}{20}=\\frac{23}{20}$ m.\n" +
+      "Sisa $=\\frac{13}{2}-\\frac{23}{20}=\\frac{130-23}{20}=\\frac{107}{20}=5\\frac{7}{20}$ m.\n\n" +
+      "Jadi (1), (2), dan (3) BENAR, sedangkan sisa lebih dari $5$ m sehingga (4) SALAH → B.",
+  },
 
   // ─── 18 · PGKBS ───────────────────────────────────────────────────────────
+  {
+    no: 18,
+    type: "pgkbs",
+    soal: "Sebuah wadah berkapasitas $15$ liter diisi sampai $\\dfrac{3}{5}$ bagian. Kemudian $\\dfrac{1}{4}$ dari isi wadah digunakan. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Isi wadah mula-mula adalah $9$ liter.",
+      "Sisa isi wadah adalah $6\\dfrac{3}{4}$ liter.",
+      "Sisa isi wadah adalah $\\dfrac{3}{4}$ dari kapasitas wadah.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan:
+      "Isi mula-mula $=\\frac{3}{5}\\times15=9$ liter.\n" +
+      "Yang digunakan $=\\frac{1}{4}\\times9=\\frac{9}{4}=2\\frac{1}{4}$ liter, sehingga sisa $=9-\\frac{9}{4}=\\frac{27}{4}=6\\frac{3}{4}$ liter.\n\n" +
+      "(1) BENAR. (2) BENAR. Untuk (3), sisa dibanding kapasitas $=\\frac{27/4}{15}=\\frac{9}{20}$, bukan $\\frac{3}{4}$, sehingga SALAH.",
+  },
 
   // ─── 19 · PG ──────────────────────────────────────────────────────────────
+  {
+    no: 19,
+    type: "pg",
+    soal: "Hasil dari $\\dfrac{5}{6}-\\dfrac{3}{8}$ adalah ....",
+    options: ["A. $\\dfrac{7}{24}$", "B. $\\dfrac{11}{24}$", "C. $\\dfrac{13}{24}$", "D. $\\dfrac{19}{24}$"],
+    jawaban: "B",
+    pembahasan: "$\\frac{5}{6}-\\frac{3}{8}=\\frac{20}{24}-\\frac{9}{24}=\\frac{11}{24}$. Jadi jawaban yang benar adalah B.",
+  },
 
   // ─── 20 · PG ──────────────────────────────────────────────────────────────
   {
-    no: 8,
+    no: 20,
     type: "pg",
     soal: "Dina akan mengemas tepung beras ke dalam kantong plastik berukuran $\\dfrac{1}{2}\\text{ kg}$ dan $\\dfrac{1}{4}\\text{ kg}$. Berat tepung beras yang akan dikemas adalah $24{,}3\\text{ kg}$. Kemasan $\\dfrac{1}{2}\\text{ kg}$ akan digunakan terlebih dahulu. Berat sisa tepung beras yang tidak dapat dikemas sesuai ukuran kantong adalah ....",
     options: [
@@ -359,7 +562,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 21 · PGKBS ───────────────────────────────────────────────────────────
   {
-    no: 9,
+    no: 21,
     type: "pgkbs",
     soal: "Diketahui sekarung kedelai dengan berat $36\\text{ kg}$. Kedelai tersebut akan dijual dalam kemasan plastik kecil. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
     pernyataan: [
@@ -377,7 +580,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 22 · PG (estimasi) ────────────────────────────────────────────────────
   {
-    no: 10,
+    no: 22,
     type: "pg",
     soal: "Diketahui operasi bilangan $4{,}2 \\times 19{,}7 + 13{,}81 - 32{,}47 = m$. Perkiraan hasil dari $(m - 20)$ adalah ....",
     options: ["A. 20", "B. 40", "C. 80", "D. 100"],
@@ -393,7 +596,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 23 · PG (urutan → kode) ───────────────────────────────────────────────
   {
-    no: 11,
+    no: 23,
     type: "pg",
     soal: "Diketahui kode warna menggunakan huruf yang nilainya disusun dari terbesar ke terkecil. Huruf beserta nilainya: $B = \\dfrac{3}{5}$; $I = 0{,}48$; $R = \\dfrac{1}{3}$; $U = 7\\%$. Kode warna tersebut adalah ....",
     options: ["A. BIRU", "B. RUBI", "C. UBIR", "D. IURB"],
@@ -410,7 +613,7 @@ const latihanDasar: LatihanSoal[] = [
 
   // ─── 24 · PG ──────────────────────────────────────────────────────────────
   {
-    no: 12,
+    no: 24,
     type: "pg",
     soal: "Hasil dari $\\dfrac{2}{5} \\times \\dfrac{5}{6} - \\dfrac{3}{4} \\div \\dfrac{9}{2}$ adalah ....",
     options: [
@@ -432,7 +635,7 @@ const latihanDasar: LatihanSoal[] = [
   // ─── 25 & 26 · Konteks Kaveling ────────────────────────────────────────────
   // ─── 25 · PGKBS ───────────────────────────────────────────────────────────
   {
-    no: 13,
+    no: 25,
     type: "pgkbs",
     soal: `Perhatikan teks berikut untuk menjawab soal nomor 25 dan 26.
 
@@ -455,10 +658,36 @@ Berdasarkan teks tersebut, tentukan Benar atau Salah untuk setiap pernyataan ber
   },
 
   // ─── 26 · PGK ─────────────────────────────────────────────────────────────
+  {
+    no: 26,
+    type: "pgk",
+    soal: "Berdasarkan teks Tanah Kaveling pada soal nomor 25, pilihlah semua pernyataan yang benar.",
+    pernyataan: [
+      "Kaveling bernomor kelipatan 4 merupakan $\\dfrac{1}{4}$ bagian dari total kaveling.",
+      "Kaveling bernomor kelipatan 5 merupakan $\\dfrac{1}{5}$ bagian dari total kaveling.",
+      "Kaveling bernomor paling banyak 10 merupakan $\\dfrac{1}{10}$ bagian dari total kaveling.",
+      "Kaveling bernomor genap merupakan $\\dfrac{2}{5}$ bagian dari total kaveling.",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (3)",
+      "(1), (3), dan (4)",
+      "(1), (2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 2],
+    pembahasan:
+      "Total kaveling adalah $100$.\n" +
+      "(1) Kelipatan 4 dari 1 sampai 100 ada $100\\div4=25$, jadi bagiannya $\\frac{25}{100}=\\frac{1}{4}$ ✓ BENAR\n" +
+      "(2) Kelipatan 5 ada $100\\div5=20$, jadi bagiannya $\\frac{20}{100}=\\frac{1}{5}$ ✓ BENAR\n" +
+      "(3) Nomor 1 sampai 10 berjumlah $10$, jadi bagiannya $\\frac{10}{100}=\\frac{1}{10}$ ✓ BENAR\n" +
+      "(4) Bilangan genap ada $50$, sehingga bagiannya $\\frac{50}{100}=\\frac{1}{2}$, bukan $\\frac{2}{5}$ ✗ SALAH\n\n" +
+      "Pernyataan yang benar adalah (1), (2), dan (3) → B.",
+  },
 
   // ─── 27 · PGK ─────────────────────────────────────────────────────────────
   {
-    no: 14,
+    no: 27,
     type: "pgk",
     soal: "Perhatikan perhitungan bilangan pecahan berikut.\n$P = \\dfrac{4}{7} \\div \\dfrac{8}{21}, \\quad Q = \\dfrac{3}{8} \\times \\dfrac{4}{15}, \\quad R = \\dfrac{7}{12} + \\dfrac{5}{6}, \\quad S = \\dfrac{11}{12} - \\dfrac{5}{6}$\nBerdasarkan informasi tersebut, pilihlah semua jawaban yang benar. Jawaban benar lebih dari satu.",
     pernyataan: [
@@ -474,6 +703,7 @@ Berdasarkan teks tersebut, tentukan Benar atau Salah untuk setiap pernyataan ber
       "(1), (2), dan (3)",
     ],
     jawaban: "B",
+    jawabanPGK: [1, 2],
     pembahasan:
       "$P = \\dfrac{4}{7} \\div \\dfrac{8}{21} = \\dfrac{4}{7} \\times \\dfrac{21}{8} = \\dfrac{84}{56} = \\dfrac{3}{2}$; pernyataan $P=\\frac{2}{3}$ ✗ SALAH\n\n" +
       "$Q = \\dfrac{3}{8} \\times \\dfrac{4}{15} = \\dfrac{12}{120} = \\dfrac{1}{10}$ ✓ BENAR\n\n" +
@@ -484,10 +714,40 @@ Berdasarkan teks tersebut, tentukan Benar atau Salah untuk setiap pernyataan ber
 
   // ─── 28 & 29 · Konteks Persediaan Beras ────────────────────────────────────
   // ─── 28 · PGK ─────────────────────────────────────────────────────────────
+  {
+    no: 28,
+    type: "pgk",
+    soal: `Perhatikan teks berikut untuk menjawab soal nomor 28 dan 29.
+
+Persediaan Beras Bu Kartika
+Bu Kartika mencatat harga pembelian 100 kg beras sebesar Rp1.200.000,00. Untuk acara syukuran, ia perlu menyediakan beras untuk 75 tamu. Setiap tamu mendapat $0{,}12$ kg beras. Beras untuk acara dibeli sebagai persediaan tambahan dengan harga per kilogram yang sama.
+
+Berdasarkan teks tersebut, pilihlah semua pernyataan yang benar.`,
+    pernyataan: [
+      "Kebutuhan beras untuk acara syukuran adalah $9$ kg.",
+      "Harga beras per kilogram adalah Rp12.000,00.",
+      "Biaya pembelian beras tambahan adalah Rp108.000,00.",
+      "Jika membeli $10$ kg, sisa beras setelah acara adalah $2$ kg.",
+    ],
+    options: [
+      "(1) dan (2)",
+      "(1), (2), dan (3)",
+      "(1), (3), dan (4)",
+      "(1), (2), (3), dan (4)",
+    ],
+    jawaban: "B",
+    jawabanPGK: [0, 1, 2],
+    pembahasan:
+      "(1) Kebutuhan beras $=75\\times0{,}12=9$ kg ✓ BENAR\n" +
+      "(2) Harga per kilogram $=\\text{Rp}1.200.000,00\\div100=\\text{Rp}12.000,00$ ✓ BENAR\n" +
+      "(3) Biaya tambahan $=9\\times\\text{Rp}12.000,00=\\text{Rp}108.000,00$ ✓ BENAR\n" +
+      "(4) Jika membeli 10 kg, sisa setelah menyediakan 9 kg adalah $10-9=1$ kg, bukan 2 kg ✗ SALAH\n\n" +
+      "Pernyataan yang benar adalah (1), (2), dan (3) → B.",
+  },
 
   // ─── 29 · PG ──────────────────────────────────────────────────────────────
   {
-    no: 15,
+    no: 29,
     type: "pg",
     soal: "Berdasarkan teks Persediaan Beras Bu Kartika (soal 28), biaya pembelian beras tambahan untuk acara syukuran adalah ....",
     options: [
