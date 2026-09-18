@@ -94,7 +94,6 @@ const MenuPage = () => {
     { key: "ai",          icon: Bot,            path: "/chat-ai" },
     { key: "questionBank",icon: FileText,       path: "/bank-soal" },
     { key: "olympiad",    icon: Trophy,         path: "/olimpiade" },
-    { key: "examBrowser", icon: ClipboardCheck, path: "/exam-browser" },
     { key: "lkpd",        icon: ClipboardCheck, path: "/lkpd" },
     { key: "kokurikuler", icon: GraduationCap,  path: "/ruang-untuk-guru/kokulikuler" },
     { key: "ujiMandiri",  icon: ClipboardCheck, path: "/uji-mandiri" },

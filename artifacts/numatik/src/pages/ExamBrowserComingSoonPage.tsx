@@ -46,7 +46,7 @@ const ExamBrowserComingSoonPage = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden gradient-space">
       <Starfield />
-      <PageNavigation prevPath="/menu" />
+      <PageNavigation prevPath="/ruang-untuk-guru" />
 
       <main className="relative z-10 mx-auto w-full max-w-5xl px-5 pb-28 pt-24 sm:px-8 sm:pt-28">
         <section className="relative overflow-hidden rounded-[2rem] border border-cyan-400/25 bg-card/75 p-6 shadow-[0_0_60px_rgba(34,211,238,0.12)] backdrop-blur-xl sm:p-10 lg:p-14">

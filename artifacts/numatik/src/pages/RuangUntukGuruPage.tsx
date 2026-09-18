@@ -4,7 +4,6 @@ import {
   GraduationCap,
   Monitor,
   ListChecks,
-  ShieldCheck,
   MessageSquareHeart,
   Gamepad2,
   HeartHandshake,
@@ -21,6 +20,7 @@ import {
   Star,
   Trophy,
   Clock,
+  ShieldCheck,
 } from "lucide-react";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
@@ -117,6 +117,18 @@ const guruMenuItems = [
     icon: Trophy,
     path: "/ruang-untuk-guru/kokulikuler",
     desc: "Aktivitas kokulikuler matematika: proyek, olimpiade, eksplorasi, investigasi & permainan per materi",
+  },
+  {
+    label: "SMA",
+    icon: GraduationCap,
+    path: "/ruang-untuk-guru/sma",
+    desc: "Materi, latihan, dan persiapan matematika jenjang SMA",
+  },
+  {
+    label: "EXAM BROWSER NUMATIK",
+    icon: ShieldCheck,
+    path: "/ruang-untuk-guru/exam-browser",
+    desc: "Mode ujian aman, fokus dengan proteksi maksimal",
   },
   {
     label: "NUMATIK GAME",

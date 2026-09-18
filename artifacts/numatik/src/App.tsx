@@ -157,6 +157,7 @@ const ModelMatematikaPtLSVLKPDPage = lazy(() => import("./pages/lkpd/kelas7/plsv
 const ATPPage = lazy(() => import("./pages/ATPPage"));
 const GuruLayout = lazy(() => import("./components/GuruLayout"));
 const RuangUntukGuruPage = lazy(() => import("./pages/RuangUntukGuruPage"));
+const SmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPage"));
 const NumatikGamePage = lazy(() => import("./pages/ruang-untuk-guru/NumatikGamePage"));
 const KeyakinanKelasPage = lazy(() => import("./pages/ruang-untuk-guru/KeyakinanKelasPage"));
 const PenilaianPembelajaranPage = lazy(() => import("./pages/ruang-untuk-guru/PenilaianPembelajaranPage"));
@@ -963,7 +964,7 @@ const AppInner = () => {
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/exam-browser" element={<ExamBrowserComingSoonPage />} />
+          <Route path="/exam-browser" element={<Navigate to="/ruang-untuk-guru/exam-browser" replace />} />
   <Route path="/uji-mandiri" element={<UjiMandiriPage />} />
           <Route path="/lkpd" element={<LKPDMenuPage />} />
           <Route path="/lkpd/kelas-7" element={<LKPDKelas7Page />} />
@@ -1107,6 +1108,8 @@ const AppInner = () => {
           <Route path="/atp" element={<ATPPage />} />
           <Route element={<GuruLayout />}>
             <Route path="/ruang-untuk-guru" element={<RuangUntukGuruPage />} />
+            <Route path="/ruang-untuk-guru/sma" element={<SmaPage />} />
+            <Route path="/ruang-untuk-guru/exam-browser" element={<ExamBrowserComingSoonPage />} />
             <Route path="/ruang-untuk-guru/numatik-game" element={<NumatikGamePage />} />
             <Route path="/ruang-untuk-guru/keyakinan-kelas" element={<KeyakinanKelasPage />} />
             <Route path="/ruang-untuk-guru/penilaian-pembelajaran" element={<PenilaianPembelajaranPage />} />
@@ -1244,6 +1247,7 @@ const AppInner = () => {
           <Route path="/pengaturan" element={<PengaturanPage />} />
           <Route path="/tentang-aplikasi" element={<TentangAplikasiPage />} />
           <Route path="/coming-soon" element={<ComingSoonPage />} />
+          <Route path="/intensif-utbk" element={<ComingSoonPage />} />
           <Route path="/menghitung-cepat" element={<MenghitungCepatPage />} />
           <Route path="/menghitung-cepat/perkalian-dengan-11" element={<PerkalianDengan11Page />} />
           <Route path="/menghitung-cepat/kuadrat-berakhiran-5" element={<KuadratBerakhiran5Page />} />
