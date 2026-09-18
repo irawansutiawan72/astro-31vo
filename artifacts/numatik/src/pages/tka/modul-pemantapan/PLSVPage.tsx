@@ -127,14 +127,14 @@ const contohSoal: LatihanSoal[] = [
   {
     no: 4,
     type: "pgkbs",
-    soal: "Pak Budi mempunyai sebidang tanah berbentuk belah ketupat dengan panjang diagonal masing-masing $(2x + 6)\\text{ meter}$ dan $(4x - 10)\\text{ meter}$. Di sekeliling tanah tersebut akan dipasangi tiang pancang dengan jarak antartiang $1\\text{ meter}$. Selanjutnya, tanah dibagi menjadi 4 bagian sama besar. Tentukan apakah pernyataan berikut Benar atau Salah!",
+    soal: "Pak Budi mempunyai sebidang tanah berbentuk belah ketupat dengan panjang diagonal masing-masing $(2x + 6)\\text{ meter}$ dan $(4x - 10)\\text{ meter}$. Jika kedua diagonal tersebut sama panjang, tanah itu dibagi menjadi 4 bagian sama besar. Tentukan apakah pernyataan berikut Benar atau Salah!",
     pernyataan: [
       "Panjang diagonal tanah tersebut adalah $22\\text{ meter}$.",
-      "Jumlah tiang pancang yang dibutuhkan adalah $53$ buah.",
+      "Luas seluruh tanah tersebut adalah $242\\text{ m}^2$.",
       "Luas setiap bagian tanah yang telah dibagi adalah $121\\text{ m}^2$.",
     ],
-    jawabanBS: ["B", "S", "S"],
-    pembahasan: "Karena kedua diagonal belah ketupat nilainya sama:\n$2x + 6 = 4x - 10$\n$2x = 16 \\implies x = 8$\nDiagonal: $2(8) + 6 = 22\\text{ m}$ → BENAR\nKeliling: $s = \\sqrt{11^2 + 11^2} = \\sqrt{242} \\approx 15{,}55\\text{ m}$, Keliling $\\approx 62{,}2$ → tiang $\\approx 62$ buah, bukan 53 → SALAH\nLuas total $= \\frac{22 \\times 22}{2} = 242\\text{ m}^2$, Luas per bagian $= \\frac{242}{4} = 60{,}5\\text{ m}^2$, bukan $121\\text{ m}^2$ → SALAH",
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Karena kedua diagonal sama panjang:\n$2x + 6 = 4x - 10$\n$2x = 16 \\implies x = 8$\nPanjang masing-masing diagonal adalah $2(8) + 6 = 22\\text{ m}$ → Pernyataan (1) BENAR.\n\nLuas belah ketupat:\n$L = \\frac{1}{2}d_1d_2 = \\frac{1}{2}\\times22\\times22 = 242\\text{ m}^2$ → Pernyataan (2) BENAR.\n\nKarena tanah dibagi menjadi 4 bagian sama besar, luas tiap bagian adalah $\\frac{242}{4}=60{,}5\\text{ m}^2$, bukan $121\\text{ m}^2$ → Pernyataan (3) SALAH.",
   },
   {
     no: 5,
@@ -384,12 +384,12 @@ const latihanDasar: LatihanSoal[] = [
   // ── No. 17 — PGK ────────────────────────────────────────────────────────────
   {
     no: 17, type: "pgk",
-    soal: "Kebun Pak Hartono berbentuk persegi panjang. Panjang dan diagonalnya berturut-turut dinyatakan sebagai $(4x - 10)$ meter dan $(3x - 5)$ meter. Pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
+    soal: "Kebun Pak Hartono berbentuk persegi panjang. Panjang dan lebarnya berturut-turut dinyatakan sebagai $(4x - 10)$ meter dan $(3x - 5)$ meter. Jika keliling kebun $110$ meter, pernyataan-pernyataan berikut berkaitan dengan situasi tersebut.",
     pernyataan: [
-      "Persamaan yang terbentuk adalah $4x - 10 = 3x - 5$.",
-      "Nilai $x$ yang memenuhi adalah $x = 5$.",
-      "Panjang diagonal kebun Pak Hartono adalah 10 meter.",
-      "Substitusi $x = 5$ ke ekspresi $3x - 5$ menghasilkan nilai 20.",
+      "Persamaan yang terbentuk adalah $2\\big((4x - 10) + (3x - 5)\\big)=110$.",
+      "Nilai $x$ yang memenuhi adalah $x = 10$.",
+      "Panjang kebun Pak Hartono adalah $30$ meter.",
+      "Lebar kebun Pak Hartono adalah $20$ meter.",
     ],
     options: [
       "A. 1 dan 4",
@@ -398,7 +398,7 @@ const latihanDasar: LatihanSoal[] = [
       "D. 1, 2, dan 3",
     ],
     jawaban: "D",
-    pembahasan: "$4x - 10 = 3x - 5 \\Rightarrow x = 5$ → Pernyataan (1) dan (2) BENAR\nDiagonal $= 4(5) - 10 = 10$ meter; cek: $3(5)-5 = 10$ ✓ → Pernyataan (3) BENAR\n$3(5) - 5 = 10 \\neq 20$ → Pernyataan (4) SALAH\nBenar: 1, 2, dan 3 → Jawaban D",
+    pembahasan: "Gunakan rumus keliling persegi panjang:\n$2\\big((4x - 10)+(3x - 5)\\big)=110$\n$2(7x-15)=110$\n$14x-30=110 \\Rightarrow 14x=140 \\Rightarrow x=10$.\nJadi, pernyataan (1) dan (2) BENAR.\n\nPanjang $=4(10)-10=30$ meter → Pernyataan (3) BENAR.\nLebar $=3(10)-5=25$ meter, bukan $20$ meter → Pernyataan (4) SALAH.\n\nPernyataan yang benar adalah 1, 2, dan 3 → Jawaban D",
   },
 
   // ── No. 18 — PGKBS ──────────────────────────────────────────────────────────
