@@ -443,10 +443,9 @@ const contohSoal: LS[] = [
       "Skala yang digunakan oleh Pak Ahmad pada blueprint tersebut adalah $1 : 400$.",
       "Ukuran gedung sebenarnya $500$ kali lebih besar daripada ukuran pada blueprint.",
       "Perbandingan luas cetak biru dengan luas gedung sebenarnya adalah $1 : 160.000$.",
-      "Luas gedung sebenarnya $160.000$ kali lebih besar daripada luas cetak birunya.",
     ],
-    jawabanBS: ["B", "S", "B", "B"],
-    pembahasan: "Ukuran sebenarnya: 40 m = 4.000 cm, 50 m = 5.000 cm\n(1) Skala = 10 cm ÷ 4.000 cm = 1 : 400 → BENAR\n(2) Skala 1:400 berarti 400 kali lebih besar (bukan 500 kali) → SALAH\n(3) Luas blueprint = 10 × 12,5 = 125 cm². Luas sebenarnya = 4.000 × 5.000 = 20.000.000 cm². Perbandingan = 125 : 20.000.000 = 1 : 160.000 → BENAR\n(4) Luas sebenarnya = 160.000 × luas blueprint → BENAR",
+    jawabanBS: ["B", "S", "B"],
+    pembahasan: "Ukuran sebenarnya: 40 m = 4.000 cm, 50 m = 5.000 cm.\n(1) Skala = 10 cm ÷ 4.000 cm = 1 : 400 → BENAR.\n(2) Skala 1:400 berarti 400 kali lebih besar (bukan 500 kali) → SALAH.\n(3) Luas blueprint = 10 × 12,5 = 125 cm². Luas sebenarnya = 4.000 × 5.000 = 20.000.000 cm². Perbandingan = 125 : 20.000.000 = 1 : 160.000 → BENAR.",
   },
   {
     no: 104,

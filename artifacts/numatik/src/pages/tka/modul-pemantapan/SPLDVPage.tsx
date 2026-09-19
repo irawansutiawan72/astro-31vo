@@ -24,10 +24,9 @@ const contohSoal: LatihanSoal[] = [
       "Nilai $n$ sama dengan $4$.",
       "Nilai $m$ sama dengan $3$.",
       "Nilai dari $2m - n$ adalah $2$.",
-      "Nilai $m < n$.",
     ],
-    jawabanBS: ["S", "S", "S", "S"],
-    pembahasan: "Eliminasi variabel $x$ untuk mencari $y$ ($n$):\n$$\\begin{aligned} 4x - 2y = 10 &\\;(\\times 1) \\implies 4x - 2y = 10 \\\\ 2x + y = 9 &\\;(\\times 2) \\implies 4x + 2y = 18 \\\\ \\hline &\\quad\\quad -4y = -8 \\quad (-) \\\\ &\\quad\\quad y = 2 \\end{aligned}$$\nMaka $n = 2$ (bukan 4) → Pernyataan (1) SALAH\nSubstitusi $y = 2$ ke persamaan (2): $2x + 2 = 9 \\Rightarrow x = 3{,}5$\nMaka $m = 3{,}5$ (bukan 3) → Pernyataan (2) SALAH\n$2m - n = 2(3{,}5) - 2 = 5$ (bukan 2) → Pernyataan (3) SALAH\n$m = 3{,}5 > n = 2$, sehingga $m > n$ (bukan $m < n$) → Pernyataan (4) SALAH",
+    jawabanBS: ["S", "S", "S"],
+    pembahasan: "Eliminasi variabel $x$ untuk mencari $y$ ($n$):\n$$\\begin{aligned} 4x - 2y = 10 &\\;(\\times 1) \\implies 4x - 2y = 10 \\\\ 2x + y = 9 &\\;(\\times 2) \\implies 4x + 2y = 18 \\\\ \\hline &\\quad\\quad -4y = -8 \\quad (-) \\\\ &\\quad\\quad y = 2 \\end{aligned}$$\nMaka $n = 2$ (bukan 4) → Pernyataan (1) SALAH.\nSubstitusi $y = 2$ ke persamaan (2): $2x + 2 = 9 \\Rightarrow x = 3{,}5$, sehingga $m = 3{,}5$ (bukan 3) → Pernyataan (2) SALAH.\n$2m - n = 2(3{,}5) - 2 = 5$ (bukan 2) → Pernyataan (3) SALAH.",
   },
 
   // ── Soal 3 — PGKBS (bacaan: Toko Busana Indah) ──────────────────────────────
@@ -62,13 +61,13 @@ const contohSoal: LatihanSoal[] = [
     no: 5, type: "pg",
     soal: "Diberikan sistem persamaan:\n$$\\frac{1}{x} + \\frac{3}{y} = \\frac{5}{6} \\quad \\text{dan} \\quad \\frac{3}{x} - \\frac{1}{y} = \\frac{1}{2}$$\nPenyelesaian dari sistem persamaan tersebut adalah $(x, y) = \\dots$",
     options: [
-      "A. $(2, 4)$",
-      "B. $(3, 4)$",
-      "C. $(4, 3)$",
-      "D. $(2, 3)$",
+      "A. $\\left(\\dfrac{30}{7}, 5\\right)$",
+      "B. $\\left(5, \\dfrac{30}{7}\\right)$",
+      "C. $\\left(\\dfrac{7}{30}, 5\\right)$",
+      "D. $(3, 5)$",
     ],
-    jawaban: "D",
-    pembahasan: "Misalkan $a = \\dfrac{1}{x}$ dan $b = \\dfrac{1}{y}$, sehingga:\n$a + 3b = \\dfrac{5}{6} \\implies 6a + 18b = 5 \\quad\\text{--- (1)}$\n$3a - b = \\dfrac{1}{2} \\implies 6a - 2b = 1 \\quad\\text{--- (2)}$\nEliminasi variabel $a$ dengan (1) $-$ (2):\n$$20b = 4 \\implies b = \\frac{1}{5}$$\nSubstitusi $b = \\dfrac{1}{5}$ ke (2):\n$$6a - \\frac{2}{5} = 1 \\implies 6a = \\frac{7}{5} \\implies a = \\frac{7}{30}$$\nKembalikan ke variabel asli:\n$x = \\dfrac{1}{a} = \\dfrac{30}{7}$, $\\quad y = \\dfrac{1}{b} = 5$\nHasil: $\\left(\\dfrac{30}{7},\\, 5\\right)$",
+    jawaban: "A",
+    pembahasan: "Misalkan $a = \\dfrac{1}{x}$ dan $b = \\dfrac{1}{y}$, sehingga:\n$a + 3b = \\dfrac{5}{6} \\implies 6a + 18b = 5 \\quad\\text{--- (1)}$\n$3a - b = \\dfrac{1}{2} \\implies 6a - 2b = 1 \\quad\\text{--- (2)}$\nEliminasi variabel $a$ dengan (1) $-$ (2):\n$$20b = 4 \\implies b = \\frac{1}{5}$$\nSubstitusi $b = \\dfrac{1}{5}$ ke (2):\n$$6a - \\frac{2}{5} = 1 \\implies 6a = \\frac{7}{5} \\implies a = \\frac{7}{30}$$\nKembalikan ke variabel asli: $x = \\dfrac{1}{a} = \\dfrac{30}{7}$ dan $y = \\dfrac{1}{b} = 5$.\nJadi penyelesaiannya adalah $\\left(\\dfrac{30}{7}, 5\\right)$ → Jawaban A.",
   },
 ];
 
@@ -349,15 +348,14 @@ const latihanDasar: LatihanSoal[] = [
   // ── No. 20 — PGKBS ──────────────────────────────────────────────────────────
   {
     no: 20, type: "pgkbs",
-    soal: "Dua buah bilangan bulat $m$ dan $n$ memenuhi persamaan $3m - 2n = -19$ dan $n + 2m = -11$. Tentukan kebenaran setiap pernyataan berikut!",
+    soal: "Dua buah bilangan bulat $m$ dan $n$ memenuhi persamaan $3m - 2n = -13$ dan $n + 2m = -11$. Tentukan kebenaran setiap pernyataan berikut!",
     pernyataan: [
       "Nilai $m$ adalah $-5$.",
       "Nilai $n$ adalah $-1$.",
       "Hasil kali $m \\cdot n$ adalah $5$.",
-      "Jumlah $m + n$ adalah $-6$.",
     ],
-    jawabanBS: ["B", "B", "B", "B"],
-    pembahasan: "Dari persamaan (2): $n = -11 - 2m$. Substitusi ke (1):\n$3m - 2(-11-2m) = -19 \\Rightarrow 3m+22+4m=-19 \\Rightarrow 7m=-41$\nDengan pendekatan bilangan bulat terdekat: $m=-5$, maka $n=-11-2(-5)=-1$\nPernyataan (1): $m=-5$ → BENAR\nPernyataan (2): $n=-1$ → BENAR\nPernyataan (3): $m \\cdot n = (-5)(-1) = 5$ → BENAR\nPernyataan (4): $m+n=-5+(-1)=-6$ → BENAR",
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Dari persamaan (2): $n = -11 - 2m$. Substitusi ke persamaan (1):\n$3m - 2(-11-2m) = -13 \\Rightarrow 3m+22+4m=-13 \\Rightarrow 7m=-35 \\Rightarrow m=-5$.\nKemudian $n=-11-2(-5)=-1$.\nPernyataan (1): $m=-5$ → BENAR.\nPernyataan (2): $n=-1$ → BENAR.\nPernyataan (3): $m \\cdot n = (-5)(-1) = 5$ → BENAR.",
   },
 
   // ── No. 21 — PG ─────────────────────────────────────────────────────────────
@@ -381,7 +379,7 @@ const latihanDasar: LatihanSoal[] = [
   // ── No. 23 — PG ─────────────────────────────────────────────────────────────
   {
     no: 23, type: "pg",
-    soal: "Diberikan sistem persamaan berikut:\n$$\\frac{2}{3}x + \\frac{1}{2}y = 12 \\quad \\text{dan} \\quad \\frac{1}{3}x - \\frac{1}{4}y = 1$$\nHimpunan penyelesaian dari sistem tersebut adalah …",
+    soal: "Diberikan sistem persamaan berikut:\n$$\\frac{2}{3}x + \\frac{1}{2}y = 12 \\quad \\text{dan} \\quad \\frac{1}{3}x - \\frac{1}{4}y = 2$$\nHimpunan penyelesaian dari sistem tersebut adalah …",
     options: [
       "A. $\\{(12, 8)\\}$",
       "B. $\\{(9, 12)\\}$",
@@ -389,7 +387,7 @@ const latihanDasar: LatihanSoal[] = [
       "D. $\\{(15, 4)\\}$",
     ],
     jawaban: "A",
-    pembahasan: "Kalikan persamaan (1) dengan 6: $4x + 3y = 72 \\quad\\text{--- (3)}$\nKalikan persamaan (2) dengan 12: $4x - 3y = 12 \\quad\\text{--- (4)}$\nJumlahkan (3) dan (4): $8x=84 \\Rightarrow x=10{,}5$; dan pendekatan jawaban terdekat adalah $x=12, y=8$\nVerifikasi (1): $\\frac{2}{3}(12)+\\frac{1}{2}(8)=8+4=12$ ✓ → Jawaban A",
+    pembahasan: "Kalikan persamaan (1) dengan 6: $4x + 3y = 72 \\quad\\text{--- (3)}$.\nKalikan persamaan (2) dengan 12: $4x - 3y = 24 \\quad\\text{--- (4)}$.\nJumlahkan (3) dan (4): $8x=96 \\Rightarrow x=12$.\nSubstitusi ke persamaan (1): $\\frac{2}{3}(12)+\\frac{1}{2}y=12 \\Rightarrow 8+\\frac{1}{2}y=12 \\Rightarrow y=8$.\nVerifikasi persamaan (2): $\\frac{1}{3}(12)-\\frac{1}{4}(8)=4-2=2$ ✓\nJadi himpunan penyelesaiannya adalah $\\{(12,8)\\}$ → Jawaban A.",
   },
 
   // ── No. 24 — PG ─────────────────────────────────────────────────────────────
@@ -409,10 +407,9 @@ const latihanDasar: LatihanSoal[] = [
       "Banyaknya karung beras kemasan 20 kg adalah 100 buah.",
       "Banyaknya karung beras kemasan 40 kg adalah 50 buah.",
       "Total beban beras kemasan 20 kg adalah 2 ton.",
-      "Rasio total berat beras kemasan 20 kg terhadap kemasan 40 kg adalah 1 : 1.",
     ],
-    jawabanBS: ["B", "B", "B", "B"],
-    pembahasan: "Misalkan $k_{20}$ = karung 20 kg dan $k_{40}$ = karung 40 kg.\n$k_{20}+k_{40}=150$ dan $20k_{20}+40k_{40}=4.000 \\Rightarrow k_{20}+2k_{40}=200$\nKurangi persamaan (1): $k_{40}=50,\\; k_{20}=100$\nPernyataan (1): $k_{20}=100$ → BENAR\nPernyataan (2): $k_{40}=50$ → BENAR\nPernyataan (3): $100 \\times 20=2.000$ kg $= 2$ ton → BENAR\nPernyataan (4): Berat 20 kg : Berat 40 kg $= 2.000:2.000 = 1:1$ → BENAR",
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Misalkan $k_{20}$ = karung 20 kg dan $k_{40}$ = karung 40 kg.\n$k_{20}+k_{40}=150$ dan $20k_{20}+40k_{40}=4.000 \\Rightarrow k_{20}+2k_{40}=200$\nKurangi persamaan pertama dari persamaan kedua: $k_{40}=50$, sehingga $k_{20}=100$.\nPernyataan (1): $k_{20}=100$ → BENAR.\nPernyataan (2): $k_{40}=50$ → BENAR.\nPernyataan (3): $100 \\times 20=2.000$ kg $= 2$ ton → BENAR.",
   },
 
   // ── No. 26 — PG ─────────────────────────────────────────────────────────────
@@ -433,9 +430,14 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 27, type: "pg",
     soal: "Diketahui sistem persamaan kuadratik $3p^2 - q^2 = 11$ dan $p^2 + 2q^2 = 22$. Nilai yang TIDAK MUNGKIN menjadi hasil dari $p + q$ adalah …",
-    options: ["A. $-6$", "B. $0$", "C. $3$", "D. $6$"],
+    options: [
+      "A. $-\\sqrt{\\frac{44}{7}}-\\sqrt{\\frac{55}{7}}$",
+      "B. $0$",
+      "C. $\\sqrt{\\frac{55}{7}}-\\sqrt{\\frac{44}{7}}$",
+      "D. $\\sqrt{\\frac{44}{7}}+\\sqrt{\\frac{55}{7}}$",
+    ],
     jawaban: "B",
-    pembahasan: "Kalikan persamaan (1) dengan 2: $6p^2-2q^2=22$. Jumlahkan dengan (2):\n$7p^2=44 \\Rightarrow p^2=\\dfrac{44}{7}$; $q^2=\\dfrac{55}{7}$\n$p=\\pm\\sqrt{\\dfrac{44}{7}}$, $q=\\pm\\sqrt{\\dfrac{55}{7}}$\nNilai-nilai $p+q$ yang mungkin: $\\pm\\sqrt{\\dfrac{44}{7}}\\pm\\sqrt{\\dfrac{55}{7}} \\approx \\pm5{,}31$ atau $\\approx \\pm0{,}30$\nNilai $p+q=0$ hanya mungkin jika $p=-q$, tetapi $p^2=44/7 \\neq 55/7=q^2$, sehingga $p \\neq -q$\nNilai 0 TIDAK MUNGKIN → Jawaban B",
+    pembahasan: "Kalikan persamaan (1) dengan 2: $6p^2-2q^2=22$. Jumlahkan dengan (2):\n$7p^2=44 \\Rightarrow p^2=\\dfrac{44}{7}$ dan $q^2=\\dfrac{55}{7}$.\nMaka $p=\\pm\\sqrt{\\dfrac{44}{7}}$ dan $q=\\pm\\sqrt{\\dfrac{55}{7}}$. Nilai $p+q$ yang mungkin adalah empat kombinasi tanda dari kedua bentuk akar.\nPilihan A dan D merupakan jumlah dua akar dengan tanda sama, sedangkan pilihan C merupakan salah satu selisihnya. Nilai $p+q=0$ tidak mungkin karena itu memerlukan $p=-q$, padahal $p^2=\\dfrac{44}{7} \\neq \\dfrac{55}{7}=q^2$.\nJadi nilai yang TIDAK MUNGKIN adalah $0$ → Jawaban B.",
   },
 
   // ── No. 28 — PGKBS ──────────────────────────────────────────────────────────
@@ -465,12 +467,12 @@ const latihanDasar: LatihanSoal[] = [
     no: 30, type: "pgkbs",
     soal: "Diberikan SPLDV berikut:\n$$\\frac{1}{x} - \\frac{1}{y} = \\frac{1}{4} \\quad \\text{dan} \\quad \\frac{2}{x} + \\frac{1}{y} = \\frac{1}{2}$$\nTentukan kategorisasi Benar atau Salah pada setiap pernyataan berikut!",
     pernyataan: [
-      "Nilai dari $\\dfrac{1}{x}$ adalah $\\dfrac{1}{4}$.",
-      "Nilai dari $y$ adalah tak terdefinisi (karena $\\dfrac{1}{y} = 0$).",
-      "Nilai dari $x + y$ tidak mempunyai solusi real sederhana.",
+      "Dalam substitusi $a=\\dfrac{1}{x}$ dan $b=\\dfrac{1}{y}$, diperoleh $a=\\dfrac{1}{4}$ dan $b=0$.",
+      "Terdapat pasangan bilangan real tak nol $(x,y)$ yang memenuhi sistem tersebut.",
+      "Sistem semula tidak mempunyai solusi real $(x,y)$.",
     ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Misalkan $a=\\dfrac{1}{x}$, $b=\\dfrac{1}{y}$.\nSistem: $a-b=\\dfrac{1}{4}$ dan $2a+b=\\dfrac{1}{2}$\nJumlahkan: $3a=\\dfrac{3}{4} \\Rightarrow a=\\dfrac{1}{4}$; maka $b=0$\nPernyataan (1): $\\dfrac{1}{x}=\\dfrac{1}{4} \\Rightarrow x=4$ → BENAR\nPernyataan (2): $\\dfrac{1}{y}=0$ artinya $y \\to \\infty$ (tak terdefinisi secara real) → BENAR\nPernyataan (3): karena $y$ tak terdefinisi, $x+y$ tidak memiliki solusi real sederhana → BENAR",
+    jawabanBS: ["B", "S", "B"],
+    pembahasan: "Misalkan $a=\\dfrac{1}{x}$ dan $b=\\dfrac{1}{y}$, dengan $x$ dan $y$ bilangan real tak nol.\nSistem berubah menjadi $a-b=\\dfrac{1}{4}$ dan $2a+b=\\dfrac{1}{2}$. Menjumlahkan kedua persamaan menghasilkan $3a=\\dfrac{3}{4}$, sehingga $a=\\dfrac{1}{4}$ dan $b=0$.\nPernyataan (1): secara aljabar, nilai yang dipaksakan adalah $\\dfrac{1}{x}=\\dfrac{1}{4}$ → BENAR.\nPernyataan (2): tidak ada bilangan real tak nol $y$ yang memenuhi $\\dfrac{1}{y}=0$ → SALAH, karena bukan berarti $y$ memiliki nilai tak terdefinisi sebagai solusi.\nPernyataan (3): akibatnya sistem semula tidak mempunyai pasangan solusi real $(x,y)$, sehingga $x+y$ juga tidak memiliki nilai → BENAR.",
   },
 
   // ── No. 31 — PG ─────────────────────────────────────────────────────────────

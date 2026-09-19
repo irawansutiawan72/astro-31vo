@@ -86,7 +86,7 @@ Harga dasar minuman tanpa topping adalah Rp12.000,00 dan biaya tambahan setiap j
       "Pelanggan yang membayar Rp18.000,00 adalah Dimas.",
       "Total harga minuman yang dibeli Fani adalah Rp24.000,00.",
       "Total harga minuman yang dibeli Eka adalah Rp15.000,00.",
-      "Fani membayar dua kali lipat lebih mahal daripada Eka.",
+      "Fani membayar dua kali harga Eka.",
     ],
     jawabanPGK: [0, 1, 3],
     pembahasan: `Gunakan rumus $f(x)=12.000+3.000x$.

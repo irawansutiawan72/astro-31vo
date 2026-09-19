@@ -119,10 +119,9 @@ const contohSoal: LatihanSoal[] = [
       "Panjang kebun tersebut adalah $27\\text{ cm}$.",
       "Lebar kebun tersebut adalah $11\\text{ cm}$.",
       "Selisih antara panjang dan lebar kebun adalah $16\\text{ cm}$.",
-      "Luas kebun tersebut adalah $297\\text{ cm}^2$.",
     ],
-    jawabanBS: ["B", "B", "B", "B"],
-    pembahasan: "Mencari nilai $x$ melalui rumus keliling:\n$K = 2 \\times (p + l)$\n$76 = 2 \\times \\big((4x + 3) + (2x - 1)\\big)$\n$76 = 2 \\times (6x + 2)$\n$76 = 12x + 4$\n$12x = 72 \\implies x = 6$\nPanjang: $p = 4(6) + 3 = 27\\text{ cm}$ → BENAR\nLebar: $l = 2(6) - 1 = 11\\text{ cm}$ → BENAR\nSelisih: $p - l = 27 - 11 = 16\\text{ cm}$ → BENAR\nLuas: $L = 27 \\times 11 = 297\\text{ cm}^2$ → BENAR\nSemua pernyataan BENAR.",
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Mencari nilai $x$ melalui rumus keliling:\n$K = 2 \\times (p + l)$\n$76 = 2 \\times \\big((4x + 3) + (2x - 1)\\big)$\n$76 = 2 \\times (6x + 2)$\n$76 = 12x + 4$\n$12x = 72 \\implies x = 6$\nPanjang: $p = 4(6) + 3 = 27\\text{ cm}$ → BENAR.\nLebar: $l = 2(6) - 1 = 11\\text{ cm}$ → BENAR.\nSelisih: $p - l = 27 - 11 = 16\\text{ cm}$ → BENAR.\nJadi ketiga pernyataan BENAR.",
   },
   {
     no: 4,

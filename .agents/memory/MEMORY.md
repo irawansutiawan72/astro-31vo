@@ -7,3 +7,4 @@
 - [Imported API workflow](imported-api-workflow.md) — API artifact metadata may exist while the API workflow is absent after GitHub import
 - [Numatik typecheck baseline](numatik-typecheck-baseline.md) — full typecheck currently has pre-existing readonly locale typing errors even when the Vite build succeeds
 - [TKA data isolation](tka-data-isolation.md) — TKA module exercise data should live outside route pages so each menu can evolve independently
+- [TKA complex-question audit](tka-complex-question-audit.md) — PGK uses 4 statements and PGKBS uses 3; every claim must have its source data in the prompt

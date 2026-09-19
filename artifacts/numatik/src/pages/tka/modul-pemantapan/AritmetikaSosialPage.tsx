@@ -54,19 +54,19 @@ const contohSoal: LatihanSoal[] = [
   {
     no: 4,
     type: "pgkbs",
-    soal: "Cermati data harga dan diskon sepatu serta kaos dari empat toko berikut. Febian akan membeli 1 pasang sepatu dan 1 buah kaos. Tentukan apakah setiap pernyataan berikut BENAR atau SALAH!",
+    soal: "Cermati data berikut. Harga sepatu Rp140.000,00 dan harga kaos Rp100.000,00. Toko Damai memberi diskon sepatu 20% dan kaos 25%; Toko Sentosa memberi diskon sepatu 30% dan kaos 15%; Toko Rukun memberi diskon sepatu 15% dan kaos 30%; Toko Sejahtera memberi diskon sepatu 10% dan kaos 10%. Febian akan membeli 1 pasang sepatu dan 1 buah kaos. Tentukan apakah setiap pernyataan berikut BENAR atau SALAH!",
     pernyataan: [
       "Harga sepatu Rp140.000,00 dan harga kaos Rp100.000,00. Diskon Toko Damai berturut-turut 20% dan 25%. Total yang harus dibayar di Toko Damai adalah Rp187.000,00.",
       "Diskon Toko Sentosa untuk sepatu dan kaos berturut-turut 30% dan 15%. Total yang harus dibayar di Toko Sentosa adalah Rp183.000,00.",
       "Toko Rukun memberikan total harga bayar paling murah di antara keempat toko tersebut.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "Toko Damai: $80\\%\\times Rp140.000,00+75\\%\\times Rp100.000,00=Rp187.000,00$ (BENAR).\nToko Sentosa: $70\\%\\times Rp140.000,00+85\\%\\times Rp100.000,00=Rp183.000,00$ (BENAR).\nToko Rukun: $85\\%\\times Rp140.000,00+70\\%\\times Rp100.000,00=Rp189.000,00$, sedangkan harga termurah adalah Toko Sentosa (SALAH).",
+    pembahasan: "Toko Damai: $80\\%\\times Rp140.000,00+75\\%\\times Rp100.000,00=Rp187.000,00$ (BENAR).\nToko Sentosa: $70\\%\\times Rp140.000,00+85\\%\\times Rp100.000,00=Rp183.000,00$ (BENAR).\nToko Rukun: $85\\%\\times Rp140.000,00+70\\%\\times Rp100.000,00=Rp189.000,00$.\nToko Sejahtera: $90\\%\\times Rp140.000,00+90\\%\\times Rp100.000,00=Rp216.000,00$. Harga termurah adalah Toko Sentosa, bukan Toko Rukun (SALAH).",
   },
   {
     no: 5,
     type: "pgkbs",
-    soal: "Perhatikan daftar harga dan diskon barang berikut. Rani membeli 3 tas, 2 pasang sandal, dan 1 pasang sepatu. Tentukan apakah setiap pernyataan berikut BENAR atau SALAH!",
+    soal: "Perhatikan data berikut: harga satu tas Rp80.000,00 dengan diskon 15%, harga satu pasang sandal Rp50.000,00 dengan diskon 25%, dan harga satu pasang sepatu Rp120.000,00 dengan diskon 20%. Rani membeli 3 tas, 2 pasang sandal, dan 1 pasang sepatu. Tentukan apakah setiap pernyataan berikut BENAR atau SALAH!",
     pernyataan: [
       "Besar potongan harga total untuk 3 tas yang dibeli Rani adalah Rp36.000,00.",
       "Total harga belanjaan Rani sebelum mendapatkan diskon adalah Rp460.000,00.",
