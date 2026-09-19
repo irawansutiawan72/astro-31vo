@@ -563,6 +563,7 @@ const latihanDasarSPLDVDenganTambahan = [
 const SPLDVPage = () => (
   <TKAPemantapanLayout
     title="SISTEM PERSAMAAN LINEAR DUA VARIABEL"
+    backPath="/tka/modul-pemantapan"
     materiSections={materiSections}
     contohSoal={contohSoal}
     latihanDasar={latihanDasarSPLDVDenganTambahan}
