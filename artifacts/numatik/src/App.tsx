@@ -161,6 +161,7 @@ const SmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPage"));
 const SmaComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaComingSoonPage"));
 const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMenuPage"));
 const SmaSubtopicComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSubtopicComingSoonPage"));
+const SmaEksponenLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaPage"));
 const NumatikGamePage = lazy(() => import("./pages/ruang-untuk-guru/NumatikGamePage"));
 const KeyakinanKelasPage = lazy(() => import("./pages/ruang-untuk-guru/KeyakinanKelasPage"));
 const PenilaianPembelajaranPage = lazy(() => import("./pages/ruang-untuk-guru/PenilaianPembelajaranPage"));
@@ -1114,6 +1115,10 @@ const AppInner = () => {
             <Route path="/ruang-untuk-guru/sma" element={<SmaPage />} />
             <Route path="/ruang-untuk-guru/sma/:mode" element={<SmaTopicMenuPage />} />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug" element={<SmaTopicMenuPage />} />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/sifat-sifat-eksponen"
+              element={<SmaEksponenLogaritmaPage />}
+            />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/tes-kemampuan-akademik" element={<SmaComingSoonPage />} />
