@@ -1,8 +1,19 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { latihanDasar as latihanDasarOlimpiade, brslDasarImages } from "@/pages/OlimpiadeBangunRuangSisiLengkungPage";
 import { brslDasarPembahasan } from "@/data/pembahasan/brslDasar";
+
+const toPembahasanText = (soalNo: number) => {
+  const pembahasan = brslDasarPembahasan[soalNo];
+  if (!pembahasan) return undefined;
+
+  return [
+    `Konsep & Trik: ${pembahasan.konsepTrik}`,
+    `Step-by-Step Penyelesaian:\n${pembahasan.stepByStep}`,
+    `Tips: ${pembahasan.tips}`,
+    `Kesimpulan: ${pembahasan.kesimpulan}`,
+  ].join("\n\n");
+};
 
 const materiSections: MateriSection[] = [
   { heading: "A. Tabung (Silinder)", content: `Tabung: bangun ruang dengan dua sisi alas dan tutup berbentuk lingkaran, sisi selimut berbentuk persegi panjang.\n\nJika jari-jari = r dan tinggi = t:\n- Luas selimut = $2\\pi rt$\n- Luas permukaan = $2\\pi r(r + t)$\n- Volume = $\\pi r^2 t$` },
@@ -59,14 +70,20 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 45, soal: "Wadah pembuatan es cream berbentuk tabung dengan diameter 0,2 m dan tinggi 0,75 m. Jika es cream tersebut dimasukkan kedalam corong-corong es cream berbentuk kerucut dengan jari-jari 2,5 cm dan tinggi 10 cm. Maka banyak corong es cream yang dibutuhkan adalah...", options: ["A. 60", "B. 120", "C. 240", "D. 360"] },
 ];
 
+const brslDasarImages: Record<number, string> = {
+  3: "https://drive.google.com/thumbnail?id=1JKSolP4umjS4zkIFcPjTjXyX11q0fETc&sz=w400",
+  5: "https://drive.google.com/thumbnail?id=1v67ykpMcxuQHQF-z3Y61HmAARB_GWH3L&sz=w400",
+  6: "https://drive.google.com/thumbnail?id=1TW3y2DX8tNKNxKVDFM0SZsgWSQKerrOu&sz=w400",
+  36: "https://drive.google.com/thumbnail?id=1L9qkbyu2NUYzbz7HoP31rtI8grpitjnc&sz=w400",
+  37: "https://drive.google.com/thumbnail?id=1gcGt20jDnqGt1ojHyqAGBwMwnFsRPPte&sz=w400",
+};
+
 const BangunRuangSisiLengkungPage = () => (
   <TKAPemantapanLayout
     title="BANGUN RUANG SISI LENGKUNG"
-  materiSections={materiSections}
-  contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
-  latihanDasar={latihanDasarOlimpiade
-    .filter((soal) => !new Set([1, 2, 4, 9]).has(soal.no))
-    .map((soal) => ({ ...soal, pembahasan: brslDasarPembahasan[soal.no] }))}
+    materiSections={materiSections}
+    contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
+    latihanDasar={latihanDasarTkaLama.map((soal) => ({ ...soal, pembahasan: toPembahasanText(soal.no) }))}
     gambarMap={Object.fromEntries(Object.entries(brslDasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
   />
 );
