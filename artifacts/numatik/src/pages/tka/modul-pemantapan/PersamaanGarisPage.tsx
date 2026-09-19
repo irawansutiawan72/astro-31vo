@@ -9,8 +9,7 @@ const materiSections: MateriSection[] = [
 
 /* ============================================================
    Ilustrasi grafik latihan TKA.
-   Semua SVG disimpan di halaman ini agar modul TKA dapat berdiri
-   sendiri tanpa memuat halaman/menu Olimpiade Matematika.
+   Semua SVG disimpan di halaman ini agar modul TKA dapat berdiri sendiri.
    ============================================================ */
 const _axisBlue = "#3B82F6";
 const _lineYellow = "#FACC15";
