@@ -313,14 +313,14 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 28, type: "pgkbs",
-    soal: "Taman Pak Budi berbentuk trapesium sama kaki. Sisi-sisi sejajarnya berturut-turut sepanjang $(6x - 4)$ m dan $(4x + 8)$ m, sedangkan sisi miringnya masing-masing $(5x + 2)$ m. Tinggi trapesium tersebut adalah $(3x + 1)$ m. Di sekeliling taman akan ditanami pohon pucuk merah dengan jarak antarpohon $(2x + 1)$ m. Harga per pohon adalah Rp200.000.\n\nBerdasarkan data di atas, tentukan kebenaran pernyataan berikut!",
+    soal: "Taman Pak Budi berbentuk trapesium sama kaki. Sisi-sisi sejajarnya berturut-turut sepanjang $(6x - 4)$ m dan $(4x + 8)$ m, sedangkan sisi miringnya masing-masing $(5x + 2)$ m. Di sekeliling taman akan ditanami pohon pucuk merah dengan jarak antarpohon $(2x - 2)$ m. Harga per pohon adalah Rp200.000.\n\nBerdasarkan data di atas, tentukan kebenaran pernyataan berikut!",
     pernyataan: [
       "Keliling taman Pak Budi adalah $(20x + 8)$ m.",
       "Jika nilai $x = 3$, maka banyak pohon yang dibutuhkan adalah $17$ buah.",
       "Total biaya pembelian seluruh pohon untuk $x = 3$ adalah Rp3.400.000.",
     ],
-    jawabanBS: ["B", "S", "S"],
-    pembahasan: "Keliling $= (6x-4) + (4x+8) + 2(5x+2) = 20x + 8$ (BENAR).\n\nUntuk $x=3$: keliling $= 20(3)+8 = 68$ m, jarak antarpohon $= 2(3)+1 = 7$ m. Banyak pohon $= 68 \\div 7 \\approx 9{,}7$, bukan $17$ (SALAH).\n\nKarena banyak pohon bukan $17$, total biaya juga bukan Rp3.400.000 (SALAH).",
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Keliling $= (6x-4) + (4x+8) + 2(5x+2) = 20x + 8$ (BENAR).\n\nUntuk $x=3$: keliling $= 20(3)+8 = 68$ m dan jarak antarpohon $= 2(3)-2 = 4$ m. Banyak pohon $= 68 \\div 4 = 17$ buah (BENAR).\n\nTotal biaya $=17\\times Rp200.000=Rp3.400.000$ (BENAR).",
   },
   {
     no: 29, type: "pg",
@@ -379,7 +379,7 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 35, type: "pgkbs",
-    soal: "Tiga generasi dalam satu keluarga terdiri dari Cucu, Ibu, dan Nenek. Tiga tahun yang lalu, usia Nenek tepat tiga kali usia Ibu, dan usia Ibu kurang lima tahun dari empat kali usia Cucu. Jika tahun ini usia Cucu adalah $y$ tahun, tentukan apakah pernyataan berikut Benar (B) atau Salah (S):",
+    soal: "Tiga generasi dalam satu keluarga terdiri dari Cucu, Ibu, dan Nenek. Tiga tahun yang lalu, usia Nenek tepat tiga kali usia Ibu, dan usia Ibu pada saat itu kurang lima tahun dari empat kali usia Cucu pada saat itu. Jika tahun ini usia Cucu adalah $y$ tahun, tentukan apakah pernyataan berikut Benar (B) atau Salah (S):",
     pernyataan: [
       "Usia Ibu tahun ini dapat dinyatakan sebagai $(4y - 14)$ tahun.",
       "Usia Nenek dua tahun yang akan datang adalah $(12y - 46)$ tahun.",
