@@ -49,6 +49,11 @@ function toWebPSrc(src: string): string {
   return src.replace(/\.(png|jpe?g|gif)(\?.*)?$/i, '.webp$2')
 }
 
+/** Only request sibling WebP files when the source is remotely generated. */
+function canUseWebPSibling(src: string): boolean {
+  return /^https?:\/\//i.test(src) && !src.includes('.webp')
+}
+
 /** Whether the browser supports the IntersectionObserver API */
 const hasIO = typeof IntersectionObserver !== 'undefined'
 
@@ -109,6 +114,7 @@ export const AsyncImage = React.memo(function AsyncImage({
 
   const webpSrc = toWebPSrc(src)
   const isWebP  = src.includes('.webp') || src.startsWith('data:')
+  const useWebPSibling = canUseWebPSibling(src)
 
   const wrapStyle: CSSProperties = {
     position: 'relative',
@@ -147,7 +153,7 @@ export const AsyncImage = React.memo(function AsyncImage({
       {inView && !errored && (
         <picture>
           {/* WebP source for browsers that support it */}
-          {!isWebP && <source srcSet={webpSrc} type="image/webp" />}
+          {!isWebP && useWebPSibling && <source srcSet={webpSrc} type="image/webp" />}
 
           <img
             src={src}
@@ -179,10 +185,11 @@ export function CriticalImage({ src, alt, className, ...rest }: AsyncImageProps)
   const [errored, setErrored] = useState(false)
   const webpSrc = toWebPSrc(src)
   const isWebP  = src.includes('.webp') || src.startsWith('data:')
+  const useWebPSibling = canUseWebPSibling(src)
 
   return (
     <picture>
-      {!isWebP && <source srcSet={webpSrc} type="image/webp" />}
+      {!isWebP && useWebPSibling && <source srcSet={webpSrc} type="image/webp" />}
       <img
         src={src}
         alt={alt}

@@ -985,7 +985,8 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           style={{ color: isLightTheme ? "var(--text-primary)" : "rgba(255,255,255,0.9)" }}
                         >
                           {soal.soal.split('\n').map((line, lineIdx) => {
-                            const imgMatch = line.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
+                            const trimmedLine = line.trim();
+                            const imgMatch = trimmedLine.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
                             if (imgMatch) {
                               // An explicit visual in the question takes precedence over
                               // a fallback visual supplied through soalSvg/gambarMap.
@@ -1003,7 +1004,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 </div>
                               );
                             }
-                            if (line.trim() === "[DIAGRAM]" && diagram) {
+                            if (trimmedLine === "[DIAGRAM]" && diagram) {
                               diagramInserted = true;
                               return (
                                 <div key={lineIdx} className="my-2 min-w-0 max-w-full overflow-x-auto">
