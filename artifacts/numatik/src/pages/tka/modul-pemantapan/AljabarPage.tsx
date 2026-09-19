@@ -398,6 +398,7 @@ const latihanDasarAljabar = latihanDasar
 const AljabarPage = () => (
   <TKAPemantapanLayout
     title="BENTUK ALJABAR"
+    backPath="/tka/modul-pemantapan"
     materiSections={materiSections}
     contohSoal={contohSoal}
     latihanDasar={latihanDasarAljabar}

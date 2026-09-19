@@ -233,6 +233,7 @@ const latihanDasar: LatihanSoal[] = [
 const AritmetikaSosialPage = () => (
   <TKAPemantapanLayout
     title="ARITMETIKA SOSIAL"
+    backPath="/tka/modul-pemantapan"
     materiSections={materiSections}
     contohSoal={contohSoal}
     latihanDasar={latihanDasar}

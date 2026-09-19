@@ -294,6 +294,7 @@ const latihanTambahan: LatihanSoal[] = [
 const RelasiFungsiPage = () => (
   <TKAPemantapanLayout
     title="RELASI DAN FUNGSI"
+    backPath="/tka/modul-pemantapan"
     materiSections={materiSections}
     contohSoal={contohSoal}
     showImageSourceLinks={false}
