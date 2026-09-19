@@ -1,10 +1,57 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { statistikaContohSoal, statistikaContohSvgMap } from "@/data/statistikaContohSoal";
-import {
-  renderDasarVisual,
-  materiSections,
-} from "@/pages/OlimpiadeStatistikaPage";
+import { tkaStatistikaMateri } from "@/data/tkaStatistikaMateri";
+
+const visualData: Record<number, { title: string; headers: [string, string]; rows: [string, string][] }> = {
+  1: { title: "Tabel frekuensi", headers: ["Nilai", "Frekuensi"], rows: [["5", "1"], ["6", "4"], ["7", "5"], ["8", "6"], ["9", "4"], ["10", "2"]] },
+  2: { title: "Data nilai", headers: ["Data ke-", "Nilai"], rows: [["1", "5"], ["2", "5"], ["3", "7"], ["4", "3"], ["5", "2"], ["6", "5"], ["7", "6"], ["8", "9"], ["9", "7"], ["10", "10"]] },
+  4: { title: "Tabel frekuensi nilai siswa", headers: ["Nilai", "Frekuensi"], rows: [["3", "2"], ["4", "5"], ["5", "5"], ["6", "7"], ["7", "6"], ["8", "3"]] },
+  5: { title: "Diagram nilai kuis", headers: ["Nilai", "Frekuensi"], rows: [["50", "2"], ["60", "3"], ["70", "8"], ["80", "5"], ["90", "6"], ["100", "1"]] },
+  9: { title: "Tabel data statistik", headers: ["Kategori", "Nilai"], rows: [["A", "12"], ["B", "18"], ["C", "24"], ["D", "16"]] },
+  10: { title: "Data pengamatan", headers: ["Data", "Frekuensi"], rows: [["1", "3"], ["2", "5"], ["3", "7"], ["4", "4"]] },
+  11: { title: "Tabel nilai", headers: ["Nilai", "Frekuensi"], rows: [["4", "2"], ["5", "4"], ["6", "5"], ["7", "5"], ["8", "9"]] },
+  15: { title: "Tabel distribusi frekuensi hasil seleksi", headers: ["Nilai", "Frekuensi"], rows: [["50", "10"], ["60", "16"], ["70", "50"], ["80", "x"], ["90", "4"], ["100", "5"]] },
+  16: { title: "Keterangan nilai siswa", headers: ["Siswa", "Nilai"], rows: [["Adi", "10"], ["Budi", "—"], ["Cici", "—"], ["Didi", "—"], ["Eki", "4"]] },
+  17: { title: "Data ukuran pemusatan", headers: ["Ukuran", "Nilai"], rows: [["Mean", "72"], ["Median", "70"], ["Modus", "68"], ["Jangkauan", "25"]] },
+  18: { title: "Data pengunjung", headers: ["Hari", "Pengunjung"], rows: [["Senin", "300"], ["Selasa", "250"], ["Rabu", "400"], ["Kamis", "550"], ["Jumat", "1500"]] },
+  19: { title: "Tabel data", headers: ["Kelompok", "Nilai"], rows: [["1", "15"], ["2", "20"], ["3", "25"], ["4", "30"]] },
+  20: { title: "Grafik suhu udara", headers: ["Waktu", "Suhu"], rows: [["19.00", "29"], ["21.00", "27"], ["23.00", "26"], ["01.00", "24"], ["03.00", "25"], ["05.00", "28"]] },
+  21: { title: "Data hasil survei", headers: ["Kategori", "Persentase"], rows: [["A", "20%"], ["B", "35%"], ["C", "25%"], ["D", "20%"]] },
+  22: { title: "Demografi usia warga", headers: ["Kelompok usia", "Persentase"], rows: [["Balita", "10%"], ["Anak-anak", "20%"], ["Remaja", "25%"], ["Dewasa", "35%"], ["Lansia", "10%"]] },
+  23: { title: "Pengunjung pameran buku", headers: ["Hari", "Pengunjung"], rows: [["1", "50"], ["2", "150"], ["3", "250"], ["4", "200"], ["5", "230"], ["6", "270"]] },
+  24: { title: "Nilai tukar USD terhadap Rupiah", headers: ["Hari", "Kurs"], rows: [["Sen", "16000"], ["Sel", "16400"], ["Rab", "16100"], ["Kam", "16300"], ["Jum", "16200"], ["Sab", "16600"], ["Min", "16500"]] },
+  25: { title: "Moda transportasi siswa", headers: ["Moda", "Sudut"], rows: [["Jalan kaki", "60°"], ["Sepeda", "60°"], ["Angkutan umum", "60°"], ["Ojek online", "72°"], ["Sepeda motor", "48°"], ["Lainnya", "60°"]] },
+  26: { title: "Tinggi tanaman", headers: ["Tinggi", "Frekuensi"], rows: [["10", "3"], ["11", "6"], ["12", "10"], ["13", "11"], ["14", "8"], ["15", "2"]] },
+  27: { title: "Nilai ujian", headers: ["Skor", "Frekuensi"], rows: [["600", "3"], ["700", "6"], ["750", "7"], ["800", "8"], ["900", "4"], ["1000", "2"]] },
+};
+
+const renderTkaStatistikaVisual = (no: number): React.ReactNode => {
+  const data = visualData[no] ?? visualData[1];
+  return (
+    <div className="my-3 overflow-hidden rounded-xl border border-cyan-400/30 bg-white/5">
+      <div className="border-b border-cyan-400/20 bg-cyan-500/15 px-3 py-2 text-center text-xs font-bold text-cyan-200">{data.title}</div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[260px] text-center text-xs text-white/85">
+          <thead className="border-b border-white/10 bg-white/5">
+            <tr>
+              <th className="px-3 py-2 text-cyan-300">{data.headers[0]}</th>
+              <th className="px-3 py-2 text-cyan-300">{data.headers[1]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.rows.map(([label, value]) => (
+              <tr key={`${label}-${value}`} className="border-b border-white/5 last:border-b-0">
+                <td className="px-3 py-1.5">{label}</td>
+                <td className="px-3 py-1.5">{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 const latihanDasar: LatihanSoal[] = [
   {
@@ -428,29 +475,29 @@ const latihanDasar: LatihanSoal[] = [
 ];
 
 const gambarMap = {
-  1: renderDasarVisual(4),
-  2: renderDasarVisual(41),
-  4: renderDasarVisual(51),
-  5: renderDasarVisual(60),
+  1: renderTkaStatistikaVisual(4),
+  2: renderTkaStatistikaVisual(41),
+  4: renderTkaStatistikaVisual(51),
+  5: renderTkaStatistikaVisual(60),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
-  13: renderDasarVisual(15),
-  14: renderDasarVisual(9),
-  15: renderDasarVisual(10),
-  16: renderDasarVisual(11),
-  17: renderDasarVisual(19),
-  18: renderDasarVisual(20),
-  20: renderDasarVisual(22),
-  21: renderDasarVisual(23),
-  22: renderDasarVisual(24),
-  23: renderDasarVisual(25),
-  24: renderDasarVisual(26),
-  25: renderDasarVisual(27),
+  13: renderTkaStatistikaVisual(15),
+  14: renderTkaStatistikaVisual(9),
+  15: renderTkaStatistikaVisual(10),
+  16: renderTkaStatistikaVisual(11),
+  17: renderTkaStatistikaVisual(19),
+  18: renderTkaStatistikaVisual(20),
+  20: renderTkaStatistikaVisual(22),
+  21: renderTkaStatistikaVisual(23),
+  22: renderTkaStatistikaVisual(24),
+  23: renderTkaStatistikaVisual(25),
+  24: renderTkaStatistikaVisual(26),
+  25: renderTkaStatistikaVisual(27),
 };
 
 const StatistikaPage = () => (
   <TKAPemantapanLayout
     title="STATISTIKA"
-    materiSections={materiSections}
+    materiSections={tkaStatistikaMateri}
     contohSoal={statistikaContohSoal}
     soalSvgMap={statistikaContohSvgMap}
     latihanDasar={latihanDasar}

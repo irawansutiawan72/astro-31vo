@@ -1,7 +1,7 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
-import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
+import type { LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { materiSection as olimpiadeMateriSection } from "@/pages/OlimpiadeTransformasiPage";
+import { tkaTransformasiMateri } from "@/data/tkaTransformasiMateri";
 
 const materiImagesByHeading: Record<string, string> = {
   "A. Definisi Transformasi": "/translasi-claw-machine.png",
@@ -9,15 +9,13 @@ const materiImagesByHeading: Record<string, string> = {
   "C. Refleksi (Pencerminan)": "/pontiac-rotasi.png",
 };
 
-const materiSections: MateriSection[] = olimpiadeMateriSection.sections
-  .filter((section) => section.heading !== "Indikator 11")
-  .map((section) => {
-    const image = materiImagesByHeading[section.heading];
-    return {
-      ...section,
-      content: image ? `${section.content}\n\n[IMAGE:${image}]` : section.content,
-    };
-  });
+const materiSections = tkaTransformasiMateri.map((section) => {
+  const image = materiImagesByHeading[section.heading];
+  return {
+    ...section,
+    content: image ? `${section.content}\n\n[IMAGE:${image}]` : section.content,
+  };
+});
 
 const latihanDasar: LatihanSoal[] = [
   { no: 1, soal: "Titik A(5, -2) ditranslasi oleh $T\\binom{-3}{1}$. Tentukan koordinat bayangan titik A tersebut!", options: ["A. A'(2, 1)", "B. A'(1, 1)", "C. A'(2, 2)", "D. A'(2, -1)", "E. A'(-2, 1)"] },
