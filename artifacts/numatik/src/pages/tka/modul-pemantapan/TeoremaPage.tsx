@@ -592,9 +592,6 @@ const latihanDasarTka: LatihanSoal[] = [
   },
 ];
 
-// Dataset TKA ini sengaja dimiliki modul Pemantapan sendiri.
-export const bankSoalTeoremaPythagoras = latihanDasarTka;
-
 const TeoremaPage = () => (
   <TKAPemantapanLayout
     title="TEOREMA PYTHAGORAS"

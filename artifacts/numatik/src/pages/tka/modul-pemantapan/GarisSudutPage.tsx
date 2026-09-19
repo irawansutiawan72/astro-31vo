@@ -3,9 +3,8 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { useTheme } from "@/contexts/ThemeContext";
 
-// ─── Diagram SVG untuk tiap soal — diduplikasi dari OlimpiadeGarisSudutPage.tsx
-// (menu OLIMPIADE MATEMATIKA > GARIS DAN SUDUT > LATIHAN DASAR) agar soal di
-// modul pemantapan ini juga lengkap dengan gambar. ───
+// ─── Diagram SVG khusus untuk latihan Modul Pemantapan TKA ────────────────────
+// Seluruh visual latihan didefinisikan di modul ini agar halaman tetap mandiri.
 const materiSections: MateriSection[] = [
   { heading: "A. Jenis-jenis Sudut", content: `- Sudut siku-siku: 90°\n- Sudut lancip: 0° < α < 90°\n- Sudut tumpul: 90° < α < 180°\n- Sudut lurus: 180°\n- Sudut refleks: 180° < α < 360°\n- Sudut penuh: 360°` },
   { heading: "B. Hubungan Antar Sudut", content: `1. Sudut berpelurus (suplemen): dua sudut berjumlah 180°\n   Jika sudut A dan sudut B berpelurus: $A + B = 180°$\n\n2. Sudut berpenyiku (komplemen): dua sudut berjumlah 90°\n   Jika sudut A dan sudut B berpenyiku: $A + B = 90°$\n\n3. Sudut bertolak belakang: dua sudut yang bertolak belakang nilainya sama.\n\n4. Sudut sehadap: $\\alpha_1 = \\alpha_2$ (pada dua garis sejajar)\n5. Sudut berseberangan dalam: $\\alpha_1 = \\alpha_2$\n6. Sudut berseberangan luar: $\\alpha_1 = \\alpha_2$\n7. Sudut sepihak (dalam): $\\alpha_1 + \\alpha_2 = 180°$` },

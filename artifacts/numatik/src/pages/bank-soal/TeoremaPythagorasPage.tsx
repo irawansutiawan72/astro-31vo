@@ -14,7 +14,6 @@ const renderWithLatex = (text: string) => {
 };
 import { useNavigate } from "react-router-dom";
 import PageNavigation from "@/components/PageNavigation";
-import { bankSoalTeoremaPythagoras } from "@/pages/tka/modul-pemantapan/TeoremaPage";
 
 type Question = { no: number; text: string; options: string[]; answer: string; explanation: string; image?: { src: string; alt: string } };
 
@@ -43,19 +42,6 @@ function QuestionCard({ question }: { question: Question }) {
   </article>;
 }
 
-function TkaQuestionCard({ question, index }: { question: (typeof bankSoalTeoremaPythagoras)[number]; index: number }) {
-  const [open, setOpen] = useState(false);
-  return <article className="rounded-2xl border border-border/60 bg-card/60 p-5 shadow-lg backdrop-blur-sm">
-    <div className="mb-3 flex items-center justify-between"><span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">Soal {index + 11}</span><span className="text-xs text-muted-foreground">Dari Modul Pemantapan</span></div>
-    <p className="mb-4 text-base leading-7 text-foreground">{question.soal}</p>
-    {question.gambar && <div className="mb-4 overflow-x-auto">{question.gambar}</div>}
-    {question.options && <div className="grid gap-2 text-sm leading-6 text-muted-foreground">{question.options.map((option) => <div key={option}>{renderWithLatex(option)}</div>)}</div>}
-    {question.pernyataan && <div className="grid gap-2 text-sm leading-6 text-muted-foreground">{question.pernyataan.map((item) => <div key={item}>{item}</div>)}</div>}
-    <button type="button" onClick={() => setOpen((value) => !value)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/20">{open ? "Sembunyikan Pembahasan" : "Lihat Pembahasan"}{open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</button>
-    {open && <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm leading-7"><p className="font-semibold text-primary">Jawaban: {question.jawaban ?? question.jawabanBS?.join(", ")}</p><p className="mt-2 whitespace-pre-line text-muted-foreground">{question.pembahasan}</p></div>}
-  </article>;
-}
-
-const BankSoalTeoremaPythagorasPage = () => { const navigate = useNavigate(); return <main className="relative min-h-screen gradient-space overflow-x-hidden"><PageNavigation prevPath="/bank-soal" /><section className="relative z-10 mx-auto w-full max-w-4xl px-4 py-20"><header className="mb-8 text-center"><h1 className="font-display text-2xl font-bold text-primary md:text-3xl">BANK SOAL TEOREMA PYTHAGORAS</h1><p className="mt-3 text-sm leading-6 text-muted-foreground">Kumpulan soal dan pembahasan Teorema Pythagoras lengkap dengan gambar.</p></header><div className="grid gap-5">{questions.map((question) => <QuestionCard key={`bank-${question.no}`} question={question} />)}{bankSoalTeoremaPythagoras.map((question, index) => <TkaQuestionCard key={`tka-${question.no}`} question={question} index={index} />)}</div><button type="button" onClick={() => navigate("/bank-soal")} className="mx-auto mt-8 block rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/20">Kembali ke Bank Soal</button></section></main>; };
+const BankSoalTeoremaPythagorasPage = () => { const navigate = useNavigate(); return <main className="relative min-h-screen gradient-space overflow-x-hidden"><PageNavigation prevPath="/bank-soal" /><section className="relative z-10 mx-auto w-full max-w-4xl px-4 py-20"><header className="mb-8 text-center"><h1 className="font-display text-2xl font-bold text-primary md:text-3xl">BANK SOAL TEOREMA PYTHAGORAS</h1><p className="mt-3 text-sm leading-6 text-muted-foreground">Kumpulan soal dan pembahasan Teorema Pythagoras lengkap dengan gambar.</p></header><div className="grid gap-5">{questions.map((question) => <QuestionCard key={`bank-${question.no}`} question={question} />)}</div><button type="button" onClick={() => navigate("/bank-soal")} className="mx-auto mt-8 block rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/20">Kembali ke Bank Soal</button></section></main>; };
 
 export default BankSoalTeoremaPythagorasPage;

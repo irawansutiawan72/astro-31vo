@@ -377,7 +377,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
     <div className="relative min-h-screen flex flex-col items-center overflow-x-hidden tka-pemantapan"
       style={isLightTheme ? { background: "var(--bg-primary)" } : { background: "linear-gradient(160deg, #0f0c29 0%, #141428 40%, #1a0a2e 70%, #0d1117 100%)" }}>
       <Starfield />
-      <PageNavigation />
+      <PageNavigation prevPath={backPath} />
 
       <div className="tka-pemantapan-content relative z-10 min-w-0 max-w-3xl w-full px-4 pt-8 pb-14">
 
@@ -1366,7 +1366,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
         {/* ── Back button ── */}
         <div className="mt-10 flex justify-center">
           <button
-            onClick={() => { playPopSound(); navigate(-1); }}
+            onClick={() => { playPopSound(); navigate(backPath); }}
             className="group flex items-center gap-2 font-body text-sm text-white/30 hover:text-violet-300 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
