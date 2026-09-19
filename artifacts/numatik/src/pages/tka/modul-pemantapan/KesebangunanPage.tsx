@@ -1,7 +1,25 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { latihanDasar as latihanOlimpiade, kesDasarImages } from "@/pages/OlimpiadeKesebangunanPage";
+
+const kesebangunanImages: Record<number, string> = {
+  3: "https://drive.google.com/thumbnail?id=1ZP5r-eDLDKqa_q-Vl_VgLnSSXb_6Fw_V&sz=w400",
+  4: "https://drive.google.com/thumbnail?id=1ROQpFuAJ_OJmnYkdpUHsdDrW-rgtSeEh&sz=w400",
+  6: "https://drive.google.com/thumbnail?id=1WjJCZ5nKRuOb0gnNyrISrI2d5NP6Egh9&sz=w400",
+  7: "https://drive.google.com/thumbnail?id=1t4cMz2PzB-uTGzaUXpQZwzkyHRgqC03m&sz=w400",
+  8: "https://drive.google.com/thumbnail?id=1MdsvhRq7fn3ESbmDu2Dfo4M4LRgO24hw&sz=w400",
+  9: "https://drive.google.com/thumbnail?id=1CaV_lnFuho6eghbrRYdI2nc_R66HLdVk&sz=w400",
+  10: "https://drive.google.com/thumbnail?id=1n6fdjbhG0auXBQA36uGI9ZfoqCHt3PBp&sz=w400",
+  11: "https://drive.google.com/thumbnail?id=1Q7d9DCss1BiMXbv7LROvwKtWrHDQV_Vq&sz=w400",
+  12: "https://drive.google.com/thumbnail?id=1ZXJK12JT1UjYsddLMB2gB5MPWbEpPSrk&sz=w400",
+  13: "https://drive.google.com/thumbnail?id=1PMDhaE4vtKuFsAl220dYy-E7M8YNJD8Y&sz=w400",
+  15: "https://drive.google.com/thumbnail?id=18ISrSOMi8scSjAoCxj8ii_V3EpoTfmG1&sz=w400",
+  16: "https://drive.google.com/thumbnail?id=1UqzWN2GNTfIkIyfMFCd5X7_QwZSJdrn7&sz=w400",
+  17: "https://drive.google.com/thumbnail?id=1sLnMt8MJVfYDlyBZgnSvtD5beV0MEjad&sz=w400",
+  18: "https://drive.google.com/thumbnail?id=11mITiYHdllHy9TRQY9L-Snd-Pwu7eS55&sz=w400",
+  21: "https://drive.google.com/thumbnail?id=1QBSIjecMAMMs-gtZhNTxcuHOV-u29-GB&sz=w400",
+  22: "https://drive.google.com/thumbnail?id=1VM2aEBmsoI6IsZ8F-YtVagAmst3fqGYs&sz=w400",
+};
 
 const materiSections: MateriSection[] = [
   {
@@ -196,8 +214,8 @@ const KesebangunanPage = () => (
     title="KESEBANGUNAN DAN KEKONGRUENAN"
   materiSections={materiSections}
   contohSoal={getTkaContohSoal("kesebangunan")}
-  latihanDasar={latihanOlimpiade.map((soal) => ({ ...soal, pembahasan: typeof soal.pembahasan === "string" ? soal.pembahasan : String(soal.pembahasan ?? "") }))}
-  gambarMap={Object.fromEntries(Object.entries(kesDasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
+  latihanDasar={latihanDasarTkaLama}
+  gambarMap={Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
   />
 );
 
