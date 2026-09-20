@@ -3,29 +3,32 @@ modules = ["nodejs-20", "web", "python-3.12"]
 [deployment]
 router = "application"
 deploymentTarget = "autoscale"
+build = ["sh", "-c", "set -e; pnpm install --filter @workspace/numatik... --frozen-lockfile || pnpm install --filter @workspace/numatik...; pnpm --filter @workspace/numatik run build"]
+run = ["pnpm", "--filter", "@workspace/numatik", "run", "serve"]
 
 [deployment.postBuild]
 args = ["pnpm", "store", "prune"]
 env = { "CI" = "true" }
 
 [workflows]
-runButton = "Project"
+runButton = "Start application"
 
 [[workflows.workflow]]
-name = "Project"
+name = "Start application"
 mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "artifacts/numatik: web"
-
-[[workflows.workflow]]
-name = "artifacts/numatik: web"
 author = "agent"
 
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "sh -c 'set -e; pnpm install --filter @workspace/numatik... --frozen-lockfile || pnpm install --filter @workspace/numatik...; exec pnpm --filter @workspace/numatik run dev'"
+waitForPort = 18860
+
+[[workflows.workflow]]
+name = "artifacts/numatik: web"
+author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"

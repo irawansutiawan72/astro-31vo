@@ -13,6 +13,9 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.
 - For a lockfile-only workspace setup, use `pnpm install --frozen-lockfile`; the package installer callback requires at least one package and is not a substitute for installing all workspace manifests.
 - If full workspace install is blocked by the firewall on an unrelated `lib/api-spec` dependency, install the target package graph with `pnpm install --filter @workspace/numatik... --frozen-lockfile`; this preserves the lockfile and is sufficient for Numatik verification.
+- For imported projects, the reliable bootstrap must be a direct shell task in the `Start application` workflow. Wrapping the artifact workflow with `workflow.run` can bypass the install command when the managed artifact workflow starts.
+  **Why:** The managed artifact workflow may be recreated from artifact metadata during import/restart, so its command can run before the root bootstrap task.
+  **How to apply:** Put the filtered install and `exec pnpm --filter @workspace/numatik run dev` in the direct workflow task, with `waitForPort` set to the Vite port.
 - Build and dev prehooks regenerate the tracked search index from page content; content changes can therefore legitimately update `public/search-index.json`.
   **Why:** Search needs to reflect newly added instructional text and routes after a build.
   **How to apply:** Keep the generated index synchronized when changing searchable page copy; do not mistake that diff for an unrelated source edit.
