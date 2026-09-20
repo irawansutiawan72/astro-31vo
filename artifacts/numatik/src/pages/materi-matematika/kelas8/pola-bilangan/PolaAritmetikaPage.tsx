@@ -475,11 +475,33 @@ function ArithmeticArcPanel({
   );
 }
 
-const PolaAritmetikaPage = () => {
+type PolaAritmetikaPageProps = {
+  audience?: "kelas8" | "sma";
+};
+
+const PolaAritmetikaPage = ({ audience = "kelas8" }: PolaAritmetikaPageProps) => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const { isDark } = useTheme();
-  const t = translations[language];
+  const isSmaTeacherPage = audience === "sma";
+  const baseTranslation = translations[language];
+  const t = isSmaTeacherPage
+    ? {
+        ...baseTranslation,
+        breadcrumb:
+          language === "id"
+            ? "SMA · Buku Animasi Matematika · Barisan dan Deret"
+            : language === "en"
+              ? "Senior High · Math Animation Book · Sequences and Series"
+              : "高校 · 数学アニメーション · 数列と級数",
+        summarySubheader:
+          language === "id"
+            ? "Barisan dan Deret Aritmetika — SMA"
+            : language === "en"
+              ? "Arithmetic Sequences & Series — Senior High"
+              : "等差数列と等差級数 — 高校",
+      }
+    : baseTranslation;
 
   const SectionHeader = ({ icon, iconColor, title }: {
     icon: React.ReactNode; iconColor?: string; title: string;
@@ -508,7 +530,13 @@ const PolaAritmetikaPage = () => {
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
       <Starfield />
-      <PageNavigation />
+       <PageNavigation
+         prevPath={
+           isSmaTeacherPage
+             ? "/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret"
+             : undefined
+         }
+       />
       <div className="relative z-10 max-w-3xl w-full px-4 pt-20 pb-12">
         <BookOpen className="w-10 h-10 text-primary mx-auto mb-3" />
         <h1 className="font-display text-xl md:text-2xl font-bold text-primary text-glow-cyan mb-2 text-center">
@@ -1036,7 +1064,15 @@ const PolaAritmetikaPage = () => {
 
         </div>
         <div className="mt-8 text-center">
-          <button onClick={() => { playPopSound(); navigate("/materi-matematika/kelas-8/pola-bilangan"); }}
+          <button
+            onClick={() => {
+              playPopSound();
+              navigate(
+                isSmaTeacherPage
+                  ? "/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret"
+                  : "/materi-matematika/kelas-8/pola-bilangan",
+              );
+            }}
             className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer font-body">
             {t.backBtn}
           </button>

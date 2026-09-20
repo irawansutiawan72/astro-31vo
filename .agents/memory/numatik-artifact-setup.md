@@ -12,7 +12,9 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - Imported projects may therefore be unreachable by artifact-based screenshot/presentation tools even while the managed frontend workflow runs; use build, logs, and direct route checks as fallback verification.
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.
 - For a lockfile-only workspace setup, use `pnpm install --frozen-lockfile`; the package installer callback requires at least one package and is not a substitute for installing all workspace manifests.
-- If full workspace install is blocked by the firewall on an unrelated `lib/api-spec` dependency, install the target package graph with `pnpm install --filter @workspace/numatik... --frozen-lockfile`; this preserves the lockfile and is sufficient for Numatik verification.
+- If full workspace install is blocked by the package firewall on an unrelated workspace dependency, the Numatik bootstrap should retry with `pnpm install --filter @workspace/numatik... --frozen-lockfile`; this preserves the lockfile and is sufficient for the frontend.
+  **Why:** A clean import can fail before Vite starts even though Numatik's own dependency graph is installable.
+  **How to apply:** Attempt the full frozen-lockfile install from the workspace root first, then use the filtered graph only as a frontend-safe fallback.
 - For imported projects, the reliable bootstrap must be a direct shell task in the `Start application` workflow. Wrapping the artifact workflow with `workflow.run` can bypass the install command when the managed artifact workflow starts.
   **Why:** The managed artifact workflow may be recreated from artifact metadata during import/restart, so its command can run before the root bootstrap task.
   **How to apply:** Put the filtered install and `exec pnpm --filter @workspace/numatik run dev` in the direct workflow task, with `waitForPort` set to the Vite port.

@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/build-search-index.mjs",
+    "predev": "node scripts/ensure-deps.mjs && node scripts/build-search-index.mjs",
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "prebuild": "node scripts/build-search-index.mjs",
+    "prebuild": "node scripts/ensure-deps.mjs && node scripts/build-search-index.mjs",
     "build": "NODE_OPTIONS='--max-old-space-size=4096' vite build --config vite.config.ts",
     "build:search-index": "node scripts/build-search-index.mjs",
-    "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
+    "preview": "node scripts/ensure-deps.mjs && vite preview --config vite.config.ts --host 0.0.0.0",
+    "serve": "pnpm run preview",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
