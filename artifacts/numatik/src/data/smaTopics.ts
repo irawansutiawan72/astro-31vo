@@ -13,6 +13,13 @@ export type SmaTopic = {
 
 export const SMA_TOPICS: SmaTopic[] = [
   {
+    title: "Fungsi Eksponen",
+    slug: "fungsi-eksponen",
+    subtopics: [
+      { title: "Pertumbuhan, Peluruhan, dan Grafik Eksponen", slug: "eksplorasi-fungsi-eksponen" },
+    ],
+  },
+  {
     title: "Eksponen dan Logaritma",
     slug: "eksponen-dan-logaritma",
     subtopics: [
