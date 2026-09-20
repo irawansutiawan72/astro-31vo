@@ -82,6 +82,7 @@ Jawab: $U_n = \\frac{1}{2}n(n-1)$`,
 
 export const latihanDasarPolaBilanganTka: TkaPolaBilanganSoal[] = [
   { no: 1, soal: "Diketahui barisan bilangan aritmetika sebagai berikut.\n$-8, -4, 0, 4, 8, 12, n, 20, 24$\nNilai n yang memenuhi adalah ....", options: ["A. 10", "B. 14", "C. 16", "D. 18"] },
+  { no: 2, soal: "Perhatikan pola bilangan berselang-seling berikut.\n$1, 3, 5, 8, 9, 13, 13, 18, 17, \\ldots$\nPernyataan yang sesuai dengan pola tersebut adalah ....", options: ["A. Suku ke-7, ke-8, dan ke-9 adalah 13, 18, 17", "B. Suku ke-7, ke-8, dan ke-9 adalah 14, 17, 18", "C. Suku ke-7, ke-8, dan ke-9 adalah 13, 17, 18", "D. Suku ke-7, ke-8, dan ke-9 adalah 14, 18, 19"] },
   { no: 3, soal: "Suku ke-22 dari barisan 99, 93, 87, 81, … adalah ....", options: ["A. –27", "B. –21", "C. –15", "D. –9"] },
   { no: 4, soal: "Suku pertama dari barisan aritmatika adalah 3 dan bedanya 4, suku ke-10 dari barisan aritmatika tersebut adalah ....", options: ["A. 30", "B. 33", "C. 36", "D. 39"] },
   { no: 5, soal: "Dari barisan aritmetika diketahui $U_3 = 18$ dan $U_7 = 38$. Jumlah 24 suku pertama adalah ....", options: ["A. 786", "B. 1248", "C. 1572", "D. 3144"] },
@@ -101,6 +102,9 @@ export const latihanDasarPolaBilanganTka: TkaPolaBilanganSoal[] = [
   { no: 19, soal: "Celin melipat-lipat kertas berkali-kali. Jika ketebalan kertas mula-mula 2 mm, maka butuh berapa kali lipatan sehingga ketebalan kertas menjadi 256 mm?", options: ["A. 7 kali", "B. 8 kali", "C. 9 kali", "D. 10 kali"] },
   { no: 20, soal: "Seutas tali dibagi menjadi enam bagian, sehingga bagian-bagiannya membentuk barisan geometri. Jika panjang tali terpendek 9 cm dan panjang tali terpanjang 288 cm, maka panjang tali mula-mula adalah ....", options: ["A. 567 cm", "B. 576 cm", "C. 586 cm", "D. 596 cm"] },
   { no: 21, soal: "Setiap bakteri akan membelah diri menjadi 2 setiap 15 menit. Jika banyak bakteri pada pukul 10.00 ada 25 buah, maka banyak bakteri pada pukul 12.15 adalah ....", options: ["A. 800", "B. 1600", "C. 3200", "D. 6400"] },
+  { no: 22, soal: "Diketahui barisan $15, 24, 35, 48, \\ldots$. Suku ke-14 barisan tersebut adalah ....", options: ["A. 280", "B. 286", "C. 288", "D. 290"] },
+  { no: 23, soal: "Diketahui barisan $3, 5, 9, 15, 23, \\ldots$. Suku ke-40 barisan tersebut adalah ....", options: ["A. 1.560", "B. 1.563", "C. 1.584", "D. 1.603"] },
+  { no: 24, soal: "Perhatikan pola bilangan berselang-seling berikut.\n$1, 3, 6, 7, 11, 11, \\ldots$\nTiga suku berikutnya adalah ....", options: ["A. 15, 16, 20", "B. 16, 15, 21", "C. 16, 16, 21", "D. 17, 15, 22"] },
   { no: 25, soal: "Rumus suku ke-n barisan adalah $U_n = 2n(n-1)$. Hasil dari $U_9 - U_7$ adalah ....", options: ["A. 80", "B. 70", "C. 60", "D. 50"] },
   { no: 26, soal: "Rumus suku ke-n dari barisan bilangan 0, 4, 10, 18, … adalah ....", options: ["A. $\\frac{1}{2}n(n+1)$", "B. $2n(n+1)$", "C. $(n-1)(n+2)$", "D. $(n+1)(n+2)$"] },
   { no: 27, soal: "Perhatikan gambar berikut!\nBanyak persegi satuan pada pola ke-19 adalah ....", options: ["A. 36", "B. 38", "C. 40", "D. 42"] },

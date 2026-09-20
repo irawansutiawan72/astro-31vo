@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AlertTriangle,
   BookOpen,
@@ -9,6 +9,7 @@ import {
   Target,
 } from "lucide-react";
 import { BlockMath, InlineMath } from "react-katex";
+import { motion } from "framer-motion";
 import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
@@ -23,6 +24,7 @@ type LanguageCopy = {
   foundation: string;
   practice: string;
   laws: string;
+  lawsHeading: string;
   lawsPractice: string;
   summary: string;
   takeAway: string;
@@ -45,6 +47,7 @@ const copy: Record<"id" | "en" | "ja", LanguageCopy> = {
     foundation: "Bagian 1 · Pengertian dan Notasi Pangkat",
     practice: "Contoh Soal dan Pembahasan",
     laws: "Bagian 2 · Sifat-Sifat Operasi Bilangan Berpangkat",
+    lawsHeading: "📊 Delapan Sifat Utama Eksponen",
     lawsPractice: "Latihan Sifat-Sifat Eksponen",
     summary: "Rangkuman Rumus",
     takeAway: "Inti yang perlu diingat",
@@ -65,6 +68,7 @@ const copy: Record<"id" | "en" | "ja", LanguageCopy> = {
     foundation: "Part 1 · Meaning and Exponential Notation",
     practice: "Worked Examples",
     laws: "Part 2 · Laws of Operations with Powers",
+    lawsHeading: "📊 Eight Main Laws of Exponents",
     lawsPractice: "Exponent Law Practice",
     summary: "Formula Summary",
     takeAway: "Key takeaways",
@@ -85,6 +89,7 @@ const copy: Record<"id" | "en" | "ja", LanguageCopy> = {
     foundation: "第1部 · 累乗の概念と表記",
     practice: "例題と解説",
     laws: "第2部 · 累乗の演算法則",
+    lawsHeading: "📊 指数の8つの性質",
     lawsPractice: "指数法則の練習",
     summary: "公式まとめ",
     takeAway: "覚えておきたいこと",
@@ -190,8 +195,33 @@ const Accordion = ({
 
 const BacteriaAnimation = ({ t }: { t: LanguageCopy }) => {
   const [generation, setGeneration] = useState(0);
+  const [isSplitting, setIsSplitting] = useState(false);
+  const splitTimer = useRef<number | null>(null);
   const count = 2 ** generation;
   const isMax = generation === 5;
+
+  useEffect(() => {
+    return () => {
+      if (splitTimer.current !== null) {
+        window.clearTimeout(splitTimer.current);
+      }
+    };
+  }, []);
+
+  const advanceGeneration = () => {
+    if (isSplitting) return;
+    if (isMax) {
+      setGeneration(0);
+      return;
+    }
+
+    setIsSplitting(true);
+    splitTimer.current = window.setTimeout(() => {
+      setGeneration((value) => value + 1);
+      setIsSplitting(false);
+      splitTimer.current = null;
+    }, 1500);
+  };
 
   return (
     <Card tone="cyan">
@@ -206,28 +236,66 @@ const BacteriaAnimation = ({ t }: { t: LanguageCopy }) => {
           <InlineMath math={`2^${generation} = ${count}`} />
         </span>
       </div>
-      <div className="flex min-h-[92px] flex-wrap items-center justify-center gap-2 rounded-xl bg-slate-950/30 p-3">
+      <div
+        className="flex min-h-[92px] flex-wrap items-center justify-center gap-2 rounded-xl bg-slate-950/30 p-3"
+        aria-busy={isSplitting}
+      >
         {Array.from({ length: count }, (_, index) => (
-          <button
-            key={`${generation}-${index}`}
-            type="button"
-            onClick={() => !isMax && setGeneration((value) => value + 1)}
-            className="cursor-pointer text-2xl transition-transform hover:scale-125"
-            aria-label="Belah kuman"
-          >
-            🦠
-          </button>
+          <div key={`${generation}-${index}`} className="relative flex h-10 w-10 items-center justify-center">
+            <motion.button
+              type="button"
+              onClick={advanceGeneration}
+              disabled={isSplitting}
+              animate={
+                isSplitting
+                  ? { opacity: [1, 1, 0.15], scale: [1, 1.15, 0.55], rotate: [0, 7, 0] }
+                  : { opacity: 1, scale: 1, rotate: 0 }
+              }
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="relative z-10 cursor-pointer text-2xl transition-transform hover:scale-125 disabled:cursor-wait"
+              aria-label="Belah kuman"
+            >
+              🦠
+            </motion.button>
+            {isSplitting && (
+              <>
+                <motion.span
+                  className="pointer-events-none absolute z-20 text-2xl"
+                  initial={{ opacity: 0, scale: 0.45, x: 0 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0.45, 1, 1.05], x: [0, -20, -28] }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  aria-hidden="true"
+                >
+                  🦠
+                </motion.span>
+                <motion.span
+                  className="pointer-events-none absolute z-20 text-2xl"
+                  initial={{ opacity: 0, scale: 0.45, x: 0 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0.45, 1, 1.05], x: [0, 20, 28] }}
+                  transition={{ duration: 1.5, ease: "easeInOut", delay: 0.08 }}
+                  aria-hidden="true"
+                >
+                  🦠
+                </motion.span>
+              </>
+            )}
+          </div>
         ))}
       </div>
       <button
         type="button"
-        onClick={() => setGeneration(isMax ? 0 : generation + 1)}
-        className="mt-4 w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-body text-sm font-bold text-white transition hover:opacity-90"
+        onClick={advanceGeneration}
+        disabled={isSplitting}
+        className="mt-4 w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-body text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-wait disabled:opacity-75"
       >
-        {isMax ? t.resetAnimation : `${t.openAnimation} (${count} → ${count * 2})`}
+        {isSplitting ? "Pembelahan slowmotion..." : isMax ? t.resetAnimation : `${t.openAnimation} (${count} → ${count * 2})`}
       </button>
       <p className="mt-2 text-center font-body text-xs text-white/50">
-        {isMax ? "2⁵ = 32 kuman. Perhatikan pertumbuhan yang sangat cepat!" : "Klik kuman atau tombol untuk melihat generasi berikutnya."}
+        {isSplitting
+          ? "Perhatikan satu kuman membelah perlahan menjadi dua."
+          : isMax
+            ? "2⁵ = 32 kuman. Perhatikan pertumbuhan yang sangat cepat!"
+            : "Klik kuman atau tombol untuk melihat generasi berikutnya."}
       </p>
     </Card>
   );
@@ -264,7 +332,6 @@ const SmaEksponenLogaritmaPage = () => {
     ["Pangkat nol", "a^0 = 1", "Berlaku untuk a ≠ 0.", "yellow"],
     ["Pangkat negatif", "a^{-n} = \\dfrac{1}{a^n}", "Pindahkan basis ke posisi kebalikan.", "orange"],
     ["Pangkat pecahan", "a^{\\frac{m}{n}} = \\sqrt[n]{a^m}", "Penyebut menjadi indeks akar.", "purple"],
-    ["Menggabungkan basis", "a^n b^n = (ab)^n", "Kebalikan dari pangkat perkalian.", "blue"],
   ] as const;
 
   return (
@@ -385,7 +452,7 @@ const SmaEksponenLogaritmaPage = () => {
             <h2 className="font-display text-lg font-bold text-primary">{t.laws}</h2>
           </div>
 
-          <Accordion id="sifat" title="📊 Sembilan Sifat Utama Eksponen" icon={<Target className="h-5 w-5" />} iconClass="text-green-400" open={isOpen("sifat")} onToggle={toggle}>
+          <Accordion id="sifat" title={t.lawsHeading} icon={<Target className="h-5 w-5" />} iconClass="text-green-400" open={isOpen("sifat")} onToggle={toggle}>
             <div className="grid gap-3 sm:grid-cols-2">
               {laws.map(([name, formula, note, tone], index) => (
                 <Card key={name} tone={tone}>
