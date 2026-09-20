@@ -1,0 +1,225 @@
+Logaritma
+Pernahkah kamu bertanya, "2 dipangkatkan berapa supaya hasilnya 32?" Itulah logaritma! Yuk, kita kuasai konsep dan 6 sifat saktinya, langkah demi langkah.
+
+a·log b = c  ⇔  aᶜ = b
+Pengertian Logaritma
+Logaritma adalah kebalikan (invers) dari perpangkatan
+Perpangkatan menjawab "hasilnya berapa?". Logaritma menjawab "pangkatnya berapa?".
+
+alog b = c  ⇔  aᶜ = b
+a = bilangan pokok (basis), a > 0 dan a ≠ 1
+b = numerus, b > 0
+c = hasil logaritma (pangkatnya)
+
+💡 Kalau basis tidak ditulis, artinya basis 10. Jadi log 100 = 10log 100 = 2.
+Contoh 1: mengubah bentuk pangkat ke logaritma
+5² = 25 ⇔ 5log 25 = 2
+
+Pembahasan: basis 5, hasil pangkat 25, pangkatnya 2. Pangkatnya menjadi hasil logaritma.
+
+Contoh 2: pangkat negatif
+6⁻² = 
+1
+36
+ ⇔ 6log 
+1
+36
+ = −2
+
+Pembahasan: numerus boleh pecahan, asalkan positif. Hasil logaritmanya boleh negatif.
+
+Contoh 3: mencari nilai
+3log 81 = ?
+
+Pembahasan: tanya "3 dipangkatkan berapa jadi 81?" Karena 3⁴ = 81, maka 3log 81 = 4.
+
+Sifat Dasar
+Tiga sifat yang paling sering dipakai
+alog aⁿ = n
+alog a = 1
+alog 1 = 0
+Ingat: a¹ = a dan a⁰ = 1, sehingga sifat 2 dan 3 langsung terbukti.
+
+Contoh 1
+5log 25 = 5log 5² = 2
+
+Pembahasan: tulis 25 sebagai 5², lalu pakai alog aⁿ = n.
+
+Contoh 2
+6log 
+1
+36
+ = 6log 6⁻² = −2
+
+Pembahasan: 
+1
+36
+ = 6⁻², jadi hasilnya pangkat itu, yaitu −2.
+
+Contoh 3
+9log 1 + 9log 9 + 9log 81 = 0 + 1 + 2 = 3
+
+Pembahasan: 9log 1 = 0, 9log 9 = 1, dan 81 = 9² sehingga 9log 81 = 2.
+
+Sifat 1: Penjumlahan
+Log ditambah log, numerusnya dikali
+alog b + alog c = alog (b × c)
+⚠️ Syaratnya: basisnya harus sama.
+Contoh 1
+2log 4 + 2log 8 = 2log (4 × 8) = 2log 32 = 5
+
+Pembahasan: gabungkan jadi satu logaritma, lalu 2⁵ = 32.
+
+Contoh 2
+5log 
+1
+2
+ + 5log 50 = 5log (
+1
+2
+ × 50) = 5log 25 = 2
+
+Pembahasan: ½ × 50 = 25 dan 5² = 25.
+
+Contoh 3
+3log 6 + 3log 1,5 = 3log 9 = 2
+
+Pembahasan: 6 × 1,5 = 9, dan 3² = 9.
+
+Sifat 2: Pengurangan
+Log dikurang log, numerusnya dibagi
+alog b − alog c = alog 
+b
+c
+Contoh 1
+7log 217 − 7log 31 = 7log 
+217
+31
+ = 7log 7 = 1
+
+Pembahasan: 217 ÷ 31 = 7, lalu pakai alog a = 1.
+
+Contoh 2
+log 0,04 − log 4 = log 
+0,04
+4
+ = log 0,01 = −2
+
+Pembahasan: basis 10 tidak ditulis. 0,01 = 10⁻², jadi hasilnya −2.
+
+Contoh 3
+2log 48 − 2log 3 = 2log 16 = 4
+
+Pembahasan: 48 ÷ 3 = 16 dan 2⁴ = 16.
+
+Sifat 3: Pangkat Numerus
+Pangkat "turun" jadi pengali
+alog bⁿ = n × alog b
+Contoh 1
+3log 9⁴ = 4 × 3log 9 = 4 × 2 = 8
+
+Pembahasan: turunkan pangkat 4 menjadi pengali, lalu 3log 9 = 2.
+
+Contoh 2 (gabungan sifat 1, 2, 3)
+2 log 25 − 3 log 5 + log 20
+= log 25² − log 5³ + log 20
+= log 
+625 × 20
+125
+ = log 100 = 2
+
+Pembahasan: naikkan pengali menjadi pangkat, kurangi jadi bagi, tambah jadi kali. 625 × 20 ÷ 125 = 100.
+
+Sifat 4: Ganti Basis
+Pindah ke basis baru p yang kamu suka
+alog b = 
+plog b
+plog a
+
+Kasus khusus (p = b): alog b = 
+1
+blog a
+Contoh 1
+4log 32 = 
+2log 32
+2log 4
+ = 
+5
+2
+
+Pembahasan: pindah ke basis 2 karena 32 = 2⁵ dan 4 = 2².
+
+Contoh 2: jika 2log 3 = a, tentukan 8log 3
+8log 3 = 
+log 3
+log 8
+ = 
+log 3
+3 log 2
+ = 
+1
+3
+ × 2log 3 = 
+a
+3
+
+Contoh 3: kebalikan
+3log 2 = 
+1
+2log 3
+ = 
+1
+a
+
+Pembahasan: membalik basis dan numerus sama dengan membalik pecahannya.
+
+Sifat 5: Rantai dan Pangkat Basis
+Tiga bentuk yang saling melengkapi
+(i) glog a × alog b = glog b
+(ii) gⁿlog aᵐ = 
+m
+n
+ × glog a
+(iii) gⁿlog aⁿ = glog a
+Sifat (i) seperti rantai: "a" di tengah saling menghilangkan.
+
+Contoh 1
+2log 5 × 5log 64 = 2log 64 = 2log 2⁶ = 6
+
+Contoh 2: jika 2log 3 = a
+4log 81 = 2²log 3⁴ = 
+4
+2
+ × 2log 3 = 2a
+
+Contoh 3: rantai panjang
+2log 3 × 3log 4 × 4log 8 = 2log 8 = 3
+
+Pembahasan: 3 dan 4 di tengah saling habis, tersisa 2log 8.
+
+Sifat 6: Pangkat dan Log Saling Menghapus
+Basis sama = kembali ke numerus
+gglog a = a
+Contoh 1
+22log 5 = 5
+
+Contoh 2
+77log 25 = 25
+
+Pembahasan: basis pangkat dan basis log sama (7), keduanya saling menghapus.
+
+Contoh 3 (tantangan)
+42log 3 = (2²)2log 3 = 22 · 2log 3 = 22log 9 = 9
+
+Pembahasan: samakan basis menjadi 2, masukkan pengali 2 ke pangkat (sifat 3), lalu sifat 6.
+
+Ringkasan dan Jebakan Umum
+Sifat	Rumus
+Dasar	alog aⁿ = n; alog a = 1; alog 1 = 0
+1	alog b + alog c = alog (bc)
+2	alog b − alog c = alog (b/c)
+3	alog bⁿ = n · alog b
+4	alog b = plog b / plog a = 1 / blog a
+5	glog a · alog b = glog b; gⁿlog aᵐ = (m/n) glog a
+6	g(glog a) = a
+🚫 Jebakan: alog (b + c) tidak sama dengan alog b + alog c. Yang boleh dipecah hanya perkalian: alog (bc).

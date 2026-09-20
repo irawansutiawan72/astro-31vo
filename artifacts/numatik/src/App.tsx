@@ -1119,6 +1119,10 @@ const AppInner = () => {
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/sifat-sifat-eksponen"
               element={<SmaEksponenLogaritmaPage />}
             />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/konsep-dan-sifat-sifat-logaritma"
+              element={<SmaEksponenLogaritmaPage />}
+            />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/tes-kemampuan-akademik" element={<SmaComingSoonPage />} />
