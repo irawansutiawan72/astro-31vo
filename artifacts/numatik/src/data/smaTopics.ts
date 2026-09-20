@@ -17,10 +17,10 @@ export const SMA_TOPICS: SmaTopic[] = [
     slug: "eksponen-dan-logaritma",
     subtopics: [
       { title: "Konsep dan Sifat-Sifat Eksponen", slug: "sifat-sifat-eksponen" },
+      { title: "Bentuk Akar dan Merasionalkan Akar", slug: "bentuk-akar-dan-merasionalkan-penyebut" },
       { title: "Fungsi Eksponen", slug: "fungsi-eksponen" },
       { title: "Persamaan Eksponen", slug: "persamaan-eksponen" },
       { title: "Pertidaksamaan Eksponen", slug: "pertidaksamaan-eksponen" },
-      { title: "Bentuk Akar dan Merasionalkan Penyebut", slug: "bentuk-akar-dan-merasionalkan-penyebut" },
       { title: "Konsep dan Sifat-Sifat Logaritma", slug: "konsep-dan-sifat-sifat-logaritma" },
       { title: "Fungsi Logaritma", slug: "fungsi-logaritma" },
       { title: "Persamaan Logaritma", slug: "persamaan-logaritma" },
