@@ -256,7 +256,7 @@ const SmaFungsiEksponenPage = () => {
   return (
     <div className="relative min-h-screen overflow-hidden gradient-space text-white">
       <Starfield />
-      <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/fungsi-eksponen" />
+      <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma" />
 
       <main className="relative z-10 mx-auto w-full max-w-5xl px-4 pb-16 pt-12 md:px-6">
         <header className="relative mb-8 overflow-hidden rounded-[2rem] border border-cyan-300/25 bg-gradient-to-br from-cyan-950/90 via-indigo-950/80 to-fuchsia-950/70 p-6 shadow-[0_0_60px_rgba(34,211,238,0.14)] md:p-10">

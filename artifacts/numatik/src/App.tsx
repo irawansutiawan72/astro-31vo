@@ -1125,6 +1125,10 @@ const AppInner = () => {
               element={<SmaEksponenLogaritmaPage />}
             />
             <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/fungsi-eksponen"
+              element={<SmaFungsiEksponenPage />}
+            />
+            <Route
               path="/ruang-untuk-guru/sma/buku-animasi/fungsi-eksponen/eksplorasi-fungsi-eksponen"
               element={<SmaFungsiEksponenPage />}
             />

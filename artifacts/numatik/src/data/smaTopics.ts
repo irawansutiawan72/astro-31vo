@@ -13,17 +13,11 @@ export type SmaTopic = {
 
 export const SMA_TOPICS: SmaTopic[] = [
   {
-    title: "Fungsi Eksponen",
-    slug: "fungsi-eksponen",
-    subtopics: [
-      { title: "Pertumbuhan, Peluruhan, dan Grafik Eksponen", slug: "eksplorasi-fungsi-eksponen" },
-    ],
-  },
-  {
     title: "Eksponen dan Logaritma",
     slug: "eksponen-dan-logaritma",
     subtopics: [
       { title: "Sifat-sifat Eksponen (Bilangan Berpangkat)", slug: "sifat-sifat-eksponen" },
+      { title: "Fungsi Eksponen", slug: "fungsi-eksponen" },
       { title: "Pertumbuhan dan Peluruhan Eksponensial", slug: "pertumbuhan-dan-peluruhan-eksponensial" },
       { title: "Bentuk Akar dan Merasionalkan Penyebut", slug: "bentuk-akar-dan-merasionalkan-penyebut" },
       { title: "Konsep dan Sifat-sifat Logaritma", slug: "konsep-dan-sifat-sifat-logaritma" },
