@@ -16,11 +16,15 @@ export const SMA_TOPICS: SmaTopic[] = [
     title: "Eksponen dan Logaritma",
     slug: "eksponen-dan-logaritma",
     subtopics: [
-      { title: "Sifat-sifat Eksponen (Bilangan Berpangkat)", slug: "sifat-sifat-eksponen" },
+      { title: "Konsep dan Sifat-Sifat Eksponen", slug: "sifat-sifat-eksponen" },
       { title: "Fungsi Eksponen", slug: "fungsi-eksponen" },
-      { title: "Pertumbuhan dan Peluruhan Eksponensial", slug: "pertumbuhan-dan-peluruhan-eksponensial" },
+      { title: "Persamaan Eksponen", slug: "persamaan-eksponen" },
+      { title: "Pertidaksamaan Eksponen", slug: "pertidaksamaan-eksponen" },
       { title: "Bentuk Akar dan Merasionalkan Penyebut", slug: "bentuk-akar-dan-merasionalkan-penyebut" },
-      { title: "Konsep dan Sifat-sifat Logaritma", slug: "konsep-dan-sifat-sifat-logaritma" },
+      { title: "Konsep dan Sifat-Sifat Logaritma", slug: "konsep-dan-sifat-sifat-logaritma" },
+      { title: "Fungsi Logaritma", slug: "fungsi-logaritma" },
+      { title: "Persamaan Logaritma", slug: "persamaan-logaritma" },
+      { title: "Pertidaksamaan Logaritma", slug: "pertidaksamaan-logaritma" },
     ],
   },
   {
