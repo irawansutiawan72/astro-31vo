@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/ensure-deps.mjs && node scripts/build-search-index.mjs",
+    "predev": "node ../../scripts/ensure-deps.mjs && node scripts/build-search-index.mjs",
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
     "prebuild": "node scripts/ensure-deps.mjs && node scripts/build-search-index.mjs",
     "build": "NODE_OPTIONS='--max-old-space-size=4096' vite build --config vite.config.ts",

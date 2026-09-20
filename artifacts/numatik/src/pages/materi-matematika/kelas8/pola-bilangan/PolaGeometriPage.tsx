@@ -435,11 +435,26 @@ function GeometricArcPanel({
   );
 }
 
-const PolaGeometriPage = () => {
+type PolaGeometriPageProps = {
+  audience?: "kelas8" | "sma";
+};
+
+const PolaGeometriPage = ({ audience = "kelas8" }: PolaGeometriPageProps) => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const { isDark } = useTheme();
   const t = translations[language];
+  const isSmaTeacherPage = audience === "sma";
+  const backPath = isSmaTeacherPage
+    ? "/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret"
+    : "/materi-matematika/kelas-8/pola-bilangan";
+  const breadcrumb = isSmaTeacherPage
+    ? language === "id"
+      ? "SMA · Buku Animasi Matematika"
+      : language === "en"
+        ? "Senior High School · Animated Mathematics Book"
+        : "高校 · 数学アニメーションブック"
+    : t.breadcrumb;
 
   const SectionHeader = ({ icon, iconColor, title }: {
     icon: React.ReactNode; iconColor?: string; title: string;
@@ -468,7 +483,7 @@ const PolaGeometriPage = () => {
   return (
     <div className="pola-geometri-materi-route relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
       <Starfield />
-      <PageNavigation />
+       <PageNavigation prevPath={isSmaTeacherPage ? backPath : undefined} />
       <div className="relative z-10 max-w-3xl w-full px-4 pt-20 pb-12">
         <BookOpen className="w-10 h-10 text-primary mx-auto mb-3" />
         <h1 className="font-display text-xl md:text-2xl font-bold text-primary text-glow-cyan mb-2 text-center">
@@ -477,7 +492,7 @@ const PolaGeometriPage = () => {
         <p className="font-display text-sm font-semibold text-cyan-400 text-center mb-1">
           {t.pageSubtitle}
         </p>
-        <p className="text-white/50 text-xs text-center mb-6 font-body">{t.breadcrumb}</p>
+         <p className="text-white/50 text-xs text-center mb-6 font-body">{breadcrumb}</p>
 
         <div className="flex flex-col gap-4 animate-slide-up">
 
@@ -948,7 +963,7 @@ const PolaGeometriPage = () => {
 
         </div>
         <div className="mt-8 text-center">
-          <button onClick={() => { playPopSound(); navigate("/materi-matematika/kelas-8/pola-bilangan"); }}
+           <button onClick={() => { playPopSound(); navigate(backPath); }}
             className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer font-body">
             {t.backBtn}
           </button>
