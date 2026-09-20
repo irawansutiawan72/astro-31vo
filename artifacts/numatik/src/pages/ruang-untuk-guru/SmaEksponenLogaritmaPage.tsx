@@ -12,7 +12,7 @@ import {
   Sparkles,
   Target,
 } from "lucide-react";
-import { BlockMath, InlineMath } from "react-katex";
+import { BlockMath, InlineMath as KaTeXInlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
@@ -29,9 +29,17 @@ const toneClasses: Record<Tone, string> = {
   blue: "border-blue-300/35 bg-blue-400/10",
 };
 
+const toTeacherLogNotation = (math: string) =>
+  math.replace(/\\log_(\{[^{}]+\}|[A-Za-z0-9]+)/g, (_match, rawBase: string) => {
+    const base = rawBase.startsWith("{") ? rawBase.slice(1, -1) : rawBase;
+    return `{}^{${base}}\\log`;
+  });
+
+const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={toTeacherLogNotation(math)} />;
+
 const Formula = ({ children }: { children: string }) => (
   <div className="my-3 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/55 px-4 py-3 text-center text-cyan-100">
-    <BlockMath math={children} />
+    <BlockMath math={toTeacherLogNotation(children)} />
   </div>
 );
 
