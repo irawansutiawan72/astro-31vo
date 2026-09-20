@@ -4,15 +4,15 @@ Numatik (Numerasi Aktif dengan Teknologi Informasi dan Komunikasi) is an educati
 
 ## Run & Operate
 
-- **Frontend** — workflow `Start application` installs the Numatik dependency graph with `pnpm install --filter @workspace/numatik... --frozen-lockfile` (falling back to the same filtered install without `--frozen-lockfile` when needed), then runs `pnpm --filter @workspace/numatik run dev`. Vite listens on `0.0.0.0:$PORT` with `PORT=18860` for the managed preview. **Source of truth: `artifacts/numatik/src/`** — this is the only location to edit; Vercel build also uses this package.
+- **Frontend** — the artifact workflow `artifacts/numatik: web` is self-installing: it calls `scripts/ensure-numatik-deps.sh`, which checks the executable `artifacts/numatik/node_modules/.bin/vite` and runs the filtered frozen-lockfile install only when needed. A shared atomic lock prevents the artifact workflow and `Start application` from installing simultaneously. Then `pnpm --filter @workspace/numatik run dev` runs `predev` (build-search-index) before Vite. Vite listens on `0.0.0.0:$PORT` with `PORT=18860` for the managed preview. **Source of truth: `artifacts/numatik/src/`** — this is the only location to edit; Vercel build also uses this package.
 - **API server** — workflow `Numatik API Server` starts the separate Express 5 backend package (`PORT=8080 pnpm --filter @workspace/api-server run dev`); requires `DATABASE_URL`.
-- `artifact.toml` files exist under `artifacts/*/.replit-artifact/` but artifact registration is not preserved across GitHub imports — `listArtifacts()` returns empty. The direct `Start application` workflow is the reliable import/clone entry point for the frontend; the artifact workflow remains as service metadata.
+- `artifact.toml` files exist under `artifacts/*/.replit-artifact/`. The Numatik artifact workflow must remain self-installing; do not assume a separate `Start application` install has already populated `node_modules`.
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string (needed for backend only; frontend runs without it)
-- First-time setup after import: the `Start application` workflow installs the Numatik dependency graph automatically at the repo root before starting the frontend. For a manual setup, run `pnpm install --filter @workspace/numatik... --frozen-lockfile` (or the same command without `--frozen-lockfile` if the lockfile is intentionally out of sync).
+- First-time setup after import: either frontend workflow calls `scripts/ensure-numatik-deps.sh` before starting. For a manual setup, run `pnpm install --filter @workspace/numatik... --frozen-lockfile`.
 
 ## Stack
 

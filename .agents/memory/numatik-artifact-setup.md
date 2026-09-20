@@ -201,6 +201,11 @@ Pecahan soal components are JSX components (not data arrays). Key differences:
 - The TKA Statistika module reuses question data exported by the Olimpiade Statistika page. Apply TKA-only removals by filtering in `tka/modul-pemantapan/StatistikaPage.tsx`, not by editing the shared source.
 - **Why:** The same source questions feed the Olimpiade page, so direct deletion would unintentionally change another user-facing module.
 
+## Self-installing artifact workflow
+- Artifact-managed web services start from the artifact package directory, not the workspace root; reference shared bootstrap scripts with `../../` and let the script resolve its own absolute root.
+- **Why:** A root-relative script path makes the artifact preview fail before dependency installation, even when the same command works in `Start application`.
+- **How to apply:** Keep the artifact command self-installing and use an executable Vite check plus one shared atomic install lock for all frontend workflows.
+
 ## Practice header labels
 - Practice subtopic pages contain several legacy, hardcoded grade breadcrumbs and badges rather than one shared label component.
 - **Why:** Removing a grade label consistently across the practice route requires targeting the route-level header patterns; changing one locale key or one landing page leaves other subtopic headers visible.
