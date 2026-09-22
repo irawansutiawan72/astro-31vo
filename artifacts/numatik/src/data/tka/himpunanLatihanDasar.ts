@@ -58,7 +58,7 @@ export const latihanDasarHimpunanTka: TkaHimpunanSoal[] = [
   {
     no: 3,
     soal: "Perhatikan gambar diagram Venn berikut!\nPernyataan berikut yang benar adalah ....",
-    image: "https://drive.google.com/thumbnail?id=1_5TXjD6ro0fw4r83PTWZ2Y4Ajpmbo6Kk&sz=w800",
+    image: "/himpunan-no3-diagram.svg",
     options: ["A. $B \\cup C = \\{1, 2, 3, 4, 5, 6, 8\\}$","B. $B \\cap C = \\{2, 6, 7, 9\\}$","C. $B - C = \\{1, 3, 9\\}$","D. $C - B = \\{5, 8\\}$"],
     jawaban: "C",
     pembahasan: {

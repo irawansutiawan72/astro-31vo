@@ -56,3 +56,17 @@ mtime_ms = 1790067295930
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/95b050b5-c713-4496-811d-484f96dbba26/b77ead1a-e72f-4822-83f2-25a28a9d8b45"
 storage_version_token = "1790067381927685"
 content_type = "image/svg+xml"
+
+[[outputs]]
+id = "fNC0-EzFhd1uZHxBdNVhg"
+uri = "file://artifacts/numatik/public/himpunan-no3-diagram.svg"
+type = "image"
+title = "Himpunan nomor 3 — Diagram Venn"
+description = "Diagram Venn SVG dengan B saja = 1, 3, 9; B irisan C = 2, 6, 7; dan C saja = 5, 8."
+logical_id = "118f0fdd-2f16-4a1f-b1da-38daedcf6478"
+content_hash = "sha256:2ecb3bd9a20860b042ba0fe17d8b533e71f76d71b29162cec7a900c289388d65"
+size = 1465
+mtime_ms = 1790067482782
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/118f0fdd-2f16-4a1f-b1da-38daedcf6478/9def64ac-bf02-46fb-ad43-67902d38a1b2"
+storage_version_token = "1790067515334802"
+content_type = "image/svg+xml"
