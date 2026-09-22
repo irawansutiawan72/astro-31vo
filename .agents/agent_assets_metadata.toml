@@ -1,0 +1,58 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "xrdIRkHVbVN3sXYZ179xk"
+uri = "file://artifacts/numatik/public/himpunan-no2-opsi-a.svg"
+type = "image"
+title = "Himpunan nomor 2 — Opsi A"
+description = "Diagram Venn SVG untuk pilihan A."
+logical_id = "2f4488af-2a20-40ee-9540-e7c7cf159ee1"
+content_hash = "sha256:3069e67ab3de138abf14da54c03fc860ff1bc6eadcfb00dc4756dcc0091d885e"
+size = 1257
+mtime_ms = 1790067280265
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/2f4488af-2a20-40ee-9540-e7c7cf159ee1/46a47e63-21a6-4d05-b307-2ddecb218828"
+storage_version_token = "1790067378035723"
+content_type = "image/svg+xml"
+
+[[outputs]]
+id = "iyn1wntNRY6obATtfUBYr"
+uri = "file://artifacts/numatik/public/himpunan-no2-opsi-b.svg"
+type = "image"
+title = "Himpunan nomor 2 — Opsi B"
+description = "Diagram Venn SVG untuk pilihan B; P dan Q beririsan pada angka 2."
+logical_id = "64cd569d-115d-4b5b-946b-76176cefae33"
+content_hash = "sha256:70179f16427c9f5ebca7f53be3ee34d1d7d548cfbca762e80d575abc9043783f"
+size = 1507
+mtime_ms = 1790067284622
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/64cd569d-115d-4b5b-946b-76176cefae33/fc832adc-fc24-455e-9a11-f5e664ebebba"
+storage_version_token = "1790067379316472"
+content_type = "image/svg+xml"
+
+[[outputs]]
+id = "dYVjDzCEhqtEWipHa_HRW"
+uri = "file://artifacts/numatik/public/himpunan-no2-opsi-c.svg"
+type = "image"
+title = "Himpunan nomor 2 — Opsi C"
+description = "Diagram Venn SVG untuk pilihan C."
+logical_id = "84abe800-cea7-4e2e-bd03-14cacf9425f7"
+content_hash = "sha256:5d8700c0c5314d55fb141cd734e8b8a9e7eceb27452b858421e7d5bb000731ee"
+size = 1354
+mtime_ms = 1790067289681
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/84abe800-cea7-4e2e-bd03-14cacf9425f7/af66506c-9117-4100-bdb6-645740ca339a"
+storage_version_token = "1790067380660785"
+content_type = "image/svg+xml"
+
+[[outputs]]
+id = "Whq7Egts2AhYPkGuGb_8X"
+uri = "file://artifacts/numatik/public/himpunan-no2-opsi-d.svg"
+type = "image"
+title = "Himpunan nomor 2 — Opsi D"
+description = "Diagram Venn SVG untuk pilihan D."
+logical_id = "95b050b5-c713-4496-811d-484f96dbba26"
+content_hash = "sha256:48ea347ae00735fa6eecac1fcd371981ff701f0342397a87dde1f2101c0995a3"
+size = 1510
+mtime_ms = 1790067295930
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/95b050b5-c713-4496-811d-484f96dbba26/b77ead1a-e72f-4822-83f2-25a28a9d8b45"
+storage_version_token = "1790067381927685"
+content_type = "image/svg+xml"

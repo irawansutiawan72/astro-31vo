@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Pilihan A diagram Venn nomor 2</title>
+  <desc id="desc">Himpunan P digambarkan berada di dalam himpunan Q.</desc>
+  <rect width="640" height="360" fill="#ffffff"/>
+  <rect x="34" y="24" width="572" height="312" rx="18" fill="#f8fafc" stroke="#334155" stroke-width="4"/>
+  <text x="58" y="63" fill="#0f172a" font-family="Arial, sans-serif" font-size="24" font-weight="700">S</text>
+  <circle cx="320" cy="188" r="118" fill="#fbcfe8" fill-opacity=".62" stroke="#be185d" stroke-width="4"/>
+  <circle cx="320" cy="188" r="62" fill="#bfdbfe" fill-opacity=".8" stroke="#1d4ed8" stroke-width="4"/>
+  <text x="320" y="181" text-anchor="middle" fill="#0f172a" font-family="Arial, sans-serif" font-size="25" font-weight="700">P</text>
+  <text x="320" y="210" text-anchor="middle" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="21">2, 3, 5</text>
+  <text x="320" y="99" text-anchor="middle" fill="#9d174d" font-family="Arial, sans-serif" font-size="25" font-weight="700">Q</text>
+  <text x="320" y="124" text-anchor="middle" fill="#831843" font-family="Arial, sans-serif" font-size="20">4, 6, 8</text>
+</svg>

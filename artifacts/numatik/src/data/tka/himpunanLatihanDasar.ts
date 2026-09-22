@@ -40,7 +40,7 @@ export const latihanDasarHimpunanTka: TkaHimpunanSoal[] = [
   {
     no: 2,
     soal: "Diketahui:\nS = {x | 1 $\\leq$ x $\\leq$ 10, x $\\in$ bilangan asli}\nP = {x | x $\\leq$ 6, x $\\in$ bilangan prima}\nQ = {x | 1 $\\leq$ x $\\leq$ 9, x $\\in$ bilangan genap}\nDiagram Venn untuk himpunan-himpunan di atas adalah ...",
-    options: ["A.|https://drive.google.com/thumbnail?id=1BHSvpzcObESqlhbrm7PfkOuRuZnbnf3J&sz=w800","B.|https://drive.google.com/thumbnail?id=1fZWVP3UMw083sMOyx5LlOVnVqujqcQ3F&sz=w800","C.|https://drive.google.com/thumbnail?id=1lEHTqKktMDLPT0sl0HFMobOGub3aHMDJ&sz=w800","D.|https://drive.google.com/thumbnail?id=11co-lVEgY02aBS0wNX9PKpjOYGemAXXh&sz=w800"],
+    options: ["A.|/himpunan-no2-opsi-a.svg","B.|/himpunan-no2-opsi-b.svg","C.|/himpunan-no2-opsi-c.svg","D.|/himpunan-no2-opsi-d.svg"],
     jawaban: "B",
     pembahasan: {
       konsep: "Tentukan anggota S, P, Q dan irisan P∩Q untuk menentukan bentuk diagram Venn yang benar.",
