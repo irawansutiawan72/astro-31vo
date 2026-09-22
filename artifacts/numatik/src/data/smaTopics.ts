@@ -64,6 +64,19 @@ export const SMA_TOPICS: SmaTopic[] = [
     ],
   },
   {
+    title: "Persamaan Kuadrat",
+    slug: "persamaan-kuadrat",
+    subtopics: [
+      { title: "Bentuk Umum Persamaan Kuadrat", slug: "bentuk-umum-persamaan-kuadrat" },
+      { title: "Menentukan Akar-Akar Persamaan Kuadrat dengan Pemfaktoran", slug: "akar-persamaan-kuadrat-dengan-pemfaktoran" },
+      { title: "Menentukan Akar-Akar Persamaan Kuadrat dengan Rumus Kuadratik", slug: "akar-persamaan-kuadrat-dengan-rumus-kuadratik" },
+      { title: "Menentukan Akar-Akar Persamaan Kuadrat dengan Pelengkap Kuadrat", slug: "akar-persamaan-kuadrat-dengan-pelengkap-kuadrat" },
+      { title: "Diskriminan", slug: "diskriminan" },
+      { title: "Menyusun Persamaan Kuadrat Baru", slug: "menyusun-persamaan-kuadrat-baru" },
+      { title: "Penerapan Persamaan Kuadrat pada Permasalahan Kontekstual", slug: "penerapan-persamaan-kuadrat-pada-permasalahan-kontekstual" },
+    ],
+  },
+  {
     title: "Fungsi Kuadrat",
     slug: "fungsi-kuadrat",
     subtopics: [
