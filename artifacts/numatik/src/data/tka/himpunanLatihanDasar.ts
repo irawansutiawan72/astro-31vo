@@ -23,7 +23,7 @@ export const latihanDasarHimpunanTka: TkaHimpunanSoal[] = [
   {
     no: 1,
     soal: "Diketahui\nS = {x | x < 15, x $\\in$ bilangan asli}\nP = {x | 2 $\\leq$ x < 10, x $\\in$ bilangan prima}\nQ = {x | 2 < x $\\leq$ 10, x $\\in$ bilangan genap}\nDiagram Venn yang menyatakan hubungan di atas adalah ...",
-    options: ["A.|https://drive.google.com/thumbnail?id=1bjgTDobme-339WSKwFxTj85moUMt4J6e&sz=w800","B.|https://drive.google.com/thumbnail?id=19by54iWAtblxty-jtdFVWzic9wB7HkJI&sz=w800","C.|https://drive.google.com/thumbnail?id=1CxVpXw1NBNgcBbY-qBLF_mKb6ildxPqp&sz=w800","D.|https://drive.google.com/thumbnail?id=1PS-Ap7zDmNffqM2L00wSR0jip1_4tqmP&sz=w800"],
+    options: ["A. P berada di dalam Q", "B. Q berada di dalam P", "C. P dan Q saling lepas", "D. P dan Q beririsan"],
     jawaban: "C",
     pembahasan: {
       konsep: "Tentukan anggota setiap himpunan, lalu cari irisan P∩Q untuk menentukan bentuk diagram Venn.",
