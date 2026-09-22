@@ -175,30 +175,27 @@ const categories: Category[] = [
   },
 ];
 
-/* ── Trophy SVG ──────────────────────────────────────── */
-const TrophySVG = () => (
+/* ── Medal SVG ───────────────────────────────────────── */
+const MedalSVG = () => (
   <svg viewBox="0 0 64 64" className="w-14 h-14" fill="none">
     <defs>
-      <linearGradient id="tg1" x1="0" y1="0" x2="0" y2="1">
+      <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#fde68a" />
         <stop offset="100%" stopColor="#f59e0b" />
       </linearGradient>
-      <linearGradient id="tg2" x1="0" y1="0" x2="0" y2="1">
+      <linearGradient id="mg2" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#fbbf24" />
         <stop offset="100%" stopColor="#d97706" />
       </linearGradient>
     </defs>
-    {/* Cup body */}
-    <path d="M16 8 h32 v18 a16 16 0 0 1-32 0 Z" fill="url(#tg1)" />
-    {/* Handles */}
-    <path d="M16 12 Q6 12 6 22 Q6 30 16 30" stroke="url(#tg2)" strokeWidth="3" fill="none" strokeLinecap="round" />
-    <path d="M48 12 Q58 12 58 22 Q58 30 48 30" stroke="url(#tg2)" strokeWidth="3" fill="none" strokeLinecap="round" />
-    {/* Stem */}
-    <rect x="28" y="42" width="8" height="10" fill="url(#tg2)" rx="1" />
-    {/* Base */}
-    <rect x="18" y="52" width="28" height="5" fill="url(#tg1)" rx="2.5" />
-    {/* Star on cup */}
-    <path d="M32 16 l1.8 5.5 h5.8 l-4.7 3.4 1.8 5.5 L32 27l-4.7 3.4 1.8-5.5-4.7-3.4h5.8Z"
+    {/* Ribbon */}
+    <path d="M22 5h8l2 18-6-4-6 4Z" fill="url(#mg2)" />
+    <path d="M34 5h8l2 18-6-4-6 4Z" fill="url(#mg1)" />
+    {/* Medal */}
+    <circle cx="32" cy="39" r="17" fill="url(#mg1)" />
+    <circle cx="32" cy="39" r="13" stroke="url(#mg2)" strokeWidth="2.5" fill="none" />
+    {/* Star on medal */}
+    <path d="M32 29l2.8 6.3 6.8.7-5 4.5 1.4 6.7-6-3.4-6 3.4 1.4-6.7-5-4.5 6.8-.7Z"
       fill="var(--icon-color)" fillOpacity="0.55" />
   </svg>
 );
@@ -242,7 +239,7 @@ const OlimpiadePage = () => {
         {/* ── Hero header ── */}
         <div className="flex flex-col items-center mb-10">
           <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-500/20 to-yellow-400/10 border border-amber-400/30 flex items-center justify-center mb-5 shadow-[0_0_32px_rgba(251,191,36,0.2)]">
-            <TrophySVG />
+            <MedalSVG />
           </div>
           <h1 className={`font-display text-2xl md:text-3xl font-bold text-center mb-1 ${isLight ? "text-slate-900" : "text-white"}`}
             style={{ textShadow: isLight ? "0 2px 12px rgba(30,64,175,0.12)" : "0 0 40px rgba(251,191,36,0.5)" }}>
