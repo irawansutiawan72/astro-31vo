@@ -70,3 +70,17 @@ mtime_ms = 1790067482782
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/118f0fdd-2f16-4a1f-b1da-38daedcf6478/9def64ac-bf02-46fb-ad43-67902d38a1b2"
 storage_version_token = "1790067515334802"
 content_type = "image/svg+xml"
+
+[[outputs]]
+id = "JpL_1rh3uwUrnhjiLqo_H"
+uri = "file://artifacts/numatik/public/himpunan-contoh-no2-opsi-b.svg"
+type = "image"
+title = "Contoh Himpunan nomor 2 — Opsi B"
+description = "Diagram Venn benar untuk S 1–12, P={2,3,5,7}, dan Q={2,4,6,8,10}."
+logical_id = "86726f20-3dcd-4119-8b5e-4115004f3e37"
+content_hash = "sha256:7119f774795579d176a3a9bf7497442d7bea5c895c90f65771058646a39e4650"
+size = 1515
+mtime_ms = 1790068248986
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:f47ad073-3213-4eed-94df-65897469348a/86726f20-3dcd-4119-8b5e-4115004f3e37/928d4dcd-2204-41bb-8437-c39a0d2585d8"
+storage_version_token = "1790068298983530"
+content_type = "image/svg+xml"
