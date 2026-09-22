@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Settings, X, Gamepad2, BookOpen, ClipboardCheck,
-  Trophy, Bot, Calculator, Zap, FileText, GraduationCap,
+  Medal, Bot, Calculator, Zap, FileText, GraduationCap,
   ArrowLeftRight, Sigma, Brain, PlayCircle, FileQuestion,
   Rocket, User, Heart, Info,
 } from "lucide-react";
@@ -91,7 +91,7 @@ const PREVIEW_ITEMS = [
   { icon: Gamepad2,      menuKey: "menu.gameArena" },
   { icon: Bot,           menuKey: "menu.ai" },
   { icon: ClipboardCheck,menuKey: "menu.lkpd" },
-  { icon: Trophy,        menuKey: "menu.olympiad" },
+  { icon: Medal,         menuKey: "menu.olympiad" },
   { icon: Calculator,    menuKey: "menu.calculator" },
   { icon: Zap,           menuKey: "menu.fastCalc" },
   { icon: Brain,         menuKey: "menu.academic" },
