@@ -64,8 +64,7 @@ const materiSections: MateriSection[] = [
 
 const latihanDasar: LatihanSoal[] = latihanDasarHimpunanTka.map((item) => ({
   no: item.no,
-  soal: item.soal,
-  image: item.image,
+  soal: item.image ? `${item.soal}\n[IMAGE:${item.image}]` : item.soal,
   options: item.options,
   optionsJsx: item.no === 1
     ? ([
