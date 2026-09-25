@@ -1304,9 +1304,9 @@ const AppInner = () => {
 
           {/* Latihan Mandiri Routes */}
           <Route path="/latihan-mandiri" element={<LatihanMandiriPage />} />
-          <Route path="/latihan-mandiri/kelas-7" element={<LatihanMandiriKelas7Page />} />
-          <Route path="/latihan-mandiri/kelas-8" element={<LatihanMandiriKelas8Page />} />
-          <Route path="/latihan-mandiri/kelas-9" element={<LatihanMandiriKelas9Page />} />
+          <Route path="/latihan-mandiri/kelas-7" element={<Navigate to="/latihan-mandiri" replace />} />
+          <Route path="/latihan-mandiri/kelas-8" element={<Navigate to="/latihan-mandiri" replace />} />
+          <Route path="/latihan-mandiri/kelas-9" element={<Navigate to="/latihan-mandiri" replace />} />
 
           {/* Kelas 7 Topic Routes */}
           <Route path="/latihan-mandiri/kelas-7/bilangan-bulat" element={<BilanganBulatK7Page />} />
@@ -1490,9 +1490,9 @@ const AppInner = () => {
 
           {/* Math Game Arena Routes */}
           <Route path="/math-game-arena" element={<MathGameArenaPage />} />
-          <Route path="/math-game-arena/kelas-7" element={<MathGameArenaKelas7Page />} />
-          <Route path="/math-game-arena/kelas-8" element={<MathGameArenaKelas8Page />} />
-          <Route path="/math-game-arena/kelas-9" element={<MathGameArenaKelas9Page />} />
+          <Route path="/math-game-arena/kelas-7" element={<Navigate to="/math-game-arena" replace />} />
+          <Route path="/math-game-arena/kelas-8" element={<Navigate to="/math-game-arena" replace />} />
+          <Route path="/math-game-arena/kelas-9" element={<Navigate to="/math-game-arena" replace />} />
           <Route path="/math-game-arena/umum" element={<MathGameArenaUmumPage />} />
           <Route path="/math-game-arena/umum/balap-mobil" element={<CarRacingGamePage />} />
           <Route path="/math-game-arena/umum/tetris" element={<TetrisGamePage />} />
@@ -1642,9 +1642,9 @@ const AppInner = () => {
           {/* Materi Matematika Routes */}
           <Route path="/materi-matematika" element={<Navigate to="/buku-animasi-matematika" replace />} />
           <Route path="/buku-animasi-matematika" element={<MateriMatematikaPage />} />
-          <Route path="/materi-matematika/kelas-7" element={<MateriMatematikaKelas7Page />} />
-          <Route path="/materi-matematika/kelas-8" element={<MateriMatematikaKelas8Page />} />
-          <Route path="/materi-matematika/kelas-9" element={<MateriMatematikaKelas9Page />} />
+          <Route path="/materi-matematika/kelas-7" element={<Navigate to="/buku-animasi-matematika" replace />} />
+          <Route path="/materi-matematika/kelas-8" element={<Navigate to="/buku-animasi-matematika" replace />} />
+          <Route path="/materi-matematika/kelas-9" element={<Navigate to="/buku-animasi-matematika" replace />} />
           <Route path="/materi-matematika/kelas-7/bilangan-bulat" element={<BilanganBulatMMK7Page />} />
           <Route path="/materi-matematika/kelas-7/bilangan-bulat/penjumlahan" element={<PenjumlahanBilanganBulatMMK7Page />} />
           <Route path="/materi-matematika/kelas-7/bilangan-bulat/penjumlahan/buku-animasi" element={<BukuAnimasiPenjumlahanBilanganBulatPage />} />

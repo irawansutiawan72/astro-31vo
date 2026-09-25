@@ -46,18 +46,19 @@ const GameSubtopicPage = ({
 }: GameSubtopicPageProps) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isLight = theme === "light";
-
-  const kelasMatch = backPath.match(/kelas-([789])/);
-  const kelasNum = kelasMatch ? kelasMatch[1] : "7";
-  const resolvedBackLabel = backLabel || t(`gameArena.backToKelas${kelasNum}`);
-  const resolvedKelasLabel = kelasLabel || t(`gameArena.kelas${kelasNum}Label`);
+  const allTopicsPath = "/math-game-arena";
+  const language = i18n.resolvedLanguage?.split("-")[0] ?? "id";
+  const backToAllLabel =
+    language === "en" ? "Back to all topics" :
+    language === "ja" ? "すべてのトピックに戻る" :
+    "Kembali ke semua topik";
 
   return (
     <div className={`relative min-h-screen flex flex-col items-center overflow-hidden ${isLight ? "gradient-snow" : "gradient-space"}`}>
       {isLight ? <Snowfall /> : <Starfield />}
-      <PageNavigation prevPath={backPath} />
+      <PageNavigation prevPath={allTopicsPath} />
 
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
         <div className="text-center mb-8">
@@ -69,7 +70,7 @@ const GameSubtopicPage = ({
             {title}
           </h1>
           <p className="text-cyan-400/60 text-xs font-body tracking-widest uppercase">
-            {resolvedKelasLabel} · Math Game Arena
+            Math Game Arena
           </p>
           <div className="mt-3 flex items-center justify-center gap-2 text-[11px] font-body" style={{ color: "var(--text-secondary)" }}>
             <span>☄️</span>
@@ -227,10 +228,10 @@ const GameSubtopicPage = ({
 
         <div className="mt-10 text-center">
           <button
-            onClick={() => { playPopSound(); navigate(backPath); }}
+            onClick={() => { playPopSound(); navigate(allTopicsPath); }}
             className="text-sm text-white/40 hover:text-cyan-400 transition-colors cursor-pointer font-body"
           >
-            ← {resolvedBackLabel}
+            ← {backToAllLabel}
           </button>
         </div>
       </div>

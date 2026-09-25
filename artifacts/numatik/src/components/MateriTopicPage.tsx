@@ -52,21 +52,21 @@ const MateriTopicPage = ({ title, emoji, kelas, subtopics, backPath, backLabel, 
   const navigate = useNavigate();
   const { language } = useLanguage();
   const { isDark } = useTheme();
+  const allTopicsPath = "/buku-animasi-matematika";
 
   const uiText = {
-    id: { subTopics: "Sub Topik", comingSoon: "Segera hadir", contextDefault: "Buku Animasi Matematika" },
-    en: { subTopics: "Sub Topics", comingSoon: "Coming soon", contextDefault: "Math Animation Book" },
-    ja: { subTopics: "サブトピック", comingSoon: "近日公開", contextDefault: "数学アニメーションブック" },
+    id: { subTopics: "Sub Topik", comingSoon: "Segera hadir", backToAll: "Kembali ke semua materi" },
+    en: { subTopics: "Sub Topics", comingSoon: "Coming soon", backToAll: "Back to all topics" },
+    ja: { subTopics: "サブトピック", comingSoon: "近日公開", backToAll: "すべての教材に戻る" },
   };
 
   const ui = uiText[language];
-  const resolvedContextLabel = contextLabel ?? ui.contextDefault;
   const COLOR_PALETTE = isDark ? COLOR_PALETTE_DARK : COLOR_PALETTE_LIGHT;
 
   return (
     <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
       <Starfield />
-      <PageNavigation prevPath={backPath} />
+      <PageNavigation prevPath={allTopicsPath} />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
         <div className="flex flex-col items-center mb-8">
           <div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary/40 flex items-center justify-center mb-4">
@@ -75,9 +75,6 @@ const MateriTopicPage = ({ title, emoji, kelas, subtopics, backPath, backLabel, 
           <h1 className="font-display text-2xl md:text-3xl font-bold text-primary text-glow-cyan text-center mb-1" style={{ textShadow: '0 0 24px rgba(96,165,250,0.7)' }}>
             {title}
           </h1>
-          <p className={`text-xs text-center font-body mb-1 ${isDark ? "text-white/50" : "text-gray-500"}`}>
-            {kelas} · {resolvedContextLabel}
-          </p>
           <div className={`flex items-center gap-3 rounded-xl px-5 py-2 mt-2 border ${
             isDark ? "bg-white/5 border-white/10" : "bg-sky-50 border-sky-200/70"
           }`}>
@@ -128,10 +125,10 @@ const MateriTopicPage = ({ title, emoji, kelas, subtopics, backPath, backLabel, 
 
         <div className="mt-8 text-center">
           <button
-            onClick={() => { playPopSound(); navigate(backPath); }}
+            onClick={() => { playPopSound(); navigate(allTopicsPath); }}
             className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer font-body"
           >
-            ← {backLabel}
+            ← {ui.backToAll}
           </button>
         </div>
       </div>
