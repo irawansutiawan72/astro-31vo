@@ -915,9 +915,20 @@ const queryClient = new QueryClient({
   },
 });
 
+const scrollPositionsByPath = new Map<string, number>();
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, scrollPositionsByPath.get(pathname) ?? 0);
+
+    const saveScrollPosition = () => {
+      scrollPositionsByPath.set(pathname, window.scrollY);
+    };
+
+    window.addEventListener("scroll", saveScrollPosition, { passive: true });
+    return () => window.removeEventListener("scroll", saveScrollPosition);
+  }, [pathname]);
   return null;
 };
 
