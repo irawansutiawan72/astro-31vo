@@ -808,7 +808,8 @@ const AllDiagonalBidangSVG = ({ lang }: { lang: string }) => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {diags.map((d, i) => (
           <div key={d.key} className={isDark ? "bg-slate-900/55 border border-slate-700/70 rounded-lg p-3 space-y-2" : "bg-white border border-gray-200 rounded-lg p-3 space-y-2"}>
-            <svg viewBox="0 0 240 190" className="w-full mx-auto" aria-label={`${lang==="en"?"Face diagonal":"面対角線"} ${d.key}`}>
+            <svg viewBox="0 0 240 190" className="w-full mx-auto"
+              aria-label={`${lang==="en" ? "Face diagonal" : lang==="ja" ? "面対角線" : "Diagonal bidang"} ${d.key}`}>
               <defs><style>{`@keyframes diagBidangGlow{0%,100%{stroke-opacity:1;}50%{stroke-opacity:0.1;}}`}</style></defs>
               <polygon points="40,55 150,55 150,145 40,145" fill={isDark?"rgba(20,30,50,0.76)":"rgba(241,245,249,0.85)"} stroke={isDark?"#475569":"#94a3b8"} strokeWidth="1.4"/>
               <polygon points="75,28 185,28 185,118 75,118" fill={isDark?"rgba(20,30,50,0.44)":"rgba(226,232,240,0.65)"} stroke={isDark?"#475569":"#94a3b8"} strokeWidth="1.4"/>
@@ -837,7 +838,9 @@ const AllDiagonalBidangSVG = ({ lang }: { lang: string }) => {
               <text x="112" y="175" fill={d.color} fontSize="12" fontFamily="monospace" fontWeight="bold" textAnchor="middle">{d.key}</text>
             </svg>
             <div>
-              <p className="text-xs font-semibold" style={{ color:d.color }}>{`${i+1}. ${lang==="en"?"Diagonal":"対角線"} ${d.key}`}</p>
+              <p className="text-xs font-semibold" style={{ color:d.color }}>
+                {`${i+1}. ${lang==="en" ? "Face diagonal" : lang==="ja" ? "面対角線" : "Diagonal bidang"} ${d.key}`}
+              </p>
               <p className={isDark ? "text-[11px] text-white/55" : "text-[11px] text-slate-500"}>{`${faceLabel} ${d.face}`}</p>
             </div>
           </div>
