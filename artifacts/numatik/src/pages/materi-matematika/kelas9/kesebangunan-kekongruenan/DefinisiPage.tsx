@@ -287,7 +287,7 @@ const DefinisiPage = () => {
   );
 
   return (
-    <div className={`relative min-h-screen flex flex-col items-center gradient-space overflow-hidden ${isDark ? "" : "definition-light-svg-labels"}`}>
+    <div className={`relative min-h-screen flex flex-col items-center gradient-space overflow-hidden kesebangunan-kekongruenan-route ${isDark ? "" : "definition-light-svg-labels"}`}>
       {!isDark && (
         <style>{`
           .definition-light-svg-labels svg text,

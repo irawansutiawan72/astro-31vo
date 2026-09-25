@@ -253,6 +253,43 @@
   fill: #0f172a !important;
 }
 
+/* Kesebangunan & Kekongruenan: the diagrams were authored for the space
+   theme and use bright SVG labels. In the light themes, make every diagram
+   label readable without changing the dark/space and ocean themes. */
+[data-theme="light"] .kesebangunan-kekongruenan-route svg text,
+[data-theme="light"] .kesebangunan-kekongruenan-route svg text tspan,
+[data-theme="white"] .kesebangunan-kekongruenan-route svg text,
+[data-theme="white"] .kesebangunan-kekongruenan-route svg text tspan,
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg text,
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg text tspan,
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg text,
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg text tspan {
+  fill: #0f172a !important;
+  color: #0f172a !important;
+}
+
+/* Several diagrams have a hardcoded space-colored SVG panel behind those
+   labels. Replace only those rectangular canvas/panel fills in light themes;
+   colored geometry, strokes, and markers remain unchanged. */
+[data-theme="light"] .kesebangunan-kekongruenan-route svg rect[fill="#020d1a"],
+[data-theme="light"] .kesebangunan-kekongruenan-route svg rect[fill="#0f172a"],
+[data-theme="light"] .kesebangunan-kekongruenan-route svg rect[fill="#1e293b"],
+[data-theme="light"] .kesebangunan-kekongruenan-route svg rect[fill="#111827"],
+[data-theme="white"] .kesebangunan-kekongruenan-route svg rect[fill="#020d1a"],
+[data-theme="white"] .kesebangunan-kekongruenan-route svg rect[fill="#0f172a"],
+[data-theme="white"] .kesebangunan-kekongruenan-route svg rect[fill="#1e293b"],
+[data-theme="white"] .kesebangunan-kekongruenan-route svg rect[fill="#111827"],
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg rect[fill="#020d1a"],
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg rect[fill="#0f172a"],
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg rect[fill="#1e293b"],
+[data-theme="forest"] .kesebangunan-kekongruenan-route svg rect[fill="#111827"],
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg rect[fill="#020d1a"],
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg rect[fill="#0f172a"],
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg rect[fill="#1e293b"],
+[data-theme="sunset"] .kesebangunan-kekongruenan-route svg rect[fill="#111827"] {
+  fill: #f8fafc !important;
+}
+
 /* Perkalian Bilangan Bulat uses inline dark SVG row fills. Keep every
    animated label on a pale surface in the light themes so the dark labels
    remain readable while the dark space theme is unchanged. */
