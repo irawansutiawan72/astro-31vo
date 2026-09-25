@@ -806,12 +806,12 @@ const balokNets: BalokCell[][] = [
     { x: CL,    y: CL+CT+CT,   w: CP, h: CL, color: "#ef4444", label: "p×l" },
   ],
   [
-    { x: 0,     y: 0,          w: CL, h: CT, color: "#22c55e", label: "l×t" },
-    { x: CL,    y: 0,          w: CP, h: CL, color: "#eab308", label: "p×l" },
-    { x: CL,    y: CL,         w: CP, h: CT, color: "#8b5cf6", label: "p×t" },
-    { x: CL+CP, y: CL,         w: CL, h: CT, color: "#f97316", label: "l×t" },
-    { x: CL,    y: CL+CT,      w: CP, h: CL, color: "#ef4444", label: "p×l" },
-    { x: CL,    y: CL+CT+CL,   w: CP, h: CT, color: "#3b82f6", label: "p×t" },
+    { x: 0,        y: 0,          w: CT, h: CL, color: "#22c55e", label: "l×t" },
+    { x: CT,       y: 0,          w: CP, h: CL, color: "#eab308", label: "p×l" },
+    { x: CT,       y: CL,         w: CP, h: CT, color: "#8b5cf6", label: "p×t" },
+    { x: CT+CP,    y: CL,         w: CL, h: CT, color: "#f97316", label: "l×t" },
+    { x: CT,       y: CL+CT,      w: CP, h: CL, color: "#ef4444", label: "p×l" },
+    { x: CT,       y: CL+CT+CL,   w: CP, h: CT, color: "#3b82f6", label: "p×t" },
   ],
   [
     { x: 0,             y: CL,         w: CT, h: CL, color: "#22c55e", label: "l×t" },
