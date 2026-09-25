@@ -8,6 +8,7 @@ import "katex/dist/katex.min.css";
 import { InlineMath, BlockMath } from "react-katex";
 import SimilarityAnimation from "@/components/SimilarityAnimation";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /* ── DIAGRAMS ── */
 
@@ -270,6 +271,7 @@ const GridBangunMiring = () => (
 const DefinisiPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
+  const { isDark } = useTheme();
   const [expandedSections, setExpandedSections] = useState<string[]>([
     "intro", "konsep1", "contoh1", "konsep2", "contoh2", "konsep3",
   ]);
@@ -285,7 +287,15 @@ const DefinisiPage = () => {
   );
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-hidden">
+    <div className={`relative min-h-screen flex flex-col items-center gradient-space overflow-hidden ${isDark ? "" : "definition-light-svg-labels"}`}>
+      {!isDark && (
+        <style>{`
+          .definition-light-svg-labels svg text,
+          .definition-light-svg-labels svg text tspan {
+            fill: #1e293b !important;
+          }
+        `}</style>
+      )}
       <Starfield />
       <PageNavigation />
       <div className="relative z-10 max-w-3xl w-full px-4 py-10">
