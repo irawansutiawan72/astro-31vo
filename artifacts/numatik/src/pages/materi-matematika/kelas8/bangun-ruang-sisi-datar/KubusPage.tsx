@@ -709,7 +709,9 @@ const NetFoldPreview = ({
                     fontSize: 11,
                     fontWeight: 800,
                     fontFamily: "monospace",
-                    backfaceVisibility: "visible",
+                    // Keep the colored face oriented toward the viewer while
+                    // folding; the reverse side should not read as another face.
+                    backfaceVisibility: "hidden",
                   }}
                 >
                   {i + 1}
