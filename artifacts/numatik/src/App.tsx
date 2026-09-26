@@ -162,6 +162,7 @@ const SmaComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaComingS
 const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMenuPage"));
 const SmaSubtopicComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSubtopicComingSoonPage"));
 const SmaEksponenLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaPage"));
+const SmaLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaLogaritmaPage"));
 const SmaFungsiEksponenPage = lazy(() => import("./pages/ruang-untuk-guru/SmaFungsiEksponenPage"));
 const SmaBentukAkarPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBentukAkarPage"));
 const SmaBarisanDeretAritmetikaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretAritmetikaPage"));
@@ -1136,7 +1137,7 @@ const AppInner = () => {
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/konsep-dan-sifat-sifat-logaritma"
-              element={<SmaEksponenLogaritmaPage />}
+              element={<SmaLogaritmaPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/bentuk-akar-dan-merasionalkan-penyebut"

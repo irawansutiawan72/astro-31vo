@@ -194,7 +194,6 @@ const laws = [
   { title: "Sifat 6 · Pangkat nol", formula: "a^0=1\\quad(a\\ne0)", tone: "blue" as Tone, text: "Bilangan bukan nol berpangkat nol bernilai satu.", example: "7^0+(-5)^0+100^0=3" },
   { title: "Sifat 7 · Pangkat negatif", formula: "a^{-n}=\\frac1{a^n}", tone: "amber" as Tone, text: "Pangkat negatif berarti kebalikan dari pangkat positif.", example: "2^{-4}+5^{-1}=\\frac{21}{80}" },
   { title: "Sifat 8 · Pangkat pecahan", formula: "a^{\\frac mn}=\\sqrt[n]{a^m}", tone: "emerald" as Tone, text: "Penyebut menjadi indeks akar dan pembilang menjadi pangkat.", example: "32^{3/5}=\\sqrt[5]{32^3}=8" },
-  { title: "Sifat 9 · Perkalian basis", formula: "a^n b^n=(ab)^n", tone: "cyan" as Tone, text: "Dua pangkat dengan eksponen sama dapat digabungkan basisnya.", example: "2^3\\cdot3^3=6^3=216" },
 ];
 
 const SmaEksponenLogaritmaPage = () => {
@@ -262,8 +261,8 @@ const SmaEksponenLogaritmaPage = () => {
               <Formula tone="amber">{"2^{10}=1.024"}</Formula>
               <p className="font-body text-sm leading-relaxed text-white/75">Notasi pangkat juga dipakai untuk menulis bilangan sangat besar dan sangat kecil.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-cyan-200">📏 Bilangan sangat besar</p><p className="text-sm text-white/70">Kecepatan cahaya: <InlineMath math="3\\times10^8" /> m/s</p><p className="text-sm text-white/70">Perkiraan kekayaan: <InlineMath math="2\\times10^{11}" /> dolar</p></div>
-                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-emerald-200">🔬 Bilangan sangat kecil</p><p className="text-sm text-white/70">Ukuran bakteri: <InlineMath math="2\\times10^{-6}" /> m</p><p className="text-sm text-white/70">Ukuran virus: <InlineMath math="1\\times10^{-7}" /> m</p></div>
+                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-cyan-200">📏 Bilangan sangat besar</p><p className="text-sm text-white/70">Kecepatan cahaya: <InlineMath math={"3\\times10^8"} /> m/s</p><p className="text-sm text-white/70">Perkiraan kekayaan: <InlineMath math={"2\\times10^{11}"} /> dolar</p></div>
+                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-emerald-200">🔬 Bilangan sangat kecil</p><p className="text-sm text-white/70">Ukuran bakteri: <InlineMath math={"2\\times10^{-6}"} /> m</p><p className="text-sm text-white/70">Ukuran virus: <InlineMath math={"1\\times10^{-7}"} /> m</p></div>
               </div>
             </InfoCard>
           </Accordion>
@@ -280,14 +279,14 @@ const SmaEksponenLogaritmaPage = () => {
             </InfoCard>
             <InfoCard tone="cyan">
               <p className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-200">🔍 Anatomi notasi pangkat</p>
-              <div className="rounded-xl bg-slate-950/45 p-4 text-center"><span className="font-display text-6xl font-black text-white">5<sup className="text-3xl text-yellow-300">3</sup></span><p className="mt-2 font-body text-sm text-white/65"><InlineMath math="5^3=5\\times5\\times5=125" /> · dibaca “lima pangkat tiga”</p></div>
+              <div className="rounded-xl bg-slate-950/45 p-4 text-center"><span className="font-display text-6xl font-black text-white">5<sup className="text-3xl text-yellow-300">3</sup></span><p className="mt-2 font-body text-sm text-white/65"><InlineMath math={"5^3=5\\times5\\times5=125"} /> · dibaca “lima pangkat tiga”</p></div>
               <p className="mt-3 font-body text-sm text-yellow-100"><strong>Tips:</strong> pangkat 2 disebut kuadrat dan pangkat 3 disebut kubik.</p>
             </InfoCard>
           </Accordion>
 
           <Accordion id="examples" title="Contoh pengertian bilangan berpangkat" eyebrow="Bagian 2 · latihan bertahap" icon={<Calculator className="h-5 w-5" />} tone="blue" open={open("examples")} onToggle={toggle}>
             <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number={1} tone="emerald" question={<>Nyatakan <InlineMath math="7\\times7\\times7\\times7" /> dalam notasi pangkat.</>}>
+              <ExampleCard number={1} tone="emerald" question={<>Nyatakan <InlineMath math={"7\\times7\\times7\\times7"} /> dalam notasi pangkat.</>}>
                 <Formula tone="emerald">{"7\\times7\\times7\\times7=7^4"}</Formula><p>Basis = 7 dan eksponen = 4. Nilainya <InlineMath math="2.401" />.</p>
               </ExampleCard>
               <ExampleCard number={2} tone="blue" question={<>Kubus memiliki rusuk 6 cm. Tentukan volumenya.</>}>
@@ -306,9 +305,9 @@ const SmaEksponenLogaritmaPage = () => {
               <p className="font-body text-sm text-yellow-100"><strong>Tips:</strong> pangkatkan pembilang dan penyebutnya secara terpisah.</p>
             </InfoCard>
             <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number={1} tone="violet" question={<>Hitung <InlineMath math="\\left(\\frac35\\right)^3" />.</>}><Formula>{"\\left(\\frac35\\right)^3=\\frac{3^3}{5^3}=\\frac{27}{125}"}</Formula></ExampleCard>
-              <ExampleCard number={2} tone="blue" question={<>Hitung <InlineMath math="\\left(\\frac23\\right)^4" />.</>}><Formula>{"\\left(\\frac23\\right)^4=\\frac{16}{81}"}</Formula></ExampleCard>
-              <ExampleCard number={3} tone="rose" question={<>Sederhanakan <InlineMath math="\\left(\\frac{x^3}{y^2}\\right)^4" />.</>}><Formula>{"\\frac{x^{12}}{y^8}"}</Formula></ExampleCard>
+              <ExampleCard number={1} tone="violet" question={<>Hitung <InlineMath math={"\\left(\\frac35\\right)^3"} />.</>}><Formula>{"\\left(\\frac35\\right)^3=\\frac{3^3}{5^3}=\\frac{27}{125}"}</Formula></ExampleCard>
+              <ExampleCard number={2} tone="blue" question={<>Hitung <InlineMath math={"\\left(\\frac23\\right)^4"} />.</>}><Formula>{"\\left(\\frac23\\right)^4=\\frac{16}{81}"}</Formula></ExampleCard>
+              <ExampleCard number={3} tone="rose" question={<>Sederhanakan <InlineMath math={"\\left(\\frac{x^3}{y^2}\\right)^4"} />.</>}><Formula>{"\\frac{x^{12}}{y^8}"}</Formula></ExampleCard>
             </div>
           </Accordion>
 
@@ -322,20 +321,20 @@ const SmaEksponenLogaritmaPage = () => {
               <Formula tone="orange">{"(-3)^2=9\\qquad\\text{sedangkan}\\qquad-3^2=-9"}</Formula>
             </InfoCard>
             <div className="grid gap-4 md:grid-cols-2">
-              <ExampleCard number={1} tone="emerald" question={<>Tentukan nilai <InlineMath math="(-4)^2" /> dan <InlineMath math="-4^2" />.</>}><Formula>{"(-4)^2=16\\qquad-4^2=-16"}</Formula><p>Hasil berbeda karena posisi tanda kurung berbeda.</p></ExampleCard>
-              <ExampleCard number={2} tone="orange" question={<>Tentukan <InlineMath math="(-3)^4,(-3)^3,-3^4" />.</>}><Formula>{"(-3)^4=81,\\quad(-3)^3=-27,\\quad-3^4=-81"}</Formula><p>Genap positif, ganjil negatif, dan minus di luar tetap negatif.</p></ExampleCard>
+              <ExampleCard number={1} tone="emerald" question={<>Tentukan nilai <InlineMath math={"(-4)^2"} /> dan <InlineMath math={"-4^2"} />.</>}><Formula>{"(-4)^2=16\\qquad-4^2=-16"}</Formula><p>Hasil berbeda karena posisi tanda kurung berbeda.</p></ExampleCard>
+              <ExampleCard number={2} tone="orange" question={<>Tentukan <InlineMath math={"(-3)^4,(-3)^3,-3^4"} />.</>}><Formula>{"(-3)^4=81,\\quad(-3)^3=-27,\\quad-3^4=-81"}</Formula><p>Genap positif, ganjil negatif, dan minus di luar tetap negatif.</p></ExampleCard>
             </div>
           </Accordion>
 
           <Accordion id="zero" title="Pangkat nol dan pangkat negatif" eyebrow="Bagian 5 · perluasan definisi" icon={<CheckCircle2 className="h-5 w-5" />} tone="cyan" open={open("zero")} onToggle={toggle}>
             <div className="grid gap-4 md:grid-cols-2">
-              <InfoCard tone="cyan"><p className="font-bold text-cyan-200">Pangkat nol</p><p className="mt-2 text-sm text-white/75">Setiap bilangan bukan nol berpangkat nol bernilai satu.</p><Formula>{"a^0=1\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math="2^4=16,2^3=8,2^2=4,2^1=2,2^0=1" /></p></InfoCard>
-              <InfoCard tone="amber"><p className="font-bold text-amber-200">Pangkat negatif</p><p className="mt-2 text-sm text-white/75">Pangkat negatif adalah kebalikan dari pangkat positif.</p><Formula>{"a^{-n}=\\frac1{a^n}\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math="3^{-2}=\\frac19" /></p></InfoCard>
+              <InfoCard tone="cyan"><p className="font-bold text-cyan-200">Pangkat nol</p><p className="mt-2 text-sm text-white/75">Setiap bilangan bukan nol berpangkat nol bernilai satu.</p><Formula>{"a^0=1\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math={"2^4=16,2^3=8,2^2=4,2^1=2,2^0=1"} /></p></InfoCard>
+              <InfoCard tone="amber"><p className="font-bold text-amber-200">Pangkat negatif</p><p className="mt-2 text-sm text-white/75">Pangkat negatif adalah kebalikan dari pangkat positif.</p><Formula>{"a^{-n}=\\frac1{a^n}\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math={"3^{-2}=\\frac19"} /></p></InfoCard>
             </div>
-            <div className="rounded-xl border border-yellow-300/25 bg-yellow-400/10 p-4 text-sm text-yellow-100"><strong>Catatan penting:</strong> <InlineMath math="0^0" /> tidak terdefinisi. Rumus <InlineMath math="a^0=1" /> hanya berlaku jika <InlineMath math="a\\ne0" />.</div>
+            <div className="rounded-xl border border-yellow-300/25 bg-yellow-400/10 p-4 text-sm text-yellow-100"><strong>Catatan penting:</strong> <InlineMath math={"0^0"} /> tidak terdefinisi. Rumus <InlineMath math={"a^0=1"} /> hanya berlaku jika <InlineMath math={"a\\ne0"} />.</div>
           </Accordion>
 
-          <Accordion id="laws" title="Sifat-sifat operasi bilangan berpangkat" eyebrow="Bagian 6 · sembilan sifat utama" icon={<Sparkles className="h-5 w-5" />} tone="blue" open={open("laws")} onToggle={toggle}>
+          <Accordion id="laws" title="Sifat-sifat operasi bilangan berpangkat" eyebrow="Bagian 6 · delapan sifat utama" icon={<Sparkles className="h-5 w-5" />} tone="blue" open={open("laws")} onToggle={toggle}>
             <InfoCard tone="blue"><p className="font-body text-sm leading-relaxed text-white/80">Kuasai logika setiap sifat, bukan hanya menghafal rumusnya. Jika lupa, rumus dapat diturunkan kembali dari definisi perkalian berulang.</p></InfoCard>
             <div className="grid gap-4 md:grid-cols-2">
               {laws.map((law) => (
@@ -351,9 +350,9 @@ const SmaEksponenLogaritmaPage = () => {
 
           <Accordion id="practice" title="Contoh soal gabungan" eyebrow="Bagian 7 · terapkan beberapa sifat" icon={<Calculator className="h-5 w-5" />} tone="amber" open={open("practice")} onToggle={toggle}>
             <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number={1} tone="emerald" question={<>Hitung <InlineMath math="5^0+3^{-2}" />.</>}><Formula>{"5^0+3^{-2}=1+\\frac19=\\frac{10}{9}"}</Formula></ExampleCard>
-              <ExampleCard number={2} tone="violet" question={<>Sederhanakan <InlineMath math="\\frac{(-2)^3\\times3^{-2}}{6^0}" />.</>}><Formula>{"\\frac{-8\\times\\frac19}{1}=-\\frac89"}</Formula></ExampleCard>
-              <ExampleCard number={3} tone="rose" question={<>Jika <InlineMath math="a=2^{-3}" />, tentukan <InlineMath math="a^{-2}" />.</>}><Formula>{"a^{-2}=(2^{-3})^{-2}=2^6=64"}</Formula></ExampleCard>
+              <ExampleCard number={1} tone="emerald" question={<>Hitung <InlineMath math={"5^0+3^{-2}"} />.</>}><Formula>{"5^0+3^{-2}=1+\\frac19=\\frac{10}{9}"}</Formula></ExampleCard>
+              <ExampleCard number={2} tone="violet" question={<>Sederhanakan <InlineMath math={"\\frac{(-2)^3\\times3^{-2}}{6^0}"} />.</>}><Formula>{"\\frac{-8\\times\\frac19}{1}=-\\frac89"}</Formula></ExampleCard>
+              <ExampleCard number={3} tone="rose" question={<>Jika <InlineMath math={"a=2^{-3}"} />, tentukan <InlineMath math={"a^{-2}"} />.</>}><Formula>{"a^{-2}=(2^{-3})^{-2}=2^6=64"}</Formula></ExampleCard>
             </div>
           </Accordion>
 
