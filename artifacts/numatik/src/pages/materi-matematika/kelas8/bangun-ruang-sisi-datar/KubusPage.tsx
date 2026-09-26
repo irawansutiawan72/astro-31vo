@@ -785,7 +785,9 @@ const NetFoldPreview = ({
 
 const NET_FACE_NUMBERS: Record<FName, number>[] = [
   { top: 1, left: 2, back: 3, right: 4, bottom: 5, front: 6 },
-  { left: 1, front: 2, right: 3, back: 4, bottom: 5, top: 6 },
+  // In net #2, square #2 is the rear/base face. Square #4 folds around
+  // the right hinge into the front face when the cube is assembled.
+  { left: 1, back: 2, right: 3, front: 4, bottom: 5, top: 6 },
 ];
 const HINGED_NET_SIZE = 44;
 const HINGED_NET_HALF = HINGED_NET_SIZE / 2;
@@ -903,22 +905,22 @@ const HingedNetPreview = ({
 
   const patternTwo = (
     <>
-      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: HINGED_NET_SIZE }}>
-        <HingedNetFace face="front" number={number("front")} />
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: HINGED_NET_SIZE }}>
+        <HingedNetFace face="back" number={number("back")} />
       </div>
-      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: 0, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: 0, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
         <HingedNetFace face="left" number={number("left")} style={{ top: 0, left: -HINGED_NET_SIZE }} />
       </div>
-      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
         <HingedNetFace face="right" number={number("right")} style={{ top: 0, left: 0 }} />
         <div style={{ ...hinge(`rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
-          <HingedNetFace face="back" number={number("back")} style={{ top: 0, left: 0 }} />
+          <HingedNetFace face="front" number={number("front")} style={{ top: 0, left: 0 }} />
         </div>
         <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
           <HingedNetFace face="top" number={number("top")} style={{ top: -HINGED_NET_SIZE, left: 0 }} />
         </div>
       </div>
-      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : -90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
         <HingedNetFace face="bottom" number={number("bottom")} style={{ top: 0, left: 0 }} />
       </div>
     </>
