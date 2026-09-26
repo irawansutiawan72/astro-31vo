@@ -913,10 +913,12 @@ const HingedNetPreview = ({
       </div>
       <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
         <HingedNetFace face="right" number={number("right")} style={{ top: 0, left: 0 }} />
-        <div style={{ ...hinge(`rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+        {/* The front face folds inward from the right edge, not outward. */}
+        <div style={{ ...hinge(`rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
           <HingedNetFace face="front" number={number("front")} style={{ top: 0, left: 0 }} />
         </div>
-        <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        {/* The top face follows the right face into the cube's top position. */}
+        <div style={{ ...hinge(`rotateX(${isOpen ? 0 : -90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
           <HingedNetFace face="top" number={number("top")} style={{ top: -HINGED_NET_SIZE, left: 0 }} />
         </div>
       </div>
