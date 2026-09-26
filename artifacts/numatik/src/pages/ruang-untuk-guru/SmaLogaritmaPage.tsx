@@ -222,7 +222,7 @@ const SmaLogaritmaPage = () => {
             </div>
           </Accordion>
 
-          <Accordion id="basic" title="Tiga sifat dasar yang wajib diingat" eyebrow="Sebelum masuk ke 6 sifat" icon={<CheckCircle2 className="h-5 w-5" />} tone="emerald" open={isOpen("basic")} onToggle={toggle}>
+          <Accordion id="basic" title="Tiga sifat dasar yang wajib diingat" eyebrow="Sebelum masuk ke 7 sifat" icon={<CheckCircle2 className="h-5 w-5" />} tone="emerald" open={isOpen("basic")} onToggle={toggle}>
             <ColorCard tone="emerald">
               <div className="grid gap-3 md:grid-cols-3">
                 {[
@@ -257,9 +257,9 @@ const SmaLogaritmaPage = () => {
                 <Formula>{"\\log_2(4\\times8)=\\log_2 32=5"}</Formula>
                 <p>Gabungkan numerus, lalu cari pangkat 2 yang menghasilkan 32.</p>
               </ExampleCard>
-              <ExampleCard number="2" tone="blue" question={<><InlineMath math="\log_5\\frac12+\log_5 50" /></>}>
-                <Formula>{"\\log_5\\left(\\frac12\\times50\\right)=\\log_5 25=2"}</Formula>
-                <p><InlineMath math="\frac12\times50=25" /> dan <InlineMath math="5^2=25" />.</p>
+              <ExampleCard number="2" tone="blue" question={<><InlineMath math="\log_5\frac{1}{2}+\log_5 50" /></>}>
+                <Formula>{"\\log_5\\left(\\frac{1}{2}\\times50\\right)=\\log_5 25=2"}</Formula>
+                <p><InlineMath math="\frac{1}{2}\times50=25" /> dan <InlineMath math="5^2=25" />.</p>
               </ExampleCard>
               <ExampleCard number="3" tone="blue" question={<><InlineMath math="\log_3 6+\log_3 1{,}5" /></>}>
                 <Formula>{"\\log_3 9=2"}</Formula>
@@ -276,7 +276,7 @@ const SmaLogaritmaPage = () => {
                 <p><InlineMath math="217\div31=7" />, lalu gunakan sifat dasar <InlineMath math="\log_7 7=1" />.</p>
               </ExampleCard>
               <ExampleCard number="2" tone="rose" question={<><InlineMath math="\log 0{,}04-\log 4" /></>}>
-                <Formula>{"\\log\\frac{0{,}04}{4}=\\log 0{,}01=-2"}</Formula>
+                <Formula>{"\\log\\left(\\frac{0{,}04}{4}\\right)=\\log 0{,}01=-2"}</Formula>
                 <p>Basis 10 tidak ditulis dan <InlineMath math="0{,}01=10^{-2}" />.</p>
               </ExampleCard>
               <ExampleCard number="3" tone="rose" question={<><InlineMath math="\log_2 48-\log_2 3" /></>}>
@@ -294,7 +294,7 @@ const SmaLogaritmaPage = () => {
                 <p>Turunkan pangkat 4 menjadi pengali.</p>
               </ExampleCard>
               <ExampleCard number="2" tone="violet" question="Gabungkan sifat 1, 2, dan 3: 2 log 25 − 3 log 5 + log 20.">
-                <Formula>{"\\log25^2-\\log5^3+\\log20=\\log\\frac{625\\times20}{125}=\\log100=2"}</Formula>
+                <Formula>{"\\log(25^2)-\\log(5^3)+\\log20=\\log\\left(\\frac{625\\times20}{125}\\right)=\\log100=2"}</Formula>
                 <p>Pengali dinaikkan menjadi pangkat, pengurangan menjadi pembagian, dan penjumlahan menjadi perkalian.</p>
               </ExampleCard>
             </div>
@@ -305,11 +305,11 @@ const SmaLogaritmaPage = () => {
             <p className="font-body text-sm text-white/70">Pangkat pada numerus menjadi pembilang, sedangkan pangkat pada basis menjadi penyebut.</p>
             <div className="grid gap-4 md:grid-cols-2">
               <ExampleCard number="1" tone="fuchsia" question={<><InlineMath math="\log_{2^3}4^2" /></>}>
-                <Formula>{"\\frac23\\log_2 4=\\frac23\\times2=\\frac43"}</Formula>
+                <Formula>{"\\frac{2}{3}\\log_2 4=\\frac{2}{3}\\times2=\\frac{4}{3}"}</Formula>
                 <p>Gunakan <InlineMath math="n=2" /> sebagai pembilang dan <InlineMath math="m=3" /> sebagai penyebut.</p>
               </ExampleCard>
               <ExampleCard number="2" tone="fuchsia" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_{8}9" />.</>}>
-                <Formula>{"\\log_{2^3}3^2=\\frac23\\log_2 3=\\frac23a"}</Formula>
+                <Formula>{"\\log_{2^3}3^2=\\frac{2}{3}\\log_2 3=\\frac{2}{3}a"}</Formula>
                 <p>Ubah <InlineMath math="8=2^3" /> dan <InlineMath math="9=3^2" />, lalu terapkan sifat ini.</p>
               </ExampleCard>
             </div>
@@ -321,38 +321,31 @@ const SmaLogaritmaPage = () => {
             <p className="font-body text-sm text-white/70">Pilih basis baru <InlineMath math="p" /> yang membuat perhitungan lebih mudah.</p>
             <div className="grid gap-4 md:grid-cols-3">
               <ExampleCard number="1" tone="amber" question={<><InlineMath math="\log_4 32" /></>}>
-                <Formula>{"\\frac{\\log_2 32}{\\log_2 4}=\\frac52"}</Formula>
+                <Formula>{"\\frac{\\log_2 32}{\\log_2 4}=\\frac{5}{2}"}</Formula>
                 <p>Pindah ke basis 2 karena <InlineMath math="32=2^5" /> dan <InlineMath math="4=2^2" />.</p>
               </ExampleCard>
               <ExampleCard number="2" tone="amber" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_8 3" />.</>}>
-                <Formula>{"\\log_8 3=\\frac{\\log 3}{\\log 8}=\\frac{\\log 3}{3\\log2}=\\frac a3"}</Formula>
+                <Formula>{"\\log_8 3=\\frac{\\log 3}{\\log 8}=\\frac{\\log 3}{3\\log 2}=\\frac{a}{3}"}</Formula>
               </ExampleCard>
               <ExampleCard number="3" tone="amber" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_3 2" />.</>}>
-                <Formula>{"\\log_3 2=\\frac{1}{\\log_2 3}=\\frac1a"}</Formula>
+                <Formula>{"\\log_3 2=\\frac{1}{\\log_2 3}=\\frac{1}{a}"}</Formula>
                 <p>Membalik basis dan numerus membalik pecahannya.</p>
               </ExampleCard>
             </div>
           </Accordion>
 
-          <Accordion id="chain" title="Sifat 6 · Rantai dan pangkat basis" eyebrow="Tiga bentuk yang saling melengkapi" icon={<Link2 className="h-5 w-5" />} tone="cyan" open={isOpen("chain")} onToggle={toggle}>
+          <Accordion id="chain" title="Sifat 6 · Rantai logaritma" eyebrow="Satu bentuk yang saling menyederhanakan" icon={<Link2 className="h-5 w-5" />} tone="cyan" open={isOpen("chain")} onToggle={toggle}>
             <ColorCard tone="cyan">
-              <div className="grid gap-3 md:grid-cols-3">
-                <Formula>{"\\log_g a\\times\\log_a b=\\log_g b"}</Formula>
-                <Formula>{"\\log_{g^n}a^m=\\frac mn\\log_g a"}</Formula>
-                <Formula>{"\\log_{g^n}a^n=\\log_g a"}</Formula>
-              </div>
-              <p className="font-body text-sm text-cyan-50/75">Sifat pertama seperti rantai: “a” di tengah saling menghilangkan.</p>
+              <Formula>{"\\log_a b\\times\\log_b c=\\log_a c"}</Formula>
+              <p className="font-body text-sm text-cyan-50/75">Logaritma dengan basis dan numerus yang berurutan dapat dirangkai hingga menyisakan basis pertama dan numerus terakhir.</p>
             </ColorCard>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
               <ExampleCard number="1" tone="cyan" question={<><InlineMath math="\log_2 5\times\log_5 64" /></>}>
                 <Formula>{"\\log_2 64=\\log_2 2^6=6"}</Formula>
               </ExampleCard>
-              <ExampleCard number="2" tone="cyan" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_4 81" />.</>}>
-                <Formula>{"\\log_{2^2}3^4=\\frac42\\log_2 3=2a"}</Formula>
-              </ExampleCard>
-              <ExampleCard number="3" tone="cyan" question={<><InlineMath math="\log_2 3\times\log_3 4\times\log_4 8" /></>}>
+              <ExampleCard number="2" tone="cyan" question={<><InlineMath math="\log_2 3\times\log_3 4\times\log_4 8" /></>}>
                 <Formula>{"\\log_2 8=3"}</Formula>
-                <p>Angka 3 dan 4 di tengah saling habis.</p>
+                <p>Angka 3 dan 4 di tengah saling habis secara bertahap.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -369,7 +362,7 @@ const SmaLogaritmaPage = () => {
               </ExampleCard>
               <ExampleCard number="3" tone="emerald" question={<><InlineMath math="4^{\log_2 3}" />.</>}>
                 <Formula>{"(2^2)^{\\log_2 3}=2^{2\\log_2 3}=2^{\\log_2 9}=9"}</Formula>
-                <p>Samakan basis menjadi 2, masukkan pengali 2 ke pangkat, lalu gunakan sifat 6.</p>
+                <p>Samakan basis menjadi 2, masukkan pengali 2 ke pangkat, lalu gunakan sifat 7.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -382,13 +375,13 @@ const SmaLogaritmaPage = () => {
                 </thead>
                 <tbody className="text-white/75">
                   {[
-                    ["Dasar", "\\log_a a^n=n;\\quad\\log_a a=1;\\quad\\log_a1=0"],
+                    ["Dasar", "\\log_a a^n=n;\\quad\\log_a a=1;\\quad\\log_a 1=0"],
                     ["1 · Penjumlahan", "\\log_a b+\\log_a c=\\log_a(bc)"],
-                    ["2 · Pengurangan", "\\log_a b-\\log_a c=\\log_a\\left(\\frac bc\\right)"],
+                    ["2 · Pengurangan", "\\log_a b-\\log_a c=\\log_a\\left(\\frac{b}{c}\\right)"],
                     ["3 · Pangkat numerus", "\\log_a b^n=n\\log_a b"],
                     ["4 · Pangkat basis dan numerus", "\\log_{a^m}b^n=\\frac{n}{m}\\log_a b"],
-                    ["5 · Ganti basis", "\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac1{\\log_b a};\\quad\\log_a b\\cdot\\log_b c=\\log_a c"],
-                    ["6 · Rantai dan pangkat basis", "\\log_g a\\cdot\\log_a b=\\log_g b"],
+                    ["5 · Ganti basis", "\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac{1}{\\log_b a};\\quad\\log_a b\\cdot\\log_b c=\\log_a c"],
+                    ["6 · Rantai logaritma", "\\log_a b\\cdot\\log_b c=\\log_a c"],
                     ["7 · Saling menghapus", "a^{\\log_a b}=b"],
                   ].map(([name, formula], index) => (
                     <tr key={name} className={`border-t border-white/5 ${index % 2 === 0 ? "bg-white/[0.025]" : ""}`}>
