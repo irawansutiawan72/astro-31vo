@@ -573,7 +573,9 @@ const NET_PATTERNS: [number, number][][] = [
 ];
 const NET_COLORS = ["#3b82f6","#8b5cf6","#22c55e","#f97316","#eab308","#ef4444"];
 const NET_FOLD_FACE_ORDERS: FName[][] = [
-  ["top", "left", "front", "right", "bottom", "back"],
+  // For net #1, keep square #3 behind the cube and bring square #6
+  // forward into the front position previously occupied by #3.
+  ["top", "left", "back", "right", "bottom", "front"],
   ["left", "front", "right", "back", "bottom", "top"],
 ];
 const NET_FOLD_SIZE = 40;
