@@ -1136,6 +1136,26 @@ const FrontHingedNetCell = ({
   </div>
 );
 
+const HingedNetSeam = ({ direction }: { direction: NetDirection }) => (
+  <div
+    aria-hidden="true"
+    style={{
+      position: "absolute",
+      zIndex: 3,
+      pointerEvents: "none",
+      background: "rgba(255,255,255,0.82)",
+      boxShadow: "0 0 5px rgba(255,255,255,0.65)",
+      ...(direction === "up"
+        ? { top: -1, left: 0, width: NET_HINGE_SIZE, height: 2 }
+        : direction === "down"
+        ? { top: -1, left: 0, width: NET_HINGE_SIZE, height: 2 }
+        : direction === "left"
+        ? { top: 0, left: -1, width: 2, height: NET_HINGE_SIZE }
+        : { top: 0, left: -1, width: 2, height: NET_HINGE_SIZE }),
+    }}
+  />
+);
+
 const FrontHingedNetPreview = ({
   cells,
   lang,
@@ -1201,6 +1221,7 @@ const FrontHingedNetPreview = ({
     if (!node.direction) return cell;
     return (
       <div key={node.index} style={hingeFor(node.direction)}>
+        <HingedNetSeam direction={node.direction} />
         <div style={{ position: "absolute", ...cellPosition }}>{cell}</div>
       </div>
     );
@@ -1220,7 +1241,10 @@ const FrontHingedNetPreview = ({
             height: NET_HINGE_SIZE,
             marginLeft: -NET_HINGE_HALF,
             marginTop: -NET_HINGE_HALF,
-            transform: "rotateX(-18deg) rotateY(28deg)",
+            // Keep the root face centered in the same cube as the nested
+            // door-like hinges. This also keeps all six faces in frame when
+            // pattern 3 or 4 closes.
+            transform: `translateZ(-${NET_HINGE_HALF}px) rotateX(-18deg) rotateY(28deg)`,
             transformStyle: "preserve-3d",
           }}
         >
