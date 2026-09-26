@@ -1159,9 +1159,11 @@ const HingedNetSeam = ({ direction }: { direction: NetDirection }) => (
 const FrontHingedNetPreview = ({
   cells,
   lang,
+  pattern,
 }: {
   cells: [number, number][];
   lang: string;
+  pattern?: 3 | 4;
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
@@ -1226,6 +1228,11 @@ const FrontHingedNetPreview = ({
       </div>
     );
   };
+  const viewTransform = pattern === 3
+    // Pattern 3 is a four-square strip. Turning the assembled view makes
+    // square 5 the front face and square 6 the visible side face.
+    ? `translateZ(-${NET_HINGE_HALF}px) rotateX(-18deg) rotateY(160deg)`
+    : `translateZ(-${NET_HINGE_HALF}px) rotateX(-18deg) rotateY(28deg)`;
 
   return (
     <div className="w-full">
@@ -1242,9 +1249,9 @@ const FrontHingedNetPreview = ({
             marginLeft: -NET_HINGE_HALF,
             marginTop: -NET_HINGE_HALF,
             // Keep the root face centered in the same cube as the nested
-            // door-like hinges. This also keeps all six faces in frame when
-            // pattern 3 or 4 closes.
-            transform: `translateZ(-${NET_HINGE_HALF}px) rotateX(-18deg) rotateY(28deg)`,
+            // door-like hinges. Pattern 3 uses a front-facing view so its
+            // fifth and sixth squares remain visible after assembly.
+            transform: viewTransform,
             transformStyle: "preserve-3d",
           }}
         >
@@ -1398,7 +1405,7 @@ const NetGallery = ({ lang }: { lang: string }) => {
           {i < 2 ? (
             <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2} lang={lang} />
           ) : i < 4 ? (
-            <FrontHingedNetPreview cells={cells} lang={lang} />
+            <FrontHingedNetPreview cells={cells} lang={lang} pattern={(i + 1) as 3 | 4} />
           ) : (
             <GenericHingedNetPreview cells={cells} lang={lang} />
           )}
