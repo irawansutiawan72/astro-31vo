@@ -17,7 +17,7 @@ import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 
-type Tone = "cyan" | "emerald" | "amber" | "violet" | "rose" | "blue";
+type Tone = "cyan" | "emerald" | "amber" | "violet" | "rose" | "blue" | "fuchsia";
 
 const toneClasses: Record<Tone, string> = {
   cyan: "border-cyan-300/35 bg-cyan-400/10",
@@ -26,6 +26,7 @@ const toneClasses: Record<Tone, string> = {
   violet: "border-violet-300/35 bg-violet-400/10",
   rose: "border-rose-300/35 bg-rose-400/10",
   blue: "border-blue-300/35 bg-blue-400/10",
+  fuchsia: "border-fuchsia-300/35 bg-fuchsia-400/10",
 };
 
 const toTeacherLogNotation = (math: string) =>
@@ -121,7 +122,7 @@ const Accordion = ({
 );
 
 const SmaLogaritmaPage = () => {
-  const allSections = ["opening", "definition", "basic", "addition", "subtraction", "power", "base", "chain", "cancel", "summary"];
+  const allSections = ["opening", "definition", "basic", "addition", "subtraction", "power", "power-base", "base", "chain", "cancel", "summary"];
   const [expanded, setExpanded] = useState(allSections);
 
   const toggle = (id: string) => {
@@ -160,7 +161,7 @@ const SmaLogaritmaPage = () => {
                 <div>
                   <p className="font-display text-base font-bold text-yellow-100">Pernahkah kamu bertanya?</p>
                   <p className="mt-1 font-body text-sm leading-relaxed text-yellow-50/80">
-                    “2 dipangkatkan berapa supaya hasilnya 32?” Itulah logaritma! Yuk, kuasai konsep dan 6 sifat saktinya langkah demi langkah.
+                    “2 dipangkatkan berapa supaya hasilnya 32?” Itulah logaritma! Yuk, kuasai konsep dan 7 sifat saktinya langkah demi langkah.
                   </p>
                 </div>
               </div>
@@ -245,7 +246,7 @@ const SmaLogaritmaPage = () => {
 
           <div className="relative py-3">
             <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-fuchsia-300/30 to-transparent" />
-            <p className="relative mx-auto w-fit bg-[#070b23] px-4 font-display text-sm font-bold uppercase tracking-[0.22em] text-fuchsia-200">Enam sifat sakti logaritma</p>
+            <p className="relative mx-auto w-fit bg-[#070b23] px-4 font-display text-sm font-bold uppercase tracking-[0.22em] text-fuchsia-200">Tujuh sifat sakti logaritma</p>
           </div>
 
           <Accordion id="addition" title="Sifat 1 · Penjumlahan" eyebrow="Log ditambah · numerus dikali" icon={<span className="font-display text-lg font-black">+</span>} tone="blue" open={isOpen("addition")} onToggle={toggle}>
@@ -299,8 +300,24 @@ const SmaLogaritmaPage = () => {
             </div>
           </Accordion>
 
-          <Accordion id="base" title="Sifat 4 · Ganti basis" eyebrow="Pindah ke basis baru yang lebih nyaman" icon={<ArrowRight className="h-5 w-5" />} tone="amber" open={isOpen("base")} onToggle={toggle}>
+          <Accordion id="power-base" title="Sifat 4 · Pangkat basis dan numerus" eyebrow="Pangkat pada basis dan numerus menjadi perbandingan" icon={<span className="font-display text-lg font-black">÷</span>} tone="fuchsia" open={isOpen("power-base")} onToggle={toggle}>
+            <Formula>{"\\log_{a^m}b^n=\\frac{n}{m}\\log_a b"}</Formula>
+            <p className="font-body text-sm text-white/70">Pangkat pada numerus menjadi pembilang, sedangkan pangkat pada basis menjadi penyebut.</p>
+            <div className="grid gap-4 md:grid-cols-2">
+              <ExampleCard number="1" tone="fuchsia" question={<><InlineMath math="\log_{2^3}4^2" /></>}>
+                <Formula>{"\\frac23\\log_2 4=\\frac23\\times2=\\frac43"}</Formula>
+                <p>Gunakan <InlineMath math="n=2" /> sebagai pembilang dan <InlineMath math="m=3" /> sebagai penyebut.</p>
+              </ExampleCard>
+              <ExampleCard number="2" tone="fuchsia" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_{8}9" />.</>}>
+                <Formula>{"\\log_{2^3}3^2=\\frac23\\log_2 3=\\frac23a"}</Formula>
+                <p>Ubah <InlineMath math="8=2^3" /> dan <InlineMath math="9=3^2" />, lalu terapkan sifat ini.</p>
+              </ExampleCard>
+            </div>
+          </Accordion>
+
+          <Accordion id="base" title="Sifat 5 · Ganti basis" eyebrow="Pindah ke basis baru yang lebih nyaman" icon={<ArrowRight className="h-5 w-5" />} tone="amber" open={isOpen("base")} onToggle={toggle}>
             <Formula>{"\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac{1}{\\log_b a}"}</Formula>
+            <Formula>{"\\log_a b\\times\\log_b c=\\log_a c"}</Formula>
             <p className="font-body text-sm text-white/70">Pilih basis baru <InlineMath math="p" /> yang membuat perhitungan lebih mudah.</p>
             <div className="grid gap-4 md:grid-cols-3">
               <ExampleCard number="1" tone="amber" question={<><InlineMath math="\log_4 32" /></>}>
@@ -317,7 +334,7 @@ const SmaLogaritmaPage = () => {
             </div>
           </Accordion>
 
-          <Accordion id="chain" title="Sifat 5 · Rantai dan pangkat basis" eyebrow="Tiga bentuk yang saling melengkapi" icon={<Link2 className="h-5 w-5" />} tone="cyan" open={isOpen("chain")} onToggle={toggle}>
+          <Accordion id="chain" title="Sifat 6 · Rantai dan pangkat basis" eyebrow="Tiga bentuk yang saling melengkapi" icon={<Link2 className="h-5 w-5" />} tone="cyan" open={isOpen("chain")} onToggle={toggle}>
             <ColorCard tone="cyan">
               <div className="grid gap-3 md:grid-cols-3">
                 <Formula>{"\\log_g a\\times\\log_a b=\\log_g b"}</Formula>
@@ -340,7 +357,7 @@ const SmaLogaritmaPage = () => {
             </div>
           </Accordion>
 
-          <Accordion id="cancel" title="Sifat 6 · Pangkat dan log saling menghapus" eyebrow="Basis sama · kembali ke numerus" icon={<Sparkles className="h-5 w-5" />} tone="emerald" open={isOpen("cancel")} onToggle={toggle}>
+          <Accordion id="cancel" title="Sifat 7 · Pangkat dan log saling menghapus" eyebrow="Basis sama · kembali ke numerus" icon={<Sparkles className="h-5 w-5" />} tone="emerald" open={isOpen("cancel")} onToggle={toggle}>
             <Formula>{"a^{\\log_a b}=b"}</Formula>
             <div className="grid gap-4 md:grid-cols-3">
               <ExampleCard number="1" tone="emerald" question={<><InlineMath math="2^{\log_2 5}" /></>}>
@@ -369,9 +386,10 @@ const SmaLogaritmaPage = () => {
                     ["1 · Penjumlahan", "\\log_a b+\\log_a c=\\log_a(bc)"],
                     ["2 · Pengurangan", "\\log_a b-\\log_a c=\\log_a\\left(\\frac bc\\right)"],
                     ["3 · Pangkat numerus", "\\log_a b^n=n\\log_a b"],
-                    ["4 · Ganti basis", "\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac1{\\log_b a}"],
-                    ["5 · Rantai", "\\log_g a\\cdot\\log_a b=\\log_g b"],
-                    ["6 · Saling menghapus", "a^{\\log_a b}=b"],
+                    ["4 · Pangkat basis dan numerus", "\\log_{a^m}b^n=\\frac{n}{m}\\log_a b"],
+                    ["5 · Ganti basis", "\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac1{\\log_b a};\\quad\\log_a b\\cdot\\log_b c=\\log_a c"],
+                    ["6 · Rantai dan pangkat basis", "\\log_g a\\cdot\\log_a b=\\log_g b"],
+                    ["7 · Saling menghapus", "a^{\\log_a b}=b"],
                   ].map(([name, formula], index) => (
                     <tr key={name} className={`border-t border-white/5 ${index % 2 === 0 ? "bg-white/[0.025]" : ""}`}>
                       <td className="px-4 py-3 font-semibold text-white">{name}</td>
