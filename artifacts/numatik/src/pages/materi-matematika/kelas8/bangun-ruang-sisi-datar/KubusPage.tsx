@@ -1042,6 +1042,214 @@ const NET_HINGE_SIZE = 40;
 const NET_HINGE_HALF = NET_HINGE_SIZE / 2;
 const NET_HINGE_TRANSITION = "transform 1.15s cubic-bezier(0.4, 0, 0.2, 1)";
 
+type HingedNetNode = {
+  index: number;
+  direction?: NetDirection;
+  children: HingedNetNode[];
+};
+
+const getNetTree = (cells: [number, number][]): HingedNetNode => {
+  const cellIndex = new Map(cells.map(([c, r], index) => [`${c},${r}`, index]));
+  const degree = (index: number) => {
+    const [c, r] = cells[index];
+    return NET_DIRECTIONS.filter(({ dc, dr }) => cellIndex.has(`${c + dc},${r + dr}`)).length;
+  };
+  const rootIndex = cells.reduce((best, _cell, index) =>
+    degree(index) > degree(best) ? index : best, 0);
+  const visited = new Set<number>([rootIndex]);
+  const directionByIndex = new Map<number, NetDirection>();
+  const parentByIndex = new Map<number, number>();
+  const queue = [rootIndex];
+
+  while (queue.length > 0) {
+    const parentIndex = queue.shift()!;
+    const [c, r] = cells[parentIndex];
+    for (const { direction, dc, dr } of NET_DIRECTIONS) {
+      const childIndex = cellIndex.get(`${c + dc},${r + dr}`);
+      if (childIndex === undefined || visited.has(childIndex)) continue;
+      visited.add(childIndex);
+      parentByIndex.set(childIndex, parentIndex);
+      directionByIndex.set(childIndex, direction);
+      queue.push(childIndex);
+    }
+  }
+
+  const buildNode = (index: number): HingedNetNode => ({
+    index,
+    direction: directionByIndex.get(index),
+    children: cells
+      .map((_, childIndex) => childIndex)
+      .filter(childIndex => parentByIndex.get(childIndex) === index)
+      .map(buildNode),
+  });
+  return buildNode(rootIndex);
+};
+
+const FrontHingedNetCell = ({
+  index,
+  children,
+}: {
+  index: number;
+  children?: React.ReactNode;
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      width: NET_HINGE_SIZE,
+      height: NET_HINGE_SIZE,
+      transformStyle: "preserve-3d",
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: NET_COLORS[index],
+        border: `2px solid ${NET_COLORS[index]}cc`,
+        borderRadius: 5,
+        color: "white",
+        fontSize: 12,
+        fontWeight: 800,
+        fontFamily: "monospace",
+        boxShadow: `0 0 10px ${NET_COLORS[index]}88`,
+        backfaceVisibility: "hidden",
+      }}
+    >
+      {index + 1}
+    </div>
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: NET_COLORS[index],
+        opacity: 0.35,
+        border: `2px solid ${NET_COLORS[index]}66`,
+        borderRadius: 5,
+        transform: "rotateY(180deg)",
+        backfaceVisibility: "hidden",
+      }}
+    />
+    {children}
+  </div>
+);
+
+const FrontHingedNetPreview = ({
+  cells,
+  lang,
+}: {
+  cells: [number, number][];
+  lang: string;
+}) => {
+  const { isDark } = useTheme();
+  const [isOpen, setIsOpen] = useState(true);
+  const tree = getNetTree(cells);
+  const labels = {
+    unfold: lang === "en" ? "Unfold" : lang === "ja" ? "展開" : "Bongkar",
+    assemble: lang === "en" ? "Assemble" : lang === "ja" ? "折りたたむ" : "Satukan",
+    net: lang === "en" ? "Cube net" : lang === "ja" ? "立方体の展開図" : "Jaring-jaring kubus",
+    cube: lang === "en" ? "Assembled cube" : lang === "ja" ? "組み立てた立方体" : "Kubus tersusun",
+  };
+  const buttonClass = (active: boolean, tone: "cyan" | "violet") =>
+    active
+      ? `rounded-lg border px-3 py-1.5 text-[10px] font-bold cursor-pointer transition-colors ${
+          tone === "cyan"
+            ? "border-cyan-500 bg-cyan-900/80 text-cyan-200 hover:bg-cyan-800"
+            : "border-violet-500 bg-violet-900/80 text-violet-200 hover:bg-violet-800"
+        }`
+      : "rounded-lg border border-slate-600 bg-slate-800/40 px-3 py-1.5 text-[10px] font-bold text-slate-500 cursor-default";
+
+  const hingeFor = (direction: NetDirection): React.CSSProperties => {
+    const angle = direction === "up"
+      ? (isOpen ? 0 : -90)
+      : direction === "down"
+      ? (isOpen ? 0 : 90)
+      : direction === "left"
+      ? (isOpen ? 0 : 90)
+      : (isOpen ? 0 : -90);
+    const position = direction === "up"
+      ? { top: 0, left: 0, width: NET_HINGE_SIZE, height: 0, transformOrigin: "50% 0% 0" }
+      : direction === "down"
+      ? { top: NET_HINGE_SIZE, left: 0, width: NET_HINGE_SIZE, height: 0, transformOrigin: "50% 0% 0" }
+      : direction === "left"
+      ? { top: 0, left: 0, width: 0, height: NET_HINGE_SIZE, transformOrigin: "0% 50% 0" }
+      : { top: 0, left: NET_HINGE_SIZE, width: 0, height: NET_HINGE_SIZE, transformOrigin: "0% 50% 0" };
+    return {
+      position: "absolute",
+      ...position,
+      transformStyle: "preserve-3d",
+      transform: `rotate${direction === "up" || direction === "down" ? "X" : "Y"}(${angle}deg)`,
+      transition: NET_HINGE_TRANSITION,
+    };
+  };
+
+  const renderNode = (node: HingedNetNode): React.ReactNode => {
+    const cellPosition = !node.direction
+      ? { top: 0, left: 0 }
+      : node.direction === "up"
+      ? { top: -NET_HINGE_SIZE, left: 0 }
+      : node.direction === "left"
+      ? { top: 0, left: -NET_HINGE_SIZE }
+      : { top: 0, left: 0 };
+    const cell = (
+      <FrontHingedNetCell index={node.index}>
+        {node.children.map(renderNode)}
+      </FrontHingedNetCell>
+    );
+    if (!node.direction) return cell;
+    return (
+      <div key={node.index} style={hingeFor(node.direction)}>
+        <div style={{ position: "absolute", ...cellPosition }}>{cell}</div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full">
+      <div
+        className="relative mx-auto overflow-visible"
+        style={{ width: 230, height: 184, perspective: 820 }}
+        aria-label={isOpen ? labels.net : labels.cube}
+      >
+        <div
+          className="absolute left-1/2 top-1/2"
+          style={{
+            width: NET_HINGE_SIZE,
+            height: NET_HINGE_SIZE,
+            marginLeft: -NET_HINGE_HALF,
+            marginTop: -NET_HINGE_HALF,
+            transform: "rotateX(-18deg) rotateY(28deg)",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          {renderNode(tree)}
+        </div>
+      </div>
+      <p className={`text-center text-[10px] font-body ${isOpen ? (isDark ? "text-white/50" : "text-slate-500") : "text-emerald-500"}`}>
+        {isOpen ? labels.net : labels.cube}
+      </p>
+      <div className="mt-2 flex justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => { playPopSound(); setIsOpen(true); }}
+          className={buttonClass(!isOpen, "cyan")}
+        >
+          {labels.unfold}
+        </button>
+        <button
+          type="button"
+          onClick={() => { playPopSound(); setIsOpen(false); }}
+          className={buttonClass(isOpen, "violet")}
+        >
+          {labels.assemble}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const GenericHingedNetPreview = ({
   cells,
   lang,
@@ -1165,6 +1373,8 @@ const NetGallery = ({ lang }: { lang: string }) => {
           <span className={isDark ? "text-white/50 text-[10px] font-body font-bold" : "text-slate-500 text-[10px] font-body font-bold"}>{netLabel} #{i+1}</span>
           {i < 2 ? (
             <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2} lang={lang} />
+          ) : i < 4 ? (
+            <FrontHingedNetPreview cells={cells} lang={lang} />
           ) : (
             <GenericHingedNetPreview cells={cells} lang={lang} />
           )}
