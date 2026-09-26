@@ -618,8 +618,8 @@ const NetFoldPreview = ({
   lang: string;
 }) => {
   const { isDark } = useTheme();
-  const [folded, setFolded] = useState(false);
-  const replayTimerRef = useRef<number | null>(null);
+  const [foldPhase, setFoldPhase] = useState<"net" | "folding" | "cube">("net");
+  const foldTimerRef = useRef<number | null>(null);
   const cols = cells.map(([c]) => c);
   const rows = cells.map(([, r]) => r);
   const minC = Math.min(...cols);
@@ -630,26 +630,37 @@ const NetFoldPreview = ({
   const centerR = (minR + maxR) / 2;
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setFolded(true), 850);
+    const timer = window.setTimeout(() => setFoldPhase("folding"), 850);
     return () => {
       window.clearTimeout(timer);
-      if (replayTimerRef.current !== null) window.clearTimeout(replayTimerRef.current);
+      if (foldTimerRef.current !== null) window.clearTimeout(foldTimerRef.current);
     };
   }, []);
 
   const replay = () => {
     playPopSound();
-    setFolded(false);
-    if (replayTimerRef.current !== null) window.clearTimeout(replayTimerRef.current);
-    replayTimerRef.current = window.setTimeout(() => setFolded(true), 240);
+    if (foldTimerRef.current !== null) window.clearTimeout(foldTimerRef.current);
+    setFoldPhase("net");
+    // Give the reverse animation time to finish before starting the fold again.
+    foldTimerRef.current = window.setTimeout(() => setFoldPhase("folding"), 820);
   };
 
-  const buttonLabel = folded
+  useEffect(() => {
+    if (foldPhase !== "folding") return;
+    const timer = window.setTimeout(() => setFoldPhase("cube"), 1_650);
+    return () => window.clearTimeout(timer);
+  }, [foldPhase]);
+
+  const buttonLabel = foldPhase === "cube"
     ? lang === "en" ? "↻ Replay fold" : lang === "ja" ? "↻ 折りたたみを再生" : "↻ Ulangi lipatan"
+    : foldPhase === "folding"
+    ? lang === "en" ? "⏳ Folding..." : lang === "ja" ? "⏳ 折りたたみ中..." : "⏳ Sedang melipat..."
     : lang === "en" ? "▶ Fold automatically" : lang === "ja" ? "▶ 自動で折る" : "▶ Lipat otomatis";
-  const statusLabel = folded
+  const statusLabel = foldPhase === "cube"
     ? lang === "en" ? "✓ Forms a cube" : lang === "ja" ? "✓ 立方体になります" : "✓ Menjadi kubus"
-    : lang === "en" ? "Watch the six faces fold" : lang === "ja" ? "6面が折りたたまれます" : "Saksikan 6 sisi melipat";
+    : foldPhase === "folding"
+    ? lang === "en" ? "Watch the six faces fold" : lang === "ja" ? "6面が折りたたまれます" : "Saksikan 6 sisi melipat"
+    : lang === "en" ? "Cube net" : lang === "ja" ? "立方体の展開図" : "Jaring-jaring kubus";
 
   return (
     <div className="w-full">
@@ -668,6 +679,7 @@ const NetFoldPreview = ({
           {cells.map(([c, r], i) => {
             const flatTransform = `translate3d(${(c - centerC) * NET_FOLD_SIZE}px, ${(r - centerR) * NET_FOLD_SIZE}px, 0)`;
             const foldedTransform = NET_FOLD_FACE_TRANSFORMS[faceOrder[i]];
+            const isFolded = foldPhase !== "net";
             return (
               <div
                 key={`${c}-${r}`}
@@ -678,9 +690,11 @@ const NetFoldPreview = ({
                   marginLeft: -NET_FOLD_HALF,
                   marginTop: -NET_FOLD_HALF,
                   transformStyle: "preserve-3d",
-                  transform: folded ? foldedTransform : flatTransform,
-                  transition: `transform 1.35s cubic-bezier(0.4, 0, 0.2, 1) ${folded ? i * 0.12 : 0}s`,
-                  zIndex: folded ? i : 1,
+                  transform: isFolded ? foldedTransform : flatTransform,
+                  transition: foldPhase === "net"
+                    ? "transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)"
+                    : `transform 1.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.12}s`,
+                  zIndex: isFolded ? i : 1,
                 }}
               >
                 <div
@@ -688,7 +702,7 @@ const NetFoldPreview = ({
                   style={{
                     background: NET_COLORS[i],
                     border: `2px solid ${isDark ? "rgba(255,255,255,0.72)" : "rgba(15,23,42,0.38)"}`,
-                    boxShadow: folded
+                    boxShadow: isFolded
                       ? `0 0 12px ${NET_COLORS[i]}88`
                       : `0 3px 8px ${NET_COLORS[i]}55`,
                     color: "white",
