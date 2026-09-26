@@ -1,60 +1,42 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertTriangle,
-  ArrowRight,
   BookOpen,
   Calculator,
   CheckCircle2,
   ChevronDown,
   ChevronUp,
   Lightbulb,
-  Link2,
   Sparkles,
   Target,
 } from "lucide-react";
-import { BlockMath, InlineMath as KaTeXInlineMath } from "react-katex";
+import { BlockMath, InlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 
-type Tone = "cyan" | "emerald" | "amber" | "violet" | "rose" | "blue";
+type Tone = "cyan" | "emerald" | "amber" | "violet" | "rose" | "blue" | "orange";
 
-const toneClasses: Record<Tone, string> = {
-  cyan: "border-cyan-300/35 bg-cyan-400/10",
-  emerald: "border-emerald-300/35 bg-emerald-400/10",
-  amber: "border-amber-300/35 bg-amber-400/10",
-  violet: "border-violet-300/35 bg-violet-400/10",
-  rose: "border-rose-300/35 bg-rose-400/10",
-  blue: "border-blue-300/35 bg-blue-400/10",
+const tones: Record<Tone, string> = {
+  cyan: "border-cyan-300/30 bg-cyan-400/10",
+  emerald: "border-emerald-300/30 bg-emerald-400/10",
+  amber: "border-amber-300/30 bg-amber-400/10",
+  violet: "border-violet-300/30 bg-violet-400/10",
+  rose: "border-rose-300/30 bg-rose-400/10",
+  blue: "border-blue-300/30 bg-blue-400/10",
+  orange: "border-orange-300/30 bg-orange-400/10",
 };
 
-const toTeacherLogNotation = (math: string) =>
-  math.replace(/\\log_(\{[^{}]+\}|[A-Za-z0-9]+)/g, (_match, rawBase: string) => {
-    const base = rawBase.startsWith("{") ? rawBase.slice(1, -1) : rawBase;
-    return `{}^{${base}}\\log`;
-  });
-
-const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={toTeacherLogNotation(math)} />;
-
-const Formula = ({ children }: { children: string }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/55 px-4 py-3 text-center text-cyan-100">
-    <BlockMath math={toTeacherLogNotation(children)} />
+const Formula = ({ children, tone = "cyan" }: { children: string; tone?: Tone }) => (
+  <div className={`my-3 overflow-x-auto rounded-xl border px-4 py-3 text-center text-cyan-100 ${tones[tone]}`}>
+    <BlockMath math={children} />
   </div>
 );
 
-const ColorCard = ({
-  tone = "cyan",
-  children,
-  className = "",
-}: {
-  tone?: Tone;
-  children: ReactNode;
-  className?: string;
-}) => (
-  <div className={`rounded-2xl border p-4 shadow-lg shadow-black/10 ${toneClasses[tone]} ${className}`}>
-    {children}
-  </div>
+const InfoCard = ({ children, tone = "cyan", className = "" }: { children: ReactNode; tone?: Tone; className?: string }) => (
+  <div className={`rounded-2xl border p-4 shadow-lg shadow-black/10 ${tones[tone]} ${className}`}>{children}</div>
 );
 
 const ExampleCard = ({
@@ -63,16 +45,14 @@ const ExampleCard = ({
   question,
   children,
 }: {
-  number: string;
+  number: number;
   tone: Tone;
   question: ReactNode;
   children: ReactNode;
 }) => (
-  <div className={`rounded-2xl border p-4 ${toneClasses[tone]}`}>
+  <div className={`rounded-2xl border p-4 ${tones[tone]}`}>
     <div className="mb-3 flex items-center gap-2">
-      <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
-        Contoh {number}
-      </span>
+      <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">Contoh {number}</span>
     </div>
     <div className="rounded-xl bg-slate-950/45 p-3 font-body text-sm leading-relaxed text-white">{question}</div>
     <div className="mt-3 border-l-2 border-white/25 pl-3 font-body text-sm leading-relaxed text-white/75">
@@ -94,14 +74,14 @@ const Accordion = ({
 }: {
   id: string;
   title: string;
-  eyebrow?: string;
+  eyebrow: string;
   icon: ReactNode;
   tone: Tone;
   open: boolean;
   onToggle: (id: string) => void;
   children: ReactNode;
 }) => (
-  <section className={`overflow-hidden rounded-3xl border shadow-xl shadow-black/15 ${toneClasses[tone]}`}>
+  <section className={`overflow-hidden rounded-3xl border shadow-xl shadow-black/15 ${tones[tone]}`}>
     <button
       type="button"
       onClick={() => onToggle(id)}
@@ -111,7 +91,7 @@ const Accordion = ({
       <span className="flex min-w-0 items-center gap-3">
         <span className="shrink-0 rounded-xl bg-white/10 p-2 text-white">{icon}</span>
         <span>
-          {eyebrow && <span className="mb-1 block text-[10px] font-black uppercase tracking-[0.2em] text-white/45">{eyebrow}</span>}
+          <span className="mb-1 block text-[10px] font-black uppercase tracking-[0.2em] text-white/45">{eyebrow}</span>
           <span className="font-display text-base font-bold text-white md:text-lg">{title}</span>
         </span>
       </span>
@@ -121,27 +101,120 @@ const Accordion = ({
   </section>
 );
 
-const propertyColors: Tone[] = ["emerald", "blue", "violet", "amber", "rose", "cyan"];
+const bacteriaSteps = [
+  { count: 1, label: "2^0=1", color: "from-emerald-400 to-teal-600", border: "border-emerald-400/50", bg: "bg-emerald-500/20", text: "text-emerald-300" },
+  { count: 2, label: "2^1=2", color: "from-cyan-400 to-blue-600", border: "border-cyan-400/50", bg: "bg-cyan-500/20", text: "text-cyan-300" },
+  { count: 4, label: "2^2=4", color: "from-violet-400 to-purple-700", border: "border-violet-400/50", bg: "bg-violet-500/20", text: "text-violet-300" },
+  { count: 8, label: "2^3=8", color: "from-orange-400 to-red-600", border: "border-orange-400/50", bg: "bg-orange-500/20", text: "text-orange-300" },
+  { count: 16, label: "2^4=16", color: "from-pink-400 to-fuchsia-600", border: "border-pink-400/50", bg: "bg-pink-500/20", text: "text-pink-300" },
+  { count: 32, label: "2^5=32", color: "from-yellow-400 to-amber-600", border: "border-yellow-400/50", bg: "bg-yellow-500/20", text: "text-yellow-300" },
+];
+
+const BacteriaAnimation = () => {
+  const [step, setStep] = useState(0);
+  const [splitting, setSplitting] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const current = bacteriaSteps[step];
+  const next = bacteriaSteps[step + 1] ?? current;
+
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  const advance = () => {
+    if (splitting) return;
+    playPopSound();
+    if (step === bacteriaSteps.length - 1) {
+      setStep(0);
+      return;
+    }
+    setSplitting(true);
+    timer.current = setTimeout(() => {
+      setStep((value) => value + 1);
+      setSplitting(false);
+    }, 900);
+  };
+
+  return (
+    <div className={`overflow-hidden rounded-2xl border-2 ${current.border} ${current.bg} backdrop-blur-sm`}>
+      <div className="px-5 pt-4 text-center">
+        <p className="font-body text-xs font-semibold uppercase tracking-widest text-white/60">🎬 Animasi Interaktif</p>
+        <h3 className="font-display text-base font-bold text-white">Pembelahan Kuman & Notasi Pangkat</h3>
+      </div>
+      <div className="flex items-center justify-center py-3">
+        <motion.div key={step} initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={`rounded-full border px-5 py-2 ${current.border} ${current.bg}`}>
+          <span className={`font-display text-2xl font-bold ${current.text}`}><InlineMath math={current.label} /></span>
+        </motion.div>
+      </div>
+      <div className="flex min-h-[150px] flex-wrap content-center items-center justify-center gap-3 px-4 py-2">
+        {splitting ? Array.from({ length: current.count }, (_, index) => (
+          <motion.div
+            key={index}
+            initial={{ scaleX: 1, scaleY: 0.6 }}
+            animate={{ scaleX: 1.8, scaleY: 0.55 }}
+            transition={{ duration: 0.7 }}
+            className={`flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br ${current.color} text-xl shadow-lg`}
+          >🦠</motion.div>
+        )) : Array.from({ length: current.count }, (_, index) => (
+          <motion.button
+            type="button"
+            key={index}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: index * 0.025 }}
+            onClick={advance}
+            aria-label="Belah kuman"
+            className={`flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br ${current.color} text-xl shadow-lg transition hover:scale-110`}
+          >🦠</motion.button>
+        ))}
+      </div>
+      <div className="flex justify-center gap-1.5 pb-3">
+        {bacteriaSteps.map((item, index) => <div key={item.label} className={`h-1.5 rounded-full transition-all ${index === step ? `w-6 bg-gradient-to-r ${item.color}` : index < step ? "w-3 bg-white/40" : "w-3 bg-white/10"}`} />)}
+      </div>
+      <div className="px-5 pb-5">
+        <motion.button
+          type="button"
+          whileTap={{ scale: 0.96 }}
+          onClick={advance}
+          disabled={splitting}
+          className={`w-full rounded-xl bg-gradient-to-r ${current.color} py-3 font-body text-sm font-bold text-white shadow-lg transition hover:opacity-90 disabled:opacity-50`}
+        >
+          {splitting ? "⏳ Membelah…" : step === bacteriaSteps.length - 1 ? "🔄 Ulangi dari awal" : `🦠 Tekan untuk membelah! (${current.count} → ${next.count})`}
+        </motion.button>
+        <p className="mt-2 text-center font-body text-xs text-white/40">{step === bacteriaSteps.length - 1 ? "Sudah 2⁵ = 32 kuman!" : "Klik kuman atau tombol untuk melihat pembelahan selanjutnya"}</p>
+      </div>
+    </div>
+  );
+};
+
+const laws = [
+  { title: "Sifat 1 · Perkalian", formula: "a^m\\times a^n=a^{m+n}", tone: "emerald" as Tone, text: "Jika basis sama, pangkat dijumlahkan.", example: "2^3\\times2^4=2^7=128" },
+  { title: "Sifat 2 · Pembagian", formula: "\\frac{a^m}{a^n}=a^{m-n}", tone: "cyan" as Tone, text: "Jika basis sama, pangkat penyebut dikurangkan.", example: "\\frac{7^8}{7^5}=7^3=343" },
+  { title: "Sifat 3 · Pangkat dari pangkat", formula: "(a^m)^n=a^{mn}", tone: "violet" as Tone, text: "Pangkat luar dikalikan dengan pangkat di dalam.", example: "(3^4)^5=3^{20}" },
+  { title: "Sifat 4 · Pangkat perkalian", formula: "(ab)^n=a^n b^n", tone: "orange" as Tone, text: "Pangkat dapat didistribusikan ke setiap faktor.", example: "(2\\cdot3)^4=2^4\\cdot3^4" },
+  { title: "Sifat 5 · Pangkat pecahan", formula: "\\left(\\frac ab\\right)^n=\\frac{a^n}{b^n}", tone: "rose" as Tone, text: "Pangkat didistribusikan ke pembilang dan penyebut.", example: "\\left(\\frac34\\right)^2=\\frac9{16}" },
+  { title: "Sifat 6 · Pangkat nol", formula: "a^0=1\\quad(a\\ne0)", tone: "blue" as Tone, text: "Bilangan bukan nol berpangkat nol bernilai satu.", example: "7^0+(-5)^0+100^0=3" },
+  { title: "Sifat 7 · Pangkat negatif", formula: "a^{-n}=\\frac1{a^n}", tone: "amber" as Tone, text: "Pangkat negatif berarti kebalikan dari pangkat positif.", example: "2^{-4}+5^{-1}=\\frac{21}{80}" },
+  { title: "Sifat 8 · Pangkat pecahan", formula: "a^{\\frac mn}=\\sqrt[n]{a^m}", tone: "emerald" as Tone, text: "Penyebut menjadi indeks akar dan pembilang menjadi pangkat.", example: "32^{3/5}=\\sqrt[5]{32^3}=8" },
+  { title: "Sifat 9 · Perkalian basis", formula: "a^n b^n=(ab)^n", tone: "cyan" as Tone, text: "Dua pangkat dengan eksponen sama dapat digabungkan basisnya.", example: "2^3\\cdot3^3=6^3=216" },
+];
 
 const SmaEksponenLogaritmaPage = () => {
-  const allSections = ["opening", "definition", "basic", "addition", "subtraction", "power", "base", "chain", "cancel", "summary"];
+  const allSections = ["opening", "concept", "examples", "fraction", "negative", "zero", "laws", "practice", "summary"];
   const [expanded, setExpanded] = useState(allSections);
 
   const toggle = (id: string) => {
     playPopSound();
-    setExpanded((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+    setExpanded((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
   };
-
-  const isOpen = (id: string) => expanded.includes(id);
   const toggleAll = () => {
     playPopSound();
-    setExpanded((current) => (current.length === allSections.length ? [] : allSections));
+    setExpanded((current) => current.length === allSections.length ? [] : allSections);
   };
+  const open = (id: string) => expanded.includes(id);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#070b23] text-white">
       <Starfield />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.26),_transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[580px] bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.26),_transparent_65%)]" />
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma" />
 
       <main className="relative z-10 mx-auto w-full max-w-5xl px-4 pb-20 pt-16">
@@ -150,21 +223,18 @@ const SmaEksponenLogaritmaPage = () => {
           <div className="absolute -bottom-16 -left-8 h-44 w-44 rounded-full bg-cyan-300/15 blur-3xl" />
           <div className="relative">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200/35 bg-cyan-200/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-cyan-100">
-              <BookOpen className="h-4 w-4" />
-              Ruang untuk Guru · SMA
+              <BookOpen className="h-4 w-4" /> Buku Animasi Matematika · SMA
             </div>
             <h1 className="font-display text-3xl font-black leading-tight text-cyan-100 drop-shadow-[0_0_18px_rgba(34,211,238,0.35)] md:text-5xl">
-              KONSEP DAN SIFAT-SIFAT LOGARITMA
+              KONSEP DAN SIFAT-SIFAT EKSPONEN
             </h1>
-            <p className="mt-3 font-body text-sm text-white/65 md:text-base">Buku Animasi Matematika SMA · Eksponen dan Logaritma</p>
+            <p className="mt-3 font-body text-sm text-white/65 md:text-base">Eksponen dan Logaritma · Pengertian, Notasi, dan Operasi Bilangan Berpangkat</p>
             <div className="mx-auto mt-7 max-w-2xl rounded-2xl border border-yellow-200/30 bg-yellow-300/10 p-4 text-left shadow-inner shadow-yellow-100/5 md:p-5">
               <div className="flex gap-3">
                 <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-yellow-300" />
                 <div>
                   <p className="font-display text-base font-bold text-yellow-100">Pernahkah kamu bertanya?</p>
-                  <p className="mt-1 font-body text-sm leading-relaxed text-yellow-50/80">
-                    “2 dipangkatkan berapa supaya hasilnya 32?” Itulah logaritma! Yuk, kuasai konsep dan 6 sifat saktinya langkah demi langkah.
-                  </p>
+                  <p className="mt-1 font-body text-sm leading-relaxed text-yellow-50/80">Bagaimana menulis perkalian berulang dengan singkat? Dari pertanyaan sederhana ini, kita menemukan notasi pangkat dan sifat-sifatnya.</p>
                 </div>
               </div>
             </div>
@@ -172,238 +242,153 @@ const SmaEksponenLogaritmaPage = () => {
         </header>
 
         <div className="mb-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-body text-white/50">
-            <Sparkles className="h-4 w-4 text-yellow-300" />
-            Materi visual · contoh bertahap · siap dipakai mengajar
-          </div>
+          <div className="flex items-center gap-2 font-body text-xs text-white/50"><Sparkles className="h-4 w-4 text-yellow-300" /> Materi visual · animasi · contoh bertahap</div>
           <button type="button" onClick={toggleAll} className="rounded-full border border-white/15 bg-white/5 px-3 py-2 font-body text-xs text-white/70 transition hover:border-cyan-300/50 hover:text-cyan-100">
             {expanded.length === allSections.length ? "Tutup semua" : "Buka semua"}
           </button>
         </div>
 
         <div className="space-y-4">
-          <Accordion id="opening" title="Logaritma adalah kebalikan perpangkatan" eyebrow="Mulai dari pertanyaan sederhana" icon={<Lightbulb className="h-5 w-5" />} tone="amber" open={isOpen("opening")} onToggle={toggle}>
-            <ColorCard tone="amber">
-              <p className="font-body text-sm leading-relaxed text-amber-50/85">
-                Perpangkatan menjawab pertanyaan <strong className="text-yellow-200">“hasilnya berapa?”</strong>. Logaritma membalik pertanyaan itu menjadi <strong className="text-yellow-200">“pangkatnya berapa?”</strong>.
-              </p>
-              <Formula>{"\\log_a b = c \\Longleftrightarrow a^c=b"}</Formula>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Basis", "a", "a > 0 dan a \\ne 1"],
-                  ["Numerus", "b", "b > 0"],
-                  ["Hasil logaritma", "c", "pangkat yang dicari"],
-                ].map(([label, symbol, note]) => (
-                  <div key={label} className="rounded-xl bg-slate-950/35 p-3 text-center">
-                    <p className="text-xs font-bold text-white/55">{label}</p>
-                    <p className="my-1 font-display text-2xl font-black text-cyan-200">{symbol}</p>
-                    <p className="text-xs text-white/60">{note}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 font-body text-sm text-white/75">
-                Jika basis tidak ditulis, artinya basis 10. Jadi <InlineMath math="\log 100 = \log_{10}100 = 2" />.
-              </p>
-            </ColorCard>
-          </Accordion>
-
-          <Accordion id="definition" title="Pengertian dan contoh dasar" eyebrow="Bagian 1 · Fondasi konsep" icon={<Target className="h-5 w-5" />} tone="cyan" open={isOpen("definition")} onToggle={toggle}>
-            <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="cyan" question={<><InlineMath math="5^2=25" /> dapat diubah menjadi bentuk logaritma.</>}>
-                <Formula>{"\\log_5 25=2"}</Formula>
-                <p>Basisnya 5, numerusnya 25, dan pangkat yang dicari adalah 2.</p>
-              </ExampleCard>
-              <ExampleCard number="2" tone="violet" question={<>Pangkat negatif juga dapat ditulis sebagai logaritma.</>}>
-                <Formula>{"6^{-2}=\\frac{1}{36}\\Longleftrightarrow\\log_6\\frac{1}{36}=-2"}</Formula>
-                <p>Numerus boleh pecahan selama tetap positif. Hasil logaritma boleh negatif.</p>
-              </ExampleCard>
-              <ExampleCard number="3" tone="emerald" question={<>Tentukan <InlineMath math="\log_3 81" />.</>}>
-                <p>Tanyakan: “3 dipangkatkan berapa menjadi 81?” Karena <InlineMath math="3^4=81" />, maka:</p>
-                <Formula>{"\\log_3 81=4"}</Formula>
-              </ExampleCard>
-            </div>
-          </Accordion>
-
-          <Accordion id="basic" title="Tiga sifat dasar yang wajib diingat" eyebrow="Sebelum masuk ke 6 sifat" icon={<CheckCircle2 className="h-5 w-5" />} tone="emerald" open={isOpen("basic")} onToggle={toggle}>
-            <ColorCard tone="emerald">
-              <div className="grid gap-3 md:grid-cols-3">
-                {[
-                  ["Sifat dasar 1", "\\log_a a^n=n", "Pangkat turun menjadi hasil."],
-                  ["Sifat dasar 2", "\\log_a a=1", "Karena a^1=a."],
-                  ["Sifat dasar 3", "\\log_a 1=0", "Karena a^0=1."],
-                ].map(([title, formula, note]) => (
-                  <div key={title} className="rounded-2xl border border-emerald-200/15 bg-slate-950/30 p-4">
-                    <p className="text-xs font-bold text-emerald-200">{title}</p>
-                    <Formula>{formula}</Formula>
-                    <p className="text-xs leading-relaxed text-white/60">{note}</p>
-                  </div>
-                ))}
-              </div>
-            </ColorCard>
-            <ExampleCard number="4" tone="emerald" question={<>Hitung <InlineMath math="\log_9 1+\log_9 9+\log_9 81" />.</>}>
-              <Formula>{"0+1+2=3"}</Formula>
-              <p><InlineMath math="\log_9 1=0" />, <InlineMath math="\log_9 9=1" />, dan <InlineMath math="81=9^2" /> sehingga <InlineMath math="\log_9 81=2" />.</p>
-            </ExampleCard>
-          </Accordion>
-
-          <div className="relative py-3">
-            <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-fuchsia-300/30 to-transparent" />
-            <p className="relative mx-auto w-fit bg-[#070b23] px-4 font-display text-sm font-bold uppercase tracking-[0.22em] text-fuchsia-200">Enam sifat sakti logaritma</p>
+          <div className="space-y-2 px-1 text-center">
+            <p className="font-body text-xs font-semibold uppercase tracking-widest text-white/40">Sebelum mulai belajar…</p>
+            <h2 className="font-display text-xl font-bold text-white">🦠 Yuk, amati kuman ini membelah diri!</h2>
+            <p className="mx-auto max-w-xl font-body text-sm leading-relaxed text-white/60">Tekan tombol di bawah dan perhatikan pola matematika yang tersembunyi di dalam pembelahan sel.</p>
           </div>
+          <BacteriaAnimation />
 
-          <Accordion id="addition" title="Sifat 1 · Penjumlahan" eyebrow="Log ditambah · numerus dikali" icon={<span className="font-display text-lg font-black">+</span>} tone="blue" open={isOpen("addition")} onToggle={toggle}>
-            <Formula>{"\\log_a b+\\log_a c=\\log_a(b\\times c)"}</Formula>
-            <p className="font-body text-sm text-white/70">Syarat penting: basisnya harus sama.</p>
-            <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="blue" question={<><InlineMath math="\log_2 4+\log_2 8" /></>}>
-                <Formula>{"\\log_2(4\\times8)=\\log_2 32=5"}</Formula>
-                <p>Gabungkan numerus, lalu cari pangkat 2 yang menghasilkan 32.</p>
-              </ExampleCard>
-              <ExampleCard number="2" tone="blue" question={<><InlineMath math="\log_5\\frac12+\log_5 50" /></>}>
-                <Formula>{"\\log_5\\left(\\frac12\\times50\\right)=\\log_5 25=2"}</Formula>
-                <p><InlineMath math="\frac12\times50=25" /> dan <InlineMath math="5^2=25" />.</p>
-              </ExampleCard>
-              <ExampleCard number="3" tone="blue" question={<><InlineMath math="\log_3 6+\log_3 1{,}5" /></>}>
-                <Formula>{"\\log_3 9=2"}</Formula>
-                <p>Karena <InlineMath math="6\times1{,}5=9" />.</p>
-              </ExampleCard>
-            </div>
-          </Accordion>
-
-          <Accordion id="subtraction" title="Sifat 2 · Pengurangan" eyebrow="Log dikurang · numerus dibagi" icon={<span className="font-display text-lg font-black">−</span>} tone="rose" open={isOpen("subtraction")} onToggle={toggle}>
-            <Formula>{"\\log_a b-\\log_a c=\\log_a\\left(\\frac{b}{c}\\right)"}</Formula>
-            <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="rose" question={<><InlineMath math="\log_7 217-\log_7 31" /></>}>
-                <Formula>{"\\log_7\\frac{217}{31}=\\log_7 7=1"}</Formula>
-                <p><InlineMath math="217\div31=7" />, lalu gunakan sifat dasar <InlineMath math="\log_7 7=1" />.</p>
-              </ExampleCard>
-              <ExampleCard number="2" tone="rose" question={<><InlineMath math="\log 0{,}04-\log 4" /></>}>
-                <Formula>{"\\log\\frac{0{,}04}{4}=\\log 0{,}01=-2"}</Formula>
-                <p>Basis 10 tidak ditulis dan <InlineMath math="0{,}01=10^{-2}" />.</p>
-              </ExampleCard>
-              <ExampleCard number="3" tone="rose" question={<><InlineMath math="\log_2 48-\log_2 3" /></>}>
-                <Formula>{"\\log_2 16=4"}</Formula>
-                <p><InlineMath math="48\div3=16" /> dan <InlineMath math="2^4=16" />.</p>
-              </ExampleCard>
-            </div>
-          </Accordion>
-
-          <Accordion id="power" title="Sifat 3 · Pangkat numerus" eyebrow="Pangkat turun menjadi pengali" icon={<span className="font-display text-lg font-black">×</span>} tone="violet" open={isOpen("power")} onToggle={toggle}>
-            <Formula>{"\\log_a b^n=n\\times\\log_a b"}</Formula>
-            <div className="grid gap-4 md:grid-cols-2">
-              <ExampleCard number="1" tone="violet" question={<><InlineMath math="\log_3 9^4" /></>}>
-                <Formula>{"4\\times\\log_3 9=4\\times2=8"}</Formula>
-                <p>Turunkan pangkat 4 menjadi pengali.</p>
-              </ExampleCard>
-              <ExampleCard number="2" tone="violet" question="Gabungkan sifat 1, 2, dan 3: 2 log 25 − 3 log 5 + log 20.">
-                <Formula>{"\\log25^2-\\log5^3+\\log20=\\log\\frac{625\\times20}{125}=\\log100=2"}</Formula>
-                <p>Pengali dinaikkan menjadi pangkat, pengurangan menjadi pembagian, dan penjumlahan menjadi perkalian.</p>
-              </ExampleCard>
-            </div>
-          </Accordion>
-
-          <Accordion id="base" title="Sifat 4 · Ganti basis" eyebrow="Pindah ke basis baru yang lebih nyaman" icon={<ArrowRight className="h-5 w-5" />} tone="amber" open={isOpen("base")} onToggle={toggle}>
-            <Formula>{"\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac{1}{\\log_b a}"}</Formula>
-            <p className="font-body text-sm text-white/70">Pilih basis baru <InlineMath math="p" /> yang membuat perhitungan lebih mudah.</p>
-            <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="amber" question={<><InlineMath math="\log_4 32" /></>}>
-                <Formula>{"\\frac{\\log_2 32}{\\log_2 4}=\\frac52"}</Formula>
-                <p>Pindah ke basis 2 karena <InlineMath math="32=2^5" /> dan <InlineMath math="4=2^2" />.</p>
-              </ExampleCard>
-              <ExampleCard number="2" tone="amber" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_8 3" />.</>}>
-                <Formula>{"\\log_8 3=\\frac{\\log 3}{\\log 8}=\\frac{\\log 3}{3\\log2}=\\frac a3"}</Formula>
-              </ExampleCard>
-              <ExampleCard number="3" tone="amber" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_3 2" />.</>}>
-                <Formula>{"\\log_3 2=\\frac{1}{\\log_2 3}=\\frac1a"}</Formula>
-                <p>Membalik basis dan numerus membalik pecahannya.</p>
-              </ExampleCard>
-            </div>
-          </Accordion>
-
-          <Accordion id="chain" title="Sifat 5 · Rantai dan pangkat basis" eyebrow="Tiga bentuk yang saling melengkapi" icon={<Link2 className="h-5 w-5" />} tone="cyan" open={isOpen("chain")} onToggle={toggle}>
-            <ColorCard tone="cyan">
-              <div className="grid gap-3 md:grid-cols-3">
-                <Formula>{"\\log_g a\\times\\log_a b=\\log_g b"}</Formula>
-                <Formula>{"\\log_{g^n}a^m=\\frac mn\\log_g a"}</Formula>
-                <Formula>{"\\log_{g^n}a^n=\\log_g a"}</Formula>
+          <Accordion id="opening" title="Perkalian berulang? Ada cara lebih cepat!" eyebrow="Pembuka · motivasi belajar" icon={<Lightbulb className="h-5 w-5" />} tone="amber" open={open("opening")} onToggle={toggle}>
+            <InfoCard tone="amber">
+              <p className="font-body text-sm leading-relaxed text-amber-50/85">Kuman berkembang dari <strong className="text-yellow-200">1, 2, 4, 8, 16, 32</strong>. Menulis perkalian 2 berulang kali sampai generasi ke-10 tentu panjang dan melelahkan. Notasi pangkat meringkasnya menjadi:</p>
+              <Formula tone="amber">{"2^{10}=1.024"}</Formula>
+              <p className="font-body text-sm leading-relaxed text-white/75">Notasi pangkat juga dipakai untuk menulis bilangan sangat besar dan sangat kecil.</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-cyan-200">📏 Bilangan sangat besar</p><p className="text-sm text-white/70">Kecepatan cahaya: <InlineMath math="3\\times10^8" /> m/s</p><p className="text-sm text-white/70">Perkiraan kekayaan: <InlineMath math="2\\times10^{11}" /> dolar</p></div>
+                <div className="rounded-xl bg-slate-950/35 p-3"><p className="mb-2 text-xs font-bold text-emerald-200">🔬 Bilangan sangat kecil</p><p className="text-sm text-white/70">Ukuran bakteri: <InlineMath math="2\\times10^{-6}" /> m</p><p className="text-sm text-white/70">Ukuran virus: <InlineMath math="1\\times10^{-7}" /> m</p></div>
               </div>
-              <p className="font-body text-sm text-cyan-50/75">Sifat pertama seperti rantai: “a” di tengah saling menghilangkan.</p>
-            </ColorCard>
+            </InfoCard>
+          </Accordion>
+
+          <Accordion id="concept" title="Pengertian dan notasi pangkat" eyebrow="Bagian 1 · konsep dasar" icon={<Target className="h-5 w-5" />} tone="emerald" open={open("concept")} onToggle={toggle}>
+            <InfoCard tone="emerald">
+              <p className="font-body text-sm leading-relaxed text-white/80"><strong className="text-emerald-200">Bilangan berpangkat</strong> adalah cara singkat menuliskan perkalian berulang dari bilangan yang sama.</p>
+              <Formula tone="emerald">{"a^n=\\underbrace{a\\times a\\times a\\times\\cdots\\times a}_{n\\text{ faktor}}"}</Formula>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl bg-slate-950/35 p-3 text-center"><p className="font-display text-3xl font-black text-cyan-200">a</p><p className="text-xs font-bold text-white">Basis</p><p className="text-xs text-white/55">bilangan yang dikalikan</p></div>
+                <div className="rounded-xl bg-slate-950/35 p-3 text-center"><p className="font-display text-3xl font-black text-yellow-200">n</p><p className="text-xs font-bold text-white">Eksponen</p><p className="text-xs text-white/55">banyak faktor</p></div>
+                <div className="rounded-xl bg-slate-950/35 p-3 text-center"><p className="font-display text-3xl font-black text-violet-200">aⁿ</p><p className="text-xs font-bold text-white">Nilai berpangkat</p><p className="text-xs text-white/55">hasil perkalian berulang</p></div>
+              </div>
+            </InfoCard>
+            <InfoCard tone="cyan">
+              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-200">🔍 Anatomi notasi pangkat</p>
+              <div className="rounded-xl bg-slate-950/45 p-4 text-center"><span className="font-display text-6xl font-black text-white">5<sup className="text-3xl text-yellow-300">3</sup></span><p className="mt-2 font-body text-sm text-white/65"><InlineMath math="5^3=5\\times5\\times5=125" /> · dibaca “lima pangkat tiga”</p></div>
+              <p className="mt-3 font-body text-sm text-yellow-100"><strong>Tips:</strong> pangkat 2 disebut kuadrat dan pangkat 3 disebut kubik.</p>
+            </InfoCard>
+          </Accordion>
+
+          <Accordion id="examples" title="Contoh pengertian bilangan berpangkat" eyebrow="Bagian 2 · latihan bertahap" icon={<Calculator className="h-5 w-5" />} tone="blue" open={open("examples")} onToggle={toggle}>
             <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="cyan" question={<><InlineMath math="\log_2 5\times\log_5 64" /></>}>
-                <Formula>{"\\log_2 64=\\log_2 2^6=6"}</Formula>
+              <ExampleCard number={1} tone="emerald" question={<>Nyatakan <InlineMath math="7\\times7\\times7\\times7" /> dalam notasi pangkat.</>}>
+                <Formula tone="emerald">{"7\\times7\\times7\\times7=7^4"}</Formula><p>Basis = 7 dan eksponen = 4. Nilainya <InlineMath math="2.401" />.</p>
               </ExampleCard>
-              <ExampleCard number="2" tone="cyan" question={<>Jika <InlineMath math="\log_2 3=a" />, tentukan <InlineMath math="\log_4 81" />.</>}>
-                <Formula>{"\\log_{2^2}3^4=\\frac42\\log_2 3=2a"}</Formula>
+              <ExampleCard number={2} tone="blue" question={<>Kubus memiliki rusuk 6 cm. Tentukan volumenya.</>}>
+                <Formula>{"V=s^3=6^3=216\\,\\mathrm{cm}^3"}</Formula><p>Volume kubus adalah sisi dikalikan tiga kali.</p>
               </ExampleCard>
-              <ExampleCard number="3" tone="cyan" question={<><InlineMath math="\log_2 3\times\log_3 4\times\log_4 8" /></>}>
-                <Formula>{"\\log_2 8=3"}</Formula>
-                <p>Angka 3 dan 4 di tengah saling habis.</p>
+              <ExampleCard number={3} tone="violet" question={<>Bakteri membelah menjadi 2 setiap jam. Berapa setelah 8 jam?</>}>
+                <Formula>2^8=256</Formula><p>Setelah 8 jam terdapat 256 bakteri.</p>
               </ExampleCard>
             </div>
           </Accordion>
 
-          <Accordion id="cancel" title="Sifat 6 · Pangkat dan log saling menghapus" eyebrow="Basis sama · kembali ke numerus" icon={<Sparkles className="h-5 w-5" />} tone="emerald" open={isOpen("cancel")} onToggle={toggle}>
-            <Formula>{"a^{\\log_a b}=b"}</Formula>
+          <Accordion id="fraction" title="Pecahan berpangkat" eyebrow="Bagian 3 · basis pecahan" icon={<Target className="h-5 w-5" />} tone="violet" open={open("fraction")} onToggle={toggle}>
+            <InfoCard tone="violet">
+              <p className="font-body text-sm text-white/80">Pangkat pada pecahan diterapkan secara terpisah kepada pembilang dan penyebut.</p>
+              <Formula tone="violet">{"\\left(\\frac pq\\right)^n=\\frac pq\\times\\cdots\\times\\frac pq=\\frac{p^n}{q^n}"}</Formula>
+              <p className="font-body text-sm text-yellow-100"><strong>Tips:</strong> pangkatkan pembilang dan penyebutnya secara terpisah.</p>
+            </InfoCard>
             <div className="grid gap-4 md:grid-cols-3">
-              <ExampleCard number="1" tone="emerald" question={<><InlineMath math="2^{\log_2 5}" /></>}>
-                <Formula>{"=5"}</Formula>
-              </ExampleCard>
-              <ExampleCard number="2" tone="emerald" question={<><InlineMath math="7^{\log_7 25}" /></>}>
-                <Formula>{"=25"}</Formula>
-                <p>Basis pangkat dan basis log sama-sama 7, jadi saling menghapus.</p>
-              </ExampleCard>
-              <ExampleCard number="3" tone="emerald" question={<><InlineMath math="4^{\log_2 3}" />.</>}>
-                <Formula>{"(2^2)^{\\log_2 3}=2^{2\\log_2 3}=2^{\\log_2 9}=9"}</Formula>
-                <p>Samakan basis menjadi 2, masukkan pengali 2 ke pangkat, lalu gunakan sifat 6.</p>
-              </ExampleCard>
+              <ExampleCard number={1} tone="violet" question={<>Hitung <InlineMath math="\\left(\\frac35\\right)^3" />.</>}><Formula>{"\\left(\\frac35\\right)^3=\\frac{3^3}{5^3}=\\frac{27}{125}"}</Formula></ExampleCard>
+              <ExampleCard number={2} tone="blue" question={<>Hitung <InlineMath math="\\left(\\frac23\\right)^4" />.</>}><Formula>{"\\left(\\frac23\\right)^4=\\frac{16}{81}"}</Formula></ExampleCard>
+              <ExampleCard number={3} tone="rose" question={<>Sederhanakan <InlineMath math="\\left(\\frac{x^3}{y^2}\\right)^4" />.</>}><Formula>{"\\frac{x^{12}}{y^8}"}</Formula></ExampleCard>
             </div>
           </Accordion>
 
-          <Accordion id="summary" title="Rangkuman dan jebakan umum" eyebrow="Simpan sebagai peta konsep" icon={<BookOpen className="h-5 w-5" />} tone="rose" open={isOpen("summary")} onToggle={toggle}>
+          <Accordion id="negative" title="Bilangan negatif berpangkat" eyebrow="Bagian 4 · perhatikan tanda kurung" icon={<AlertTriangle className="h-5 w-5" />} tone="orange" open={open("negative")} onToggle={toggle}>
+            <InfoCard tone="orange">
+              <p className="font-body text-sm text-white/80">Tanda kurung menentukan apakah tanda minus termasuk ke dalam basis.</p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl border border-cyan-300/25 bg-slate-950/40 p-3"><p className="font-bold text-cyan-200">(-a)ⁿ · minus termasuk basis</p><Formula tone="cyan">{"(-a)^n=(-a)\\times\\cdots\\times(-a)"}</Formula><p className="text-xs text-white/65">Pangkat genap menghasilkan positif, pangkat ganjil menghasilkan negatif.</p></div>
+                <div className="rounded-xl border border-rose-300/25 bg-slate-950/40 p-3"><p className="font-bold text-rose-200">-aⁿ · minus di luar basis</p><Formula tone="rose">-a^n=-(a^n)</Formula><p className="text-xs text-white/65">Hanya a yang dipangkatkan, kemudian diberi tanda minus.</p></div>
+              </div>
+              <Formula tone="orange">{"(-3)^2=9\\qquad\\text{sedangkan}\\qquad-3^2=-9"}</Formula>
+            </InfoCard>
+            <div className="grid gap-4 md:grid-cols-2">
+              <ExampleCard number={1} tone="emerald" question={<>Tentukan nilai <InlineMath math="(-4)^2" /> dan <InlineMath math="-4^2" />.</>}><Formula>{"(-4)^2=16\\qquad-4^2=-16"}</Formula><p>Hasil berbeda karena posisi tanda kurung berbeda.</p></ExampleCard>
+              <ExampleCard number={2} tone="orange" question={<>Tentukan <InlineMath math="(-3)^4,(-3)^3,-3^4" />.</>}><Formula>{"(-3)^4=81,\\quad(-3)^3=-27,\\quad-3^4=-81"}</Formula><p>Genap positif, ganjil negatif, dan minus di luar tetap negatif.</p></ExampleCard>
+            </div>
+          </Accordion>
+
+          <Accordion id="zero" title="Pangkat nol dan pangkat negatif" eyebrow="Bagian 5 · perluasan definisi" icon={<CheckCircle2 className="h-5 w-5" />} tone="cyan" open={open("zero")} onToggle={toggle}>
+            <div className="grid gap-4 md:grid-cols-2">
+              <InfoCard tone="cyan"><p className="font-bold text-cyan-200">Pangkat nol</p><p className="mt-2 text-sm text-white/75">Setiap bilangan bukan nol berpangkat nol bernilai satu.</p><Formula>{"a^0=1\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math="2^4=16,2^3=8,2^2=4,2^1=2,2^0=1" /></p></InfoCard>
+              <InfoCard tone="amber"><p className="font-bold text-amber-200">Pangkat negatif</p><p className="mt-2 text-sm text-white/75">Pangkat negatif adalah kebalikan dari pangkat positif.</p><Formula>{"a^{-n}=\\frac1{a^n}\\quad(a\\ne0)"}</Formula><p className="text-xs text-white/60"><InlineMath math="3^{-2}=\\frac19" /></p></InfoCard>
+            </div>
+            <div className="rounded-xl border border-yellow-300/25 bg-yellow-400/10 p-4 text-sm text-yellow-100"><strong>Catatan penting:</strong> <InlineMath math="0^0" /> tidak terdefinisi. Rumus <InlineMath math="a^0=1" /> hanya berlaku jika <InlineMath math="a\\ne0" />.</div>
+          </Accordion>
+
+          <Accordion id="laws" title="Sifat-sifat operasi bilangan berpangkat" eyebrow="Bagian 6 · sembilan sifat utama" icon={<Sparkles className="h-5 w-5" />} tone="blue" open={open("laws")} onToggle={toggle}>
+            <InfoCard tone="blue"><p className="font-body text-sm leading-relaxed text-white/80">Kuasai logika setiap sifat, bukan hanya menghafal rumusnya. Jika lupa, rumus dapat diturunkan kembali dari definisi perkalian berulang.</p></InfoCard>
+            <div className="grid gap-4 md:grid-cols-2">
+              {laws.map((law) => (
+                <InfoCard key={law.title} tone={law.tone}>
+                  <p className="font-display text-sm font-bold text-white">{law.title}</p>
+                  <Formula tone={law.tone}>{law.formula}</Formula>
+                  <p className="font-body text-sm leading-relaxed text-white/75">{law.text}</p>
+                  <div className="mt-3 rounded-xl bg-slate-950/45 p-3 text-center"><InlineMath math={law.example} /></div>
+                </InfoCard>
+              ))}
+            </div>
+          </Accordion>
+
+          <Accordion id="practice" title="Contoh soal gabungan" eyebrow="Bagian 7 · terapkan beberapa sifat" icon={<Calculator className="h-5 w-5" />} tone="amber" open={open("practice")} onToggle={toggle}>
+            <div className="grid gap-4 md:grid-cols-3">
+              <ExampleCard number={1} tone="emerald" question={<>Hitung <InlineMath math="5^0+3^{-2}" />.</>}><Formula>{"5^0+3^{-2}=1+\\frac19=\\frac{10}{9}"}</Formula></ExampleCard>
+              <ExampleCard number={2} tone="violet" question={<>Sederhanakan <InlineMath math="\\frac{(-2)^3\\times3^{-2}}{6^0}" />.</>}><Formula>{"\\frac{-8\\times\\frac19}{1}=-\\frac89"}</Formula></ExampleCard>
+              <ExampleCard number={3} tone="rose" question={<>Jika <InlineMath math="a=2^{-3}" />, tentukan <InlineMath math="a^{-2}" />.</>}><Formula>{"a^{-2}=(2^{-3})^{-2}=2^6=64"}</Formula></ExampleCard>
+            </div>
+          </Accordion>
+
+          <Accordion id="summary" title="Rangkuman konsep dan sifat" eyebrow="Peta konsep · simpan sebagai pengingat" icon={<BookOpen className="h-5 w-5" />} tone="rose" open={open("summary")} onToggle={toggle}>
             <div className="overflow-x-auto rounded-2xl border border-white/10">
-              <table className="w-full min-w-[680px] text-left font-body text-sm">
-                <thead className="bg-slate-950/60 text-cyan-100">
-                  <tr><th className="px-4 py-3">Sifat</th><th className="px-4 py-3">Rumus inti</th></tr>
-                </thead>
+              <table className="w-full min-w-[700px] text-left font-body text-sm">
+                <thead className="bg-slate-950/60 text-cyan-100"><tr><th className="px-4 py-3">Materi</th><th className="px-4 py-3">Rumus inti</th><th className="px-4 py-3">Kunci</th></tr></thead>
                 <tbody className="text-white/75">
                   {[
-                    ["Dasar", "\\log_a a^n=n;\\quad\\log_a a=1;\\quad\\log_a1=0"],
-                    ["1 · Penjumlahan", "\\log_a b+\\log_a c=\\log_a(bc)"],
-                    ["2 · Pengurangan", "\\log_a b-\\log_a c=\\log_a\\left(\\frac bc\\right)"],
-                    ["3 · Pangkat numerus", "\\log_a b^n=n\\log_a b"],
-                    ["4 · Ganti basis", "\\log_a b=\\frac{\\log_p b}{\\log_p a}=\\frac1{\\log_b a}"],
-                    ["5 · Rantai", "\\log_g a\\cdot\\log_a b=\\log_g b"],
-                    ["6 · Saling menghapus", "a^{\\log_a b}=b"],
-                  ].map(([name, formula], index) => (
+                    ["Definisi", "a^n=\\underbrace{a\\cdots a}_n", "Perkalian berulang"],
+                    ["Pangkat nol", "a^0=1", "a\\ne0"],
+                    ["Pangkat negatif", "a^{-n}=\\frac1{a^n}", "Kebalikan"],
+                    ["Pecahan", "\\left(\\frac ab\\right)^n=\\frac{a^n}{b^n}", "Distribusi"],
+                    ["Perkalian basis sama", "a^m a^n=a^{m+n}", "Jumlahkan pangkat"],
+                    ["Pembagian basis sama", "\\frac{a^m}{a^n}=a^{m-n}", "Kurangkan pangkat"],
+                    ["Pangkat dari pangkat", "(a^m)^n=a^{mn}", "Kalikan pangkat"],
+                    ["Pangkat pecahan", "a^{m/n}=\\sqrt[n]{a^m}", "Akar dan pangkat"],
+                  ].map(([name, formula, key], index) => (
                     <tr key={name} className={`border-t border-white/5 ${index % 2 === 0 ? "bg-white/[0.025]" : ""}`}>
                       <td className="px-4 py-3 font-semibold text-white">{name}</td>
                       <td className="px-4 py-3 text-cyan-100"><InlineMath math={formula} /></td>
+                      <td className="px-4 py-3">{key}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <ColorCard tone="rose">
-              <div className="flex gap-3">
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-200" />
-                <div className="font-body text-sm leading-relaxed text-rose-50/85">
-                  <strong className="text-rose-100">Jebakan umum:</strong> <InlineMath math="\log_a(b+c)" /> tidak sama dengan <InlineMath math="\log_a b+\log_a c" />. Yang boleh digabung adalah perkalian, yaitu <InlineMath math="\log_a(bc)" />.
-                </div>
-              </div>
-            </ColorCard>
-            <ColorCard tone="emerald">
-              <p className="font-body text-sm leading-relaxed text-emerald-50/85">
-                <strong className="text-emerald-100">Pesan untuk siswa:</strong> saat melihat logaritma, ubah pertanyaan menjadi “basis dipangkatkan berapa?”. Cek basis, numerus, dan syaratnya sebelum memilih sifat.
-              </p>
-            </ColorCard>
+            <InfoCard tone="rose"><div className="flex gap-3"><AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-200" /><p className="font-body text-sm leading-relaxed text-rose-50/85"><strong>Jebakan umum:</strong> jangan menggabungkan basis yang berbeda pada perkalian, dan selalu periksa tanda kurung pada bilangan negatif.</p></div></InfoCard>
           </Accordion>
         </div>
 
         <div className="mt-10 flex flex-wrap justify-center gap-3 text-center font-body text-xs text-white/45">
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Basis: a &gt; 0, a ≠ 1</span>
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Numerus: b &gt; 0</span>
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Belajar dengan memahami pola</span>
+          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Basis dan eksponen</span>
+          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Pahami pola, bukan hafalan</span>
+          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Siap dipakai mengajar</span>
         </div>
       </main>
     </div>
