@@ -188,7 +188,7 @@ const SmaLogaritmaPage = () => {
               <Formula>{"\\log_a b = c \\Longleftrightarrow a^c=b"}</Formula>
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["Basis", "a", "a > 0 dan a \\ne 1"],
+                  ["Basis", "a", "a > 0 dan a ≠ 1"],
                   ["Numerus", "b", "b > 0"],
                   ["Hasil logaritma", "c", "pangkat yang dicari"],
                 ].map(([label, symbol, note]) => (
@@ -294,7 +294,7 @@ const SmaLogaritmaPage = () => {
                 <p>Turunkan pangkat 4 menjadi pengali.</p>
               </ExampleCard>
               <ExampleCard number="2" tone="violet" question="Gabungkan sifat 1, 2, dan 3: 2 log 25 − 3 log 5 + log 20.">
-                <Formula>{"\\log(25^2)-\\log(5^3)+\\log20=\\log\\left(\\frac{625\\times20}{125}\\right)=\\log100=2"}</Formula>
+                <Formula>{"\\log (25^2)-\\log (5^3)+\\log 20=\\log\\left(\\frac{625\\times20}{125}\\right)=\\log 100=2"}</Formula>
                 <p>Pengali dinaikkan menjadi pangkat, pengurangan menjadi pembagian, dan penjumlahan menjadi perkalian.</p>
               </ExampleCard>
             </div>
