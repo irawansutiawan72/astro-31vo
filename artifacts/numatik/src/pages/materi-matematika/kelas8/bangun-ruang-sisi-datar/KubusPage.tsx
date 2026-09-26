@@ -572,6 +572,20 @@ const NET_PATTERNS: [number, number][][] = [
   [[0,2],[1,2],[1,1],[1,0],[2,0],[3,0]],
 ];
 const NET_COLORS = ["#3b82f6","#8b5cf6","#22c55e","#f97316","#eab308","#ef4444"];
+const NET_FOLD_FACE_ORDERS: FName[][] = [
+  ["top", "left", "front", "right", "bottom", "back"],
+  ["left", "front", "right", "back", "bottom", "top"],
+];
+const NET_FOLD_SIZE = 40;
+const NET_FOLD_HALF = NET_FOLD_SIZE / 2;
+const NET_FOLD_FACE_TRANSFORMS: Record<FName, string> = {
+  front: `translateZ(${NET_FOLD_HALF}px)`,
+  back: `rotateY(180deg) translateZ(${NET_FOLD_HALF}px)`,
+  left: `rotateY(-90deg) translateZ(${NET_FOLD_HALF}px)`,
+  right: `rotateY(90deg) translateZ(${NET_FOLD_HALF}px)`,
+  top: `rotateX(90deg) translateZ(${NET_FOLD_HALF}px)`,
+  bottom: `rotateX(-90deg) translateZ(${NET_FOLD_HALF}px)`,
+};
 
 const NetSVG = ({ cells }: { cells: [number, number][] }) => {
   const cols = cells.map(([c]) => c);
@@ -594,17 +608,138 @@ const NetSVG = ({ cells }: { cells: [number, number][] }) => {
   );
 };
 
+const NetFoldPreview = ({
+  cells,
+  faceOrder,
+  lang,
+}: {
+  cells: [number, number][];
+  faceOrder: FName[];
+  lang: string;
+}) => {
+  const { isDark } = useTheme();
+  const [folded, setFolded] = useState(false);
+  const replayTimerRef = useRef<number | null>(null);
+  const cols = cells.map(([c]) => c);
+  const rows = cells.map(([, r]) => r);
+  const minC = Math.min(...cols);
+  const minR = Math.min(...rows);
+  const maxC = Math.max(...cols);
+  const maxR = Math.max(...rows);
+  const centerC = (minC + maxC) / 2;
+  const centerR = (minR + maxR) / 2;
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setFolded(true), 850);
+    return () => {
+      window.clearTimeout(timer);
+      if (replayTimerRef.current !== null) window.clearTimeout(replayTimerRef.current);
+    };
+  }, []);
+
+  const replay = () => {
+    playPopSound();
+    setFolded(false);
+    if (replayTimerRef.current !== null) window.clearTimeout(replayTimerRef.current);
+    replayTimerRef.current = window.setTimeout(() => setFolded(true), 240);
+  };
+
+  const buttonLabel = folded
+    ? lang === "en" ? "↻ Replay fold" : lang === "ja" ? "↻ 折りたたみを再生" : "↻ Ulangi lipatan"
+    : lang === "en" ? "▶ Fold automatically" : lang === "ja" ? "▶ 自動で折る" : "▶ Lipat otomatis";
+  const statusLabel = folded
+    ? lang === "en" ? "✓ Forms a cube" : lang === "ja" ? "✓ 立方体になります" : "✓ Menjadi kubus"
+    : lang === "en" ? "Watch the six faces fold" : lang === "ja" ? "6面が折りたたまれます" : "Saksikan 6 sisi melipat";
+
+  return (
+    <div className="w-full">
+      <div
+        className="relative mx-auto overflow-visible"
+        style={{ width: 230, height: 184, perspective: 820 }}
+        aria-label={statusLabel}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            transformStyle: "preserve-3d",
+            transform: "rotateX(-18deg) rotateY(26deg)",
+          }}
+        >
+          {cells.map(([c, r], i) => {
+            const flatTransform = `translate3d(${(c - centerC) * NET_FOLD_SIZE}px, ${(r - centerR) * NET_FOLD_SIZE}px, 0)`;
+            const foldedTransform = NET_FOLD_FACE_TRANSFORMS[faceOrder[i]];
+            return (
+              <div
+                key={`${c}-${r}`}
+                className="absolute left-1/2 top-1/2"
+                style={{
+                  width: NET_FOLD_SIZE,
+                  height: NET_FOLD_SIZE,
+                  marginLeft: -NET_FOLD_HALF,
+                  marginTop: -NET_FOLD_HALF,
+                  transformStyle: "preserve-3d",
+                  transform: folded ? foldedTransform : flatTransform,
+                  transition: `transform 1.35s cubic-bezier(0.4, 0, 0.2, 1) ${folded ? i * 0.12 : 0}s`,
+                  zIndex: folded ? i : 1,
+                }}
+              >
+                <div
+                  className="flex h-full w-full items-center justify-center rounded-md"
+                  style={{
+                    background: NET_COLORS[i],
+                    border: `2px solid ${isDark ? "rgba(255,255,255,0.72)" : "rgba(15,23,42,0.38)"}`,
+                    boxShadow: folded
+                      ? `0 0 12px ${NET_COLORS[i]}88`
+                      : `0 3px 8px ${NET_COLORS[i]}55`,
+                    color: "white",
+                    fontSize: 11,
+                    fontWeight: 800,
+                    fontFamily: "monospace",
+                    backfaceVisibility: "visible",
+                  }}
+                >
+                  {i + 1}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <p className={`text-center text-[10px] font-body ${folded ? "text-emerald-500" : isDark ? "text-white/50" : "text-slate-500"}`}>
+        {statusLabel}
+      </p>
+      <button
+        type="button"
+        onClick={replay}
+        className="mx-auto mt-2 block rounded-lg border border-cyan-600 bg-cyan-900/60 px-3 py-1.5 text-[10px] font-bold text-cyan-200 transition-colors hover:bg-cyan-800/70 cursor-pointer"
+      >
+        {buttonLabel}
+      </button>
+    </div>
+  );
+};
+
 const NetGallery = ({ lang }: { lang: string }) => {
   const { isDark } = useTheme();
   const netLabel = lang === "en" ? "Net" : lang === "ja" ? "展開図" : "Jaring";
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
       {NET_PATTERNS.map((cells, i) => (
-        <div key={i} className={isDark ? "bg-slate-800/60 border border-slate-700 rounded-lg p-3 flex flex-col items-center gap-2" : "bg-gray-100 border border-gray-200 rounded-lg p-3 flex flex-col items-center gap-2"}>
+        <div key={i} className={i < 2
+          ? (isDark
+            ? "sm:col-span-2 bg-slate-800/60 border border-cyan-700/60 rounded-lg p-3 flex flex-col items-center gap-2"
+            : "sm:col-span-2 bg-gray-100 border border-cyan-300 rounded-lg p-3 flex flex-col items-center gap-2")
+          : (isDark
+            ? "bg-slate-800/60 border border-slate-700 rounded-lg p-3 flex flex-col items-center gap-2"
+            : "bg-gray-100 border border-gray-200 rounded-lg p-3 flex flex-col items-center gap-2")}>
           <span className={isDark ? "text-white/50 text-[10px] font-body font-bold" : "text-slate-500 text-[10px] font-body font-bold"}>{netLabel} #{i+1}</span>
-          <div className="flex items-center justify-center" style={{ minHeight:80 }}>
-            <NetSVG cells={cells}/>
-          </div>
+          {i < 2 ? (
+            <NetFoldPreview cells={cells} faceOrder={NET_FOLD_FACE_ORDERS[i]} lang={lang} />
+          ) : (
+            <div className="flex items-center justify-center" style={{ minHeight:80 }}>
+              <NetSVG cells={cells}/>
+            </div>
+          )}
         </div>
       ))}
     </div>
