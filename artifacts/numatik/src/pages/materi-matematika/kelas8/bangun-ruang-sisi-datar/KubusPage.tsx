@@ -586,6 +586,46 @@ const NET_FOLD_FACE_TRANSFORMS: Record<FName, string> = {
   top: `rotateX(90deg) translateZ(${NET_FOLD_HALF}px)`,
   bottom: `rotateX(-90deg) translateZ(${NET_FOLD_HALF}px)`,
 };
+const NET_FOLD_ANIMATION_NAMES: Record<FName, string> = {
+  front: "numatikNetFoldFront",
+  back: "numatikNetFoldBack",
+  left: "numatikNetFoldLeft",
+  right: "numatikNetFoldRight",
+  top: "numatikNetFoldTop",
+  bottom: "numatikNetFoldBottom",
+};
+const NET_FOLD_KEYFRAMES = `
+  @keyframes numatikNetFoldFront {
+    0% { transform: var(--net-flat); }
+    55% { transform: translateZ(32px); }
+    100% { transform: translateZ(${NET_FOLD_HALF}px); }
+  }
+  @keyframes numatikNetFoldBack {
+    0% { transform: var(--net-flat); }
+    55% { transform: rotateY(132deg) translateZ(32px); }
+    100% { transform: rotateY(180deg) translateZ(${NET_FOLD_HALF}px); }
+  }
+  @keyframes numatikNetFoldLeft {
+    0% { transform: var(--net-flat); }
+    55% { transform: rotateY(-58deg) translateZ(32px); }
+    100% { transform: rotateY(-90deg) translateZ(${NET_FOLD_HALF}px); }
+  }
+  @keyframes numatikNetFoldRight {
+    0% { transform: var(--net-flat); }
+    55% { transform: rotateY(58deg) translateZ(32px); }
+    100% { transform: rotateY(90deg) translateZ(${NET_FOLD_HALF}px); }
+  }
+  @keyframes numatikNetFoldTop {
+    0% { transform: var(--net-flat); }
+    55% { transform: rotateX(58deg) translateZ(32px); }
+    100% { transform: rotateX(90deg) translateZ(${NET_FOLD_HALF}px); }
+  }
+  @keyframes numatikNetFoldBottom {
+    0% { transform: var(--net-flat); }
+    55% { transform: rotateX(-58deg) translateZ(32px); }
+    100% { transform: rotateX(-90deg) translateZ(${NET_FOLD_HALF}px); }
+  }
+`;
 
 const NetSVG = ({ cells }: { cells: [number, number][] }) => {
   const cols = cells.map(([c]) => c);
@@ -647,7 +687,7 @@ const NetFoldPreview = ({
 
   useEffect(() => {
     if (foldPhase !== "folding") return;
-    const timer = window.setTimeout(() => setFoldPhase("cube"), 1_650);
+    const timer = window.setTimeout(() => setFoldPhase("cube"), 2_100);
     return () => window.clearTimeout(timer);
   }, [foldPhase]);
 
@@ -664,6 +704,7 @@ const NetFoldPreview = ({
 
   return (
     <div className="w-full">
+      <style>{NET_FOLD_KEYFRAMES}</style>
       <div
         className="relative mx-auto overflow-visible"
         style={{ width: 230, height: 184, perspective: 820 }}
@@ -678,7 +719,8 @@ const NetFoldPreview = ({
         >
           {cells.map(([c, r], i) => {
             const flatTransform = `translate3d(${(c - centerC) * NET_FOLD_SIZE}px, ${(r - centerR) * NET_FOLD_SIZE}px, 0)`;
-            const foldedTransform = NET_FOLD_FACE_TRANSFORMS[faceOrder[i]];
+            const face = faceOrder[i];
+            const foldedTransform = NET_FOLD_FACE_TRANSFORMS[face];
             const isFolded = foldPhase !== "net";
             return (
               <div
@@ -693,7 +735,11 @@ const NetFoldPreview = ({
                   transform: isFolded ? foldedTransform : flatTransform,
                   transition: foldPhase === "net"
                     ? "transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)"
-                    : `transform 1.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.12}s`,
+                    : "none",
+                  animation: foldPhase === "folding"
+                    ? `${NET_FOLD_ANIMATION_NAMES[face]} 1.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.12}s both`
+                    : "none",
+                  ["--net-flat" as string]: flatTransform,
                   zIndex: isFolded ? i : 1,
                 }}
               >
