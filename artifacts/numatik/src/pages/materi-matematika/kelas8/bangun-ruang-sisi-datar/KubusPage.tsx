@@ -1139,9 +1139,11 @@ const FrontHingedNetCell = ({
 const FrontHingedNetPreview = ({
   cells,
   lang,
+  pattern,
 }: {
   cells: [number, number][];
   lang: string;
+  pattern?: 3 | 4;
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
@@ -1205,6 +1207,9 @@ const FrontHingedNetPreview = ({
       </div>
     );
   };
+  const viewTransform = pattern === 3 && !isOpen
+    ? `rotateX(-18deg) rotateY(160deg)`
+    : "rotateX(-18deg) rotateY(28deg)";
 
   return (
     <div className="w-full">
@@ -1220,7 +1225,8 @@ const FrontHingedNetPreview = ({
             height: NET_HINGE_SIZE,
             marginLeft: -NET_HINGE_HALF,
             marginTop: -NET_HINGE_HALF,
-            transform: "rotateX(-18deg) rotateY(28deg)",
+            transform: viewTransform,
+            transition: "transform 0.8s ease",
             transformStyle: "preserve-3d",
           }}
         >
@@ -1374,7 +1380,7 @@ const NetGallery = ({ lang }: { lang: string }) => {
           {i < 2 ? (
             <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2} lang={lang} />
           ) : i < 4 ? (
-            <FrontHingedNetPreview cells={cells} lang={lang} />
+            <FrontHingedNetPreview cells={cells} lang={lang} pattern={(i + 1) as 3 | 4} />
           ) : (
             <GenericHingedNetPreview cells={cells} lang={lang} />
           )}
