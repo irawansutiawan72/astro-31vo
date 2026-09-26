@@ -719,7 +719,7 @@ const NetFoldPreview = ({
           })}
         </div>
       </div>
-      <p className={`text-center text-[10px] font-body ${folded ? "text-emerald-500" : isDark ? "text-white/50" : "text-slate-500"}`}>
+      <p className={`text-center text-[10px] font-body ${foldPhase === "cube" ? "text-emerald-500" : isDark ? "text-white/50" : "text-slate-500"}`}>
         {statusLabel}
       </p>
       <button
