@@ -32,7 +32,7 @@ const toneClasses: Record<Tone, string> = {
 const toTeacherLogNotation = (math: string) =>
   math.replace(/\\log_(\{[^{}]+\}|[A-Za-z0-9]+)/g, (_match, rawBase: string) => {
     const base = rawBase.startsWith("{") ? rawBase.slice(1, -1) : rawBase;
-    return `{}^{${base}}\\log`;
+    return `{}^{${base}}\\log `;
   });
 
 const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={toTeacherLogNotation(math)} />;
