@@ -561,15 +561,15 @@ const InteractiveCube3D = ({ lang }: { lang: string }) => {
 const NET_PATTERNS: [number, number][][] = [
   [[1,0],[0,1],[1,1],[2,1],[1,2],[1,3]],
   [[0,0],[1,0],[2,0],[3,0],[1,1],[2,-1]],
-  [[0,0],[1,0],[2,0],[3,0],[0,1],[1,-1]],
-  [[0,0],[0,1],[1,1],[2,1],[2,2],[2,3]],
-  [[0,0],[1,0],[1,1],[2,1],[3,1],[3,2]],
-  [[0,0],[1,0],[1,1],[1,2],[2,2],[1,3]],
-  [[0,0],[1,0],[2,0],[2,1],[2,2],[1,2]],
-  [[0,0],[1,0],[2,0],[0,1],[0,2],[0,3]],
-  [[0,0],[0,1],[0,2],[1,2],[2,2],[2,1]],
-  [[0,0],[1,0],[1,1],[1,2],[2,2],[3,2]],
-  [[0,2],[1,2],[1,1],[1,0],[2,0],[3,0]],
+  [[0,0],[0,1],[0,2],[1,1],[2,1],[3,1]],
+  [[0,0],[0,1],[0,2],[1,2],[1,3],[1,4]],
+  [[0,0],[0,1],[1,1],[1,2],[1,3],[2,1]],
+  [[0,0],[0,1],[1,1],[1,2],[1,3],[2,2]],
+  [[0,0],[0,1],[1,1],[1,2],[1,3],[2,3]],
+  [[0,0],[0,1],[1,1],[1,2],[2,1],[3,1]],
+  [[0,0],[0,1],[1,1],[1,2],[2,2],[2,3]],
+  [[0,0],[0,1],[1,1],[2,1],[2,2],[3,1]],
+  [[0,0],[0,1],[1,1],[2,1],[3,1],[3,2]],
 ];
 const NET_COLORS = ["#3b82f6","#8b5cf6","#22c55e","#f97316","#eab308","#ef4444"];
 const NET_FOLD_FACE_ORDERS: FName[][] = [
@@ -944,10 +944,12 @@ const HingedNetPreview = ({
 };
 
 type NetDirection = "up" | "down" | "left" | "right";
-type HingedNetNode = {
-  index: number;
-  direction?: NetDirection;
-  children: HingedNetNode[];
+type NetVector = [number, number, number];
+type NetFrame = {
+  center: NetVector;
+  u: NetVector;
+  v: NetVector;
+  normal: NetVector;
 };
 
 const NET_DIRECTIONS: { direction: NetDirection; dc: number; dr: number }[] = [
@@ -957,7 +959,47 @@ const NET_DIRECTIONS: { direction: NetDirection; dc: number; dr: number }[] = [
   { direction: "right", dc: 1, dr: 0 },
 ];
 
-const getNetTree = (cells: [number, number][]): HingedNetNode => {
+const addNetVector = (a: NetVector, b: NetVector): NetVector =>
+  [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const scaleNetVector = (v: NetVector, factor: number): NetVector =>
+  [v[0] * factor, v[1] * factor, v[2] * factor];
+const negateNetVector = (v: NetVector): NetVector => scaleNetVector(v, -1);
+
+const foldNetFrame = (frame: NetFrame, direction: NetDirection): NetFrame => {
+  const { center, u, v, normal } = frame;
+  if (direction === "right") {
+    return {
+      center: addNetVector(center, addNetVector(scaleNetVector(u, 0.5), scaleNetVector(normal, -0.5))),
+      u: negateNetVector(normal),
+      v,
+      normal: u,
+    };
+  }
+  if (direction === "left") {
+    return {
+      center: addNetVector(center, addNetVector(scaleNetVector(u, -0.5), scaleNetVector(normal, -0.5))),
+      u: normal,
+      v,
+      normal: negateNetVector(u),
+    };
+  }
+  if (direction === "down") {
+    return {
+      center: addNetVector(center, addNetVector(scaleNetVector(v, 0.5), scaleNetVector(normal, -0.5))),
+      u,
+      v: negateNetVector(normal),
+      normal: v,
+    };
+  }
+  return {
+    center: addNetVector(center, addNetVector(scaleNetVector(v, -0.5), scaleNetVector(normal, -0.5))),
+    u,
+    v: normal,
+    normal: negateNetVector(v),
+  };
+};
+
+const getNetFrames = (cells: [number, number][]): Map<number, NetFrame> => {
   const cellIndex = new Map(cells.map(([c, r], index) => [`${c},${r}`, index]));
   const degree = (index: number) => {
     const [c, r] = cells[index];
@@ -965,81 +1007,40 @@ const getNetTree = (cells: [number, number][]): HingedNetNode => {
   };
   const rootIndex = cells.reduce((best, _cell, index) =>
     degree(index) > degree(best) ? index : best, 0);
-  const visited = new Set<number>([rootIndex]);
-  const parentByIndex = new Map<number, number>();
-  const directionByIndex = new Map<number, NetDirection>();
+  const frames = new Map<number, NetFrame>([[
+    rootIndex,
+    { center: [0, 0, 0], u: [1, 0, 0], v: [0, 1, 0], normal: [0, 0, 1] },
+  ]]);
   const queue = [rootIndex];
 
   while (queue.length > 0) {
     const parentIndex = queue.shift()!;
     const [c, r] = cells[parentIndex];
+    const parentFrame = frames.get(parentIndex);
+    if (!parentFrame) continue;
     for (const { direction, dc, dr } of NET_DIRECTIONS) {
       const childIndex = cellIndex.get(`${c + dc},${r + dr}`);
-      if (childIndex === undefined || visited.has(childIndex)) continue;
-      visited.add(childIndex);
-      parentByIndex.set(childIndex, parentIndex);
-      directionByIndex.set(childIndex, direction);
+      if (childIndex === undefined || frames.has(childIndex)) continue;
+      frames.set(childIndex, foldNetFrame(parentFrame, direction));
       queue.push(childIndex);
     }
   }
+  return frames;
+};
 
-  const buildNode = (index: number): HingedNetNode => ({
-    index,
-    direction: directionByIndex.get(index),
-    children: cells
-      .map((_, childIndex) => childIndex)
-      .filter(childIndex => parentByIndex.get(childIndex) === index)
-      .map(buildNode),
-  });
-  return buildNode(rootIndex);
+const netFrameTransform = (frame: NetFrame): string => {
+  const matrix = [
+    frame.u[0], frame.u[1], frame.u[2], 0,
+    frame.v[0], frame.v[1], frame.v[2], 0,
+    frame.normal[0], frame.normal[1], frame.normal[2], 0,
+    frame.center[0] * NET_HINGE_SIZE, frame.center[1] * NET_HINGE_SIZE, frame.center[2] * NET_HINGE_SIZE, 1,
+  ];
+  return `matrix3d(${matrix.join(",")})`;
 };
 
 const NET_HINGE_SIZE = 40;
 const NET_HINGE_HALF = NET_HINGE_SIZE / 2;
 const NET_HINGE_TRANSITION = "transform 1.15s cubic-bezier(0.4, 0, 0.2, 1)";
-
-const NetHingeCell = ({
-  index,
-  isOpen,
-  children,
-}: {
-  index: number;
-  isOpen: boolean;
-  children?: React.ReactNode;
-}) => (
-  <div
-    style={{
-      position: "absolute",
-      width: NET_HINGE_SIZE,
-      height: NET_HINGE_SIZE,
-      transformStyle: "preserve-3d",
-    }}
-  >
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: NET_COLORS[index],
-        border: `2px solid ${NET_COLORS[index]}cc`,
-        borderRadius: 5,
-        color: "white",
-        fontSize: 12,
-        fontWeight: 800,
-        fontFamily: "monospace",
-        boxShadow: isOpen
-          ? `0 3px 8px ${NET_COLORS[index]}55`
-          : `0 0 8px ${NET_COLORS[index]}88`,
-        backfaceVisibility: "hidden",
-      }}
-    >
-      {index + 1}
-    </div>
-    {children}
-  </div>
-);
 
 const GenericHingedNetPreview = ({
   cells,
@@ -1050,7 +1051,11 @@ const GenericHingedNetPreview = ({
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
-  const tree = getNetTree(cells);
+  const frames = getNetFrames(cells);
+  const cols = cells.map(([c]) => c);
+  const rows = cells.map(([, r]) => r);
+  const centerC = (Math.min(...cols) + Math.max(...cols)) / 2;
+  const centerR = (Math.min(...rows) + Math.max(...rows)) / 2;
   const labels = {
     unfold: lang === "en" ? "Unfold" : lang === "ja" ? "展開" : "Bongkar",
     assemble: lang === "en" ? "Assemble" : lang === "ja" ? "折りたたむ" : "Satukan",
@@ -1066,55 +1071,6 @@ const GenericHingedNetPreview = ({
             : "border-violet-500 bg-violet-900/80 text-violet-200 hover:bg-violet-800"
         }`
       : "rounded-lg border border-slate-600 bg-slate-800/40 px-3 py-1.5 text-[10px] font-bold text-slate-500 cursor-default";
-
-  const hingeFor = (direction: NetDirection): React.CSSProperties => {
-    const angle = direction === "up"
-      ? (isOpen ? 0 : -90)
-      : direction === "down"
-      ? (isOpen ? 0 : 90)
-      : direction === "left"
-      ? (isOpen ? 0 : 90)
-      : (isOpen ? 0 : -90);
-    const position = direction === "up"
-      ? { top: 0, left: 0, width: NET_HINGE_SIZE, height: 0, transformOrigin: "50% 0% 0" }
-      : direction === "down"
-      ? { top: NET_HINGE_SIZE, left: 0, width: NET_HINGE_SIZE, height: 0, transformOrigin: "50% 0% 0" }
-      : direction === "left"
-      ? { top: 0, left: 0, width: 0, height: NET_HINGE_SIZE, transformOrigin: "0% 50% 0" }
-      : { top: 0, left: NET_HINGE_SIZE, width: 0, height: NET_HINGE_SIZE, transformOrigin: "0% 50% 0" };
-    return {
-      position: "absolute",
-      ...position,
-      transformStyle: "preserve-3d",
-      transform: `rotate${direction === "up" || direction === "down" ? "X" : "Y"}(${angle}deg)`,
-      transition: NET_HINGE_TRANSITION,
-    };
-  };
-
-  const renderNode = (node: HingedNetNode): React.ReactNode => {
-    if (!node.direction) {
-      return (
-        <NetHingeCell key={node.index} index={node.index} isOpen={isOpen}>
-          {node.children.map(renderNode)}
-        </NetHingeCell>
-      );
-    }
-    const direction = node.direction;
-    const cellPosition = direction === "up"
-      ? { top: -NET_HINGE_SIZE, left: 0 }
-      : direction === "left"
-      ? { top: 0, left: -NET_HINGE_SIZE }
-      : { top: 0, left: 0 };
-    return (
-      <div key={node.index} style={hingeFor(direction)}>
-        <div style={{ position: "absolute", ...cellPosition }}>
-          <NetHingeCell index={node.index} isOpen={isOpen}>
-            {node.children.map(renderNode)}
-          </NetHingeCell>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="w-full">
@@ -1134,7 +1090,44 @@ const GenericHingedNetPreview = ({
             transformStyle: "preserve-3d",
           }}
         >
-          {renderNode(tree)}
+          {cells.map(([c, r], index) => {
+            const frame = frames.get(index);
+            const flatTransform = `translate3d(${(c - centerC) * NET_HINGE_SIZE}px, ${(r - centerR) * NET_HINGE_SIZE}px, 0)`;
+            return (
+              <div
+                key={`${c}-${r}`}
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  width: NET_HINGE_SIZE,
+                  height: NET_HINGE_SIZE,
+                  marginLeft: -NET_HINGE_HALF,
+                  marginTop: -NET_HINGE_HALF,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: NET_COLORS[index],
+                  border: `2px solid ${NET_COLORS[index]}cc`,
+                  borderRadius: 5,
+                  color: "white",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  fontFamily: "monospace",
+                  boxShadow: isOpen
+                    ? `0 3px 8px ${NET_COLORS[index]}55`
+                    : `0 0 8px ${NET_COLORS[index]}88`,
+                  transformStyle: "preserve-3d",
+                  transformOrigin: "50% 50% 0",
+                  backfaceVisibility: "hidden",
+                  transform: isOpen || !frame ? flatTransform : netFrameTransform(frame),
+                  transition: `${NET_HINGE_TRANSITION} ${isOpen ? (cells.length - index - 1) * 45 : index * 45}ms`,
+                }}
+              >
+                {index + 1}
+              </div>
+            );
+          })}
         </div>
       </div>
       <p className={`text-center text-[10px] font-body ${isOpen ? (isDark ? "text-white/50" : "text-slate-500") : "text-emerald-500"}`}>
