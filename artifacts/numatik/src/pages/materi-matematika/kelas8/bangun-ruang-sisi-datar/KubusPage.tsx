@@ -1087,9 +1087,13 @@ const getNetTree = (cells: [number, number][]): HingedNetNode => {
 
 const FrontHingedNetCell = ({
   index,
+  isOpen,
+  hiddenWhenClosed,
   children,
 }: {
   index: number;
+  isOpen: boolean;
+  hiddenWhenClosed: boolean;
   children?: React.ReactNode;
 }) => (
   <div
@@ -1098,6 +1102,8 @@ const FrontHingedNetCell = ({
       width: NET_HINGE_SIZE,
       height: NET_HINGE_SIZE,
       transformStyle: "preserve-3d",
+      opacity: hiddenWhenClosed && !isOpen ? 0 : 1,
+      transition: "opacity 350ms ease",
     }}
   >
     <div
@@ -1139,13 +1145,16 @@ const FrontHingedNetCell = ({
 const FrontHingedNetPreview = ({
   cells,
   lang,
+  hiddenFaceIndices,
 }: {
   cells: [number, number][];
   lang: string;
+  hiddenFaceIndices: number[];
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
   const tree = getNetTree(cells);
+  const hiddenFaces = new Set(hiddenFaceIndices);
   const labels = {
     unfold: lang === "en" ? "Unfold" : lang === "ja" ? "展開" : "Bongkar",
     assemble: lang === "en" ? "Assemble" : lang === "ja" ? "折りたたむ" : "Satukan",
@@ -1194,7 +1203,11 @@ const FrontHingedNetPreview = ({
       ? { top: 0, left: -NET_HINGE_SIZE }
       : { top: 0, left: 0 };
     const cell = (
-      <FrontHingedNetCell index={node.index}>
+      <FrontHingedNetCell
+        index={node.index}
+        isOpen={isOpen}
+        hiddenWhenClosed={hiddenFaces.has(node.index)}
+      >
         {node.children.map(renderNode)}
       </FrontHingedNetCell>
     );
@@ -1374,7 +1387,11 @@ const NetGallery = ({ lang }: { lang: string }) => {
           {i < 2 ? (
             <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2} lang={lang} />
           ) : i < 4 ? (
-            <FrontHingedNetPreview cells={cells} lang={lang} />
+            <FrontHingedNetPreview
+              cells={cells}
+              lang={lang}
+              hiddenFaceIndices={i === 2 ? [5] : [3, 4, 5]}
+            />
           ) : (
             <GenericHingedNetPreview cells={cells} lang={lang} />
           )}

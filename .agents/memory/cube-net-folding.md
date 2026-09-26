@@ -7,4 +7,4 @@ Use one validated set of 11 cube-net patterns and derive each face's center, loc
 
 **Why:** Different net branches can fold around different axes, so the final geometry must preserve each face's unique cube normal and center.
 
-**How to apply:** When changing the gallery in the cube material page, validate all six face normals and centers for every pattern, then verify the net and assembled states in the preview. Match the front-facing fold direction and staged hinge motion to the reference interaction before extending the specialized renderer to more patterns.
+**How to apply:** When changing the gallery in the cube material page, validate all six face normals and centers for every pattern, then verify the net and assembled states in the preview. Match the front-facing fold direction and staged hinge motion to the reference interaction before extending the specialized renderer to more patterns. If the reference expects rear faces to vanish, model that closed-state occlusion explicitly instead of relying only on CSS depth sorting.
