@@ -783,6 +783,183 @@ const NetFoldPreview = ({
   );
 };
 
+const NET_FACE_NUMBERS: Record<FName, number>[] = [
+  { top: 1, left: 2, back: 3, right: 4, bottom: 5, front: 6 },
+  { left: 1, front: 2, right: 3, back: 4, bottom: 5, top: 6 },
+];
+const HINGED_NET_SIZE = 44;
+const HINGED_NET_HALF = HINGED_NET_SIZE / 2;
+const HINGED_NET_TRANSITION = "transform 1.15s cubic-bezier(0.4, 0, 0.2, 1)";
+
+const HingedNetFace = ({
+  face,
+  number,
+  style,
+}: {
+  face: FName;
+  number: number;
+  style?: React.CSSProperties;
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      width: HINGED_NET_SIZE,
+      height: HINGED_NET_SIZE,
+      transformStyle: "preserve-3d",
+      ...style,
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: FACE_COLORS[face],
+        border: `2px solid ${FACE_COLORS[face]}cc`,
+        borderRadius: 5,
+        color: "white",
+        fontSize: 13,
+        fontWeight: 800,
+        fontFamily: "monospace",
+        boxShadow: `0 0 8px ${FACE_COLORS[face]}66`,
+        backfaceVisibility: "hidden",
+      }}
+    >
+      {number}
+    </div>
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: FACE_COLORS[face],
+        opacity: 0.35,
+        border: `2px solid ${FACE_COLORS[face]}66`,
+        borderRadius: 5,
+        transform: "rotateY(180deg)",
+        backfaceVisibility: "hidden",
+      }}
+    />
+  </div>
+);
+
+const HingedNetPreview = ({
+  faceNumbers,
+  variant,
+  lang,
+}: {
+  faceNumbers: Record<FName, number>;
+  variant: 1 | 2;
+  lang: string;
+}) => {
+  const { isDark } = useTheme();
+  const [isOpen, setIsOpen] = useState(true);
+  const number = (face: FName) => faceNumbers[face];
+  const labels = {
+    unfold: lang === "en" ? "Unfold" : lang === "ja" ? "展開" : "Bongkar",
+    assemble: lang === "en" ? "Assemble" : lang === "ja" ? "折りたたむ" : "Satukan",
+    net: lang === "en" ? "Cube net" : lang === "ja" ? "立方体の展開図" : "Jaring-jaring kubus",
+    cube: lang === "en" ? "Assembled cube" : lang === "ja" ? "組み立てた立方体" : "Kubus tersusun",
+  };
+  const buttonClass = (active: boolean, tone: "cyan" | "violet") =>
+    active
+      ? `rounded-lg border px-3 py-1.5 text-[10px] font-bold cursor-pointer transition-colors ${
+          tone === "cyan"
+            ? "border-cyan-500 bg-cyan-900/80 text-cyan-200 hover:bg-cyan-800"
+            : "border-violet-500 bg-violet-900/80 text-violet-200 hover:bg-violet-800"
+        }`
+      : "rounded-lg border border-slate-600 bg-slate-800/40 px-3 py-1.5 text-[10px] font-bold text-slate-500 cursor-default";
+
+  const hinge = (transform: string): React.CSSProperties => ({
+    position: "absolute",
+    transformStyle: "preserve-3d",
+    transition: HINGED_NET_TRANSITION,
+    transform,
+  });
+
+  const patternOne = (
+    <>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: HINGED_NET_SIZE }}>
+        <HingedNetFace face="back" number={number("back")} />
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : -90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        <HingedNetFace face="top" number={number("top")} style={{ top: -HINGED_NET_SIZE, left: 0 }} />
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        <HingedNetFace face="bottom" number={number("bottom")} style={{ top: 0, left: 0 }} />
+        <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+          <HingedNetFace face="front" number={number("front")} style={{ top: 0, left: 0 }} />
+        </div>
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: 0, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+        <HingedNetFace face="left" number={number("left")} style={{ top: 0, left: -HINGED_NET_SIZE }} />
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+        <HingedNetFace face="right" number={number("right")} style={{ top: 0, left: 0 }} />
+      </div>
+    </>
+  );
+
+  const patternTwo = (
+    <>
+      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: HINGED_NET_SIZE }}>
+        <HingedNetFace face="front" number={number("front")} />
+      </div>
+      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: 0, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+        <HingedNetFace face="left" number={number("left")} style={{ top: 0, left: -HINGED_NET_SIZE }} />
+      </div>
+      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+        <HingedNetFace face="right" number={number("right")} style={{ top: 0, left: 0 }} />
+        <div style={{ ...hinge(`rotateY(${isOpen ? 0 : 90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+          <HingedNetFace face="back" number={number("back")} style={{ top: 0, left: 0 }} />
+        </div>
+        <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+          <HingedNetFace face="top" number={number("top")} style={{ top: -HINGED_NET_SIZE, left: 0 }} />
+        </div>
+      </div>
+      <div style={{ ...hinge(`translateZ(${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : -90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        <HingedNetFace face="bottom" number={number("bottom")} style={{ top: 0, left: 0 }} />
+      </div>
+    </>
+  );
+
+  return (
+    <div className="w-full">
+      <div
+        className="relative mx-auto overflow-visible"
+        style={{ width: 230, height: 184, perspective: 820 }}
+        aria-label={isOpen ? labels.net : labels.cube}
+      >
+        <div
+          className="absolute left-1/2 top-1/2"
+          style={{
+            width: HINGED_NET_SIZE,
+            height: HINGED_NET_SIZE,
+            marginLeft: -HINGED_NET_HALF,
+            marginTop: -HINGED_NET_HALF,
+            transformStyle: "preserve-3d",
+            transform: "rotateX(-18deg) rotateY(28deg)",
+          }}
+        >
+          {variant === 1 ? patternOne : patternTwo}
+        </div>
+      </div>
+      <p className={`text-center text-[10px] font-body ${isOpen ? (isDark ? "text-white/50" : "text-slate-500") : "text-emerald-500"}`}>
+        {isOpen ? labels.net : labels.cube}
+      </p>
+      <div className="mt-2 flex justify-center gap-2">
+        <button type="button" onClick={() => setIsOpen(true)} className={buttonClass(!isOpen, "cyan")}>
+          {labels.unfold}
+        </button>
+        <button type="button" onClick={() => setIsOpen(false)} className={buttonClass(isOpen, "violet")}>
+          {labels.assemble}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const NetGallery = ({ lang }: { lang: string }) => {
   const { isDark } = useTheme();
   const netLabel = lang === "en" ? "Net" : lang === "ja" ? "展開図" : "Jaring";
@@ -798,7 +975,7 @@ const NetGallery = ({ lang }: { lang: string }) => {
             : "bg-gray-100 border border-gray-200 rounded-lg p-3 flex flex-col items-center gap-2")}>
           <span className={isDark ? "text-white/50 text-[10px] font-body font-bold" : "text-slate-500 text-[10px] font-body font-bold"}>{netLabel} #{i+1}</span>
           {i < 2 ? (
-            <NetFoldPreview cells={cells} faceOrder={NET_FOLD_FACE_ORDERS[i]} lang={lang} />
+            <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2} lang={lang} />
           ) : (
             <div className="flex items-center justify-center" style={{ minHeight:80 }}>
               <NetSVG cells={cells}/>
