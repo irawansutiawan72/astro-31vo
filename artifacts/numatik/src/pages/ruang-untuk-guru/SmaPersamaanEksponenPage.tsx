@@ -284,6 +284,16 @@ const SmaPersamaanEksponenPage = () => {
                 </div>
               </div>
               <Formula tone="cyan">{"a^{f(x)}=b\\qquad\\Longleftrightarrow\\qquad\\text{cari nilai }x\\text{ yang membuat kedua ruas sama}"}</Formula>
+              <div className="mt-4 rounded-2xl border border-violet-300/30 bg-violet-400/10 p-4">
+                <p className="font-display text-sm font-bold text-violet-100">Termasuk basis pecahan</p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-violet-50/85">
+                  Basis <InlineMath math="a" /> boleh berupa pecahan, selama <InlineMath math="a>0" /> dan <InlineMath math="a\ne1" />. Jika ruas kanan dapat ditulis sebagai pangkat dari basis yang sama, maka bentuk umum ini berubah menjadi persamaan dengan basis sama:
+                </p>
+                <Formula tone="violet">{"a^{f(x)}=b\\quad\\text{dan}\\quad b=a^p\\quad\\Longrightarrow\\quad a^{f(x)}=a^p\\quad\\Longrightarrow\\quad f(x)=p"}</Formula>
+                <p className="font-body text-xs leading-relaxed text-violet-50/75">
+                  Contoh: <InlineMath math={"\\left(\\frac{1}{2}\\right)^{f(x)}=\\frac{1}{8}=\\left(\\frac{1}{2}\\right)^3"} />, sehingga <strong className="text-violet-100"><InlineMath math="f(x)=3" /></strong>. Aturan penyamaan pangkat tetap berlaku untuk basis pecahan karena fungsi eksponen tetap satu-satu.
+                </p>
+              </div>
               <blockquote className="rounded-xl border-l-4 border-yellow-300 bg-yellow-300/10 px-4 py-3 font-body text-sm leading-relaxed text-yellow-50">
                 <strong>Tips:</strong> jangan buru-buru memakai logaritma. Cek dulu apakah kedua ruas bisa ditulis dengan <strong>basis yang sama</strong>.
               </blockquote>
@@ -297,12 +307,12 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={2} difficulty="Sedang" tone="blue" question={<>Tentukan penyelesaian dari <InlineMath math="3^{x+1}=81" />.</>}>
                 <p>Karena <InlineMath math="81=3^4" />, persamaan menjadi:</p>
                 <Formula tone="blue">{"3^{x+1}=3^4\\Rightarrow x+1=4\\Rightarrow x=3"}</Formula>
-                <p>Jadi, himpunan penyelesaiannya adalah <InlineMath math="\\{3\\}" />.</p>
+                <p>Jadi, himpunan penyelesaiannya adalah <InlineMath math="\{3\}" />.</p>
               </ExampleCard>
               <ExampleCard number={3} difficulty="Sulit" tone="violet" question={<>Tentukan penyelesaian dari <InlineMath math="4^{x-1}=8" />.</>}>
                 <p>Ubah kedua bilangan ke basis <InlineMath math="2" />:</p>
                 <Formula tone="violet">{"(2^2)^{x-1}=2^3\\Rightarrow2^{2x-2}=2^3"}</Formula>
-                <p>Samakan pangkat: <InlineMath math="2x-2=3" />, sehingga <InlineMath math="x=\\frac{5}{2}" />.</p>
+                <p>Samakan pangkat: <InlineMath math="2x-2=3" />, sehingga <InlineMath math="x=\frac{5}{2}" />.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -315,6 +325,36 @@ const SmaPersamaanEksponenPage = () => {
               </p>
               <Formula tone="emerald">a^m=a^n\qquad\Longrightarrow\qquad m=n</Formula>
               <p className="font-body text-sm text-white/70"><strong className="text-emerald-100">Urutan kerja:</strong> hilangkan basis yang sama → selesaikan persamaan biasa → cek jawaban.</p>
+            </ColorCard>
+            <ColorCard tone="blue">
+              <p className="font-display text-base font-bold text-blue-100">Pola penting yang perlu dibedakan</p>
+              <p className="mt-1 font-body text-sm leading-relaxed text-blue-50/85">
+                Gunakan aturan berikut setelah memastikan syarat basis dan domainnya. Jangan langsung menyamakan pangkat jika basisnya belum memenuhi syarat.
+              </p>
+              <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl border border-white/10 bg-slate-950/25 p-3">
+                  <p className="font-body text-xs font-black uppercase tracking-[0.16em] text-blue-100/70">Basis sama</p>
+                  <Formula tone="blue">{"a^{f(x)}=a^{g(x)}\\quad\\Longrightarrow\\quad f(x)=g(x)\\qquad(a>0,\\ a\\ne1)"}</Formula>
+                  <p className="font-body text-xs leading-relaxed text-white/65">Kedua pangkat disamakan karena fungsi <InlineMath math="a^x" /> bersifat satu-satu.</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/25 p-3">
+                  <p className="font-body text-xs font-black uppercase tracking-[0.16em] text-blue-100/70">Pangkat sama</p>
+                  <Formula tone="blue">{"a^{f(x)}=b^{f(x)}\\quad\\Longrightarrow\\quad f(x)=0\\qquad(a,b>0,\\ a\\ne b)"}</Formula>
+                  <p className="font-body text-xs leading-relaxed text-white/65">Syarat <InlineMath math="a\ne b" /> penting. Saat <InlineMath math="f(x)=0" />, kedua ruas sama-sama bernilai <InlineMath math="1" />.</p>
+                </div>
+              </div>
+              <div className="mt-3 rounded-xl border border-violet-300/25 bg-violet-400/10 p-3">
+                <p className="font-body text-xs font-black uppercase tracking-[0.16em] text-violet-100/75">Basis berupa fungsi</p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-white/80">
+                  Untuk <InlineMath math="h(x)^{f(x)}=h(x)^{g(x)}" />, periksa kemungkinan berikut sesuai domain:
+                </p>
+                <ul className="mt-2 grid gap-2 font-body text-sm leading-relaxed text-white/75 md:grid-cols-2">
+                  <li><strong className="text-violet-100">a)</strong> <InlineMath math="f(x)=g(x)" /> jika basis memenuhi <InlineMath math="h(x)>0" /> dan <InlineMath math="h(x)\ne1" />.</li>
+                  <li><strong className="text-violet-100">b)</strong> <InlineMath math="h(x)=1" />, karena <InlineMath math="1^{f(x)}=1^{g(x)}=1" />.</li>
+                  <li><strong className="text-violet-100">c)</strong> <InlineMath math="h(x)=0" /> jika <InlineMath math="f(x)>0" /> dan <InlineMath math="g(x)>0" />.</li>
+                  <li><strong className="text-violet-100">d)</strong> <InlineMath math="h(x)=-1" /> jika <InlineMath math="f(x)" /> dan <InlineMath math="g(x)" /> keduanya ganjil atau keduanya genap.</li>
+                </ul>
+              </div>
             </ColorCard>
             <div className="grid gap-4 md:grid-cols-3">
               <ExampleCard number={1} difficulty="Mudah" tone="emerald" question={<>Tentukan <InlineMath math="x" /> dari <InlineMath math="5^{2x-1}=5^7" />.</>}>
@@ -330,7 +370,7 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={3} difficulty="Sulit" tone="rose" question={<>Tentukan penyelesaian <InlineMath math="9^{x-1}=27^{2x-3}" />.</>}>
                 <p>Pilih basis <InlineMath math="3" /> karena <InlineMath math="9=3^2" /> dan <InlineMath math="27=3^3" />:</p>
                 <Formula tone="rose">{"3^{2x-2}=3^{6x-9}\\Rightarrow2x-2=6x-9"}</Formula>
-                <p>Diperoleh <InlineMath math="7=4x" />, sehingga <strong className="text-rose-100"><InlineMath math="x=\\frac{7}{4}" /></strong>.</p>
+                <p>Diperoleh <InlineMath math="7=4x" />, sehingga <strong className="text-rose-100"><InlineMath math="x=\frac{7}{4}" /></strong>.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -348,7 +388,7 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={1} difficulty="Mudah" tone="cyan" question={<>Tentukan <InlineMath math="x" /> dari <InlineMath math="4^x=32" />.</>}>
                 <p>Tulis semua bilangan sebagai pangkat <InlineMath math="2" />:</p>
                 <Formula tone="cyan">{"2^{2x}=2^5\\Rightarrow2x=5\\Rightarrow x=\\frac52"}</Formula>
-                <p>Jadi, <InlineMath math="x=\\frac52" />.</p>
+                <p>Jadi, <InlineMath math="x=\frac52" />.</p>
               </ExampleCard>
               <ExampleCard number={2} difficulty="Sedang" tone="amber" question={<>Selesaikan <InlineMath math="27^{x-1}=9^{x+1}" />.</>}>
                 <p>Gunakan basis <InlineMath math="3" />:</p>
@@ -358,7 +398,7 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={3} difficulty="Sulit" tone="rose" question={<>Tentukan <InlineMath math="x" /> dari <InlineMath math="16^{x+1}=8^{2x-1}" />.</>}>
                 <p>Ubah ke basis <InlineMath math="2" />:</p>
                 <Formula tone="rose">{"2^{4x+4}=2^{6x-3}\\Rightarrow4x+4=6x-3"}</Formula>
-                <p>Berarti <InlineMath math="7=2x" />, sehingga <strong className="text-rose-100"><InlineMath math="x=\\frac72" /></strong>. Cek cepat: kedua ruas sama-sama bernilai <InlineMath math="2^{18}" />.</p>
+                <p>Berarti <InlineMath math="7=2x" />, sehingga <strong className="text-rose-100"><InlineMath math="x=\frac72" /></strong>. Cek cepat: kedua ruas sama-sama bernilai <InlineMath math="2^{18}" />.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -370,6 +410,10 @@ const SmaPersamaanEksponenPage = () => {
                 Jika muncul <InlineMath math="a^{2x}" /> dan <InlineMath math="a^x" /> sekaligus, gunakan substitusi <InlineMath math="y=a^x" />. Dengan begitu, <InlineMath math="a^{2x}=(a^x)^2=y^2" /> dan persamaan eksponen berubah menjadi persamaan kuadrat.
               </p>
               <Formula tone="amber">{"y=a^x\\quad\\Longrightarrow\\quad a^{2x}=y^2"}</Formula>
+              <Formula tone="amber">{"p\\left(a^{f(x)}\\right)^2+q\\,a^{f(x)}+r=0\\quad\\xrightarrow{\\,y=a^{f(x)}\\,}\\quad py^2+qy+r=0"}</Formula>
+              <p className="font-body text-sm leading-relaxed text-amber-50/80">
+                Setelah persamaan kuadrat dalam <InlineMath math="y" /> selesai, kembalikan ke <InlineMath math="y=a^{f(x)}" />. Karena <InlineMath math="a^{f(x)}>0" />, hanya akar <InlineMath math="y>0" /> yang boleh dipakai.
+              </p>
               <blockquote className="rounded-xl border-l-4 border-rose-300 bg-rose-300/10 px-4 py-3 font-body text-sm leading-relaxed text-rose-50">
                 <strong>Catatan penting:</strong> untuk <InlineMath math="a>0" />, nilai <InlineMath math="y=a^x" /> selalu positif. Akar <InlineMath math="y\le0" /> harus ditolak.
               </blockquote>
@@ -378,8 +422,8 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={1} difficulty="Mudah" tone="emerald" question={<>Selesaikan <InlineMath math="2^{2x}-5\cdot2^x+6=0" />.</>}>
                 <p>Misalkan <InlineMath math="y=2^x" />, sehingga <InlineMath math="2^{2x}=y^2" />:</p>
                 <Formula tone="emerald">y^2-5y+6=0\Rightarrow(y-2)(y-3)=0</Formula>
-                <p><InlineMath math="y=2" /> memberi <InlineMath math="2^x=2" /> sehingga <InlineMath math="x=1" />. Nilai <InlineMath math="y=3" /> memberi <InlineMath math="x=\\log_2 3" />.</p>
-                <p className="text-emerald-100"><strong>Jawaban:</strong> <InlineMath math="x=1" /> atau <InlineMath math="x=\\log_2 3" />.</p>
+                <p><InlineMath math="y=2" /> memberi <InlineMath math="2^x=2" /> sehingga <InlineMath math="x=1" />. Nilai <InlineMath math="y=3" /> memberi <InlineMath math="x=\log_2 3" />.</p>
+                <p className="text-emerald-100"><strong>Jawaban:</strong> <InlineMath math="x=1" /> atau <InlineMath math="x=\log_2 3" />.</p>
               </ExampleCard>
               <ExampleCard number={2} difficulty="Sedang" tone="blue" question={<>Selesaikan <InlineMath math="3^{2x}-10\cdot3^x+9=0" />.</>}>
                 <p>Ambil <InlineMath math="y=3^x>0" />:</p>
@@ -391,7 +435,7 @@ const SmaPersamaanEksponenPage = () => {
                 <p>Karena <InlineMath math="4^x=(2^2)^x=(2^x)^2" />, misalkan <InlineMath math="y=2^x>0" />:</p>
                 <Formula tone="rose">y^2-6y+8=0\Rightarrow(y-2)(y-4)=0</Formula>
                 <p><InlineMath math="y=2" /> menghasilkan <InlineMath math="x=1" />; <InlineMath math="y=4=2^2" /> menghasilkan <InlineMath math="x=2" />.</p>
-                <p className="text-rose-100"><strong>Himpunan penyelesaian:</strong> <InlineMath math="\\{1,2\\}" />.</p>
+                <p className="text-rose-100"><strong>Himpunan penyelesaian:</strong> <InlineMath math="\{1,2\}" />.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -409,7 +453,7 @@ const SmaPersamaanEksponenPage = () => {
               <ExampleCard number={1} difficulty="Mudah" tone="cyan" question={<>Sebuah koloni berisi 200 bakteri dan berlipat dua setiap 3 jam. Kapan jumlahnya menjadi 1.600 bakteri?</>}>
                 <p>Modelnya <InlineMath math="N(t)=200\cdot2^{t/3}" />. Masukkan target:</p>
                 <Formula tone="cyan">{"200\\cdot2^{t/3}=1.600\\Rightarrow2^{t/3}=8=2^3"}</Formula>
-                <p>Samakan pangkat: <InlineMath math="\\frac{t}{3}=3" />, jadi <strong className="text-cyan-100"><InlineMath math="t=9" /> jam</strong>.</p>
+                <p>Samakan pangkat: <InlineMath math="\frac{t}{3}=3" />, jadi <strong className="text-cyan-100"><InlineMath math="t=9" /> jam</strong>.</p>
               </ExampleCard>
               <ExampleCard number={2} difficulty="Sedang" tone="emerald" question={<>Tabungan Rp1.500.000,00 tumbuh 10% per tahun. Setelah berapa tahun nilainya mencapai Rp2.196.150,00?</>}>
                 <p>Faktor pertumbuhan 10% adalah <InlineMath math="1+0{,}10=1{,}1" />:</p>
@@ -417,9 +461,9 @@ const SmaPersamaanEksponenPage = () => {
                 <p>Karena basis sama, <InlineMath math="t=4" />. Jadi tabungan mencapai target setelah <strong className="text-emerald-100">4 tahun</strong>.</p>
               </ExampleCard>
               <ExampleCard number={3} difficulty="Sulit" tone="violet" question={<>Suatu zat bermassa 80 mg memiliki waktu paruh 6 jam. Berapa lama hingga massanya tersisa 10 mg?</>}>
-                <p>Model peluruhan: <InlineMath math="m(t)=80\\left(\\frac12\\right)^{t/6}" />. Masukkan massa akhir:</p>
+                <p>Model peluruhan: <InlineMath math="m(t)=80\left(\frac12\right)^{t/6}" />. Masukkan massa akhir:</p>
                 <Formula tone="violet">{"80\\left(\\frac12\\right)^{t/6}=10\\Rightarrow\\left(\\frac12\\right)^{t/6}=\\frac18=\\left(\\frac12\\right)^3"}</Formula>
-                <p>Samakan pangkat: <InlineMath math="\\frac{t}{6}=3" />, maka <strong className="text-violet-100"><InlineMath math="t=18" /> jam</strong>.</p>
+                <p>Samakan pangkat: <InlineMath math="\frac{t}{6}=3" />, maka <strong className="text-violet-100"><InlineMath math="t=18" /> jam</strong>.</p>
               </ExampleCard>
             </div>
           </Accordion>
@@ -433,8 +477,11 @@ const SmaPersamaanEksponenPage = () => {
                 <tbody className="text-white/75">
                   {[
                     ["Basis sama", "$a^m=a^n$", "Samakan eksponen"],
+                    ["Bentuk fungsi eksponen", "$a^{f(x)}=a^{g(x)}$", "Samakan $f(x)$ dan $g(x)$"],
+                    ["Pangkat sama, basis berbeda", "$a^{f(x)}=b^{f(x)}$", "Jika $a\\ne b$, maka $f(x)=0$"],
+                    ["Basis berupa fungsi", "$h(x)^{f(x)}=h(x)^{g(x)}$", "Periksa $h(x)=1$, $0$, atau $-1$"],
                     ["Basis berbeda", "$4=2^2$, $8=2^3$", "Ubah ke basis yang sama"],
-                    ["Ada $a^{2x}$ dan $a^x$", "$y=a^x$", "Ingat $y>0$"],
+                    ["Bentuk kuadrat", "$p(a^{f(x)})^2+q a^{f(x)}+r=0$", "Substitusi $y=a^{f(x)}$"],
                     ["Soal cerita", "$N(t)=N_0r^{t/p}$", "Periksa satuan waktu"],
                   ].map(([situation, step, note], index) => (
                     <tr key={situation} className={`border-t border-white/5 ${index % 2 === 0 ? "bg-white/[0.025]" : ""}`}>
