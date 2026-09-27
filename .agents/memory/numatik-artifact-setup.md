@@ -21,6 +21,9 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - Build and dev prehooks regenerate the tracked search index from page content; content changes can therefore legitimately update `public/search-index.json`.
   **Why:** Search needs to reflect newly added instructional text and routes after a build.
   **How to apply:** Keep the generated index synchronized when changing searchable page copy; do not mistake that diff for an unrelated source edit.
+- For teacher-facing SMA subtopics, register the dedicated lazy route before the generic `:mode/:topicSlug/:subtopicSlug` fallback and verify the deep link directly after build.
+  **Why:** The generic fallback can render a placeholder while hiding a missing route registration, even though the topic menu link itself looks correct.
+  **How to apply:** Add the page import and exact slug route together, then check the target URL with the managed preview and a direct HTTP request.
 
 ## Languages
 - App uses **i18n (react-i18next)** with 3 locales: `id` (Indonesian), `en` (English), `ja` (Japanese).
