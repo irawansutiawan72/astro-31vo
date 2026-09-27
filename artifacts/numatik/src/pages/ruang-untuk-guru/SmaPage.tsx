@@ -9,6 +9,7 @@ import {
   GraduationCap,
   Gamepad2,
   Heart,
+  Info,
   Medal,
   Rocket,
   Settings,
@@ -84,6 +85,18 @@ const smaMenuItems = [
     icon: Settings,
     path: "/pengaturan",
     desc: "Atur mode gelap/terang",
+  },
+  {
+    label: "PETUNJUK PENGGUNAAN",
+    icon: Info,
+    path: "/petunjuk",
+    desc: "Panduan penggunaan",
+  },
+  {
+    label: "TENTANG APLIKASI",
+    icon: Rocket,
+    path: "/tentang-aplikasi",
+    desc: "Informasi tentang aplikasi",
   },
 ];
 
