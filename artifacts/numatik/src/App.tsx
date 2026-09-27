@@ -166,6 +166,7 @@ const SmaEksponenLogaritmaLatihanPage = lazy(() => import("./pages/ruang-untuk-g
 const SmaLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaLogaritmaPage"));
 const SmaFungsiEksponenPage = lazy(() => import("./pages/ruang-untuk-guru/SmaFungsiEksponenPage"));
 const SmaPersamaanEksponenPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPersamaanEksponenPage"));
+const SmaPertidaksamaanEksponenPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPertidaksamaanEksponenPage"));
 const SmaBentukAkarPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBentukAkarPage"));
 const SmaBarisanDeretAritmetikaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretAritmetikaPage"));
 const SmaBarisanDeretGeometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretGeometriPage"));
@@ -1158,6 +1159,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/persamaan-eksponen"
               element={<SmaPersamaanEksponenPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/pertidaksamaan-eksponen"
+              element={<SmaPertidaksamaanEksponenPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/fungsi-eksponen/eksplorasi-fungsi-eksponen"
