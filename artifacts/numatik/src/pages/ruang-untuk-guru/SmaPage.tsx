@@ -21,22 +21,34 @@ import { playPopSound } from "@/hooks/useAudio";
 
 const smaMenuItems = [
   {
-    label: "BUKU ANIMASI MATEMATIKA",
+    label: "PETUNJUK PENGGUNAAN",
+    icon: Info,
+    path: "/petunjuk",
+    desc: "Panduan penggunaan",
+  },
+  {
+    label: "BUKU ANIMASI MATEMATIKA SMA",
     icon: BookOpen,
     path: "/ruang-untuk-guru/sma/buku-animasi",
     desc: "Pelajari konsep matematika secara visual dan interaktif",
   },
   {
-    label: "TUGAS-LATIHAN MANDIRI",
+    label: "TUGAS-LATIHAN MANDIRI SMA",
     icon: ClipboardList,
     path: "/ruang-untuk-guru/sma/tugas-latihan-mandiri",
     desc: "Latihan soal untuk memperkuat pemahaman materi",
   },
   {
-    label: "MATH GAME ARENA",
+    label: "MATH GAME ARENA SMA",
     icon: Gamepad2,
     path: "/math-game-arena",
     desc: "Belajar matematika sambil bermain game interaktif",
+  },
+  {
+    label: "TES KEMAMPUAN AKADEMIK SMA",
+    icon: Brain,
+    path: "/ruang-untuk-guru/sma/tes-kemampuan-akademik",
+    desc: "Uji kemampuan akademik matematika",
   },
   {
     label: "INTENSIF UTBK",
@@ -51,10 +63,10 @@ const smaMenuItems = [
     desc: "Tantangan matematika untuk mengasah penalaran",
   },
   {
-    label: "TES KEMAMPUAN AKADEMIK SMA",
-    icon: Brain,
-    path: "/ruang-untuk-guru/sma/tes-kemampuan-akademik",
-    desc: "Uji kemampuan akademik matematika",
+    label: "NUMATIK ARTIFICIAL INTELLIGENCE (AI)",
+    icon: Bot,
+    path: "/chat-ai",
+    desc: "Tanya jawab dengan AI matematika",
   },
   {
     label: "KALKULATOR SCIENTIFIC",
@@ -63,10 +75,10 @@ const smaMenuItems = [
     desc: "Hitung cepat dengan kalkulator scientific",
   },
   {
-    label: "NUMATIK ARTIFICIAL INTELLIGENCE (AI)",
-    icon: Bot,
-    path: "/chat-ai",
-    desc: "Tanya jawab dengan AI matematika",
+    label: "PENGATURAN",
+    icon: Settings,
+    path: "/pengaturan",
+    desc: "Atur mode gelap/terang",
   },
   {
     label: "DONASI",
@@ -79,18 +91,6 @@ const smaMenuItems = [
     icon: User,
     path: "/biografi",
     desc: "Data pembuat aplikasi",
-  },
-  {
-    label: "PENGATURAN",
-    icon: Settings,
-    path: "/pengaturan",
-    desc: "Atur mode gelap/terang",
-  },
-  {
-    label: "PETUNJUK PENGGUNAAN",
-    icon: Info,
-    path: "/petunjuk",
-    desc: "Panduan penggunaan",
   },
   {
     label: "TENTANG APLIKASI",
