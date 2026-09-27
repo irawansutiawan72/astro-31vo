@@ -5,7 +5,7 @@ Numatik (Numerasi Aktif dengan Teknologi Informasi dan Komunikasi) is an educati
 ## Run & Operate
 
 - **Frontend** — run `pnpm --filter @workspace/numatik dev` from the workspace root. Its `predev` script calls the root `scripts/ensure-deps.mjs`, which installs dependencies from the workspace root when `artifacts/numatik/node_modules/.bin/vite` is missing, then regenerates the search index before Vite. The package's `prebuild` and `preview` scripts retain the same dependency check for direct package operations. Vite listens on `0.0.0.0:$PORT` with `PORT=18860` for the managed preview. **Source of truth: `artifacts/numatik/src/`** — this is the only location to edit; Vercel build also uses this package.
-- **API server** — workflow `Numatik API Server` starts the separate Express 5 backend package (`PORT=8080 pnpm --filter @workspace/api-server run dev`); requires `DATABASE_URL`.
+- **API server** — managed workflow `artifacts/api-server: API Server` starts the separate Express 5 backend package (`PORT=8080 pnpm --filter @workspace/api-server run dev`). On a clean import, install its dependency graph with `pnpm install --filter @workspace/api-server... --frozen-lockfile` if the package-local `node_modules` is missing. The health route runs without a database; database-backed features still require `DATABASE_URL`.
 - `artifact.toml` files exist under `artifacts/*/.replit-artifact/`. The Numatik package owns its dependency bootstrap; do not assume a separate workflow has already populated `node_modules`.
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
