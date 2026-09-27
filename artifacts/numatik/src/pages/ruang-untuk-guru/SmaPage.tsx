@@ -4,10 +4,15 @@ import {
   BookOpen,
   Brain,
   ClipboardList,
+  Bot,
+  Calculator,
   GraduationCap,
   Gamepad2,
+  Heart,
   Medal,
   Rocket,
+  Settings,
+  User,
 } from "lucide-react";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
@@ -49,6 +54,36 @@ const smaMenuItems = [
     icon: Brain,
     path: "/ruang-untuk-guru/sma/tes-kemampuan-akademik",
     desc: "Uji kemampuan akademik matematika",
+  },
+  {
+    label: "KALKULATOR SCIENTIFIC",
+    icon: Calculator,
+    path: "/kalkulator-scientific",
+    desc: "Hitung cepat dengan kalkulator scientific",
+  },
+  {
+    label: "NUMATIK ARTIFICIAL INTELLIGENCE (AI)",
+    icon: Bot,
+    path: "/chat-ai",
+    desc: "Tanya jawab dengan AI matematika",
+  },
+  {
+    label: "DONASI",
+    icon: Heart,
+    path: "/donasi",
+    desc: "Ayo dukung agar aplikasinya lebih berkembang",
+  },
+  {
+    label: "BIOGRAFI",
+    icon: User,
+    path: "/biografi",
+    desc: "Data pembuat aplikasi",
+  },
+  {
+    label: "PENGATURAN",
+    icon: Settings,
+    path: "/pengaturan",
+    desc: "Atur mode gelap/terang",
   },
 ];
 
