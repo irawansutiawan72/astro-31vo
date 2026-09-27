@@ -5,6 +5,7 @@ import {
   Brain,
   ClipboardList,
   GraduationCap,
+  Gamepad2,
   Medal,
   Rocket,
 } from "lucide-react";
@@ -24,6 +25,12 @@ const smaMenuItems = [
     icon: ClipboardList,
     path: "/ruang-untuk-guru/sma/tugas-latihan-mandiri",
     desc: "Latihan soal untuk memperkuat pemahaman materi",
+  },
+  {
+    label: "MATH GAME ARENA",
+    icon: Gamepad2,
+    path: "/math-game-arena",
+    desc: "Belajar matematika sambil bermain game interaktif",
   },
   {
     label: "INTENSIF UTBK",
