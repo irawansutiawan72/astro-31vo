@@ -1,0 +1,39 @@
+RUANG UNTUK GURU – SMA – BUKU ANIMASI MATEMATIKA SMA – EKSPONEN DAN LOGARITMA – PERTIDAKSAMAAN EKSPONEN
+Role: Kamu adalah seorang Instructional Designer dan Ahli Materi Pendidikan yang mahir membuat konten aplikasi pembelajaran yang interaktif.
+Tugas: buat konten materi PERTIDAKSAMAAN EKSPONEN untuk SMA yang orisinal untuk aplikasi saya di menu tersebut yang berisi lengkap dan menarik
+dengan Aturan Penulisan & Struktur:
+buatlah Gambar - gambar dan animasi yang lucu dan jelas beserta warnanya berbeda dengan backgrorund agar jelas
+Parafrase Total: Tulis ulang materi menggunakan bahasa yang lebih segar, mudah dipahami, dan kasual namun tetap profesional. Hindari struktur kalimat yang sama persis dengan buku sumber.
+Struktur Sub-bab: Setiap sub-bab wajib memiliki:
+Ringkasan Intisari: Penjelasan singkat konsep utama.
+3 Contoh Soal Berbeda: Buat 3 contoh soal yang tingkat kesulitannya bertahap (Mudah, Sedang, Sulit).
+Pembahasan Detail: Setiap contoh soal wajib disertai langkah-langkah penyelesaian.
+Format Matematika & Sains: Gunakan sintaks LaTeX (gunakan tanda $...$) untuk semua rumus, variabel, simbol, dan persamaan matematika.
+Visual & Warna (Sangat Penting): Gunakan blok warna terpisah (menggunakan format Markdown) untuk membedakan elemen agar nyaman dibaca di layar aplikasi:
+Gunakan Bold untuk istilah penting.
+Gunakan blok Quote (>) untuk Tips atau Catatan Penting.
+A.	Gunakan blok Code (``) atau tabel untuk memisahkan Pembahasan dari Soal.
+
+MATERI MEMUAT MINIMAL MATERI TENTANG :
+B.	Pertidaksamaan Eksponen
+Bentuk I Pertidaksamaan Eksponen
+
+	Untuk a > 1
+1. 	Jika af(x)> ag(x), maka f(x) > g(x)
+2. 	Jika af(x)< ag(x), maka f(x) < g(x)
+	Jika 0 < a < 1
+1.  Jika af(x)> ag(x), maka f(x) < g(x)
+2.  Jika af(x)< ag(x), maka f(x) > g(x)
+Bentuk II Pertidaksamaan Eksponen
+
+	Jika 
+1.	 
+2.	 
+3.	  
+4.	 
+Maka dapat diselesaikan secara pertidaksamaan kuadrat.
+
+Kurva
+1.	Jika :f(x) berada diatas kurva g(x), maka f(x) > g(x)
+2.	Jika :f(x) berada dibawah kurva g(x), maka f(x) < g(x)
+
