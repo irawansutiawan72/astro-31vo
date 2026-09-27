@@ -506,6 +506,8 @@ const PKPenerapanKontekstualPage = lazy(() => import("./pages/latihan-mandiri/ke
 
 // Math Game Arena Pages
 const MathGameArenaPage = lazy(() => import("./pages/MathGameArenaPage"));
+const MathGameArenaSmaMenuPage = lazy(() => import("./pages/MathGameArenaSmaMenuPage"));
+const MathGameArenaSmaSubtopicPage = lazy(() => import("./pages/MathGameArenaSmaSubtopicPage"));
 const MathGameArenaKelas7Page = lazy(() => import("./pages/MathGameArenaKelas7Page"));
 const MathGameArenaKelas8Page = lazy(() => import("./pages/MathGameArenaKelas8Page"));
 const MathGameArenaKelas9Page = lazy(() => import("./pages/MathGameArenaKelas9Page"));
@@ -1507,6 +1509,8 @@ const AppInner = () => {
 
           {/* Math Game Arena Routes */}
           <Route path="/math-game-arena" element={<MathGameArenaPage />} />
+           <Route path="/math-game-arena/sma/:topicSlug/:subtopicSlug" element={<MathGameArenaSmaSubtopicPage />} />
+           <Route path="/math-game-arena/sma/:topicSlug" element={<MathGameArenaSmaMenuPage />} />
           <Route path="/math-game-arena/kelas-7" element={<Navigate to="/math-game-arena" replace />} />
           <Route path="/math-game-arena/kelas-8" element={<Navigate to="/math-game-arena" replace />} />
           <Route path="/math-game-arena/kelas-9" element={<Navigate to="/math-game-arena" replace />} />

@@ -1,5 +1,5 @@
-import DirectTopicMenu from "@/components/DirectTopicMenu";
+import MathGameArenaSmaMenuPage from "./MathGameArenaSmaMenuPage";
 
-const MathGameArenaPage = () => <DirectTopicMenu kind="game" />;
+const MathGameArenaPage = () => <MathGameArenaSmaMenuPage />;
 
 export default MathGameArenaPage;
