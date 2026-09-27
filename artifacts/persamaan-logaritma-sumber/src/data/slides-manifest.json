@@ -1,1 +1,218 @@
-[]
+[
+  {
+    "id": "persamaan-logaritma-sumber-slide-01",
+    "position": 1,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide1.tsx",
+    "title": "Slide 1 — Pembuka",
+    "description": "Slide pembuka materi logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-02",
+    "position": 2,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide2.tsx",
+    "title": "Slide 2 — Pengantar",
+    "description": "Pengantar menuju persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-03",
+    "position": 3,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide3.tsx",
+    "title": "Slide 3 — Definisi",
+    "description": "Definisi dan bentuk dasar persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-04",
+    "position": 4,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide4.tsx",
+    "title": "Slide 4 — Syarat",
+    "description": "Syarat basis dan numerus logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-05",
+    "position": 5,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide5.tsx",
+    "title": "Slide 5 — Bentuk Persamaan",
+    "description": "Ragam bentuk persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-06",
+    "position": 6,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide6.tsx",
+    "title": "Slide 6 — Strategi",
+    "description": "Strategi umum menyelesaikan persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-07",
+    "position": 7,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide7.tsx",
+    "title": "Slide 7 — Contoh Dasar",
+    "description": "Contoh dasar persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-08",
+    "position": 8,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide8.tsx",
+    "title": "Slide 8 — Pembahasan",
+    "description": "Pembahasan contoh dengan perubahan bentuk.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-09",
+    "position": 9,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide9.tsx",
+    "title": "Slide 9 — Basis Sama",
+    "description": "Persamaan dengan basis logaritma yang sama.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-10",
+    "position": 10,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide10.tsx",
+    "title": "Slide 10 — Numerus",
+    "description": "Menyamakan numerus pada persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-11",
+    "position": 11,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide11.tsx",
+    "title": "Slide 11 — Contoh",
+    "description": "Contoh penyelesaian persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-12",
+    "position": 12,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide12.tsx",
+    "title": "Slide 12 — Latihan",
+    "description": "Latihan bertahap persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-13",
+    "position": 13,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide13.tsx",
+    "title": "Slide 13 — Basis Berbeda",
+    "description": "Persamaan logaritma dengan basis berbeda.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-14",
+    "position": 14,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide14.tsx",
+    "title": "Slide 14 — Contoh Basis",
+    "description": "Contoh numerus sama pada basis berbeda.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-15",
+    "position": 15,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide15.tsx",
+    "title": "Slide 15 — Penyelesaian",
+    "description": "Langkah penyelesaian dan pemeriksaan jawaban.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-16",
+    "position": 16,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide16.tsx",
+    "title": "Slide 16 — Bentuk Kuadrat",
+    "description": "Pengantar bentuk kuadrat dalam logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-17",
+    "position": 17,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide17.tsx",
+    "title": "Slide 17 — Substitusi",
+    "description": "Substitusi variabel pada persamaan kuadrat logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-18",
+    "position": 18,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide18.tsx",
+    "title": "Slide 18 — Contoh Kuadrat",
+    "description": "Contoh persamaan kuadrat dalam logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-19",
+    "position": 19,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide19.tsx",
+    "title": "Slide 19 — Pembahasan Kuadrat",
+    "description": "Pembahasan lanjutan bentuk kuadrat.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-20",
+    "position": 20,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide20.tsx",
+    "title": "Slide 20 — Penyaringan Akar",
+    "description": "Penyaringan akar berdasarkan syarat logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-21",
+    "position": 21,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide21.tsx",
+    "title": "Slide 21 — Ringkasan",
+    "description": "Ringkasan metode penyelesaian.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-22",
+    "position": 22,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide22.tsx",
+    "title": "Slide 22 — Latihan Akhir",
+    "description": "Latihan akhir materi persamaan logaritma.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-23",
+    "position": 23,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide23.tsx",
+    "title": "Slide 23 — Catatan",
+    "description": "Catatan penting dan pemeriksaan jawaban.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "persamaan-logaritma-sumber-slide-24",
+    "position": 24,
+    "kind": "jsx",
+    "filepath": "src/pages/slides/Slide24.tsx",
+    "title": "Slide 24 — Penutup",
+    "description": "Penutup sumber materi persamaan logaritma.",
+    "speakerNotes": ""
+  }
+]
