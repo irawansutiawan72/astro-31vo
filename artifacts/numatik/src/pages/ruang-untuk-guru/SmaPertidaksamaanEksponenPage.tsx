@@ -216,6 +216,75 @@ const SignChart = () => (
   </div>
 );
 
+const CurveComparisonIllustration = () => {
+  const [position, setPosition] = useState<"above" | "below">("above");
+  const fIsAbove = position === "above";
+  const fY = fIsAbove ? 96 : 190;
+  const gY = fIsAbove ? 190 : 96;
+
+  return (
+    <ColorCard tone="violet">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start gap-3">
+            <Target className="mt-0.5 h-5 w-5 shrink-0 text-violet-200" />
+            <div>
+              <p className="font-display text-base font-bold text-violet-100">Cara membaca dua kurva</p>
+              <p className="mt-1 font-body text-sm leading-relaxed text-violet-50/85">
+                “Di atas” atau “di bawah” selalu dibaca pada <strong>x yang sama</strong>. Tarik garis vertikal dari titik pada kurva
+                <InlineMath math="f" /> ke kurva <InlineMath math="g" />, lalu bandingkan ketinggian keduanya.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => { playPopSound(); setPosition("above"); }}
+              className={`rounded-xl px-3 py-2 font-body text-xs font-bold transition ${fIsAbove ? "bg-emerald-300/25 text-emerald-100" : "bg-white/10 text-white/60"}`}
+            >
+              f(x) di atas g(x)
+            </button>
+            <button
+              type="button"
+              onClick={() => { playPopSound(); setPosition("below"); }}
+              className={`rounded-xl px-3 py-2 font-body text-xs font-bold transition ${!fIsAbove ? "bg-rose-300/25 text-rose-100" : "bg-white/10 text-white/60"}`}
+            >
+              f(x) di bawah g(x)
+            </button>
+          </div>
+        </div>
+        <div className="w-full shrink-0 md:max-w-[390px]">
+          <svg viewBox="0 0 520 265" role="img" aria-label={fIsAbove ? "Kurva f berada di atas kurva g pada x yang sama" : "Kurva f berada di bawah kurva g pada x yang sama"} className="h-auto w-full rounded-2xl border border-white/10 bg-slate-950/45">
+            <path d="M48 220 H488 M94 22 V220" stroke="#94a3b8" strokeOpacity=".6" />
+            <path d="M94 42 V220 M180 42 V220 M266 42 V220 M352 42 V220 M438 42 V220" stroke="#64748b" strokeOpacity=".12" strokeDasharray="4 6" />
+            <path d="M48 96 H488 M48 190 H488" stroke="#64748b" strokeOpacity=".14" strokeDasharray="4 6" />
+            <path d="M48 171 C125 126 182 132 239 164 S355 203 488 74" fill="none" stroke="#a78bfa" strokeWidth="4" strokeLinecap="round" />
+            <path d="M48 84 C126 124 183 115 239 80 S356 72 488 164" fill="none" stroke="#67e8f9" strokeWidth="4" strokeLinecap="round" />
+            <text x="465" y="69" fill="#67e8f9" fontSize="13" fontWeight="800">f</text>
+            <text x="465" y="180" fill="#c4b5fd" fontSize="13" fontWeight="800">g</text>
+            <line x1="352" y1={fY} x2="352" y2={gY} stroke={fIsAbove ? "#86efac" : "#fda4af"} strokeWidth="3" strokeDasharray="6 5" />
+            <circle cx="352" cy={fY} r="6" fill="#67e8f9" stroke="#ecfeff" strokeWidth="2" />
+            <circle cx="352" cy={gY} r="6" fill="#a78bfa" stroke="#f5f3ff" strokeWidth="2" />
+            <text x="363" y={fY - 9} fill="#bae6fd" fontSize="12" fontWeight="700">f(x)</text>
+            <text x="363" y={gY + 17} fill="#ddd6fe" fontSize="12" fontWeight="700">g(x)</text>
+            <text x="358" y="237" fill="#cbd5e1" fontSize="11">x yang sama</text>
+          </svg>
+        </div>
+      </div>
+      <div className={`mt-4 rounded-xl border px-4 py-3 font-body text-sm leading-relaxed ${fIsAbove ? "border-emerald-300/25 bg-emerald-300/10 text-emerald-50" : "border-rose-300/25 bg-rose-300/10 text-rose-50"}`}>
+        {fIsAbove ? (
+          <><strong>Kurva f lebih tinggi daripada kurva g.</strong> Jadi, pada nilai <InlineMath math="x" /> tersebut, nilai <InlineMath math="f(x)" /> lebih besar: <InlineMath math="f(x)>g(x)" />.</>
+        ) : (
+          <><strong>Kurva f lebih rendah daripada kurva g.</strong> Jadi, pada nilai <InlineMath math="x" /> tersebut, nilai <InlineMath math="f(x)" /> lebih kecil: <InlineMath math="f(x)<g(x)" />.</>
+        )}
+      </div>
+      <p className="mt-3 font-body text-xs leading-relaxed text-white/60">
+        Bayangkan dua seluncuran: untuk satu posisi mendatar yang sama, seluncuran yang lebih tinggi memiliki nilai <InlineMath math="y" /> lebih besar. Itulah arti “berada di atas”.
+      </p>
+    </ColorCard>
+  );
+};
+
 const SmaPertidaksamaanEksponenPage = () => {
   const allSections = ["direction", "quadratic", "summary"];
   const [expanded, setExpanded] = useState(allSections);
@@ -315,6 +384,8 @@ const SmaPertidaksamaanEksponenPage = () => {
                 <p className="mt-3 text-sm leading-relaxed text-white/70">Untuk tanda <InlineMath math="<,\ \le,\ \ge" />, alurnya sama. Hanya simbol akhirnya yang mengikuti aturan basis.</p>
               </ColorCard>
             </div>
+
+            <CurveComparisonIllustration />
 
             <div className="grid gap-4 md:grid-cols-3">
               <ExampleCard number={1} difficulty="Mudah" tone="emerald" question={<>Tentukan penyelesaian dari <InlineMath math="2^{x+1}>8" />.</>}>
