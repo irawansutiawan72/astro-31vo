@@ -163,6 +163,7 @@ const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMen
 const SmaSubtopicComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSubtopicComingSoonPage"));
 const SmaEksponenLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaPage"));
 const SmaEksponenLogaritmaLatihanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaLatihanPage"));
+const SmaPersamaanEksponenLatihanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPersamaanEksponenLatihanPage"));
 const SmaLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaLogaritmaPage"));
 const SmaPersamaanLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPersamaanLogaritmaPage"));
 const SmaPertidaksamaanLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPertidaksamaanLogaritmaPage"));
@@ -1145,6 +1146,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/tugas-latihan-mandiri/eksponen-dan-logaritma/sifat-sifat-eksponen"
               element={<SmaEksponenLogaritmaLatihanPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/tugas-latihan-mandiri/eksponen-dan-logaritma/persamaan-eksponen"
+              element={<SmaPersamaanEksponenLatihanPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/konsep-dan-sifat-sifat-logaritma"
