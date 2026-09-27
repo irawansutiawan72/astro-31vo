@@ -342,6 +342,11 @@ const SmaPersamaanEksponenPage = () => {
                   <Formula tone="blue">{"a^{f(x)}=b^{f(x)}\\quad\\Longrightarrow\\quad f(x)=0\\qquad(a,b>0,\\ a\\ne b)"}</Formula>
                   <p className="font-body text-xs leading-relaxed text-white/65">Syarat <InlineMath math="a\ne b" /> penting. Saat <InlineMath math="f(x)=0" />, kedua ruas sama-sama bernilai <InlineMath math="1" />.</p>
                 </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/25 p-3">
+                  <p className="font-body text-xs font-black uppercase tracking-[0.16em] text-blue-100/70">Pangkat fungsi sama</p>
+                  <Formula tone="blue">{"f(x)^{h(x)}=g(x)^{h(x)}\\quad\\Longrightarrow\\quad f(x)=g(x)\\qquad(f(x),g(x)>0,\\ h(x)\\ne0)"}</Formula>
+                  <p className="font-body text-xs leading-relaxed text-white/65">Jika <InlineMath math="h(x)=0" />, kedua ruas bernilai <InlineMath math="1" /> sehingga basis tidak harus sama.</p>
+                </div>
               </div>
               <div className="mt-3 rounded-xl border border-violet-300/25 bg-violet-400/10 p-3">
                 <p className="font-body text-xs font-black uppercase tracking-[0.16em] text-violet-100/75">Basis berupa fungsi</p>
@@ -479,6 +484,7 @@ const SmaPersamaanEksponenPage = () => {
                     ["Basis sama", "$a^m=a^n$", "Samakan eksponen"],
                     ["Bentuk fungsi eksponen", "$a^{f(x)}=a^{g(x)}$", "Samakan $f(x)$ dan $g(x)$"],
                     ["Pangkat sama, basis berbeda", "$a^{f(x)}=b^{f(x)}$", "Jika $a\\ne b$, maka $f(x)=0$"],
+                    ["Pangkat fungsi sama", "$f(x)^{h(x)}=g(x)^{h(x)}$", "Jika $h(x)\\ne0$, samakan basis"],
                     ["Basis berupa fungsi", "$h(x)^{f(x)}=h(x)^{g(x)}$", "Periksa $h(x)=1$, $0$, atau $-1$"],
                     ["Basis berbeda", "$4=2^2$, $8=2^3$", "Ubah ke basis yang sama"],
                     ["Bentuk kuadrat", "$p(a^{f(x)})^2+q a^{f(x)}+r=0$", "Substitusi $y=a^{f(x)}$"],
