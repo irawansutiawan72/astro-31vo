@@ -2,6 +2,127 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 
+const circleStroke = "var(--icon-stroke)";
+const circleText = "var(--icon-color)";
+const cyan = "#38bdf8";
+const yellow = "#facc15";
+const pink = "#fb7185";
+
+const DiagramShell = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <svg
+    viewBox="0 0 420 240"
+    role="img"
+    aria-label={title}
+    className="mx-auto w-full max-w-lg"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title>{title}</title>
+    {children}
+  </svg>
+);
+
+const Soal1SVG = () => (
+  <DiagramShell title="Lingkaran berjari-jari 21 cm dengan satu juring diarsir">
+    <circle cx="210" cy="120" r="84" fill="none" stroke={circleStroke} strokeWidth="2.5" />
+    <path d="M210 120 L210 36 A84 84 0 0 1 282.75 78 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
+    <line x1="210" y1="120" x2="210" y2="36" stroke={yellow} strokeWidth="2" />
+    <line x1="210" y1="120" x2="282.75" y2="78" stroke={yellow} strokeWidth="2" />
+    <circle cx="210" cy="120" r="4" fill={pink} />
+    <text x="197" y="139" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="216" y="73" fill={yellow} fontSize="14" fontFamily="serif">r = 21 cm</text>
+    <text x="273" y="62" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
+    <text x="291" y="84" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
+    <text x="317" y="207" fill={yellow} fontSize="13" fontFamily="sans-serif">daerah diarsir</text>
+    <line x1="294" y1="190" x2="260" y2="112" stroke={yellow} strokeWidth="1.4" strokeDasharray="4 4" />
+  </DiagramShell>
+);
+
+const Soal2SVG = () => (
+  <DiagramShell title="Diagram busur kecil PQ dan juring dengan sudut pusat 120 derajat">
+    <line x1="210" y1="18" x2="210" y2="222" stroke={circleStroke} strokeOpacity="0.2" strokeDasharray="4 5" />
+    <line x1="18" y1="120" x2="402" y2="120" stroke={circleStroke} strokeOpacity="0.2" strokeDasharray="4 5" />
+    <circle cx="108" cy="120" r="70" fill="none" stroke={circleStroke} strokeWidth="2.2" />
+    <path d="M168.62 85 A70 70 0 0 1 168.62 155" fill="none" stroke={cyan} strokeWidth="6" strokeLinecap="round" />
+    <line x1="108" y1="120" x2="168.62" y2="85" stroke={cyan} strokeWidth="2" />
+    <line x1="108" y1="120" x2="168.62" y2="155" stroke={cyan} strokeWidth="2" />
+    <circle cx="108" cy="120" r="3.5" fill={pink} />
+    <text x="98" y="139" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="171" y="82" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
+    <text x="171" y="164" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
+    <text x="32" y="34" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Busur kecil PQ</text>
+    <text x="56" y="207" fill={yellow} fontSize="13" fontFamily="serif">OP = 21 cm</text>
+    <line x1="280" y1="120" x2="280" y2="52" stroke={circleStroke} strokeWidth="2.2" />
+    <line x1="280" y1="120" x2="338.89" y2="154" stroke={circleStroke} strokeWidth="2.2" />
+    <path d="M280 120 L280 52 A68 68 0 0 1 338.89 154 Z" fill="#facc15" fillOpacity="0.3" stroke={yellow} strokeWidth="2" />
+    <circle cx="280" cy="120" r="3.5" fill={pink} />
+    <text x="270" y="139" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="273" y="44" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
+    <text x="342" y="161" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
+    <text x="288" y="91" fill={yellow} fontSize="13" fontFamily="serif">120°</text>
+    <text x="300" y="199" fill={yellow} fontSize="13" fontFamily="serif">r = 7 cm</text>
+    <text x="259" y="22" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Juring</text>
+  </DiagramShell>
+);
+
+const Soal3SVG = () => (
+  <DiagramShell title="Lingkaran dengan busur QR sepanjang 60 cm dan busur PQ yang dicari">
+    <circle cx="210" cy="120" r="82" fill="none" stroke={circleStroke} strokeWidth="2.5" />
+    <path d="M151.98 61.98 A82 82 0 0 1 268.02 61.98" fill="none" stroke={cyan} strokeWidth="6" strokeLinecap="round" />
+    <path d="M268.02 61.98 A82 82 0 0 1 268.02 178.02" fill="none" stroke={yellow} strokeWidth="6" strokeLinecap="round" />
+    <line x1="210" y1="120" x2="151.98" y2="61.98" stroke={circleStroke} strokeWidth="1.5" strokeDasharray="4 4" />
+    <line x1="210" y1="120" x2="268.02" y2="61.98" stroke={circleStroke} strokeWidth="1.5" strokeDasharray="4 4" />
+    <line x1="210" y1="120" x2="268.02" y2="178.02" stroke={circleStroke} strokeWidth="1.5" strokeDasharray="4 4" />
+    <circle cx="210" cy="120" r="4" fill={pink} />
+    <text x="198" y="140" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="137" y="58" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
+    <text x="271" y="58" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
+    <text x="272" y="190" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">R</text>
+    <text x="210" y="48" textAnchor="middle" fill={cyan} fontSize="14" fontFamily="serif">busur PQ = x cm</text>
+    <text x="319" y="124" fill={yellow} fontSize="14" fontFamily="serif">QR = 60 cm</text>
+  </DiagramShell>
+);
+
+const Soal4SVG = () => (
+  <DiagramShell title="Dua juring pada satu lingkaran: ORS diketahui 60 cm persegi dan OPQ dicari">
+    <circle cx="210" cy="120" r="84" fill="none" stroke={circleStroke} strokeWidth="2.5" />
+    <path d="M210 120 L210 36 A84 84 0 0 1 282.75 78 Z" fill="#38bdf8" fillOpacity="0.28" stroke={cyan} strokeWidth="2" />
+    <path d="M210 120 L282.75 78 A84 84 0 0 1 126.99 144.36 Z" fill="#facc15" fillOpacity="0.28" stroke={yellow} strokeWidth="2" />
+    <line x1="210" y1="120" x2="210" y2="36" stroke={cyan} strokeWidth="2" />
+    <line x1="210" y1="120" x2="282.75" y2="78" stroke={circleStroke} strokeWidth="2" />
+    <line x1="210" y1="120" x2="126.99" y2="144.36" stroke={yellow} strokeWidth="2" />
+    <circle cx="210" cy="120" r="4" fill={pink} />
+    <text x="198" y="140" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="205" y="31" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">R</text>
+    <text x="289" y="75" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">S</text>
+    <text x="117" y="158" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
+    <text x="96" y="141" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
+    <text x="235" y="74" fill={cyan} fontSize="13" fontFamily="serif">Luas ORS = 60 cm²</text>
+    <text x="162" y="181" fill={yellow} fontSize="14" fontFamily="serif">Luas OPQ = x cm²</text>
+  </DiagramShell>
+);
+
+const Soal5SVG = () => (
+  <DiagramShell title="Lingkaran pusat O dengan sudut AOB 35 derajat, sudut COD 140 derajat, dan busur AB 14 cm">
+    <circle cx="210" cy="120" r="86" fill="none" stroke={circleStroke} strokeWidth="2.5" />
+    <path d="M139.5 174.9 A86 86 0 0 1 155.2 42.2" fill="none" stroke={pink} strokeWidth="7" strokeLinecap="round" />
+    <path d="M290.8 90.6 A86 86 0 0 1 129.2 90.6" fill="none" stroke={yellow} strokeWidth="7" strokeLinecap="round" />
+    <line x1="210" y1="120" x2="139.5" y2="174.9" stroke={pink} strokeWidth="2" />
+    <line x1="210" y1="120" x2="155.2" y2="42.2" stroke={pink} strokeWidth="2" />
+    <line x1="210" y1="120" x2="290.8" y2="90.6" stroke={yellow} strokeWidth="2" />
+    <line x1="210" y1="120" x2="129.2" y2="90.6" stroke={yellow} strokeWidth="2" />
+    <circle cx="210" cy="120" r="4" fill={cyan} />
+    <text x="198" y="141" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="126" y="190" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
+    <text x="146" y="34" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
+    <text x="295" y="95" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">C</text>
+    <text x="118" y="88" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">D</text>
+    <text x="163" y="131" fill={pink} fontSize="13" fontFamily="serif">35°</text>
+    <text x="205" y="74" fill={yellow} fontSize="13" fontFamily="serif">140°</text>
+    <text x="105" y="218" fill={pink} fontSize="13" fontFamily="serif">busur AB = 14 cm</text>
+    <text x="292" y="52" fill={yellow} fontSize="13" fontFamily="serif">busur CD = x cm</text>
+  </DiagramShell>
+);
+
 const materiSections: MateriSection[] = [
   { heading: "A. Unsur-unsur Lingkaran", content: `- Pusat (O): titik yang berjarak sama dari semua titik pada lingkaran\n- Jari-jari (r): jarak dari pusat ke tepi lingkaran\n- Diameter (d): dua kali jari-jari, $d = 2r$\n- Busur: bagian keliling lingkaran\n- Tali busur: garis lurus menghubungkan dua titik pada lingkaran\n- Apotema: jarak terpendek dari pusat ke tali busur\n- Juring (sektor): daerah antara dua jari-jari dan busur\n- Tembereng: daerah antara tali busur dan busur` },
   { heading: "B. Keliling dan Luas Lingkaran", content: `Keliling (K): $K = 2\\pi r = \\pi d$\n\nLuas (L): $L = \\pi r^2$\n\nDengan $\\pi \\approx \\frac{22}{7}$ atau $\\pi \\approx 3,14$` },
@@ -11,11 +132,11 @@ const materiSections: MateriSection[] = [
 ];
 
 const latihanDasarTka: LatihanSoal[] = [
-  { no: 1, soal: "Perhatikan gambar!\nJika O adalah pusat lingkaran, jika r = 21 cm dan $\\pi = \\frac{22}{7}$, maka luas daerah yang diarsir adalah ...", options: ["A. 77 $cm^2$", "B. 154 $cm^2$", "C. 231 $cm^2$", "D. 308 $cm^2$"] },
-  { no: 2, soal: "Perhatikan gambar lingkaran di samping! Jika O pusat lingkaran, dan panjang OP = 21 cm, maka panjang busur kecil PQ adalah.... ($\\pi = \\frac{22}{7}$)\nLuas juring dengan sudut pusat $120^0$ dan panjang jari-jari 7 cm adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 77 $cm^2$", "B. 51,33 $cm^2$", "C. 38,50 $cm^2$", "D. 14,67 $cm^2$"] },
-  { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"] },
-  { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"] },
-  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"] },
+  { no: 1, soal: "Perhatikan gambar!\nJika O adalah pusat lingkaran, jika r = 21 cm dan $\\pi = \\frac{22}{7}$, maka luas daerah yang diarsir adalah ...", options: ["A. 77 $cm^2$", "B. 154 $cm^2$", "C. 231 $cm^2$", "D. 308 $cm^2$"], gambar: <Soal1SVG /> },
+  { no: 2, soal: "Perhatikan gambar lingkaran di samping! Jika O pusat lingkaran, dan panjang OP = 21 cm, maka panjang busur kecil PQ adalah.... ($\\pi = \\frac{22}{7}$)\nLuas juring dengan sudut pusat $120^0$ dan panjang jari-jari 7 cm adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 77 $cm^2$", "B. 51,33 $cm^2$", "C. 38,50 $cm^2$", "D. 14,67 $cm^2$"], gambar: <Soal2SVG /> },
+  { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"], gambar: <Soal3SVG /> },
+  { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"], gambar: <Soal4SVG /> },
+  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: <Soal5SVG /> },
   { no: 6, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 496,44 $cm^2$", "B. 718,2 $cm^2$", "C. 992,88 $cm^2$", "D. 1827 $cm^2$"] },
   { no: 7, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 59,5 $cm^2$", "B. 112 $cm^2$", "C. 119 $cm^2$", "D. 224 $cm^2$"] },
   { no: 8, soal: "Keliling daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 47,1 cm", "B. 62,8 cm", "C. 78,5 cm", "D. 94,2 cm"] },
