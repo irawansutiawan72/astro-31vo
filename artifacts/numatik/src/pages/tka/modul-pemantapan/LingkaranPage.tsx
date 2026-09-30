@@ -1,6 +1,7 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
+import soal5LingkaranImage from "@/assets/tka/lingkaran-latihan-soal-5.png";
 
 const circleStroke = "var(--icon-stroke)";
 const circleText = "var(--icon-color)";
@@ -101,26 +102,12 @@ const Soal4SVG = () => (
   </DiagramShell>
 );
 
-const Soal5SVG = () => (
-  <DiagramShell title="Lingkaran pusat O dengan sudut AOB 35 derajat, sudut COD 140 derajat, dan busur AB 14 cm">
-    <circle cx="210" cy="120" r="86" fill="none" stroke={circleStroke} strokeWidth="2.5" />
-    <path d="M139.5 174.9 A86 86 0 0 1 155.2 42.2" fill="none" stroke={pink} strokeWidth="7" strokeLinecap="round" />
-    <path d="M290.8 90.6 A86 86 0 0 1 129.2 90.6" fill="none" stroke={yellow} strokeWidth="7" strokeLinecap="round" />
-    <line x1="210" y1="120" x2="139.5" y2="174.9" stroke={pink} strokeWidth="2" />
-    <line x1="210" y1="120" x2="155.2" y2="42.2" stroke={pink} strokeWidth="2" />
-    <line x1="210" y1="120" x2="290.8" y2="90.6" stroke={yellow} strokeWidth="2" />
-    <line x1="210" y1="120" x2="129.2" y2="90.6" stroke={yellow} strokeWidth="2" />
-    <circle cx="210" cy="120" r="4" fill={cyan} />
-    <text x="198" y="141" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="126" y="190" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
-    <text x="146" y="34" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
-    <text x="295" y="95" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">C</text>
-    <text x="118" y="88" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">D</text>
-    <text x="163" y="131" fill={pink} fontSize="13" fontFamily="serif">35°</text>
-    <text x="205" y="74" fill={yellow} fontSize="13" fontFamily="serif">140°</text>
-    <text x="105" y="218" fill={pink} fontSize="13" fontFamily="serif">busur AB = 14 cm</text>
-    <text x="292" y="52" fill={yellow} fontSize="13" fontFamily="serif">busur CD = x cm</text>
-  </DiagramShell>
+const Soal5Image = () => (
+  <img
+    src={soal5LingkaranImage}
+    alt="Diagram lingkaran dengan busur AB 14 cm dan sudut pusat 35°, serta sudut pusat 140° untuk busur CD"
+    className="mx-auto block h-auto max-h-[380px] w-full max-w-[380px] rounded-lg bg-white object-contain"
+  />
 );
 
 const materiSections: MateriSection[] = [
@@ -136,7 +123,7 @@ const latihanDasarTka: LatihanSoal[] = [
   { no: 2, soal: "Perhatikan gambar lingkaran di samping! Jika O pusat lingkaran, dan panjang OP = 21 cm, maka panjang busur kecil PQ adalah.... ($\\pi = \\frac{22}{7}$)\nLuas juring dengan sudut pusat $120^0$ dan panjang jari-jari 7 cm adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 77 $cm^2$", "B. 51,33 $cm^2$", "C. 38,50 $cm^2$", "D. 14,67 $cm^2$"], gambar: <Soal2SVG /> },
   { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"], gambar: <Soal3SVG /> },
   { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"], gambar: <Soal4SVG /> },
-  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: <Soal5SVG /> },
+  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: <Soal5Image /> },
   { no: 6, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 496,44 $cm^2$", "B. 718,2 $cm^2$", "C. 992,88 $cm^2$", "D. 1827 $cm^2$"] },
   { no: 7, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 59,5 $cm^2$", "B. 112 $cm^2$", "C. 119 $cm^2$", "D. 224 $cm^2$"] },
   { no: 8, soal: "Keliling daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 47,1 cm", "B. 62,8 cm", "C. 78,5 cm", "D. 94,2 cm"] },
