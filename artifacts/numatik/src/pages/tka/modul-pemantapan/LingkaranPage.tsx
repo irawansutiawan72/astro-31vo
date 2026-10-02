@@ -4,7 +4,6 @@ import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import soal5LingkaranImage from "@/assets/tka/lingkaran-latihan-soal-5.png";
 
 const circleStroke = "var(--icon-stroke)";
-const circleText = "var(--icon-color)";
 const cyan = "#38bdf8";
 const yellow = "#facc15";
 const pink = "#fb7185";
@@ -38,23 +37,6 @@ const Soal1SVG = () => (
   </DiagramShell>
 );
 
-const Soal2SVG = () => (
-  <DiagramShell title="Satu lingkaran dengan busur PQ dan juring bersudut pusat 120 derajat">
-    <circle cx="205" cy="125" r="88" fill="none" stroke={circleStroke} strokeWidth="2.5" />
-    <path d="M205 125 L205 37 A88 88 0 0 1 281.21 169 Z" fill={yellow} fillOpacity="0.26" stroke={yellow} strokeWidth="2" />
-    <line x1="205" y1="125" x2="205" y2="37" stroke={yellow} strokeWidth="2" />
-    <line x1="205" y1="125" x2="281.21" y2="169" stroke={yellow} strokeWidth="2" />
-    <path d="M205 37 A88 88 0 0 1 281.21 169" fill="none" stroke={cyan} strokeWidth="5" strokeLinecap="round" />
-    <path d="M205 100 A25 25 0 0 1 226.65 112.5" fill="none" stroke={yellow} strokeWidth="1.8" />
-    <circle cx="205" cy="125" r="4" fill={pink} />
-    <text x="192" y="146" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="192" y="32" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
-    <text x="286" y="177" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
-    <text x="211" y="97" fill={yellow} fontSize="14" fontFamily="serif">120°</text>
-    <text x="68" y="218" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Busur PQ dan juring</text>
-  </DiagramShell>
-);
-
 const Soal5Image = () => (
   <img
     src={soal5LingkaranImage}
@@ -73,7 +55,6 @@ const materiSections: MateriSection[] = [
 
 const latihanDasarTka: LatihanSoal[] = [
   { no: 1, soal: "Perhatikan gambar!\nJika O adalah pusat lingkaran, jika r = 21 cm dan $\\pi = \\frac{22}{7}$, maka luas daerah yang diarsir adalah ...", options: ["A. 77 $cm^2$", "B. 154 $cm^2$", "C. 231 $cm^2$", "D. 308 $cm^2$"], gambar: <Soal1SVG /> },
-  { no: 2, soal: "Perhatikan gambar lingkaran di samping! Jika O pusat lingkaran, dan panjang OP = 21 cm, maka panjang busur kecil PQ adalah.... ($\\pi = \\frac{22}{7}$)\nLuas juring dengan sudut pusat $120^0$ dan panjang jari-jari 7 cm adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 77 $cm^2$", "B. 51,33 $cm^2$", "C. 38,50 $cm^2$", "D. 14,67 $cm^2$"], gambar: <Soal2SVG /> },
   { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"] },
   { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"] },
   { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: <Soal5Image /> },
@@ -100,7 +81,7 @@ const latihanDasarTka: LatihanSoal[] = [
   { no: 26, soal: "Perhatikan gambar berikut!\nKolam ikan Pak Arvin tampak seperti gambar di atas. Jika di sekeliling akan dipagari dengan kawat berduri dua kali putaran, maka dibutuhkan kawat berduri minimum sepanjang......", options: ["A. 72 m", "B. 86 m", "C. 144 m", "D. 172 m"] },
   { no: 27, soal: "Sebuah tonggak ditengah lapangan rumput berbentuk persegipanjang berukuran 15 m x 20 m. Seekor kambing diikat di tonggak dengan tali yang panjangnya 7 m. Berapa luas lapangan yang rumputnya tidak termakan kambing?", options: ["A. 100 $m^2$", "B. 146 $m^2$", "C. 154 $m^2$", "D. 300 $m^2$"] },
   { no: 28, soal: "Perhatikan gambar berikut!\nKolam pak Tedi bentuk dan ukuran Nampak seperti gambar.\nJika keliling kolam diberi pagar kawat dua kali putaran, maka dibutuhkan kawat minimum sepanjang ....", options: ["A. 66 m", "B. 88 m", "C. 132 m", "D. 180 m"] },
-];
+].map((soal, index) => ({ ...soal, no: index + 1 }));
 
 const LingkaranPage = () => (
   <TKAPemantapanLayout
