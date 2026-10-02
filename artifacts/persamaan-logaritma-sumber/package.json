@@ -4,8 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node ../../scripts/ensure-deps.mjs @workspace/persamaan-logaritma-sumber",
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
+    "prebuild": "node ../../scripts/ensure-deps.mjs @workspace/persamaan-logaritma-sumber",
     "build": "vite build --config vite.config.ts",
+    "preserve": "node ../../scripts/ensure-deps.mjs @workspace/persamaan-logaritma-sumber",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "validate-slides": "pnpm exec tsx scripts/validate-slides.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
