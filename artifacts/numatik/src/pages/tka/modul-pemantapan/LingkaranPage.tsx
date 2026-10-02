@@ -1,46 +1,13 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import soal5LingkaranImage from "@/assets/tka/lingkaran-latihan-soal-5.png";
 
-const circleStroke = "var(--icon-stroke)";
-const cyan = "#38bdf8";
-const yellow = "#facc15";
-const pink = "#fb7185";
-
-const DiagramShell = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <svg
-    viewBox="0 0 420 240"
-    role="img"
-    aria-label={title}
-    className="mx-auto w-full max-w-lg"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <title>{title}</title>
-    {children}
-  </svg>
-);
-
-const Soal1SVG = () => (
-  <DiagramShell title="Lingkaran berjari-jari 21 cm dengan juring bersudut pusat 40 derajat diarsir">
-    <circle cx="210" cy="120" r="84" fill="none" stroke={circleStroke} strokeWidth="2.5" />
-    <path d="M210 120 L210 36 A84 84 0 0 1 264 55.65 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
-    <line x1="210" y1="120" x2="210" y2="36" stroke={yellow} strokeWidth="2" />
-    <line x1="210" y1="120" x2="264" y2="55.65" stroke={yellow} strokeWidth="2" />
-    <path d="M210 96 A24 24 0 0 1 225.43 101.62" fill="none" stroke={yellow} strokeWidth="1.7" />
-    <circle cx="210" cy="120" r="4" fill={pink} />
-    <text x="197" y="139" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="217" y="72" fill={yellow} fontSize="14" fontFamily="serif">r = 21 cm</text>
-    <text x="193" y="32" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
-    <text x="270" y="55" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
-    <text x="222" y="98" fill={yellow} fontSize="13" fontFamily="serif">40°</text>
-  </DiagramShell>
-);
-
-const Soal5Image = () => (
+const questionImage = (src: string, alt: string) => (
   <img
-    src={soal5LingkaranImage}
-    alt="Diagram lingkaran dengan busur AB 14 cm dan sudut pusat 35°, serta sudut pusat 140° untuk busur CD"
+    src={src}
+    alt={alt}
+    loading="lazy"
+    decoding="async"
     className="mx-auto block h-auto max-h-[380px] w-full max-w-[380px] rounded-lg bg-white object-contain"
   />
 );
@@ -54,12 +21,12 @@ const materiSections: MateriSection[] = [
 ];
 
 const latihanDasarTka: LatihanSoal[] = [
-  { no: 1, soal: "Perhatikan gambar!\nJika O adalah pusat lingkaran, jika r = 21 cm dan $\\pi = \\frac{22}{7}$, maka luas daerah yang diarsir adalah ...", options: ["A. 77 $cm^2$", "B. 154 $cm^2$", "C. 231 $cm^2$", "D. 308 $cm^2$"], gambar: <Soal1SVG /> },
-  { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"] },
-  { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"] },
-  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: <Soal5Image /> },
-  { no: 6, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 496,44 $cm^2$", "B. 718,2 $cm^2$", "C. 992,88 $cm^2$", "D. 1827 $cm^2$"] },
-  { no: 7, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 59,5 $cm^2$", "B. 112 $cm^2$", "C. 119 $cm^2$", "D. 224 $cm^2$"] },
+  { no: 1, soal: "Perhatikan gambar!\nJika O adalah pusat lingkaran, jika r = 21 cm dan $\\pi = \\frac{22}{7}$, maka luas daerah yang diarsir adalah ...", options: ["A. 77 $cm^2$", "B. 154 $cm^2$", "C. 231 $cm^2$", "D. 308 $cm^2$"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1790922970/Gemini_Generated_Image_6d5hfl6d5hfl6d5h_zndphm.jpg", "Gambar untuk soal Lingkaran nomor 1") },
+  { no: 3, soal: "Perhatikanlah gambar berikut.\nDiketahui O adalah titik pusat lingkaran. Jika panjang busur QR = 60 cm, panjang busur PQ adalah...", options: ["A. 40 cm", "B. 45 cm", "C. 50 cm", "D. 55 cm"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1790924260/no_3_w6voed.jpg", "Gambar untuk soal Lingkaran nomor 2") },
+  { no: 4, soal: "Perhatikan gambar!\nJika luas juring ORS = 60 $cm^2$, luas juring OPQ adalah...", options: ["A. 40 $cm^2$", "B. 75 $cm^2$", "C. 90 $cm^2$", "D. 105 $cm^2$"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1790924845/Gemini_Generated_Image_ym1vvvym1vvvym1v_q9c6im.jpg", "Gambar untuk soal Lingkaran nomor 3") },
+  { no: 5, soal: "Pada suatu lingkaran dengan pusat O diketahui titik A, B, C, dan D pada keliling lingkaran, sehingga $\\angle AOB = 35°$ dan $\\angle COD = 140°$. Jika panjang busur AB = 14 cm, hitunglah panjang busur CD.", options: ["A. 28 cm", "B. 42 cm", "C. 56 cm", "D. 70 cm"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117321/LINGKARAN_-_LATIHAN_DASAR_-_NO_5_lrmbny.png", "Gambar untuk soal Lingkaran nomor 4") },
+  { no: 6, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 496,44 $cm^2$", "B. 718,2 $cm^2$", "C. 992,88 $cm^2$", "D. 1827 $cm^2$"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117315/LINGKARAN_-_LATIHAN_DASAR_-_NO_26_nicwq1.png", "Gambar untuk soal Lingkaran nomor 5") },
+  { no: 7, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 59,5 $cm^2$", "B. 112 $cm^2$", "C. 119 $cm^2$", "D. 224 $cm^2$"], gambar: questionImage("https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117317/LINGKARAN_-_LATIHAN_DASAR_-_NO_7_vcwarn.png", "Gambar untuk soal Lingkaran nomor 6") },
   { no: 8, soal: "Keliling daerah yang diarsir pada gambar berikut adalah ...", options: ["A. 47,1 cm", "B. 62,8 cm", "C. 78,5 cm", "D. 94,2 cm"] },
   { no: 9, soal: "Keliling daerah yang diarsir pada gambar berikut adalah ...", options: [] },
   { no: 10, soal: "Luas daerah yang diarsir pada gambar berikut adalah ...", options: [] },
