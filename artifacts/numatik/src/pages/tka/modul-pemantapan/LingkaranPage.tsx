@@ -23,16 +23,18 @@ const DiagramShell = ({ title, children }: { title: string; children: React.Reac
 );
 
 const Soal1SVG = () => (
-  <DiagramShell title="Lingkaran berjari-jari 21 cm dengan satu juring diarsir">
+  <DiagramShell title="Lingkaran berjari-jari 21 cm dengan juring bersudut pusat 40 derajat diarsir">
     <circle cx="210" cy="120" r="84" fill="none" stroke={circleStroke} strokeWidth="2.5" />
-    <path d="M210 120 L210 36 A84 84 0 0 1 282.75 78 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
+    <path d="M210 120 L210 36 A84 84 0 0 1 264 56 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
     <line x1="210" y1="120" x2="210" y2="36" stroke={yellow} strokeWidth="2" />
-    <line x1="210" y1="120" x2="282.75" y2="78" stroke={yellow} strokeWidth="2" />
+    <line x1="210" y1="120" x2="264" y2="56" stroke={yellow} strokeWidth="2" />
+    <path d="M210 96 A24 24 0 0 1 228.39 101.57" fill="none" stroke={yellow} strokeWidth="1.7" />
     <circle cx="210" cy="120" r="4" fill={pink} />
     <text x="197" y="139" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="216" y="73" fill={yellow} fontSize="14" fontFamily="serif">r = 21 cm</text>
-    <text x="273" y="62" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
-    <text x="291" y="84" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
+    <text x="217" y="72" fill={yellow} fontSize="14" fontFamily="serif">r = 21 cm</text>
+    <text x="193" y="32" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">A</text>
+    <text x="270" y="55" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">B</text>
+    <text x="222" y="98" fill={yellow} fontSize="13" fontFamily="serif">40°</text>
     <text x="317" y="207" fill={yellow} fontSize="13" fontFamily="sans-serif">daerah diarsir</text>
     <line x1="294" y1="190" x2="260" y2="112" stroke={yellow} strokeWidth="1.4" strokeDasharray="4 4" />
   </DiagramShell>
