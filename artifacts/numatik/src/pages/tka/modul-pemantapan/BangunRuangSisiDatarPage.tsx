@@ -2,9 +2,12 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { bangunRuangSisiDatarDasarPembahasan } from "@/data/pembahasan/bangunRuangSisiDatarDasar";
+import { tkaBangunRuangSisiDatarPembahasan } from "@/data/pembahasan/tkaBangunRuangSisiDatar";
 
 const toPembahasanText = (soalNo: number) => {
-  const pembahasan = bangunRuangSisiDatarDasarPembahasan[soalNo];
+  const pembahasan =
+    tkaBangunRuangSisiDatarPembahasan[soalNo] ??
+    bangunRuangSisiDatarDasarPembahasan[soalNo];
   if (!pembahasan) return undefined;
 
   return [
@@ -23,7 +26,7 @@ const materiSections: MateriSection[] = [
 ];
 
 const latihanDasarTkaLama: LatihanSoal[] = [
-  { no: 1, soal: "Pada rangkaian persegi berikut yang merupakan jaring-jaring kubus adalah ...", options: ["A. Gambar A", "B. Gambar B", "C. Gambar C", "D. Gambar D"] },
+  { no: 1, soal: "Perhatikan rangkaian persegi pada gambar A–D. Manakah yang dapat dilipat menjadi kubus dengan keenam sisi berbeda dan tanpa ada sisi yang bertumpuk?", options: ["A. Gambar A", "B. Gambar B", "C. Gambar C", "D. Gambar D"] },
   { no: 2, soal: "Perhatikan gambar!\nAgar dapat membentuk balok, persegipanjang yang harus dihilangkan bernomor ....", options: ["A. 5 dan 6", "B. 5 dan 7", "C. 1 dan 7", "D. 1 dan 8"] },
   { no: 3, soal: "Daerah yang diarsir pada gambar disebut ....", options: ["A. Diagonal bidang", "B. Bidang diagonal", "C. Diagonal ruang", "D. Diagonal sisi"] },
   { no: 4, soal: "Banyaknya diagonal ruang dan bidang diagonal balok adalah ...", options: ["A. 4 dan 6", "B. 4 dan 12", "C. 6 dan 4", "D. 12 dan 4"] },
@@ -36,7 +39,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 11, soal: "Gambar berikut adalah mainan anak-anak yang berbentuk balok, tersusun dari kubus-kubus satuan yang kongruen. Jika seluruh permukaan balok tersebut dicat, banyaknya kubus satuan yang terkena cat pada dua sisinya saja adalah ....", options: ["A. 16", "B. 18", "C. 24", "D. 28"] },
   { no: 12, soal: "Via akan membuat kerangka balok dari kawat. Jika kerangka balok yang akan dibuat berukuran 10 cm x 6 cm x 4 cm dan panjang kawat yang tersedia 7,2 m, maka banyak kerangka balok yang dapat dibuat oleh Via adalah ....", options: ["A. 6 buah", "B. 8 buah", "C. 9 buah", "D. 12 buah"] },
   { no: 13, soal: "Pak Dani membuat kerangka berbentuk balok yang terbuat dari alumunium dengan ukuran 60 cm x 50 cm x 80 cm. jika harga alumunium Rp40.000,00 tiap meter maka biaya yang diperlukan untuk membeli alumunium adalah...", options: ["A. Rp72.000,00", "B. Rp96.000,00", "C. Rp288.000,00", "D. Rp960.000,00"] },
-  { no: 15, soal: "Rosa akan membuat model kerangka limas dan prisma masing-masing satu buah. Model kerangka limas alasnya berbentuk persegi panjang dengan ukuran 8 cm x 6 cm dengan tinggi limas 12 cm. Sedangkan kerangka prisma alasnya berbentuk segi enam beraturan dengan panjang sisi 12 cm dan tinggi prisma 20 cm. Jika Rosa memiliki persediaan kawat 4 m, maka sisa kawat yang tidak terpakai adalah...", options: ["A. 50 cm", "B. 54 cm", "C. 58 cm", "D. 60 cm"] },
+  { no: 15, soal: "Rosa akan membuat model kerangka limas dan prisma masing-masing satu buah. Model kerangka limas alasnya berbentuk persegi panjang dengan ukuran 8 cm × 6 cm dan tinggi limas 12 cm. Kerangka prisma beralas segi enam beraturan dengan panjang sisi 12 cm dan tinggi 21 cm. Jika Rosa memiliki persediaan kawat 4 m, sisa kawat yang tidak terpakai adalah ....", options: ["A. 50 cm", "B. 54 cm", "C. 58 cm", "D. 60 cm"] },
   { no: 16, soal: "Ardian akan membuat sebuah model kerangka limas yang alasnya berbentuk persegi, dengan panjang sisi 8 cm, jika panjang rusuk tegak limas 10 cm, maka panjang kawat yang diperlukan adalah ....", options: ["A. 36 cm", "B. 40 cm", "C. 72 cm", "D. 80 cm"] },
   { no: 17, soal: "Apri mendapat tugas untuk membuat kerangka lampu hias yang berbentuk kerangka limas seperti pada gambar. Jika kerangka limas tersebut dibuat dari rotan dan harga 1 m rotan adalah Rp20.000,00, maka biaya yang dibutuhkan seluruhnya adalah ...", options: ["A. Rp64.000,00", "B. Rp52.000,00", "C. Rp44.000,00", "D. Rp22.000,00"] },
   { no: 18, soal: "Panjang diagonal sisi sebuah kubus adalah $2\\sqrt{2}$ cm, maka luas permukaan kubus tersebut adalah ...", options: ["A. 96 $cm^2$", "B. 64 $cm^2$", "C. 24 $cm^2$", "D. 8 $cm^2$"] },
@@ -54,12 +57,12 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 30, soal: "Perhatikan gambar berikut.\nLuas seluruh bangun tersebut adalah ....", options: ["A. 760 $cm^2$", "B. 720 $cm^2$", "C. 660 $cm^2$", "D. 640 $cm^2$"] },
   { no: 31, soal: "Sebuah kubus mempunyai panjang diagonal ruang adalah $5\\sqrt{3}$ cm. maka volumenya adalah", options: ["A. 150 $cm^3$", "B. 125 $cm^3$", "C. 75 $cm^3$", "D. 45 $cm^3$"] },
   { no: 32, soal: "Luas salah satu sisi pada kubus adalah 25 $cm^2$. Maka volume kubus tersebut adalah ...", options: ["A. 625 $cm^3$", "B. 150 $cm^3$", "C. 125 $cm^3$", "D. 50 $cm^3$"] },
-  { no: 33, soal: "Perbandingan panjang rusuk-rusuk sebuah balok 2 : 3 : 4, jika luas permukaan balok tersebut 248 $cm^2$, maka volumenya adalah ....", options: ["A. 24 $cm^3$", "B. 32 $cm^3$", "C. 180 $cm^3$", "D. 192 $cm^3$"] },
+  { no: 33, soal: "Perbandingan panjang rusuk-rusuk sebuah balok adalah 2 : 3 : 4. Jika luas permukaannya 208 $cm^2$, volumenya adalah ....", options: ["A. 24 $cm^3$", "B. 32 $cm^3$", "C. 180 $cm^3$", "D. 192 $cm^3$"] },
   { no: 35, soal: "Pada sebuah prisma yang alasnya belahketupat, diketahui panjang sisinya 13 cm, panjang salah satu diagonalnya 10 cm, dan tinggi prisma 15 cm, volume prisma adalah ...", options: ["A. 1.800 $cm^3$", "B. 1.200 $cm^3$", "C. 650 $cm^3$", "D. 600 $cm^3$"] },
   { no: 36, soal: "Perhatikan gambar prisma berikut!\nVolumenya adalah ....", options: ["A. 800 $cm^3$", "B. 1.600 $cm^3$", "C. 2.400 $cm^3$", "D. 3.200 $cm^3$"] },
   { no: 37, soal: "Sebuah prisma alasnya berbentuk jajar genjang dengan panjang alas 15 cm dan tinggi 8 cm. Jika tinggi prisma 20 cm, volume prisma tersebut adalah ....", options: ["A. 2.400 $cm^3$", "B. 2.100 $cm^3$", "C. 1.800 $cm^3$", "D. 800 $cm^3$"] },
   { no: 38, soal: "Sebuah prisma alasnya berbentuk segitiga siku-siku, panjang sisi siku-sikunya 8 cm dan 15 cm, jika volume prisma itu 1200 $cm^3$.\nHitunglah:\na. Tinggi prisma\nb. Luas seluruh permukaan prisma", options: [] },
-  { no: 39, soal: "Perhatikan gambar limas T.ABCD di samping!\nPanjang AB = BC = CD = AD = 30 cm. Jika volume limas 6000 $cm^3$, maka panjang garis TE adalah ....", options: ["A. 20 cm", "B. 25 cm", "C. 35 cm", "D. 40 cm"] },
+  { no: 39, soal: "Perhatikan gambar limas T.ABCD di samping! Titik E adalah titik potong diagonal-diagonal alas ABCD. Panjang AB = BC = CD = AD = 30 cm. Jika volume limas 6000 $cm^3$, panjang TE adalah ....", options: ["A. 20 cm", "B. 25 cm", "C. 35 cm", "D. 40 cm"] },
   { no: 40, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 52 cm dan panjang salah satu diagonalnya 10 cm serta tinggi limas 12 cm. Volume limas tersebut adalah....", options: ["A. 720 $cm^3$", "B. 1.296 $cm^3$", "C. 1.728 $cm^3$", "D. 2.880 $cm^3$"] },
   { no: 41, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 60 cm dan panjang salah satu diagonalnya 18 cm, jika tinggi limas 20 cm, maka volume limas tersebut adalah....", options: ["A. 1440 $cm^3$", "B. 1800 $cm^3$", "C. 2160 $cm^3$", "D. 2880 $cm^3$"] },
   { no: 42, soal: "Sebuah limas mempunyai alas berbentuk jajargenjang yang panjang salah satu sisinya 12 cm dan jarak antara sisi itu dengan sisi sejajarnya adalah 15 cm. Jika volumnya 600 $cm^3$, maka tinggi limas tersebut adalah ....", options: ["A. 30 cm", "B. 10 cm", "C. 6,6 cm", "D. 3,3 cm"] },
@@ -94,12 +97,20 @@ const urutanSoalBangunRuang = [
   15, 43,
 ];
 const urutanSoalBangunRuangIndex = new Map(urutanSoalBangunRuang.map((no, index) => [no, index]));
+const kunciJawabanTkaBangunRuang: Record<number, string> = {
+  1: "A",
+  15: "A",
+  22: "D",
+  33: "D",
+  39: "A",
+};
 const latihanDasarBangunRuangDasar = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
   .sort((a, b) => (urutanSoalBangunRuangIndex.get(a.no) ?? Number.MAX_SAFE_INTEGER) - (urutanSoalBangunRuangIndex.get(b.no) ?? Number.MAX_SAFE_INTEGER))
   .map((soal, index) => ({
     ...soal,
     no: index + 1,
+    jawaban: kunciJawabanTkaBangunRuang[soal.no],
     pembahasan: toPembahasanText(soal.no),
     gambar: dasarImagesByOriginalNo[soal.no]
       ? <img src={dasarImagesByOriginalNo[soal.no]} alt={`Gambar soal ${index + 1}`} className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />
