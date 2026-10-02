@@ -25,10 +25,10 @@ const DiagramShell = ({ title, children }: { title: string; children: React.Reac
 const Soal1SVG = () => (
   <DiagramShell title="Lingkaran berjari-jari 21 cm dengan juring bersudut pusat 40 derajat diarsir">
     <circle cx="210" cy="120" r="84" fill="none" stroke={circleStroke} strokeWidth="2.5" />
-    <path d="M210 120 L210 36 A84 84 0 0 1 264 56 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
+    <path d="M210 120 L210 36 A84 84 0 0 1 264 55.65 Z" fill="#facc15" fillOpacity="0.35" stroke={yellow} strokeWidth="2" />
     <line x1="210" y1="120" x2="210" y2="36" stroke={yellow} strokeWidth="2" />
-    <line x1="210" y1="120" x2="264" y2="56" stroke={yellow} strokeWidth="2" />
-    <path d="M210 96 A24 24 0 0 1 228.39 101.57" fill="none" stroke={yellow} strokeWidth="1.7" />
+    <line x1="210" y1="120" x2="264" y2="55.65" stroke={yellow} strokeWidth="2" />
+    <path d="M210 96 A24 24 0 0 1 225.43 101.62" fill="none" stroke={yellow} strokeWidth="1.7" />
     <circle cx="210" cy="120" r="4" fill={pink} />
     <text x="197" y="139" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
     <text x="217" y="72" fill={yellow} fontSize="14" fontFamily="serif">r = 21 cm</text>
@@ -39,29 +39,19 @@ const Soal1SVG = () => (
 );
 
 const Soal2SVG = () => (
-  <DiagramShell title="Diagram busur kecil PQ dan juring dengan sudut pusat 120 derajat">
-    <line x1="210" y1="18" x2="210" y2="222" stroke={circleStroke} strokeOpacity="0.2" strokeDasharray="4 5" />
-    <line x1="18" y1="120" x2="402" y2="120" stroke={circleStroke} strokeOpacity="0.2" strokeDasharray="4 5" />
-    <circle cx="108" cy="120" r="70" fill="none" stroke={circleStroke} strokeWidth="2.2" />
-    <path d="M168.62 85 A70 70 0 0 1 168.62 155" fill="none" stroke={cyan} strokeWidth="6" strokeLinecap="round" />
-    <line x1="108" y1="120" x2="168.62" y2="85" stroke={cyan} strokeWidth="2" />
-    <line x1="108" y1="120" x2="168.62" y2="155" stroke={cyan} strokeWidth="2" />
-    <circle cx="108" cy="120" r="3.5" fill={pink} />
-    <text x="98" y="139" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="171" y="82" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
-    <text x="171" y="164" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
-    <text x="32" y="34" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Busur kecil PQ</text>
-    <text x="56" y="207" fill={yellow} fontSize="13" fontFamily="serif">OP = 21 cm</text>
-    <line x1="280" y1="120" x2="280" y2="52" stroke={circleStroke} strokeWidth="2.2" />
-    <line x1="280" y1="120" x2="338.89" y2="154" stroke={circleStroke} strokeWidth="2.2" />
-    <path d="M280 120 L280 52 A68 68 0 0 1 338.89 154 Z" fill="#facc15" fillOpacity="0.3" stroke={yellow} strokeWidth="2" />
-    <circle cx="280" cy="120" r="3.5" fill={pink} />
-    <text x="270" y="139" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
-    <text x="273" y="44" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
-    <text x="342" y="161" fill={cyan} fontSize="15" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
-    <text x="288" y="91" fill={yellow} fontSize="13" fontFamily="serif">120°</text>
-    <text x="300" y="199" fill={yellow} fontSize="13" fontFamily="serif">r = 7 cm</text>
-    <text x="259" y="22" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Juring</text>
+  <DiagramShell title="Satu lingkaran dengan busur PQ dan juring bersudut pusat 120 derajat">
+    <circle cx="205" cy="125" r="88" fill="none" stroke={circleStroke} strokeWidth="2.5" />
+    <path d="M205 125 L205 37 A88 88 0 0 1 281.21 169 Z" fill={yellow} fillOpacity="0.26" stroke={yellow} strokeWidth="2" />
+    <line x1="205" y1="125" x2="205" y2="37" stroke={yellow} strokeWidth="2" />
+    <line x1="205" y1="125" x2="281.21" y2="169" stroke={yellow} strokeWidth="2" />
+    <path d="M205 37 A88 88 0 0 1 281.21 169" fill="none" stroke={cyan} strokeWidth="5" strokeLinecap="round" />
+    <path d="M205 100 A25 25 0 0 1 226.65 112.5" fill="none" stroke={yellow} strokeWidth="1.8" />
+    <circle cx="205" cy="125" r="4" fill={pink} />
+    <text x="192" y="146" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">O</text>
+    <text x="192" y="32" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">P</text>
+    <text x="286" y="177" fill={cyan} fontSize="16" fontFamily="serif" fontStyle="italic" fontWeight="bold">Q</text>
+    <text x="211" y="97" fill={yellow} fontSize="14" fontFamily="serif">120°</text>
+    <text x="68" y="218" fill={circleText} fontSize="13" fontFamily="sans-serif" fontWeight="bold">Busur PQ dan juring</text>
   </DiagramShell>
 );
 
