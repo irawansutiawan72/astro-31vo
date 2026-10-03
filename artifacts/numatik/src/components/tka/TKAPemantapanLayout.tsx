@@ -57,6 +57,10 @@ interface Props {
   imageScaleExceptQuestionNo?: number;
   /** Render fallback question diagrams before any statement list. */
   diagramBeforeStatements?: boolean;
+  /** Show a text correctness result as soon as a student answers. */
+  showImmediateAnswerFeedback?: boolean;
+  /** Render a separate Tips section inside each expanded explanation. */
+  showPembahasanTips?: boolean;
 }
 
 const getGoogleDriveFileId = (value: string) => {
@@ -258,7 +262,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; bor
   },
 };
 
-const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo, diagramBeforeStatements = false }: Props) => {
+const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo, diagramBeforeStatements = false, showImmediateAnswerFeedback = false, showPembahasanTips = false }: Props) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
@@ -938,6 +942,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                 const stepsPembahasan = soal.pembahasan
                   ? getPembahasanPart(soal.pembahasan, "Step-by-Step Penyelesaian", ["Tips", "Kesimpulan"])
                   : "";
+                const tipsPembahasan = soal.pembahasan
+                  ? getPembahasanPart(soal.pembahasan, "Tips", ["Kesimpulan"])
+                  : "";
+                const correctOptionText = soal.jawaban
+                  ? soal.options?.[optionLetters.indexOf(soal.jawaban)]?.replace(/^[A-E]\.\s*/, "")
+                  : undefined;
                 const diagram = soal.gambar
                   ?? (soal.soalSvg && soalSvgMap?.[soal.soalSvg])
                   ?? (typeof gambarMap?.[soal.no] === "string"
@@ -1097,6 +1107,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         <p className="text-[11px] font-body text-amber-300/60 mt-2 italic">
                           <>Pilih <span className="font-bold not-italic text-amber-300/80">semua pernyataan yang benar</span> (jawaban lebih dari satu).</>
                         </p>
+                        {showImmediateAnswerFeedback && selectedPGK.length > 0 && (
+                          <div
+                            role="status"
+                            className={`mt-2 rounded-lg px-3 py-2 text-xs font-semibold ${isCorrect ? "text-green-700 bg-green-100 border border-green-300" : "text-amber-800 bg-amber-50 border border-amber-300"}`}
+                          >
+                            {isCorrect
+                              ? "Benar! Semua pernyataan yang tepat sudah dipilih."
+                              : "Belum tepat. Pernyataan yang dipilih ditandai benar atau salah; pilih semua pernyataan yang benar."}
+                          </div>
+                        )}
                       </div>
                     )}
 
@@ -1151,6 +1171,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           return (
                             <button
                               key={j}
+                              type="button"
+                              aria-pressed={isSelected}
+                              aria-label={`Pilih jawaban ${letter}`}
                               onClick={() => handleSelectAnswer(soal.no, letter)}
                               disabled={isRevealed}
                               className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left transition-all duration-200 text-xs font-body"
@@ -1227,14 +1250,24 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                     {contentRenderer(p)}
                                   </span>
                                   {rowEvaluated && (
-                                    rowCorrect
-                                      ? <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-green-400" />
-                                      : <XCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
+                                    <span className="flex items-center gap-1 shrink-0">
+                                      {rowCorrect
+                                        ? <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                                        : <XCircle className="w-3.5 h-3.5 text-red-400" />}
+                                      {showImmediateAnswerFeedback && (
+                                        <span className={`text-[10px] font-semibold ${rowCorrect ? "text-green-400" : "text-red-400"}`}>
+                                          {rowCorrect ? "Benar" : "Salah"}
+                                        </span>
+                                      )}
+                                    </span>
                                   )}
                                 </div>
                                 {/* Benar button */}
                                 <div className="w-14 flex items-center justify-center py-2">
                                   <button
+                                    type="button"
+                                    aria-label={`Pilih Benar untuk pernyataan ${pi + 1}`}
+                                    aria-pressed={userAns === "B"}
                                     disabled={isRevealed}
                                     onClick={() => handleSelectBS(soal.no, pi, "B", soal.pernyataan!.length)}
                                     className="w-8 h-7 rounded-lg text-[10px] font-bold font-display transition-all duration-150"
@@ -1255,6 +1288,9 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                                 {/* Salah button */}
                                 <div className="w-14 flex items-center justify-center py-2">
                                   <button
+                                    type="button"
+                                    aria-label={`Pilih Salah untuk pernyataan ${pi + 1}`}
+                                    aria-pressed={userAns === "S"}
                                     disabled={isRevealed}
                                     onClick={() => handleSelectBS(soal.no, pi, "S", soal.pernyataan!.length)}
                                     className="w-8 h-7 rounded-lg text-[10px] font-bold font-display transition-all duration-150"
@@ -1295,6 +1331,16 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         </div>
                       </div>
                     )}
+                    {showImmediateAnswerFeedback && type === "pg" && selected && (
+                      <div
+                        role="status"
+                        className={`mx-5 mb-3 rounded-lg px-3 py-2 text-xs font-semibold ${isCorrect ? "text-green-700 bg-green-100 border border-green-300" : "text-red-700 bg-red-50 border border-red-300"}`}
+                      >
+                        {isCorrect
+                          ? "Benar! Jawabanmu tepat."
+                          : <>Belum tepat. Jawaban yang benar: {soal.jawaban}{correctOptionText ? <> — {contentRenderer(correctOptionText)}</> : null}.</>}
+                      </div>
+                    )}
 
                     {/* ── Action row: every latihan question with a pembahasan gets a visible toggle ── */}
                     {soal.pembahasan && <div className="px-5 pb-4 flex flex-col gap-2">
@@ -1331,7 +1377,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     {/* ── Pembahasan ── */}
                     {isRevealed && soal.pembahasan && (
                       <div className="mx-4 mb-4 space-y-2.5 animate-slide-up">
-                        {(soal.jawaban || soal.jawabanBS) && (
+                        {(soal.jawaban || soal.jawabanBS || pgkAnswerLabel) && (
                           <div className={`rounded-xl px-4 py-3 flex items-center gap-3 border ${isLightTheme ? "bg-green-50 border-green-300" : "bg-gradient-to-r from-green-900/60 to-emerald-900/30 border-green-500/60"}`}>
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-base border ${isLightTheme ? "bg-green-100 border-green-300" : "bg-green-500/20 border-green-400/40"}`}>
                               <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -1339,7 +1385,11 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             <div>
                               <p className={`text-[9px] font-bold uppercase tracking-widest mb-0.5 ${isLightTheme ? "text-green-600" : "text-green-400"}`}>① Jawaban</p>
                               <div className={`font-bold text-xs leading-snug ${isLightTheme ? "text-green-800" : "text-green-200"}`}>
-                                {soal.jawaban ? soal.jawaban : soal.jawabanBS?.map((ans, i) => <span key={i} className="mr-2">({i + 1}) {ans}</span>)}
+                                {soal.jawaban
+                                  ? <>{soal.jawaban}{correctOptionText ? <> — {contentRenderer(correctOptionText)}</> : null}</>
+                                  : soal.jawabanBS
+                                    ? soal.jawabanBS.map((ans, i) => <span key={i} className="mr-2">({i + 1}) {ans === "B" ? "Benar" : "Salah"}</span>)
+                                    : <>Pernyataan benar: {pgkAnswerLabel}</>}
                               </div>
                             </div>
                           </div>
@@ -1362,6 +1412,18 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             ))}
                           </div>
                         </div>
+                        {showPembahasanTips && tipsPembahasan && (
+                          <div className={`rounded-xl px-4 py-3 border ${isLightTheme ? "bg-amber-50 border-amber-300" : "bg-gradient-to-r from-amber-900/40 to-yellow-900/20 border-amber-500/40"}`}>
+                            <p className={`text-[9px] font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${isLightTheme ? "text-amber-700" : "text-amber-300"}`}>
+                              <Lightbulb className="w-3.5 h-3.5" /> ④ Tips &amp; Trik
+                            </p>
+                            <div className={`text-xs leading-relaxed whitespace-pre-wrap ${isLightTheme ? "text-amber-900" : "text-white/80"}`}>
+                              {tipsPembahasan.split("\n").map((line, i) => (
+                                <span key={i}>{i > 0 && <br />}{contentRenderer(line)}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
