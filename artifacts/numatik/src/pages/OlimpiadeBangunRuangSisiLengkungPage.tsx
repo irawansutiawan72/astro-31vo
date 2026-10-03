@@ -19,11 +19,18 @@ const brslOlimpiadeImages: Record<number, string> = {
 };
 
 export const brslDasarImages: Record<number, string> = {
-  3: "https://drive.google.com/thumbnail?id=1JKSolP4umjS4zkIFcPjTjXyX11q0fETc&sz=w400",
-  5: "https://drive.google.com/thumbnail?id=1v67ykpMcxuQHQF-z3Y61HmAARB_GWH3L&sz=w400",
-  6: "https://drive.google.com/thumbnail?id=1TW3y2DX8tNKNxKVDFM0SZsgWSQKerrOu&sz=w400",
-  36: "https://drive.google.com/thumbnail?id=1L9qkbyu2NUYzbz7HoP31rtI8grpitjnc&sz=w400",
-  37: "https://drive.google.com/thumbnail?id=1gcGt20jDnqGt1ojHyqAGBwMwnFsRPPte&sz=w400",
+  3: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_3_ppng5b.png",
+  5: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_5_chwcqp.png",
+  6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_6_pgbiec.png",
+  13: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_13_oosn5o.png",
+  30: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117360/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_30_zftbie.png",
+  31: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_31_nlgpvg.png",
+  32: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117365/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_32_klahbw.png",
+  33: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_33_nsnj1g.png",
+  34: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117357/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_34_eqdmwj.png",
+  35: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_35_uu8ch9.png",
+  36: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117357/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_36_aqje7y.png",
+  37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
 /* ─────────────── LaTeX helper ─────────────── */
@@ -579,69 +586,6 @@ const OlimpiadeBangunRuangSisiLengkungPage = () => {
                       <span key={li}>
                         {li > 0 && <br />}
                         {renderWithLatex(line)}
-                        {soal.no === 13 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1rLSQ51U-6We_l3AeySU_TRWXqD3lU0KZ&sz=w400"}
-                              alt="Gambar soal 13"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 30 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1HrfAHJfL03s4PLAh0xArrekt06lk73VD&sz=w400"}
-                              alt="Gambar soal 30"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 31 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1GddLWn6b_GOQ3fO6TR6lOuKofj5s60_O&sz=w400"}
-                              alt="Gambar soal 31"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 32 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1aq-RvISMhcuoLqijWbIUEASaCChzAgGK&sz=w400"}
-                              alt="Gambar soal 32"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 33 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=16Dq-RPfoXYFjvhkmpfjpc5QIukxIU34X&sz=w400"}
-                              alt="Gambar soal 33"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 34 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1FMDYXfLdg37wwpDMhzmC79X8GgCUcTP4&sz=w400"}
-                              alt="Gambar soal 34"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
-                        {soal.no === 35 && li === 0 && (
-                          <div className="flex justify-center my-3">
-                            <img
-                              src={"https://drive.google.com/thumbnail?id=1HgtlrM_Juf_VaVJa7K-lWHPlkeSTIJGR&sz=w400"}
-                              alt="Gambar soal 35"
-                              className="max-w-[280px] w-full rounded-lg border border-white/10 bg-white/90 p-2"
-                            />
-                          </div>
-                        )}
                       </span>
                     ))}
                   </div>
