@@ -73,16 +73,16 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 
 const nomorBangunRuangDihapus = new Set([2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 18, 19, 20, 23, 24, 25, 26, 28, 30, 31, 32, 34, 35, 36, 37, 38, 41, 42, 44, 46]);
 const dasarImagesByOriginalNo: Record<number, string> = {
-  9: "/bangun-ruang-sisi-datar-q3-kubus.png",
+  9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117311/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_9_dlckst.png",
   25: "https://drive.google.com/thumbnail?id=1eedXYvdSO5Ae6ZcP0sdCukxXFWcrzICI&sz=w400",
-  39: "https://drive.google.com/thumbnail?id=1_kOE5Oj78xbhchPx3ODTl7akYOV_x-td&sz=w400",
-  43: "https://drive.google.com/thumbnail?id=1Hk5h3-41dZtCNt_-pOgKZB8rnN7m8_gm&sz=w400",
+  39: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117362/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_39_scggir.png",
+  43: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791031722/Gemini_Generated_Image_malrkdmalrkdmalr_i2iq4r.jpg",
 };
 const kubusNetQuestionOneOptions = [
-  <img key="A" src="/bangun-ruang-sisi-datar-q1-opsi-a.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="B" src="/bangun-ruang-sisi-datar-q1-opsi-b.png" alt="Jaring-jaring kubus opsi B" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
-  <img key="C" src="/bangun-ruang-sisi-datar-q1-opsi-c.png" alt="Jaring-jaring kubus opsi C" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
-  <img key="D" src="/bangun-ruang-sisi-datar-q1-opsi-d.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
+  <img key="A" src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117308/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_1_PG_A_acpkg9.png" alt="Jaring-jaring kubus opsi A" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="B" src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117308/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_1_PG_B_j8w7qp.png" alt="Jaring-jaring kubus opsi B" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
+  <img key="C" src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117308/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_1_PG_C_h4imyk.png" alt="Jaring-jaring kubus opsi C" className="bangun-ruang-sisi-datar-question-image max-h-44 w-full object-contain rounded bg-white p-1" />,
+  <img key="D" src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117308/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_1_PG_D_njhkqo.png" alt="Jaring-jaring kubus opsi D" className="bangun-ruang-sisi-datar-question-image max-h-36 w-full object-contain rounded bg-white p-1" />,
 ];
 const urutanSoalBangunRuang = [
   // Kubus
@@ -128,7 +128,7 @@ const soalBalokMainan = {
   soal: soalBalokMainanDasar.soal,
   options: soalBalokMainanDasar.options,
   pembahasan: toPembahasanText(11),
-  gambar: <img src="/bangun-ruang-sisi-datar-q3-balok.png" alt="Gambar balok mainan dari kubus satuan" className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
+  gambar: <img src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117309/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_11_fsymfk.png" alt="Gambar balok mainan dari kubus satuan" className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
 };
 
 const soalAquariumPrismaSegitiga = {
