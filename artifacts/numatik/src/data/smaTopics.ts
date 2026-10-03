@@ -95,9 +95,10 @@ export const SMA_TOPICS: SmaTopic[] = [
     title: "Statistika",
     slug: "statistika",
     subtopics: [
-      { title: "Penyajian Data (Histogram, Frekuensi Relatif, Ogive)", slug: "penyajian-data" },
+      { title: "Penyajian Data (Diagram Batang, Diagram Garis, Diagram Lingkaran, Histogram, Polygon Frekuensi, Ogive, Tabel Distribusi Frekuensi)", slug: "penyajian-data" },
       { title: "Ukuran Pemusatan Data (Mean, Median, Modus)", slug: "ukuran-pemusatan-data" },
-      { title: "Ukuran Penempatan/Penyebaran Data (Kuartil, Jangkauan Interkuartil, Simpangan Baku)", slug: "ukuran-penempatan-penyebaran-data" },
+      { title: "Ukuran Letak Data (Kuartil, Desil dan Persentil)", slug: "ukuran-letak-data" },
+      { title: "Ukuran Penyebaran Data (Jangkauan, Jangkauan Inter Kuartil, Simpangan Kuartil, Ragam, Simpangan Baku, Rataan Tiga)", slug: "ukuran-penempatan-penyebaran-data" },
     ],
   },
   {
