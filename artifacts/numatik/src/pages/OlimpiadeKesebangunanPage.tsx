@@ -22,29 +22,29 @@ const kesOlimpiadeImages: Record<number, string> = {
 };
 
 export const kesDasarImages: Record<number, string> = {
-  3: "https://drive.google.com/thumbnail?id=1ZP5r-eDLDKqa_q-Vl_VgLnSSXb_6Fw_V&sz=w400",
-  4: "https://drive.google.com/thumbnail?id=1ROQpFuAJ_OJmnYkdpUHsdDrW-rgtSeEh&sz=w400",
-  6: "https://drive.google.com/thumbnail?id=1WjJCZ5nKRuOb0gnNyrISrI2d5NP6Egh9&sz=w400",
-  7: "https://drive.google.com/thumbnail?id=1t4cMz2PzB-uTGzaUXpQZwzkyHRgqC03m&sz=w400",
-  8: "https://drive.google.com/thumbnail?id=1MdsvhRq7fn3ESbmDu2Dfo4M4LRgO24hw&sz=w400",
-  9: "https://drive.google.com/thumbnail?id=1CaV_lnFuho6eghbrRYdI2nc_R66HLdVk&sz=w400",
-  10: "https://drive.google.com/thumbnail?id=1n6fdjbhG0auXBQA36uGI9ZfoqCHt3PBp&sz=w400",
-  11: "https://drive.google.com/thumbnail?id=1Q7d9DCss1BiMXbv7LROvwKtWrHDQV_Vq&sz=w400",
-  12: "https://drive.google.com/thumbnail?id=1ZXJK12JT1UjYsddLMB2gB5MPWbEpPSrk&sz=w400",
-  13: "https://drive.google.com/thumbnail?id=1PMDhaE4vtKuFsAl220dYy-E7M8YNJD8Y&sz=w400",
-  15: "https://drive.google.com/thumbnail?id=18ISrSOMi8scSjAoCxj8ii_V3EpoTfmG1&sz=w400",
-  16: "https://drive.google.com/thumbnail?id=1UqzWN2GNTfIkIyfMFCd5X7_QwZSJdrn7&sz=w400",
-  17: "https://drive.google.com/thumbnail?id=1sLnMt8MJVfYDlyBZgnSvtD5beV0MEjad&sz=w400",
-  18: "https://drive.google.com/thumbnail?id=11mITiYHdllHy9TRQY9L-Snd-Pwu7eS55&sz=w400",
-  21: "https://drive.google.com/thumbnail?id=1QBSIjecMAMMs-gtZhNTxcuHOV-u29-GB&sz=w400",
-  22: "https://drive.google.com/thumbnail?id=1VM2aEBmsoI6IsZ8F-YtVagAmst3fqGYs&sz=w400",
+  3: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_3_esplzp.png",
+  4: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_4_srwinp.png",
+  6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_6_zilnja.png",
+  7: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_7_xwr9ax.png",
+  8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_8_get5ke.png",
+  9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_9_jxeevd.png",
+  10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_10_xvdtcp.png",
+  11: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_11_vk8ooq.png",
+  12: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_12_zkvbci.png",
+  13: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_13_nvbv3w.png",
+  15: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_15_ozmr6l.png",
+  16: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_16_vfpjrw.png",
+  17: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_17_i903gj.png",
+  18: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_18_h4b34o.png",
+  21: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_21_ubuud2.png",
+  22: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117352/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_22_fhu89d.png",
 };
 
 const kesDasarSoal1Images: { label: string; src: string }[] = [
-  { label: "(i)", src: "/images/Gemini_Generated_Image_ei9ifzei9ifzei9i_1778334487098.png" },
-  { label: "(ii)", src: "/images/Gemini_Generated_Image_jtpzlcjtpzlcjtpz_1778334487099.png" },
-  { label: "(iii)", src: "/images/Gemini_Generated_Image_2aindm2aindm2ain_1778334487100.png" },
-  { label: "(iv)", src: "/images/hghg_1778334636982.png" },
+  { label: "(i)", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_i_yyjsln.png" },
+  { label: "(ii)", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_ii_pvvcad.png" },
+  { label: "(iii)", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_iii_desmvy.png" },
+  { label: "(iv)", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035300/no_1_bagian_iv_n15tkt.png" },
 ];
 
 const renderWithLatex = (text: string) => {
@@ -915,7 +915,7 @@ const OlimpiadeKesebangunanPage = () => {
                     <div className="grid grid-cols-2 gap-3 mb-3">
                       {kesDasarSoal1Images.map((item) => (
                         <div key={item.label} className="flex flex-col items-center gap-1 bg-white/90 rounded-lg border border-white/10 p-2">
-                          <img src={item.src} alt={`Pernyataan ${item.label}`} className="max-h-24 w-auto object-contain" />
+                          <img src={item.src} alt={`Pernyataan ${item.label}`} className="max-h-48 w-full object-contain" />
                           <span className="font-display text-[10px] font-bold text-slate-700">{item.label}</span>
                         </div>
                       ))}
