@@ -104,8 +104,14 @@ export const SMA_TOPICS: SmaTopic[] = [
     title: "Peluang",
     slug: "peluang",
     subtopics: [
+      { title: "Aturan Perkalian dan Penjumlahan", slug: "aturan-perkalian-dan-penjumlahan" },
+      { title: "Permutasi", slug: "permutasi" },
+      { title: "Kombinasi", slug: "kombinasi" },
+      { title: "Ekspansi Binomial (Pengayaan)", slug: "ekspansi-binomial" },
       { title: "Ruang Sampel dan Distribusi Peluang Kejadian", slug: "ruang-sampel-dan-distribusi-peluang-kejadian" },
-      { title: "Aturan Penjumlahan Peluang (Kejadian Saling Lepas & Tidak Saling Lepas)", slug: "aturan-penjumlahan-peluang" },
+      { title: "Frekuensi Harapan", slug: "frekuensi-harapan" },
+      { title: "Komplemen Suatu Kejadian", slug: "komplemen-suatu-kejadian" },
+      { title: "Kejadian Majemuk", slug: "kejadian-majemuk" },
     ],
   },
   {
