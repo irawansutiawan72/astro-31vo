@@ -62,7 +62,7 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 5,
-    type: "pgk",
+    type: "pgk" as const,
     soal: "Pada lingkaran berpusat O, $\\angle AOB=35°$, $\\angle COD=140°$, dan panjang busur AB adalah 14 cm. Pilih semua pernyataan yang benar.",
     pernyataan: [
       "$\\angle AOB=35°$.",
@@ -80,7 +80,7 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 6,
-    type: "pgk",
+    type: "pgk" as const,
     soal: "Gambar menunjukkan persegi sisi 21 cm dan setengah lingkaran berdiameter 21 cm. Gunakan $\\pi=\\frac{22}{7}$. Pilih semua pernyataan yang benar tentang luas daerah yang diarsir.",
     pernyataan: [
       "Luas persegi adalah 441 cm².",
@@ -98,7 +98,7 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 7,
-    type: "pgk",
+    type: "pgk" as const,
     soal: "Gambar menunjukkan persegi sisi 14 cm dengan dua seperempat lingkaran berjari-jari 7 cm tidak termasuk daerah arsir. Pilih semua pernyataan yang benar tentang luas daerah arsir.",
     pernyataan: [
       "Luas persegi adalah 196 cm².",
@@ -116,7 +116,7 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 8,
-    type: "pgk",
+    type: "pgk" as const,
     soal: "Perhatikan gambar keliling daerah arsir. Jari-jari setengah lingkaran kecil yang ditunjukkan adalah 10 cm. Gunakan $\\pi=3{,}14$. Pilih semua pernyataan yang benar.",
     pernyataan: [
       "Panjang busur setengah lingkaran berjari-jari 10 cm adalah $10\\pi=31{,}4$ cm.",
@@ -134,7 +134,7 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 9,
-    type: "pgk",
+    type: "pgk" as const,
     soal: "Keliling daerah arsir pada gambar terdiri atas satu busur setengah lingkaran berdiameter 28 cm dan dua busur setengah lingkaran berdiameter 14 cm. Gunakan $\\pi=\\frac{22}{7}$. Pilih semua pernyataan yang benar.",
     pernyataan: [
       "Panjang busur besar adalah $14\\pi=44$ cm.",
@@ -152,14 +152,14 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 10,
-    type: "pgkbs",
+    type: "pgkbs" as const,
     soal: "Gambar menunjukkan tembereng dari juring 90° dengan jari-jari 10 cm. Gunakan $\\pi=3{,}14$. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.",
     pernyataan: [
       "Luas juring 90° adalah 78,5 cm².",
       "Luas segitiga yang dibentuk oleh dua jari-jari adalah 50 cm².",
       "Luas tembereng yang diarsir adalah 50 cm².",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "B", "S"] as ("B" | "S")[],
     pembahasan: explain(
       "Luas tembereng adalah luas juring dikurangi luas segitiga di dalam juring.",
       "1. Luas juring $=\\frac{90}{360}\\times3{,}14\\times10^2=78{,}5$ cm².\n2. Kedua jari-jari membentuk segitiga siku-siku: luasnya $=\\frac12\\times10\\times10=50$ cm².\n3. Luas tembereng $=78{,}5-50=28{,}5$ cm².\n4. Jadi pernyataan (1) dan (2) benar, sedangkan (3) salah.",
@@ -169,14 +169,14 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 11,
-    type: "pgkbs",
+    type: "pgkbs" as const,
     soal: "Bangun pada gambar dibatasi dua busur setengah lingkaran berdiameter 26 cm dan 14 cm serta dua ruas garis lurus. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.",
     pernyataan: [
       "Jumlah panjang kedua busur setengah lingkaran adalah $20\\pi$ cm.",
       "Jumlah panjang dua ruas garis lurus adalah selisih diameter, yaitu 12 cm.",
       "Dengan $\\pi=3{,}14$, keliling bangun adalah 80 cm.",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "B", "S"] as ("B" | "S")[],
     pembahasan: explain(
       "Keliling bangun terdiri dari dua busur setengah lingkaran dan dua ruas garis lurus.",
       "1. Jumlah busur $=\\frac12\\pi(26)+\\frac12\\pi(14)=20\\pi=62{,}8$ cm.\n2. Jumlah dua ruas lurus $=26-14=12$ cm.\n3. Keliling $=62{,}8+12=74{,}8$ cm, bukan 80 cm.\n4. Maka pernyataan (1) dan (2) benar, sedangkan (3) salah.",
@@ -200,14 +200,14 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 15,
-    type: "pgkbs",
+    type: "pgkbs" as const,
     soal: "Pada gambar, O adalah pusat lingkaran dan $\\angle ACE=30°$. Diketahui pula $\\angle ABE+\\angle ACE+\\angle ADE=96°$. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.",
     pernyataan: [
       "$\\angle ACE=30°$.",
       "$\\angle AOE=60°$.",
       "$\\angle AOE=96°$.",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "B", "S"] as ("B" | "S")[],
     pembahasan: explain(
       "Sudut pusat besarnya dua kali sudut keliling yang menghadap busur yang sama.",
       "1. Pernyataan (1) sama dengan informasi soal, jadi benar.\n2. $\\angle ACE=30°$ menghadap busur AE.\n3. Sudut pusat $\\angle AOE=2\\times30°=60°$.\n4. Jadi pernyataan (2) benar dan pernyataan (3) salah.",
@@ -253,14 +253,14 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 19,
-    type: "pgkbs",
+    type: "pgkbs" as const,
     soal: "Pada lingkaran pada gambar, AD adalah diameter, titik X adalah perpotongan AC dan BD, $\\angle ADB=28°$, dan $\\angle AXB=60°$. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.",
     pernyataan: [
       "$\\angle BAC=30°$.",
       "$\\angle ADC=58°$.",
       "$\\angle DAC=58°$.",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "B", "S"] as ("B" | "S")[],
     pembahasan: explain(
       "Gunakan teorema sudut keliling, sudut dari dua tali busur yang berpotongan di dalam lingkaran, dan sudut keliling yang menghadap diameter.",
       "1. $\\angle ADB=28°$ menghadap busur AB, jadi busur AB $=56°$.\n2. Untuk tali busur yang berpotongan di X, $\\angle AXB=\\frac12$(busur AB + busur CD). Maka busur CD $=120°-56°=64°$.\n3. Karena AD diameter, busur ABCD pada setengah lingkaran bawah bernilai 180°. Jadi busur BC $=180°-56°-64°=60°$, sehingga $\\angle BAC=30°$.\n4. $\\angle ADC$ menghadap busur ABC, jadi $\\angle ADC=\\frac12(56°+60°)=58°$.\n5. Segitiga ACD siku-siku di C; maka $\\angle DAC=180°-90°-58°=32°$. Pernyataan (1) dan (2) benar, (3) salah.",
@@ -270,14 +270,14 @@ const latihanDasarTka: LatihanSoal[] = [
   },
   {
     no: 20,
-    type: "pgkbs",
+    type: "pgkbs" as const,
     soal: "Pada segiempat tali busur ABCD pada gambar, sudut luar di C adalah 100° dan $\\angle ABC=74°$. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.",
     pernyataan: [
       "$\\angle DCB=80°$.",
       "$\\angle BAD=100°$.",
       "$\\angle ADC=74°$.",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "B", "S"] as ("B" | "S")[],
     pembahasan: explain(
       "Pada segiempat tali busur, sudut luar sama dengan sudut dalam yang berhadapan; sudut-sudut berhadapan jumlahnya 180°.",
       "1. Sudut dalam DCB berpelurus dengan sudut luar 100°, sehingga $\\angle DCB=80°$.\n2. $\\angle BAD=180°-\\angle DCB=100°$.\n3. $\\angle ADC=180°-\\angle ABC=180°-74°=106°$.\n4. Jadi pernyataan (1) dan (2) benar, sedangkan (3) salah.",
