@@ -41,9 +41,10 @@ export const SMA_TOPICS: SmaTopic[] = [
     slug: "vektor-dan-operasinya",
     subtopics: [
       { title: "Konsep Dasar Vektor (Notasi, Panjang, dan Arah Vektor)", slug: "konsep-dasar-vektor" },
-      { title: "Operasi Vektor secara Geometris (Segitiga, Jajar Genjang, Poligon)", slug: "operasi-vektor-secara-geometris" },
-      { title: "Vektor pada Sistem Koordinat Kartesius (Komponen Vektor Dimensi 2 & 3)", slug: "vektor-pada-sistem-koordinat-kartesius" },
-      { title: "Operasi Aljabar pada Vektor", slug: "operasi-aljabar-pada-vektor" },
+      { title: "Jumlah Vektor, Selisih Vektor dan Vektor Satuan", slug: "operasi-vektor-secara-geometris" },
+      { title: "Perkalian Vektor dengan Skalar, Vektor dengan Vektor (dot Product dan Cross Product)", slug: "vektor-pada-sistem-koordinat-kartesius" },
+      { title: "Sudut Antara Dua Vektor", slug: "operasi-aljabar-pada-vektor" },
+      { title: "Proyeksi Vektor (Proyeksi Skalar Ortogonal dan Proyeksi Vektor Ortogonal)", slug: "proyeksi-vektor" },
     ],
   },
   {
