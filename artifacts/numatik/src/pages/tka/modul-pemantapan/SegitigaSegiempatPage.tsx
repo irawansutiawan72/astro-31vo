@@ -25,7 +25,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 1, type: "pg",
     soal: "Perhatikan gambar berikut.\n\nKeliling bangun di atas adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1FZ2AoGQ3eaOk2m_1sRzibrtwOC2_TFEU&sz=w400" alt="Soal No. 1 - Keliling bangun" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117327/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_1_voqitt.png" alt="Soal No. 1 - Keliling bangun" />,
     options: ["A. 44 cm", "B. 48 cm", "C. 49 cm", "D. 52 cm"],
     jawaban: "C",
     pembahasan: "Konsep & Trik: keliling bangun gabungan = jumlah seluruh sisi luar. Pakai sifat \"sisi luar tetap sama\" walau bangun dipotong: panjang total horizontal $=$ panjang sisi terpanjang horizontal, demikian pula vertikal.\n\nLangkah: tambahkan seluruh ruas tepi. Untuk bangun bertingkat (L atau T), kelompokkan sisi horizontal dan vertikal terpisah, lalu jumlahkan. Dengan ukuran-ukuran pada gambar, total $=49$ cm.\n\nTips: trik \"kotak luar\" — bayangkan bangun L sebagai persegi panjang besar; keliling L sama dengan keliling persegi panjang luarnya.\n\nKesimpulan: keliling bangun adalah 49 cm.\n\nJawaban: C",
@@ -33,7 +33,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 2, type: "pg",
     soal: "Perhatikan gambar berikut ini.\n\nKeliling bangun di atas adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1tiDMGjhTHnJ14nthVibriCOjqyBKjftS&sz=w400" alt="Soal No. 2 - Keliling bangun" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117327/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_2_i4pp2u.png" alt="Soal No. 2 - Keliling bangun" />,
     options: ["A. 61 cm", "B. 84 cm", "C. 90 cm", "D. 94 cm"],
     jawaban: "D",
     pembahasan: "Konsep & Trik: tambahkan semua sisi luar bangun. Sisi miring (jika ada) dihitung dengan Pythagoras.\n\nLangkah: identifikasi setiap sisi luar dari gambar. Bila ada sisi miring, hitung $c=\\sqrt{a^2+b^2}$. Jumlahkan total semua sisi $=94$ cm.\n\nTips: tandai setiap sisi yang sudah dihitung dengan tanda centang agar tidak dobel.\n\nKesimpulan: keliling bangun adalah 94 cm.\n\nJawaban: D",
@@ -41,7 +41,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 5, type: "pg",
     soal: "Perhatikan gambar.\n\nDiketahui AB = 20 cm, AF = 13 cm dan BD = 10 cm. Luas bangun di samping adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=13eTUR0UwxWFDKDERb3eqBdP1X4Rdc1A7&sz=w400" alt="Soal No. 5 - Luas bangun" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117327/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_5_iad8nj.png" alt="Soal No. 5 - Luas bangun" />,
     options: ["A. 280 $cm^2$", "B. 320 $cm^2$", "C. 360 $cm^2$", "D. 480 $cm^2$"],
     jawaban: "A",
     pembahasan: "Konsep & Trik: bangun gabungan berupa persegi panjang ditambah segitiga. Hitung luas tiap bagian dengan AB = panjang, AF = lebar, BD = sisi tambahan.\n\nLangkah: persegi panjang utama $=AB\\times AF=20\\times13=260$ cm². Tambahan segitiga dari $BD=10$ menghasilkan luas tambahan sehingga total $=280$ cm².\n\nTips: bila BD membentuk segitiga siku-siku dengan kaki yang sudah diketahui, langsung pakai $\\frac{1}{2}at$.\n\nKesimpulan: luas bangun adalah 280 cm².\n\nJawaban: A",
@@ -49,7 +49,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 6, type: "pg",
     soal: "Perhatikan gambar berikut.\n\nPanjang AD = BE = 17 cm dan DE = 15 cm. Luas bangun AGBCHD adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1omKMtkcPQyuXaxph_7C3BNYK0g39b1m1&sz=w400" alt="Soal No. 6 - Luas bangun AGBCHD" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117326/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_6_q1aigy.png" alt="Soal No. 6 - Luas bangun AGBCHD" />,
     options: ["A. 375 $cm^2$", "B. 525 $cm^2$", "C. 600 $cm^2$", "D. 750 $cm^2$"],
     jawaban: "C",
     pembahasan: "Konsep & Trik: AD = BE = 17 dan DE = 15 menyiratkan kemunculan tripel Pythagoras 8-15-17. Pisahkan bangun menjadi persegi panjang (DE × tinggi) ditambah dua segitiga siku-siku 8-15-17.\n\nLangkah: tinggi tambahan $=\\sqrt{17^2-15^2}=\\sqrt{64}=8$. Luas total persegi panjang + dua segitiga $=600$ cm².\n\nTips: tripel 8-15-17 sangat khas; selalu cek bila muncul angka 15 dan 17 bersamaan.\n\nKesimpulan: luas bangun AGBCHD adalah 600 cm².\n\nJawaban: C",
@@ -57,7 +57,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 7, type: "pg",
     soal: "Perhatikan gambar berikut.\n\nLuas daerah yang diarsir adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1JwpzVgl6O7qCbzohZXtEchgzXuT62xPz&sz=w400" alt="Soal No. 7 - Luas bangun" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117327/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_7_oirzof.png" alt="Soal No. 7 - Luas bangun" />,
     options: ["A. 60 $cm^2$", "B. 66 $cm^2$", "C. 72 $cm^2$", "D. 90 $cm^2$"],
     jawaban: "B",
     pembahasan: "Konsep & Trik: daerah arsir = luas bangun besar dikurangi luas bagian yang tidak diarsir (atau langsung pisahkan menjadi bagian-bagian standar).\n\nLangkah: hitung luas bangun pembungkus, lalu kurangi luas bagian putih. Hasil $=66$ cm².\n\nTips: strategi \"luas total dikurangi luas kosong\" biasanya lebih cepat untuk daerah arsir tidak teratur.\n\nKesimpulan: luas daerah yang diarsir adalah 66 cm².\n\nJawaban: B",
@@ -65,7 +65,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 8, type: "pg",
     soal: "Perhatikan gambar di bawah!\n\nLuas daerah yang diarsir adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1smlxX8PWDjFQnQtQDD6v_EPoot0HRWFu&sz=w400" alt="Soal No. 8 - Luas daerah yang diarsir" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117326/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_8_zixplk.png" alt="Soal No. 8 - Luas daerah yang diarsir" />,
     options: ["A. 42 $cm^2$", "B. 56 $cm^2$", "C. 70 $cm^2$", "D. 84 $cm^2$"],
     jawaban: "C",
     pembahasan: "Konsep & Trik: bagi daerah arsir menjadi segitiga/persegi panjang, lalu pakai rumus standar.\n\nLangkah: identifikasi daerah arsir. Gunakan $L_{\\triangle}=\\frac{1}{2}\\cdot a\\cdot t$ dan $L_{persegi\\ panjang}=p\\cdot l$. Total $=70$ cm².\n\nTips: garis bantu sering kali memecah daerah arsir kompleks menjadi 2-3 bentuk standar.\n\nKesimpulan: luas daerah yang diarsir adalah 70 cm².\n\nJawaban: C",
@@ -73,7 +73,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 9, type: "pg",
     soal: "Perhatikan gambar persegi ABCD dan persegi panjang BEFG berikut!\n\nJika luas daerah yang tidak diarsir 68 $cm^2$, luas daerah yang diarsir adalah ...",
-    gambar: <SoalImage src="https://drive.google.com/thumbnail?id=1rGPa94rPURdekLuXmtlflgRwkL3mohzP&sz=w400" alt="Soal No. 9 - Persegi ABCD dan persegi panjang BEFG" />,
+    gambar: <SoalImage src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117326/SEGITIGA_DAN_SEGIEMPAT_-_LATIHAN_DASAR_-_NO_9_fs6m6x.png" alt="Soal No. 9 - Persegi ABCD dan persegi panjang BEFG" />,
     options: ["A. 24 $cm^2$", "B. 28 $cm^2$", "C. 30 $cm^2$", "D. 56 $cm^2$"],
     jawaban: "B",
     pembahasan: "Konsep & Trik: pakai prinsip luas arsir = luas total dikurangi luas tak diarsir. Kalau dua bangun tumpang tindih, gunakan inklusi-eksklusi.\n\nLangkah: misalkan luas persegi $=a^2$ dan luas persegi panjang $=p\\cdot l$. Luas tak diarsir $=a^2+p\\cdot l-2\\cdot\\text{arsir}=68$. Dengan ukuran pada gambar, luas arsir $=28$ cm².\n\nTips: inklusi-eksklusi $|A\\cup B|=|A|+|B|-|A\\cap B|$ berguna saat bangun tumpang tindih.\n\nKesimpulan: luas daerah yang diarsir adalah 28 cm².\n\nJawaban: B",
