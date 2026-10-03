@@ -3,23 +3,45 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 
 const kesebangunanImages: Record<number, string> = {
-  3: "https://drive.google.com/thumbnail?id=1ZP5r-eDLDKqa_q-Vl_VgLnSSXb_6Fw_V&sz=w400",
-  4: "https://drive.google.com/thumbnail?id=1ROQpFuAJ_OJmnYkdpUHsdDrW-rgtSeEh&sz=w400",
-  6: "https://drive.google.com/thumbnail?id=1WjJCZ5nKRuOb0gnNyrISrI2d5NP6Egh9&sz=w400",
-  7: "https://drive.google.com/thumbnail?id=1t4cMz2PzB-uTGzaUXpQZwzkyHRgqC03m&sz=w400",
-  8: "https://drive.google.com/thumbnail?id=1MdsvhRq7fn3ESbmDu2Dfo4M4LRgO24hw&sz=w400",
-  9: "https://drive.google.com/thumbnail?id=1CaV_lnFuho6eghbrRYdI2nc_R66HLdVk&sz=w400",
-  10: "https://drive.google.com/thumbnail?id=1n6fdjbhG0auXBQA36uGI9ZfoqCHt3PBp&sz=w400",
-  11: "https://drive.google.com/thumbnail?id=1Q7d9DCss1BiMXbv7LROvwKtWrHDQV_Vq&sz=w400",
-  12: "https://drive.google.com/thumbnail?id=1ZXJK12JT1UjYsddLMB2gB5MPWbEpPSrk&sz=w400",
-  13: "https://drive.google.com/thumbnail?id=1PMDhaE4vtKuFsAl220dYy-E7M8YNJD8Y&sz=w400",
-  15: "https://drive.google.com/thumbnail?id=18ISrSOMi8scSjAoCxj8ii_V3EpoTfmG1&sz=w400",
-  16: "https://drive.google.com/thumbnail?id=1UqzWN2GNTfIkIyfMFCd5X7_QwZSJdrn7&sz=w400",
-  17: "https://drive.google.com/thumbnail?id=1sLnMt8MJVfYDlyBZgnSvtD5beV0MEjad&sz=w400",
-  18: "https://drive.google.com/thumbnail?id=11mITiYHdllHy9TRQY9L-Snd-Pwu7eS55&sz=w400",
-  21: "https://drive.google.com/thumbnail?id=1QBSIjecMAMMs-gtZhNTxcuHOV-u29-GB&sz=w400",
-  22: "https://drive.google.com/thumbnail?id=1VM2aEBmsoI6IsZ8F-YtVagAmst3fqGYs&sz=w400",
+  3: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_3_esplzp.png",
+  4: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_4_srwinp.png",
+  6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_6_zilnja.png",
+  7: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_7_xwr9ax.png",
+  8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_8_get5ke.png",
+  9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_9_jxeevd.png",
+  10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_10_xvdtcp.png",
+  11: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_11_vk8ooq.png",
+  12: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_12_zkvbci.png",
+  13: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_13_nvbv3w.png",
+  15: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_15_ozmr6l.png",
+  16: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_16_vfpjrw.png",
+  17: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_17_i903gj.png",
+  18: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_18_h4b34o.png",
+  21: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_21_ubuud2.png",
+  22: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117352/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_22_fhu89d.png",
 };
+
+const kesebangunanSoalSatuParts = [
+  { bagian: "i", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_i_yyjsln.png" },
+  { bagian: "ii", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_ii_pvvcad.png" },
+  { bagian: "iii", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_iii_desmvy.png" },
+  { bagian: "iv", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035300/no_1_bagian_iv_n15tkt.png" },
+] as const;
+
+const kesebangunanSoalSatuDiagram = (
+  <div role="group" aria-label="Gambar soal nomor 1" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {kesebangunanSoalSatuParts.map(({ bagian, src }) => (
+      <figure key={bagian} className="min-w-0 rounded-xl border border-border/40 bg-background p-2">
+        <figcaption className="mb-1 text-center text-sm font-semibold">({bagian})</figcaption>
+        <img
+          src={src}
+          alt={`Gambar soal nomor 1 bagian ${bagian}`}
+          className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain"
+        />
+      </figure>
+    ))}
+  </div>
+);
 
 const materiSections: MateriSection[] = [
   {
@@ -215,7 +237,13 @@ const KesebangunanPage = () => (
   materiSections={materiSections}
   contohSoal={getTkaContohSoal("kesebangunan")}
   latihanDasar={latihanDasarTkaLama}
-  gambarMap={Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
+  gambarMap={{
+    1: kesebangunanSoalSatuDiagram,
+    ...Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [
+      Number(no),
+      <img key={no} src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
+    ])),
+  }}
   />
 );
 
