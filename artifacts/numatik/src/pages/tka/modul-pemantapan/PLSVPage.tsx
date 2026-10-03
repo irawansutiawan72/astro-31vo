@@ -898,7 +898,7 @@ const latihanDasarDenganTambahan: LatihanSoal[] = [
 
 const PLSVPage = () => (
   <TKAPemantapanLayout
-    title="PERSAMAAN DAN PERTIDAKSAMAAN LINEAR SATU VARIABEL"
+    title="Persamaan Dan Pertidaksamaan Linear Satu Variabel"
     materiSections={materiSections}
     contohSoal={contohSoal}
     latihanDasar={latihanDasarDenganTambahan}
