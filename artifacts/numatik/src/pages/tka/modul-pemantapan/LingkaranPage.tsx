@@ -183,6 +183,7 @@ const LingkaranPage = () => (
     contohSoal={getTkaContohSoal("lingkaran")}
     latihanDasar={latihanDasarTka}
     imageScale="responsiveHalf"
+    diagramBeforeStatements
   />
 );
 

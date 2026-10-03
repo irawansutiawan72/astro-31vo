@@ -55,6 +55,8 @@ interface Props {
   showImageSourceLinks?: boolean;
   imageScale?: "default" | "half" | "responsiveHalf";
   imageScaleExceptQuestionNo?: number;
+  /** Render fallback question diagrams before any statement list. */
+  diagramBeforeStatements?: boolean;
 }
 
 const getGoogleDriveFileId = (value: string) => {
@@ -256,7 +258,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string; bg: string; bor
   },
 };
 
-const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo }: Props) => {
+const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materiSections, latihanDasar, contohSoal, soalSvgMap, optionSvgMap, gambarMap, showImageSourceLinks = true, imageScale = "default", imageScaleExceptQuestionNo, diagramBeforeStatements = false }: Props) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
@@ -1029,6 +1031,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       </div>
                     </div>
 
+                    {diagramBeforeStatements && !diagramInserted && diagram && (
+                      <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
+                        <div className={`min-w-0 max-w-full ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
+                      </div>
+                    )}
+
                     {/* ── PGK: checkbox statement list ── */}
                     {(type === "pgk") && soal.pernyataan && (
                       <div className="px-5 pb-2 space-y-1.5 ml-11 min-w-0">
@@ -1093,7 +1101,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     )}
 
                     {/* ── Optional diagram/image, placed after the statements ── */}
-                    {!diagramInserted && diagram && (
+                    {!diagramBeforeStatements && !diagramInserted && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
                          <div className={`min-w-0 max-w-full ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
