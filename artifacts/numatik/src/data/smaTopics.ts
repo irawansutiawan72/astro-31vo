@@ -52,8 +52,13 @@ export const SMA_TOPICS: SmaTopic[] = [
     slug: "perbandingan-trigonometri",
     subtopics: [
       { title: "Perbandingan Trigonometri pada Segitiga Siku-Siku (Sin, Cos, Tan, Sec, Cosec, Cotan)", slug: "perbandingan-trigonometri-segitiga-siku-siku" },
-      { title: "Sudut-Sudut Istimewa dan Relasi Sudut", slug: "sudut-sudut-istimewa-dan-relasi-sudut" },
-      { title: "Penerapan dan Pemodelan Trigonometri (Aturan Sinus & Cosinus)", slug: "penerapan-dan-pemodelan-trigonometri" },
+      { title: "Perbandingan Trigonometri untuk Sudut Istimewa", slug: "sudut-sudut-istimewa-dan-relasi-sudut" },
+      { title: "Nilai Perbandingan Trigonometri pada Berbagai Kuadran dan Sudut Berelasi", slug: "penerapan-dan-pemodelan-trigonometri" },
+      { title: "Persamaan Trigonometri", slug: "persamaan-trigonometri" },
+      { title: "Identitas dan Rumus-rumus Trigonometri", slug: "identitas-dan-rumus-rumus-trigonometri" },
+      { title: "Aturan Sinus dan Cosinus dan Luas Segitiga", slug: "aturan-sinus-cosinus-dan-luas-segitiga" },
+      { title: "Grafik Fungsi Trigonometri", slug: "grafik-fungsi-trigonometri" },
+      { title: "Pertidaksamaan Trigonometri", slug: "pertidaksamaan-trigonometri" },
     ],
   },
   {
