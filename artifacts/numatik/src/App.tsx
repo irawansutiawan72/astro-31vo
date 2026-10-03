@@ -158,6 +158,7 @@ const ATPPage = lazy(() => import("./pages/ATPPage"));
 const GuruLayout = lazy(() => import("./components/GuruLayout"));
 const RuangUntukGuruPage = lazy(() => import("./pages/RuangUntukGuruPage"));
 const SmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPage"));
+const IntensifUtbkPage = lazy(() => import("./pages/ruang-untuk-guru/IntensifUtbkPage"));
 const SmaComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaComingSoonPage"));
 const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMenuPage"));
 const SmaSubtopicComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSubtopicComingSoonPage"));
@@ -1342,7 +1343,8 @@ const AppInner = () => {
           <Route path="/pengaturan" element={<PengaturanPage />} />
           <Route path="/tentang-aplikasi" element={<TentangAplikasiPage />} />
           <Route path="/coming-soon" element={<ComingSoonPage />} />
-          <Route path="/intensif-utbk" element={<ComingSoonPage />} />
+          <Route path="/intensif-utbk" element={<IntensifUtbkPage />} />
+          <Route path="/intensif-utbk/:topicSlug" element={<IntensifUtbkPage />} />
           <Route path="/menghitung-cepat" element={<MenghitungCepatPage />} />
           <Route path="/menghitung-cepat/perkalian-dengan-11" element={<PerkalianDengan11Page />} />
           <Route path="/menghitung-cepat/kuadrat-berakhiran-5" element={<KuadratBerakhiran5Page />} />
