@@ -769,6 +769,8 @@ const NET_FACE_NUMBERS: Record<FName, number>[] = [
   { left: 1, back: 2, right: 3, front: 4, bottom: 5, top: 6 },
   // Net #3: the center square is the base, with a three-face strip on its right.
   { top: 1, back: 2, bottom: 3, right: 4, front: 5, left: 6 },
+  // Net #4: the lower flap continues around the cube through faces 4–6.
+  { top: 1, back: 2, bottom: 3, right: 4, front: 5, left: 6 },
 ];
 const HINGED_NET_SIZE = 44;
 const HINGED_NET_HALF = HINGED_NET_SIZE / 2;
@@ -841,7 +843,7 @@ const HingedNetPreview = ({
   lang,
 }: {
   faceNumbers: Record<FName, number>;
-  variant: 1 | 2 | 3;
+  variant: 1 | 2 | 3 | 4;
   lang: string;
 }) => {
   const { isDark } = useTheme();
@@ -940,6 +942,29 @@ const HingedNetPreview = ({
     </>
   );
 
+  const patternFour = (
+    <>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: HINGED_NET_SIZE }}>
+        <HingedNetFace face="back" number={number("back")} />
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : -90}deg)`), top: 0, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        <HingedNetFace face="top" number={number("top")} style={{ top: -HINGED_NET_SIZE, left: 0 }} />
+      </div>
+      <div style={{ ...hinge(`translateZ(-${HINGED_NET_HALF}px) rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+        <HingedNetFace face="bottom" number={number("bottom")} style={{ top: 0, left: 0 }} />
+        <div style={{ ...hinge(`rotateY(${isOpen ? 0 : -90}deg)`), top: 0, left: HINGED_NET_SIZE, width: 0, height: HINGED_NET_SIZE, transformOrigin: "0% 50% 0" }}>
+          <HingedNetFace face="right" number={number("right")} style={{ top: 0, left: 0 }} />
+          <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+            <HingedNetFace face="front" number={number("front")} style={{ top: 0, left: 0 }} />
+            <div style={{ ...hinge(`rotateX(${isOpen ? 0 : 90}deg)`), top: HINGED_NET_SIZE, left: 0, width: HINGED_NET_SIZE, height: 0, transformOrigin: "50% 0% 0" }}>
+              <HingedNetFace face="left" number={number("left")} style={{ top: 0, left: 0 }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <div className="w-full">
       <div
@@ -958,7 +983,7 @@ const HingedNetPreview = ({
             transform: "rotateX(-18deg) rotateY(28deg)",
           }}
         >
-          {variant === 1 ? patternOne : variant === 2 ? patternTwo : patternThree}
+          {variant === 1 ? patternOne : variant === 2 ? patternTwo : variant === 3 ? patternThree : patternFour}
         </div>
       </div>
       <p className={`text-center text-[10px] font-body ${isOpen ? (isDark ? "text-white/50" : "text-slate-500") : "text-emerald-500"}`}>
@@ -1412,10 +1437,8 @@ const NetGallery = ({ lang }: { lang: string }) => {
           ? "bg-slate-800/60 border border-cyan-700/60 rounded-lg p-3 flex flex-col items-center gap-2"
           : "bg-gray-100 border border-cyan-300 rounded-lg p-3 flex flex-col items-center gap-2"}>
           <span className={isDark ? "text-white/50 text-[10px] font-body font-bold" : "text-slate-500 text-[10px] font-body font-bold"}>{netLabel} #{i+1}</span>
-          {i < 3 ? (
-            <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2 | 3} lang={lang} />
-          ) : i < 4 ? (
-            <FrontHingedNetPreview cells={cells} lang={lang} />
+          {i < 4 ? (
+            <HingedNetPreview faceNumbers={NET_FACE_NUMBERS[i]} variant={(i + 1) as 1 | 2 | 3 | 4} lang={lang} />
           ) : (
             <GenericHingedNetPreview cells={cells} lang={lang} />
           )}
