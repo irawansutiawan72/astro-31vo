@@ -177,6 +177,7 @@ const SmaBarisanDeretAritmetikaPage = lazy(() => import("./pages/ruang-untuk-gur
 const SmaBarisanDeretGeometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretGeometriPage"));
 const SmaKonsepDasarVektorPage = lazy(() => import("./pages/ruang-untuk-guru/SmaKonsepDasarVektorPage"));
 const SmaOperasiVektorPage = lazy(() => import("./pages/ruang-untuk-guru/SmaOperasiVektorPage"));
+const SmaVektorPadaSistemKoordinatKartesiusPage = lazy(() => import("./pages/ruang-untuk-guru/SmaVektorPadaSistemKoordinatKartesiusPage"));
 const NumatikGamePage = lazy(() => import("./pages/ruang-untuk-guru/NumatikGamePage"));
 const KeyakinanKelasPage = lazy(() => import("./pages/ruang-untuk-guru/KeyakinanKelasPage"));
 const PenilaianPembelajaranPage = lazy(() => import("./pages/ruang-untuk-guru/PenilaianPembelajaranPage"));
@@ -1206,6 +1207,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/vektor-dan-operasinya/operasi-vektor-secara-geometris"
               element={<SmaOperasiVektorPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/vektor-dan-operasinya/vektor-pada-sistem-koordinat-kartesius"
+              element={<SmaVektorPadaSistemKoordinatKartesiusPage />}
             />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
