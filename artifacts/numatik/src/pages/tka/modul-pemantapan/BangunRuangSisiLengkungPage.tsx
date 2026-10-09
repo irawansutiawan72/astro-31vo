@@ -33,7 +33,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 8, soal: "Suatu kerucut jari-jarinya 7 cm dan tingginya 24 cm. Jika $\\pi = \\frac{22}{7}$, maka luas seluruh permukaan kerucut tersebut adalah ...", options: ["A. 682 $cm^2$", "B. 704 $cm^2$", "C. 726 $cm^2$", "D. 752 $cm^2$"] },
   { no: 9, soal: "Sebuah kerucut luas alasnya 154 $cm^2$. Jika tinggi kerucut 24 cm, maka luas seluruh permukaan kerucut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 604 $cm^2$", "B. 614 $cm^2$", "C. 704 $cm^2$", "D. 714 $cm^2$"] },
   { no: 10, soal: "Bila luas kulit bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, maka jari-jari bola itu adalah ...", options: ["A. 28 cm", "B. 21 cm", "C. 14 cm", "D. 7 cm"] },
-  { no: 11, soal: "Luas permukaan $\\frac{3}{4}$ bola padat yang panjang jari-jarinya 7 cm adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 616 $cm^2$", "B. 606 $cm^2$", "C. 462 $cm^2$", "D. 452 $cm^2$"] },
+  { no: 11, soal: "Luas permukaan luar bangun $\\frac{3}{4}$ bola padat berjari-jari 7 cm, termasuk seluruh bidang potong datarnya, adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 616 $cm^2$", "B. 606 $cm^2$", "C. 462 $cm^2$", "D. 452 $cm^2$"] },
   { no: 12, soal: "Tanti akan membuat dua buah topi ulang tahun dari karton berukuran 30 cm x 50 cm. Jika diameter topi 21 cm dan garis pelukis 20 cm, maka sisa karton yang tidak terpakai adalah ....", options: ["A. 75 $cm^2$", "B. 100 $cm^2$", "C. 150 $cm^2$", "D. 180 $cm^2$"] },
   { no: 13, soal: "Perhatikan gambar topi berbentuk kerucut terbuat dari karton berikut ini!\nJika diameter lingkaran alas 28 cm dan tinggi topi 48 cm, luas karton minimal yang diperlukan untuk membuat 3 buah topi tersebut adalah ....", options: ["A. 2.112 $cm^2$", "B. 2.200 $cm^2$", "C. 6.336 $cm^2$", "D. 6.600 $cm^2$"] },
   { no: 14, soal: "Volume kerucut yang panjang diameternya 21 cm dan tinggi 12 cm adalah ...", options: ["A. 231 $cm^3$", "B. 986 $cm^3$", "C. 1.386 $cm^3$", "D. 2.958 $cm^3$"] },
@@ -52,19 +52,19 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 27, soal: "Sebuah kerucut mempunyai volume 40 $cm^3$, jika diameter kerucut diperbesar 2 kali dan tinggi diperbesar 3 kali, maka volume kerucut yang baru adalah ....", options: ["A. 240 $cm^3$", "B. 480 $cm^3$", "C. 720 $cm^3$", "D. 1440 $cm^3$"] },
   { no: 28, soal: "Diketahui volume suatu kerucut 120 $cm^3$, jika diameter kerucut diperbesar dua kali dan tinggi diperpanjang 3 kali, maka volume kerucut sekarang adalah....", options: ["A. 240 $cm^3$", "B. 480 $cm^3$", "C. 1.440 $cm^3$", "D. 1.540 $cm^3$"] },
   { no: 29, soal: "Sebuah kertas karton berbentuk juring lingkaran dengan sudut pusat $216^0$ dan panjang jari-jarinya 15 cm. Jika kertas karton tersebut dibuat kerucut, maka volume kerucut maksimum adalah ....", options: ["A. $324\\pi$ $cm^3$", "B. $405\\pi$ $cm^3$", "C. $620\\pi$ $cm^3$", "D. $675\\pi$ $cm^3$"] },
-  { no: 30, soal: "Perhatikan gambar!\nLuas permukaan bangun ruang tersebut adalah ....", options: ["A. 550 $cm^2$", "B. 1320 $cm^2$", "C. 1474 $cm^2$", "D. 1584 $cm^2$"] },
+  { no: 30, soal: "Perhatikan gambar!\nLuas permukaan bangun ruang tersebut adalah .... ($\\pi = \\frac{22}{7}$)", options: ["A. 550 $cm^2$", "B. 1320 $cm^2$", "C. 1474 $cm^2$", "D. 1584 $cm^2$"] },
   { no: 31, soal: "Perhatikan gambar!\nLuas permukaan gambar disamping adalah ...", options: ["A. 400$\\pi$ $cm^2$", "B. 800$\\pi$ $cm^2$", "C. 1200$\\pi$ $cm^2$", "D. 1600$\\pi$ $cm^2$"] },
-  { no: 32, soal: "Perhatikan gambar!\nGambar diatas merupakan sebuah bandul terbuat dari logam. Jika berat setiap 1 $cm^3$ adalah 15 gram, maka berat bandul seluruhnya adalah ....", options: ["A. 7122 gram", "B. 7212 gram", "C. 7222 gram", "D. 7232 gram"] },
+  { no: 32, soal: "Perhatikan gambar!\nBandul logam terdiri atas kerucut dan setengah bola. Jika massa setiap 1 $cm^3$ logam adalah 15 gram dan $\\pi = 3,14$, berat bandul seluruhnya adalah ....", options: ["A. 7.122 gram", "B. 7.212 gram", "C. 7.222 gram", "D. 8.635 gram"] },
   { no: 33, soal: "Sebuah bandul terdiri dari kerucut dan belahan bola.\nJika diameter bola 14 cm dan garis pelukis kerucutnya 25 cm, maka volume bandul tersebut adalah ....", options: ["A. 132,6 $cm^3$", "B. 1232,0 $cm^3$", "C. 1950,7 $cm^3$", "D. 2002,0 $cm^3$"] },
   { no: 34, soal: "Perhatikan gambar benda padat berbentuk tabung dan setengah bola berikut!\nLuas permukaan benda tersebut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 702 cm²", "B. 802 cm²", "C. 902 cm²", "D. 1.002 cm²"] },
-  { no: 35, soal: "Perhatikan gambar berikut!\nSebuah peluru terbentuk dari tabung dan kerucut. Volume peluru tersebut adalah...", options: ["A. 4.312,0 $cm^3$", "B. 4.230,0 $cm^3$", "C. 4.358,2 $cm^3$", "D. 5.312,4 $cm^3$"] },
+  { no: 35, soal: "Perhatikan gambar berikut!\nSebuah peluru terbentuk dari tabung dan kerucut. Volume peluru tersebut adalah... ($\\pi = \\frac{22}{7}$)", options: ["A. 4.312,0 $cm^3$", "B. 4.230,0 $cm^3$", "C. 4.358,2 $cm^3$", "D. 5.312,4 $cm^3$"] },
   { no: 36, soal: "Bangun pada gambar berikut terdiri dari tabung dan belahan bola.\nLuas permukaan bangun tersebut adalah....", options: ["A. 880 $cm^2$", "B. 1.496 $cm^2$", "C. 1.596 $cm^2$", "D. 2.010 $cm^2$"] },
-  { no: 37, soal: "Gambar di bawah adalah sebuah bola dimasukkan ke sebuah tabung, jika luas permukaan bola 616 $cm^2$. Maka luas permukaan tabung adalah ....", options: ["A. 360 $cm^2$", "B. 300 $cm^2$", "C. 160 $cm^2$", "D. 150 $cm^2$"] },
+  { no: 37, soal: "Bola tepat pas di dalam tabung seperti pada gambar. Jika luas permukaan bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, luas seluruh permukaan tabung adalah ....", options: ["A. 616 $cm^2$", "B. 770 $cm^2$", "C. 880 $cm^2$", "D. 924 $cm^2$"] },
   { no: 38, soal: "Sebuah bak air berbentuk tabung dengan diameter 140 cm dan memiliki tinggi 1 m yang terisi penuh. Dari tabung tersebut dialirkan air melalui kran dengan debit 20 liter/menit selama 1 jam. Maka volume air yang masih tersisa adalah ...", options: ["A. 40 liter", "B. 140 liter", "C. 240 liter", "D. 340 liter"] },
   { no: 39, soal: "Ke dalam tabung berisi air setinggi 30 cm dimasukkan 6 bola besi yang masing-masing berjari-jari 7 cm. Jika diameter tabung 28 cm, tinggi air dalam tabung setelah dimasukkan enam bola besi adalah ...", options: ["A. 37 cm", "B. 42 cm", "C. 44 cm", "D. 52 cm"] },
   { no: 40, soal: "Sebuah tabung berdiameter 24 cm dan tinggi 50 cm diisi air $\\frac{3}{5}$ dari tingginya. Tiga buah bola besi berjari-jari 6 cm dimasukan kedalam tabung. Tinggi air dalam tabung sekarang adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 32 cm", "B. 34 cm", "C. 36 cm", "D. 42 cm"] },
   { no: 41, soal: "Sebuah tabung berjari-jari 10 cm dan tinggi 50 cm berisi air $\\frac{3}{5}$ tinggi tabung. Jika 4 bola besi berjari-jari 5 cm dimasukkan ke dalam tabung, maka permukaan air pada tabung akan naik setinggi ...", options: [] },
-  { no: 42, soal: "Sebuah torn pengisi air berbentuk tabung dengan diameter 2 m dan tinggi 10 m. Torn tersebut diisi air dengan debit air 20 liter/menit. Maka torn tersebut akan terisi air hingga penuh selama ...", options: ["A. 2 jam 15 menit", "B. 2 jam 27 menit", "C. 2 jam 37 menit", "D. 2 jam 38 menit"] },
+  { no: 42, soal: "Sebuah torn pengisi air berbentuk tabung dengan diameter 2 m dan tinggi 10 m. Torn tersebut diisi air dengan debit 200 liter/menit ($\\pi = 3,14$). Torn akan terisi penuh selama ...", options: ["A. 2 jam 15 menit", "B. 2 jam 27 menit", "C. 2 jam 37 menit", "D. 2 jam 38 menit"] },
   { no: 43, soal: "Sebuah bola logam dimasukkan ke dalam tabung yang berisi air sehingga permukaan air di dalam tabung menjadi naik. Hitunglah tinggi air yang naik jika diameternya 3 cm dan diameter tabung 5 cm.", options: ["A. 0,72", "B. 52", "C. 18", "D. 7,2"] },
   { no: 44, soal: "Fitra menyalakan lilin berbentuk tabung dengan diameter 2,8 cm dan tinggi 15 cm. Jika setiap menit lilin terbakar 1,68 $cm^3$, maka lilin akan habis terbakar dalam waktu ... ($\\pi = \\frac{22}{7}$)", options: ["A. 48 menit", "B. 50 menit", "C. 55 menit", "D. 56 menit"] },
   { no: 45, soal: "Wadah pembuatan es cream berbentuk tabung dengan diameter 0,2 m dan tinggi 0,75 m. Jika es cream tersebut dimasukkan kedalam corong-corong es cream berbentuk kerucut dengan jari-jari 2,5 cm dan tinggi 10 cm. Maka banyak corong es cream yang dibutuhkan adalah...", options: ["A. 60", "B. 120", "C. 240", "D. 360"] },
@@ -90,8 +90,13 @@ const BangunRuangSisiLengkungPage = () => (
     title="BANGUN RUANG SISI LENGKUNG"
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
-    latihanDasar={latihanDasarTkaLama.map((soal) => ({ ...soal, pembahasan: toPembahasanText(soal.no) }))}
+    latihanDasar={latihanDasarTkaLama.map((soal) => ({
+      ...soal,
+      jawaban: brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
+      pembahasan: toPembahasanText(soal.no),
+    }))}
     gambarMap={Object.fromEntries(Object.entries(brslDasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
+    showImmediateAnswerFeedback
   />
 );
 

@@ -8,13 +8,13 @@ export const tkaBangunRuangSisiDatarPembahasan: Record<number, Pembahasan> = {
     stepByStep:
       "A. Terdiri dari 6 persegi dan saat dilipat menempati keenam sisi kubus satu kali.\n" +
       "B. Dua persegi akan menempati sisi kubus yang sama saat dilipat.\n" +
-      "C. Hanya terdiri dari 5 persegi, sehingga tidak dapat menutup seluruh sisi kubus.\n" +
+      "C. Terdiri dari 6 persegi, tetapi saat dilipat ada dua persegi yang menempati sisi kubus yang sama.\n" +
       "D. Dua persegi akan menempati sisi kubus yang sama saat dilipat.\n" +
       "Jadi, jaring-jaring yang valid adalah gambar A.",
     tips:
       "Hitung dahulu jumlah perseginya, lalu ikuti arah lipatan. Jaring-jaring valid harus menghasilkan 6 sisi yang berbeda tanpa tumpang tindih.",
     kesimpulan:
-      "Pilihan A adalah satu-satunya rangkaian yang dapat dilipat menjadi kubus.",
+      "Pilihan A adalah satu-satunya rangkaian yang dapat dilipat menjadi kubus tanpa ada sisi yang bertumpuk.",
   },
   15: {
     jawaban: "A. 50 cm",

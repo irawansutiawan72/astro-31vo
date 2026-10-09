@@ -41,7 +41,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 13, soal: "Pak Dani membuat kerangka berbentuk balok yang terbuat dari alumunium dengan ukuran 60 cm x 50 cm x 80 cm. jika harga alumunium Rp40.000,00 tiap meter maka biaya yang diperlukan untuk membeli alumunium adalah...", options: ["A. Rp72.000,00", "B. Rp96.000,00", "C. Rp288.000,00", "D. Rp960.000,00"] },
   { no: 15, soal: "Rosa akan membuat model kerangka limas dan prisma masing-masing satu buah. Model kerangka limas alasnya berbentuk persegi panjang dengan ukuran 8 cm × 6 cm dan tinggi limas 12 cm. Kerangka prisma beralas segi enam beraturan dengan panjang sisi 12 cm dan tinggi 21 cm. Jika Rosa memiliki persediaan kawat 4 m, sisa kawat yang tidak terpakai adalah ....", options: ["A. 50 cm", "B. 54 cm", "C. 58 cm", "D. 60 cm"] },
   { no: 16, soal: "Ardian akan membuat sebuah model kerangka limas yang alasnya berbentuk persegi, dengan panjang sisi 8 cm, jika panjang rusuk tegak limas 10 cm, maka panjang kawat yang diperlukan adalah ....", options: ["A. 36 cm", "B. 40 cm", "C. 72 cm", "D. 80 cm"] },
-  { no: 17, soal: "Apri mendapat tugas untuk membuat kerangka lampu hias yang berbentuk kerangka limas seperti pada gambar. Jika kerangka limas tersebut dibuat dari rotan dan harga 1 m rotan adalah Rp20.000,00, maka biaya yang dibutuhkan seluruhnya adalah ...", options: ["A. Rp64.000,00", "B. Rp52.000,00", "C. Rp44.000,00", "D. Rp22.000,00"] },
+  { no: 17, soal: "Apri membuat kerangka lampu hias berbentuk limas beralas persegi. Panjang sisi alasnya 25 cm dan setiap rusuk tegaknya 30 cm. Jika harga rotan Rp20.000,00 per meter, berapa biaya rotan untuk seluruh kerangka?", options: ["A. Rp64.000,00", "B. Rp52.000,00", "C. Rp44.000,00", "D. Rp22.000,00"] },
   { no: 18, soal: "Panjang diagonal sisi sebuah kubus adalah $2\\sqrt{2}$ cm, maka luas permukaan kubus tersebut adalah ...", options: ["A. 96 $cm^2$", "B. 64 $cm^2$", "C. 24 $cm^2$", "D. 8 $cm^2$"] },
   { no: 19, soal: "Luas permukaan sebuah kotak peralatan yang berbentuk balok dengan ukuran 2 dm x 3 dm x 5 dm adalah ...", options: ["A. 180 $dm^2$", "B. 62 $dm^2$", "C. 45 $dm^2$", "D. 30 $dm^2$"] },
   { no: 20, soal: "Luas permukaan sebuah balok 148 $cm^2$, jika panjang 6 cm, dan lebar 5 cm, maka tingginya adalah ....", options: ["A. 4 cm", "B. 6 cm", "C. 8 cm", "D. 10 cm"] },
@@ -63,7 +63,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 37, soal: "Sebuah prisma alasnya berbentuk jajar genjang dengan panjang alas 15 cm dan tinggi 8 cm. Jika tinggi prisma 20 cm, volume prisma tersebut adalah ....", options: ["A. 2.400 $cm^3$", "B. 2.100 $cm^3$", "C. 1.800 $cm^3$", "D. 800 $cm^3$"] },
   { no: 38, soal: "Sebuah prisma alasnya berbentuk segitiga siku-siku, panjang sisi siku-sikunya 8 cm dan 15 cm, jika volume prisma itu 1200 $cm^3$.\nHitunglah:\na. Tinggi prisma\nb. Luas seluruh permukaan prisma", options: [] },
   { no: 39, soal: "Perhatikan gambar limas T.ABCD di samping! Titik E adalah titik potong diagonal-diagonal alas ABCD. Panjang AB = BC = CD = AD = 30 cm. Jika volume limas 6000 $cm^3$, panjang TE adalah ....", options: ["A. 20 cm", "B. 25 cm", "C. 35 cm", "D. 40 cm"] },
-  { no: 40, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 52 cm dan panjang salah satu diagonalnya 10 cm serta tinggi limas 12 cm. Volume limas tersebut adalah....", options: ["A. 720 $cm^3$", "B. 1.296 $cm^3$", "C. 1.728 $cm^3$", "D. 2.880 $cm^3$"] },
+  { no: 40, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 52 cm dan panjang salah satu diagonalnya 10 cm serta tinggi limas 12 cm. Volume limas tersebut adalah....", options: ["A. 720 $cm^3$", "B. 1.296 $cm^3$", "C. 1.728 $cm^3$", "D. 480 $cm^3$"] },
   { no: 41, soal: "Alas sebuah limas berbentuk belah ketupat dengan keliling 60 cm dan panjang salah satu diagonalnya 18 cm, jika tinggi limas 20 cm, maka volume limas tersebut adalah....", options: ["A. 1440 $cm^3$", "B. 1800 $cm^3$", "C. 2160 $cm^3$", "D. 2880 $cm^3$"] },
   { no: 42, soal: "Sebuah limas mempunyai alas berbentuk jajargenjang yang panjang salah satu sisinya 12 cm dan jarak antara sisi itu dengan sisi sejajarnya adalah 15 cm. Jika volumnya 600 $cm^3$, maka tinggi limas tersebut adalah ....", options: ["A. 30 cm", "B. 10 cm", "C. 6,6 cm", "D. 3,3 cm"] },
   { no: 43, soal: "Perhatikan gambar berikut!\nVolume bangun di atas adalah....", options: ["A. 144 $cm^3$", "B. 576 $cm^3$", "C. 644 $cm^3$", "D. 720 $cm^3$"] },
@@ -99,10 +99,24 @@ const urutanSoalBangunRuang = [
 const urutanSoalBangunRuangIndex = new Map(urutanSoalBangunRuang.map((no, index) => [no, index]));
 const kunciJawabanTkaBangunRuang: Record<number, string> = {
   1: "A",
+  5: "D",
+  9: "C",
+  11: "C",
+  12: "C",
+  14: "B",
   15: "A",
+  16: "C",
+  17: "C",
+  21: "A",
   22: "D",
+  27: "A",
+  28: "A",
+  29: "A",
   33: "D",
   39: "A",
+  40: "D",
+  43: "D",
+  45: "D",
 };
 const latihanDasarBangunRuangDasar = latihanDasarTkaLama
   .filter((soal) => !nomorBangunRuangDihapus.has(soal.no))
@@ -127,6 +141,7 @@ const soalBalokMainan = {
   no: 3,
   soal: soalBalokMainanDasar.soal,
   options: soalBalokMainanDasar.options,
+  jawaban: kunciJawabanTkaBangunRuang[11],
   pembahasan: toPembahasanText(11),
   gambar: <img src="https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117309/BANGUN_RUANG_SISI_DATAR_-_LATIHAN_DASAR_-_NO_11_fsymfk.png" alt="Gambar balok mainan dari kubus satuan" className="bangun-ruang-sisi-datar-question-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
 };
@@ -135,6 +150,7 @@ const soalAquariumPrismaSegitiga = {
   no: 7,
   soal: "Sebuah kerangka aquarium berbentuk prisma segitiga dengan tinggi 60 cm dibuat dari alumunium. Panjang sisi-sisi segitiga itu 30 cm, 40 cm, dan 50 cm. Jika harga 1m alumunium adalah Rp30.000,00, harga alumunium untuk membuat kerangka tersebut adalah ....",
   options: ["A. Rp120.000,00", "B. Rp126.000,00", "C. Rp140.000,00", "D. Rp160.000,00"],
+  jawaban: kunciJawabanTkaBangunRuang[14],
   pembahasan: toPembahasanText(14),
 };
 
@@ -159,6 +175,7 @@ const BangunRuangSisiDatarPage = () => (
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-datar")}
     latihanDasar={latihanDasarBangunRuang}
+    showImmediateAnswerFeedback
   />
 );
 

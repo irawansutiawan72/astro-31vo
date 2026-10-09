@@ -120,17 +120,17 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Karena sisi dan titik sudut limas segi-n sama-sama n+1, maka $a+b-c = 2n = 24$.",
   },
   9: {
-    jawaban: "Kubus yang tidak terkena cat = $(p-2)(l-2)(t-2)$",
+    jawaban: "C. 32 buah",
     konsepTrik:
-      "Kubus yang tidak terkena cat adalah kubus di bagian dalam balok, yaitu $(p-2)(l-2)(t-2)$ di mana p, l, t adalah jumlah kubus satuan per dimensi.",
+      "Kubus yang tidak terkena cat berada sepenuhnya di bagian dalam balok. Dari gambar, ukuran balok adalah 6 × 6 × 4 kubus satuan.",
     stepByStep:
-      "1. Tentukan dimensi balok dalam kubus satuan dari gambar: p × l × t\n" +
-      "2. Kubus tidak kena cat = $(p-2)(l-2)(t-2)$\n" +
-      "Contoh balok 5×4×3: $(5-2)(4-2)(3-2) = 3 \\times 2 \\times 1 = 6$",
+      "Ukuran balok pada gambar: panjang 6, lebar 6, dan tinggi 4 kubus satuan.\n" +
+      "Kubus di bagian dalam tidak menyentuh keenam sisi luar, sehingga banyaknya:\n" +
+      "$(6-2)(6-2)(4-2)=4\\times4\\times2=32$ buah.",
     tips:
-      "Rumus: $(p-2)(l-2)(t-2)$. Ini berlaku jika semua permukaan dicat.",
+      "Kurangi 2 dari setiap dimensi untuk membuang lapisan kubus pada kedua sisi yang berlawanan. Rumus ini berlaku saat seluruh permukaan dicat.",
     kesimpulan:
-      "Kubus tidak kena cat berada di inti (interior) balok, dihitung dengan mengurangi 2 lapisan dari setiap dimensi.",
+      "Ada 32 kubus satuan yang tidak terkena cat, yaitu pilihan C.",
   },
   10: {
     jawaban: "Kubus terkena cat tepat 1 sisi = $2[(p-2)(l-2)+(p-2)(t-2)+(l-2)(t-2)]$",
@@ -146,17 +146,18 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Kubus satu sisi terkena cat ada di bagian tengah setiap bidang sisi balok.",
   },
   11: {
-    jawaban: "Kubus terkena cat tepat 2 sisi = $4[(p-2)+(l-2)+(t-2)]$",
+    jawaban: "C. 24 buah",
     konsepTrik:
-      "Kubus yang terkena cat tepat 2 sisi berada di sepanjang 12 rusuk balok (tidak di sudut).",
+      "Kubus yang terkena cat tepat dua sisi berada di bagian dalam rusuk balok, bukan di sudut. Gambar menunjukkan balok berukuran 5 × 4 × 3 kubus satuan.",
     stepByStep:
-      "1. Tentukan dimensi balok p × l × t dari gambar\n" +
-      "2. Kubus 2 sisi = $4[(p-2) + (l-2) + (t-2)]$\n" +
-      "Contoh 6×3×2: $4[(6-2)+(3-2)+(2-2)] = 4[4+1+0] = 20$",
+      "Gunakan rumus kubus yang terkena cat tepat dua sisi:\n" +
+      "$4[(p-2)+(l-2)+(t-2)]$.\n" +
+      "Untuk ukuran 5 × 4 × 3 pada gambar:\n" +
+      "$4[(5-2)+(4-2)+(3-2)]=4(3+2+1)=24$ buah.",
     tips:
-      "Rumus: 4 kali jumlah kubus di setiap jenis rusuk (dalam). Setiap balok punya 3 jenis panjang rusuk, masing-masing 4 buah.",
+      "Setiap satu dari tiga kelompok rusuk memiliki 4 rusuk sejajar; kubus di sudut tidak dihitung karena terkena cat pada tiga sisi.",
     kesimpulan:
-      "Kubus dua sisi terkena cat terletak di sepanjang 12 rusuk balok, masing-masing (panjang rusuk − 2) kubus.",
+      "Ada 24 kubus satuan yang terkena cat tepat pada dua sisi, yaitu pilihan C.",
   },
   12: {
     jawaban: "C. 9 buah",
@@ -229,17 +230,17 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Kawat kerangka limas persegi = 4(sisi alas + rusuk tegak) = 4(8+10) = 72 cm.",
   },
   17: {
-    jawaban: "Biaya = total panjang rusuk (meter) × Rp20.000",
+    jawaban: "C. Rp44.000,00",
     konsepTrik:
-      "Kerangka limas persegi = 4 rusuk alas + 4 rusuk tegak. Biaya = total panjang (meter) × harga per meter.",
+      "Kerangka limas beralas persegi memiliki 4 rusuk alas dan 4 rusuk tegak. Kalikan total panjang semua rusuk dengan harga rotan per meter.",
     stepByStep:
-      "1. Baca sisi alas dan panjang rusuk tegak dari gambar\n" +
-      "2. Total rusuk = 4 × sisi alas + 4 × rusuk tegak\n" +
-      "3. Konversi ke meter, lalu kalikan dengan Rp20.000",
+      "Panjang seluruh rusuk = $4(25)+4(30)=100+120=220$ cm.\n" +
+      "Ubah ke meter: $220$ cm = $2{,}2$ m.\n" +
+      "Biaya = $2{,}2\\times Rp20.000=Rp44.000,00$.",
     tips:
-      "Harga rotan Rp20.000/m. Contoh: total rusuk 220 cm = 2,2 m → biaya = 2,2 × 20.000 = Rp44.000.",
+      "Hitung rusuk alas dan rusuk tegak sebagai dua kelompok terpisah, lalu samakan satuan panjang sebelum menghitung biaya.",
     kesimpulan:
-      "Biaya kerangka = panjang total rusuk (meter) × harga per meter.",
+      "Biaya rotan untuk kerangka tersebut adalah Rp44.000,00, yaitu pilihan C.",
   },
   18: {
     jawaban: "C. 24 cm²",
@@ -365,19 +366,18 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Luas bidang diagonal = panjang bidang × lebar bidang. Baca gambar untuk menentukan dimensinya.",
   },
   27: {
-    jawaban: "B. Rp460.000,00",
+    jawaban: "A. Rp400.000,00",
     konsepTrik:
       "Aquarium tanpa tutup: luas kaca = luas alas + 4 sisi tegak (tanpa tutup atas).",
     stepByStep:
       "p = 2 m, l = 1 m, t = 0,5 m\n" +
       "Luas kaca = luas alas + 2 sisi panjang + 2 sisi lebar\n" +
-      "= $2 \\times 1 + 2(2 \\times 0{,}5 + 1 \\times 0{,}5) = 2 + 2(1 + 0{,}5) = 2 + 3 = 5$ m²\n" +
-      "Biaya = $5 \\times Rp80.000 + \\frac{0{,}75}{10} \\times Rp... $\n" +
-      "Kunci: total = $5{,}75 \\times 80.000 = Rp460.000$",
+      "= $2\\times1+2(2\\times0{,}5)+2(1\\times0{,}5)=2+2+1=5$ m².\n" +
+      "Biaya = $5\\times Rp80.000=Rp400.000,00$.",
     tips:
       "Aquarium tanpa tutup = luas alas + 2 sisi panjang + 2 sisi lebar. Jangan lupa sisi bawah (alas)!",
     kesimpulan:
-      "Biaya kaca aquarium tanpa tutup = (luas alas + 4 sisi tegak) × Rp80.000/m² = Rp460.000.",
+      "Biaya kaca aquarium tanpa tutup adalah Rp400.000,00, yaitu pilihan A.",
   },
   28: {
     jawaban: "A. 1.280 cm²",
@@ -538,18 +538,19 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Tinggi limas TE = 3×6000 / 900 = 20 cm.",
   },
   40: {
-    jawaban: "A. 720 cm³",
+    jawaban: "D. 480 cm³",
     konsepTrik:
       "Belah ketupat keliling 52 → sisi = 13. Dari sisi dan diagonal pertama, cari diagonal kedua dengan Pythagoras. Volume limas = ⅓ × luas alas × tinggi.",
     stepByStep:
       "Keliling 52 cm → sisi = 13 cm\n" +
       "Diagonal lain: $2\\sqrt{13^2-5^2} = 2\\times12 = 24$ cm\n" +
       "Luas alas = $\\frac{1}{2} \\times 10 \\times 24 = 120$ cm²\n" +
-      "Volume = $\\frac{1}{3} \\times 120 \\times 18 = 720$ cm³",
+      "Tinggi limas pada soal adalah 12 cm.\n" +
+      "Volume = $\\frac{1}{3}\\times120\\times12=480$ cm³.",
     tips:
       "Untuk mencari diagonal kedua belah ketupat: gunakan Pythagoras pada segitiga setengah diagonal.",
     kesimpulan:
-      "Volume limas belah ketupat = ⅓ × (½d₁d₂) × tinggi = 720 cm³.",
+      "Volume limas belah ketupat tersebut adalah 480 cm³, yaitu pilihan D.",
   },
   41: {
     jawaban: "A. 1.440 cm³",
@@ -579,18 +580,18 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Tinggi limas = 3 × 600 / 180 = 10 cm.",
   },
   43: {
-    jawaban: "D. Volume = V₁ + V₂",
+    jawaban: "D. 720 cm³",
     konsepTrik:
-      "Untuk bangun gabungan (balok + limas atau prisma + limas), hitung volume masing-masing bangun terpisah lalu jumlahkan.",
+      "Bangun pada gambar terdiri atas balok dan limas beralas persegi panjang yang sama. Hitung volume keduanya, lalu jumlahkan.",
     stepByStep:
-      "1. Identifikasi dua bangun penyusun dari gambar\n" +
-      "2. Hitung volume bangun pertama (prisma/balok)\n" +
-      "3. Hitung volume bangun kedua (limas)\n" +
-      "4. Volume total = V₁ + V₂",
+      "Balok berukuran $12\\times6\\times8$ cm, sehingga volumenya $576$ cm³.\n" +
+      "Tinggi seluruh bangun 14 cm dan tinggi balok 8 cm, jadi tinggi limas $14-8=6$ cm.\n" +
+      "Volume limas = $\\frac{1}{3}\\times(12\\times6)\\times6=144$ cm³.\n" +
+      "Volume seluruh bangun = $576+144=720$ cm³.",
     tips:
-      "Volume bangun gabungan = jumlah volume semua bagian. Identifikasi tiap bagian dari gambar.",
+      "Pada bangun gabungan, pastikan tinggi limas adalah bagian atap saja, bukan tinggi total bangun.",
     kesimpulan:
-      "Volume gabungan = volume prisma/balok + volume limas.",
+      "Volume bangun pada gambar adalah 720 cm³, yaitu pilihan D.",
   },
   44: {
     jawaban: "A. 64 buah",
@@ -606,7 +607,7 @@ export const bangunRuangSisiDatarDasarPembahasan: Record<number, Pembahasan> = {
       "Kubus besar 3 m dibagi menjadi 64 kubus kecil 0,75 m.",
   },
   45: {
-    jawaban: "45 kubus kecil",
+    jawaban: "D. 45 buah",
     konsepTrik:
       "Volume air → berapa banyak kubus 20 cm yang memenuhinya. Konversikan satuan terlebih dahulu.",
     stepByStep:

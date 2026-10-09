@@ -22,14 +22,14 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Banyak sisi pada bola adalah $1$ buah.",
   },
   3: {
-    jawaban: "A. 1",
+    jawaban: "D. 4",
     konsepTrik:
-      "Rusuk pada kerucut adalah pertemuan selimut dengan alas, yaitu lingkaran alas.",
+      "Rusuk kerucut adalah pertemuan selimut dengan alas, yaitu lingkaran pada bagian bawah kerucut.",
     stepByStep:
       "Kerucut memiliki:\n- 1 sisi alas (lingkaran)\n- 1 selimut (juring)\n- 1 titik puncak\nRusuk = pertemuan alas dengan selimut = lingkaran alas (1 rusuk).",
     tips:
-      "Pada gambar kerucut, rusuk biasanya adalah lingkaran alas.",
-    kesimpulan: "Banyak rusuk pada kerucut adalah $1$ buah (lingkaran alas).",
+      "Pada gambar, telusuri lingkaran batas antara alas dan selimut; nomor yang menunjuk rusuk lengkung tersebut adalah 4.",
+    kesimpulan: "Nomor 4 menunjukkan satu-satunya rusuk kerucut, yaitu lingkaran alas.",
   },
   4: {
     jawaban: "D. Juring lingkaran",
@@ -52,14 +52,15 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Selimut tabung berbentuk persegi panjang.",
   },
   6: {
-    jawaban: "C. 7 cm",
+    jawaban: "A. 3,5 cm",
     konsepTrik:
       "Panjang selimut tabung saat dibuka $= 2\\pi r$. Dari panjang ini cari $r$.",
     stepByStep:
-      "Misal panjang sisi selimut = $44$ cm.\n$2\\pi r = 44 \\to r = \\dfrac{44}{2 \\cdot \\frac{22}{7}} = \\dfrac{44 \\cdot 7}{44} = 7$ cm.",
+      "Panjang persegi panjang pada gambar adalah 22 cm, sama dengan keliling alas tabung.\n" +
+      "$2\\pi r=22 \\to r=\\dfrac{22}{2\\cdot\\frac{22}{7}}=3{,}5$ cm.",
     tips:
-      "Selalu cek satuan dan gunakan $\\pi = \\dfrac{22}{7}$ jika hasil dipersingkat.",
-    kesimpulan: "Jari-jari tabung adalah $7$ cm.",
+      "Panjang sisi mendatar jaring-jaring tabung sama dengan keliling lingkaran alas, bukan diameternya.",
+    kesimpulan: "Jari-jari tabung adalah 3,5 cm, yaitu pilihan A.",
   },
   7: {
     jawaban: "B. 489,84 $cm^2$",
@@ -102,14 +103,16 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Jari-jari bola adalah $7$ cm.",
   },
   11: {
-    jawaban: "C. 462 $cm^2$",
+    jawaban: "A. 616 $cm^2$",
     konsepTrik:
-      "Luas permukaan $\\dfrac{3}{4}$ bola padat (hanya bagian lengkung) $= \\dfrac{3}{4} \\times 4\\pi r^2 = 3\\pi r^2$.",
+      "Luas permukaan bangun padat mencakup bagian lengkung yang tersisa dan bidang datar hasil potongan.",
     stepByStep:
-      "$L = 3\\pi r^2 = 3 \\cdot \\dfrac{22}{7} \\cdot 49 = 3 \\cdot 22 \\cdot 7 = 462$ $cm^2$",
+      "Luas lengkung = $\\dfrac{3}{4}(4\\pi r^2)=3\\pi(7^2)=462$ cm².\n" +
+      "Luas bidang potong = $\\pi r^2=\\dfrac{22}{7}\\times49=154$ cm².\n" +
+      "Luas permukaan total = $462+154=616$ cm².",
     tips:
-      "Yang dihitung adalah kulit lengkung saja; bagian datar biasanya tidak dihitung.",
-    kesimpulan: "Luas permukaan $\\dfrac{3}{4}$ bola padat adalah $462$ $cm^2$.",
+      "Bedakan luas kulit lengkung saja dengan luas permukaan bangun padat yang juga memiliki bidang potong datar.",
+    kesimpulan: "Luas permukaan bangun ¾ bola termasuk bidang potongnya adalah 616 cm², pilihan A.",
   },
   12: {
     jawaban: "D. 180 $cm^2$",
@@ -292,34 +295,42 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Volume kerucut maksimum adalah $324\\pi$ $cm^3$.",
   },
   30: {
-    jawaban: "C. 1474 $cm^2$",
+    jawaban: "D. 1.584 $cm^2$",
     konsepTrik:
-      "Bangun gabungan $\\to$ jumlahkan luas tiap bagian (selimut tabung, kulit setengah bola, alas, dst) sesuai gambar.",
+      "Bangun terdiri dari tabung dan kerucut di atasnya. Permukaan luarnya adalah selimut tabung, selimut kerucut, dan alas bawah tabung.",
     stepByStep:
-      "Identifikasi tiap bagian dan jari-jari/tinggi-nya dari gambar.\nL gabungan $=$ jumlah bagian-bagiannya.\nHasil sesuai gambar $\\approx 1474$ $cm^2$.",
+      "Diameter alas 14 cm, jadi $r=7$ cm. Tinggi tabung 20 cm; tinggi total 44 cm, jadi tinggi kerucut $44-20=24$ cm.\n" +
+      "Garis pelukis kerucut: $s=\\sqrt{7^2+24^2}=25$ cm.\n" +
+      "Luas luar $=2\\pi(7)(20)+\\pi(7)(25)+\\pi(7^2)=280\\pi+175\\pi+49\\pi=504\\pi=1.584$ cm².",
     tips:
-      "Bagian permukaan yang berimpit (mis. tabung dan setengah bola) hanya dihitung satu kali.",
-    kesimpulan: "Luas permukaan bangun ruang tersebut adalah $1474$ $cm^2$.",
+      "Lingkaran sambungan tabung dan kerucut tertutup, jadi tidak dihitung. Lingkaran bawah tabung tetap termasuk permukaan luar.",
+    kesimpulan: "Luas permukaan bangun gabungan adalah 1.584 cm², pilihan D.",
   },
   31: {
-    jawaban: "B. $800\\pi$ $cm^2$",
+    jawaban: "C. $1200\\pi$ $cm^2$",
     konsepTrik:
-      "Bangun gabungan dengan luas dalam $\\pi$. Jumlahkan tiap bagian dengan rumus standar.",
+      "Bangun adalah tabung dengan dua tutup setengah bola. Kedua setengah bola membentuk satu bola penuh.",
     stepByStep:
-      "Hitung tiap selimut/kulit lengkung sesuai gambar.\nTotal $= 800\\pi$ $cm^2$.",
+      "Diameter 20 cm, jadi $r=10$ cm. Panjang keseluruhan 60 cm, sehingga panjang tabung $=60-20=40$ cm.\n" +
+      "Luas selimut tabung $=2\\pi(10)(40)=800\\pi$ cm².\n" +
+      "Luas kedua belahan bola $=4\\pi(10^2)=400\\pi$ cm².\n" +
+      "Luas permukaan total $=800\\pi+400\\pi=1.200\\pi$ cm².",
     tips:
-      "Saat hasil dalam $\\pi$, jangan substitusi nilai $\\pi$ sampai akhir.",
-    kesimpulan: "Luas permukaan bangun adalah $800\\pi$ $cm^2$.",
+      "Panjang tabung tidak sama dengan panjang seluruh kapsul; kurangi diameter bola dari panjang total.",
+    kesimpulan: "Luas permukaan bangun adalah $1.200\\pi$ cm², pilihan C.",
   },
   32: {
-    jawaban: "B. 7212 gram",
+    jawaban: "D. 8.635 gram",
     konsepTrik:
-      "Berat $=$ volume $\\times$ massa jenis (berat per $cm^3$).",
+      "Bandul terdiri dari sebuah kerucut dan setengah bola dengan jari-jari sama. Massa diperoleh dari volume total dikalikan massa per cm³.",
     stepByStep:
-      "Hitung volume bandul (gabungan kerucut + bola/setengah bola dst) sesuai gambar.\nMisal $V \\approx 480{,}8$ $cm^3$.\nBerat $= 480{,}8 \\times 15 \\approx 7212$ gram.",
+      "Diameter alas 10 cm, jadi $r=5$ cm. Tinggi total 17 cm; tinggi setengah bola 5 cm, maka tinggi kerucut $=17-5=12$ cm.\n" +
+      "$V_{kerucut}=\\dfrac{1}{3}\\pi(5^2)(12)=100\\pi=314$ cm³.\n" +
+      "$V_{setengah\\ bola}=\\dfrac{2}{3}\\pi(5^3)=\\dfrac{250\\pi}{3}\\approx261{,}67$ cm³.\n" +
+      "$V_{total}\\approx575{,}67$ cm³, sehingga massanya $575{,}67\\times15\\approx8.635$ gram.",
     tips:
-      "Pisahkan bandul jadi bagian-bagian sederhana sebelum mengalikan dengan massa jenis.",
-    kesimpulan: "Berat bandul seluruhnya adalah $7212$ gram.",
+      "Tinggi setengah bola sama dengan jari-jarinya; kurangi nilai itu dari tinggi total untuk memperoleh tinggi kerucut.",
+    kesimpulan: "Massa bandul adalah sekitar 8.635 gram, pilihan D.",
   },
   33: {
     jawaban: "C. 1950,7 $cm^3$",
@@ -336,7 +347,9 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     konsepTrik:
       "Tabung + setengah bola: $L = (\\text{alas tabung}) + (\\text{selimut tabung}) + (\\text{kulit setengah bola})$.",
     stepByStep:
-      "$L = \\pi r^2 + 2\\pi r t + 2\\pi r^2 = \\pi r(3r + 2t)$\nSubstitusi nilai $r$ dan $t$ dari gambar; hasil $902$ $cm^2$.",
+      "Diameter 14 cm, jadi $r=7$ cm; tinggi tabung $t=10$ cm.\n" +
+      "Luas permukaan luar $=$ alas tabung $+$ selimut tabung $+$ kulit setengah bola:\n" +
+      "$L=\\pi(7^2)+2\\pi(7)(10)+2\\pi(7^2)=287\\pi=902$ cm².",
     tips:
       "Bagian atas tabung yang ditempel setengah bola tidak dihitung — keduanya saling menutup.",
     kesimpulan: "Luas permukaan benda adalah $902$ $cm^2$.",
@@ -346,30 +359,36 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     konsepTrik:
       "Peluru = tabung + kerucut. $V = \\pi r^2 t_1 + \\dfrac{1}{3}\\pi r^2 t_2$.",
     stepByStep:
-      "Substitusi nilai $r$, $t_{tabung}$, dan $t_{kerucut}$ dari gambar.\nHasil total $= 4312$ $cm^3$.",
+      "Diameter 14 cm, jadi $r=7$ cm. Tinggi tabung 20 cm dan panjang seluruh peluru 44 cm, maka tinggi kerucut $=44-20=24$ cm.\n" +
+      "$V_{tabung}=\\pi(7^2)(20)=980\\pi$ cm³.\n" +
+      "$V_{kerucut}=\\dfrac{1}{3}\\pi(7^2)(24)=392\\pi$ cm³.\n" +
+      "$V_{total}=1.372\\pi=4.312$ cm³.",
     tips:
       "Pastikan $r$ tabung sama dengan $r$ kerucut (karena bersambung).",
     kesimpulan: "Volume peluru adalah $4.312$ $cm^3$.",
   },
   36: {
-    jawaban: "C. 1.596 $cm^2$",
+    jawaban: "B. 1.496 $cm^2$",
     konsepTrik:
       "Tabung + setengah bola: $L = \\pi r^2 + 2\\pi r t + 2\\pi r^2 = \\pi r(3r + 2t)$.",
     stepByStep:
-      "Substitusi nilai $r$ dan $t$ dari gambar.\nHasil $\\approx 1596$ $cm^2$.",
+      "Diameter 14 cm, jadi $r=7$ cm. Panjang seluruh bangun 34 cm, sehingga panjang tabung $=34-14=20$ cm.\n" +
+      "Dua setengah bola membentuk satu bola penuh. Luas luar $=2\\pi(7)(20)+4\\pi(7^2)=476\\pi=1.496$ cm².",
     tips:
       "Lingkaran alas tabung tetap dihitung; tutup atas digantikan oleh setengah bola.",
-    kesimpulan: "Luas permukaan bangun adalah $1596$ $cm^2$.",
+    kesimpulan: "Luas permukaan bangun adalah 1.496 cm², pilihan B.",
   },
   37: {
-    jawaban: "A. 360 $cm^2$",
+    jawaban: "D. 924 $cm^2$",
     konsepTrik:
       "Bola pas dalam tabung $\\to t_{tabung} = 2r$. $L_{tabung} = 2\\pi r(r + t) = 2\\pi r \\cdot 3r = 6\\pi r^2 = \\dfrac{3}{2} L_{bola}$ — atau hitung langsung dari $r$.",
     stepByStep:
-      "$L_{bola} = 4\\pi r^2 = 616 \\to r^2 = 49 \\to r = 7$\n$L_{tabung}$ (sesuai konfigurasi soal) $= 360$ $cm^2$.",
+      "$4\\pi r^2=616$ dengan $\\pi=\\dfrac{22}{7}$, sehingga $r=7$ cm.\n" +
+      "Bola tepat pas di dalam tabung, jadi tinggi tabung $=2r=14$ cm.\n" +
+      "Luas seluruh permukaan tabung $=2\\pi r^2+2\\pi rh=2\\pi(7^2)+2\\pi(7)(14)=294\\pi=924$ cm².",
     tips:
-      "Identifikasi tepat apa yang ditanyakan: luas permukaan tabung total atau hanya bagian tertentu.",
-    kesimpulan: "Luas permukaan tabung adalah $360$ $cm^2$.",
+      "Luas seluruh permukaan tabung mencakup dua lingkaran alas dan tutup serta selimut tabung.",
+    kesimpulan: "Luas seluruh permukaan tabung adalah 924 cm², pilihan D.",
   },
   38: {
     jawaban: "D. 340 liter",
@@ -416,7 +435,9 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     konsepTrik:
       "Waktu $= \\dfrac{V_{tabung}}{\\text{debit}}$. Konversi ke satuan konsisten.",
     stepByStep:
-      "$d = 2$ m $\\to r = 1$ m, $t = 10$ m\n$V = \\pi(1)^2(10) = 10\\pi$ m$^3 = 10.000\\pi$ L $\\approx 31.400$ L\nWaktu $\\approx \\dfrac{31.400}{200} \\approx 157$ menit $= 2$ jam $37$ menit",
+      "$d = 2$ m $\\to r = 1$ m, $t = 10$ m.\n" +
+      "$V = 3{,}14(1)^2(10)=31{,}4$ m³ $=31.400$ L.\n" +
+      "Waktu $=\\dfrac{31.400}{200}=157$ menit $=2$ jam $37$ menit.",
     tips:
       "Konversi m$^3$ ke liter: $1\\,m^3 = 1000\\,L$.",
     kesimpulan: "Waktu yang dibutuhkan $\\approx 2$ jam $37$ menit.",
