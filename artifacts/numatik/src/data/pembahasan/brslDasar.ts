@@ -421,14 +421,18 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan: "Tinggi air dalam tabung sekarang adalah $36$ cm.",
   },
   41: {
-    jawaban: "$\\Delta h = \\dfrac{20}{3} \\approx 6{,}67$ cm",
+    jawaban: "B. 35 cm",
     konsepTrik:
-      "$\\Delta h = \\dfrac{n \\cdot V_{bola}}{\\pi r_{tabung}^2}$.",
+      "Kenaikan air sama dengan volume total bola yang masuk dibagi luas alas tabung. Tambahkan kenaikan itu ke tinggi air awal.",
     stepByStep:
-      "4 bola $r=5$: $\\Delta V = 4 \\cdot \\dfrac{4}{3}\\pi(125) = \\dfrac{2000\\pi}{3}$\n$\\Delta h = \\dfrac{2000\\pi/3}{\\pi(100)} = \\dfrac{20}{3}$ cm $\\approx 6{,}67$ cm",
+      "Tinggi air awal $=\\dfrac{3}{5}\\times50=30$ cm.\n" +
+      "Volume 3 bola berjari-jari 5 cm: $3\\times\\dfrac{4}{3}\\pi(5^3)=500\\pi$ cm³.\n" +
+      "Luas alas tabung $=\\pi(10^2)=100\\pi$ cm².\n" +
+      "Kenaikan air $=\\dfrac{500\\pi}{100\\pi}=5$ cm.\n" +
+      "Tinggi air akhir $=30+5=35$ cm.",
     tips:
-      "Periksa apakah air tidak meluap (tinggi akhir $\\leq$ tinggi tabung).",
-    kesimpulan: "Permukaan air naik setinggi $\\dfrac{20}{3}$ cm $\\approx 6{,}67$ cm.",
+      "Periksa bahwa hasilnya masih di bawah tinggi tabung 50 cm; bola-bola tenggelam seluruhnya.",
+    kesimpulan: "Tinggi permukaan air setelah bola dimasukkan adalah 35 cm, pilihan B.",
   },
   42: {
     jawaban: "C. 2 jam 37 menit",
