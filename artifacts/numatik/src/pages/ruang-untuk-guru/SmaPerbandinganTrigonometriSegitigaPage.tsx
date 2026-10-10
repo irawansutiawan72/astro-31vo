@@ -3,8 +3,6 @@ import {
   ArrowRight,
   BookOpen,
   CheckCircle2,
-  ChevronDown,
-  ChevronUp,
   Lightbulb,
   Sparkles,
   Target,
@@ -13,7 +11,6 @@ import { BlockMath, InlineMath as KaTeXInlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
-import { playPopSound } from "@/hooks/useAudio";
 
 type Tone = "cyan" | "emerald" | "amber" | "violet" | "rose" | "blue";
 
@@ -26,7 +23,7 @@ const toneClasses: Record<Tone, string> = {
   blue: "border-blue-300/35 bg-blue-400/10",
 };
 
-const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={math} />;
+const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={math.replace(/\\\\/g, "\\")} />;
 
 const Formula = ({ children }: { children: string }) => (
   <div className="my-3 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-center text-cyan-100 sm:px-4">
@@ -90,53 +87,45 @@ const ExampleCard = ({
   </article>
 );
 
-const Accordion = ({
-  id,
+const LessonSection = ({
   title,
   eyebrow,
   tone,
-  open,
-  onToggle,
   children,
 }: {
-  id: string;
   title: string;
   eyebrow: string;
   tone: Tone;
-  open: boolean;
-  onToggle: (id: string) => void;
   children: ReactNode;
 }) => (
   <section className={`overflow-hidden rounded-3xl border shadow-xl shadow-black/15 ${toneClasses[tone]}`}>
-    <button
-      type="button"
-      onClick={() => onToggle(id)}
-      aria-expanded={open}
-      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:bg-white/[0.04]"
-    >
+    <div className="flex items-center gap-4 px-5 py-5 text-left">
       <span className="flex min-w-0 items-center gap-3">
         <span className="shrink-0 rounded-xl bg-white/10 p-2 text-white"><BookOpen className="h-5 w-5" /></span>
         <span>
           <span className="mb-1 block text-[10px] font-black uppercase tracking-[0.2em] text-white/50">{eyebrow}</span>
-          <span className="font-display text-base font-bold text-white md:text-lg">{title}</span>
+          <h2 className="font-display text-base font-bold text-white md:text-lg">{title}</h2>
         </span>
       </span>
-      {open ? <ChevronUp className="h-5 w-5 shrink-0 text-white/70" /> : <ChevronDown className="h-5 w-5 shrink-0 text-white/70" />}
-    </button>
-    {open && <div className="space-y-4 px-4 pb-5 sm:px-5 sm:pb-6">{children}</div>}
+    </div>
+    <div className="space-y-4 px-4 pb-5 sm:px-5 sm:pb-6">{children}</div>
   </section>
 );
 
 const TriangleExplorer = () => {
   const [angle, setAngle] = useState(35);
   const radians = (angle * Math.PI) / 180;
-  const leftX = 105;
   const rightX = 255;
   const baseline = 232;
-  const height = 150 * Math.tan(radians);
+  const hypotenuseLength = 160;
+  const leftX = rightX - hypotenuseLength * Math.cos(radians);
+  const baseLength = rightX - leftX;
+  const height = hypotenuseLength * Math.sin(radians);
   const topY = baseline - height;
-  const arcX = rightX - 31 * Math.cos(radians);
-  const arcY = baseline - 31 * Math.sin(radians);
+  const arcRadius = 31;
+  const arcStartX = rightX - arcRadius;
+  const baselineExtensionStart = Math.min(leftX, arcStartX - 8);
+  const rightAngleSize = Math.min(12, baseLength * 0.3, height * 0.3);
   const hypotenuseMidX = (leftX + rightX) / 2;
   const hypotenuseMidY = (topY + baseline) / 2;
   const values = [
@@ -163,8 +152,9 @@ const TriangleExplorer = () => {
           <path d={`M ${leftX} ${baseline} L ${leftX} ${topY}`} fill="none" stroke="#fb7185" strokeWidth="6" strokeLinecap="round" filter="url(#triangle-glow)" />
           <path d={`M ${leftX} ${baseline} L ${rightX} ${baseline}`} fill="none" stroke="#22d3ee" strokeWidth="6" strokeLinecap="round" filter="url(#triangle-glow)" />
           <path d={`M ${rightX} ${baseline} L ${leftX} ${topY}`} fill="none" stroke="#a78bfa" strokeWidth="6" strokeLinecap="round" filter="url(#triangle-glow)" />
-          <path d={`M ${leftX} ${baseline - 14} L ${leftX + 14} ${baseline - 14} L ${leftX + 14} ${baseline}`} fill="none" stroke="#f8fafc" strokeWidth="2" />
-          <path d={`M ${rightX - 32} ${baseline} A 32 32 0 0 0 ${arcX} ${arcY}`} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" />
+          <path d={`M ${leftX} ${baseline - rightAngleSize} L ${leftX + rightAngleSize} ${baseline - rightAngleSize} L ${leftX + rightAngleSize} ${baseline}`} fill="none" stroke="#f8fafc" strokeWidth="2" />
+          {baselineExtensionStart < leftX && <line x1={baselineExtensionStart} y1={baseline} x2={leftX} y2={baseline} stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" opacity=".55" />}
+          <path d={`M ${arcStartX} ${baseline} A ${arcRadius} ${arcRadius} 0 0 1 ${rightX - arcRadius * Math.cos(radians)} ${baseline - arcRadius * Math.sin(radians)}`} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" />
           <text x={leftX - 46} y={(topY + baseline) / 2} fill="#fda4af" fontSize="13" fontWeight="700" textAnchor="middle" transform={`rotate(-90 ${leftX - 46} ${(topY + baseline) / 2})`}>depan</text>
           <text x={(leftX + rightX) / 2} y={baseline + 24} fill="#67e8f9" fontSize="13" fontWeight="700" textAnchor="middle">samping</text>
           <text x={hypotenuseMidX + 19} y={hypotenuseMidY - 3} fill="#c4b5fd" fontSize="13" fontWeight="700" textAnchor="middle" transform={`rotate(${-angle} ${hypotenuseMidX + 19} ${hypotenuseMidY - 3})`}>miring</text>
@@ -191,14 +181,15 @@ const TriangleExplorer = () => {
             id="trig-angle"
             type="range"
             min="20"
-            max="55"
+            max="89"
             step="1"
             value={angle}
             onChange={(event) => setAngle(Number(event.target.value))}
-            aria-label="Atur besar sudut segitiga"
+            aria-label="Atur besar sudut segitiga dari 20 sampai 89 derajat"
+            aria-valuetext={`${angle} derajat`}
             className="w-full accent-amber-300"
           />
-          <div className="mt-1 flex justify-between font-body text-[10px] text-amber-50/60"><span><InlineMath math="20^\\circ" /></span><span><InlineMath math="55^\\circ" /></span></div>
+          <div className="mt-1 flex justify-between font-body text-[10px] text-amber-50/60"><span><InlineMath math="20^\\circ" /></span><span><InlineMath math="89^\\circ" /></span></div>
         </div>
         <div className="grid gap-2">
           {values.map(([math, value], index) => {
@@ -257,19 +248,6 @@ const ContextSketch = () => (
 );
 
 const SmaPerbandinganTrigonometriSegitigaPage = () => {
-  const sections = ["ratios", "sides", "special", "applications"];
-  const [expanded, setExpanded] = useState<string[]>(["ratios"]);
-
-  const toggle = (id: string) => {
-    playPopSound();
-    setExpanded((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
-  };
-  const toggleAll = () => {
-    playPopSound();
-    setExpanded((current) => current.length === sections.length ? [] : sections);
-  };
-  const allOpen = expanded.length === sections.length;
-
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#070b23] text-white">
       <Starfield />
@@ -322,21 +300,14 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
           <TriangleExplorer />
         </section>
 
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="mb-4 flex flex-wrap items-center gap-2">
           <p className="flex items-center gap-2 font-body text-xs text-white/55">
             <Sparkles className="h-4 w-4 text-yellow-300" /> Empat subbab · contoh bertahap · visual interaktif
           </p>
-          <button
-            type="button"
-            onClick={toggleAll}
-            className="rounded-full border border-white/15 bg-white/5 px-4 py-2 font-body text-xs font-semibold text-white/75 transition hover:border-cyan-300/50 hover:text-cyan-100"
-          >
-            {allOpen ? "Tutup semua subbab" : "Buka semua subbab"}
-          </button>
         </div>
 
         <div className="space-y-4">
-          <Accordion id="ratios" title="Enam rasio, satu segitiga" eyebrow="Subbab 1 · Pahami peran sisi" tone="cyan" open={expanded.includes("ratios")} onToggle={toggle}>
+          <LessonSection title="Enam rasio, satu segitiga" eyebrow="Subbab 1 · Pahami peran sisi" tone="cyan">
             <ColorCard tone="cyan">
               <p className="font-body text-sm leading-relaxed text-cyan-50/85">
                 Pilih dulu satu <strong className="text-cyan-100">sudut lancip</strong> sebagai acuan. Sisi yang berhadapan dengan sudut itu disebut sisi depan, sisi yang menempel pada sudut (selain sisi miring) disebut sisi samping, dan sisi di depan sudut siku-siku adalah sisi miring.
@@ -387,9 +358,9 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={5}><Formula>{"\\cos\\theta=\\frac{24}{25},\\quad \\tan\\theta=\\frac7{24},\\quad \\operatorname{cosec}\\theta=\\frac{25}{7},\\quad \\sec\\theta=\\frac{25}{24},\\quad \\operatorname{cotan}\\theta=\\frac{24}{7}"}</Formula></Step>
               </ExampleCard>
             </div>
-          </Accordion>
+          </LessonSection>
 
-          <Accordion id="sides" title="Mencari panjang sisi yang belum diketahui" eyebrow="Subbab 2 · Pilih rasio yang tepat" tone="emerald" open={expanded.includes("sides")} onToggle={toggle}>
+          <LessonSection title="Mencari panjang sisi yang belum diketahui" eyebrow="Subbab 2 · Pilih rasio yang tepat" tone="emerald">
             <ColorCard tone="emerald">
               <p className="font-body text-sm leading-relaxed text-emerald-50/85">
                 Pilih rasio yang memuat <strong className="text-emerald-100">sudut acuan</strong>, panjang yang sudah diketahui, dan panjang yang dicari. Kalau dua sisi diketahui, Teorema Pythagoras juga bisa membantu menemukan sisi ketiga.
@@ -421,9 +392,9 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={6}>Pemeriksaan: <InlineMath math="(5\\sqrt2)^2+(5\\sqrt2)^2=100=10^2" />.</Step>
               </ExampleCard>
             </div>
-          </Accordion>
+          </LessonSection>
 
-          <Accordion id="special" title="Sudut istimewa tanpa kalkulator" eyebrow="Subbab 3 · Kenali pola segitiganya" tone="amber" open={expanded.includes("special")} onToggle={toggle}>
+          <LessonSection title="Sudut istimewa tanpa kalkulator" eyebrow="Subbab 3 · Kenali pola segitiganya" tone="amber">
             <ColorCard tone="amber">
               <p className="font-body text-sm leading-relaxed text-amber-50/85">
                 Nilai untuk sudut tertentu bisa diturunkan dari dua bentuk segitiga: segitiga sama sisi yang dibelah dua, serta segitiga siku-siku sama kaki. Tabel ini cukup untuk nilai sinus, cosinus, dan tangen.
@@ -472,9 +443,9 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={4}>Jadi, hasil akhirnya adalah <InlineMath math="\\frac52" />.</Step>
               </ExampleCard>
             </div>
-          </Accordion>
+          </LessonSection>
 
-          <Accordion id="applications" title="Mengukur tinggi dan jarak di sekitar kita" eyebrow="Subbab 4 · Buat model, lalu hitung" tone="rose" open={expanded.includes("applications")} onToggle={toggle}>
+          <LessonSection title="Mengukur tinggi dan jarak di sekitar kita" eyebrow="Subbab 4 · Buat model, lalu hitung" tone="rose">
             <ColorCard tone="rose">
               <p className="font-body text-sm leading-relaxed text-rose-50/85">
                 Sudut elevasi adalah sudut pandang ke atas dari garis mendatar; sudut depresi adalah sudut pandang ke bawah. Gambar situasi sebagai segitiga siku-siku, tentukan sudut acuan, lalu tandai jarak mendatar, tinggi, dan garis pandang.
@@ -514,23 +485,32 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={7}>Jadi jarak awal sekitar <InlineMath math="47{,}3\\text{ m}" /> dan tinggi menara di atas mata pengamat sekitar <InlineMath math="27{,}3\\text{ m}" />.</Step>
               </ExampleCard>
             </div>
-          </Accordion>
+          </LessonSection>
         </div>
 
         <ColorCard tone="blue" className="mt-5">
           <div className="flex gap-3">
             <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />
             <div>
-              <h2 className="font-display font-bold text-blue-100">Ringkasan cepat</h2>
+              <h2 className="font-display font-bold text-blue-100">Rangkuman · Bekal sebelum lanjut</h2>
+              <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100/55">Halaman akhir</p>
               <p className="mt-1 font-body text-sm leading-relaxed text-white/75">
                 Tetapkan sudut acuan, kenali tiga sisi, lalu pilih rasio yang memuat ukuran yang diketahui dan yang dicari. Untuk soal cerita, buat sketsa dahulu dan nyatakan apa yang sebenarnya diukur.
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-slate-950/45 p-3 text-sm">
-                <InlineMath math="\\sin=\\frac{\\text{depan}}{\\text{miring}}" />
-                <InlineMath math="\\cos=\\frac{\\text{samping}}{\\text{miring}}" />
-                <InlineMath math="\\tan=\\frac{\\text{depan}}{\\text{samping}}" />
+                <InlineMath math="\\sin\\theta=\\frac{\\text{depan}}{\\text{miring}}" />
+                <InlineMath math="\\cos\\theta=\\frac{\\text{samping}}{\\text{miring}}" />
+                <InlineMath math="\\tan\\theta=\\frac{\\text{depan}}{\\text{samping}}" />
                 <ArrowRight className="h-4 w-4 text-cyan-300" />
                 <span className="font-body text-xs text-white/65">rasio kebalikannya menghasilkan cosecan, secan, dan cotan.</span>
+              </div>
+              <div className="mt-4 rounded-xl border border-amber-200/15 bg-amber-300/[0.08] p-4">
+                <h3 className="flex items-center gap-2 font-display text-sm font-bold text-amber-100"><Lightbulb className="h-4 w-4" /> Tips &amp; Trik</h3>
+                <ul className="mt-2 space-y-2 font-body text-sm leading-relaxed text-white/75">
+                  <li>• Pilih sudut acuan terlebih dahulu; nama sisi depan dan samping bergantung pada sudut itu.</li>
+                  <li>• Cocokkan pasangan sisi dengan SOH–CAH–TOA, lalu balik rasionya untuk cosecan, secan, atau cotan.</li>
+                  <li>• Periksa jawaban: sisi miring harus paling panjang, satuannya konsisten, dan tinggi pada soal elevasi jelas diukur dari mana.</li>
+                </ul>
               </div>
             </div>
           </div>
