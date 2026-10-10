@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -14,13 +14,53 @@ import "katex/dist/katex.min.css";
 import Starfield from "@/components/Starfield";
 import PageNavigation from "@/components/PageNavigation";
 
-const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={math} />;
+const InlineMath = ({ math }: { math: string }) => (
+  <span className="inline-block min-w-0 max-w-full overflow-x-auto align-baseline whitespace-nowrap">
+    <KaTeXInlineMath math={math} />
+  </span>
+);
 
 const Formula = ({ math, label }: { math: string; label?: string }) => (
-  <div className="overflow-x-auto rounded-2xl border border-cyan-200/15 bg-[#071326]/90 px-3 py-3 text-center text-cyan-100 sm:px-5">
-    {label && <p className="mb-2 text-left font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-100/45">{label}</p>}
-    <BlockMath math={math} />
+  <div className="min-w-0 max-w-full overflow-x-auto rounded-2xl border border-cyan-200/15 bg-[#071326]/90 px-2.5 py-2.5 text-center text-[13px] leading-relaxed text-cyan-100 sm:px-5 sm:py-3 sm:text-base">
+    {label && <p className="mb-2 whitespace-normal text-left font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-100/45">{label}</p>}
+    <div className="w-max min-w-full">
+      <BlockMath math={math} />
+    </div>
   </div>
+);
+
+type ExampleLevel = "Mudah" | "Sedang" | "Sulit";
+
+const exampleLevelStyles: Record<ExampleLevel, string> = {
+  Mudah: "border-emerald-200/20 bg-emerald-200/[.08] text-emerald-100",
+  Sedang: "border-cyan-200/20 bg-cyan-200/[.08] text-cyan-100",
+  Sulit: "border-rose-200/20 bg-rose-200/[.08] text-rose-100",
+};
+
+const ExampleCard = ({
+  level,
+  title,
+  prompt,
+  children,
+}: {
+  level: ExampleLevel;
+  title: string;
+  prompt: string;
+  children: ReactNode;
+}) => (
+  <article className="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-[#101b2d]/80">
+    <div className="flex flex-wrap items-center gap-3 border-b border-white/10 px-4 py-4 sm:px-5">
+      <span className={`rounded-full border px-3 py-1 font-body text-[10px] font-black uppercase tracking-[.16em] ${exampleLevelStyles[level]}`}>{level}</span>
+      <h3 className="min-w-0 font-display text-lg font-extrabold text-white">{title}</h3>
+    </div>
+    <div className="min-w-0 space-y-3 p-4 sm:p-5">
+      <p className="font-body text-sm leading-relaxed text-slate-200"><strong className="text-white">Soal:</strong> {prompt}</p>
+      <div className="min-w-0 space-y-3 rounded-2xl border border-white/[.07] bg-black/10 p-3 sm:p-4">
+        <p className="font-body text-xs font-black uppercase tracking-[.16em] text-slate-400">Langkah penyelesaian</p>
+        {children}
+      </div>
+    </div>
+  </article>
 );
 
 const SectionHeading = ({
@@ -190,6 +230,8 @@ const SmaSudutIstimewaPage = () => {
             ["nol-dan-sembilan-puluh", "0° & 90°"],
             ["segitiga-khusus", "Segitiga khusus"],
             ["ringkasan-nilai", "Tabel nilai"],
+            ["contoh-soal", "Contoh soal"],
+            ["ringkasan-tips", "Rangkuman & tips"],
           ].map(([id, label]) => (
             <button key={id} type="button" onClick={() => jumpTo(id)} className="shrink-0 rounded-full border border-white/10 bg-white/[.04] px-4 py-2 font-body text-xs font-bold text-slate-300 transition hover:border-cyan-200/35 hover:text-cyan-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200" data-testid={`button-nav-${id}`}>
               {label}
@@ -365,6 +407,98 @@ const SmaSudutIstimewaPage = () => {
                 </div>
               </div>
             </section>
+
+            <section id="contoh-soal" className="scroll-mt-8">
+              <SectionHeading index="05" kicker="Coba langkahnya satu per satu" title="Tiga contoh soal bertingkat" description="Kenali sisi yang diketahui dan sisi yang dicari, lalu pilih sinus, cosinus, atau tangen yang menghubungkannya." />
+              <div className="grid min-w-0 gap-4 xl:grid-cols-2">
+                <ExampleCard
+                  level="Mudah"
+                  title="Cari sisi di depan sudut 30°"
+                  prompt="Segitiga siku-siku memiliki sudut 30° dan sisi miring 12 cm. Berapa panjang sisi di depan sudut 30°?"
+                >
+                  <p className="font-body text-sm leading-relaxed text-slate-300">Sisi depan dan sisi miring berpasangan dengan sinus. Misalkan sisi depan itu <InlineMath math="x" />.</p>
+                  <Formula math="\sin30^\circ=\frac{x}{12}=\frac12\quad\Longrightarrow\quad x=6\text{ cm}" />
+                  <p className="font-body text-sm font-bold text-emerald-100">Jawaban: sisi di depan sudut 30° panjangnya 6 cm.</p>
+                </ExampleCard>
+
+                <ExampleCard
+                  level="Sedang"
+                  title="Cari dua sisi pada sudut 60°"
+                  prompt="Segitiga siku-siku memiliki sisi miring 10 cm dan sudut 60°. Tentukan sisi di depan dan sisi samping sudut tersebut."
+                >
+                  <p className="font-body text-sm leading-relaxed text-slate-300">Gunakan sinus untuk sisi depan (<InlineMath math="x" />) dan cosinus untuk sisi samping (<InlineMath math="y" />).</p>
+                  <Formula math="\sin60^\circ=\frac{x}{10}=\frac{\sqrt3}{2}\quad\Longrightarrow\quad x=5\sqrt3\text{ cm}" />
+                  <Formula math="\cos60^\circ=\frac{y}{10}=\frac12\quad\Longrightarrow\quad y=5\text{ cm}" />
+                  <p className="font-body text-sm font-bold text-cyan-100">Jawaban: sisi depan 5√3 cm dan sisi samping 5 cm.</p>
+                </ExampleCard>
+
+                <ExampleCard
+                  level="Sulit"
+                  title="Perkirakan tinggi menara"
+                  prompt="Sari berdiri 12 m dari kaki menara. Sudut elevasi dari tanah ke puncak menara adalah 30°. Berapa tinggi menara? Abaikan tinggi mata Sari."
+                >
+                  <p className="font-body text-sm leading-relaxed text-slate-300">Jarak 12 m adalah sisi samping, sedangkan tinggi menara (<InlineMath math="h" />) adalah sisi depan. Jadi, gunakan tangen.</p>
+                  <Formula math="\tan30^\circ=\frac{h}{12}=\frac{\sqrt3}{3}\quad\Longrightarrow\quad h=4\sqrt3\text{ m}\approx6{,}93\text{ m}" />
+                  <p className="font-body text-sm font-bold text-rose-100">Jawaban: tinggi menara kira-kira 6,93 m.</p>
+                </ExampleCard>
+              </div>
+            </section>
+
+            <section id="ringkasan-tips" className="scroll-mt-8">
+              <SectionHeading index="06" kicker="Bawa pulang pola utamanya" title="Rangkuman, tips, dan trik" description="Kalau lupa satu nilai, kembali ke bentuk segitiga dan pilih rasio berdasarkan sisi yang diketahui." />
+              <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+                <article className="min-w-0 rounded-3xl border border-cyan-200/15 bg-cyan-200/[.045] p-4 sm:p-5">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 shrink-0 text-cyan-200" />
+                    <h3 className="font-display text-lg font-extrabold text-cyan-50">Ringkasan pola</h3>
+                  </div>
+                  <p className="mb-3 font-body text-sm leading-relaxed text-slate-300">Sinus membandingkan depan dengan miring, cosinus membandingkan samping dengan miring, dan tangen membandingkan depan dengan samping.</p>
+                  <div className="grid min-w-0 gap-2 sm:grid-cols-3">
+                    <div className="min-w-0 rounded-xl border border-cyan-200/10 bg-[#071326]/65 p-3">
+                      <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.15em] text-cyan-100">Sinus</p>
+                      <InlineMath math="\sin\theta=\frac{\text{depan}}{\text{miring}}" />
+                    </div>
+                    <div className="min-w-0 rounded-xl border border-amber-200/10 bg-[#071326]/65 p-3">
+                      <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.15em] text-amber-100">Cosinus</p>
+                      <InlineMath math="\cos\theta=\frac{\text{samping}}{\text{miring}}" />
+                    </div>
+                    <div className="min-w-0 rounded-xl border border-violet-200/10 bg-[#071326]/65 p-3">
+                      <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.15em] text-violet-100">Tangen</p>
+                      <InlineMath math="\tan\theta=\frac{\text{depan}}{\text{samping}}" />
+                    </div>
+                  </div>
+                  <div className="mt-4 grid min-w-0 gap-3 sm:grid-cols-2">
+                    <div className="min-w-0 rounded-xl border border-violet-200/10 bg-violet-200/[.04] p-3">
+                      <p className="mb-1 font-body text-xs font-bold text-violet-100">45°–45°–90°</p>
+                      <p className="mb-2 font-body text-xs text-slate-400">kaki : kaki : miring</p>
+                      <Formula math="1:1:\sqrt2" />
+                    </div>
+                    <div className="min-w-0 rounded-xl border border-amber-200/10 bg-amber-200/[.04] p-3">
+                      <p className="mb-1 font-body text-xs font-bold text-amber-100">30°–60°–90°</p>
+                      <p className="mb-2 font-body text-xs text-slate-400">depan 30° : depan 60° : miring</p>
+                      <Formula math="1:\sqrt3:2" />
+                    </div>
+                  </div>
+                  <p className="mt-4 font-body text-xs leading-relaxed text-slate-400">Nilai sin, cos, dan tan untuk setiap sudut tersedia lengkap di tabel sudut istimewa.</p>
+                  <button type="button" onClick={() => jumpTo("ringkasan-nilai")} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl border border-cyan-200/20 bg-cyan-200/[.08] px-4 py-2.5 font-body text-sm font-bold text-cyan-50 transition hover:bg-cyan-200/[.14] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200">
+                    Kembali ke tabel nilai <ArrowDown className="h-4 w-4 rotate-180" />
+                  </button>
+                </article>
+
+                <article className="min-w-0 rounded-3xl border border-amber-200/15 bg-amber-200/[.045] p-4 sm:p-5">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4 shrink-0 text-amber-200" />
+                    <h3 className="font-display text-lg font-extrabold text-amber-50">Tips memilih rasio</h3>
+                  </div>
+                  <ol className="space-y-3 font-body text-sm leading-relaxed text-slate-300">
+                    <li className="flex gap-3"><span className="font-mono text-xs font-bold text-amber-200">01</span><span>Tandai dulu sudut acuannya. Sisi “depan” dan “samping” berubah mengikuti sudut pilihan; sisi miring selalu di depan sudut 90°.</span></li>
+                    <li className="flex gap-3"><span className="font-mono text-xs font-bold text-amber-200">02</span><span>Cocokkan sisi yang diketahui dan dicari: depan–miring memakai sinus, samping–miring memakai cosinus, depan–samping memakai tangen.</span></li>
+                    <li className="flex gap-3"><span className="font-mono text-xs font-bold text-amber-200">03</span><span>Ingat pola sisinya: 45° memakai 1, 1, √2; 30°–60° memakai 1, √3, 2. Urutan sisi harus mengikuti sudut yang sedang dibahas.</span></li>
+                    <li className="flex gap-3"><span className="font-mono text-xs font-bold text-amber-200">04</span><span>Untuk merapikan pecahan, ingat <InlineMath math="\frac1{\sqrt3}=\frac{\sqrt3}{3}" />. Tangen 90° tidak terdefinisi karena pembaginya nol.</span></li>
+                  </ol>
+                </article>
+              </div>
+            </section>
           </div>
 
           <aside className="hidden lg:block">
@@ -376,6 +510,8 @@ const SmaSudutIstimewaPage = () => {
                   ["02", "Lingkaran satuan", "nol-dan-sembilan-puluh"],
                   ["03", "Segitiga khusus", "segitiga-khusus"],
                   ["04", "Tabel & pola", "ringkasan-nilai"],
+                  ["05", "Contoh soal", "contoh-soal"],
+                  ["06", "Rangkuman & tips", "ringkasan-tips"],
                 ].map(([number, label, id]) => (
                   <li key={id}><button type="button" onClick={() => jumpTo(id)} className="flex w-full items-center gap-2 text-left transition hover:text-cyan-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200"><span className="font-mono text-[10px] text-cyan-200/70">{number}</span>{label}</button></li>
                 ))}
