@@ -175,6 +175,7 @@ const SmaPertidaksamaanEksponenPage = lazy(() => import("./pages/ruang-untuk-gur
 const SmaBentukAkarPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBentukAkarPage"));
 const SmaBarisanDeretAritmetikaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretAritmetikaPage"));
 const SmaBarisanDeretGeometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaBarisanDeretGeometriPage"));
+const SmaDeretGeometriTakHinggaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaDeretGeometriTakHinggaPage"));
 const SmaKonsepDasarVektorPage = lazy(() => import("./pages/ruang-untuk-guru/SmaKonsepDasarVektorPage"));
 const SmaOperasiVektorPage = lazy(() => import("./pages/ruang-untuk-guru/SmaOperasiVektorPage"));
 const SmaVektorPadaSistemKoordinatKartesiusPage = lazy(() => import("./pages/ruang-untuk-guru/SmaVektorPadaSistemKoordinatKartesiusPage"));
@@ -1201,6 +1202,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret/barisan-dan-deret-geometri"
               element={<SmaBarisanDeretGeometriPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret/deret-geometri-tak-hingga"
+              element={<SmaDeretGeometriTakHinggaPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/vektor-dan-operasinya/konsep-dasar-vektor"
