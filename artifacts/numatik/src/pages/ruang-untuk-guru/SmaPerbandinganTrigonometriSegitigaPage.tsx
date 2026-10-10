@@ -25,9 +25,31 @@ const toneClasses: Record<Tone, string> = {
 
 const InlineMath = ({ math }: { math: string }) => <KaTeXInlineMath math={math.replace(/\\\\/g, "\\")} />;
 
+const portraitFormula = (math: string) => {
+  const lines = math.split(/\\(?:qquad|quad)/g).flatMap((group) =>
+    group.split("\\Longrightarrow").flatMap((part, implicationIndex) => {
+      const expression = part.trim();
+      if (!expression) return [];
+
+      const equalities = expression.split("=");
+      const rows = expression.length > 42 && equalities.length > 2
+        ? [`${equalities[0]}=${equalities[1]}`, ...equalities.slice(2).map((item) => `=${item}`)]
+        : [expression];
+
+      return rows.map((row, rowIndex) => (
+        implicationIndex > 0 && rowIndex === 0 ? `\\Longrightarrow ${row}` : row
+      ));
+    }),
+  );
+
+  return lines.length > 1
+    ? `\\begin{gathered}${lines.join("\\\\")}\\end{gathered}`
+    : math;
+};
+
 const Formula = ({ children }: { children: string }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-center text-cyan-100 sm:px-4">
-    <BlockMath math={children} />
+  <div className="my-3 min-w-0 max-w-full rounded-xl border border-white/10 bg-slate-950/60 px-2 py-2 text-center text-[0.72rem] text-cyan-100 sm:px-4 sm:text-sm [&_.katex-display]:my-1">
+    <BlockMath math={portraitFormula(children)} />
   </div>
 );
 
@@ -67,7 +89,7 @@ const ExampleCard = ({
   question: ReactNode;
   children: ReactNode;
 }) => (
-  <article className={`rounded-2xl border p-4 ${toneClasses[tone]}`}>
+  <article className={`min-w-0 rounded-2xl border p-4 ${toneClasses[tone]}`}>
     <div className="mb-3 flex flex-wrap items-center gap-2">
       <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white">
         Contoh {number}
@@ -76,7 +98,7 @@ const ExampleCard = ({
         {difficulty}
       </span>
     </div>
-    <div className="rounded-xl border border-white/10 bg-slate-950/55 p-3 font-body text-sm leading-relaxed text-white">
+    <div className="min-w-0 max-w-full rounded-xl border border-white/10 bg-slate-950/55 p-3 font-body text-sm leading-relaxed text-white">
       <p className="mb-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/45">Soal</p>
       <code className="whitespace-normal font-body">{question}</code>
     </div>
@@ -323,7 +345,7 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 ].map(([name, formula, note]) => (
                   <div key={name} className="rounded-xl border border-white/10 bg-slate-950/45 p-3">
                     <p className="text-xs font-bold text-cyan-100">{name}</p>
-                    <div className="my-1 overflow-x-auto text-sm text-white"><InlineMath math={formula} /></div>
+                    <div className="my-1 min-w-0 max-w-full text-sm text-white"><InlineMath math={formula} /></div>
                     <p className="text-[11px] text-white/50">{note}</p>
                   </div>
                 ))}
@@ -380,7 +402,7 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={2}><Formula>{"\\tan60^\\circ=\\frac{\\text{depan}}8=\\sqrt3\\quad\\Longrightarrow\\quad \\text{depan}=8\\sqrt3\\text{ cm}"}</Formula></Step>
                 <Step number={3}>Gunakan cosinus untuk mencari sisi miring.</Step>
                 <Step number={4}><Formula>{"\\cos60^\\circ=\\frac8{\\text{miring}}=\\frac12\\quad\\Longrightarrow\\quad \\text{miring}=16\\text{ cm}"}</Formula></Step>
-                <Step number={5}>Pemeriksaan: <InlineMath math="(8\\sqrt3)^2+8^2=192+64=256=16^2" />, sesuai Pythagoras.</Step>
+                <Step number={5}>Pemeriksaan, sesuai Pythagoras:<Formula>{"(8\\sqrt3)^2+8^2=192+64=256=16^2"}</Formula></Step>
               </ExampleCard>
 
               <ExampleCard number="3" difficulty="Tantangan" tone="violet" question={<>Sebuah tangga membentuk sudut <InlineMath math="45^\\circ" /> dengan lantai. Jarak kaki tangga dari dinding adalah <InlineMath math="5\\sqrt2\\text{ m}" />. Tentukan tinggi ujung tangga pada dinding dan panjang tangganya.</>}>
@@ -389,7 +411,7 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
                 <Step number={3}><Formula>{"\\tan45^\\circ=\\frac{\\text{tinggi}}{5\\sqrt2}=1\\quad\\Longrightarrow\\quad \\text{tinggi}=5\\sqrt2\\text{ m}"}</Formula></Step>
                 <Step number={4}>Cari panjang tangga menggunakan cosinus.</Step>
                 <Step number={5}><Formula>{"\\cos45^\\circ=\\frac{5\\sqrt2}{\\text{tangga}}=\\frac{\\sqrt2}{2}\\quad\\Longrightarrow\\quad \\text{tangga}=10\\text{ m}"}</Formula></Step>
-                <Step number={6}>Pemeriksaan: <InlineMath math="(5\\sqrt2)^2+(5\\sqrt2)^2=100=10^2" />.</Step>
+                <Step number={6}>Pemeriksaan:<Formula>{"(5\\sqrt2)^2+(5\\sqrt2)^2=100=10^2"}</Formula></Step>
               </ExampleCard>
             </div>
           </LessonSection>
@@ -399,8 +421,31 @@ const SmaPerbandinganTrigonometriSegitigaPage = () => {
               <p className="font-body text-sm leading-relaxed text-amber-50/85">
                 Nilai untuk sudut tertentu bisa diturunkan dari dua bentuk segitiga: segitiga sama sisi yang dibelah dua, serta segitiga siku-siku sama kaki. Tabel ini cukup untuk nilai sinus, cosinus, dan tangen.
               </p>
-              <div className="mt-3 overflow-x-auto rounded-xl border border-white/10">
-                <table className="w-full min-w-[390px] border-collapse text-center font-body text-sm">
+              <div className="mt-3 space-y-2 rounded-xl border border-white/10 p-2 sm:hidden">
+                {[
+                  ["30^\\circ", "\\frac12", "\\frac{\\sqrt3}{2}", "\\frac{\\sqrt3}{3}"],
+                  ["45^\\circ", "\\frac{\\sqrt2}{2}", "\\frac{\\sqrt2}{2}", "1"],
+                  ["60^\\circ", "\\frac{\\sqrt3}{2}", "\\frac12", "\\sqrt3"],
+                ].map(([angle, sine, cosine, tangent]) => (
+                  <div key={angle} className="rounded-xl bg-white/[0.04] p-3">
+                    <h3 className="font-display text-sm font-bold text-amber-100"><InlineMath math={angle} /></h3>
+                    <dl className="mt-2 grid grid-cols-3 gap-2 text-center">
+                      {[
+                        ["sin", sine],
+                        ["cos", cosine],
+                        ["tan", tangent],
+                      ].map(([name, value]) => (
+                        <div key={name} className="min-w-0 rounded-lg bg-slate-950/45 px-1.5 py-2">
+                          <dt className="text-[10px] font-bold text-white/55">{name}</dt>
+                          <dd className="mt-1 text-xs text-white"><InlineMath math={value} /></dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 hidden rounded-xl border border-white/10 sm:block">
+                <table className="w-full table-fixed border-collapse text-center font-body text-sm">
                   <thead className="bg-amber-200/10 text-amber-100">
                     <tr>
                       <th className="p-3 text-left">Sudut</th>
