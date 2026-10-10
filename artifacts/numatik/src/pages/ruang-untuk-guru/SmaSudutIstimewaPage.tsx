@@ -76,12 +76,11 @@ const FortyFiveTriangle = () => (
     <path d="M90 222 L110 222 L110 242" fill="none" stroke="#e2e8f0" strokeWidth="2" />
     <path d="M90 108 A26 26 0 0 0 108 100" fill="none" stroke="#fda4af" strokeWidth="2.5" />
     <path d="M226 242 A24 24 0 0 1 233 225" fill="none" stroke="#fda4af" strokeWidth="2.5" />
-    <text x="53" y="167" fill="#a5f3fc" fontSize="14" fontWeight="700" transform="rotate(-90 53 167)">1</text>
+    <text x="68" y="167" fill="#a5f3fc" fontSize="14" fontWeight="700" textAnchor="middle">1</text>
     <text x="167" y="266" fill="#fde68a" fontSize="14" fontWeight="700" textAnchor="middle">1</text>
     <text x="180" y="151" fill="#ddd6fe" fontSize="14" fontWeight="700" textAnchor="middle" transform="rotate(45 180 151)">√2</text>
-    <text x="111" y="77" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
+    <text x="98" y="122" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
     <text x="199" y="230" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
-    <text x="59" y="259" fill="#94a3b8" fontSize="10">90°</text>
   </svg>
 );
 
