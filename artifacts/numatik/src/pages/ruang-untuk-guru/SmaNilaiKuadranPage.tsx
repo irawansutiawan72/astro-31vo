@@ -20,14 +20,34 @@ const InlineMath = ({ math }: { math: string }) => (
 
 const Formula = ({ math, label }: { math: string; label?: string }) => (
   <div
-    className="min-w-0 max-w-full overflow-x-auto rounded-2xl border border-cyan-200/15 bg-[#071326]/90 px-2.5 py-2.5 text-center text-[13px] leading-relaxed text-cyan-100 sm:px-5 sm:py-3 sm:text-base"
+    className="quadrant-formula min-w-0 max-w-full overflow-x-auto rounded-2xl border border-cyan-200/15 bg-[#071326]/90 px-3 py-3 text-left text-[13px] leading-relaxed text-cyan-100 sm:px-5 sm:py-3 sm:text-base"
     aria-label={label ?? "Rumus trigonometri"}
     data-testid="formula-box"
   >
-    {label && <p className="mb-2 whitespace-normal text-left font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-100/45">{label}</p>}
-    <div className="w-max min-w-full">
+    {label && <p className="mb-1 whitespace-normal font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-100/55">{label}</p>}
+    <div className="w-max min-w-full text-left">
       <BlockMath math={math} />
     </div>
+  </div>
+);
+
+const IdentityRows = ({
+  rows,
+}: {
+  rows: { ratio: string; equation: string }[];
+}) => (
+  <div className="overflow-hidden rounded-2xl border border-cyan-200/10 bg-[#071326]/60" aria-label="Rumus perbandingan trigonometri">
+    {rows.map(({ ratio, equation }, index) => (
+      <div
+        key={`${ratio}-${index}`}
+        className="grid grid-cols-[3.1rem_minmax(0,1fr)] items-baseline gap-2 border-b border-white/[.07] px-3 py-2 last:border-0 sm:grid-cols-[3.7rem_minmax(0,1fr)] sm:gap-3 sm:px-4"
+      >
+        <span className="font-body text-xs font-black uppercase tracking-wide text-cyan-100">{ratio}</span>
+        <div className="min-w-0 text-left text-[13px] leading-normal text-slate-100 sm:text-sm">
+          <InlineMath math={equation} />
+        </div>
+      </div>
+    ))}
   </div>
 );
 
@@ -138,6 +158,7 @@ const SmaNilaiKuadranPage = () => {
         @keyframes quadrant-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         .quadrant-rise { animation: quadrant-rise .65s cubic-bezier(.2,.7,.2,1) both; }
         .quadrant-rise-delay { animation-delay: .12s; }
+        .quadrant-formula .katex-display { margin: 0; text-align: left; }
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
@@ -210,7 +231,23 @@ const SmaNilaiKuadranPage = () => {
                     </table>
                   </div>
                   <div className="rounded-2xl border border-amber-200/15 bg-amber-200/[.06] p-4">
-                    <p className="font-body text-sm leading-relaxed text-amber-50/90"><strong className="text-amber-100">Ingat lewat CAST / ASTC:</strong> mulai dari kuadran I lalu bergerak berlawanan arah jarum jam: <b>A</b>ll (semua positif), <b>S</b>ine (sin positif), <b>T</b>angent (tan positif), <b>C</b>osine (cos positif). Nama mnemonic bisa dibaca CAST dari kuadran IV atau ASTC dari kuadran I; petanya sama.</p>
+                    <p className="font-body text-sm leading-relaxed text-amber-50/90">
+                      <strong className="text-amber-100">Trik ingatan, urut kuadran I sampai IV:</strong> ucapkan “Saya Sudah Tahu Caranya”. Kata yang disebut menunjukkan rasio yang positif; di kuadran II–IV, rasio lainnya negatif.
+                    </p>
+                    <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                      {[
+                        { quadrant: "I", word: "Saya", meaning: "Semua positif", tone: "border-cyan-200/15 bg-cyan-200/[.06] text-cyan-50" },
+                        { quadrant: "II", word: "Sudah", meaning: "Sinus positif", tone: "border-amber-200/15 bg-amber-200/[.06] text-amber-50" },
+                        { quadrant: "III", word: "Tahu", meaning: "Tangen positif", tone: "border-violet-200/15 bg-violet-200/[.06] text-violet-50" },
+                        { quadrant: "IV", word: "Caranya", meaning: "Cosinus positif", tone: "border-rose-200/15 bg-rose-200/[.06] text-rose-50" },
+                      ].map((item) => (
+                        <div key={item.quadrant} className={`rounded-xl border p-3 ${item.tone}`}>
+                          <p className="font-body text-[10px] font-bold uppercase tracking-[.14em] opacity-70">Kuadran {item.quadrant}</p>
+                          <p className="mt-1 font-display text-base font-extrabold">{item.word}</p>
+                          <p className="font-body text-xs leading-relaxed opacity-85">{item.meaning}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -239,23 +276,87 @@ const SmaNilaiKuadranPage = () => {
             </section>
 
             <section id="sudut-berelasi" className="scroll-mt-8">
-              <SectionHeading index="03" kicker="Sudut besar, pola sederhana" title="Identitas sudut berelasi" description="Untuk α sudut lancip, tanda ditentukan oleh kuadran. Nama rasio tetap atau berganti sesuai letak sudut acuannya terhadap sumbu." />
+              <SectionHeading index="03" kicker="Sudut besar, pola sederhana" title="Identitas sudut berelasi" description="Untuk α sudut lancip, tanda ditentukan oleh kuadran. Sudut 180° dan 360° mempertahankan nama rasio; pada 90° dan 270°, nama sinus–cosinus serta tangen–kotangen bertukar." />
               <div className="space-y-3">
                 <article className="min-w-0 rounded-3xl border border-amber-200/15 bg-[linear-gradient(130deg,rgba(82,57,18,.13),rgba(14,25,42,.94)_58%)] p-4 sm:p-5">
                   <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.2em] text-amber-100/70">Kuadran II · sudut θ = 180° − α</p>
                   <h3 className="mb-3 font-display text-xl font-extrabold text-white">Sinus tetap, cosinus dan tangen negatif</h3>
-                  <Formula math="\sin(180^\circ-\alpha)=\sin\alpha,\quad \cos(180^\circ-\alpha)=-\cos\alpha,\quad \tan(180^\circ-\alpha)=-\tan\alpha" />
+                  <IdentityRows rows={[
+                    { ratio: "sin", equation: "\\sin(180^\\circ-\\alpha)=\\sin\\alpha" },
+                    { ratio: "cos", equation: "\\cos(180^\\circ-\\alpha)=-\\cos\\alpha" },
+                    { ratio: "tan", equation: "\\tan(180^\\circ-\\alpha)=-\\tan\\alpha" },
+                  ]} />
                 </article>
                 <article className="min-w-0 rounded-3xl border border-violet-200/15 bg-[linear-gradient(130deg,rgba(49,37,83,.16),rgba(14,25,42,.94)_58%)] p-4 sm:p-5">
                   <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.2em] text-violet-100/70">Kuadran III · sudut θ = 180° + α</p>
                   <h3 className="mb-3 font-display text-xl font-extrabold text-white">Tangen positif; sinus dan cosinus negatif</h3>
-                  <Formula math="\sin(180^\circ+\alpha)=-\sin\alpha,\quad \cos(180^\circ+\alpha)=-\cos\alpha,\quad \tan(180^\circ+\alpha)=\tan\alpha" />
+                  <IdentityRows rows={[
+                    { ratio: "sin", equation: "\\sin(180^\\circ+\\alpha)=-\\sin\\alpha" },
+                    { ratio: "cos", equation: "\\cos(180^\\circ+\\alpha)=-\\cos\\alpha" },
+                    { ratio: "tan", equation: "\\tan(180^\\circ+\\alpha)=\\tan\\alpha" },
+                  ]} />
                 </article>
                 <article className="min-w-0 rounded-3xl border border-rose-200/15 bg-[linear-gradient(130deg,rgba(82,35,51,.16),rgba(14,25,42,.94)_58%)] p-4 sm:p-5">
                   <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.2em] text-rose-100/70">Kuadran IV · sudut θ = 360° − α</p>
                   <h3 className="mb-3 font-display text-xl font-extrabold text-white">Cosinus positif; sinus dan tangen negatif</h3>
-                  <Formula math="\sin(360^\circ-\alpha)=-\sin\alpha,\quad \cos(360^\circ-\alpha)=\cos\alpha,\quad \tan(360^\circ-\alpha)=-\tan\alpha" />
+                  <IdentityRows rows={[
+                    { ratio: "sin", equation: "\\sin(360^\\circ-\\alpha)=-\\sin\\alpha" },
+                    { ratio: "cos", equation: "\\cos(360^\\circ-\\alpha)=\\cos\\alpha" },
+                    { ratio: "tan", equation: "\\tan(360^\\circ-\\alpha)=-\\tan\\alpha" },
+                  ]} />
                 </article>
+              </div>
+
+              <div className="mt-7">
+                <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-200/70">Ganti nama, lalu cek tandanya</p>
+                <h3 className="font-display text-xl font-extrabold leading-tight text-white sm:text-2xl">Di sekitar 90° dan 270°, rasio saling bertukar</h3>
+                <p className="mt-2 font-body text-sm leading-relaxed text-slate-300">
+                  Sinus bertukar menjadi cosinus, cosinus menjadi sinus, dan tangen menjadi kotangen (<InlineMath math="\cot" />). Tanda plus atau minus tetap mengikuti kuadran. Ingat, <InlineMath math="\cot\alpha=\frac{\cos\alpha}{\sin\alpha}" />.
+                </p>
+                <div className="mt-4 grid min-w-0 gap-3 md:grid-cols-2">
+                  <article className="min-w-0 rounded-3xl border border-cyan-200/15 bg-cyan-200/[.045] p-4 sm:p-5">
+                    <h4 className="mb-3 font-display text-lg font-extrabold text-cyan-50">Di sekitar 90°</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="mb-2 font-body text-xs font-bold text-cyan-100/80">Kuadran I · θ = 90° − α</p>
+                        <IdentityRows rows={[
+                          { ratio: "sin", equation: "\\sin(90^\\circ-\\alpha)=\\cos\\alpha" },
+                          { ratio: "cos", equation: "\\cos(90^\\circ-\\alpha)=\\sin\\alpha" },
+                          { ratio: "tan", equation: "\\tan(90^\\circ-\\alpha)=\\cot\\alpha" },
+                        ]} />
+                      </div>
+                      <div>
+                        <p className="mb-2 font-body text-xs font-bold text-cyan-100/80">Kuadran II · θ = 90° + α</p>
+                        <IdentityRows rows={[
+                          { ratio: "sin", equation: "\\sin(90^\\circ+\\alpha)=\\cos\\alpha" },
+                          { ratio: "cos", equation: "\\cos(90^\\circ+\\alpha)=-\\sin\\alpha" },
+                          { ratio: "tan", equation: "\\tan(90^\\circ+\\alpha)=-\\cot\\alpha" },
+                        ]} />
+                      </div>
+                    </div>
+                  </article>
+                  <article className="min-w-0 rounded-3xl border border-violet-200/15 bg-violet-200/[.045] p-4 sm:p-5">
+                    <h4 className="mb-3 font-display text-lg font-extrabold text-violet-50">Di sekitar 270°</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="mb-2 font-body text-xs font-bold text-violet-100/80">Kuadran III · θ = 270° − α</p>
+                        <IdentityRows rows={[
+                          { ratio: "sin", equation: "\\sin(270^\\circ-\\alpha)=-\\cos\\alpha" },
+                          { ratio: "cos", equation: "\\cos(270^\\circ-\\alpha)=-\\sin\\alpha" },
+                          { ratio: "tan", equation: "\\tan(270^\\circ-\\alpha)=\\cot\\alpha" },
+                        ]} />
+                      </div>
+                      <div>
+                        <p className="mb-2 font-body text-xs font-bold text-violet-100/80">Kuadran IV · θ = 270° + α</p>
+                        <IdentityRows rows={[
+                          { ratio: "sin", equation: "\\sin(270^\\circ+\\alpha)=-\\cos\\alpha" },
+                          { ratio: "cos", equation: "\\cos(270^\\circ+\\alpha)=\\sin\\alpha" },
+                          { ratio: "tan", equation: "\\tan(270^\\circ+\\alpha)=-\\cot\\alpha" },
+                        ]} />
+                      </div>
+                    </div>
+                  </article>
+                </div>
               </div>
               <p className="mt-4 font-body text-sm leading-relaxed text-slate-300">Contoh pembacaan: <InlineMath math="150^\circ=180^\circ-30^\circ" /> berada di kuadran II. Jadi <InlineMath math="\sin150^\circ=\sin30^\circ" />, tetapi <InlineMath math="\cos150^\circ=-\cos30^\circ" />.</p>
             </section>
@@ -264,7 +365,11 @@ const SmaNilaiKuadranPage = () => {
               <SectionHeading index="04" kicker="Putar ke arah sebaliknya" title="Sudut negatif bukan masalah baru" description="Sudut −θ berarti berputar θ derajat searah jarum jam. Pada lingkaran satuan, titiknya merupakan cerminan titik θ terhadap sumbu-x: koordinat x tetap, koordinat y berganti tanda." />
               <div className="grid min-w-0 gap-3 md:grid-cols-[1fr_.9fr]">
                 <div className="min-w-0 rounded-3xl border border-cyan-200/15 bg-cyan-200/[.045] p-4 sm:p-5">
-                  <Formula math="\sin(-\theta)=-\sin\theta,\qquad \cos(-\theta)=\cos\theta,\qquad \tan(-\theta)=-\tan\theta" label="Sifat ganjil dan genap" />
+                  <IdentityRows rows={[
+                    { ratio: "sin", equation: "\\sin(-\\theta)=-\\sin\\theta" },
+                    { ratio: "cos", equation: "\\cos(-\\theta)=\\cos\\theta" },
+                    { ratio: "tan", equation: "\\tan(-\\theta)=-\\tan\\theta" },
+                  ]} />
                   <p className="mt-3 font-body text-sm leading-relaxed text-slate-300">Sinus dan tangen adalah fungsi ganjil: nilainya berlawanan tanda. Cosinus adalah fungsi genap: nilainya sama.</p>
                 </div>
                 <div className="min-w-0 rounded-3xl border border-amber-200/15 bg-amber-200/[.045] p-4 sm:p-5">
@@ -280,17 +385,17 @@ const SmaNilaiKuadranPage = () => {
                 <ExampleCard level="Mudah" title="Sinus di kuadran II" prompt="Tentukan nilai sin 150°." >
                   <p className="font-body text-sm leading-relaxed text-slate-300">1. Ubah bentuk sudut: <InlineMath math="150^\circ=180^\circ-30^\circ" />. Jadi sudut acuan <InlineMath math="\alpha=30^\circ" /> dan sudutnya berada di kuadran II.</p>
                   <p className="font-body text-sm leading-relaxed text-slate-300">2. Di kuadran II, sinus bertanda positif; gunakan <InlineMath math="\sin(180^\circ-\alpha)=\sin\alpha" />.</p>
-                  <Formula math="\sin150^\circ=\sin30^\circ=\boxed{\frac12}" />
+                  <Formula math="\sin150^\circ=\sin30^\circ=\boxed{\frac12}" label="Hasil perhitungan" />
                 </ExampleCard>
                 <ExampleCard level="Sedang" title="Cosinus di kuadran III" prompt="Tentukan nilai cos 225°." >
                   <p className="font-body text-sm leading-relaxed text-slate-300">1. Tulis <InlineMath math="225^\circ=180^\circ+45^\circ" />, sehingga <InlineMath math="\alpha=45^\circ" /> dan sudut berada di kuadran III.</p>
                   <p className="font-body text-sm leading-relaxed text-slate-300">2. Cosinus di kuadran III negatif. Identitasnya <InlineMath math="\cos(180^\circ+\alpha)=-\cos\alpha" />.</p>
-                  <Formula math="\cos225^\circ=-\cos45^\circ=-\frac{\sqrt2}{2}" />
+                  <Formula math="\cos225^\circ=-\cos45^\circ=-\frac{\sqrt2}{2}" label="Hasil perhitungan" />
                 </ExampleCard>
                 <ExampleCard level="Susah" title="Gabungkan beberapa rasio" prompt="Hitung 2 sin 210° + 3 cos 300° − tan 135°." >
                   <p className="font-body text-sm leading-relaxed text-slate-300">1. Cari sudut acuan dan tanda tiap rasio: <InlineMath math="210^\circ=180^\circ+30^\circ" /> (sin negatif), <InlineMath math="300^\circ=360^\circ-60^\circ" /> (cos positif), dan <InlineMath math="135^\circ=180^\circ-45^\circ" /> (tan negatif).</p>
                   <p className="font-body text-sm leading-relaxed text-slate-300">2. Ganti dengan nilai sudut istimewa: <InlineMath math="\sin210^\circ=-\frac12" />, <InlineMath math="\cos300^\circ=\frac12" />, <InlineMath math="\tan135^\circ=-1" />.</p>
-                  <Formula math="2\left(-\frac12\right)+3\left(\frac12\right)-(-1)=-1+\frac32+1=\boxed{\frac32}" />
+                  <Formula math="2\left(-\frac12\right)+3\left(\frac12\right)-(-1)=-1+\frac32+1=\boxed{\frac32}" label="Hasil perhitungan" />
                   <p className="font-body text-xs leading-relaxed text-emerald-100/80">Cek cepat: pengurangan tangen negatif berubah menjadi penjumlahan.</p>
                 </ExampleCard>
               </div>
@@ -304,7 +409,7 @@ const SmaNilaiKuadranPage = () => {
                 </div>
                 <div className="grid min-w-0 gap-5 p-5 sm:p-6 md:grid-cols-[1fr_.9fr]">
                   <div className="space-y-3">
-                    <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Tanda kuadran:</strong> I semua positif, II hanya sin, III hanya tan, IV hanya cos.</p>
+                    <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Tanda kuadran:</strong> ingat “Saya Sudah Tahu Caranya”: I semua positif, II sin, III tan, IV cos.</p>
                     <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Sudut acuan:</strong> II pakai <InlineMath math="180^\circ-\theta" />, III pakai <InlineMath math="\theta-180^\circ" />, IV pakai <InlineMath math="360^\circ-\theta" />.</p>
                     <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Sudut negatif:</strong> sin dan tan berganti tanda, cos tetap.</p>
                   </div>
