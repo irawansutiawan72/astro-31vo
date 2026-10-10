@@ -358,6 +358,42 @@ const SmaNilaiKuadranPage = () => {
                   </article>
                 </div>
               </div>
+              <div className="mt-7 overflow-hidden rounded-3xl border border-emerald-200/15 bg-[linear-gradient(130deg,rgba(16,79,64,.14),rgba(14,25,42,.94)_58%)]">
+                <div className="px-4 pt-4 sm:px-5 sm:pt-5">
+                  <p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.2em] text-emerald-100/70">Satu putaran penuh = 360°</p>
+                  <h3 className="font-display text-xl font-extrabold leading-tight text-white sm:text-2xl">Sudut besar? Pisahkan putaran 360°-nya</h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-slate-300">
+                    Untuk <InlineMath math="n\in\mathbb{Z}" />, setiap tambahan satu putaran penuh kembali ke arah yang sama. Jadi <InlineMath math="360^\circ n+\theta" /> memberi nilai yang sama seperti θ. Pada bentuk <InlineMath math="360^\circ n-\theta" />, cosinus tetap, sedangkan sinus dan tangen berganti tanda.
+                  </p>
+                </div>
+                <div className="grid min-w-0 gap-3 p-4 sm:grid-cols-2 sm:p-5">
+                  <article className="min-w-0 rounded-2xl border border-emerald-200/15 bg-[#071326]/55 p-3 sm:p-4">
+                    <p className="mb-3 font-body text-xs font-bold text-emerald-100/85">Tambah putaran · <InlineMath math="360^\circ n+\theta" /></p>
+                    <IdentityRows rows={[
+                      { ratio: "sin", equation: "\\sin(360^\\circ n+\\theta)=\\sin\\theta" },
+                      { ratio: "cos", equation: "\\cos(360^\\circ n+\\theta)=\\cos\\theta" },
+                      { ratio: "tan", equation: "\\tan(360^\\circ n+\\theta)=\\tan\\theta" },
+                    ]} />
+                  </article>
+                  <article className="min-w-0 rounded-2xl border border-amber-200/15 bg-[#071326]/55 p-3 sm:p-4">
+                    <p className="mb-3 font-body text-xs font-bold text-amber-100/85">Kurangi dari putaran penuh · <InlineMath math="360^\circ n-\theta" /></p>
+                    <IdentityRows rows={[
+                      { ratio: "sin", equation: "\\sin(360^\\circ n-\\theta)=-\\sin\\theta" },
+                      { ratio: "cos", equation: "\\cos(360^\\circ n-\\theta)=\\cos\\theta" },
+                      { ratio: "tan", equation: "\\tan(360^\\circ n-\\theta)=-\\tan\\theta" },
+                    ]} />
+                  </article>
+                </div>
+                <div className="grid gap-2 border-t border-white/10 bg-white/[.025] px-4 py-3 sm:grid-cols-2 sm:px-5">
+                  <p className="font-body text-xs leading-relaxed text-slate-300">
+                    <strong className="text-emerald-100">Contoh tambah:</strong> <InlineMath math="765^\circ=2\cdot360^\circ+45^\circ" />, jadi <InlineMath math="\sin765^\circ=\sin45^\circ=\frac{\sqrt2}{2}" />.
+                  </p>
+                  <p className="font-body text-xs leading-relaxed text-slate-300">
+                    <strong className="text-amber-100">Contoh kurang:</strong> <InlineMath math="1050^\circ=3\cdot360^\circ-30^\circ" />, jadi <InlineMath math="\sin1050^\circ=-\sin30^\circ=-\frac12" />.
+                  </p>
+                </div>
+                <p className="px-4 pb-4 font-body text-[11px] leading-relaxed text-slate-400 sm:px-5 sm:pb-5">Tangen mengikuti aturan ini selama nilainya terdefinisi.</p>
+              </div>
               <p className="mt-4 font-body text-sm leading-relaxed text-slate-300">Contoh pembacaan: <InlineMath math="150^\circ=180^\circ-30^\circ" /> berada di kuadran II. Jadi <InlineMath math="\sin150^\circ=\sin30^\circ" />, tetapi <InlineMath math="\cos150^\circ=-\cos30^\circ" />.</p>
             </section>
 
@@ -411,14 +447,16 @@ const SmaNilaiKuadranPage = () => {
                   <div className="space-y-3">
                     <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Tanda kuadran:</strong> ingat “Saya Sudah Tahu Caranya”: I semua positif, II sin, III tan, IV cos.</p>
                     <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Sudut acuan:</strong> II pakai <InlineMath math="180^\circ-\theta" />, III pakai <InlineMath math="\theta-180^\circ" />, IV pakai <InlineMath math="360^\circ-\theta" />.</p>
+                    <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Sudut besar:</strong> <InlineMath math="360^\circ n+\theta" /> mengulang nilai; pada <InlineMath math="360^\circ n-\theta" />, sin dan tan berganti tanda, cos tetap.</p>
                     <p className="font-body text-sm leading-relaxed text-slate-300"><strong className="text-emerald-100">Sudut negatif:</strong> sin dan tan berganti tanda, cos tetap.</p>
                   </div>
                   <div className="rounded-2xl border border-amber-200/15 bg-amber-200/[.055] p-4">
-                    <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-amber-200" aria-hidden="true" /><h3 className="font-display text-base font-extrabold text-amber-50">Trik 4 langkah</h3></div>
+                    <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-amber-200" aria-hidden="true" /><h3 className="font-display text-base font-extrabold text-amber-50">Trik 5 langkah</h3></div>
                     <ol className="list-inside list-decimal space-y-2 font-body text-sm leading-relaxed text-slate-200">
-                      <li>Letakkan sudut di kuadran yang tepat.</li>
+                      <li>Sederhanakan sudut besar dengan putaran penuh 360°.</li>
+                      <li>Letakkan sudut sisanya di kuadran yang tepat.</li>
                       <li>Temukan sudut acuannya, α.</li>
-                      <li>Pilih tanda dari CAST / ASTC.</li>
+                      <li>Pilih tanda dengan “Saya Sudah Tahu Caranya”.</li>
                       <li>Masukkan nilai sudut istimewa dan hitung rapi.</li>
                     </ol>
                   </div>
