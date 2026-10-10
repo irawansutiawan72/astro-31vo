@@ -85,22 +85,58 @@ const FortyFiveTriangle = () => (
   </svg>
 );
 
-const ThirtySixtyTriangle = () => (
-  <svg viewBox="0 0 390 300" role="img" aria-label="Segitiga siku-siku 30-60-90 dengan sisi di depan sudut 30 derajat panjang 1, sisi di depan 60 derajat panjang akar 3, dan sisi miring 2." className="block h-auto w-full">
-    <path d="M92 242 L92 122 L300 242 Z" fill="#fbbf24" fillOpacity=".07" stroke="#66809c" strokeWidth="1.5" />
-    <path d="M92 242 L92 122" stroke="#67e8f9" strokeWidth="6" strokeLinecap="round" />
-    <path d="M92 242 L300 242" stroke="#fbbf24" strokeWidth="6" strokeLinecap="round" />
-    <path d="M92 122 L300 242" stroke="#c4b5fd" strokeWidth="6" strokeLinecap="round" />
-    <path d="M92 224 L110 224 L110 242" fill="none" stroke="#e2e8f0" strokeWidth="2" />
-    <path d="M92 148 A26 26 0 0 1 114 135" fill="none" stroke="#fda4af" strokeWidth="2.5" />
-    <path d="M275 242 A25 25 0 0 0 278 229" fill="none" stroke="#fda4af" strokeWidth="2.5" />
-    <text x="62" y="185" fill="#a5f3fc" fontSize="14" fontWeight="700">1</text>
-    <text x="194" y="266" fill="#fde68a" fontSize="14" fontWeight="700" textAnchor="middle">√3</text>
-    <text x="200" y="163" fill="#ddd6fe" fontSize="14" fontWeight="700" transform="rotate(30 200 163)">2</text>
-    <text x="117" y="154" fill="#fda4af" fontSize="12" fontWeight="700">60°</text>
-    <text x="247" y="231" fill="#fda4af" fontSize="12" fontWeight="700">30°</text>
-    <text x="74" y="259" fill="#94a3b8" fontSize="10">90°</text>
-    <text x="22" y="288" fill="#94a3b8" fontSize="10">Sisi 1, √3, dan 2 adalah perbandingan panjang.</text>
+const EquilateralTriangleDiagram = () => (
+  <svg viewBox="0 0 360 280" role="img" aria-label="Segitiga sama sisi ABC dengan panjang setiap sisi 2 dan sudut 60 derajat di A, B, dan C." className="block h-auto w-full">
+    <path d="M180 40 L76 220 L284 220 Z" fill="#fbbf24" fillOpacity=".055" />
+    <path d="M180 40 L76 220" stroke="#c4b5fd" strokeWidth="5" strokeLinecap="round" />
+    <path d="M180 40 L284 220" stroke="#67e8f9" strokeWidth="5" strokeLinecap="round" />
+    <path d="M76 220 L284 220" stroke="#fbbf24" strokeWidth="5" strokeLinecap="round" />
+    <path d="M190 57 A20 20 0 0 1 170 57" fill="none" stroke="#fda4af" strokeWidth="2.5" />
+    <path d="M86 203 A20 20 0 0 1 96 220" fill="none" stroke="#fda4af" strokeWidth="2.5" />
+    <path d="M264 220 A20 20 0 0 1 274 203" fill="none" stroke="#fda4af" strokeWidth="2.5" />
+    <circle cx="180" cy="40" r="3.5" fill="#fff" />
+    <circle cx="76" cy="220" r="3.5" fill="#fff" />
+    <circle cx="284" cy="220" r="3.5" fill="#fff" />
+    <text x="180" y="25" fill="#e2e8f0" fontSize="12" fontWeight="700" textAnchor="middle">A</text>
+    <text x="61" y="239" fill="#e2e8f0" fontSize="12" fontWeight="700">B</text>
+    <text x="290" y="239" fill="#e2e8f0" fontSize="12" fontWeight="700">C</text>
+    <text x="180" y="79" fill="#fda4af" fontSize="12" fontWeight="700" textAnchor="middle">60°</text>
+    <text x="100" y="211" fill="#fda4af" fontSize="12" fontWeight="700">60°</text>
+    <text x="241" y="211" fill="#fda4af" fontSize="12" fontWeight="700">60°</text>
+    <text x="117" y="137" fill="#ddd6fe" fontSize="14" fontWeight="700" transform="rotate(-60 117 137)">2</text>
+    <text x="243" y="137" fill="#a5f3fc" fontSize="14" fontWeight="700" transform="rotate(60 243 137)">2</text>
+    <text x="180" y="251" fill="#fde68a" fontSize="14" fontWeight="700" textAnchor="middle">2</text>
+  </svg>
+);
+
+const BisectedEquilateralTriangleDiagram = () => (
+  <svg viewBox="0 0 360 280" role="img" aria-label="Segitiga sama sisi dengan garis tinggi dari puncak A ke titik tengah D. Alas terbagi menjadi 1 dan 1, sisi miringnya 2, tinggi h sama dengan akar 3, dan tiap setengahnya memiliki sudut 30, 60, dan 90 derajat." className="block h-auto w-full">
+    <path d="M180 28 L72 214 L180 214 Z" fill="#67e8f9" fillOpacity=".07" />
+    <path d="M180 28 L288 214 L180 214 Z" fill="#fbbf24" fillOpacity=".055" />
+    <path d="M180 28 L72 214" stroke="#c4b5fd" strokeWidth="5" strokeLinecap="round" />
+    <path d="M180 28 L288 214" stroke="#c4b5fd" strokeWidth="5" strokeLinecap="round" />
+    <path d="M72 214 L288 214" stroke="#fbbf24" strokeWidth="5" strokeLinecap="round" />
+    <path d="M180 28 L180 214" stroke="#67e8f9" strokeWidth="4" strokeLinecap="round" />
+    <path d="M180 196 L162 196 L162 214 M180 196 L198 196 L198 214" fill="none" stroke="#e2e8f0" strokeWidth="2" />
+    <path d="M190 45 A18 18 0 0 1 180 46 M180 46 A18 18 0 0 1 170 45" fill="none" stroke="#fda4af" strokeWidth="2" />
+    <path d="M83 197 A20 20 0 0 1 92 214 M268 214 A20 20 0 0 1 277 197" fill="none" stroke="#fda4af" strokeWidth="2" />
+    <circle cx="180" cy="28" r="3.5" fill="#fff" />
+    <circle cx="72" cy="214" r="3.5" fill="#fff" />
+    <circle cx="180" cy="214" r="3.5" fill="#fff" />
+    <circle cx="288" cy="214" r="3.5" fill="#fff" />
+    <text x="180" y="16" fill="#e2e8f0" fontSize="11" fontWeight="700" textAnchor="middle">A</text>
+    <text x="57" y="229" fill="#e2e8f0" fontSize="11" fontWeight="700">B</text>
+    <text x="294" y="229" fill="#e2e8f0" fontSize="11" fontWeight="700">C</text>
+    <text x="180" y="250" fill="#e2e8f0" fontSize="11" fontWeight="700" textAnchor="middle">D · 90°</text>
+    <text x="155" y="66" fill="#fda4af" fontSize="11" fontWeight="700" textAnchor="end">30°</text>
+    <text x="205" y="66" fill="#fda4af" fontSize="11" fontWeight="700">30°</text>
+    <text x="91" y="199" fill="#fda4af" fontSize="11" fontWeight="700">60°</text>
+    <text x="247" y="199" fill="#fda4af" fontSize="11" fontWeight="700">60°</text>
+    <text x="123" y="234" fill="#fde68a" fontSize="12" fontWeight="700" textAnchor="middle">1</text>
+    <text x="237" y="234" fill="#fde68a" fontSize="12" fontWeight="700" textAnchor="middle">1</text>
+    <text x="109" y="122" fill="#ddd6fe" fontSize="12" fontWeight="700" transform="rotate(-60 109 122)">2</text>
+    <text x="251" y="122" fill="#ddd6fe" fontSize="12" fontWeight="700" transform="rotate(60 251 122)">2</text>
+    <text x="145" y="128" fill="#a5f3fc" fontSize="12" fontWeight="700" textAnchor="middle">h = √3</text>
   </svg>
 );
 
@@ -231,10 +267,23 @@ const SmaSudutIstimewaPage = () => {
                   <p className="font-body text-[10px] font-black uppercase tracking-[.2em] text-amber-100/70">Bentuk B · setengah segitiga sama sisi</p>
                   <h3 className="mt-1 font-display text-xl font-extrabold text-white">Segitiga 30°–60°–90°</h3>
                 </div>
-                <div className="grid items-center gap-3 p-4 sm:p-5 md:grid-cols-[.85fr_1.15fr]">
-                  <div className="rounded-2xl border border-white/10 bg-[#071326]/75 p-2 sm:p-3"><ThirtySixtyTriangle /></div>
+                <div className="space-y-4 p-4 sm:p-5">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <figure className="rounded-2xl border border-white/10 bg-[#071326]/75 p-3">
+                      <figcaption className="mb-2 font-body text-[10px] font-black uppercase tracking-[.15em] text-violet-100">1 · Segitiga sama sisi</figcaption>
+                      <EquilateralTriangleDiagram />
+                      <p className="mt-1 text-center font-body text-xs leading-relaxed text-slate-400">Ketiga sisinya sama panjang, dan tiap sudutnya 60°.</p>
+                    </figure>
+                    <figure className="rounded-2xl border border-cyan-200/15 bg-[#071326]/75 p-3">
+                      <figcaption className="mb-2 font-body text-[10px] font-black uppercase tracking-[.15em] text-cyan-100">2 · Setelah ditarik garis tinggi</figcaption>
+                      <BisectedEquilateralTriangleDiagram />
+                      <p className="mt-1 text-center font-body text-xs leading-relaxed text-slate-400">Garis tinggi membagi alas menjadi 1 dan 1, serta membentuk sudut siku-siku.</p>
+                    </figure>
+                  </div>
                   <div className="space-y-3">
-                    <p className="font-body text-sm leading-relaxed text-slate-300">Belah segitiga sama sisi bersisi 2 menjadi dua. Setengah alasnya 1, sisi miring tetap 2, dan tinggi dari Pythagoras adalah <InlineMath math="\sqrt{2^2-1^2}=\sqrt3" />.</p>
+                    <p className="font-body text-sm leading-relaxed text-slate-300">Tarik garis tinggi dari puncak A ke titik tengah D pada alas. Setengah alasnya 1 dan sisi miringnya tetap 2. Dengan Pythagoras, panjang tinggi <InlineMath math="h" /> adalah:</p>
+                    <Formula label="Pythagoras untuk mencari tinggi" math="h^2+1^2=2^2\quad\Longrightarrow\quad h=\sqrt{2^2-1^2}=\sqrt3" />
+                    <p className="font-body text-sm leading-relaxed text-slate-300">Garis tinggi membagi sudut puncak 60° menjadi dua sudut 30°. Jadi, masing-masing bagiannya adalah segitiga siku-siku 30°–60°–90°, dengan sisi <InlineMath math="1" />, <InlineMath math="\sqrt3" />, dan <InlineMath math="2" />.</p>
                     <div className="rounded-2xl border border-cyan-200/10 bg-cyan-200/[.035] p-3">
                       <p className="mb-2 font-body text-[10px] font-black uppercase tracking-[.17em] text-cyan-100">Terhadap sudut 30° · depan 1, samping √3, miring 2</p>
                       <Formula math="\sin30^\circ=\frac12,\quad \cos30^\circ=\frac{\sqrt3}{2},\quad \tan30^\circ=\frac{1}{\sqrt3}=\frac{\sqrt3}{3}" />
