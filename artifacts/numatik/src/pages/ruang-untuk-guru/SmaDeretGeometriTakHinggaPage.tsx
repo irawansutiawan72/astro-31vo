@@ -11,13 +11,17 @@ const Formula = ({ math, tone = "cyan" }: { math: string; tone?: "cyan" | "pink"
     pink: "border-pink-200/25 bg-pink-300/[.08] text-pink-50",
     amber: "border-amber-200/25 bg-amber-300/[.08] text-amber-50",
   };
-  return <div className={`overflow-x-auto rounded-2xl border px-3 py-3 text-center sm:px-5 ${tones[tone]}`}><BlockMath math={math} /></div>;
+  return (
+    <div className={`series-formula w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-2xl border px-2 py-3 text-center sm:px-5 ${tones[tone]}`}>
+      <BlockMath math={math} />
+    </div>
+  );
 };
 
 const SectionHeading = ({ number, eyebrow, title, children }: { number: string; eyebrow: string; title: ReactNode; children: ReactNode }) => (
   <div className="mb-6 flex gap-4">
     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-cyan-100/20 bg-cyan-200/10 font-display text-sm font-black text-cyan-100">{number}</span>
-    <div><p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.22em] text-cyan-200/70">{eyebrow}</p><h2 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{title}</h2><p className="mt-2 max-w-3xl font-body text-sm leading-relaxed text-slate-300">{children}</p></div>
+    <div className="min-w-0"><p className="mb-1 font-body text-[10px] font-black uppercase tracking-[.22em] text-cyan-200/70">{eyebrow}</p><h2 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{title}</h2><p className="mt-2 max-w-3xl font-body text-sm leading-relaxed text-slate-300">{children}</p></div>
   </div>
 );
 
@@ -27,12 +31,12 @@ const ExampleCard = ({ number, title, problem, children, answer }: { number: str
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-300 to-pink-300 font-display text-sm font-black text-[#311630]">{number}</span>
       <h3 className="font-display text-base font-extrabold text-white sm:text-lg">{title}</h3>
     </div>
-      <div className="grid gap-3 p-4 sm:p-6 md:grid-cols-[.85fr_1.15fr] md:items-start">
-      <div className="rounded-2xl border border-amber-200/20 bg-amber-300/[.07] p-4">
+      <div className="grid min-w-0 gap-3 p-4 sm:p-6 md:grid-cols-[.85fr_1.15fr] md:items-start">
+      <div className="min-w-0 rounded-2xl border border-amber-200/20 bg-amber-300/[.07] p-4">
         <p className="mb-2 font-body text-[10px] font-black uppercase tracking-[.18em] text-amber-200">Soal</p>
         <div className="font-body text-sm leading-relaxed text-amber-50">{problem}</div>
       </div>
-      <div className="rounded-2xl border border-cyan-200/20 bg-cyan-300/[.055] p-4">
+      <div className="min-w-0 rounded-2xl border border-cyan-200/20 bg-cyan-300/[.055] p-4">
         <p className="mb-3 font-body text-[10px] font-black uppercase tracking-[.18em] text-cyan-200">Pembahasan</p>
         <div className="space-y-3 font-body text-sm leading-relaxed text-slate-200">{children}</div>
         <div className="mt-4 rounded-xl border border-emerald-200/20 bg-emerald-300/[.08] p-3 font-body text-sm font-semibold text-emerald-100"><div className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" /><div className="min-w-0 flex-1">{answer}</div></div></div>
@@ -51,7 +55,7 @@ const outline = [
 const SmaDeretGeometriTakHinggaPage = () => {
   const map = useMemo(() => outline, []);
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-[#090f20] text-slate-100">
+    <div className="series-lesson relative min-h-[100dvh] overflow-hidden bg-[#090f20] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes series-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -59,10 +63,18 @@ const SmaDeretGeometriTakHinggaPage = () => {
         .series-enter { animation: series-enter .55s cubic-bezier(.2,.7,.2,1) both; }
         .series-drift { animation: series-drift 5s ease-in-out infinite; }
         .series-enter-delay { animation-delay: .12s; }
+        .series-formula { font-size: clamp(.72rem, 3.2vw, .95rem); }
+        .series-formula .katex-display { margin: 0; overflow: visible; }
+        .series-formula .katex-display > .katex { white-space: nowrap; }
+        @media (min-width: 640px) { .series-formula { font-size: 1rem; } }
+        @media (orientation: portrait) {
+          .series-lesson > div.fixed.left-0.bottom-0 { top: max(1rem, env(safe-area-inset-top, 0px)); bottom: auto; }
+          .series-lesson > main { padding-top: 8rem; }
+        }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
       `}</style>
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/barisan-dan-deret" />
-      <main className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-24 pt-7 sm:px-7 sm:pt-11 lg:px-10">
+        <main className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-24 pt-20 sm:px-7 sm:pt-11 lg:px-10">
         <header className="series-enter relative mb-8 overflow-hidden rounded-[2rem] border border-cyan-100/15 bg-[linear-gradient(125deg,rgba(13,47,74,.97),rgba(28,27,61,.96)_55%,rgba(78,35,72,.9))] px-5 py-7 shadow-2xl shadow-black/30 sm:px-9 sm:py-10" data-testid="infinite-series-hero">
           <div className="pointer-events-none absolute -right-12 -top-20 h-72 w-72 rounded-full border border-cyan-100/10" />
           <div className="pointer-events-none absolute -right-2 top-12 h-44 w-44 rounded-full border border-pink-100/10" />
@@ -102,22 +114,22 @@ const SmaDeretGeometriTakHinggaPage = () => {
             >
               Bayangkan kamu menaiki roller coaster angka yang suku-sukunya meluncur terus tanpa ujung! Nah, deret geometri tak hingga adalah penjumlahan suku-suku dari barisan geometri yang banyaknya tidak terhingga (<InlineMath math="n \to \infty" />).
             </SectionHeading>
-            <div className="grid gap-4 md:grid-cols-[1.1fr_.9fr]">
-              <div className="rounded-[1.8rem] border border-violet-200/20 bg-gradient-to-br from-violet-400/[.11] to-cyan-300/[.04] p-5 sm:p-7"><p className="mb-3 font-body text-[10px] font-black uppercase tracking-[.2em] text-violet-200">Bentuk Umumnya:</p><Formula math="S_{\infty}=U_1+U_2+U_3+\dots+U_n+\dots" tone="pink" /><p className="my-4 text-center font-body text-sm text-slate-300">Atau bisa juga kita tuliskan sebagai:</p><Formula math="S_{\infty}=a+ar+ar^2+ar^3+\dots+ar^{n-1}+\dots" /></div>
-              <aside className="flex flex-col justify-center rounded-[1.8rem] border border-amber-200/20 bg-amber-300/[.055] p-5 sm:p-7"><div className="mb-4 flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-amber-300/15 text-amber-100"><Lightbulb className="h-5 w-5" aria-hidden="true" /></span><h3 className="font-display text-lg font-extrabold text-amber-100">Satu ide penting</h3></div><p className="font-body text-sm leading-relaxed text-slate-200">Setiap suku diperoleh dengan mengalikan suku sebelumnya dengan rasio tetap <InlineMath math="r" />. Kunci jumlah tak hingga ada pada perilaku <InlineMath math="r^n" /> saat <InlineMath math="n" /> makin besar.</p></aside>
+            <div className="grid min-w-0 gap-4 md:grid-cols-[1.1fr_.9fr]">
+              <div className="min-w-0 rounded-[1.8rem] border border-violet-200/20 bg-gradient-to-br from-violet-400/[.11] to-cyan-300/[.04] p-5 sm:p-7"><p className="mb-3 font-body text-[10px] font-black uppercase tracking-[.2em] text-violet-200">Bentuk Umumnya:</p><Formula math="\begin{aligned}S_{\infty}&=U_1+U_2+U_3+\dots\\&\quad+U_n+\dots\end{aligned}" tone="pink" /><p className="my-4 text-center font-body text-sm text-slate-300">Atau bisa juga kita tuliskan sebagai:</p><Formula math="\begin{aligned}S_{\infty}&=a+ar+ar^2+ar^3+\dots\\&\quad+ar^{n-1}+\dots\end{aligned}" /></div>
+              <aside className="min-w-0 flex flex-col justify-center rounded-[1.8rem] border border-amber-200/20 bg-amber-300/[.055] p-5 sm:p-7"><div className="mb-4 flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-amber-300/15 text-amber-100"><Lightbulb className="h-5 w-5" aria-hidden="true" /></span><h3 className="font-display text-lg font-extrabold text-amber-100">Satu ide penting</h3></div><p className="font-body text-sm leading-relaxed text-slate-200">Setiap suku diperoleh dengan mengalikan suku sebelumnya dengan rasio tetap <InlineMath math="r" />. Kunci jumlah tak hingga ada pada perilaku <InlineMath math="r^n" /> saat <InlineMath math="n" /> makin besar.</p></aside>
             </div>
           </section>
 
           <section id="rumus-konvergensi" className="scroll-mt-6">
             <SectionHeading number="02" eyebrow="Ikuti jejak rumus" title="Bagaimana Cara Menemukan Rumusnya? 🕵️‍♂️🔍">Ingat kan rumus jumlah <InlineMath math="n" /> suku pertama (<InlineMath math="S_n" />) deret geometri? Jika kita ambil batasnya saat <InlineMath math="n" /> melompat menuju tak hingga (<InlineMath math="n \to \infty" />), kita cari nilai limitnya:</SectionHeading>
-            <div className="space-y-4 rounded-[1.8rem] border border-cyan-200/20 bg-[#101b30]/90 p-4 sm:p-7">
+              <div className="min-w-0 space-y-4 rounded-[1.8rem] border border-cyan-200/20 bg-[#101b30]/90 p-4 sm:p-7">
               <Formula math="S_n=\frac{a(1-r^n)}{1-r}" />
               <div className="flex justify-center text-cyan-100/60"><ArrowDown className="h-5 w-5" aria-hidden="true" /></div>
-              <Formula math="S_{\infty}=\lim_{n\to\infty}S_n=\lim_{n\to\infty}\frac{a(1-r^n)}{1-r}" tone="amber" />
+              <Formula math="\begin{aligned}S_{\infty}&=\lim_{n\to\infty}S_n\\&=\lim_{n\to\infty}\frac{a(1-r^n)}{1-r}\end{aligned}" tone="amber" />
               <p className="pt-2 font-body text-sm leading-relaxed text-slate-200">Dari sinilah keajaiban matematika terbagi menjadi dua jalur seru:</p>
-              <div className="grid gap-4 pt-2 md:grid-cols-2">
-                <div className="rounded-2xl border border-emerald-200/25 bg-emerald-300/[.075] p-5"><p className="mb-2 font-display text-lg font-extrabold text-emerald-100">Jalur Konvergen (Menuju Satu Titik / Punya Hasil):</p><p className="mb-3 font-body text-sm leading-relaxed text-slate-200">Jika rasio kita berada di antara <InlineMath math="-1<r<1" /> (atau ditulis <InlineMath math="|r|<1" />), suku <InlineMath math="r^n" /> akan semakin mengecil mendekati angka nol (<InlineMath math="0" />) saat <InlineMath math="n" /> sangat besar!</p><p className="mb-2 font-body text-sm text-emerald-100">Maka, rumusnya menjadi:</p><Formula math="S_{\infty}=\frac{a}{1-r}\quad\text{(Deret Konvergen)}" /></div>
-                <div className="rounded-2xl border border-rose-200/25 bg-rose-300/[.065] p-5"><p className="mb-2 font-display text-lg font-extrabold text-rose-100">Jalur Divergen (Meledak Tanpa Batas):</p><p className="mb-3 font-body text-sm leading-relaxed text-slate-200">Jika rasio kita <InlineMath math="r\le -1" /> atau <InlineMath math="r\ge 1" /> (atau <InlineMath math="|r|\ge1" />), deret tidak memiliki jumlah konvergen yang berhingga. Jadi, tidak ada hasil angka pastinya!</p><p className="font-body text-xs leading-relaxed text-rose-100/85">Catatan: untuk <InlineMath math="r=-1" />, jumlah parsial berosilasi; untuk <InlineMath math="|r|>1" />, jumlah parsial tidak menuju nilai berhingga.</p></div>
+              <div className="grid min-w-0 gap-4 pt-2 md:grid-cols-2">
+                <div className="min-w-0 rounded-2xl border border-emerald-200/25 bg-emerald-300/[.075] p-5"><p className="mb-2 font-display text-lg font-extrabold text-emerald-100">Jalur Konvergen (Menuju Satu Titik / Punya Hasil):</p><p className="mb-3 font-body text-sm leading-relaxed text-slate-200">Jika rasio kita berada di antara <InlineMath math="-1<r<1" /> (atau ditulis <InlineMath math="|r|<1" />), suku <InlineMath math="r^n" /> akan semakin mengecil mendekati angka nol (<InlineMath math="0" />) saat <InlineMath math="n" /> sangat besar!</p><p className="mb-2 font-body text-sm text-emerald-100">Maka, rumusnya menjadi:</p><Formula math="S_{\infty}=\frac{a}{1-r}\quad\text{(Deret Konvergen)}" /></div>
+                <div className="min-w-0 rounded-2xl border border-rose-200/25 bg-rose-300/[.065] p-5"><p className="mb-2 font-display text-lg font-extrabold text-rose-100">Jalur Divergen (Meledak Tanpa Batas):</p><p className="mb-3 font-body text-sm leading-relaxed text-slate-200">Jika rasio kita <InlineMath math="r\le -1" /> atau <InlineMath math="r\ge 1" /> (atau <InlineMath math="|r|\ge1" />), deret tidak memiliki jumlah konvergen yang berhingga. Jadi, tidak ada hasil angka pastinya!</p><p className="font-body text-xs leading-relaxed text-rose-100/85">Catatan: untuk <InlineMath math="r=-1" />, jumlah parsial berosilasi; untuk <InlineMath math="|r|>1" />, jumlah parsial tidak menuju nilai berhingga.</p></div>
               </div>
             </div>
           </section>
@@ -135,7 +147,7 @@ const SmaDeretGeometriTakHinggaPage = () => {
                 <p>Rasio (<InlineMath math="r" />) = <InlineMath math="\frac{12}{24}=\frac12" />.</p>
                 <p>Karena <InlineMath math="\frac12" /> berada di antara <InlineMath math="-1" /> dan <InlineMath math="1" /> (artinya <InlineMath math="|r|<1" />), deret ini konvergen dan bisa kita hitung!</p>
                 <p>Yuk hitung jumlah tak hingganya (<InlineMath math="S_{\infty}" />):</p>
-                <Formula math="\begin{aligned}S_{\infty}&=\frac{a}{1-r}\\&=\frac{24}{1-\frac12}\\&=\frac{24}{\frac12}=24\times2=48\end{aligned}" />
+                <Formula math="\begin{aligned}S_{\infty}&=\frac{a}{1-r}\\&=\frac{24}{1-\frac12}\\&=\frac{24}{\frac12}\\&=24\times2=48\end{aligned}" />
               </ExampleCard>
 
               <ExampleCard
@@ -148,7 +160,7 @@ const SmaDeretGeometriTakHinggaPage = () => {
                 <Formula math="0{,}\overline{42}=0{,}42+0{,}0042+0{,}000042+\dots" tone="pink" />
                 <p>Suku pertama (<InlineMath math="a" />) = <InlineMath math="0{,}42=\frac{42}{100}" />.</p>
                 <p>Rasio (<InlineMath math="r" />) = <InlineMath math="0{,}01=\frac{1}{100}" /> (karena <InlineMath math="|r|<1" />, aman untuk dihitung!). Mari kita masukkan ke rumus ajaib kita:</p>
-                <Formula math="\begin{aligned}S_{\infty}&=\frac{a}{1-r}\\&=\frac{\frac{42}{100}}{1-\frac{1}{100}}\\&=\frac{\frac{42}{100}}{\frac{99}{100}}=\frac{42}{99}\end{aligned}" />
+                <Formula math="\begin{aligned}S_{\infty}&=\frac{a}{1-r}\\&=\frac{\frac{42}{100}}{1-\frac{1}{100}}\\&=\frac{\frac{42}{100}}{\frac{99}{100}}\\&=\frac{42}{99}\end{aligned}" />
                 <p>Sederhanakan pembilang dan penyebut dengan membagi <InlineMath math="3" />:</p>
                 <Formula math="S_{\infty}=\frac{14}{33}" tone="pink" />
               </ExampleCard>
@@ -174,10 +186,10 @@ const SmaDeretGeometriTakHinggaPage = () => {
           <section id="ganjil-genap" className="scroll-mt-6">
             <SectionHeading number="04" eyebrow="Perluasan yang menarik" title="C. Perluasan Formula Asik: Suku Ganjil vs Suku Genap 🧩✨">Bagaimana kalau kita membedah deret geometri tak hingga menjadi dua kelompok pasukan: pasukan indeks ganjil dan pasukan indeks genap? Wah, makin menantang nih! Perhatikan bentuk umumnya:</SectionHeading>
             <div className="space-y-5 rounded-[1.8rem] border border-violet-200/20 bg-gradient-to-br from-violet-300/[.08] via-[#101a30] to-pink-300/[.07] p-4 sm:p-7">
-              <Formula math="\begin{aligned}S_{\infty}&=U_1+U_2+U_3+U_4+U_5+\dots\\&=(U_1+U_3+U_5+\dots)+(U_2+U_4+U_6+\dots)\end{aligned}" />
-              <div className="grid gap-4 md:grid-cols-2">
-                <article className="rounded-2xl border border-pink-200/25 bg-pink-300/[.07] p-4 sm:p-5"><p className="mb-3 font-display text-lg font-extrabold text-pink-100">Jumlah Suku Ganjil (<InlineMath math="S_{\infty}^{\text{ganjil}}" />):</p><Formula math="S_{\infty}^{\text{ganjil}}=U_1+U_3+U_5+\dots=a+ar^2+ar^4+\dots" tone="pink" /><p className="my-3 font-body text-sm leading-relaxed text-slate-200">Dengan rasio baru = <InlineMath math="r^2" /> dan rumusnya:</p><Formula math="S_{\infty}^{\text{ganjil}}=\frac{a}{1-r^2}" /><p className="mt-3 font-body text-xs leading-relaxed text-pink-100/80">Rumus ini berlaku karena syarat deret asal <InlineMath math="|r|<1" /> menjadikan <InlineMath math="|r^2|<1" />.</p></article>
-                <article className="rounded-2xl border border-cyan-200/25 bg-cyan-300/[.07] p-4 sm:p-5"><p className="mb-3 font-display text-lg font-extrabold text-cyan-100">Jumlah Suku Genap (<InlineMath math="S_{\infty}^{\text{genap}}" />):</p><Formula math="S_{\infty}^{\text{genap}}=U_2+U_4+U_6+\dots=ar+ar^3+ar^5+\dots" /><p className="my-3 font-body text-sm leading-relaxed text-slate-200">Dengan rasio baru = <InlineMath math="r^2" /> dan rumusnya:</p><Formula math="S_{\infty}^{\text{genap}}=\frac{ar}{1-r^2}" tone="amber" /><p className="mt-3 font-body text-xs leading-relaxed text-cyan-100/80">Rumus ini juga mensyaratkan deret asal <InlineMath math="|r|<1" />.</p></article>
+              <Formula math="\begin{aligned}S_{\infty}&=U_1+U_2+U_3+U_4+U_5+\dots\\&=(U_1+U_3+U_5+\dots)\\&\quad+(U_2+U_4+U_6+\dots)\end{aligned}" />
+              <div className="grid min-w-0 gap-4 md:grid-cols-2">
+                <article className="min-w-0 rounded-2xl border border-pink-200/25 bg-pink-300/[.07] p-4 sm:p-5"><p className="mb-3 font-display text-lg font-extrabold text-pink-100">Jumlah Suku Ganjil (<InlineMath math="S_{\infty}^{\text{ganjil}}" />):</p><Formula math="\begin{aligned}S_{\infty}^{\text{ganjil}}&=U_1+U_3+U_5+\dots\\&=a+ar^2+ar^4+\dots\end{aligned}" tone="pink" /><p className="my-3 font-body text-sm leading-relaxed text-slate-200">Dengan rasio baru = <InlineMath math="r^2" /> dan rumusnya:</p><Formula math="S_{\infty}^{\text{ganjil}}=\frac{a}{1-r^2}" /><p className="mt-3 font-body text-xs leading-relaxed text-pink-100/80">Rumus ini berlaku karena syarat deret asal <InlineMath math="|r|<1" /> menjadikan <InlineMath math="|r^2|<1" />.</p></article>
+                <article className="min-w-0 rounded-2xl border border-cyan-200/25 bg-cyan-300/[.07] p-4 sm:p-5"><p className="mb-3 font-display text-lg font-extrabold text-cyan-100">Jumlah Suku Genap (<InlineMath math="S_{\infty}^{\text{genap}}" />):</p><Formula math="\begin{aligned}S_{\infty}^{\text{genap}}&=U_2+U_4+U_6+\dots\\&=ar+ar^3+ar^5+\dots\end{aligned}" /><p className="my-3 font-body text-sm leading-relaxed text-slate-200">Dengan rasio baru = <InlineMath math="r^2" /> dan rumusnya:</p><Formula math="S_{\infty}^{\text{genap}}=\frac{ar}{1-r^2}" tone="amber" /><p className="mt-3 font-body text-xs leading-relaxed text-cyan-100/80">Rumus ini juga mensyaratkan deret asal <InlineMath math="|r|<1" />.</p></article>
               </div>
               <div className="rounded-2xl border border-amber-200/20 bg-amber-300/[.06] p-4 sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-5"><p className="font-body text-sm leading-relaxed text-slate-200">Dari kedua rumus sakti di atas, kita bisa merumuskan hubungan keren berikut untuk mencari rasio (<InlineMath math="r" />) dan suku pertama (<InlineMath math="a" />):</p><div className="mt-3 min-w-0 sm:mt-0 sm:min-w-[280px]"><Formula math="r=\frac{S_{\infty}^{\text{genap}}}{S_{\infty}^{\text{ganjil}}}" tone="amber" /></div></div>
             </div>
