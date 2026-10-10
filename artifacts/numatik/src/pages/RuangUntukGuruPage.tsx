@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   GraduationCap,
+  School,
   Monitor,
   ListChecks,
   MessageSquareHeart,
@@ -101,6 +102,18 @@ const guruMenuItems = [
     desc: "Agenda harian kegiatan pembelajaran dan kehadiran",
   },
   {
+    label: "SMA",
+    icon: GraduationCap,
+    path: "/ruang-untuk-guru/sma",
+    desc: "Materi, latihan, dan persiapan matematika jenjang SMA",
+  },
+  {
+    label: "SD",
+    icon: School,
+    path: "/ruang-untuk-guru/sd",
+    desc: "Materi, latihan, dan persiapan matematika jenjang Sekolah Dasar",
+  },
+  {
     label: "KKTP",
     icon: BadgeCheck,
     path: "/ruang-untuk-guru/kktp",
@@ -117,12 +130,6 @@ const guruMenuItems = [
     icon: Trophy,
     path: "/ruang-untuk-guru/kokulikuler",
     desc: "Aktivitas kokulikuler matematika: proyek, olimpiade, eksplorasi, investigasi & permainan per materi",
-  },
-  {
-    label: "SMA",
-    icon: GraduationCap,
-    path: "/ruang-untuk-guru/sma",
-    desc: "Materi, latihan, dan persiapan matematika jenjang SMA",
   },
   {
     label: "EXAM BROWSER NUMATIK",

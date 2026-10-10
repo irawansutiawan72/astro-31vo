@@ -158,6 +158,10 @@ const ATPPage = lazy(() => import("./pages/ATPPage"));
 const GuruLayout = lazy(() => import("./components/GuruLayout"));
 const RuangUntukGuruPage = lazy(() => import("./pages/RuangUntukGuruPage"));
 const SmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPage"));
+const SdPage = lazy(() => import("./pages/ruang-untuk-guru/SdPage"));
+const SdComingSoonPage = lazy(() =>
+  import("./pages/ruang-untuk-guru/SdPage").then((module) => ({ default: module.SdComingSoonPage })),
+);
 const IntensifUtbkPage = lazy(() => import("./pages/ruang-untuk-guru/IntensifUtbkPage"));
 const SmaComingSoonPage = lazy(() => import("./pages/ruang-untuk-guru/SmaComingSoonPage"));
 const SmaTopicMenuPage = lazy(() => import("./pages/ruang-untuk-guru/SmaTopicMenuPage"));
@@ -1147,6 +1151,8 @@ const AppInner = () => {
           <Route element={<GuruLayout />}>
             <Route path="/ruang-untuk-guru" element={<RuangUntukGuruPage />} />
             <Route path="/ruang-untuk-guru/sma" element={<SmaPage />} />
+            <Route path="/ruang-untuk-guru/sd" element={<SdPage />} />
+            <Route path="/ruang-untuk-guru/sd/:sectionSlug" element={<SdComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/:mode" element={<SmaTopicMenuPage />} />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug" element={<SmaTopicMenuPage />} />
             <Route
