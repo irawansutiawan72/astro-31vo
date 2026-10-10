@@ -67,21 +67,21 @@ const UnitCircleDiagram = () => (
 );
 
 const FortyFiveTriangle = () => (
-  <svg viewBox="0 0 360 300" role="img" aria-label="Segitiga siku-siku sama kaki dengan kedua kaki panjang 1, sisi miring akar 2, dan dua sudut lancip masing-masing 45 derajat." className="block h-auto w-full">
+  <svg viewBox="0 0 360 300" role="img" aria-label="Segitiga siku-siku sama kaki dengan sudut 90 derajat di kiri bawah dan dua sudut 45 derajat di puncak dan kanan bawah. Kedua kaki yang berhadapan dengan sudut 45 derajat sama panjang, masing-masing 1; sisi miringnya akar 2." className="block h-auto w-full">
     <path d="M90 242 L90 82 L250 242 Z" fill="#67e8f9" fillOpacity=".08" stroke="#66809c" strokeWidth="1.5" />
     <path d="M90 242 L90 82" stroke="#67e8f9" strokeWidth="6" strokeLinecap="round" />
     <path d="M90 242 L250 242" stroke="#fbbf24" strokeWidth="6" strokeLinecap="round" />
-    <path d="M90 242 L250 82" stroke="#c4b5fd" strokeWidth="6" strokeLinecap="round" />
+    <path d="M90 82 L250 242" stroke="#c4b5fd" strokeWidth="6" strokeLinecap="round" />
+    <path d="M83 162 H97 M170 235 V249" stroke="#e2e8f0" strokeWidth="2.5" strokeLinecap="round" />
     <path d="M90 222 L110 222 L110 242" fill="none" stroke="#e2e8f0" strokeWidth="2" />
-    <path d="M90 215 A27 27 0 0 1 109 223" fill="none" stroke="#fda4af" strokeWidth="2.5" />
-    <path d="M226 242 A24 24 0 0 0 233 225" fill="none" stroke="#fda4af" strokeWidth="2.5" />
+    <path d="M90 108 A26 26 0 0 0 108 100" fill="none" stroke="#fda4af" strokeWidth="2.5" />
+    <path d="M226 242 A24 24 0 0 1 233 225" fill="none" stroke="#fda4af" strokeWidth="2.5" />
     <text x="53" y="167" fill="#a5f3fc" fontSize="14" fontWeight="700" transform="rotate(-90 53 167)">1</text>
     <text x="167" y="266" fill="#fde68a" fontSize="14" fontWeight="700" textAnchor="middle">1</text>
-    <text x="180" y="151" fill="#ddd6fe" fontSize="14" fontWeight="700" transform="rotate(-45 180 151)">√2</text>
-    <text x="116" y="223" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
-    <text x="204" y="229" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
-    <text x="77" y="259" fill="#94a3b8" fontSize="10">90°</text>
-    <text x="22" y="288" fill="#94a3b8" fontSize="10">Dua kaki sama panjang: segitiga siku-siku sama kaki.</text>
+    <text x="180" y="151" fill="#ddd6fe" fontSize="14" fontWeight="700" textAnchor="middle" transform="rotate(45 180 151)">√2</text>
+    <text x="111" y="77" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
+    <text x="199" y="230" fill="#fda4af" fontSize="12" fontWeight="700">45°</text>
+    <text x="59" y="259" fill="#94a3b8" fontSize="10">90°</text>
   </svg>
 );
 
@@ -254,7 +254,7 @@ const SmaSudutIstimewaPage = () => {
                 <div className="grid items-center gap-3 p-4 sm:p-5 md:grid-cols-[.85fr_1.15fr]">
                   <div className="rounded-2xl border border-white/10 bg-[#071326]/75 p-2 sm:p-3"><FortyFiveTriangle /></div>
                   <div className="space-y-3">
-                    <p className="font-body text-sm leading-relaxed text-slate-300">Kedua kaki sama panjang, kita pilih masing-masing 1. Dengan Pythagoras, sisi miringnya <InlineMath math="\sqrt{1^2+1^2}=\sqrt2" />.</p>
+                    <p className="font-body text-sm leading-relaxed text-slate-300">Karena dua sudut lancipnya sama-sama 45°, sisi yang berhadapan dengan kedua sudut itu juga sama panjang. Jadi, segitiga ini siku-siku sama kaki. Kita pilih panjang tiap kaki 1; dengan Pythagoras, sisi miringnya <InlineMath math="\sqrt{1^2+1^2}=\sqrt2" />.</p>
                     <Formula math="\sin45^\circ=\frac{1}{\sqrt2}=\frac{\sqrt2}{2},\quad \cos45^\circ=\frac{1}{\sqrt2}=\frac{\sqrt2}{2}" />
                     <Formula math="\tan45^\circ=\frac{1}{1}=1" />
                     <p className="rounded-xl bg-violet-200/[.06] p-3 font-body text-xs leading-relaxed text-violet-50/80">Sudut 45° punya kaki “depan” dan “samping” yang sama panjang. Itu sebabnya sinus = cosinus dan tangen = 1.</p>
