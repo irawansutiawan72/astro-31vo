@@ -20,11 +20,15 @@ type FunctionKind = "sin" | "cos" | "tan";
 type Settings = { a: number; k: number; h: number; d: number };
 
 const SPECIAL_HORIZONTAL_SHIFTS = [
-  { degrees: 0, radians: 0, optionLabel: "Tanpa geser", latex: "0" },
-  { degrees: 30, radians: Math.PI / 6, optionLabel: "30° (π/6)", latex: "\\frac{\\pi}{6}" },
-  { degrees: 45, radians: Math.PI / 4, optionLabel: "45° (π/4)", latex: "\\frac{\\pi}{4}" },
-  { degrees: 60, radians: Math.PI / 3, optionLabel: "60° (π/3)", latex: "\\frac{\\pi}{3}" },
-  { degrees: 90, radians: Math.PI / 2, optionLabel: "90° (π/2)", latex: "\\frac{\\pi}{2}" },
+  { degrees: -90, radians: -Math.PI / 2, optionLabel: "−90° (−π/2)", latex: "\\frac{\\pi}{2}" },
+  { degrees: -60, radians: -Math.PI / 3, optionLabel: "−60° (−π/3)", latex: "\\frac{\\pi}{3}" },
+  { degrees: -45, radians: -Math.PI / 4, optionLabel: "−45° (−π/4)", latex: "\\frac{\\pi}{4}" },
+  { degrees: -30, radians: -Math.PI / 6, optionLabel: "−30° (−π/6)", latex: "\\frac{\\pi}{6}" },
+  { degrees: 0, radians: 0, optionLabel: "0° · tanpa geser", latex: "0" },
+  { degrees: 30, radians: Math.PI / 6, optionLabel: "+30° (+π/6)", latex: "\\frac{\\pi}{6}" },
+  { degrees: 45, radians: Math.PI / 4, optionLabel: "+45° (+π/4)", latex: "\\frac{\\pi}{4}" },
+  { degrees: 60, radians: Math.PI / 3, optionLabel: "+60° (+π/3)", latex: "\\frac{\\pi}{3}" },
+  { degrees: 90, radians: Math.PI / 2, optionLabel: "+90° (+π/2)", latex: "\\frac{\\pi}{2}" },
 ] as const;
 
 const getHorizontalShiftAngle = (radians: number) =>
@@ -228,7 +232,7 @@ function GraphExplorer() {
     <div className="grid min-w-0 gap-4 lg:grid-cols-[1.3fr_0.7fr]">
       <div className="min-w-0 rounded-2xl border border-cyan-200/15 bg-[#08112b] p-2 sm:p-3">
         <svg viewBox="0 0 360 270" role="img"
-          aria-label={`Grafik fungsi ${kind}; faktor skala a ${fmt(settings.a)}, frekuensi k ${fmt(settings.k)}, pergeseran horizontal h ${selectedHorizontalAngle ? `${selectedHorizontalAngle.degrees} derajat` : `${fmt(settings.h)} radian`}, dan pergeseran vertikal d ${fmt(settings.d)}`}
+          aria-label={`Grafik fungsi ${kind}; faktor skala a ${fmt(settings.a)}, frekuensi k ${fmt(settings.k)}, pergeseran horizontal h ${selectedHorizontalAngle ? `${fmt(selectedHorizontalAngle.degrees)} derajat` : `${fmt(settings.h)} radian`}, dan pergeseran vertikal d ${fmt(settings.d)}`}
           className="block h-auto w-full" data-testid="visual-trig-function-graph">
           <defs><clipPath id="plot-clip"><rect x={bounds.left} y={bounds.top} width={bounds.right - bounds.left} height={bounds.bottom - bounds.top} /></clipPath></defs>
           {[-3, -2, -1, 0, 1, 2, 3].map((y) => (
@@ -330,7 +334,7 @@ function GraphExplorer() {
               className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2.5 text-sm text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
               {SPECIAL_HORIZONTAL_SHIFTS.map((angle) => <option key={angle.degrees} value={angle.radians}>{angle.optionLabel}</option>)}
             </select>
-            <span className="mt-2 block text-[10px] font-medium leading-relaxed text-white/45">Derajat dikonversi ke radian untuk menghitung kurva.</span>
+            <span className="mt-2 block text-[10px] font-medium leading-relaxed text-white/45">Sudut positif menggeser ke kanan, negatif ke kiri. Nilai dikonversi ke radian.</span>
           </label>
           <ParameterSlider id="graph-shift-d" label="Geser vertikal d · bilangan bulat" value={settings.d} min={-2} max={2} step={1} onChange={(value) => update("d", value)} />
         </div>
