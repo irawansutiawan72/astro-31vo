@@ -37,7 +37,9 @@ const SmaTopicMenuPage = () => {
   const config = modeConfig[mode];
   const Icon = config.icon;
   const selectedTopic = getSmaTopic(topicSlug);
-  const items = selectedTopic?.subtopics ?? SMA_TOPICS;
+  const items = (selectedTopic?.subtopics ?? SMA_TOPICS).filter(
+    (item) => mode === "buku-animasi" || item.slug !== "identitas-dan-rumus-rumus-trigonometri",
+  );
   const heading = selectedTopic ? selectedTopic.title : config.title;
   const subtitle = selectedTopic
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
