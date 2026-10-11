@@ -19,6 +19,17 @@ import PageNavigation from "@/components/PageNavigation";
 type FunctionKind = "sin" | "cos" | "tan";
 type Settings = { a: number; k: number; h: number; d: number };
 
+const SPECIAL_HORIZONTAL_SHIFTS = [
+  { degrees: 0, radians: 0, optionLabel: "Tanpa geser", latex: "0" },
+  { degrees: 30, radians: Math.PI / 6, optionLabel: "30° (π/6)", latex: "\\frac{\\pi}{6}" },
+  { degrees: 45, radians: Math.PI / 4, optionLabel: "45° (π/4)", latex: "\\frac{\\pi}{4}" },
+  { degrees: 60, radians: Math.PI / 3, optionLabel: "60° (π/3)", latex: "\\frac{\\pi}{3}" },
+  { degrees: 90, radians: Math.PI / 2, optionLabel: "90° (π/2)", latex: "\\frac{\\pi}{2}" },
+] as const;
+
+const getHorizontalShiftAngle = (radians: number) =>
+  SPECIAL_HORIZONTAL_SHIFTS.find((angle) => Math.abs(angle.radians - radians) < 0.001);
+
 const fmt = (value: number) => {
   if (Math.abs(value) < 0.005) return "0";
   return Number(value.toFixed(2)).toString().replace("-", "−");
@@ -65,7 +76,9 @@ const Formula = ({ children }: { children: string }) => (
 );
 
 function equation(kind: FunctionKind, { a, k, h, d }: Settings) {
-  const shift = h === 0 ? "x" : h > 0 ? `(x-${fmt(h)})` : `(x+${fmt(-h)})`;
+  const selectedAngle = getHorizontalShiftAngle(h);
+  const horizontalShift = selectedAngle?.latex ?? fmt(h);
+  const shift = h === 0 ? "x" : h > 0 ? `(x-${horizontalShift})` : `(x+${horizontalShift})`;
   const inside = k === 1 ? shift : `${fmt(k)}${shift}`;
   const base = kind === "tan" ? "\\tan" : kind === "cos" ? "\\cos" : "\\sin";
   const lead = a === 1 ? "" : a === -1 ? "-" : fmt(a);
@@ -209,12 +222,13 @@ function GraphExplorer() {
     setSettings((current) => ({ ...current, [key]: value }));
   const ticks = [-2 * Math.PI, -Math.PI, 0, Math.PI, 2 * Math.PI];
   const tickText = ["−2π", "−π", "0", "π", "2π"];
+  const selectedHorizontalAngle = getHorizontalShiftAngle(settings.h);
 
   return (
     <div className="grid min-w-0 gap-4 lg:grid-cols-[1.3fr_0.7fr]">
       <div className="min-w-0 rounded-2xl border border-cyan-200/15 bg-[#08112b] p-2 sm:p-3">
         <svg viewBox="0 0 360 270" role="img"
-          aria-label={`Grafik fungsi ${kind}; faktor skala a ${fmt(settings.a)}, frekuensi k ${fmt(settings.k)}, pergeseran horizontal h ${fmt(settings.h)} radian, dan pergeseran vertikal d ${fmt(settings.d)}`}
+          aria-label={`Grafik fungsi ${kind}; faktor skala a ${fmt(settings.a)}, frekuensi k ${fmt(settings.k)}, pergeseran horizontal h ${selectedHorizontalAngle ? `${selectedHorizontalAngle.degrees} derajat` : `${fmt(settings.h)} radian`}, dan pergeseran vertikal d ${fmt(settings.d)}`}
           className="block h-auto w-full" data-testid="visual-trig-function-graph">
           <defs><clipPath id="plot-clip"><rect x={bounds.left} y={bounds.top} width={bounds.right - bounds.left} height={bounds.bottom - bounds.top} /></clipPath></defs>
           {[-3, -2, -1, 0, 1, 2, 3].map((y) => (
@@ -308,10 +322,17 @@ function GraphExplorer() {
           </select>
         </div>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <ParameterSlider id="graph-scale-a" label="Skala a" value={settings.a} min={-2} max={2} step={0.1} onChange={(value) => update("a", value)} />
-          <ParameterSlider id="graph-frequency-k" label="Frekuensi k" value={settings.k} min={0.5} max={3} step={0.1} onChange={(value) => update("k", value)} />
-          <ParameterSlider id="graph-shift-h" label="Geser horizontal h" value={settings.h} min={-Math.PI} max={Math.PI} step={0.01} onChange={(value) => update("h", value)} unit=" rad" />
-          <ParameterSlider id="graph-shift-d" label="Geser vertikal d" value={settings.d} min={-2} max={2} step={0.1} onChange={(value) => update("d", value)} />
+          <ParameterSlider id="graph-scale-a" label="Skala a · bilangan bulat" value={settings.a} min={-2} max={2} step={1} onChange={(value) => update("a", value)} />
+          <ParameterSlider id="graph-frequency-k" label="Frekuensi k · bilangan bulat" value={settings.k} min={1} max={3} step={1} onChange={(value) => update("k", value)} />
+          <label htmlFor="graph-shift-h" className="min-w-0 rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
+            <span className="block">Geser horizontal h · sudut khusus</span>
+            <select id="graph-shift-h" data-testid="select-graph-h" value={settings.h} onChange={(event) => update("h", Number(event.target.value))}
+              className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2.5 text-sm text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+              {SPECIAL_HORIZONTAL_SHIFTS.map((angle) => <option key={angle.degrees} value={angle.radians}>{angle.optionLabel}</option>)}
+            </select>
+            <span className="mt-2 block text-[10px] font-medium leading-relaxed text-white/45">Derajat dikonversi ke radian untuk menghitung kurva.</span>
+          </label>
+          <ParameterSlider id="graph-shift-d" label="Geser vertikal d · bilangan bulat" value={settings.d} min={-2} max={2} step={1} onChange={(value) => update("d", value)} />
         </div>
         <div aria-live="polite" className="rounded-xl border border-amber-200/20 bg-amber-300/[0.07] p-3">
           <p className="text-[10px] font-black uppercase tracking-wider text-amber-100/65">Yang terlihat di grafik</p>
@@ -388,7 +409,7 @@ const SmaGrafikFungsiTrigonometriPage = () => (
       </Panel>
 
       <Panel className="mb-5 border-violet-200/15 bg-[#131a38]/95"><SectionTitle index="03" title="Atur grafik dan amati" icon={<MoveHorizontal className="h-5 w-5" />} />
-        <p className="mb-4 text-sm leading-relaxed text-white/70">Pilih fungsi, lalu geser nilai a, k, h, atau d untuk membentuk ulang kurvanya. Tekan Putar untuk menjalankan titik kuning sepanjang grafik, Jeda untuk berhenti, atau seret pengatur posisinya sendiri. Semua kontrol juga bisa digunakan dengan papan ketik.</p>
+        <p className="mb-4 text-sm leading-relaxed text-white/70">Pilih fungsi, atur a, k, dan d dengan penggeser bilangan bulat, lalu pilih sudut khusus untuk h. Tekan Putar untuk menjalankan titik kuning sepanjang grafik, Jeda untuk berhenti, atau seret pengatur posisinya sendiri. Semua kontrol juga bisa digunakan dengan papan ketik.</p>
         <GraphExplorer />
       </Panel>
 
