@@ -183,6 +183,7 @@ const SmaPersamaanTrigonometriPage = lazy(() => import("./pages/ruang-untuk-guru
 const SmaIdentitasTrigonometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaIdentitasTrigonometriPage"));
 const SmaRumusRumusTrigonometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaRumusRumusTrigonometriPage"));
 const SmaGrafikFungsiTrigonometriPage = lazy(() => import("./pages/ruang-untuk-guru/SmaGrafikFungsiTrigonometriPage"));
+const SmaAturanSinusCosinusLuasSegitigaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaAturanSinusCosinusLuasSegitigaPage"));
 const SmaPersamaanLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPersamaanLogaritmaPage"));
 const SmaPertidaksamaanLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPertidaksamaanLogaritmaPage"));
 const SmaFungsiEksponenPage = lazy(() => import("./pages/ruang-untuk-guru/SmaFungsiEksponenPage"));
@@ -1213,6 +1214,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/perbandingan-trigonometri/grafik-fungsi-trigonometri"
               element={<SmaGrafikFungsiTrigonometriPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/perbandingan-trigonometri/aturan-sinus-cosinus-dan-luas-segitiga"
+              element={<SmaAturanSinusCosinusLuasSegitigaPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma/persamaan-logaritma"
