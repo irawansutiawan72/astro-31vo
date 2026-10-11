@@ -58,6 +58,7 @@ export const SMA_TOPICS: SmaTopic[] = [
       { title: "Persamaan Trigonometri", slug: "persamaan-trigonometri" },
       { title: "Aturan Sinus dan Cosinus dan Luas Segitiga", slug: "aturan-sinus-cosinus-dan-luas-segitiga" },
       { title: "Grafik Fungsi Trigonometri", slug: "grafik-fungsi-trigonometri" },
+      { title: "Rumus-rumus Trigonometri", slug: "rumus-rumus-trigonometri" },
       { title: "Pertidaksamaan Trigonometri", slug: "pertidaksamaan-trigonometri" },
     ],
   },

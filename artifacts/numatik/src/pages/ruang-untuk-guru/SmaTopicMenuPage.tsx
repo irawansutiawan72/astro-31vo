@@ -38,7 +38,9 @@ const SmaTopicMenuPage = () => {
   const Icon = config.icon;
   const selectedTopic = getSmaTopic(topicSlug);
   const items = (selectedTopic?.subtopics ?? SMA_TOPICS).filter(
-    (item) => mode === "buku-animasi" || item.slug !== "identitas-dan-rumus-rumus-trigonometri",
+    (item) =>
+      mode === "buku-animasi" ||
+      (item.slug !== "identitas-dan-rumus-rumus-trigonometri" && item.slug !== "rumus-rumus-trigonometri"),
   );
   const heading = selectedTopic ? selectedTopic.title : config.title;
   const subtitle = selectedTopic
