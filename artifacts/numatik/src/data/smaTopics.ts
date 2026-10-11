@@ -48,7 +48,7 @@ export const SMA_TOPICS: SmaTopic[] = [
     ],
   },
   {
-    title: "Perbandingan Trigonometri",
+    title: "Trigonometri",
     slug: "perbandingan-trigonometri",
     subtopics: [
       { title: "Perbandingan Trigonometri pada Segitiga Siku-Siku (Sin, Cos, Tan, Sec, Cosec, Cotan)", slug: "perbandingan-trigonometri-segitiga-siku-siku" },
