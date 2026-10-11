@@ -148,7 +148,7 @@ const SmaAturanSinusCosinusLuasSegitigaPage = () => (
         <div className="relative">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-100/25 bg-amber-100/[.08] px-3 py-1.5 font-body text-[10px] font-black uppercase tracking-[.17em] text-amber-100"><BookOpen className="h-3.5 w-3.5" /> Matematika · SMA · Buku Animasi</div>
           <p className="font-body text-[11px] font-bold uppercase tracking-[.2em] text-cyan-100/80">Perbandingan trigonometri</p>
-          <h1 className="mt-2 max-w-3xl font-display text-[clamp(1.9rem,7.5vw,3.5rem)] font-black leading-[1.06] tracking-tight text-white">Aturan sinus, cosinus <span className="text-amber-200">&amp; luas segitiga</span></h1>
+          <h1 className="mt-2 max-w-3xl font-display text-[clamp(1.9rem,7.5vw,3.5rem)] font-black leading-[1.06] tracking-tight text-white">Aturan Sinus, Cosinus dan Luas Segitiga</h1>
           <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-slate-200 sm:text-base">Segitiga punya banyak petunjuk. Dengan sinus, cosinus, dan Heron, kita bisa menemukan sisi, sudut, bahkan luasnya—ayo pecahkan dengan langkah yang rapi!</p>
           <div className="mt-5 inline-flex max-w-full items-start gap-2 rounded-xl border border-cyan-100/20 bg-cyan-200/[.08] px-3 py-2 text-xs font-semibold leading-relaxed text-cyan-50"><Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-cyan-200" /> Misi belajar: kenali data yang diketahui, pilih rumus yang pas, lalu cek satuannya.</div>
         </div>
