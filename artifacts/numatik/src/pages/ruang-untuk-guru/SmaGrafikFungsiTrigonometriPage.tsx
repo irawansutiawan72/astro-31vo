@@ -1,10 +1,12 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Activity,
   BookOpen,
   Check,
   Lightbulb,
   MoveHorizontal,
+  Pause,
+  Play,
   RotateCcw,
   Scaling,
   Waves,
@@ -71,9 +73,55 @@ function equation(kind: FunctionKind, { a, k, h, d }: Settings) {
   return `y=${lead}${base}\\left(${inside}\\right)${outside}`;
 }
 
+function ParameterSlider({
+  id,
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  unit = "",
+}: {
+  id: string;
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+  unit?: string;
+}) {
+  return (
+    <label htmlFor={id} className="min-w-0 rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
+      <span className="flex items-center justify-between gap-2">
+        <span>{label}</span>
+        <output htmlFor={id} className="shrink-0 rounded-lg bg-cyan-200/10 px-2 py-1 text-cyan-100">{fmt(value)}{unit}</output>
+      </span>
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="mt-3 block w-full cursor-pointer accent-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+      />
+      <span className="mt-1 flex justify-between text-[10px] font-medium text-white/40">
+        <span>{fmt(min)}{unit}</span><span>{fmt(max)}{unit}</span>
+      </span>
+    </label>
+  );
+}
+
 function GraphExplorer() {
   const [kind, setKind] = useState<FunctionKind>("sin");
   const [settings, setSettings] = useState<Settings>({ a: 1, k: 1, h: 0, d: 0 });
+  const [traceX, setTraceX] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [speed, setSpeed] = useState(1);
+  const traceDirection = useRef(1);
   const bounds = { left: 42, right: 340, top: 20, bottom: 224 };
   const xMin = -2 * Math.PI;
   const xMax = 2 * Math.PI;
@@ -81,6 +129,47 @@ function GraphExplorer() {
   const yMax = 4;
   const xToSvg = (x: number) => bounds.left + ((x - xMin) / (xMax - xMin)) * (bounds.right - bounds.left);
   const yToSvg = (y: number) => bounds.bottom - ((y - yMin) / (yMax - yMin)) * (bounds.bottom - bounds.top);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    let frame = 0;
+    let previousTime = 0;
+    const animate = (time: number) => {
+      if (previousTime > 0) {
+        const elapsed = Math.min(time - previousTime, 100);
+        const span = xMax - xMin;
+        const advance = (span / 8000) * speed * elapsed;
+        setTraceX((current) => {
+          const next = current + traceDirection.current * advance;
+          if (next > xMax) {
+            traceDirection.current = -1;
+            return xMax - (next - xMax);
+          }
+          if (next < xMin) {
+            traceDirection.current = 1;
+            return xMin + (xMin - next);
+          }
+          return next;
+        });
+      }
+      previousTime = time;
+      frame = window.requestAnimationFrame(animate);
+    };
+    frame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(frame);
+  }, [isPlaying, speed, xMax, xMin]);
+
+  const traceArgument = settings.k * (traceX - settings.h);
+  const traceRaw = kind === "sin" ? Math.sin(traceArgument) : kind === "cos" ? Math.cos(traceArgument) : Math.tan(traceArgument);
+  const traceY = settings.a * traceRaw + settings.d;
+  const nearTangentAsymptote = kind === "tan" && Math.abs(Math.cos(traceArgument)) < 0.04;
+  const traceVisible = Number.isFinite(traceY) && Math.abs(traceY) <= yMax && !nearTangentAsymptote;
+  const traceDescription = nearTangentAsymptote
+    ? "Titik sedang mendekati asimtot; nilai tangen tidak terdefinisi tepat di sana."
+    : !Number.isFinite(traceY) || Math.abs(traceY) > yMax
+      ? "Titik berada di luar rentang tampilan grafik."
+      : `Titik penjelajah: x = ${fmt(traceX)} rad, y = ${fmt(traceY)}.`;
+
   const curve = useMemo(() => {
     const paths: string[] = [];
     let segment: string[] = [];
@@ -144,6 +233,12 @@ function GraphExplorer() {
           <g clipPath="url(#plot-clip)">
             {asymptotes.map((x, index) => <line key={`asym-${index}`} x1={xToSvg(x)} x2={xToSvg(x)} y1={bounds.top} y2={bounds.bottom} stroke="#fb7185" strokeWidth="1.5" strokeDasharray="5 5" />)}
             {curve.map((path, index) => <path key={`curve-${index}`} d={path} fill="none" stroke="#67e8f9" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />)}
+            {traceVisible && (
+              <g aria-hidden="true">
+                <line x1={xToSvg(traceX)} x2={xToSvg(traceX)} y1={yToSvg(0)} y2={yToSvg(traceY)} stroke="#fbbf24" strokeWidth="1.5" strokeDasharray="3 3" />
+                <circle cx={xToSvg(traceX)} cy={yToSvg(traceY)} r="5.5" fill="#fbbf24" stroke="#fff7cc" strokeWidth="2" />
+              </g>
+            )}
           </g>
           <text x={bounds.right - 2} y={bounds.top - 5} textAnchor="end" fill="#a5f3fc" fontSize="10" fontWeight="700">{kind === "tan" ? "TANGEN" : kind === "cos" ? "COSINUS" : "SINUS"}</text>
           <text x={bounds.right - 3} y={yToSvg(settings.d) - 5} textAnchor="end" fill="#fcd34d" fontSize="9">garis tengah d={fmt(settings.d)}</text>
@@ -152,6 +247,55 @@ function GraphExplorer() {
         <div className="mt-2 rounded-xl bg-white/[0.04] p-3 text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-cyan-100/55">Persamaan saat ini</p>
           <div className="mt-1 [overflow-wrap:anywhere] text-cyan-100"><InlineMath math={equation(kind, settings)} /></div>
+        </div>
+        <div className="mt-3 rounded-xl border border-amber-200/15 bg-amber-200/[0.045] p-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="text-xs font-black text-amber-100">Penjelajah grafik</p>
+              <p className="mt-1 text-[11px] leading-relaxed text-white/55">Titik kuning berjalan mengikuti kurva. Geser pengatur untuk menjelajah sendiri.</p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-2">
+              <button
+                type="button"
+                aria-pressed={isPlaying}
+                onClick={() => setIsPlaying((playing) => !playing)}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-cyan-100/20 bg-cyan-200/10 px-3 py-2 text-xs font-bold text-cyan-50 transition hover:bg-cyan-200/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+              >
+                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isPlaying ? "Jeda" : "Putar"}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setIsPlaying(false); traceDirection.current = 1; setTraceX(0); }}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-bold text-white/75 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+              >
+                <RotateCcw className="h-4 w-4" /> Ulangi
+              </button>
+            </div>
+          </div>
+          <label htmlFor="graph-trace-position" className="sr-only">Posisi titik penjelajah pada sumbu x</label>
+          <input
+            id="graph-trace-position"
+            aria-label="Posisi titik penjelajah pada sumbu x"
+            type="range"
+            min={xMin}
+            max={xMax}
+            step="0.01"
+            value={traceX}
+            onChange={(event) => { setIsPlaying(false); traceDirection.current = 1; setTraceX(Number(event.target.value)); }}
+            className="mt-4 block w-full cursor-pointer accent-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+          />
+          <div className="mt-1 flex justify-between text-[10px] text-white/40"><span>−2π</span><span>0</span><span>2π</span></div>
+          <p className={`mt-2 min-h-5 text-center text-xs font-semibold ${traceVisible ? "text-amber-100" : "text-rose-200"}`} aria-live="off">
+            {traceDescription}
+          </p>
+          <label htmlFor="graph-trace-speed" className="mt-2 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold text-white/60">
+            Kecepatan gerak
+            <select id="graph-trace-speed" value={speed} onChange={(event) => setSpeed(Number(event.target.value))}
+              className="rounded-lg border border-white/10 bg-[#09122d] px-2 py-1.5 text-xs text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+              <option value={0.5}>Lambat</option><option value={1}>Sedang</option><option value={1.5}>Cepat</option>
+            </select>
+          </label>
         </div>
       </div>
       <div className="min-w-0 space-y-3">
@@ -163,35 +307,11 @@ function GraphExplorer() {
             <option value="sin">sinus · sin</option><option value="cos">cosinus · cos</option><option value="tan">tangen · tan</option>
           </select>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <label className="rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
-            <span className="block">Skala a</span>
-            <select aria-label="Faktor skala a" data-testid="select-graph-a" value={settings.a} onChange={(e) => update("a", Number(e.target.value))}
-              className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2 text-sm text-cyan-100 focus-visible:ring-2 focus-visible:ring-cyan-300">
-              {[-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2].map((v) => <option key={v} value={v}>{fmt(v)}</option>)}
-            </select>
-          </label>
-          <label className="rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
-            <span className="block">Frekuensi k</span>
-            <select aria-label="Faktor frekuensi k" data-testid="select-graph-k" value={settings.k} onChange={(e) => update("k", Number(e.target.value))}
-              className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2 text-sm text-cyan-100 focus-visible:ring-2 focus-visible:ring-cyan-300">
-              {[0.5, 0.75, 1, 1.5, 2, 3].map((v) => <option key={v} value={v}>{fmt(v)}</option>)}
-            </select>
-          </label>
-          <label className="rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
-            <span className="block">Geser horizontal h</span>
-            <select aria-label="Pergeseran horizontal h dalam radian" data-testid="select-graph-h" value={settings.h} onChange={(e) => update("h", Number(e.target.value))}
-              className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2 text-sm text-cyan-100 focus-visible:ring-2 focus-visible:ring-cyan-300">
-              {[-Math.PI, -Math.PI / 2, 0, Math.PI / 2, Math.PI].map((v) => <option key={v} value={v}>{v === 0 ? "0" : `${v < 0 ? "−" : ""}${Math.abs(v) === Math.PI ? "π" : "π/2"}`}</option>)}
-            </select>
-          </label>
-          <label className="rounded-xl border border-cyan-100/10 bg-white/[0.035] p-3 text-xs font-bold text-white/75">
-            <span className="block">Geser vertikal d</span>
-            <select aria-label="Pergeseran vertikal d" data-testid="select-graph-d" value={settings.d} onChange={(e) => update("d", Number(e.target.value))}
-              className="mt-2 w-full rounded-lg border border-white/10 bg-[#09122d] px-2 py-2 text-sm text-cyan-100 focus-visible:ring-2 focus-visible:ring-cyan-300">
-              {[-2, -1, 0, 1, 2].map((v) => <option key={v} value={v}>{fmt(v)}</option>)}
-            </select>
-          </label>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <ParameterSlider id="graph-scale-a" label="Skala a" value={settings.a} min={-2} max={2} step={0.1} onChange={(value) => update("a", value)} />
+          <ParameterSlider id="graph-frequency-k" label="Frekuensi k" value={settings.k} min={0.5} max={3} step={0.1} onChange={(value) => update("k", value)} />
+          <ParameterSlider id="graph-shift-h" label="Geser horizontal h" value={settings.h} min={-Math.PI} max={Math.PI} step={0.01} onChange={(value) => update("h", value)} unit=" rad" />
+          <ParameterSlider id="graph-shift-d" label="Geser vertikal d" value={settings.d} min={-2} max={2} step={0.1} onChange={(value) => update("d", value)} />
         </div>
         <div aria-live="polite" className="rounded-xl border border-amber-200/20 bg-amber-300/[0.07] p-3">
           <p className="text-[10px] font-black uppercase tracking-wider text-amber-100/65">Yang terlihat di grafik</p>
@@ -200,7 +320,7 @@ function GraphExplorer() {
           {kind === "tan" && <p className="mt-1 text-[11px] text-rose-200">Garis putus-putus merah muda menandai asimtot (tangen tak terdefinisi).</p>}
           {settings.a < 0 && <p className="mt-1 text-[11px] text-cyan-100">Nilai a negatif membalik grafik terhadap garis tengah.</p>}
         </div>
-        <button type="button" data-testid="button-reset-graph" onClick={() => { setKind("sin"); setSettings({ a: 1, k: 1, h: 0, d: 0 }); }}
+        <button type="button" data-testid="button-reset-graph" onClick={() => { setKind("sin"); setSettings({ a: 1, k: 1, h: 0, d: 0 }); setIsPlaying(false); traceDirection.current = 1; setTraceX(0); setSpeed(1); }}
           className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
           <RotateCcw className="h-4 w-4" /> Kembalikan bentuk awal
         </button>
@@ -268,7 +388,7 @@ const SmaGrafikFungsiTrigonometriPage = () => (
       </Panel>
 
       <Panel className="mb-5 border-violet-200/15 bg-[#131a38]/95"><SectionTitle index="03" title="Atur grafik dan amati" icon={<MoveHorizontal className="h-5 w-5" />} />
-        <p className="mb-4 text-sm leading-relaxed text-white/70">Pilih fungsi, lalu ubah parameternya. Kurva, garis tengah, periode, dan asimtot tangen ikut menyesuaikan. Semua kontrol dapat dijangkau dengan tombol Tab dan diubah memakai papan ketik.</p>
+        <p className="mb-4 text-sm leading-relaxed text-white/70">Pilih fungsi, lalu geser nilai a, k, h, atau d untuk membentuk ulang kurvanya. Tekan Putar untuk menjalankan titik kuning sepanjang grafik, Jeda untuk berhenti, atau seret pengatur posisinya sendiri. Semua kontrol juga bisa digunakan dengan papan ketik.</p>
         <GraphExplorer />
       </Panel>
 
