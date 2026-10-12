@@ -1,10 +1,11 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
+import RuangSampelMateri from "@/components/tka/RuangSampelMateri";
 import diagramKelereng from "@assets/image_1787583206453.png";
 import papanSpinner from "@assets/image_1787585871802.png";
 
 const materiSections: MateriSection[] = [
-  { heading: "A. Ruang Sampel", content: `Ruang sampel (S) = himpunan semua kemungkinan hasil percobaan.\n\nKejadian (A) = bagian dari ruang sampel.\n\nContoh:\n- Melempar dadu: S = {1, 2, 3, 4, 5, 6}, n(S) = 6\n- Melempar koin: S = {A (angka), G (gambar)}, n(S) = 2\n- Melempar 2 koin: S = {AA, AG, GA, GG}, n(S) = 4` },
+  { heading: "A. Ruang Sampel", renderContent: () => <RuangSampelMateri /> },
   { heading: "B. Frekuensi Relatif (Peluang Empirik)", content: `Frekuensi relatif menunjukkan perbandingan banyaknya suatu kejadian dengan banyak seluruh percobaan. Nilainya dapat digunakan sebagai peluang empirik.\n\n[SUBHEADING:Rumus frekuensi relatif (peluang empirik)]\n[BLOCKMATH:P(A) = \\dfrac{\\text{frekuensi kejadian } A}{\\text{banyak seluruh percobaan}}]\n\nSemakin banyak percobaan dilakukan, peluang empirik biasanya semakin mendekati peluang teoretik.` },
   { heading: "C. Peluang", content: `Peluang teoretik suatu kejadian adalah perbandingan banyak hasil yang mendukung kejadian dengan banyak seluruh hasil yang mungkin, apabila setiap hasil memiliki kesempatan yang sama.\n\n[SUBHEADING:Rumus peluang teoretik]\n[BLOCKMATH:P(A) = \\dfrac{n(A)}{n(S)}]\n\n- $n(A)$ = banyak kejadian yang diharapkan\n- $n(S)$ = banyak semua kemungkinan (ruang sampel)\n- $0 \\leq P(A) \\leq 1$\n- $P(\\text{pasti terjadi}) = 1$\n- $P(\\text{mustahil}) = 0$` },
   { heading: "D. Frekuensi Harapan", content: `Frekuensi harapan adalah banyak kemunculan suatu kejadian yang diperkirakan terjadi dalam sejumlah percobaan.\n\n[SUBHEADING:Rumus frekuensi harapan]\n[BLOCKMATH:F_h = P(A) \\times n]\n\n- $F_h$ = frekuensi harapan\n- $P(A)$ = peluang kejadian $A$\n- $n$ = banyak percobaan` },
