@@ -1,0 +1,251 @@
+Contoh Soal Sub-Bab 1
+MUDAH
+Soal 1
+Sebuah uang koin dilempar satu kali. Tentukan:
+a. Ruang sampel 
+S
+S dan 
+n
+(
+S
+)
+n(S)
+b. Kejadian 
+K
+K = muncul sisi Angka, serta 
+n
+(
+K
+)
+n(K)
+✅ Pembahasan
+
+Satu koin memiliki 2 sisi: Angka (A) dan Gambar (G).
+
+a. Daftar semua kemungkinan:
+
+S
+=
+{
+A
+,
+  
+G
+}
+,
+n
+(
+S
+)
+=
+2
+S={A,G},n(S)=2
+b. Kejadian muncul Angka hanya ada 1 anggota:
+
+K
+=
+{
+A
+}
+,
+n
+(
+K
+)
+=
+1
+K={A},n(K)=1
+🔑 Dari 2 kemungkinan, hanya 1 yang memenuhi kejadian K.
+
+SEDANG
+Soal 2
+Sebuah dadu bermuka enam dilempar satu kali. Tentukan ruang sampel 
+S
+S, kemudian tentukan anggota dan nilai 
+n
+(
+K
+)
+n(K) untuk kejadian berikut:
+a. 
+K
+1
+K 
+1
+​
+  = muncul bilangan prima
+b. 
+K
+2
+K 
+2
+​
+  = muncul bilangan lebih dari 4
+✅ Pembahasan
+
+Ruang sampel dadu:
+
+S
+=
+{
+1
+,
+  
+2
+,
+  
+3
+,
+  
+4
+,
+  
+5
+,
+  
+6
+}
+,
+n
+(
+S
+)
+=
+6
+S={1,2,3,4,5,6},n(S)=6
+a. Bilangan prima dari 1–6 adalah: 2, 3, 5.
+
+K
+1
+=
+{
+2
+,
+  
+3
+,
+  
+5
+}
+,
+n
+(
+K
+1
+)
+=
+3
+K 
+1
+​
+ ={2,3,5},n(K 
+1
+​
+ )=3
+b. Bilangan lebih dari 4 dari 1–6 adalah: 5, 6.
+
+K
+2
+=
+{
+5
+,
+  
+6
+}
+,
+n
+(
+K
+2
+)
+=
+2
+K 
+2
+​
+ ={5,6},n(K 
+2
+​
+ )=2
+💡 Ingat: 1 bukan bilangan prima! Bilangan prima dimulai dari 2.
+
+SULIT
+Soal 3
+Dari satu set kartu bridge (52 kartu), diambil satu kartu secara acak. Tentukan 
+n
+(
+S
+)
+n(S) dan nilai 
+n
+(
+K
+)
+n(K) untuk kejadian berikut:
+a. 
+K
+1
+K 
+1
+​
+  = terambil kartu merah bernomor ganjil
+b. 
+K
+2
+K 
+2
+​
+  = terambil kartu hitam bukan kartu gambar (bukan J, Q, K)
+✅ Pembahasan
+
+n
+(
+S
+)
+=
+52
+n(S)=52
+a. Kartu merah bernomor ganjil:
+
+Kartu merah = ♥ dan ♦ (masing-masing 13 kartu). Nomor ganjil dari A, 2–10, J, Q, K: yaitu A, 3, 5, 7, 9 → 5 nomor ganjil.
+
+n
+(
+K
+1
+)
+=
+2
+ suit
+×
+5
+ kartu
+=
+10
+ kartu
+n(K 
+1
+​
+ )=2 suit×5 kartu=10 kartu
+b. Kartu hitam bukan kartu gambar:
+
+Kartu hitam = ♠ dan ♣ (masing-masing 13 kartu), jadi total 26 kartu hitam. Kartu gambar hitam = J♠, Q♠, K♠, J♣, Q♣, K♣ = 6 kartu.
+
+n
+(
+K
+2
+)
+=
+26
+−
+6
+=
+20
+ kartu
+n(K 
+2
+​
+ )=26−6=20 kartu
+⚠️ Perhatikan As (A): dalam kartu bridge, As dihitung bernilai 1 dan termasuk bilangan ganjil!

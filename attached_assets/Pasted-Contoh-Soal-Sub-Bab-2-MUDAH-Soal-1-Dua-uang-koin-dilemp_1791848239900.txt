@@ -1,0 +1,355 @@
+Contoh Soal Sub-Bab 2
+MUDAH
+Soal 1
+Dua uang koin dilempar bersamaan satu kali. Tentukan:
+a. 
+n
+(
+S
+)
+n(S)
+b. Kejadian 
+K
+K = muncul tepat satu sisi Angka, serta 
+n
+(
+K
+)
+n(K)
+✅ Pembahasan
+
+a. Ruang sampel dua koin:
+
+S
+=
+{
+A
+A
+,
+  
+A
+G
+,
+  
+G
+A
+,
+  
+G
+G
+}
+,
+n
+(
+S
+)
+=
+4
+S={AA,AG,GA,GG},n(S)=4
+b. Tepat satu Angka artinya hanya satu koin menunjukkan A:
+
+K
+=
+{
+A
+G
+,
+  
+G
+A
+}
+,
+n
+(
+K
+)
+=
+2
+K={AG,GA},n(K)=2
+🔑 AA bukan karena ada DUA Angka. GG bukan karena tidak ada Angka sama sekali.
+
+SEDANG
+Soal 2
+Dua buah dadu dilempar bersamaan. Tentukan 
+n
+(
+S
+)
+n(S) dan 
+n
+(
+K
+)
+n(K) untuk kejadian 
+K
+K = jumlah kedua mata dadu sama dengan 8.
+✅ Pembahasan
+
+n
+(
+S
+)
+=
+6
+×
+6
+=
+36
+n(S)=6×6=36
+Cari semua pasangan (d1, d2) yang jumlahnya = 8:
+
+(2, 6)
+(3, 5)
+(4, 4)
+(5, 3)
+(6, 2)
+K
+=
+{
+(
+2
+,
+6
+)
+,
+(
+3
+,
+5
+)
+,
+(
+4
+,
+4
+)
+,
+(
+5
+,
+3
+)
+,
+(
+6
+,
+2
+)
+}
+,
+n
+(
+K
+)
+=
+5
+K={(2,6),(3,5),(4,4),(5,3),(6,2)},n(K)=5
+💡 Ingat: (2,6) dan (6,2) adalah pasangan yang berbeda karena dadu pertama dan kedua dibedakan!
+
+SULIT
+Soal 3
+Sebuah koin dan sebuah dadu dilempar bersamaan. Tentukan 
+n
+(
+S
+)
+n(S) dan 
+n
+(
+K
+)
+n(K) untuk:
+a. 
+K
+1
+K 
+1
+​
+  = muncul Angka dan bilangan genap
+b. 
+K
+2
+K 
+2
+​
+  = muncul Gambar dan bilangan lebih dari 3
+c. 
+K
+3
+K 
+3
+​
+  = muncul Gambar atau bilangan prima
+✅ Pembahasan
+
+n
+(
+S
+)
+=
+2
+×
+6
+=
+12
+n(S)=2×6=12
+Ruang sampel: (A,1), (A,2), (A,3), (A,4), (A,5), (A,6), (G,1), (G,2), (G,3), (G,4), (G,5), (G,6).
+
+a. Angka DAN genap (bilangan genap: 2, 4, 6):
+
+K
+1
+=
+{
+(
+A
+,
+2
+)
+,
+(
+A
+,
+4
+)
+,
+(
+A
+,
+6
+)
+}
+,
+n
+(
+K
+1
+)
+=
+3
+K 
+1
+​
+ ={(A,2),(A,4),(A,6)},n(K 
+1
+​
+ )=3
+b. Gambar DAN lebih dari 3 (yaitu 4, 5, 6):
+
+K
+2
+=
+{
+(
+G
+,
+4
+)
+,
+(
+G
+,
+5
+)
+,
+(
+G
+,
+6
+)
+}
+,
+n
+(
+K
+2
+)
+=
+3
+K 
+2
+​
+ ={(G,4),(G,5),(G,6)},n(K 
+2
+​
+ )=3
+c. Gambar ATAU prima (prima: 2, 3, 5). Hitung dengan metode gabungan:
+
+Gambar: (G,1), (G,2), (G,3), (G,4), (G,5), (G,6) → 6 pasangan.
+
+Prima tapi BUKAN Gambar: (A,2), (A,3), (A,5) → 3 pasangan.
+
+K
+3
+=
+{
+(
+G
+,
+1
+)
+,
+(
+G
+,
+2
+)
+,
+(
+G
+,
+3
+)
+,
+(
+G
+,
+4
+)
+,
+(
+G
+,
+5
+)
+,
+(
+G
+,
+6
+)
+,
+(
+A
+,
+2
+)
+,
+(
+A
+,
+3
+)
+,
+(
+A
+,
+5
+)
+}
+K 
+3
+​
+ ={(G,1),(G,2),(G,3),(G,4),(G,5),(G,6),(A,2),(A,3),(A,5)}
+n
+(
+K
+3
+)
+=
+9
+n(K 
+3
+​
+ )=9
+⚠️ Kata "ATAU" berarti salah satu atau keduanya terpenuhi. Hindari menghitung (G,2), (G,3), (G,5) dua kali!
