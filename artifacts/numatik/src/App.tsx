@@ -1633,11 +1633,12 @@ const AppInner = () => {
 
           {/* Math Game Arena Routes */}
           <Route path="/math-game-arena" element={<MathGameArenaPage />} />
+          <Route path="/math-game-arena/sma" element={<MathGameArenaSmaMenuPage />} />
            <Route path="/math-game-arena/sma/:topicSlug/:subtopicSlug" element={<MathGameArenaSmaSubtopicPage />} />
            <Route path="/math-game-arena/sma/:topicSlug" element={<MathGameArenaSmaMenuPage />} />
-          <Route path="/math-game-arena/kelas-7" element={<Navigate to="/math-game-arena" replace />} />
-          <Route path="/math-game-arena/kelas-8" element={<Navigate to="/math-game-arena" replace />} />
-          <Route path="/math-game-arena/kelas-9" element={<Navigate to="/math-game-arena" replace />} />
+          <Route path="/math-game-arena/kelas-7" element={<MathGameArenaKelas7Page />} />
+          <Route path="/math-game-arena/kelas-8" element={<MathGameArenaKelas8Page />} />
+          <Route path="/math-game-arena/kelas-9" element={<MathGameArenaKelas9Page />} />
           <Route path="/math-game-arena/umum" element={<MathGameArenaUmumPage />} />
           <Route path="/math-game-arena/umum/balap-mobil" element={<CarRacingGamePage />} />
           <Route path="/math-game-arena/umum/tetris" element={<TetrisGamePage />} />

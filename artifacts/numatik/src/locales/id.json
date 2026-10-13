@@ -6288,6 +6288,7 @@
     "footerLight": "🌟 Semangat belajar hari ini!"
   },
   "gameArena": {
+    "smpTitle": "MATH GAME ARENA SMP",
     "subtitle": "Pilih kelas untuk bermain game matematika",
     "playBtn": "MAIN",
     "backToMenu": "Kembali ke Menu",
@@ -6311,6 +6312,8 @@
     "kelas7ArenaLabel": "Kelas 7 · Math Game Arena",
     "kelas8ArenaLabel": "Kelas 8 · Math Game Arena",
     "kelas9ArenaLabel": "Kelas 9 · Math Game Arena",
+    "smaPortalTitle": "MATH GAME ARENA SMA",
+    "smaPortalDesc": "Arena terpisah dengan materi dan game matematika untuk jenjang SMA.",
     "meteorTagline": "Tembak meteor yang benar · Kumpulkan bintang!",
     "fiveQuestions": "5 SOAL",
     "meteorShooting": "Meteor Shooting",

@@ -11,3 +11,4 @@
 - [Cube net folding](cube-net-folding.md) — validate all 11 net patterns and derive 3D face frames so every assembled preview is a real cube
 - [SMA lesson voice](sma-lesson-voice.md) — keep student-facing SMA book-animation lessons cheerful, encouraging, and easy to understand in Indonesian
 - [KaTeX JSX escaping](katex-jsx-escaping.md) — doubled slashes in quoted JSX math props can become KaTeX line breaks; preview rendered formulas
+- [Math Game Arena level separation](math-game-arena-level-separation.md) — keep the main Math Game Arena for SMP; keep SMA content in its separate SMA route

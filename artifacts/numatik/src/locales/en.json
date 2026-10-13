@@ -6292,6 +6292,7 @@
     "footerLight": "🌟 Keep up the learning spirit today!"
   },
   "gameArena": {
+    "smpTitle": "MATH GAME ARENA — JUNIOR HIGH",
     "subtitle": "Choose a class to play math games",
     "playBtn": "PLAY",
     "backToMenu": "Back to Menu",
@@ -6315,6 +6316,8 @@
     "kelas7ArenaLabel": "Grade 7 · Math Game Arena",
     "kelas8ArenaLabel": "Grade 8 · Math Game Arena",
     "kelas9ArenaLabel": "Grade 9 · Math Game Arena",
+    "smaPortalTitle": "MATH GAME ARENA SMA",
+    "smaPortalDesc": "A separate arena with math topics and games for senior high school.",
     "meteorTagline": "Shoot the correct meteor · Collect stars!",
     "fiveQuestions": "5 QUESTIONS",
     "meteorShooting": "Meteor Shooting",
