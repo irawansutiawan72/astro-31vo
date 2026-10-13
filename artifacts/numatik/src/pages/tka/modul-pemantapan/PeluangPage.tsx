@@ -2,7 +2,7 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import RuangSampelMateri from "@/components/tka/RuangSampelMateri";
 import diagramKelereng from "@assets/image_1787583206453.png";
-import papanSpinner from "@assets/image_1791857657838.png";
+import papanSpinner from "@assets/image_1791865167639.png";
 import gambarSakaKirana from "@assets/image_1791860500613.png";
 import gambarMesinTetas from "@assets/image_1791860506939.png";
 import gambarSoalKode from "@assets/image_1791860512596.png";
@@ -147,8 +147,8 @@ const latihanPemantapan: LatihanSoal[] = [
       "Frekuensi harapan jarum menunjuk angka kelipatan 5 jika diputar $50$ kali adalah $10$ kali.",
       "Jika angka prima terpilih $20$ kali dalam $50$ putaran, frekuensi relatifnya adalah $0,4$.",
     ],
-    jawabanBS: ["S", "B", "B"],
-    pembahasan: "Jawaban: (1) SALAH, (2) BENAR, (3) BENAR\n\nPada gambar, sektor bernomor ganjil adalah 1, 3, 5, dan 9. Jadi peluangnya $\\frac{4}{10}=40\\%$, bukan $50\\%$.\n\nKelipatan 5 adalah 5 dan 10, sehingga peluangnya $\\frac{2}{10}=\\frac{1}{5}$. Frekuensi harapannya dalam 50 putaran adalah $\\frac{1}{5}\\times50=10$ kali.\n\nFrekuensi relatif angka prima pada percobaan tersebut adalah $\\frac{20}{50}=0,4$, jadi pernyataan (3) BENAR.",
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Jawaban: (1) BENAR, (2) BENAR, (3) BENAR\n\nPada gambar, sektor bernomor ganjil adalah 1, 3, 5, 7, dan 9. Jadi peluangnya $\\frac{5}{10}=50\\%$.\n\nKelipatan 5 adalah 5 dan 10, sehingga peluangnya $\\frac{2}{10}=\\frac{1}{5}$. Frekuensi harapannya dalam 50 putaran adalah $\\frac{1}{5}\\times50=10$ kali.\n\nFrekuensi relatif angka prima pada percobaan tersebut adalah $\\frac{20}{50}=0,4$, jadi pernyataan (3) BENAR.",
   },
 ];
 
@@ -230,12 +230,12 @@ const soalTambahan: LatihanSoal[] = [
     pernyataan: [
       "Peluang Jemima mengambil satu bola merah, kemudian satu bola biru adalah $\\frac{8}{65}$.",
       "Peluang Jemima mengambil satu bola merah, kemudian satu bola hijau adalah $\\frac{4}{65}$.",
-      "Peluang Jemima mengambil satu bola kuning, kemudian satu bola biru adalah $\\frac{16}{195}$.",
-      "Peluang Jemima mengambil satu bola kuning, kemudian satu bola hijau adalah $\\frac{2}{195}$.",
+      "Peluang Jemima mengambil dua bola kuning adalah $\\frac{7}{195}$.",
+      "Peluang Jemima mengambil dua bola hijau adalah $\\frac{1}{100}$.",
     ],
     jawabanPGK: [0, 2],
     jawaban: "Pernyataan (1) dan (3) benar",
-    pembahasan: "Jawaban: Pernyataan (1) dan (3) benar\n\nJumlah bola seluruhnya $12+8+4+16=40$. Karena bola pertama tidak dikembalikan, jumlah bola pada pengambilan kedua adalah 39.\n\n(1) Merah lalu biru: $\\frac{12}{40}\\times\\frac{16}{39}=\\frac{8}{65}$, BENAR.\n\n(2) Merah lalu hijau: $\\frac{12}{40}\\times\\frac{4}{39}=\\frac{2}{65}$, bukan $\\frac{4}{65}$, SALAH.\n\n(3) Kuning lalu biru: $\\frac{8}{40}\\times\\frac{16}{39}=\\frac{16}{195}$, BENAR.\n\n(4) Kuning lalu hijau: $\\frac{8}{40}\\times\\frac{4}{39}=\\frac{4}{195}$, bukan $\\frac{2}{195}$, SALAH.",
+    pembahasan: "Jawaban: Pernyataan (1) dan (3) benar\n\nJumlah bola seluruhnya $12+8+4+16=40$. Karena bola pertama tidak dikembalikan, jumlah bola pada pengambilan kedua adalah 39.\n\n(1) Merah lalu biru: $\\frac{12}{40}\\times\\frac{16}{39}=\\frac{8}{65}$, BENAR.\n\n(2) Merah lalu hijau: $\\frac{12}{40}\\times\\frac{4}{39}=\\frac{2}{65}$, bukan $\\frac{4}{65}$, SALAH.\n\n(3) Dua bola kuning: $\\frac{8}{40}\\times\\frac{7}{39}=\\frac{56}{1560}=\\frac{7}{195}$, BENAR.\n\n(4) Dua bola hijau: $\\frac{4}{40}\\times\\frac{3}{39}=\\frac{12}{1560}=\\frac{1}{130}$, bukan $\\frac{1}{100}$, SALAH.",
   },
 ];
 
