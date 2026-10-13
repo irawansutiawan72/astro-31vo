@@ -12,7 +12,6 @@ type StatVisual = TableVisual | LineVisual | PieVisual;
 const visualData: Record<number, StatVisual> = {
   1: { kind: "table", title: "Tabel frekuensi nilai", headers: ["Nilai", "Frekuensi"], rows: [["5", "2"], ["6", "4"], ["7", "8"], ["8", "4"], ["9", "2"]] },
   5: { kind: "table", title: "Tinggi badan ideal anak", headers: ["Usia (tahun)", "Laki-laki (cm)", "Perempuan (cm)"], rows: [["1", "74,5", "74,0"], ["2", "87,2", "86,4"], ["3", "96,1", "95,1"], ["4", "103,2", "102,7"], ["5", "110,0", "109,4"]] },
-  13: { kind: "table", title: "Tabel distribusi frekuensi hasil seleksi", headers: ["Nilai", "Frekuensi"], rows: [["10", "2"], ["20", "3"], ["30", "5"], ["40", "x"], ["50", "1"]] },
   14: { kind: "pie", title: "Kegemaran siswa (sudut)", unit: "°", rows: [["Matematika", 30], ["IPA", 54], ["IPS", 48], ["Bahasa", 72], ["Penjas", 156]] },
   15: { kind: "pie", title: "Koleksi buku perpustakaan", unit: "%", rows: [["Kesenian", 20], ["Kesehatan", 18], ["Fiksi", 25], ["Pendidikan", 22], ["Umum", 15]] },
   16: { kind: "line", title: "Penyusutan harga mobil", unit: "juta rupiah", rows: [["2015", 110], ["2016", 102.5], ["2017", 95], ["2018", 87.5], ["2019", 80]] },
@@ -345,19 +344,6 @@ const latihanDasarSumber: LatihanSoal[] = [
     "type": "pg"
   },
   {
-    "no": 13,
-    "soal": "Data hasil seleksi disajikan dalam tabel distribusi frekuensi berikut.\n[DIAGRAM]\nJika rata-rata nilai tes adalah 30, jumlah peserta yang memperoleh nilai lebih besar daripada rata-rata adalah ....",
-    "options": [
-      "A. 4 orang",
-      "B. 5 orang",
-      "C. 6 orang",
-      "D. 7 orang"
-    ],
-    "jawaban": "C",
-    "pembahasan": "Misalkan frekuensi untuk nilai 40 adalah $x$. Jumlah frekuensi yang diketahui = $2+3+5+1=11$, sedangkan jumlah nilai kali frekuensinya = $10(2)+20(3)+30(5)+50(1)=280$.\n\nGunakan mean 30:\n$\\frac{280+40x}{11+x}=30 \\Rightarrow 280+40x=330+30x \\Rightarrow x=5$.\nNilai yang lebih besar dari 30 adalah 40 dan 50, sehingga jumlah peserta = $5+1=6$ orang.",
-    "type": "pg"
-  },
-  {
     "no": 14,
     "soal": "Diagram lingkaran berikut menunjukkan kegemaran 240 siswa terhadap mata pelajaran. Tentukan Benar atau Salah untuk setiap pernyataan.",
     "type": "pgkbs",
@@ -547,7 +533,7 @@ const latihanDasarSumber: LatihanSoal[] = [
   }
 ];
 
-const urutanNomorSoalSumber = [3, 1, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const urutanNomorSoalSumber = [3, 1, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
 const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
@@ -559,7 +545,6 @@ const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
   1: renderTkaStatistikaVisual(1),
   5: renderTkaStatistikaVisual(5),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
-  13: renderTkaStatistikaVisual(13),
   14: renderTkaStatistikaVisual(14),
   15: renderTkaStatistikaVisual(15),
   16: renderTkaStatistikaVisual(16),

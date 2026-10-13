@@ -1406,7 +1406,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             <Lightbulb className="w-3.5 h-3.5" /> ② Konsep &amp; Trik
                           </p>
                            <p className={`text-xs leading-relaxed whitespace-pre-wrap ${isLightTheme ? "text-violet-900" : "text-white/80"}`}>
-                             {conceptPembahasan || conceptTip}
+                              {contentRenderer(conceptPembahasan || conceptTip)}
                            </p>
                         </div>
                         <div className={`rounded-xl px-4 py-3 border ${isLightTheme ? "bg-cyan-50 border-cyan-300" : "bg-gradient-to-r from-cyan-900/40 to-sky-900/20 border-cyan-500/40"}`}>

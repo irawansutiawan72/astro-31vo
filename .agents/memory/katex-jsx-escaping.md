@@ -7,4 +7,4 @@ In quoted JSX attributes, backslashes are passed through literally; do not doubl
 
 **Why:** A lesson preview showed malformed formulas and KaTeX warnings even though the TypeScript/Vite build succeeded.
 
-**How to apply:** Use one backslash per LaTeX command in static JSX math props. In JavaScript strings and template expressions, use the normal JavaScript escaping rules. Math renderers that split on dollar delimiters must parse `$$...$$` before `$...$`, or the display delimiters can leak into the page. Verify rendered math in the browser, not only in the build.
+**How to apply:** Use one backslash per LaTeX command in static JSX math props. In JavaScript strings and template expressions, use the normal JavaScript escaping rules. Math renderers that split on dollar delimiters must parse `$$...$$` before `$...$`. Route every explanation section, including “Konsep & Trik,” through that renderer; directly inserting source text leaves `$\\text` and `$\\frac` visible. Verify rendered math in the browser, not only in the build.
