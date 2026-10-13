@@ -6292,7 +6292,6 @@
     "footerLight": "🌟 今日も学習頑張ろう！"
   },
   "gameArena": {
-    "smpTitle": "中学校 数学ゲームアリーナ",
     "subtitle": "数学ゲームをするクラスを選んでください",
     "playBtn": "プレイ",
     "backToMenu": "メニューへ戻る",
@@ -6316,8 +6315,6 @@
     "kelas7ArenaLabel": "中学1年 · 数学ゲームアリーナ",
     "kelas8ArenaLabel": "中学2年 · 数学ゲームアリーナ",
     "kelas9ArenaLabel": "中学3年 · 数学ゲームアリーナ",
-    "smaPortalTitle": "MATH GAME ARENA SMA",
-    "smaPortalDesc": "高校数学のトピックとゲームを集めた、独立したアリーナです。",
     "meteorTagline": "正しい流星を撃て · 星を集めよう！",
     "fiveQuestions": "5問",
     "meteorShooting": "流星シューティング",
