@@ -67,7 +67,7 @@ export const SMA_TOPICS: SmaTopic[] = [
     slug: "sistem-persamaan-dan-pertidaksamaan-linear",
     subtopics: [
       { title: "Sistem Persamaan Linear Tiga Variabel (SPLTV)", slug: "sistem-persamaan-linear-tiga-variabel" },
-      { title: "Sistem Pertidaksamaan Linear Dua Variabel (SPtLDV)", slug: "sistem-pertidaksamaan-linear-dua-variabel" },
+      { title: "Sistem Pertidaksamaan Dua Variabel (SPtDV)", slug: "sistem-pertidaksamaan-linear-dua-variabel" },
     ],
   },
   {
