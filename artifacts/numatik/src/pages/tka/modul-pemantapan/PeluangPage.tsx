@@ -2,7 +2,8 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import RuangSampelMateri from "@/components/tka/RuangSampelMateri";
 import diagramKelereng from "@assets/image_1787583206453.png";
-import papanSpinner from "@assets/image_1787585871802.png";
+import papanSpinner from "@assets/image_1791857657838.png";
+import soalBolaJemima from "@assets/WhatsApp_Image_2026-10-13_at_09.04.33_1791857837078.jpeg";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Ruang Sampel", renderContent: () => <RuangSampelMateri /> },
@@ -13,7 +14,7 @@ const materiSections: MateriSection[] = [
   { heading: "F. Peluang Kejadian Majemuk", content: `1. Kejadian saling lepas (mutually exclusive):\n[SUBHEADING:Rumus peluang gabungan kejadian saling lepas]\n[BLOCKMATH:P(A \\cup B) = P(A) + P(B)]\n\n2. Kejadian tidak saling lepas:\n[SUBHEADING:Rumus peluang gabungan kejadian tidak saling lepas]\n[BLOCKMATH:P(A \\cup B) = P(A) + P(B) - P(A \\cap B)]\n\n3. Kejadian bebas (independent):\n[SUBHEADING:Rumus peluang irisan kejadian bebas]\n[BLOCKMATH:P(A \\cap B) = P(A) \\times P(B)]\n\n4. Kejadian bersyarat:\n[SUBHEADING:Rumus peluang bersyarat]\n[BLOCKMATH:P(A|B) = \\dfrac{P(A \\cap B)}{P(B)}]` },
 ];
 
-const latihanDasar: LatihanSoal[] = [
+const latihanPemantapan: LatihanSoal[] = [
   {
     no: 1,
     type: "pgkbs",
@@ -59,10 +60,10 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 3,
     type: "pg",
-    soal: "Sebuah dadu standar bermata $6$ dilambungkan satu kali. Peluang munculnya mata dadu bernilai lebih dari $6$ adalah ....",
-    options: ["A. $0$", "B. $\\frac{1}{6}$", "C. $\\frac{1}{2}$", "D. $1$"],
-    jawaban: "A",
-    pembahasan: "Jawaban: A\n\nKonsep & Trik:\nDadu standar hanya memiliki mata $1,2,3,4,5,6$. Kejadian muncul mata dadu lebih dari 6 adalah kejadian mustahil.\n\n$P(A)=\\frac{n(A)}{n(S)}=\\frac{0}{6}=0$.",
+    soal: "Sebuah dadu standar bermata $6$ dilambungkan satu kali. Peluang munculnya mata dadu yang merupakan bilangan prima adalah ....",
+    options: ["A. $\\frac{1}{6}$", "B. $\\frac{1}{3}$", "C. $\\frac{1}{2}$", "D. $\\frac{2}{3}$"],
+    jawaban: "C",
+    pembahasan: "Jawaban: C\n\nBilangan prima pada dadu adalah $2, 3,$ dan $5$, sehingga ada 3 hasil yang mendukung dari 6 hasil yang mungkin.\n\n$P(\\text{prima})=\\frac{3}{6}=\\frac{1}{2}$.",
   },
   {
     no: 4,
@@ -88,31 +89,19 @@ const latihanDasar: LatihanSoal[] = [
       "Peluang setiap siswa memperoleh hadiah adalah $\\frac{1}{4}$.",
       "Peluang siswa mendapat laptop pada undian pertama adalah $2,5\\%$.",
       "Jika undian pertama telah mendapatkan laptop, peluang undian kedua mendapatkan sepeda adalah $\\frac{15}{199}$.",
-      "Peluang siswa mendapat buku tulis pada undian pertama adalah $15\\%$.",
+      "Peluang siswa mendapat buku tulis pada undian pertama adalah $20\\%$.",
     ],
-    jawabanPGK: [0, 1, 2, 3],
-    jawaban: "Pernyataan (1), (2), (3), dan (4) BENAR",
-    pembahasan: "Jawaban: Pernyataan 1, 2, 3, dan 4 BENAR\n\nTotal hadiah $=5+15+30=50$.\n\nPernyataan 1: $P(\\text{hadiah})=\\frac{50}{200}=\\frac{1}{4}$, BENAR.\n\nPernyataan 2: $P(\\text{laptop})=\\frac{5}{200}=0,025=2,5\\%$, BENAR.\n\nPernyataan 3: Setelah satu kupon terambil, tersisa 199 kupon dan 15 sepeda. Jadi $P(\\text{sepeda})=\\frac{15}{199}$, BENAR.\n\nPernyataan 4: $P(\\text{buku tulis})=\\frac{30}{200}=0,15=15\\%$, BENAR.",
-  },
-  {
-    no: 7,
-    type: "pgkbs",
-    soal: "Dalam sebuah kantong terdapat $8$ kartu bernomor $1,2,3,4,5,6,7,8$. Diambil dua kartu sekaligus secara acak. Tentukan nilai Benar atau Salah!",
-    pernyataan: [
-      "Peluang terambil pasangan kartu bernomor berurutan adalah $\\frac{1}{4}$.",
-      "Peluang terambil pasangan kartu dengan jumlah genap adalah $\\frac{3}{7}$.",
-      "Peluang terambil kedua kartu bernomor prima adalah $\\frac{3}{14}$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Jawaban: (1) BENAR, (2) BENAR, (3) BENAR\n\nRuang sampel pengambilan dua kartu adalah $C(8,2)=28$.\n\nPasangan berurutan ada 7, sehingga peluangnya $\\frac{7}{28}=\\frac{1}{4}$.\n\nJumlah genap terjadi pada pasangan ganjil-ganjil atau genap-genap: $C(4,2)+C(4,2)=12$, sehingga peluangnya $\\frac{12}{28}=\\frac{3}{7}$.\n\nBilangan prima adalah $2,3,5,7$. Banyak pasangan prima $C(4,2)=6$, sehingga peluangnya $\\frac{6}{28}=\\frac{3}{14}$.",
+    jawabanPGK: [0, 1, 2],
+    jawaban: "Pernyataan (1), (2), dan (3) BENAR; pernyataan (4) SALAH",
+    pembahasan: "Jawaban: Pernyataan 1, 2, dan 3 BENAR; pernyataan 4 SALAH\n\nTotal hadiah $=5+15+30=50$.\n\nPernyataan 1: $P(\\text{hadiah})=\\frac{50}{200}=\\frac{1}{4}$, BENAR.\n\nPernyataan 2: $P(\\text{laptop})=\\frac{5}{200}=0,025=2,5\\%$, BENAR.\n\nPernyataan 3: Setelah laptop terambil, tersisa 199 kupon dan 15 sepeda. Jadi $P(\\text{sepeda})=\\frac{15}{199}$, BENAR.\n\nPernyataan 4: $P(\\text{buku tulis})=\\frac{30}{200}=0,15=15\\%$, bukan $20\\%$, jadi SALAH.",
   },
   {
     no: 8,
     type: "pg",
-    soal: "Berdasarkan data meteorologi, peluang hari berawan di Kota Bandung selama bulan Agustus ($31$ hari) adalah $\\frac{2}{5}$. Berapakah harapan banyaknya hari tidak berawan di bulan tersebut?",
-    options: ["A. $12,4$ hari", "B. $18,6$ hari", "C. $20,0$ hari", "D. $24,8$ hari"],
+    soal: "Berdasarkan data meteorologi, peluang hari berawan di Kota Bandung selama bulan November ($30$ hari) adalah $\\frac{2}{5}$. Berapakah harapan banyaknya hari tidak berawan di bulan tersebut?",
+    options: ["A. $12$ hari", "B. $18$ hari", "C. $20$ hari", "D. $24$ hari"],
     jawaban: "B",
-    pembahasan: "Jawaban: B\n\nPeluang tidak berawan adalah $1-\\frac{2}{5}=\\frac{3}{5}$.\n\nFrekuensi harapan $=\\frac{3}{5}\\times31=\\frac{93}{5}=18,6$ hari.",
+    pembahasan: "Jawaban: B\n\nPeluang tidak berawan adalah $1-\\frac{2}{5}=\\frac{3}{5}$.\n\nFrekuensi harapan $=\\frac{3}{5}\\times30=18$ hari.",
   },
   {
     no: 9,
@@ -131,40 +120,6 @@ const latihanDasar: LatihanSoal[] = [
     pembahasan: "Jawaban: C\n\nTiga koin menghasilkan $2^3=8$ kemungkinan dan satu dadu menghasilkan 6 kemungkinan. Dengan aturan perkalian, $n(S)=8\\times6=48$.",
   },
   {
-    no: 11,
-    type: "pg",
-    soal: "Lima orang nasabah: Andi, Budi, Citra, Deni, dan Eka sedang mengantre di depan teller bank yang menyediakan $5$ kursi berdampingan secara sejajar. Banyak cara kelima nasabah tersebut mengatur posisi duduk mereka adalah ....",
-    options: ["A. $20$ cara", "B. $60$ cara", "C. $120$ cara", "D. $720$ cara"],
-    jawaban: "C",
-    pembahasan: "Jawaban: C\n\nLima orang berbeda dapat disusun berjajar dengan $5!$ cara.\n\n$5!=5\\times4\\times3\\times2\\times1=120$ cara.",
-  },
-  {
-    no: 12,
-    type: "pgk",
-    soal: "Lima orang nasabah: Andi, Budi, Citra, Deni, dan Eka sedang duduk acak pada $5$ kursi berjajar. Pilihlah semua pernyataan yang Benar!",
-    pernyataan: [
-      "Peluang Andi duduk di posisi paling ujung (kiri atau kanan) adalah $\\frac{2}{5}$.",
-      "Peluang Budi dan Citra selalu duduk berdampingan adalah $40\\%$.",
-      "Peluang Deni dan Eka terpisah (tidak berdampingan) adalah $60\\%$.",
-      "Peluang Andi duduk di salah satu dari tiga posisi tengah adalah $\\frac{3}{5}$.",
-    ],
-    jawabanPGK: [0, 1, 2, 3],
-    jawaban: "Pernyataan (1), (2), (3), dan (4) BENAR",
-    pembahasan: "Jawaban: Pernyataan 1, 2, 3, dan 4 BENAR\n\nPernyataan 1: Ada 2 posisi ujung dari 5 posisi, jadi peluangnya $\\frac{2}{5}$.\n\nPernyataan 2: Anggap Budi dan Citra sebagai satu blok. Banyak susunan $4!\\times2!=48$, sehingga peluangnya $\\frac{48}{120}=\\frac{2}{5}=40\\%$.\n\nPernyataan 3: Peluang terpisah adalah komplemen peluang berdampingan, yaitu $1-40\\%=60\\%$.\n\nPernyataan 4: Tiga dari lima posisi merupakan posisi tengah, jadi peluang Andi duduk di salah satunya adalah $\\frac{3}{5}$.",
-  },
-  {
-    no: 13,
-    type: "pgkbs",
-    soal: "Reno dan Siska memiliki jadwal les musik pada hari kerja (Senin sampai Jumat). Masing-masing memilih satu hari secara acak dalam seminggu. Tentukan Benar atau Salah!",
-    pernyataan: [
-      "Peluang mereka memilih hari les yang sama adalah $0,20$.",
-      "Peluang mereka memilih hari les yang berurutan (misal: Senin-Selasa) adalah $\\frac{8}{25}$.",
-      "Peluang Reno les di hari Jumat dan Siska tidak les di hari Jumat adalah $16\\%$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Jawaban: (1) BENAR, (2) BENAR, (3) BENAR\n\nAda $5\\times5=25$ pasangan pilihan hari.\n\nHari sama memiliki 5 pasangan, jadi peluangnya $\\frac{5}{25}=0,20$.\n\nHari berurutan memiliki $4\\times2=8$ pasangan, jadi peluangnya $\\frac{8}{25}$.\n\nPeluang Reno Jumat dan Siska bukan Jumat adalah $\\frac{1}{5}\\times\\frac{4}{5}=\\frac{4}{25}=16\\%$.",
-  },
-  {
     no: 14,
     type: "pg",
     soal: "Sebuah kantong berisi $30$ kelereng yang terdiri dari $12$ warna merah, $8$ warna biru, dan $10$ warna hijau. Jika diambil satu kelereng secara acak, peluang terambil kelereng bukan warna biru adalah ....",
@@ -175,7 +130,7 @@ const latihanDasar: LatihanSoal[] = [
   {
     no: 15,
     type: "pgkbs",
-    soal: "Sebuah papan undian berbentuk lingkaran dibagi menjadi 10 sektor sama besar yang diberi nomor $1$ sampai $10$. Papan diputar satu kali. Tentukan nilai Benar atau Salah!",
+    soal: "Sebuah papan undian berbentuk lingkaran dibagi menjadi 10 sektor sama besar. Perhatikan gambar berikut! Papan diputar satu kali. Tentukan nilai Benar atau Salah!",
     gambar: (
       <div className="my-2 flex justify-center">
         <img src={papanSpinner} alt="Papan undian putar bernomor 1 sampai 10" className="max-h-64 w-auto rounded-xl border border-white/15 bg-white p-2 object-contain" />
@@ -184,12 +139,101 @@ const latihanDasar: LatihanSoal[] = [
     pernyataan: [
       "Peluang jarum menunjukkan angka ganjil adalah $50\\%$.",
       "Frekuensi harapan jarum menunjuk angka kelipatan 5 jika diputar $50$ kali adalah $10$ kali.",
-      "Frekuensi relatif terpilihnya angka prima jika dilakukan $8$ kali putaran adalah selalu $\\frac{2}{5}$.",
+      "Jika angka prima terpilih $20$ kali dalam $50$ putaran, frekuensi relatifnya adalah $0,4$.",
     ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Jawaban: (1) BENAR, (2) BENAR, (3) SALAH\n\nAngka ganjil ada 5 dari 10 sektor, sehingga peluangnya $\\frac{5}{10}=50\\%$.\n\nKelipatan 5 adalah 5 dan 10, sehingga $P=\\frac{2}{10}=\\frac{1}{5}$ dan frekuensi harapannya $\\frac{1}{5}\\times50=10$ kali.\n\nFrekuensi relatif ditentukan oleh hasil percobaan nyata, sehingga tidak selalu sama dengan peluang teoretik $\\frac{4}{10}=\\frac{2}{5}$.",
+    jawabanBS: ["S", "B", "B"],
+    pembahasan: "Jawaban: (1) SALAH, (2) BENAR, (3) BENAR\n\nPada gambar, sektor bernomor ganjil adalah 1, 3, 5, dan 9. Jadi peluangnya $\\frac{4}{10}=40\\%$, bukan $50\\%$.\n\nKelipatan 5 adalah 5 dan 10, sehingga peluangnya $\\frac{2}{10}=\\frac{1}{5}$. Frekuensi harapannya dalam 50 putaran adalah $\\frac{1}{5}\\times50=10$ kali.\n\nFrekuensi relatif angka prima pada percobaan tersebut adalah $\\frac{20}{50}=0,4$, jadi pernyataan (3) BENAR.",
   },
 ];
+
+const soalTambahan: LatihanSoal[] = [
+  {
+    no: 16,
+    type: "pg",
+    soal: "Terdapat $20$ kotak misteri: $8$ kotak berisi figur Saka dan $12$ kotak berisi figur Kirana. Riana mengambil $3$ kotak secara acak dan mendapatkan $1$ Saka serta $2$ Kirana. Setelah itu, Santi mengambil satu kotak secara acak dari kotak yang tersisa. Berapakah peluang Santi mendapatkan figur Saka?",
+    options: ["A. $\\frac{7}{20}$", "B. $\\frac{8}{20}$", "C. $\\frac{8}{17}$", "D. $\\frac{7}{17}$"],
+    jawaban: "D",
+    pembahasan: "Jawaban: D\n\nSetelah Riana mengambil satu Saka dan dua Kirana, tersisa $8-1=7$ kotak Saka dan $12-2=10$ kotak Kirana, atau $17$ kotak seluruhnya.\n\n$P(\\text{Saka})=\\frac{7}{17}$.",
+  },
+  {
+    no: 17,
+    type: "pg",
+    gambar: (
+      <div className="my-2 overflow-x-auto">
+        <table className="mx-auto min-w-[320px] border-collapse text-center text-xs text-white/85">
+          <thead>
+            <tr className="bg-cyan-500/20 text-cyan-100">
+              <th className="border border-cyan-400/30 px-3 py-2">Usia telur</th>
+              <th className="border border-cyan-400/30 px-3 py-2">Banyak telur</th>
+              <th className="border border-cyan-400/30 px-3 py-2">Sisa hari tetas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["2 hari", "20", "16 hari"],
+              ["4 hari", "35", "14 hari"],
+              ["6 hari", "30", "12 hari"],
+              ["8 hari", "15", "10 hari"],
+            ].map(([usia, banyak, sisa]) => (
+              <tr key={usia} className="bg-white/5">
+                <td className="border border-cyan-400/30 px-3 py-2">{usia}</td>
+                <td className="border border-cyan-400/30 px-3 py-2">{banyak}</td>
+                <td className="border border-cyan-400/30 px-3 py-2">{sisa}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ),
+    soal: "Sebuah mesin tetas digunakan untuk menetaskan telur selama $18$ hari. Telur puyuh yang diamati memiliki usia dan sisa waktu hingga menetas seperti pada tabel berikut. Jika satu telur dipilih secara acak, berapakah peluang telur tersebut menetas dalam $10$ hari ke depan?",
+    options: ["A. $\\frac{3}{20}$", "B. $\\frac{1}{15}$", "C. $\\frac{1}{10}$", "D. $\\frac{1}{8}$"],
+    jawaban: "A",
+    pembahasan: "Jawaban: A\n\nJumlah seluruh telur adalah $20+35+30+15=100$. Telur yang akan menetas dalam 10 hari ke depan adalah 15 telur yang tersisa waktu tetasnya 10 hari.\n\n$P=\\frac{15}{100}=\\frac{3}{20}$.",
+  },
+  {
+    no: 18,
+    type: "pgk",
+    soal: "Seorang guru menyiapkan kertas soal ujian berkode A, B, atau C. Mula-mula, jumlah kertas berkode A lebih sedikit daripada jumlah kertas berkode B. Guru mengambil $3$ kertas yang berkode sama. Setelah itu, tersisa $28$ kertas seluruhnya dan jumlah kertas berkode B lebih banyak daripada jumlah kertas berkode C. Jika satu kertas diambil secara acak dari sisa tersebut, peluang mendapat kode C adalah $\\frac{2}{7}$. Berapakah kemungkinan jumlah kertas berkode B mula-mula? Pilih semua jawaban benar.",
+    pernyataan: [
+      "Jumlah kertas berkode B mula-mula adalah 10 lembar.",
+      "Jumlah kertas berkode B mula-mula adalah 11 lembar.",
+      "Jumlah kertas berkode B mula-mula adalah 12 lembar.",
+      "Jumlah kertas berkode B mula-mula adalah 14 lembar.",
+    ],
+    jawabanPGK: [1, 2, 3],
+    jawaban: "11, 12, dan 14 lembar",
+    pembahasan: "Jawaban: 11, 12, dan 14 lembar\n\nSetelah tiga kertas diambil, jumlah kertas kode C adalah $28\\times\\frac{2}{7}=8$. Maka jumlah kertas kode A dan B yang tersisa adalah $28-8=20$, dengan banyak kertas B yang tersisa lebih dari 8.\n\nUji kemungkinan banyak kertas B sebelum pengambilan:\n- $10$ tidak memenuhi syarat jumlah A lebih sedikit daripada B.\n- $11$ mungkin jika 3 kertas kode C diambil: mula-mula A=9, B=11, C=11.\n- $12$ mungkin jika 3 kertas kode B diambil: mula-mula A=11, B=12, C=8.\n- $14$ mungkin jika 3 kertas kode B diambil: mula-mula A=9, B=14, C=8.\n\nJadi jawaban yang benar adalah 11, 12, dan 14 lembar.",
+  },
+  {
+    no: 19,
+    type: "pgk",
+    soal: "Terdapat 12 bola merah, 8 bola kuning, 4 bola hijau, dan 16 bola biru. Jemima mengambil 2 bola secara acak. Setiap pengambilan bola berikutnya, bola sebelumnya tidak dikembalikan. Manakah pernyataan berikut yang benar mengenai peluang pengambilan bola Jemima? Pilihlah semua jawaban yang benar. Jawaban benar lebih dari satu.",
+    gambar: (
+      <div className="my-2 flex justify-center">
+        <img
+          src={soalBolaJemima}
+          alt="Soal peluang pengambilan dua bola Jemima, disalin dari gambar yang diunggah"
+          className="max-h-[560px] w-auto max-w-full rounded-xl border border-white/15 bg-white object-contain"
+        />
+      </div>
+    ),
+    pernyataan: [
+      "Peluang Jemima mengambil satu bola merah, kemudian satu bola biru adalah $\\frac{8}{65}$.",
+      "Peluang Jemima mengambil satu bola merah, kemudian satu bola hijau adalah $\\frac{4}{65}$.",
+      "Peluang Jemima mengambil satu bola kuning, kemudian satu bola biru adalah $\\frac{16}{195}$.",
+      "Peluang Jemima mengambil satu bola kuning, kemudian satu bola hijau adalah $\\frac{2}{195}$.",
+    ],
+    jawabanPGK: [0, 2],
+    jawaban: "Pernyataan (1) dan (3) benar",
+    pembahasan: "Jawaban: Pernyataan (1) dan (3) benar\n\nJumlah bola seluruhnya $12+8+4+16=40$. Karena bola pertama tidak dikembalikan, jumlah bola pada pengambilan kedua adalah 39.\n\n(1) Merah lalu biru: $\\frac{12}{40}\\times\\frac{16}{39}=\\frac{8}{65}$, BENAR.\n\n(2) Merah lalu hijau: $\\frac{12}{40}\\times\\frac{4}{39}=\\frac{2}{65}$, bukan $\\frac{4}{65}$, SALAH.\n\n(3) Kuning lalu biru: $\\frac{8}{40}\\times\\frac{16}{39}=\\frac{16}{195}$, BENAR.\n\n(4) Kuning lalu hijau: $\\frac{8}{40}\\times\\frac{4}{39}=\\frac{4}{195}$, bukan $\\frac{2}{195}$, SALAH.",
+  },
+];
+
+const latihanDasar: LatihanSoal[] = [
+  ...latihanPemantapan.filter((soal) => soal.no === 10),
+  ...latihanPemantapan.filter((soal) => soal.no !== 10),
+  ...soalTambahan,
+].map((soal, index) => ({ ...soal, no: index + 1 }));
 
 const ruangSampelDuaDadu = (
   <div className="space-y-4 min-w-[600px]">
