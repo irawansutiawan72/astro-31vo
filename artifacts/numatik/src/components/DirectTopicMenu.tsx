@@ -20,7 +20,7 @@ export default function DirectTopicMenu({ kind }: { kind: MenuKind }) {
   const light = theme !== "dark" && theme !== "ocean";
   const base = kind === "materi" ? "/materi-matematika" : kind === "latihan" ? "/latihan-mandiri" : kind === "game" ? "/math-game-arena" : "/lkpd";
   const Icon = kind === "materi" ? BookOpen : kind === "latihan" ? ClipboardList : kind === "game" ? Gamepad2 : ClipboardList;
-  const title = kind === "materi" ? "BUKU ANIMASI MATEMATIKA" : kind === "latihan" ? "TUGAS-LATIHAN MANDIRI" : kind === "game" ? "MATH GAME ARENA" : "LKPD";
+  const title = kind === "materi" ? "BUKU ANIMASI MATEMATIKA" : kind === "latihan" ? "TUGAS-LATIHAN MANDIRI" : kind === "game" ? "MATH GAME ARENA SMP" : "LKPD";
   return <div className={`relative min-h-screen flex flex-col items-center overflow-hidden ${light && kind === "game" ? "gradient-snow" : "gradient-space"}`}>
     {light && kind === "game" ? <Snowfall /> : <Starfield />}
     <PageNavigation prevPath="/menu" />

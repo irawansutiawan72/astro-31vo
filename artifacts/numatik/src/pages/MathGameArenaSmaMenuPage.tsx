@@ -5,7 +5,7 @@ import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 import { getSmaTopic, SMA_TOPICS } from "@/data/smaTopics";
 
-const BASE_PATH = "/math-game-arena";
+const BASE_PATH = "/math-game-arena/sma";
 
 const MathGameArenaSmaMenuPage = () => {
   const navigate = useNavigate();
@@ -31,13 +31,18 @@ const MathGameArenaSmaMenuPage = () => {
         <h1 className="font-display text-2xl md:text-3xl font-bold text-primary text-glow-cyan mb-2 text-center">
           {heading}
         </h1>
+        {selectedTopic && (
+          <p className="mb-1 text-center font-display text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+            MATH GAME ARENA SMA
+          </p>
+        )}
         <p className="text-white/60 text-sm text-center mb-8 font-body">{subtitle}</p>
 
         <div className="flex flex-col gap-3 animate-slide-up">
           {items.map((item, i) => {
             const path = selectedTopic
-              ? `${BASE_PATH}/sma/${selectedTopic.slug}/${item.slug}`
-              : `${BASE_PATH}/sma/${item.slug}`;
+              ? `${BASE_PATH}/${selectedTopic.slug}/${item.slug}`
+              : `${BASE_PATH}/${item.slug}`;
 
             return (
               <button

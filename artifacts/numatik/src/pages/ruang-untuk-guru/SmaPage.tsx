@@ -41,7 +41,7 @@ const smaMenuItems = [
   {
     label: "MATH GAME ARENA SMA",
     icon: Gamepad2,
-    path: "/math-game-arena",
+    path: "/math-game-arena/sma",
     desc: "Belajar matematika sambil bermain game interaktif",
   },
   {
