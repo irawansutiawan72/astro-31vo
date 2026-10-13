@@ -22,21 +22,25 @@ const latihanPemantapan: LatihanSoal[] = [
     type: "pgkbs",
     soal: "Seorang siswa melakukan lemparan dadu bermata enam sebanyak $50$ kali. Hasil pengamatan dicatat dalam tabel berikut.\n\nTentukan nilai Benar atau Salah untuk setiap pernyataan berikut!",
     gambar: (
-      <div className="my-2 overflow-x-auto">
-        <table className="mx-auto min-w-[360px] border-collapse overflow-hidden rounded-lg text-center text-xs">
+      <div className="my-2 w-full min-w-0">
+        <table className="w-full table-fixed border-collapse overflow-hidden rounded-lg text-center text-[10px] leading-tight">
+          <colgroup>
+            <col className="w-[28%]" />
+            {[1, 2, 3, 4, 5, 6].map((mata) => <col key={mata} className="w-[12%]" />)}
+          </colgroup>
           <thead>
             <tr className="bg-cyan-500/20 text-cyan-100">
-              <th className="border border-cyan-400/30 px-4 py-2">Mata dadu</th>
+              <th className="border border-cyan-400/30 px-1 py-2">Mata dadu</th>
               {[1, 2, 3, 4, 5, 6].map((mata) => (
-                <th key={mata} className="border border-cyan-400/30 px-3 py-2">{mata}</th>
+                <th key={mata} className="border border-cyan-400/30 px-1 py-2">{mata}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr className="bg-white/5 text-white/85">
-              <th className="border border-cyan-400/30 px-4 py-2 text-cyan-100">Frekuensi</th>
+              <th className="border border-cyan-400/30 px-1 py-2 text-cyan-100">Frekuensi</th>
               {[12, 8, 10, 5, 11, 4].map((frekuensi, index) => (
-                <td key={index} className="border border-cyan-400/30 px-3 py-2">{frekuensi}</td>
+                <td key={index} className="border border-cyan-400/30 px-1 py-2">{frekuensi}</td>
               ))}
             </tr>
           </tbody>
@@ -168,13 +172,13 @@ const soalTambahan: LatihanSoal[] = [
     gambar: (
       <div className="my-2 space-y-3">
         <img src={gambarMesinTetas} alt="Mesin tetas telur dengan beberapa telur puyuh" className="mx-auto max-h-64 w-auto max-w-full rounded-xl border border-white/15 object-contain" />
-        <div className="overflow-x-auto">
-          <table className="mx-auto min-w-[320px] border-collapse text-center text-xs text-white/85">
+        <div className="w-full min-w-0">
+          <table className="w-full table-fixed border-collapse text-center text-xs text-white/85">
             <thead>
               <tr className="bg-cyan-500/20 text-cyan-100">
-                <th className="border border-cyan-400/30 px-3 py-2">Usia telur</th>
-                <th className="border border-cyan-400/30 px-3 py-2">Banyak telur</th>
-                <th className="border border-cyan-400/30 px-3 py-2">Sisa hari tetas</th>
+                <th className="border border-cyan-400/30 px-1 py-2 leading-tight break-words">Usia telur</th>
+                <th className="border border-cyan-400/30 px-1 py-2 leading-tight break-words">Banyak telur</th>
+                <th className="border border-cyan-400/30 px-1 py-2 leading-tight break-words">Sisa hari tetas</th>
               </tr>
             </thead>
             <tbody>
@@ -185,9 +189,9 @@ const soalTambahan: LatihanSoal[] = [
                 ["8 hari", "15", "10 hari"],
               ].map(([usia, banyak, sisa]) => (
                 <tr key={usia} className="bg-white/5">
-                  <td className="border border-cyan-400/30 px-3 py-2">{usia}</td>
-                  <td className="border border-cyan-400/30 px-3 py-2">{banyak}</td>
-                  <td className="border border-cyan-400/30 px-3 py-2">{sisa}</td>
+                  <td className="border border-cyan-400/30 px-1 py-2 break-words">{usia}</td>
+                  <td className="border border-cyan-400/30 px-1 py-2 break-words">{banyak}</td>
+                  <td className="border border-cyan-400/30 px-1 py-2 break-words">{sisa}</td>
                 </tr>
               ))}
             </tbody>
@@ -238,7 +242,8 @@ const soalTambahan: LatihanSoal[] = [
 const latihanDasar: LatihanSoal[] = [
   ...latihanPemantapan.filter((soal) => soal.no === 10),
   ...latihanPemantapan.filter((soal) => soal.no !== 10),
-  ...soalTambahan,
+  ...soalTambahan.filter((soal) => soal.no === 19),
+  ...soalTambahan.filter((soal) => soal.no !== 19),
 ].map((soal, index) => ({ ...soal, no: index + 1 }));
 
 const ruangSampelDuaDadu = (
