@@ -3,80 +3,159 @@ import type { LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { statistikaContohSoal, statistikaContohSvgMap } from "@/data/statistikaContohSoal";
 import { tkaStatistikaMateri } from "@/data/tkaStatistikaMateri";
 
-const visualData: Record<number, { title: string; headers: [string, string]; rows: [string, string][] }> = {
-  1: { title: "Tabel frekuensi", headers: ["Nilai", "Frekuensi"], rows: [["5", "1"], ["6", "4"], ["7", "5"], ["8", "6"], ["9", "4"], ["10", "2"]] },
-  2: { title: "Data nilai", headers: ["Data ke-", "Nilai"], rows: [["1", "5"], ["2", "5"], ["3", "7"], ["4", "3"], ["5", "2"], ["6", "5"], ["7", "6"], ["8", "9"], ["9", "7"], ["10", "10"]] },
-  4: { title: "Tabel frekuensi nilai siswa", headers: ["Nilai", "Frekuensi"], rows: [["3", "2"], ["4", "5"], ["5", "5"], ["6", "7"], ["7", "6"], ["8", "3"]] },
-  5: { title: "Diagram nilai kuis", headers: ["Nilai", "Frekuensi"], rows: [["50", "2"], ["60", "3"], ["70", "8"], ["80", "5"], ["90", "6"], ["100", "1"]] },
-  9: { title: "Tabel data statistik", headers: ["Kategori", "Nilai"], rows: [["A", "12"], ["B", "18"], ["C", "24"], ["D", "16"]] },
-  10: { title: "Data pengamatan", headers: ["Data", "Frekuensi"], rows: [["1", "3"], ["2", "5"], ["3", "7"], ["4", "4"]] },
-  11: { title: "Tabel nilai", headers: ["Nilai", "Frekuensi"], rows: [["4", "2"], ["5", "4"], ["6", "5"], ["7", "5"], ["8", "9"]] },
-  15: { title: "Tabel distribusi frekuensi hasil seleksi", headers: ["Nilai", "Frekuensi"], rows: [["50", "10"], ["60", "16"], ["70", "50"], ["80", "x"], ["90", "4"], ["100", "5"]] },
-  16: { title: "Keterangan nilai siswa", headers: ["Siswa", "Nilai"], rows: [["Adi", "10"], ["Budi", "—"], ["Cici", "—"], ["Didi", "—"], ["Eki", "4"]] },
-  17: { title: "Data ukuran pemusatan", headers: ["Ukuran", "Nilai"], rows: [["Mean", "72"], ["Median", "70"], ["Modus", "68"], ["Jangkauan", "25"]] },
-  18: { title: "Data pengunjung", headers: ["Hari", "Pengunjung"], rows: [["Senin", "300"], ["Selasa", "250"], ["Rabu", "400"], ["Kamis", "550"], ["Jumat", "1500"]] },
-  19: { title: "Tabel data", headers: ["Kelompok", "Nilai"], rows: [["1", "15"], ["2", "20"], ["3", "25"], ["4", "30"]] },
-  20: { title: "Grafik suhu udara", headers: ["Waktu", "Suhu"], rows: [["19.00", "29"], ["21.00", "27"], ["23.00", "26"], ["01.00", "24"], ["03.00", "25"], ["05.00", "28"]] },
-  21: { title: "Data hasil survei", headers: ["Kategori", "Persentase"], rows: [["A", "20%"], ["B", "35%"], ["C", "25%"], ["D", "20%"]] },
-  22: { title: "Demografi usia warga", headers: ["Kelompok usia", "Persentase"], rows: [["Balita", "10%"], ["Anak-anak", "20%"], ["Remaja", "25%"], ["Dewasa", "35%"], ["Lansia", "10%"]] },
-  23: { title: "Pengunjung pameran buku", headers: ["Hari", "Pengunjung"], rows: [["1", "50"], ["2", "150"], ["3", "250"], ["4", "200"], ["5", "230"], ["6", "270"]] },
-  24: { title: "Nilai tukar USD terhadap Rupiah", headers: ["Hari", "Kurs"], rows: [["Sen", "16000"], ["Sel", "16400"], ["Rab", "16100"], ["Kam", "16300"], ["Jum", "16200"], ["Sab", "16600"], ["Min", "16500"]] },
-  25: { title: "Moda transportasi siswa", headers: ["Moda", "Sudut"], rows: [["Jalan kaki", "60°"], ["Sepeda", "60°"], ["Angkutan umum", "60°"], ["Ojek online", "72°"], ["Sepeda motor", "48°"], ["Lainnya", "60°"]] },
-  26: { title: "Tinggi tanaman", headers: ["Tinggi", "Frekuensi"], rows: [["10", "3"], ["11", "6"], ["12", "10"], ["13", "11"], ["14", "8"], ["15", "2"]] },
-  27: { title: "Nilai ujian", headers: ["Skor", "Frekuensi"], rows: [["600", "3"], ["700", "6"], ["750", "7"], ["800", "8"], ["900", "4"], ["1000", "2"]] },
+type TableVisual = { kind: "table"; title: string; headers: string[]; rows: string[][] };
+type LineVisual = { kind: "line"; title: string; unit: string; rows: [string, number][] };
+type PieVisual = { kind: "pie"; title: string; unit: "%" | "°"; rows: [string, number][] };
+type StatVisual = TableVisual | LineVisual | PieVisual;
+
+// Visual data is keyed by the question's original number, before the exercise is reordered.
+const visualData: Record<number, StatVisual> = {
+  1: { kind: "table", title: "Tabel frekuensi nilai", headers: ["Nilai", "Frekuensi"], rows: [["5", "2"], ["6", "4"], ["7", "8"], ["8", "4"], ["9", "2"]] },
+  5: { kind: "table", title: "Tinggi badan ideal anak", headers: ["Usia (tahun)", "Laki-laki (cm)", "Perempuan (cm)"], rows: [["1", "74,5", "74,0"], ["2", "87,2", "86,4"], ["3", "96,1", "95,1"], ["4", "103,2", "102,7"], ["5", "110,0", "109,4"]] },
+  13: { kind: "table", title: "Tabel distribusi frekuensi hasil seleksi", headers: ["Nilai", "Frekuensi"], rows: [["10", "2"], ["20", "3"], ["30", "5"], ["40", "x"], ["50", "1"]] },
+  14: { kind: "pie", title: "Kegemaran siswa (sudut)", unit: "°", rows: [["Matematika", 30], ["IPA", 54], ["IPS", 48], ["Bahasa", 72], ["Penjas", 156]] },
+  15: { kind: "pie", title: "Koleksi buku perpustakaan", unit: "%", rows: [["Kesenian", 20], ["Kesehatan", 18], ["Fiksi", 25], ["Pendidikan", 22], ["Umum", 15]] },
+  16: { kind: "line", title: "Penyusutan harga mobil", unit: "juta rupiah", rows: [["2015", 110], ["2016", 102.5], ["2017", 95], ["2018", 87.5], ["2019", 80]] },
+  17: { kind: "pie", title: "Menu favorit pelanggan", unit: "%", rows: [["Rendang", 40], ["Ayam goreng", 30], ["Soto", 20], ["Lainnya", 10]] },
+  18: { kind: "line", title: "Suhu udara", unit: "°C", rows: [["19.00", 29], ["21.00", 27], ["23.00", 26], ["01.00", 24], ["03.00", 25], ["05.00", 28]] },
+  20: { kind: "pie", title: "Demografi usia warga", unit: "%", rows: [["Balita", 10], ["Anak-anak", 20], ["Remaja", 25], ["Dewasa", 35], ["Lansia", 10]] },
+  21: { kind: "line", title: "Pengunjung pameran buku", unit: "orang", rows: [["Hari 1", 50], ["Hari 2", 150], ["Hari 3", 250], ["Hari 4", 200], ["Hari 5", 230], ["Hari 6", 270]] },
+  22: { kind: "line", title: "Nilai tukar USD terhadap Rupiah", unit: "rupiah per USD", rows: [["Sen", 16000], ["Sel", 16400], ["Rab", 16100], ["Kam", 16300], ["Jum", 16200], ["Sab", 16600], ["Min", 16500]] },
+  23: { kind: "pie", title: "Moda transportasi siswa (sudut)", unit: "°", rows: [["Jalan kaki", 60], ["Sepeda", 60], ["Angkutan umum", 60], ["Ojek online", 72], ["Sepeda motor", 48], ["Lainnya", 60]] },
+  24: { kind: "table", title: "Tinggi tanaman", headers: ["Tinggi", "Frekuensi"], rows: [["10", "3"], ["11", "6"], ["12", "10"], ["13", "11"], ["14", "8"], ["15", "2"]] },
 };
 
-const renderTkaStatistikaVisual = (no: number): React.ReactNode => {
-  const data = visualData[no] ?? visualData[1];
+const chartColors = ["#22d3ee", "#a78bfa", "#fb7185", "#fbbf24", "#34d399", "#60a5fa"];
+const formatStatNumber = (value: number) => value.toLocaleString("id-ID", { maximumFractionDigits: 1 });
+
+const renderTableVisual = (data: TableVisual) => (
+  <div className="my-3 w-full max-w-full rounded-xl border border-cyan-400/30 bg-white/5">
+    <div className="rounded-t-xl border-b border-cyan-400/20 bg-cyan-500/15 px-2 py-2 text-center text-xs font-bold text-cyan-200">{data.title}</div>
+    <table className="w-full table-fixed text-center text-[11px] text-white/85">
+      <thead className="border-b border-white/10 bg-white/5">
+        <tr>{data.headers.map((header) => <th key={header} className="break-words px-1.5 py-2 font-semibold text-cyan-300">{header}</th>)}</tr>
+      </thead>
+      <tbody>
+        {data.rows.map((row, rowIndex) => (
+          <tr key={`${rowIndex}-${row.join("-")}`} className="border-b border-white/5 last:border-b-0">
+            {row.map((cell, cellIndex) => <td key={`${rowIndex}-${cellIndex}`} className="break-words px-1.5 py-1.5">{cell}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+const renderPieVisual = (data: PieVisual) => {
+  const total = data.rows.reduce((sum, [, value]) => sum + value, 0);
+  let startAngle = -90;
+  const cx = 112;
+  const cy = 112;
+  const radius = 88;
+  const slices = data.rows.map(([label, value], index) => {
+    const angle = (value / total) * 360;
+    const endAngle = startAngle + angle;
+    const toPoint = (degrees: number) => {
+      const radians = (degrees * Math.PI) / 180;
+      return [cx + radius * Math.cos(radians), cy + radius * Math.sin(radians)] as const;
+    };
+    const [x1, y1] = toPoint(startAngle);
+    const [x2, y2] = toPoint(endAngle);
+    const path = `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${angle > 180 ? 1 : 0} 1 ${x2} ${y2} Z`;
+    const mid = (startAngle + endAngle) / 2;
+    const [labelX, labelY] = [cx + radius * 0.62 * Math.cos((mid * Math.PI) / 180), cy + radius * 0.62 * Math.sin((mid * Math.PI) / 180)];
+    startAngle = endAngle;
+    return { label, value, index, path, labelX, labelY, share: (value / total) * 100 };
+  });
+
   return (
-    <div className="my-3 overflow-hidden rounded-xl border border-cyan-400/30 bg-white/5">
-      <div className="border-b border-cyan-400/20 bg-cyan-500/15 px-3 py-2 text-center text-xs font-bold text-cyan-200">{data.title}</div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[260px] text-center text-xs text-white/85">
-          <thead className="border-b border-white/10 bg-white/5">
-            <tr>
-              <th className="px-3 py-2 text-cyan-300">{data.headers[0]}</th>
-              <th className="px-3 py-2 text-cyan-300">{data.headers[1]}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.rows.map(([label, value]) => (
-              <tr key={`${label}-${value}`} className="border-b border-white/5 last:border-b-0">
-                <td className="px-3 py-1.5">{label}</td>
-                <td className="px-3 py-1.5">{value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="my-3 w-full max-w-full rounded-xl border border-cyan-400/30 bg-white/5 p-2">
+      <div className="mb-1 text-center text-xs font-bold text-cyan-200">{data.title}</div>
+      <svg viewBox="0 0 440 232" role="img" aria-label={`${data.title}; ${data.rows.map(([label, value]) => `${label} ${formatStatNumber(value)}${data.unit}`).join(", ")}`} className="block h-auto w-full">
+        {slices.map((slice) => (
+          <g key={slice.label}>
+            <path d={slice.path} fill={chartColors[slice.index % chartColors.length]} stroke="#101827" strokeWidth="2" />
+            {slice.share >= 8 && <text x={slice.labelX} y={slice.labelY} textAnchor="middle" dominantBaseline="middle" fill="#101827" fontSize="10" fontWeight="700">{formatStatNumber(slice.value)}{data.unit}</text>}
+          </g>
+        ))}
+        {slices.map((slice, index) => (
+          <g key={`${slice.label}-legend`} transform={`translate(220 ${27 + index * 34})`}>
+            <rect width="12" height="12" rx="3" fill={chartColors[slice.index % chartColors.length]} />
+            <text x="20" y="10" fill="#e2e8f0" fontSize="12">{slice.label}</text>
+            <text x="205" y="10" textAnchor="end" fill="#a5f3fc" fontSize="12" fontWeight="700">{formatStatNumber(slice.value)}{data.unit}</text>
+          </g>
+        ))}
+      </svg>
     </div>
   );
 };
 
-const latihanDasar: LatihanSoal[] = [
+const renderLineVisual = (data: LineVisual) => {
+  const values = data.rows.map(([, value]) => value);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const padding = Math.max((max - min) * 0.18, 1);
+  const low = min - padding;
+  const high = max + padding;
+  const left = 48;
+  const right = 420;
+  const top = 36;
+  const bottom = 190;
+  const points = data.rows.map(([label, value], index) => ({
+    label,
+    value,
+    x: left + (index * (right - left)) / Math.max(data.rows.length - 1, 1),
+    y: bottom - ((value - low) / (high - low)) * (bottom - top),
+  }));
+
+  return (
+    <div className="my-3 w-full max-w-full rounded-xl border border-cyan-400/30 bg-white/5 p-2">
+      <div className="text-center text-xs font-bold text-cyan-200">{data.title}</div>
+      <div className="text-center text-[10px] text-white/60">{data.unit}</div>
+      <svg viewBox="0 0 440 236" role="img" aria-label={`${data.title}; ${data.rows.map(([label, value]) => `${label}: ${formatStatNumber(value)} ${data.unit}`).join(", ")}`} className="block h-auto w-full">
+        {[0, 1, 2, 3].map((step) => {
+          const y = top + ((bottom - top) * step) / 3;
+          const value = high - ((high - low) * step) / 3;
+          return <g key={step}><line x1={left} y1={y} x2={right} y2={y} stroke="#ffffff22" /><text x={left - 6} y={y + 3} textAnchor="end" fill="#cbd5e1" fontSize="9">{formatStatNumber(value)}</text></g>;
+        })}
+        <polyline points={points.map(({ x, y }) => `${x},${y}`).join(" ")} fill="none" stroke="#22d3ee" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+        {points.map((point) => (
+          <g key={point.label}>
+            <circle cx={point.x} cy={point.y} r="4" fill="#fbbf24" stroke="#0f172a" strokeWidth="2" />
+            <text x={point.x} y={point.y - 10} textAnchor="middle" fill="#fef08a" fontSize="9" fontWeight="700">{formatStatNumber(point.value)}</text>
+            <text x={point.x} y={bottom + 18} textAnchor="middle" fill="#e2e8f0" fontSize="9">{point.label}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+const renderTkaStatistikaVisual = (no: number): React.ReactNode => {
+  const data = visualData[no];
+  if (!data) throw new Error(`Visual statistika untuk soal asal ${no} belum tersedia.`);
+  if (data.kind === "table") return renderTableVisual(data);
+  if (data.kind === "pie") return renderPieVisual(data);
+  return renderLineVisual(data);
+};
+
+const latihanDasarSumber: LatihanSoal[] = [
   {
     "no": 1,
-    "soal": "Perhatikan tabel berikut!\nPernyataan yang benar dari tabel di atas adalah ...",
-    "options": [
-      "A. Modus dari data 5",
-      "B. Median data 6,5",
-      "C. Rata-rata data 6,6",
-      "D. Jangkauan data 6"
-    ],
+    "soal": "Perhatikan tabel distribusi frekuensi berikut. Pilih semua pernyataan yang benar.",
     "type": "pgk",
     "pernyataan": [
-      "Modus data tersebut adalah 5.",
-      "Median data tersebut adalah 6,5.",
-      "Rata-rata data tersebut adalah 6,5.",
-      "Jangkauan data tersebut adalah 6."
+      "Modus data tersebut adalah 7.",
+      "Median data tersebut adalah 7.",
+      "Rata-rata data tersebut adalah 7.",
+      "Jangkauan data tersebut adalah 5."
     ],
     "jawabanPGK": [
       0,
       1,
       2
     ],
-    "jawaban": "B",
-    "pembahasan": "Hitung semua ukuran statistik: mean, modus, median, dan jangkauan. Lalu verifikasi pernyataan mana yang benar.\n\nTotal = 30 data\nMean = $\\frac{6+20+25+18+28+32+36+30}{30} = \\frac{195}{30} = 6{,}5$\nKumulatif: 2, 7, 12, 15, 19, ... → data ke-15 = nilai 6, ke-16 = nilai 7\nMedian = $\\frac{6+7}{2} = 6{,}5$ ✓\n\nJika soal meminta pernyataan yang benar/salah, hitung semua ukuran lalu bandingkan satu per satu.\n\nMedian data adalah 6,5 (sama dengan mean). Pernyataan B adalah yang benar."
+    "pembahasan": "Jumlah data = $2+4+8+4+2=20$.\n\nModus adalah 7 karena frekuensinya paling besar, yaitu 8.\nMean = $\\frac{(5\\times2)+(6\\times4)+(7\\times8)+(8\\times4)+(9\\times2)}{20}=\\frac{140}{20}=7$.\n\nData ke-1–2 bernilai 5, ke-3–6 bernilai 6, dan ke-7–14 bernilai 7. Jadi data ke-10 dan ke-11 sama-sama 7, sehingga median = 7.\nJangkauan = $9-5=4$. Maka pernyataan 1, 2, dan 3 benar; pernyataan 4 salah."
   },
   {
     "no": 2,
@@ -218,12 +297,13 @@ const latihanDasar: LatihanSoal[] = [
       "Jika ada seorang murid setinggi 132 cm, pasti ada seorang murid setinggi 128 cm.",
       "Jika 23 murid tingginya 130 cm dan satu murid 133 cm, tinggi murid terakhir adalah 127 cm.",
       "Murid yang berada di tengah setelah semua tinggi diurutkan pasti memiliki tinggi 130 cm.",
-      "Pasti setengah murid berada di bawah 130 cm dan setengah lainnya di atas 130 cm."
+      "Jumlah tinggi seluruh murid perempuan tersebut adalah 3.250 cm."
     ],
     "jawabanPGK": [
-      1
+      1,
+      3
     ],
-    "pembahasan": "Pernyataan tentang statistik: mean tidak harus sama dengan median. Periksa pernyataan B: jika ada 23 anak setinggi tepat 130 cm dan 1 anak 133 cm, tinggi anak ke-25 bisa dihitung dari total.\n\nTotal tinggi = 25 × 130 = 3250 cm\nJika 23 anak @ 130 cm, 1 anak @ 133 cm:\nTotal 24 anak = 23×130 + 133 = 3123 cm\nTinggi anak ke-25 = 3250 − 3123 = 127 cm ✓\nPernyataan B terbukti benar.\n\nUntuk membuktikan pernyataan tentang data statistik, cari contoh konkret yang memenuhi kondisi tersebut.\n\nPernyataan B adalah yang pasti benar: satu anak memiliki tinggi 127 cm jika kondisi lainnya terpenuhi."
+    "pembahasan": "Jumlah tinggi seluruh murid = $25\\times130=3.250$ cm, jadi pernyataan 4 benar.\n\nPada pernyataan 2, jumlah 25 tinggi harus 3.250 cm. Jumlah 23 murid setinggi 130 cm dan satu murid setinggi 133 cm adalah $23\\times130+133=3.123$ cm. Tinggi murid terakhir = $3.250-3.123=127$ cm, jadi pernyataan 2 benar.\n\nPernyataan 1 tidak harus benar karena selisih 2 cm dari rata-rata dapat diimbangi oleh gabungan beberapa murid, bukan harus tepat satu murid setinggi 128 cm. Mean juga tidak menentukan median, sehingga pernyataan 3 tidak selalu benar."
   },
   {
     "no": 10,
@@ -240,15 +320,15 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     "no": 11,
-    "soal": "Dua kelompok tani, Kelompok A dan Kelompok B, mencatat hasil panen jagung. Rata-rata hasil panen Kelompok A adalah 6 ton, sedangkan Kelompok B adalah 9 ton. Jika 1 orang dari masing-masing kelompok saling bertukar tempat, rata-rata hasil panen kedua kelompok menjadi sama. Selisih hasil panen kedua orang yang bertukar tempat tersebut adalah ....",
+    "soal": "Kelompok A terdiri atas 10 orang dengan rata-rata hasil panen jagung 6 ton per orang. Kelompok B terdiri atas 15 orang dengan rata-rata 9 ton per orang. Satu orang dari setiap kelompok bertukar kelompok. Jika rata-rata kedua kelompok setelah pertukaran menjadi sama, berapa selisih hasil panen kedua orang tersebut?",
     "options": [
-      "A. 3,6 ton",
-      "B. 4,2 ton",
-      "C. 5,0 ton",
-      "D. 6,0 ton"
+      "A. 18 ton",
+      "B. 15 ton",
+      "C. 12 ton",
+      "D. 9 ton"
     ],
     "jawaban": "A",
-    "pembahasan": "Jawaban Akhir: A. 3,6 ton\n\nKonsep & Trik: Gunakan persamaan kesamaan rata-rata baru setelah terjadi pertukaran nilai $x$ dan $y$.\n\nStep by Step:\nTotal awal: $S_A = 10 \\times 6 = 60$ ton; $S_B = 15 \\times 9 = 135$ ton.\nRata-rata baru sama: $\\frac{60 - x + y}{10} = \\frac{135 - y + x}{15}$.\nSederhanakan: $3(60 - x + y) = 2(135 - y + x)$ sehingga $5(y-x)=18$.\nSelisih $y-x = 3{,}6$ ton.",
+    "pembahasan": "Misalkan hasil panen orang yang pindah dari A adalah $x$ ton dan dari B adalah $y$ ton. Jumlah awal panen A = $10\\times6=60$ ton dan B = $15\\times9=135$ ton.\n\nSetelah bertukar, kedua rata-rata sama:\n$\\frac{60-x+y}{10}=\\frac{135-y+x}{15}$.\nKalikan silang: $15(60-x+y)=10(135-y+x)$, sehingga $25(y-x)=450$ dan $y-x=18$.\nJadi, selisih hasil panen kedua orang tersebut adalah 18 ton.",
     "type": "pg"
   },
   {
@@ -266,39 +346,32 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     "no": 13,
-    "soal": "Data hasil seleksi penerimaan karyawan disajikan dalam tabel distribusi frekuensi berikut.\n[DIAGRAM]\nPanitia menetapkan bahwa peserta yang dinyatakan lulus adalah mereka yang memiliki nilai lebih besar dari rata-rata. Jika rata-rata nilai tes adalah 70,2, jumlah peserta yang diterima adalah ....",
+    "soal": "Data hasil seleksi disajikan dalam tabel distribusi frekuensi berikut.\n[DIAGRAM]\nJika rata-rata nilai tes adalah 30, jumlah peserta yang memperoleh nilai lebih besar daripada rata-rata adalah ....",
     "options": [
-      "A. 15 orang",
-      "B. 18 orang",
-      "C. 24 orang",
-      "D. 30 orang"
+      "A. 4 orang",
+      "B. 5 orang",
+      "C. 6 orang",
+      "D. 7 orang"
     ],
     "jawaban": "C",
-    "pembahasan": "Jawaban Akhir: C. 24 orang\n\nKonsep & Trik: Cari nilai variabel $x$ terlebih dahulu dari rumus rata-rata keseluruhan.\n\nStep by Step:\n$\\frac{5.820 + 80x}{85 + x} = 70{,}2 \\implies 5.820 + 80x = 5.967 + 70{,}2x$.\n$9{,}8x = 147 \\implies x = 15$.\nPeserta lulus = nilai $> 70{,}2$ → $x + 4 + 5 = 15 + 4 + 5 = 24$ orang.",
+    "pembahasan": "Misalkan frekuensi untuk nilai 40 adalah $x$. Jumlah frekuensi yang diketahui = $2+3+5+1=11$, sedangkan jumlah nilai kali frekuensinya = $10(2)+20(3)+30(5)+50(1)=280$.\n\nGunakan mean 30:\n$\\frac{280+40x}{11+x}=30 \\Rightarrow 280+40x=330+30x \\Rightarrow x=5$.\nNilai yang lebih besar dari 30 adalah 40 dan 50, sehingga jumlah peserta = $5+1=6$ orang.",
     "type": "pg"
   },
   {
     "no": 14,
-    "soal": "Diagram lingkaran menunjukkan kegemaran siswa terhadap mata pelajaran berikut.\n[DIAGRAM]\nJika jumlah siswa seluruhnya 240 orang, jumlah siswa yang gemar Penjas adalah ...",
-    "options": [
-      "A. 76 orang",
-      "B. 90 orang",
-      "C. 104 orang",
-      "D. 156 orang"
-    ],
+    "soal": "Diagram lingkaran berikut menunjukkan kegemaran 240 siswa terhadap mata pelajaran. Tentukan Benar atau Salah untuk setiap pernyataan.",
     "type": "pgkbs",
     "pernyataan": [
-      "Besar sudut sektor Penjas adalah 156°.",
-      "Bagian siswa yang gemar Penjas adalah 13/30 dari seluruh siswa.",
+      "Besar sudut sektor Penjas adalah 150°.",
+      "Bagian siswa yang gemar Penjas adalah $\\frac{13}{30}$ dari seluruh siswa.",
       "Jumlah siswa yang gemar Penjas adalah 104 orang."
     ],
     "jawabanBS": [
-      "B",
+      "S",
       "B",
       "B"
     ],
-    "jawaban": "C",
-    "pembahasan": "Pada diagram lingkaran, jumlah semua sudut = 360°. Cari sudut sektor Penjas, lalu hitung proporsinya dari total.\n\nSudut Penjas = 360° − (30°+54°+48°+72°) = 360° − 204° = 156°\nBanyak siswa Penjas = $\\frac{156}{360} \\times 240 = 104$ orang\n\nJumlah semua sudut = 360°. Cari sudut yang belum diketahui dengan pengurangan.\n\nBanyak siswa yang gemar Penjas = 104 orang."
+    "pembahasan": "Jumlah sudut seluruh sektor adalah $360°$. Sudut Penjas = $360°-(30°+54°+48°+72°)=156°$, sehingga pernyataan 1 salah.\n\nBagian Penjas = $\\frac{156}{360}=\\frac{13}{30}$, jadi pernyataan 2 benar. Banyak siswa yang gemar Penjas = $\\frac{156}{360}\\times240=104$ orang, jadi pernyataan 3 benar. Tepat dua pernyataan benar."
   },
   {
     "no": 15,
@@ -315,7 +388,7 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     "no": 16,
-    "soal": "Diagram garis menunjukkan penyusutan harga mobil setelah dipakai dalam kurun waktu 5 tahun.\n[DIAGRAM]\nBesarnya penyusutan antara tahun 2015 dan 2016 adalah ...",
+    "soal": "Diagram garis menunjukkan harga sebuah mobil dari tahun 2015 sampai 2019 dalam juta rupiah.\n[DIAGRAM]\nPilih semua pernyataan yang benar.",
     "options": [
       "A. Rp 2.500.000,00",
       "B. Rp 5.000.000,00",
@@ -326,7 +399,7 @@ const latihanDasar: LatihanSoal[] = [
     "pernyataan": [
       "Penyusutan harga antara tahun 2015 dan 2016 adalah Rp7.500.000,00.",
       "Harga mobil berkurang dari Rp110.000.000,00 menjadi Rp102.500.000,00.",
-      "Persentase penyusutan terhadap harga tahun 2015 adalah 7,5%.",
+      "Persentase penyusutan terhadap harga tahun 2015 adalah sekitar 6,8%.",
       "Selisih harga tahun 2015 dan 2016 adalah Rp7.500.000,00."
     ],
     "jawabanPGK": [
@@ -335,7 +408,7 @@ const latihanDasar: LatihanSoal[] = [
       3
     ],
     "jawaban": "D",
-    "pembahasan": "Penyusutan dalam satu tahun = harga tahun ini − harga tahun berikutnya. Baca nilai dari diagram garis.\n\nHarga 2015 = Rp 110.000.000\nHarga 2016 = Rp 102.500.000\nPenyusutan = 110.000.000 − 102.500.000 = Rp 7.500.000\n\nBaca diagram garis dengan teliti. Nilai di sumbu-y harus dibaca dengan tepat sesuai skala.\n\nPenyusutan harga mobil dari 2015 ke 2016 = Rp 7.500.000."
+    "pembahasan": "Dari diagram, harga pada 2015 adalah Rp110.000.000 dan pada 2016 Rp102.500.000.\n\nPenyusutan = $110-102{,}5=7{,}5$ juta rupiah. Persentasenya terhadap harga 2015 = $\\frac{7{,}5}{110}\\times100\\%\\approx6{,}8\\%$.\n\nJadi pernyataan 1, 2, dan 4 benar; pernyataan 3 salah."
   },
   {
     "no": 17,
@@ -401,7 +474,7 @@ const latihanDasar: LatihanSoal[] = [
     "soal": "Data pengunjung pameran buku selama 6 hari disajikan dalam grafik garis berikut.\n[DIAGRAM]\nPilihlah semua jawaban yang benar.",
     "pernyataan": [
       "Kenaikan pengunjung tertinggi terjadi pada hari ke-2 ke hari ke-3.",
-      "Penurunan pengunjung hanya terjadi pada hari ke-4.",
+      "Penurunan pengunjung hanya terjadi dari hari ke-3 ke hari ke-4.",
       "Pengunjung paling sedikit terjadi pada hari pertama.",
       "Total seluruh pengunjung pameran selama 6 hari adalah 1.150 orang."
     ],
@@ -410,7 +483,7 @@ const latihanDasar: LatihanSoal[] = [
       2,
       3
     ],
-    "pembahasan": "Jawaban Akhir: Penurunan pengunjung hanya terjadi pada hari ke-4 (Benar); pengunjung paling sedikit terjadi pada hari pertama (Benar); total seluruh pengunjung selama 6 hari adalah 1.150 orang (Benar).\n\nStep by Step Penyelesaian:\n1. Hitung lonjakan harian: H1–H2 naik 100; H2–H3 naik 100; H3–H4 turun 50; H4–H5 naik 30; H5–H6 naik 40.\n2. Kenaikan tertinggi di H1–H2 dan H2–H3 bernilai sama (100 orang), sehingga pernyataan pertama tidak tepat.\n3. Penurunan grafik hanya tampak dari H3 ke H4 → Benar.\n4. Nilai terendah di H1 (50 orang) → Benar.\n5. Total = $50 + 150 + 250 + 200 + 230 + 270 = 1.150\\text{ orang}$ → Benar."
+    "pembahasan": "Pernyataan 1 salah karena kenaikan terbesar terjadi pada H1–H2 dan H2–H3, masing-masing 100 orang. Pernyataan 2 benar: satu-satunya penurunan terjadi dari H3 ke H4. Pengunjung paling sedikit pada H1, yaitu 50 orang, sehingga pernyataan 3 benar.\n\nTotal pengunjung = $50+150+250+200+230+270=1.150$ orang. Pernyataan 4 benar."
   },
   {
     "no": 22,
@@ -447,52 +520,63 @@ const latihanDasar: LatihanSoal[] = [
     "no": 24,
     "soal": "Hasil pengukuran tinggi tanaman disajikan pada tabel frekuensi berikut.\n[DIAGRAM]\nJumlah kuartil atas dan kuartil bawah dari data tersebut adalah ....",
     "options": [
-      "A. 23",
+      "A. 24",
       "B. 25",
-      "C. 26",
+      "C. 25,75",
       "D. 27"
     ],
-    "jawaban": "B",
-    "pembahasan": "Jawaban Akhir: B. 25\n\nKonsep & Trik: Tentukan letak posisi data $Q_1$ pada data ke-$\\frac{N+1}{4}$ dan $Q_3$ pada data ke-$\\frac{3(N+1)}{4}$.\n\nStep by Step:\nTotal data $N = 3 + 6 + 10 + 11 + 8 + 2 = 40$.\nPosisi $Q_1 = \\frac{1}{4}(40 + 1) = 10{,}25$ → bernilai 12.\nPosisi $Q_3 = \\frac{3}{4}(40 + 1) = 30{,}75$ → bernilai 13.\nJumlah $Q_1 + Q_3 = 12 + 13 = 25$.",
+    "jawaban": "C",
+    "pembahasan": "Jumlah data $N=3+6+10+11+8+2=40$. Gunakan posisi kuartil $Q_1=\\frac{N+1}{4}=10{,}25$ dan $Q_3=\\frac{3(N+1)}{4}=30{,}75$, dengan interpolasi di antara dua data yang mengapit posisi tersebut.\n\nDari tabel, data ke-10 dan ke-11 bernilai 12, sehingga $Q_1=12$. Data ke-30 bernilai 13 dan data ke-31 bernilai 14, sehingga $Q_3=13+0{,}75(14-13)=13{,}75$.\nJadi, $Q_1+Q_3=12+13{,}75=25{,}75$.",
     "type": "pg"
   },
   {
     "no": 25,
-    "type": "pgkbs",
-    "soal": "Tabel nilai ujian seleksi pegawai disajikan dalam tabel frekuensi berikut.\n[DIAGRAM]\nTentukan status Benar / Salah untuk setiap pernyataan.",
+    "type": "pgk",
+    "soal": "Data tunggal berikut terdiri atas 13 angka yang telah diurutkan: 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16. Dengan kuartil bawah dan kuartil atas ditentukan sebagai median dari masing-masing separuh data (tanpa menyertakan median keseluruhan), pilih semua pernyataan yang benar.",
     "pernyataan": [
-      "Kuartil atas nilai tes pegawai adalah 800.",
-      "Simpangan kuartil nilai tes pegawai adalah 50.",
-      "Median dari nilai tes pegawai adalah 750."
+      "Kuartil bawah $Q_1$ adalah 5,5.",
+      "Median $Q_2$ adalah 9.",
+      "Kuartil atas $Q_3$ adalah 13.",
+      "Jangkauan antarkuartil $Q_3-Q_1$ adalah 8."
     ],
-    "jawabanBS": [
-      "B",
-      "B",
-      "B"
+    "jawabanPGK": [
+      0,
+      1
     ],
-    "pembahasan": "Jawaban Akhir: Kuartil atas 800 (Benar); simpangan kuartil 50 (Benar); median 750 (Benar).\n\nStep by Step:\nTotal frekuensi $N = 3 + 6 + 7 + 8 + 4 + 2 = 30$.\nMedian ($Q_2$): rata-rata data ke-15 dan ke-16, keduanya bernilai 750.\nKuartil bawah ($Q_1$) = data ke-8 = 700. Kuartil atas ($Q_3$) = data ke-23 = 800.\nSimpangan kuartil: $\\frac{Q_3 - Q_1}{2} = \\frac{800 - 700}{2} = 50$."
+    "pembahasan": "Karena ada 13 data, median keseluruhan adalah data ke-7, yaitu $Q_2=9$. Tanpa memasukkan median ke dalam kedua separuh data:\n\nSeparuh bawah: 2, 4, 5, 6, 7, 8. Maka $Q_1=\\frac{5+6}{2}=5{,}5$.\nSeparuh atas: 10, 11, 12, 13, 14, 16. Maka $Q_3=\\frac{12+13}{2}=12{,}5$, bukan 13.\n\nJangkauan antarkuartil = $Q_3-Q_1=12{,}5-5{,}5=7$, bukan 8. Jadi pernyataan 1 dan 2 benar."
   }
 ];
 
-const gambarMap = {
-  1: renderTkaStatistikaVisual(4),
-  2: renderTkaStatistikaVisual(41),
-  4: renderTkaStatistikaVisual(51),
-  5: renderTkaStatistikaVisual(60),
+const urutanNomorSoalSumber = [3, 1, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
+const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
+  const soal = soalBerdasarkanNomor.get(nomorSumber);
+  if (!soal) throw new Error(`Soal statistika asal nomor ${nomorSumber} tidak ditemukan.`);
+  return { ...soal, no: index + 1 };
+});
+
+const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
+  1: renderTkaStatistikaVisual(1),
+  5: renderTkaStatistikaVisual(5),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
-  13: renderTkaStatistikaVisual(15),
-  14: renderTkaStatistikaVisual(9),
-  15: renderTkaStatistikaVisual(10),
-  16: renderTkaStatistikaVisual(11),
-  17: renderTkaStatistikaVisual(19),
-  18: renderTkaStatistikaVisual(20),
-  20: renderTkaStatistikaVisual(22),
-  21: renderTkaStatistikaVisual(23),
-  22: renderTkaStatistikaVisual(24),
-  23: renderTkaStatistikaVisual(25),
-  24: renderTkaStatistikaVisual(26),
-  25: renderTkaStatistikaVisual(27),
+  13: renderTkaStatistikaVisual(13),
+  14: renderTkaStatistikaVisual(14),
+  15: renderTkaStatistikaVisual(15),
+  16: renderTkaStatistikaVisual(16),
+  17: renderTkaStatistikaVisual(17),
+  18: renderTkaStatistikaVisual(18),
+  20: renderTkaStatistikaVisual(20),
+  21: renderTkaStatistikaVisual(21),
+  22: renderTkaStatistikaVisual(22),
+  23: renderTkaStatistikaVisual(23),
+  24: renderTkaStatistikaVisual(24),
 };
+const gambarMap = Object.fromEntries(
+  urutanNomorSoalSumber.flatMap((nomorSumber, index) => {
+    const visual = visualBerdasarkanNomorSumber[nomorSumber];
+    return visual === undefined ? [] : [[index + 1, visual]];
+  }),
+) as Record<number, React.ReactNode>;
 
 const StatistikaPage = () => (
   <TKAPemantapanLayout
@@ -502,7 +586,7 @@ const StatistikaPage = () => (
     soalSvgMap={statistikaContohSvgMap}
     latihanDasar={latihanDasar}
     gambarMap={gambarMap}
-    imageScale="half"
+    imageScale="default"
     showImageSourceLinks={false}
   />
 );

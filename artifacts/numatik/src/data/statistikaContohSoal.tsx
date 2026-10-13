@@ -262,11 +262,11 @@ export const statistikaContohSoal: LatihanSoal[] = [
     soalSvg: "pengunjungMuseum",
     pernyataan: [
       "Jumlah pengunjung museum pada hari Jumat adalah 1.500 orang.",
-      "Penurunan pengunjung dari hari Senin ke Selasa lebih sedikit dibanding kenaikan pengunjung dari hari Jumat ke Sabtu.",
+      "Penurunan pengunjung dari hari Senin ke Selasa lebih sedikit dibanding kenaikan pengunjung dari hari Sabtu ke Minggu.",
       "Persentase pengunjung hari Jumat adalah 30% dari total mingguan.",
     ],
     jawabanBS: ["B", "B", "B"],
-    pembahasan: "Jawaban Akhir:\n• Pernyataan 1: Benar\n• Pernyataan 2: Benar\n• Pernyataan 3: Benar\n\nKonsep dan Trik:\n• $\\text{Total Data} = \\frac{\\text{Nilai Diketahui}}{\\text{Persentase Diketahui}}$.\n• Setelah total keseluruhan diperoleh, hitung nilai data yang hilang dengan pengurangan sederhana.\n\nStep by Step Penyelesaian:\n1. Mencari Total Pengunjung Seminggu:\n$$\\text{Total} = \\frac{550}{11\\%} = \\frac{550}{0{,}11} = 5.000 \\text{ orang}$$\n2. Mencari Pengunjung Hari Jumat:\n$$\\text{Jumlah data diketahui} = 300 + 250 + 400 + 550 + 800 + 1.200 = 3.500 \\text{ orang}$$\n$$\\text{Hari Jumat} = 5.000 - 3.500 = 1.500 \\text{ orang}$$\n3. Evaluasi Pernyataan:\n Pernyataan 1: Benar (1.500 orang).\n Pernyataan 2: Penurunan Senin–Selasa = $300 - 250 = 50$. Kenaikan Jumat–Sabtu = $800 - 1.500$ (turun) atau dari Sabtu ke Minggu $1200 - 800 = 400$. Penurunan $50 < 700$. Pernyataan Benar.\n Pernyataan 3: $\\text{Persentase Jumat} = \\frac{1.500}{5.000} \\times 100\\% = 30\\%$. Pernyataan Benar.",
+    pembahasan: "Jawaban Akhir:\n• Pernyataan 1: Benar\n• Pernyataan 2: Benar\n• Pernyataan 3: Benar\n\nKonsep dan Trik:\n• $\\text{Total Data} = \\frac{\\text{Nilai Diketahui}}{\\text{Persentase Diketahui}}$.\n• Setelah total keseluruhan diperoleh, hitung nilai data yang hilang dengan pengurangan sederhana.\n\nStep by Step Penyelesaian:\n1. Mencari Total Pengunjung Seminggu:\n$$\\text{Total} = \\frac{550}{11\\%} = \\frac{550}{0{,}11} = 5.000 \\text{ orang}$$\n2. Mencari Pengunjung Hari Jumat:\n$$\\text{Jumlah data diketahui} = 300 + 250 + 400 + 550 + 800 + 1.200 = 3.500 \\text{ orang}$$\n$$\\text{Hari Jumat} = 5.000 - 3.500 = 1.500 \\text{ orang}$$\n3. Evaluasi Pernyataan:\n Pernyataan 1: Benar (1.500 orang).\n Pernyataan 2: Penurunan Senin–Selasa = $300 - 250 = 50$. Kenaikan Sabtu–Minggu = $1.200 - 800 = 400$. Karena $50 < 400$, pernyataan 2 benar.\n Pernyataan 3: $\\text{Persentase Jumat} = \\frac{1.500}{5.000} \\times 100\\% = 30\\%$. Pernyataan Benar.",
   },
   {
     no: 4,

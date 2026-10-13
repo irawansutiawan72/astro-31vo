@@ -157,8 +157,15 @@ const renderWithLatex = (text: string, imageScale: ImageScale = "default") => {
     );
   }
 
-  const parts = text.split(/(\$[^$]+\$)/g);
+  const parts = text.split(/(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$)/g);
   return parts.map((part, index) => {
+    if (part.startsWith('$$') && part.endsWith('$$')) {
+      return (
+        <span key={index} className="my-1 block max-w-full overflow-x-auto">
+          <InlineMath math={part.slice(2, -2)} />
+        </span>
+      );
+    }
     if (part.startsWith('$') && part.endsWith('$')) {
       return <InlineMath key={index} math={part.slice(1, -1)} />;
     }
