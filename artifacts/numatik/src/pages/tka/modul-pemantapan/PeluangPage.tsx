@@ -3,7 +3,9 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import RuangSampelMateri from "@/components/tka/RuangSampelMateri";
 import diagramKelereng from "@assets/image_1787583206453.png";
 import papanSpinner from "@assets/image_1791857657838.png";
-import soalBolaJemima from "@assets/WhatsApp_Image_2026-10-13_at_09.04.33_1791857837078.jpeg";
+import gambarSakaKirana from "@assets/image_1791860500613.png";
+import gambarMesinTetas from "@assets/image_1791860506939.png";
+import gambarSoalKode from "@assets/image_1791860512596.png";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Ruang Sampel", renderContent: () => <RuangSampelMateri /> },
@@ -150,7 +152,12 @@ const soalTambahan: LatihanSoal[] = [
   {
     no: 16,
     type: "pg",
-    soal: "Terdapat $20$ kotak misteri: $8$ kotak berisi figur Saka dan $12$ kotak berisi figur Kirana. Riana mengambil $3$ kotak secara acak dan mendapatkan $1$ Saka serta $2$ Kirana. Setelah itu, Santi mengambil satu kotak secara acak dari kotak yang tersisa. Berapakah peluang Santi mendapatkan figur Saka?",
+    soal: "Pada gambar berikut ditunjukkan kotak misteri berisi figur Saka dan Kirana. Riana mengambil $3$ kotak secara acak dan mendapatkan $1$ Saka serta $2$ Kirana. Setelah itu, Santi mengambil satu kotak secara acak dari kotak yang tersisa. Berapakah peluang Santi mendapatkan figur Saka?",
+    gambar: (
+      <div className="my-2 flex justify-center">
+        <img src={gambarSakaKirana} alt="Kotak misteri berisi 8 figur Saka dan 12 figur Kirana" className="max-h-64 w-auto max-w-full rounded-xl border border-white/15 bg-white object-contain" />
+      </div>
+    ),
     options: ["A. $\\frac{7}{20}$", "B. $\\frac{8}{20}$", "C. $\\frac{8}{17}$", "D. $\\frac{7}{17}$"],
     jawaban: "D",
     pembahasan: "Jawaban: D\n\nSetelah Riana mengambil satu Saka dan dua Kirana, tersisa $8-1=7$ kotak Saka dan $12-2=10$ kotak Kirana, atau $17$ kotak seluruhnya.\n\n$P(\\text{Saka})=\\frac{7}{17}$.",
@@ -159,30 +166,33 @@ const soalTambahan: LatihanSoal[] = [
     no: 17,
     type: "pg",
     gambar: (
-      <div className="my-2 overflow-x-auto">
-        <table className="mx-auto min-w-[320px] border-collapse text-center text-xs text-white/85">
-          <thead>
-            <tr className="bg-cyan-500/20 text-cyan-100">
-              <th className="border border-cyan-400/30 px-3 py-2">Usia telur</th>
-              <th className="border border-cyan-400/30 px-3 py-2">Banyak telur</th>
-              <th className="border border-cyan-400/30 px-3 py-2">Sisa hari tetas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["2 hari", "20", "16 hari"],
-              ["4 hari", "35", "14 hari"],
-              ["6 hari", "30", "12 hari"],
-              ["8 hari", "15", "10 hari"],
-            ].map(([usia, banyak, sisa]) => (
-              <tr key={usia} className="bg-white/5">
-                <td className="border border-cyan-400/30 px-3 py-2">{usia}</td>
-                <td className="border border-cyan-400/30 px-3 py-2">{banyak}</td>
-                <td className="border border-cyan-400/30 px-3 py-2">{sisa}</td>
+      <div className="my-2 space-y-3">
+        <img src={gambarMesinTetas} alt="Mesin tetas telur dengan beberapa telur puyuh" className="mx-auto max-h-64 w-auto max-w-full rounded-xl border border-white/15 object-contain" />
+        <div className="overflow-x-auto">
+          <table className="mx-auto min-w-[320px] border-collapse text-center text-xs text-white/85">
+            <thead>
+              <tr className="bg-cyan-500/20 text-cyan-100">
+                <th className="border border-cyan-400/30 px-3 py-2">Usia telur</th>
+                <th className="border border-cyan-400/30 px-3 py-2">Banyak telur</th>
+                <th className="border border-cyan-400/30 px-3 py-2">Sisa hari tetas</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                ["2 hari", "20", "16 hari"],
+                ["4 hari", "35", "14 hari"],
+                ["6 hari", "30", "12 hari"],
+                ["8 hari", "15", "10 hari"],
+              ].map(([usia, banyak, sisa]) => (
+                <tr key={usia} className="bg-white/5">
+                  <td className="border border-cyan-400/30 px-3 py-2">{usia}</td>
+                  <td className="border border-cyan-400/30 px-3 py-2">{banyak}</td>
+                  <td className="border border-cyan-400/30 px-3 py-2">{sisa}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     ),
     soal: "Sebuah mesin tetas digunakan untuk menetaskan telur selama $18$ hari. Telur puyuh yang diamati memiliki usia dan sisa waktu hingga menetas seperti pada tabel berikut. Jika satu telur dipilih secara acak, berapakah peluang telur tersebut menetas dalam $10$ hari ke depan?",
@@ -193,7 +203,12 @@ const soalTambahan: LatihanSoal[] = [
   {
     no: 18,
     type: "pgk",
-    soal: "Seorang guru menyiapkan kertas soal ujian berkode A, B, atau C. Mula-mula, jumlah kertas berkode A lebih sedikit daripada jumlah kertas berkode B. Guru mengambil $3$ kertas yang berkode sama. Setelah itu, tersisa $28$ kertas seluruhnya dan jumlah kertas berkode B lebih banyak daripada jumlah kertas berkode C. Jika satu kertas diambil secara acak dari sisa tersebut, peluang mendapat kode C adalah $\\frac{2}{7}$. Berapakah kemungkinan jumlah kertas berkode B mula-mula? Pilih semua jawaban benar.",
+    soal: "Perhatikan gambar berikut! Seorang guru menyiapkan kertas soal ujian berkode A, B, atau C. Mula-mula, jumlah kertas berkode A lebih sedikit daripada jumlah kertas berkode B. Guru mengambil $3$ kertas yang berkode sama. Setelah itu, tersisa $28$ kertas seluruhnya dan jumlah kertas berkode B lebih banyak daripada jumlah kertas berkode C. Jika satu kertas diambil secara acak dari sisa tersebut, peluang mendapat kode C adalah $\\frac{2}{7}$. Berapakah kemungkinan jumlah kertas berkode B mula-mula? Pilih semua jawaban benar.",
+    gambar: (
+      <div className="my-2 flex justify-center">
+        <img src={gambarSoalKode} alt="Ilustrasi guru dan papan bertuliskan kode soal A, B, atau C" className="max-h-64 w-auto max-w-full rounded-xl border border-white/15 bg-white object-contain" />
+      </div>
+    ),
     pernyataan: [
       "Jumlah kertas berkode B mula-mula adalah 10 lembar.",
       "Jumlah kertas berkode B mula-mula adalah 11 lembar.",
@@ -208,15 +223,6 @@ const soalTambahan: LatihanSoal[] = [
     no: 19,
     type: "pgk",
     soal: "Terdapat 12 bola merah, 8 bola kuning, 4 bola hijau, dan 16 bola biru. Jemima mengambil 2 bola secara acak. Setiap pengambilan bola berikutnya, bola sebelumnya tidak dikembalikan. Manakah pernyataan berikut yang benar mengenai peluang pengambilan bola Jemima? Pilihlah semua jawaban yang benar. Jawaban benar lebih dari satu.",
-    gambar: (
-      <div className="my-2 flex justify-center">
-        <img
-          src={soalBolaJemima}
-          alt="Soal peluang pengambilan dua bola Jemima, disalin dari gambar yang diunggah"
-          className="max-h-[560px] w-auto max-w-full rounded-xl border border-white/15 bg-white object-contain"
-        />
-      </div>
-    ),
     pernyataan: [
       "Peluang Jemima mengambil satu bola merah, kemudian satu bola biru adalah $\\frac{8}{65}$.",
       "Peluang Jemima mengambil satu bola merah, kemudian satu bola hijau adalah $\\frac{4}{65}$.",
