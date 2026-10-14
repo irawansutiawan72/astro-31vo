@@ -481,7 +481,9 @@ const PolaGeometriPage = ({ audience = "kelas8" }: PolaGeometriPageProps) => {
   ];
 
   return (
-    <div className="pola-geometri-materi-route relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
+    <div className={`pola-geometri-materi-route relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto ${
+      isSmaTeacherPage ? "animation-submaterial-route sma-barisan-deret-route" : ""
+    }`}>
       <Starfield />
        <PageNavigation prevPath={isSmaTeacherPage ? backPath : undefined} />
       <div className="relative z-10 max-w-3xl w-full px-4 pt-20 pb-12">

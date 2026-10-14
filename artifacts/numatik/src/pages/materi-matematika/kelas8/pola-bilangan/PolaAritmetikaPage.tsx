@@ -528,7 +528,9 @@ const PolaAritmetikaPage = ({ audience = "kelas8" }: PolaAritmetikaPageProps) =>
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto">
+    <div className={`relative min-h-screen flex flex-col items-center gradient-space overflow-x-hidden overflow-y-auto ${
+      isSmaTeacherPage ? "animation-submaterial-route sma-barisan-deret-route" : ""
+    }`}>
       <Starfield />
        <PageNavigation
          prevPath={

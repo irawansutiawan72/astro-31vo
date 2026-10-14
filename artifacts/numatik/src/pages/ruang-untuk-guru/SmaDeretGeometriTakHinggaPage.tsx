@@ -55,7 +55,7 @@ const outline = [
 const SmaDeretGeometriTakHinggaPage = () => {
   const map = useMemo(() => outline, []);
   return (
-    <div className="series-lesson relative min-h-[100dvh] overflow-hidden bg-[#090f20] text-slate-100">
+    <div className="series-lesson animation-submaterial-route sma-barisan-deret-route relative min-h-[100dvh] overflow-hidden bg-[#090f20] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes series-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }

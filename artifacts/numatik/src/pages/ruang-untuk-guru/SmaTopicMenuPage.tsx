@@ -46,6 +46,13 @@ const SmaTopicMenuPage = () => {
   const subtitle = selectedTopic
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
     : config.subtitle;
+  const lightThemeRouteClass = mode === "buku-animasi"
+    ? selectedTopic?.slug === "eksponen-dan-logaritma"
+      ? "animation-submaterial-route sma-exponent-logarithm-route"
+      : selectedTopic?.slug === "barisan-dan-deret"
+        ? "animation-submaterial-route sma-barisan-deret-route"
+        : ""
+    : "";
 
   const handleClick = (path: string) => {
     playPopSound();
@@ -53,9 +60,7 @@ const SmaTopicMenuPage = () => {
   };
 
   return (
-    <div className={`relative min-h-screen flex flex-col items-center overflow-hidden gradient-space ${
-      selectedTopic?.slug === "eksponen-dan-logaritma" ? "animation-submaterial-route sma-exponent-logarithm-route" : ""
-    }`}>
+    <div className={`relative min-h-screen flex flex-col items-center overflow-hidden gradient-space ${lightThemeRouteClass}`}>
       <Starfield />
       <PageNavigation prevPath={selectedTopic ? `${BASE_PATH}/${mode}` : BASE_PATH} />
       <main className="relative z-10 max-w-3xl w-full px-4 py-10">
