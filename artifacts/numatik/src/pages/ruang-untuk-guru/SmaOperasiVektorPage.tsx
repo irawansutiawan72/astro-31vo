@@ -123,7 +123,7 @@ const SmaOperasiVektorPage = () => {
   );
 
   return (
-    <div className="animation-submaterial-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+    <div className="animation-submaterial-route sma-vektor-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes vector-entrance { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -152,7 +152,7 @@ const SmaOperasiVektorPage = () => {
               <div className="mt-6 flex items-center gap-2 text-sm text-amber-100"><Sparkles className="h-4 w-4" aria-hidden="true" /><span>Tujuan hari ini: mengubah operasi vektor menjadi gerak yang terlihat.</span></div>
             </div>
             <div className="vector-float relative mx-auto w-full max-w-md" aria-hidden="true">
-              <svg viewBox="0 0 400 240" className="w-full">
+              <svg viewBox="0 0 400 240" className="sma-vector-hero-diagram w-full">
                 <defs><marker id="hero-tip-cyan" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#67e8f9" /></marker><marker id="hero-tip-gold" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#fbbf24" /></marker><marker id="hero-tip-lilac" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#c4b5fd" /></marker></defs>
                 <circle cx="198" cy="122" r="88" fill="none" stroke="#a5f3fc" strokeOpacity=".12" strokeDasharray="3 8" />
                 <path d="M70 174L192 110" stroke="#67e8f9" strokeWidth="6" strokeLinecap="round" markerEnd="url(#hero-tip-cyan)" />

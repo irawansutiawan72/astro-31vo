@@ -239,7 +239,7 @@ const navItems = [
 
 const SmaVektorPadaSistemKoordinatKartesiusPage = () => {
   const outline = useMemo(() => navItems, []);
-  return <div className="relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+  return <div className="animation-submaterial-route sma-vektor-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
     <Starfield />
     <style>{`
       @keyframes lesson-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

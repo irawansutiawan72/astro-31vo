@@ -112,7 +112,7 @@ const VectorPage = () => {
   };
 
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+    <div className="animation-submaterial-route sma-vektor-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes vector-drift { 0%,100% { transform: translateY(0); opacity: .82; } 50% { transform: translateY(-7px); opacity: 1; } }

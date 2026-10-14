@@ -165,7 +165,7 @@ const ProjectionLab = () => {
 };
 
 const SmaProyeksiVektorPage = () => (
-  <div className="relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+  <div className="animation-submaterial-route sma-vektor-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
     <Starfield />
     <style>{`
       @keyframes projection-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

@@ -46,13 +46,15 @@ const SmaTopicMenuPage = () => {
   const subtitle = selectedTopic
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
     : config.subtitle;
-  const lightThemeRouteClass = mode === "buku-animasi"
-    ? selectedTopic?.slug === "eksponen-dan-logaritma"
-      ? "animation-submaterial-route sma-exponent-logarithm-route"
-      : selectedTopic?.slug === "barisan-dan-deret"
-        ? "animation-submaterial-route sma-barisan-deret-route"
-        : ""
-    : "";
+  const lightThemeClassByTopic: Record<string, string> = {
+    "eksponen-dan-logaritma": "animation-submaterial-route sma-exponent-logarithm-route",
+    "barisan-dan-deret": "animation-submaterial-route sma-barisan-deret-route",
+    "vektor-dan-operasinya": "animation-submaterial-route sma-vektor-route",
+  };
+  const lightThemeRouteClass =
+    mode === "buku-animasi" && selectedTopic
+      ? lightThemeClassByTopic[selectedTopic.slug] ?? ""
+      : "";
 
   const handleClick = (path: string) => {
     playPopSound();
