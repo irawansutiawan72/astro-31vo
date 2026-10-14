@@ -153,7 +153,7 @@ const SmaBentukAkarPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden gradient-space text-white">
+    <div className="animation-submaterial-route sma-exponent-logarithm-route relative min-h-screen overflow-x-hidden gradient-space text-white">
       <Starfield />
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma" />
       <main className="relative z-10 mx-auto w-full max-w-4xl px-4 pb-20 pt-12">

@@ -254,7 +254,7 @@ const SmaFungsiEksponenPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden gradient-space text-white">
+    <div className="animation-submaterial-route sma-exponent-logarithm-route relative min-h-screen overflow-hidden gradient-space text-white">
       <Starfield />
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma" />
 

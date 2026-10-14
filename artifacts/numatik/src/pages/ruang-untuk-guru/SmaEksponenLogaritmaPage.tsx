@@ -211,7 +211,7 @@ const SmaEksponenLogaritmaPage = () => {
   const open = (id: string) => expanded.includes(id);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#070b23] text-white">
+    <div className="animation-submaterial-route sma-exponent-logarithm-route relative min-h-screen overflow-x-hidden bg-[#070b23] text-white">
       <Starfield />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[580px] bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.26),_transparent_65%)]" />
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/eksponen-dan-logaritma" />
