@@ -18,45 +18,32 @@ const materiSections = tkaTransformasiMateri.map((section) => {
 });
 
 const DilatasiSegitigaGrid = () => {
-  const xMin = -8;
-  const xMax = 14;
-  const yMin = -4;
-  const yMax = 16;
-  const plot = { x: 44, y: 32, width: 440, height: 400 };
-  const unit = 20;
+  const xMin = -4;
+  const xMax = 6;
+  const yMin = -2;
+  const yMax = 7;
+  const plot = { x: 74, y: 52, width: 400, height: 360 };
+  const unit = 40;
   const toSvg = (x: number, y: number) => ({
     x: plot.x + (x - xMin) * unit,
     y: plot.y + (yMax - y) * unit,
   });
   const xTicks = Array.from({ length: xMax - xMin + 1 }, (_, i) => xMin + i);
   const yTicks = Array.from({ length: yMax - yMin + 1 }, (_, i) => yMin + i);
-  const triangles = [
-    {
-      name: "Segitiga asal ABC",
-      color: "#2563eb",
-      fill: "rgba(37,99,235,0.12)",
-      points: [
-        { name: "A", x: -2, y: 1, dx: -8, dy: -10, anchor: "end" as const },
-        { name: "B", x: 4, y: 1, dx: 8, dy: 16, anchor: "start" as const },
-        { name: "C", x: 1, y: 5, dx: 8, dy: -8, anchor: "start" as const },
-      ],
-    },
-    {
-      name: "Bayangan A′B′C′ (k = 3)",
-      color: "#ea580c",
-      fill: "rgba(234,88,12,0.12)",
-      points: [
-        { name: "A′", x: -6, y: 3, dx: -8, dy: -10, anchor: "end" as const },
-        { name: "B′", x: 12, y: 3, dx: 8, dy: -8, anchor: "start" as const },
-        { name: "C′", x: 3, y: 15, dx: 8, dy: -8, anchor: "start" as const },
-      ],
-    },
-  ];
+  const triangle = {
+    color: "#2563eb",
+    fill: "rgba(37,99,235,0.12)",
+    points: [
+      { name: "A", x: -2, y: 1, dx: -8, dy: -10, anchor: "end" as const },
+      { name: "B", x: 4, y: 1, dx: 8, dy: 16, anchor: "start" as const },
+      { name: "C", x: 1, y: 5, dx: 8, dy: -8, anchor: "start" as const },
+    ],
+  };
 
   return (
     <figure className="mx-auto my-3 w-full max-w-xl overflow-hidden rounded-xl border border-slate-200 bg-white p-2">
       <figcaption className="pb-1 text-center text-xs font-semibold text-slate-700">
-        Grid segitiga ABC dan bayangan dilatasi dengan pusat O(0,0)
+        Grid koordinat segitiga ABC sebelum dilatasi
       </figcaption>
       <svg
         viewBox="0 0 530 490"
@@ -64,10 +51,9 @@ const DilatasiSegitigaGrid = () => {
         aria-labelledby="dilatasi-segitiga-title dilatasi-segitiga-desc"
         className="block h-auto w-full"
       >
-        <title id="dilatasi-segitiga-title">Grid dilatasi segitiga ABC dengan faktor skala 3</title>
+        <title id="dilatasi-segitiga-title">Grid koordinat segitiga ABC</title>
         <desc id="dilatasi-segitiga-desc">
-          Bidang koordinat menampilkan segitiga asal A(-2,1), B(4,1), C(1,5) dan bayangan
-          A prima(-6,3), B prima(12,3), C prima(3,15).
+          Bidang koordinat menampilkan segitiga ABC dengan titik A(-2,1), B(4,1), dan C(1,5).
         </desc>
         <rect x={plot.x} y={plot.y} width={plot.width} height={plot.height} fill="#fff" />
         {xTicks.map((x) => {
@@ -120,45 +106,39 @@ const DilatasiSegitigaGrid = () => {
         <line x1={toSvg(0, 0).x} y1={plot.y} x2={toSvg(0, 0).x} y2={plot.y + plot.height} stroke="#334155" strokeWidth="1.5" />
         <text x={plot.x + plot.width - 4} y={toSvg(0, 0).y - 7} textAnchor="end" fontSize="11" fontWeight="bold" fill="#334155">x</text>
         <text x={toSvg(0, 0).x + 7} y={plot.y + 11} fontSize="11" fontWeight="bold" fill="#334155">y</text>
-        {triangles.map((triangle) => {
-          const vertices = triangle.points.map((point) => toSvg(point.x, point.y));
+        <polygon
+          points={triangle.points.map((point) => {
+            const position = toSvg(point.x, point.y);
+            return `${position.x},${position.y}`;
+          }).join(" ")}
+          fill={triangle.fill}
+          stroke={triangle.color}
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        {triangle.points.map((point) => {
+          const position = toSvg(point.x, point.y);
           return (
-            <g key={triangle.name}>
-              <polygon
-                points={vertices.map((point) => `${point.x},${point.y}`).join(" ")}
-                fill={triangle.fill}
-                stroke={triangle.color}
-                strokeWidth="2.5"
-                strokeLinejoin="round"
-              />
-              {triangle.points.map((point) => {
-                const position = toSvg(point.x, point.y);
-                return (
-                  <g key={`${triangle.name}-${point.name}`}>
-                    <circle cx={position.x} cy={position.y} r="4" fill={triangle.color} stroke="#fff" strokeWidth="1.5" />
-                    <text
-                      x={position.x + point.dx}
-                      y={position.y + point.dy}
-                      textAnchor={point.anchor}
-                      fontSize="12"
-                      fontWeight="bold"
-                      fill={triangle.color}
-                      stroke="#fff"
-                      strokeWidth="3"
-                      paintOrder="stroke"
-                    >
-                      {`${point.name}(${point.x},${point.y})`}
-                    </text>
-                  </g>
-                );
-              })}
+            <g key={point.name}>
+              <circle cx={position.x} cy={position.y} r="4" fill={triangle.color} stroke="#fff" strokeWidth="1.5" />
+              <text
+                x={position.x + point.dx}
+                y={position.y + point.dy}
+                textAnchor={point.anchor}
+                fontSize="12"
+                fontWeight="bold"
+                fill={triangle.color}
+                stroke="#fff"
+                strokeWidth="3"
+                paintOrder="stroke"
+              >
+                {`${point.name}(${point.x},${point.y})`}
+              </text>
             </g>
           );
         })}
-        <line x1="70" y1="476" x2="96" y2="476" stroke="#2563eb" strokeWidth="3" />
-        <text x="103" y="480" fontSize="12" fill="#334155">ABC (segitiga asal)</text>
-        <line x1="274" y1="476" x2="300" y2="476" stroke="#ea580c" strokeWidth="3" />
-        <text x="307" y="480" fontSize="12" fill="#334155">A′B′C′ (bayangan, k = 3)</text>
+        <line x1="210" y1="476" x2="236" y2="476" stroke="#2563eb" strokeWidth="3" />
+        <text x="243" y="480" fontSize="12" fill="#334155">ABC (segitiga pada soal)</text>
       </svg>
     </figure>
   );
