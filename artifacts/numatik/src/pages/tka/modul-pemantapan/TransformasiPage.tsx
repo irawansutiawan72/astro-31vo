@@ -36,7 +36,7 @@ Jawaban: D.` },
   { no: 15, soal: "Jika titik B(3, -7) dicerminkan menjadi A'(-7, 3), sumbu refleksinya adalah ...", options: ["A. Sumbu y = x", "B. Sumbu x", "C. Sumbu y = -x", "D. Sumbu y"] },
   { no: 16, soal: "Jika titik A(2, 8) dicerminkan menjadi A'(2, 12), sumbu refleksinya adalah ...", options: ["A. x = 10", "B. y = 2", "C. x = 2", "D. y = 10"] },
   { no: 17, soal: "Jika titik B(2, -2) dicerminkan menjadi A'(6, -2), sumbu refleksinya adalah ...", options: ["A. x = 4", "B. y = 4", "C. x = 5", "D. y = 5"] },
-  { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 19:
+  { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 12:
 Rotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat $O(0,0)$ menggunakan aturan $(x,y)\\mapsto(-y,x)$.
 
 Substitusikan titik $(5,-3)$:
@@ -155,14 +155,17 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
 const latihanDasar: LatihanSoal[] = latihanDasarSource
   .filter((soal) => soal.no <= 23)
   .sort((a, b) => a.no - b.no)
-  .map((soal) => {
-    const type = soal.no % 3 === 1 ? "pg" : soal.no % 3 === 2 ? "pgk" : "pgkbs";
-    const pgk = pgkVariants[soal.no];
-    const pgkbs = pgkbsVariants[soal.no];
+  .map((soal, index) => {
+    const sourceNo = soal.no;
+    const displayNo = index + 1;
+    const type = sourceNo % 3 === 1 ? "pg" : sourceNo % 3 === 2 ? "pgk" : "pgkbs";
+    const pgk = pgkVariants[sourceNo];
+    const pgkbs = pgkbsVariants[sourceNo];
 
     if (type === "pgk" && pgk) {
       return {
         ...soal,
+        no: displayNo,
         type,
         soal: pgk.soal,
         options: undefined,
@@ -176,6 +179,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarSource
     if (type === "pgkbs" && pgkbs) {
       return {
         ...soal,
+        no: displayNo,
         type,
         soal: pgkbs.soal,
         options: undefined,
@@ -188,8 +192,9 @@ const latihanDasar: LatihanSoal[] = latihanDasarSource
 
     return {
       ...soal,
+      no: displayNo,
       type: "pg" as const,
-      jawaban: kunciJawaban[soal.no - 1],
+      jawaban: kunciJawaban[sourceNo - 1],
     };
   });
 
