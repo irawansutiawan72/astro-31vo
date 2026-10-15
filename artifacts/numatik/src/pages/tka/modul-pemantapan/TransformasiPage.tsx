@@ -17,6 +17,7 @@ const materiSections = tkaTransformasiMateri.map((section) => {
   };
 });
 
+// `no` is the stable source key for answer/variant lookup; array order sets the displayed number.
 const latihanDasarSource: LatihanSoal[] = [
   { no: 1, soal: "Titik A(5, -2) ditranslasi oleh $T\\binom{-3}{1}$. Tentukan koordinat bayangan titik A tersebut!", options: ["A. A'(2, 1)", "B. A'(1, 1)", "C. A'(2, 2)", "D. A'(2, -1)"], pembahasan: `Pembahasan Soal 1:
 Translasi $T\\binom{-3}{1}$ memetakan setiap titik $(x,y)$ menjadi $(x-3,y+1)$.
@@ -28,6 +29,11 @@ Jadi, koordinat bayangan titik A adalah $A'(2,-1)$.
 Jawaban: D.` },
   { no: 2, soal: "Tentukan bayangan titik A(3, -4) jika digeser oleh $T\\binom{-3}{9}$ ...", options: ["A. A'(0, 13)", "B. A'(0, 5)", "C. A'(6, 13)", "D. A'(6, 5)"] },
   { no: 5, soal: "Tentukanlah bayangan titik D(9, 0) jika digeser oleh $T_1\\binom{7}{18}$ dan dilanjutkan oleh $T_2\\binom{6}{-15}$ ...", options: ["A. D''(9, 13)", "B. D''(22, 9)", "C. D''(22, 13)", "D. D''(22, 3)"] },
+  { no: 24, type: "pgkbs", soal: "Tentukan Benar atau Salah untuk setiap pernyataan tentang refleksi titik R.", },
+  { no: 25, type: "pg", soal: "Titik $S(-4,6)$ diputar sebesar $b^\\circ$ searah atau berlawanan arah jarum jam dengan pusat $O(0,0)$ hingga menghasilkan bayangan $S'(-6,-4)$. Nilai $b$ adalah ....", options: ["A. $-90$", "B. $90$", "C. $180$", "D. $270$"], jawaban: "B", pembahasan: "Rotasi $90^\\circ$ berlawanan arah jarum jam menggunakan aturan $(x,y)\\mapsto(-y,x)$. Untuk $S(-4,6)$ diperoleh $S'=(-6,-4)$, tepat seperti bayangan pada soal. Jadi $b=90$ dan jawabannya B." },
+  { no: 26, type: "pgk", soal: "Pilihlah semua koordinat bayangan titik sudut segitiga yang tepat setelah dilatasi.", },
+  { no: 27, type: "pgkbs", soal: "Tentukan Benar atau Salah untuk setiap pernyataan tentang ukuran bayangan segitiga setelah dilatasi.", },
+  { no: 28, type: "pg", soal: "Jika hasil translasi titik $(a,-2)$ oleh pergeseran $\\begin{pmatrix}3\\\\5\\end{pmatrix}$ menghasilkan bayangan $(4,b)$, nilai $a$ dan $b$ berturut-turut adalah ....", options: ["A. $1$ dan $3$", "B. $1$ dan $7$", "C. $-1$ dan $3$", "D. $7$ dan $3$"], jawaban: "A", pembahasan: "Translasi dengan vektor $(3,5)$ memetakan $(a,-2)$ menjadi $(a+3,-2+5)=(a+3,3)$. Samakan dengan $(4,b)$: $a+3=4$ sehingga $a=1$, dan $b=3$. Jadi jawabannya A." },
   { no: 7, soal: "Jika titik B(3, -7) digeser oleh T(a, b) sehingga bayangannya adalah titik B'(20, -3), tentukan T ...", options: ["A. T(17, 4)", "B. T(17, 10)", "C. T(3, 4)", "D. T(2, 10)"] },
   { no: 10, soal: "Tentukan bayangan titik A(3, -4) jika dicerminkan oleh garis x = 3 ...", options: ["A. A'(3, 10)", "B. A'(4, -3)", "C. A'(3, -4)", "D. A'(3, 4)"] },
   { no: 12, soal: "Tentukanlah bayangan titik C(2, 8) jika dicerminkan oleh sumbu x ...", options: ["A. C''(2, 8)", "B. C''(2, -8)", "C. C''(-2, 8)", "D. C''(-2, -8)"] },
@@ -36,7 +42,7 @@ Jawaban: D.` },
   { no: 15, soal: "Jika titik B(3, -7) dicerminkan menjadi A'(-7, 3), sumbu refleksinya adalah ...", options: ["A. Sumbu y = x", "B. Sumbu x", "C. Sumbu y = -x", "D. Sumbu y"] },
   { no: 16, soal: "Jika titik A(2, 8) dicerminkan menjadi A'(2, 12), sumbu refleksinya adalah ...", options: ["A. x = 10", "B. y = 2", "C. x = 2", "D. y = 10"] },
   { no: 17, soal: "Jika titik B(2, -2) dicerminkan menjadi A'(6, -2), sumbu refleksinya adalah ...", options: ["A. x = 4", "B. y = 4", "C. x = 5", "D. y = 5"] },
-  { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 12:
+  { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 17:
 Rotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat $O(0,0)$ menggunakan aturan $(x,y)\\mapsto(-y,x)$.
 
 Substitusikan titik $(5,-3)$:
@@ -127,9 +133,30 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
     jawabanPGK: [0, 1, 2],
     pembahasan: "Karena $(1,1)$ menjadi $(-2,-2)$, faktor skala adalah $c=-2$. Maka $Q'=(-2,-10)$ dan $R'=(-6,-6)$. Jadi (1), (2), dan (3) benar.",
   },
+  26: {
+    soal: "Cermati stimulus berikut untuk menjawab soal nomor 6 dan 7! Sebuah segitiga $ABC$ memiliki koordinat titik-titik sudut $A(-2,1)$, $B(4,1)$, dan $C(1,5)$. Segitiga tersebut didilatasi dengan pusat $O(0,0)$ dan faktor skala $3$ sehingga menghasilkan bayangan segitiga $A'B'C'$. Pilihlah semua posisi bayangan koordinat titik sudut yang tepat!",
+    pernyataan: [
+      "Koordinat titik $A'$ adalah $(-6,3)$.",
+      "Koordinat titik $B'$ adalah $(12,3)$.",
+      "Koordinat titik $C'$ adalah $(3,15)$.",
+      "Koordinat titik $C'$ adalah $(1,15)$.",
+    ],
+    jawabanPGK: [0, 1, 2],
+    pembahasan: "Dilatasi berpusat di $O(0,0)$ dengan faktor skala 3 memetakan $(x,y)$ menjadi $(3x,3y)$. Maka $A'=(3(-2),3(1))=(-6,3)$, $B'=(3(4),3(1))=(12,3)$, dan $C'=(3(1),3(5))=(3,15)$. Jadi pernyataan (1), (2), dan (3) benar.",
+  },
 };
 
 const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] }> = {
+  24: {
+    soal: "Titik $R(-6,5)$ dicerminkan terhadap garis $x=k$ sehingga diperoleh bayangan $R'(10,p)$. Tentukan Benar atau Salah untuk setiap pernyataan.",
+    pernyataan: [
+      "Nilai $k$ adalah 2.",
+      "Nilai $p$ adalah $-5$.",
+      "Hasil perkalian $k\\times p$ adalah 10.",
+    ],
+    jawabanBS: ["B", "S", "B"],
+    pembahasan: "Pada refleksi terhadap garis $x=k$, koordinat bayangan memenuhi $x'=2k-x$ dan koordinat $y$ tetap. Dari $10=2k-(-6)$ diperoleh $k=2$, sedangkan $p=5$. Jadi $k\\times p=2\\times5=10$. Urutan jawabannya Benar, Salah, Benar.",
+  },
   12: {
     soal: "Titik $C(2,8)$ dicerminkan terhadap sumbu x. Tentukan Benar atau Salah.",
     pernyataan: [
@@ -150,15 +177,23 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     jawabanBS: ["B", "B", "S"],
     pembahasan: "Refleksi terhadap garis $y=x$ memetakan $(x,y)\\mapsto(y,x)$. Maka titik $(3,-7)$ menjadi $(-7,3)$, sehingga pernyataan (1) dan (2) benar. Sebaliknya, refleksi terhadap garis $y=-x$ memakai aturan $(x,y)\\mapsto(-y,-x)$ dan menghasilkan $(7,-3)$, bukan $(-7,3)$. Jadi pernyataan (3) salah.",
   },
+  27: {
+    soal: "Berdasarkan stimulus soal nomor 6 dan 7: segitiga $ABC$ memiliki titik $A(-2,1)$, $B(4,1)$, dan $C(1,5)$, lalu didilatasi dengan pusat $O(0,0)$ dan faktor skala 3 menjadi $A'B'C'$. Tentukan Benar atau Salah untuk setiap pernyataan.",
+    pernyataan: [
+      "Panjang alas bayangan segitiga $A'B'$ menjadi 3 kali panjang alas segitiga asal $AB$.",
+      "Tinggi bayangan segitiga $A'B'C'$ adalah 3 kali tinggi segitiga asal $ABC$.",
+      "Luas bayangan segitiga $A'B'C'$ adalah 6 kali luas segitiga asal $ABC$.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Faktor skala dilatasi adalah 3, sehingga semua panjang menjadi 3 kali: $AB=6$ dan $A'B'=18$, sedangkan tinggi 4 menjadi 12. Luas berubah menurut kuadrat faktor skala, yaitu $3^2=9$ kali, bukan 6 kali. Jadi urutan jawabannya Benar, Benar, Salah.",
+  },
 };
 
 const latihanDasar: LatihanSoal[] = latihanDasarSource
-  .filter((soal) => soal.no <= 23)
-  .sort((a, b) => a.no - b.no)
   .map((soal, index) => {
     const sourceNo = soal.no;
     const displayNo = index + 1;
-    const type = sourceNo % 3 === 1 ? "pg" : sourceNo % 3 === 2 ? "pgk" : "pgkbs";
+    const type = soal.type ?? (sourceNo % 3 === 1 ? "pg" : sourceNo % 3 === 2 ? "pgk" : "pgkbs");
     const pgk = pgkVariants[sourceNo];
     const pgkbs = pgkbsVariants[sourceNo];
 
@@ -194,7 +229,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarSource
       ...soal,
       no: displayNo,
       type: "pg" as const,
-      jawaban: kunciJawaban[sourceNo - 1],
+      jawaban: soal.jawaban ?? kunciJawaban[sourceNo - 1],
     };
   });
 
