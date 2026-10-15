@@ -144,6 +144,8 @@ const DilatasiSegitigaGrid = () => {
   );
 };
 
+const uploadedTranslasiKongruenImage = "/tka-transformasi-kongruen-translasi.png";
+
 // `no` is the stable source key for answer/variant lookup; array order sets the displayed number.
 const latihanDasarSource: LatihanSoal[] = [
   { no: 1, soal: "Titik A(5, -2) ditranslasi oleh $T\\binom{-3}{1}$. Tentukan koordinat bayangan titik A tersebut!", options: ["A. A'(2, 1)", "B. A'(1, 1)", "C. A'(2, 2)", "D. A'(2, -1)"], pembahasan: `Pembahasan Soal 1:
@@ -162,6 +164,30 @@ Jawaban: D.` },
   { no: 27, type: "pgkbs", soal: "Tentukan Benar atau Salah untuk setiap pernyataan tentang ukuran bayangan segitiga setelah dilatasi.", },
   { no: 28, type: "pg", soal: "Jika hasil translasi titik $(a,-2)$ oleh pergeseran $\\begin{pmatrix}3\\\\5\\end{pmatrix}$ menghasilkan bayangan $(4,b)$, nilai $a$ dan $b$ berturut-turut adalah ....", options: ["A. $1$ dan $3$", "B. $1$ dan $7$", "C. $-1$ dan $3$", "D. $7$ dan $3$"], jawaban: "A", pembahasan: "Translasi dengan vektor $(3,5)$ memetakan $(a,-2)$ menjadi $(a+3,-2+5)=(a+3,3)$. Samakan dengan $(4,b)$: $a+3=4$ sehingga $a=1$, dan $b=3$. Jadi jawabannya A." },
   { no: 7, soal: "Jika titik B(3, -7) digeser oleh T(a, b) sehingga bayangannya adalah titik B'(20, -3), tentukan T ...", options: ["A. T(17, 4)", "B. T(17, 10)", "C. T(3, 4)", "D. T(2, 10)"] },
+  {
+    no: 29,
+    type: "pg",
+    soal: "Perhatikan dua segitiga kongruen pada koordinat Kartesius berikut. Diketahui titik $Q=K$. Segitiga $PQR$ akan ditranslasikan oleh $T=(-4,-2)$. Bayangan segitiga $PQR$ dan segitiga $KLM$ akan saling ....",
+    gambar: (
+      <img
+        src={uploadedTranslasiKongruenImage}
+        alt="Dua segitiga kongruen PQR dan KLM pada bidang koordinat Kartesius dengan titik Q dan K berimpit"
+        className="mx-auto w-full max-w-xl rounded-xl border border-white/10 bg-white p-2"
+      />
+    ),
+    options: ["A. Tegak lurus", "B. Berpotongan", "C. Sejajar", "D. Berhimpit"],
+    jawaban: "C",
+    pembahasan: `Dari gambar, $P(-6,9)$, $Q=K(0,7)$, $R(-3,4)$, $L(6,5)$, dan $M(3,2)$.
+
+Translasi $T=(-4,-2)$ menghasilkan:
+$$P'=(-6-4,9-2)=(-10,7)$$
+$$Q'= (0-4,7-2)=(-4,5)$$
+$$R'=(-3-4,4-2)=(-7,2)$$
+
+Bandingkan titik-titik bayangan dengan segitiga $KLM$: $P'$ dan $K$, $Q'$ dan $L$, serta $R'$ dan $M$ masing-masing berbeda 10 satuan secara horizontal. Jadi kedua segitiga memiliki sisi-sisi bersesuaian yang sejajar dan tidak berhimpit.
+
+Jawaban: C. Sejajar.`,
+  },
   { no: 10, soal: "Tentukan bayangan titik A(3, -4) jika dicerminkan oleh garis x = 3 ...", options: ["A. A'(3, 10)", "B. A'(4, -3)", "C. A'(3, -4)", "D. A'(3, 4)"] },
   { no: 12, soal: "Tentukanlah bayangan titik C(2, 8) jika dicerminkan oleh sumbu x ...", options: ["A. C''(2, 8)", "B. C''(2, -8)", "C. C''(-2, 8)", "D. C''(-2, -8)"] },
   { no: 13, soal: "Tentukanlah bayangan titik D(9, 0) jika dicerminkan oleh sumbu y ...", options: ["A. D''(9, 0)", "B. D''(-9, 0)", "C. D''(0, 9)", "D. D''(0, -9)"] },
