@@ -27,22 +27,15 @@ $$A'=(5-3,-2+1)=(2,-1)$$
 Jadi, koordinat bayangan titik A adalah $A'(2,-1)$.
 Jawaban: D.` },
   { no: 2, soal: "Tentukan bayangan titik A(3, -4) jika digeser oleh $T\\binom{-3}{9}$ ...", options: ["A. A'(0, 13)", "B. A'(0, 5)", "C. A'(6, 13)", "D. A'(6, 5)"] },
-  { no: 3, soal: "Tentukan bayangan titik B(-2, -13) jika digeser oleh $T\\binom{3}{-6}$ ...", options: ["A. B'(5, 7)", "B. B'(5, -7)", "C. B'(1, -19)", "D. B'(1, 19)"] },
-  { no: 4, soal: "Tentukanlah bayangan titik C(2, 8) jika digeser oleh $T_1\\binom{2}{8}$ dan dilanjutkan oleh $T_2\\binom{-2}{-5}$ ...", options: ["A. C''(2, 8)", "B. C''(2, 16)", "C. C''(2, 21)", "D. C''(2, 11)"] },
   { no: 5, soal: "Tentukanlah bayangan titik D(9, 0) jika digeser oleh $T_1\\binom{7}{18}$ dan dilanjutkan oleh $T_2\\binom{6}{-15}$ ...", options: ["A. D''(9, 13)", "B. D''(22, 9)", "C. D''(22, 13)", "D. D''(22, 3)"] },
-  { no: 6, soal: "Jika titik A(27, -12) digeser oleh T(a, b) sehingga bayangannya adalah titik A'(20, -3), tentukan a + b ...", options: ["A. -7", "B. 9", "C. 2", "D. 16"] },
   { no: 7, soal: "Jika titik B(3, -7) digeser oleh T(a, b) sehingga bayangannya adalah titik B'(20, -3), tentukan T ...", options: ["A. T(17, 4)", "B. T(17, 10)", "C. T(3, 4)", "D. T(2, 10)"] },
-  { no: 8, soal: "Jika titik A digeser oleh $T\\binom{2}{9}$ menjadi A'(0, 5) maka titik A adalah ...", options: ["A. A(2, 14)", "B. A(-2, -4)", "C. A(2, 4)", "D. A(-2, 14)"] },
-  { no: 9, soal: "Jika titik B digeser oleh $T\\binom{6}{-2}$ menjadi B'(1, 7) maka titik B adalah ...", options: ["A. B(7, 5)", "B. B(7, 9)", "C. B(-5, 5)", "D. B(-5, 9)"] },
   { no: 10, soal: "Tentukan bayangan titik A(3, -4) jika dicerminkan oleh garis x = 3 ...", options: ["A. A'(3, 10)", "B. A'(4, -3)", "C. A'(3, -4)", "D. A'(3, 4)"] },
-  { no: 11, soal: "Tentukan bayangan titik B(-2, -13) jika dicerminkan oleh garis y = 4 ...", options: ["A. B'(-2, 21)", "B. B'(12, -19)", "C. B'(10, 21)", "D. B'(1, 4)"] },
   { no: 12, soal: "Tentukanlah bayangan titik C(2, 8) jika dicerminkan oleh sumbu x ...", options: ["A. C''(2, 8)", "B. C''(2, -8)", "C. C''(-2, 8)", "D. C''(-2, -8)"] },
   { no: 13, soal: "Tentukanlah bayangan titik D(9, 0) jika dicerminkan oleh sumbu y ...", options: ["A. D''(9, 0)", "B. D''(-9, 0)", "C. D''(0, 9)", "D. D''(0, -9)"] },
   { no: 14, soal: "Jika titik A(27, -12) dicerminkan menjadi A'(27, 12), sumbu refleksinya adalah ...", options: ["A. Sumbu x", "B. Titik (0, 0)", "C. Sumbu y", "D. x = 2"] },
   { no: 15, soal: "Jika titik B(3, -7) dicerminkan menjadi A'(-7, 3), sumbu refleksinya adalah ...", options: ["A. Sumbu y = x", "B. Sumbu x", "C. Sumbu y = -x", "D. Sumbu y"] },
   { no: 16, soal: "Jika titik A(2, 8) dicerminkan menjadi A'(2, 12), sumbu refleksinya adalah ...", options: ["A. x = 10", "B. y = 2", "C. x = 2", "D. y = 10"] },
   { no: 17, soal: "Jika titik B(2, -2) dicerminkan menjadi A'(6, -2), sumbu refleksinya adalah ...", options: ["A. x = 4", "B. y = 4", "C. x = 5", "D. y = 5"] },
-  { no: 18, soal: "Bayangan titik A oleh refleksi terhadap titik (1, -2) adalah titik A'(3, 5). Tentukan koordinat titik A!", options: ["A. A(1, 9)", "B. A(1, 1)", "C. A(-9, 1)", "D. A(-1, -9)", "E. A(9, 1)"] },
   { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 19:
 Rotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat $O(0,0)$ menggunakan aturan $(x,y)\\mapsto(-y,x)$.
 
@@ -52,7 +45,6 @@ $$ (5,-3)\\mapsto(-(-3),5)=(3,5) $$
 Jadi, bayangannya adalah $(3,5)$.
 Jawaban: A.` },
   { no: 20, soal: "Titik $A(-3,1)$ diputar dengan pusat $O(0,0)$ sejauh $90^\\circ$ dan $180^\\circ$ berlawanan arah jarum jam. Tentukan bayangan-bayangan yang dihasilkan.", options: ["A. $(1,3)$ dan $(-3,-1)$", "B. $(-1,-3)$ dan $(3,-1)$", "C. $(1,-2)$ dan $(-1,-2)$", "D. $(-2,1)$ dan $(2,-1)$"] },
-  { no: 21, soal: "Tentukan bayangan titik (9, 3) oleh dilatasi $[O,\\ \\frac{1}{3}]$!", options: ["A. (1, 3)", "B. (3, 1)", "C. (-1, -3)", "D. (3, -1)", "E. (1, -3)"] },
   { no: 22, soal: "Titik M'(8, -6) merupakan hasil dilatasi dari titik M(-24, 18). Maka faktor skala dilatasi tersebut jika pusatnya (0, 0) adalah ...", options: ["A. $-\\frac{1}{3}$", "B. 3", "C. -3", "D. -2"] },
   { no: 23, soal: "Segitiga PQR memiliki koordinat P(1, 1); Q(1, 5) dan R(3, 3). Didilatasi dengan [O, c] menghasilkan bayangan P'(-2, -2); Q'(-2, -10) dan R'(-6, -6). Nilai c adalah ...", options: ["A. 2", "B. 3", "C. -3", "D. -2"] },
 ];
@@ -90,28 +82,6 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
     ],
     jawabanPGK: [0, 1, 2],
     pembahasan: "Translasi pertama menghasilkan $(9+7,0+18)=(16,18)$. Translasi kedua menghasilkan $(16+6,18-15)=(22,3)$. Jumlah vektornya adalah $(13,3)$, sehingga (1), (2), dan (3) benar.",
-  },
-  8: {
-    soal: "Titik $A$ ditranslasi oleh $T\\binom{2}{9}$ menjadi $A'(0,5)$. Pilih semua pernyataan yang benar.",
-    pernyataan: [
-      "Koordinat x titik A adalah -2.",
-      "Koordinat y titik A adalah -4.",
-      "Titik asalnya adalah $A(-2,-4)$.",
-      "Titik asalnya adalah $A(-2,4)$.",
-    ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Untuk mencari titik asal, kurangkan vektor translasi dari bayangan: $A=(0-2,5-9)=(-2,-4)$. Jadi (1), (2), dan (3) benar.",
-  },
-  11: {
-    soal: "Titik $B(-2,-13)$ dicerminkan terhadap garis $y=4$. Pilih semua pernyataan yang benar.",
-    pernyataan: [
-      "Koordinat x tetap -2.",
-      "Koordinat y bayangan adalah 21.",
-      "Bayangan titik B adalah $B'(-2,21)$.",
-      "Bayangan titik B adalah $B'(2,21)$.",
-    ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Refleksi terhadap $y=4$ memakai $y'=2(4)-(-13)=21$, sedangkan x tetap. Jadi $B'=(-2,21)$ dan (1), (2), dan (3) benar.",
   },
   14: {
     soal: "Titik $A(27,-12)$ dicerminkan menjadi $A'(27,12)$. Pilih semua pernyataan yang benar.",
@@ -160,36 +130,6 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
 };
 
 const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] }> = {
-  3: {
-    soal: "Titik $B(-2,-13)$ ditranslasi oleh $T\\binom{3}{-6}$. Tentukan Benar atau Salah untuk setiap pernyataan.",
-    pernyataan: [
-      "Koordinat x bayangan adalah 1.",
-      "Koordinat y bayangan adalah -19.",
-      "Bayangan titik B adalah $B'(1,-19)$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Hasil translasi adalah $B'=(-2+3,-13-6)=(1,-19)$. Semua pernyataan benar.",
-  },
-  6: {
-    soal: "Titik $A(27,-12)$ ditranslasi menjadi $A'(20,-3)$ oleh $T(a,b)$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Nilai $a=-7$.",
-      "Nilai $b=9$.",
-      "Nilai $a+b=2$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Vektor translasi adalah $T=(20-27,-3-(-12))=(-7,9)$. Jadi $a+b=-7+9=2$ dan semua pernyataan benar.",
-  },
-  9: {
-    soal: "Titik $B$ ditranslasi oleh $T\\binom{6}{-2}$ menjadi $B'(1,7)$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Koordinat x titik B adalah -5.",
-      "Koordinat y titik B adalah 9.",
-      "Translasi titik $B(-5,9)$ menghasilkan $B'(1,7)$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Titik asal diperoleh dengan mengurangkan vektor translasi: $B=(1-6,7-(-2))=(-5,9)$. Jika ditranslasi, hasilnya $(1,7)$. Semua pernyataan benar.",
-  },
   12: {
     soal: "Titik $C(2,8)$ dicerminkan terhadap sumbu x. Tentukan Benar atau Salah.",
     pernyataan: [
@@ -209,26 +149,6 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     ],
     jawabanBS: ["B", "B", "S"],
     pembahasan: "Refleksi terhadap garis $y=x$ memetakan $(x,y)\\mapsto(y,x)$. Maka titik $(3,-7)$ menjadi $(-7,3)$, sehingga pernyataan (1) dan (2) benar. Sebaliknya, refleksi terhadap garis $y=-x$ memakai aturan $(x,y)\\mapsto(-y,-x)$ dan menghasilkan $(7,-3)$, bukan $(-7,3)$. Jadi pernyataan (3) salah.",
-  },
-  18: {
-    soal: "Bayangan titik A oleh refleksi terhadap titik pusat $(1,-2)$ adalah $A'(3,5)$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Titik pusat $(1,-2)$ merupakan titik tengah A dan A'.",
-      "Koordinat x titik A adalah -1.",
-      "Koordinat y titik A adalah -9.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Pada refleksi terhadap titik, pusat adalah titik tengah. Maka $A=2(1,-2)-(3,5)=(-1,-9)$. Semua pernyataan benar.",
-  },
-  21: {
-    soal: "Titik $(9,3)$ didilatasi terhadap pusat $O(0,0)$ dengan faktor skala $\\frac13$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Faktor skalanya adalah $\\frac13$.",
-      "Bayangannya adalah $(3,1)$.",
-      "Bayangannya adalah $(-3,-1)$.",
-    ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Dilatasi berpusat di O memetakan $(x,y)$ menjadi $(kx,ky)$. Jadi $\\frac13(9,3)=(3,1)$; (1) dan (2) benar, sedangkan (3) salah.",
   },
 };
 
