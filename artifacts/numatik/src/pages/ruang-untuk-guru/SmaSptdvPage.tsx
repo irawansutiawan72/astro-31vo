@@ -82,7 +82,7 @@ function SidewaysGraph({ title, caption, testId }: { title: string; caption: str
   </>}</GraphFrame>;
 }
 
-function CircleGraph({ title, caption, radius, center = [0, 0], mode, secondRadius, dashed = false, testId }: {
+function CircleGraph({ title, caption, radius, center = [0, 0], mode, secondRadius, dashed = false, testPoint, testLabel, testId }: {
   title: string; caption: string; radius: number; center?: [number, number]; mode: "inside" | "outside" | "ring"; secondRadius?: number; dashed?: boolean; testPoint?: [number, number]; testLabel?: string; testId: string;
 }) {
   const [x, y] = center;
