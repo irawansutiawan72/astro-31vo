@@ -18,7 +18,14 @@ const materiSections = tkaTransformasiMateri.map((section) => {
 });
 
 const latihanDasarSource: LatihanSoal[] = [
-  { no: 1, soal: "Titik A(5, -2) ditranslasi oleh $T\\binom{-3}{1}$. Tentukan koordinat bayangan titik A tersebut!", options: ["A. A'(2, 1)", "B. A'(1, 1)", "C. A'(2, 2)", "D. A'(2, -1)", "E. A'(-2, 1)"] },
+  { no: 1, soal: "Titik A(5, -2) ditranslasi oleh $T\\binom{-3}{1}$. Tentukan koordinat bayangan titik A tersebut!", options: ["A. A'(2, 1)", "B. A'(1, 1)", "C. A'(2, 2)", "D. A'(2, -1)"], pembahasan: `Pembahasan Soal 1:
+Translasi $T\\binom{-3}{1}$ memetakan setiap titik $(x,y)$ menjadi $(x-3,y+1)$.
+
+Untuk titik $A(5,-2)$:
+$$A'=(5-3,-2+1)=(2,-1)$$
+
+Jadi, koordinat bayangan titik A adalah $A'(2,-1)$.
+Jawaban: D.` },
   { no: 2, soal: "Tentukan bayangan titik A(3, -4) jika digeser oleh $T\\binom{-3}{9}$ ...", options: ["A. A'(0, 13)", "B. A'(0, 5)", "C. A'(6, 13)", "D. A'(6, 5)"] },
   { no: 3, soal: "Tentukan bayangan titik B(-2, -13) jika digeser oleh $T\\binom{3}{-6}$ ...", options: ["A. B'(5, 7)", "B. B'(5, -7)", "C. B'(1, -19)", "D. B'(1, 19)"] },
   { no: 4, soal: "Tentukanlah bayangan titik C(2, 8) jika digeser oleh $T_1\\binom{2}{8}$ dan dilanjutkan oleh $T_2\\binom{-2}{-5}$ ...", options: ["A. C''(2, 8)", "B. C''(2, 16)", "C. C''(2, 21)", "D. C''(2, 11)"] },
@@ -36,8 +43,15 @@ const latihanDasarSource: LatihanSoal[] = [
   { no: 16, soal: "Jika titik A(2, 8) dicerminkan menjadi A'(2, 12), sumbu refleksinya adalah ...", options: ["A. x = 10", "B. y = 2", "C. x = 2", "D. y = 10"] },
   { no: 17, soal: "Jika titik B(2, -2) dicerminkan menjadi A'(6, -2), sumbu refleksinya adalah ...", options: ["A. x = 4", "B. y = 4", "C. x = 5", "D. y = 5"] },
   { no: 18, soal: "Bayangan titik A oleh refleksi terhadap titik (1, -2) adalah titik A'(3, 5). Tentukan koordinat titik A!", options: ["A. A(1, 9)", "B. A(1, 1)", "C. A(-9, 1)", "D. A(-1, -9)", "E. A(9, 1)"] },
-  { no: 19, soal: "Tentukan bayangan titik (5, -3) oleh rotasi $R(P,\\ 90^{\\circ})$ dengan koordinat titik P(-1, 2)!", options: ["A. (8, 4)", "B. (-8, 4)", "C. (8, -4)", "D. (-4, -8)", "E. (4, 8)"] },
-  { no: 20, soal: "Titik A(-3, 1) jika dirotasi terhadap sudut $90^{\\circ}$ dan $180^{\\circ}$ menghasilkan bayangan pada titik ... dan ...", options: ["A. (1, 3) dan (-3, -1)", "B. (-1, -3) dan (3, -1)", "C. (1, -2) dan (-1, -2)", "D. (-2, 1) dan (2, -1)"] },
+  { no: 19, soal: "Titik $(5,-3)$ dirotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat rotasi $O(0,0)$. Koordinat bayangannya adalah ...", options: ["A. $(3,5)$", "B. $(-3,-5)$", "C. $(-3,5)$", "D. $(3,-5)$"], pembahasan: `Pembahasan Soal 19:
+Rotasi $90^\\circ$ berlawanan arah jarum jam dengan pusat $O(0,0)$ menggunakan aturan $(x,y)\\mapsto(-y,x)$.
+
+Substitusikan titik $(5,-3)$:
+$$ (5,-3)\\mapsto(-(-3),5)=(3,5) $$
+
+Jadi, bayangannya adalah $(3,5)$.
+Jawaban: A.` },
+  { no: 20, soal: "Titik $A(-3,1)$ diputar dengan pusat $O(0,0)$ sejauh $90^\\circ$ dan $180^\\circ$ berlawanan arah jarum jam. Tentukan bayangan-bayangan yang dihasilkan.", options: ["A. $(1,3)$ dan $(-3,-1)$", "B. $(-1,-3)$ dan $(3,-1)$", "C. $(1,-2)$ dan $(-1,-2)$", "D. $(-2,1)$ dan $(2,-1)$"] },
   { no: 21, soal: "Tentukan bayangan titik (9, 3) oleh dilatasi $[O,\\ \\frac{1}{3}]$!", options: ["A. (1, 3)", "B. (3, 1)", "C. (-1, -3)", "D. (3, -1)", "E. (1, -3)"] },
   { no: 22, soal: "Titik M'(8, -6) merupakan hasil dilatasi dari titik M(-24, 18). Maka faktor skala dilatasi tersebut jika pusatnya (0, 0) adalah ...", options: ["A. $-\\frac{1}{3}$", "B. 3", "C. -3", "D. -2"] },
   { no: 23, soal: "Segitiga PQR memiliki koordinat P(1, 1); Q(1, 5) dan R(3, 3). Didilatasi dengan [O, c] menghasilkan bayangan P'(-2, -2); Q'(-2, -10) dan R'(-6, -6). Nilai c adalah ...", options: ["A. 2", "B. 3", "C. -3", "D. -2"] },
@@ -51,7 +65,7 @@ type ComplexVariant = {
 
 const kunciJawaban = [
   "D", "B", "C", "D", "D", "C", "A", "B", "D", "C", "A", "B", "B", "A",
-  "A", "D", "A", "D", "E", "B", "B", "A", "D",
+  "A", "D", "A", "D", "A", "B", "B", "A", "D",
 ] as const;
 
 const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
@@ -119,18 +133,18 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
       "Garis refleksinya adalah $y=4$.",
     ],
     jawabanPGK: [0, 1, 2],
-    pembahasan: "Garis cermin berada di titik tengah koordinat x, yaitu $x=\\frac{2+6}{2}=4$. Koordinat y tetap dan jarak ke garis adalah $|4-2|=2$. Jadi (1), (2), dan (3) benar.",
+    pembahasan: "Titik $B(2,-2)$ dan bayangannya $B'(6,-2)$ memiliki ordinat yang sama. Garis cermin tegak lurus ruas $BB'$ dan melalui titik tengahnya. Titik tengah $BB'$ adalah $\\left(\\frac{2+6}{2},\\frac{-2+(-2)}{2}\\right)=(4,-2)$, sehingga sumbu refleksinya adalah garis vertikal $x=4$. Jarak titik B ke garis tersebut adalah $|2-4|=2$ satuan. Jadi pernyataan (1), (2), dan (3) benar, sedangkan (4) salah.",
   },
   20: {
-    soal: "Titik $A(-3,1)$ diputar terhadap pusat $O(0,0)$ sejauh $90^\\circ$ dan $180^\\circ$. Pilih semua pernyataan yang benar.",
+    soal: "Titik $A(-3,1)$ diputar terhadap pusat $O(0,0)$ sejauh $90^\\circ$ dan $180^\\circ$ berlawanan arah jarum jam. Pilih semua pernyataan yang benar.",
     pernyataan: [
       "Bayangan rotasi $90^\\circ$ berlawanan arah jarum jam adalah $(-1,-3)$.",
       "Bayangan rotasi $180^\\circ$ adalah $(3,-1)$.",
       "Kedua bayangan tersebut adalah $(-1,-3)$ dan $(3,-1)$.",
-      "Bayangan rotasi $90^\\circ$ berlawanan arah jarum jam adalah $(1,3)$.",
+      "Jika titik A diputar $90^\\circ$ berlawanan arah jarum jam, lalu dilanjutkan dengan rotasi $180^\\circ$, bayangannya adalah $(1,3)$.",
     ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Rotasi $90^\\circ$ berlawanan arah jarum jam memakai $(x,y)\\mapsto(-y,x)$ sehingga diperoleh $(-1,-3)$. Rotasi $180^\\circ$ menghasilkan $(3,-1)$. Jadi (1), (2), dan (3) benar.",
+    jawabanPGK: [0, 1, 2, 3],
+    pembahasan: "Rotasi $90^\\circ$ berlawanan arah jarum jam memakai aturan $(x,y)\\mapsto(-y,x)$, sehingga $A(-3,1)$ menjadi $(-1,-3)$. Rotasi $180^\\circ$ memetakan $(x,y)\\mapsto(-x,-y)$, sehingga bayangan langsung A adalah $(3,-1)$. Untuk pernyataan (4), lakukan rotasi berurutan: $(-3,1)\\mapsto(-1,-3)\\mapsto(1,3)$. Jadi pernyataan (1), (2), (3), dan (4) semuanya benar.",
   },
   23: {
     soal: "Segitiga $PQR$ didilatasi terhadap pusat $O(0,0)$ sehingga $P(1,1)$ menjadi $P'(-2,-2)$. Pilih semua pernyataan yang benar.",
@@ -191,10 +205,10 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     pernyataan: [
       "Koordinat x dan y saling bertukar.",
       "Sumbu refleksinya adalah garis $y=x$.",
-      "Bayangannya adalah $(7,-3)$.",
+      "Sumbu refleksinya adalah garis $y=-x$.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "Pemetaan $(x,y)\\mapsto(y,x)$ adalah refleksi terhadap garis $y=x$. Jadi $(3,-7)$ menjadi $(-7,3)$, bukan $(7,-3)$.",
+    pembahasan: "Refleksi terhadap garis $y=x$ memetakan $(x,y)\\mapsto(y,x)$. Maka titik $(3,-7)$ menjadi $(-7,3)$, sehingga pernyataan (1) dan (2) benar. Sebaliknya, refleksi terhadap garis $y=-x$ memakai aturan $(x,y)\\mapsto(-y,-x)$ dan menghasilkan $(7,-3)$, bukan $(-7,3)$. Jadi pernyataan (3) salah.",
   },
   18: {
     soal: "Bayangan titik A oleh refleksi terhadap titik pusat $(1,-2)$ adalah $A'(3,5)$. Tentukan Benar atau Salah.",
