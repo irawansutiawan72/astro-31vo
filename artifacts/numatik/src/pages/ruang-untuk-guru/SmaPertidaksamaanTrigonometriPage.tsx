@@ -233,6 +233,90 @@ function InequalityVisualizer() {
   );
 }
 
+function QuadraticIntersectionNumberLine() {
+  const left = 126;
+  const right = 640;
+  const toU = (value: number) => left + ((value + 3) / 6) * (right - left);
+  const toAngle = (degrees: number) => left + (degrees / 360) * (right - left);
+  const rows = [
+    { label: "Rentang sin x", start: -1, end: 1, y: 98, color: "#67e8f9" },
+    { label: "Hasil kuadrat", start: -2, end: 0.5, y: 205, color: "#fbbf24" },
+    { label: "Irisan pada u", start: -1, end: 0.5, y: 312, color: "#34d399" },
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 720 540"
+      role="img"
+      aria-label="Garis bilangan menunjukkan irisan rentang sinus minus satu sampai satu dengan solusi kuadrat minus dua sampai satu per dua. Irisannya minus satu sampai satu per dua. Pada interval sudut nol sampai 360 derajat, solusinya dari nol sampai 30 derajat dan dari 150 sampai 360 derajat."
+      className="block h-auto w-full"
+      data-testid="visual-quadratic-solution-numberline"
+    >
+      <defs>
+        <marker id="quad-intersection-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M 0 0 L 8 4 L 0 8 z" fill="#cbd5e1" />
+        </marker>
+      </defs>
+      <text x="18" y="28" fill="#bae6fd" fontSize="13" fontWeight="800">IRISAN NILAI u</text>
+      <text x={left} y="50" fill="#94a3b8" fontSize="10">Setiap baris adalah satu himpunan pada garis bilangan yang sama.</text>
+
+      {rows.map((row) => (
+        <g key={row.label}>
+          <text x="18" y={row.y - 13} fill={row.color} fontSize="11" fontWeight="700">{row.label}</text>
+          <line x1={left} x2={right} y1={row.y} y2={row.y} stroke="#52617b" strokeWidth="1.5" />
+          {[-3, -2, -1, 0, 1, 2, 3].map((tick) => (
+            <g key={`${row.label}-${tick}`}>
+              <line x1={toU(tick)} x2={toU(tick)} y1={row.y - 5} y2={row.y + 6} stroke="#71809a" strokeWidth="1" />
+              <text x={toU(tick)} y={row.y + 21} fill="#aab7cc" fontSize="10" textAnchor="middle">{tick}</text>
+            </g>
+          ))}
+          <line x1={toU(row.start)} x2={toU(row.end)} y1={row.y} y2={row.y} stroke={row.color} strokeWidth="8" strokeLinecap="round" />
+          <circle cx={toU(row.start)} cy={row.y} r="5" fill={row.color} stroke="#f8fafc" strokeWidth="1.5" />
+          <circle cx={toU(row.end)} cy={row.y} r="5" fill={row.color} stroke="#f8fafc" strokeWidth="1.5" />
+          <text x={toU(row.start)} y={row.y - 10} fill={row.color} fontSize="10" fontWeight="700" textAnchor="middle">{row.start === 0.5 ? "½" : row.start}</text>
+          <text x={toU(row.end)} y={row.y - 10} fill={row.color} fontSize="10" fontWeight="700" textAnchor="middle">{row.end === 0.5 ? "½" : row.end}</text>
+        </g>
+      ))}
+
+      <path
+        d={`M ${toU(-1)} 116 L ${toU(-1)} 282`}
+        fill="none"
+        stroke="#cbd5e1"
+        strokeWidth="1.7"
+        strokeDasharray="4 4"
+        markerEnd="url(#quad-intersection-arrow)"
+      />
+      <path
+        d={`M ${toU(0.5)} 223 L ${toU(0.5)} 282`}
+        fill="none"
+        stroke="#cbd5e1"
+        strokeWidth="1.7"
+        strokeDasharray="4 4"
+        markerEnd="url(#quad-intersection-arrow)"
+      />
+      <rect x="458" y="275" width="170" height="22" rx="11" fill="#34d399" fillOpacity=".12" />
+      <text x="543" y="290" fill="#a7f3d0" fontSize="10" fontWeight="700" textAnchor="middle">batas irisan = solusi</text>
+
+      <text x="18" y="390" fill="#a7f3d0" fontSize="11" fontWeight="800">KEMBALIKAN KE SUDUT x</text>
+      <text x={left} y="410" fill="#94a3b8" fontSize="10">Dari sin x ∈ [−1, ½] dan 0° ≤ x ≤ 360°.</text>
+      <line x1={left} x2={right} y1="456" y2="456" stroke="#52617b" strokeWidth="1.5" />
+      {[0, 30, 90, 150, 180, 270, 360].map((tick) => (
+        <g key={`angle-${tick}`}>
+          <line x1={toAngle(tick)} x2={toAngle(tick)} y1="449" y2="464" stroke="#71809a" strokeWidth="1" />
+          <text x={toAngle(tick)} y="480" fill="#aab7cc" fontSize="10" textAnchor="middle">{tick}°</text>
+        </g>
+      ))}
+      <line x1={toAngle(0)} x2={toAngle(30)} y1="456" y2="456" stroke="#34d399" strokeWidth="8" strokeLinecap="round" />
+      <line x1={toAngle(150)} x2={toAngle(360)} y1="456" y2="456" stroke="#34d399" strokeWidth="8" strokeLinecap="round" />
+      {[0, 30, 150, 360].map((tick) => (
+        <circle key={`solution-${tick}`} cx={toAngle(tick)} cy="456" r="5" fill="#34d399" stroke="#f8fafc" strokeWidth="1.5" />
+      ))}
+      <text x={(toAngle(0) + toAngle(30)) / 2} y="511" fill="#a7f3d0" fontSize="10" fontWeight="700" textAnchor="middle">[0°, 30°]</text>
+      <text x={(toAngle(150) + toAngle(360)) / 2} y="511" fill="#a7f3d0" fontSize="10" fontWeight="700" textAnchor="middle">[150°, 360°]</text>
+    </svg>
+  );
+}
+
 const SmaPertidaksamaanTrigonometriPage = () => (
   <div className="relative min-h-screen overflow-x-hidden bg-[#080d22] text-white">
     <Starfield />
@@ -327,8 +411,54 @@ const SmaPertidaksamaanTrigonometriPage = () => (
         </article>
       </div>
 
+      <Panel className="mb-5 border-emerald-200/20 bg-[#111a36]/95">
+        <SectionTitle index="04" title="Pertidaksamaan kuadrat dalam sinus atau cosinus" icon={<Activity className="h-5 w-5" />} />
+        <p className="mb-3 text-sm leading-relaxed text-white/75">
+          Kalau sinus atau cosinus muncul berpangkat dua, kita bisa mengubah soalnya menjadi pertidaksamaan kuadrat biasa. Misalnya, untuk <InlineMath math="a\sin^2x+b\sin x+c\ \gtreqless\ 0" />, tetapkan <InlineMath math="u=\sin x" />. Setelah mendapatkan interval <InlineMath math="u" /> dari pemfaktoran, jangan lupa bahwa nilai sinus hanya berada di antara −1 dan 1.
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <div className="rounded-xl border border-cyan-100/10 bg-cyan-300/[0.045] p-3 text-xs leading-relaxed text-white/75">
+            <strong className="text-cyan-100">Sinus dan cosinus:</strong> nilai penggantinya harus memenuhi <InlineMath math="-1\le u\le1" />. Irisan dengan interval hasil kuadrat inilah yang boleh diteruskan ke pencarian sudut.
+          </div>
+          <div className="rounded-xl border border-amber-100/10 bg-amber-300/[0.045] p-3 text-xs leading-relaxed text-white/75">
+            <strong className="text-amber-100">Tangen:</strong> nilainya dapat berupa bilangan real apa pun, tetapi <InlineMath math="\tan x" /> tidak terdefinisi pada <InlineMath math="90^\circ+180^\circ k" />. Titik-titik itu tetap harus dikeluarkan.
+          </div>
+        </div>
+        <ol className="mt-4 space-y-3">
+          <Step number={1}>Substitusikan <InlineMath math="u=\sin x" /> atau <InlineMath math="u=\cos x" />, lalu susun menjadi bentuk kuadrat dalam <InlineMath math="u" />.</Step>
+          <Step number={2}>Faktorkan atau cari akar-akarnya. Gunakan tanda koefisien kuadrat untuk menentukan bagian garis bilangan yang memenuhi pertidaksamaan.</Step>
+          <Step number={3}>Iris interval itu dengan rentang nilai fungsi trigonometri. Untuk sinus dan cosinus, iris dengan <InlineMath math="[-1,1]" />.</Step>
+          <Step number={4}>Ubah interval nilai <InlineMath math="u" /> menjadi sudut-sudut <InlineMath math="x" />, lalu iriskan lagi dengan interval sudut yang diminta.</Step>
+        </ol>
+
+        <div className="mt-5 rounded-[1.4rem] border border-emerald-100/15 bg-emerald-300/[0.045] p-4 sm:p-5">
+          <p className="text-[10px] font-black uppercase tracking-[0.17em] text-emerald-100/65">Contoh lengkap · irisan yang menentukan</p>
+          <Formula>{"2\\sin^2x+3\\sin x-2\\le0,\\qquad 0^\\circ\\le x\\le360^\\circ"}</Formula>
+          <ol className="space-y-3">
+            <Step number={1}>Misalkan <InlineMath math="u=\sin x" />. Pertidaksamaannya menjadi <InlineMath math="2u^2+3u-2\le0" />.</Step>
+            <Step number={2}>Faktorkan: <InlineMath math="(2u-1)(u+2)\le0" />. Karena grafik kuadrat terbuka ke atas, hasilnya berada di antara kedua akar: <InlineMath math="-2\le u\le\frac12" />.</Step>
+            <Step number={3}>Sinus hanya bernilai dari −1 sampai 1. Jadi ambil irisan <InlineMath math="[-2,\frac12]\cap[-1,1]=[-1,\frac12]" />. Batas −2 tidak mungkin menjadi nilai sinus; batas −1 tetap mungkin.</Step>
+            <Step number={4}>Sekarang cari sudut dengan <InlineMath math="-1\le\sin x\le\frac12" />. Pada satu putaran penuh, sinus tidak lebih dari <InlineMath math="\frac12" /> dari 0° sampai 30°, lalu dari 150° sampai 360°.</Step>
+            <li data-testid="result-quadratic-sine-example" className="ml-9 rounded-xl border border-emerald-100/15 bg-emerald-100/[0.07] p-3 font-bold text-emerald-100">
+              Himpunan penyelesaian: <InlineMath math="x\in[0^\circ,30^\circ]\cup[150^\circ,360^\circ]" />.
+            </li>
+          </ol>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-cyan-200/15 bg-[#08112b] p-2 sm:p-4">
+          <p className="px-2 pt-2 text-xs font-bold leading-relaxed text-white/75">
+            Garis bilangan ini memperlihatkan batas yang bertemu: interval dari hasil kuadrat dipotong oleh rentang sinus. Panah menunjuk batas irisan, lalu baris terakhir menunjukkan sudut yang cocok.
+          </p>
+          <QuadraticIntersectionNumberLine />
+        </div>
+
+        <div className="mt-4 rounded-xl border border-violet-100/10 bg-violet-300/[0.045] p-3 text-sm leading-relaxed text-white/75">
+          <strong className="text-violet-100">Coba lihat kasus cosinus.</strong> Untuk <InlineMath math="\cos^2x-\cos x>0" />, tetapkan <InlineMath math="u=\cos x" /> sehingga <InlineMath math="u(u-1)>0" />. Hasil kuadratnya <InlineMath math="u<0" /> atau <InlineMath math="u>1" />. Setelah diiris dengan <InlineMath math="[-1,1]" />, tersisa <InlineMath math="-1\le u<0" />; maka pada <InlineMath math="0^\circ\le x\le360^\circ" />, solusinya <InlineMath math="90^\circ<x<270^\circ" />. Ujungnya terbuka karena cosinus di 90° dan 270° sama dengan 0.
+        </div>
+      </Panel>
+
       <Panel className="mb-5 border-violet-200/15 bg-[#131a38]/95">
-        <SectionTitle index="04" title="Sudut di dalam fungsi: ubah rentang dulu" icon={<RotateCcw className="h-5 w-5" />} />
+        <SectionTitle index="05" title="Sudut di dalam fungsi: ubah rentang dulu" icon={<RotateCcw className="h-5 w-5" />} />
         <p className="text-sm leading-relaxed text-white/75">Misalkan <InlineMath math="\sin(2x+30^\circ)\ge\frac12" /> untuk <InlineMath math="0^\circ\le x\le180^\circ" />. Jangan langsung memakai satu putaran untuk sudut bagian dalam. Tetapkan <InlineMath math="\theta=2x+30^\circ" />.</p>
         <Formula>{"0^\\circ\\le x\\le180^\\circ\\quad\\Longrightarrow\\quad30^\\circ\\le\\theta\\le390^\\circ"}</Formula>
         <ol className="space-y-3">
@@ -339,7 +469,7 @@ const SmaPertidaksamaanTrigonometriPage = () => (
       </Panel>
 
       <Panel className="mb-5 border-rose-200/15 bg-rose-300/[0.035]">
-        <SectionTitle index="05" title="Dua jebakan yang gampang dihindari" icon={<TriangleAlert className="h-5 w-5" />} />
+        <SectionTitle index="06" title="Dua jebakan yang gampang dihindari" icon={<TriangleAlert className="h-5 w-5" />} />
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-rose-100/10 bg-rose-200/[0.045] p-3 text-sm leading-relaxed text-white/75"><strong className="text-rose-100">Operasi negatif membalik tanda.</strong><p className="mt-2">Dari <InlineMath math="-2\sin x>1" />, membagi kedua ruas dengan <InlineMath math="-2" /> memberi <InlineMath math="\sin x<-\frac12" />, bukan <InlineMath math=">" />.</p></div>
           <div className="rounded-xl border border-amber-100/10 bg-amber-200/[0.045] p-3 text-sm leading-relaxed text-white/75"><strong className="text-amber-100">Asimtot tangen bukan titik solusi.</strong><p className="mt-2">Pada <InlineMath math="90^\circ+180^\circ k" />, fungsi tangen tidak ada. Pisahkan cabang grafik dan jangan pernah menutup interval pada asimtot.</p></div>
@@ -348,7 +478,7 @@ const SmaPertidaksamaanTrigonometriPage = () => (
       </Panel>
 
       <Panel className="border-amber-200/20 bg-gradient-to-br from-[#182448] to-[#292344]">
-        <SectionTitle index="06" title="Rangkuman dan cek mandiri" icon={<Check className="h-5 w-5" />} />
+        <SectionTitle index="07" title="Rangkuman dan cek mandiri" icon={<Check className="h-5 w-5" />} />
         <ul className="space-y-2 text-sm leading-relaxed text-white/75">
           <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" /> Solusi adalah seluruh interval sudut yang membuat pertidaksamaan benar.</li>
           <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" /> Sinus dan cosinus berperiode 360°; tangen berperiode 180°.</li>
