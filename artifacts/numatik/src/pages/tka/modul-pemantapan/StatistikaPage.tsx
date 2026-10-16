@@ -140,6 +140,20 @@ const renderTkaStatistikaVisual = (no: number): React.ReactNode => {
 
 const latihanDasarSumber: LatihanSoal[] = [
   {
+    no: 26,
+    type: "pg",
+    soal: "Karet dan kelapa sangat penting bagi banyak industri di dunia, mulai dari ban hingga makanan. Indonesia adalah penghasil utama keduanya, dan meskipun ada tantangan dalam produksi, kedua komoditas ini tetap penting untuk ekonomi Indonesia dan pasokan global. Berikut adalah data produksi karet dan kelapa di Indonesia.\n[DIAGRAM]\nBerdasarkan data di atas, diagram garis manakah yang menunjukkan penyajian data dari salah satu hasil produksi karet atau kelapa di Indonesia?",
+    options: ["A", "B", "C", "D"],
+    optionsJsx: [
+      <img src="/tka-statistika-produksi-opsi-a.webp" alt="Diagram garis pilihan A" className="block h-auto max-h-56 max-w-full rounded-md bg-white object-contain p-1" loading="lazy" />,
+      <img src="/tka-statistika-produksi-opsi-b.webp" alt="Diagram garis pilihan B" className="block h-auto max-h-56 max-w-full rounded-md bg-white object-contain p-1" loading="lazy" />,
+      <img src="/tka-statistika-produksi-opsi-c.webp" alt="Diagram garis pilihan C" className="block h-auto max-h-56 max-w-full rounded-md bg-white object-contain p-1" loading="lazy" />,
+      <img src="/tka-statistika-produksi-opsi-d.webp" alt="Diagram garis pilihan D" className="block h-auto max-h-56 max-w-full rounded-md bg-white object-contain p-1" loading="lazy" />,
+    ],
+    jawaban: "D",
+    pembahasan: "Bandingkan nilai produksi karet pada tabel dengan titik-titik di setiap diagram. Produksi karet berturut-turut adalah 3,68; 3,50; 3,30; 3,12; 2,95; 2,75; dan 2,60 juta ton dari tahun 2018 sampai 2024. Nilainya turun setiap tahun, dan urutan titik tersebut sesuai dengan diagram D.\n\nDiagram A menunjukkan nilai gabungan karet dan kelapa, sedangkan diagram B dan C tidak menyajikan urutan data produksi salah satu komoditas sesuai tabel. Jadi, jawaban yang benar adalah D.",
+  },
+  {
     "no": 1,
     "soal": "Perhatikan tabel distribusi frekuensi berikut. Pilih semua pernyataan yang benar.",
     "type": "pgk",
@@ -533,7 +547,7 @@ const latihanDasarSumber: LatihanSoal[] = [
   }
 ];
 
-const urutanNomorSoalSumber = [3, 1, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const urutanNomorSoalSumber = [26, 3, 1, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
 const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
@@ -542,6 +556,7 @@ const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, inde
 });
 
 const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
+  26: <img src="/tka-statistika-produksi-karet-kelapa-tabel.webp" alt="Tabel produksi karet dan kelapa di Indonesia tahun 2018–2024, dalam juta ton" className="mx-auto block h-auto w-full max-w-2xl rounded-lg bg-white" loading="lazy" />,
   1: renderTkaStatistikaVisual(1),
   5: renderTkaStatistikaVisual(5),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
