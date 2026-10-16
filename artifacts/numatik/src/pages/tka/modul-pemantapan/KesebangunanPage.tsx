@@ -28,7 +28,7 @@ const kesebangunanSoalSatuParts = [
 ] as const;
 
 const kesebangunanSoalSatuDiagram = (
-  <div role="group" aria-label="Gambar soal nomor 1" className="kesebangunan-landscape-diagram grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <div role="group" aria-label="Gambar soal nomor 1" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
     {kesebangunanSoalSatuParts.map(({ bagian, src }) => (
       <figure key={bagian} className="min-w-0 rounded-xl border border-border/40 bg-background p-2">
         <figcaption className="mb-1 text-center text-sm font-semibold">({bagian})</figcaption>
@@ -82,19 +82,12 @@ const kesebangunanSoalSembilanBelasDiagram = (
     >
       <title id="kesebangunan-q19-title">Foto di atas karton berukuran 10 cm × 15 cm</title>
       <desc id="kesebangunan-q19-desc">
-        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas foto masing-masing 2 cm. Bagian bawah karton ditandai dengan arsiran.
+        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas foto masing-masing 2 cm. Jarak bagian bawah ditandai dengan x.
       </desc>
-      <defs>
-        <pattern id="kesebangunan-q19-bottom-hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <rect width="8" height="8" fill="#fde68a" />
-          <line x1="0" y1="0" x2="0" y2="8" stroke="#d97706" strokeWidth="3" />
-        </pattern>
-      </defs>
       <text x="210" y="25" fill="#172033" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="14">
         Karton: 10 cm × 15 cm
       </text>
       <rect x="140" y="50" width="140" height="210" fill="#f2c96d" stroke="#172033" strokeWidth="2" />
-      <rect x="140" y="204" width="140" height="56" fill="url(#kesebangunan-q19-bottom-hatch)" />
       <rect x="168" y="78" width="84" height="126" fill="#73c6dc" stroke="#172033" strokeWidth="2" />
       <text x="210" y="148" fill="#12354b" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="700">
         FOTO
@@ -105,9 +98,11 @@ const kesebangunanSoalSembilanBelasDiagram = (
         <text x="267" y="152" transform="rotate(-90 267 152)">2 cm</text>
         <text x="210" y="285">10 cm</text>
         <text x="117" y="155" transform="rotate(-90 117 155)">15 cm</text>
+        <text x="315" y="237" fontStyle="italic" fontSize="16">x</text>
       </g>
       <path d="M140 272h140M140 267v10M280 267v10" stroke="#172033" strokeWidth="1.5" />
       <path d="M122 50v210M117 50h10M117 260h10" stroke="#172033" strokeWidth="1.5" />
+      <path d="M300 204v56M295 204h10M295 260h10" stroke="#172033" strokeWidth="1.5" />
     </svg>
   </figure>
 );
