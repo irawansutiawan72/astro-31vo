@@ -6,7 +6,6 @@ const kesebangunanImages: Record<number, string> = {
   3: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_3_esplzp.png",
   4: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_4_srwinp.png",
   6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_6_zilnja.png",
-  7: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_7_xwr9ax.png",
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_8_get5ke.png",
   9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_9_jxeevd.png",
   10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_10_xvdtcp.png",
@@ -43,6 +42,64 @@ const kesebangunanSoalSatuDiagram = (
   </div>
 );
 
+const kesebangunanSoalTujuhDiagram = (
+  <figure className="mx-auto my-3 w-full max-w-2xl rounded-xl border border-border/40 bg-white p-3">
+    <svg
+      viewBox="0 0 520 260"
+      role="img"
+      aria-labelledby="kesebangunan-q7-title kesebangunan-q7-desc"
+      className="block h-auto w-full"
+    >
+      <title id="kesebangunan-q7-title">Dua persegi panjang sebangun</title>
+      <desc id="kesebangunan-q7-desc">
+        Persegi panjang besar memiliki tinggi 20 cm dan persegi panjang kecil memiliki tinggi 5 cm.
+      </desc>
+      <rect x="70" y="25" width="160" height="200" fill="#09afd0" stroke="#172033" strokeWidth="2" />
+      <rect x="390" y="175" width="40" height="50" fill="#a32379" stroke="#172033" strokeWidth="2" />
+      <g stroke="#172033" strokeWidth="2">
+        <line x1="48" y1="25" x2="48" y2="225" />
+        <line x1="41" y1="25" x2="55" y2="25" />
+        <line x1="41" y1="225" x2="55" y2="225" />
+        <line x1="368" y1="175" x2="368" y2="225" />
+        <line x1="361" y1="175" x2="375" y2="175" />
+        <line x1="361" y1="225" x2="375" y2="225" />
+      </g>
+      <g fill="#172033" fontFamily="Georgia, serif" fontSize="25">
+        <text x="28" y="125" textAnchor="middle" transform="rotate(-90 28 125)">20 cm</text>
+        <text x="346" y="201" textAnchor="middle" transform="rotate(-90 346 201)">5 cm</text>
+      </g>
+    </svg>
+  </figure>
+);
+
+const kesebangunanSoalDuaPuluhDiagram = (
+  <figure className="mx-auto my-3 w-full max-w-lg rounded-xl border border-border/40 bg-white p-3">
+    <svg
+      viewBox="0 0 420 350"
+      role="img"
+      aria-labelledby="kesebangunan-q20-title kesebangunan-q20-desc"
+      className="block h-auto w-full"
+    >
+      <title id="kesebangunan-q20-title">Foto pada karton berukuran 20 cm × 25 cm</title>
+      <desc id="kesebangunan-q20-desc">
+        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas masing-masing 2 cm; sisa karton di bawah foto 3 cm.
+      </desc>
+      <rect x="100" y="28" width="200" height="250" fill="#f2c96d" stroke="#172033" strokeWidth="2" />
+      <rect x="120" y="48" width="160" height="200" fill="#73c6dc" stroke="#172033" strokeWidth="2" />
+      <text x="200" y="148" fill="#12354b" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="700">FOTO</text>
+      <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="13" textAnchor="middle">
+        <text x="200" y="20">Karton: 20 cm × 25 cm</text>
+        <text x="110" y="160" transform="rotate(-90 110 160)">2 cm</text>
+        <text x="290" y="160" transform="rotate(-90 290 160)">2 cm</text>
+        <text x="200" y="44">2 cm</text>
+        <text x="200" y="267">3 cm</text>
+      </g>
+      <path d="M100 288h200" stroke="#172033" strokeWidth="1.5" />
+      <path d="M100 283v10M300 283v10" stroke="#172033" strokeWidth="1.5" />
+    </svg>
+  </figure>
+);
+
 const materiSections: MateriSection[] = [
   {
     heading: "A. Kesebangunan",
@@ -77,7 +134,7 @@ Syarat dua segitiga kongruen:
 const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 1,
-    soal: "Perhatikan gambar bangun-bangun berikut:\n(i) Dua buah persegi\n(ii) Dua buah persegi panjang\n(iii) Dua buah segitiga sama sisi\n(iv) Dua buah belah ketupat\n\nPasangan bangun di samping yang pasti sebangun adalah ...",
+    soal: "Perhatikan gambar bangun-bangun berikut.\n\nPasangan bangun yang pasti sebangun adalah ...",
     options: ["A. (i) dan (ii)", "B. (i) dan (iii)", "C. (ii) dan (iii)", "D. (ii) dan (iv)"],
     jawaban: "B",
     pembahasan: "Bangun yang PASTI sebangun adalah bangun yang semua sudut bersesuaiannya selalu sama dan rasio sisi-sisi yang bersesuaian selalu konstan.\n\n• (i) Dua persegi → semua sudut 90° dan keempat sisinya sama panjang, sehingga rasio sisi selalu sama. PASTI sebangun ✓\n• (ii) Dua persegi panjang → sudut 90° tetapi rasio panjang : lebar bisa berbeda. Belum tentu sebangun ✗\n• (iii) Dua segitiga sama sisi → semua sudutnya 60° dan ketiga sisinya sama panjang. PASTI sebangun ✓\n• (iv) Dua belah ketupat → keempat sisinya sama panjang, tetapi sudutnya bisa berbeda. Belum tentu sebangun ✗\n\nJadi pasangan yang pasti sebangun adalah (i) dan (iii)."
@@ -119,10 +176,11 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 7,
-    soal: "Dari gambar di samping, panjang TR = ..",
-    options: ["A. 2 cm", "B. 3 cm", "C. 4 cm", "D. 6 cm"],
-    jawaban: "C",
-    pembahasan: "Gunakan konsep kesebangunan dua segitiga (atau sifat garis sejajar pada segitiga). Jika ada dua segitiga yang sebangun dengan T pada salah satu sisi, perbandingan sisi-sisi bersesuaian berlaku:\n\n$\\dfrac{TR}{\\text{sisi pasangannya}} = \\dfrac{\\text{sisi tegak 1}}{\\text{sisi tegak 2}}$\n\nMisal pada soal standar diketahui rasio sisi 6 : 9 (= 2 : 3) dan sisi pembanding 6 cm, maka:\nTR = $\\dfrac{2}{3} \\times 6 = 4$ cm.\n\nJadi panjang TR = 4 cm."
+    soal: "Perhatikan dua persegi panjang berikut.\n\nDua persegi panjang sebangun. Diketahui luas persegi panjang yang lebih besar adalah 320 cm² dan kedua persegi panjang tersebut sebangun. Berapakah keliling persegi panjang yang lebih kecil?",
+    options: ["A. 9 cm", "B. 18 cm", "C. 20 cm", "D. 72 cm"],
+    jawaban: "B",
+    pembahasan: "Perbandingan tinggi persegi panjang besar dan kecil adalah $20:5=4:1$. Karena keduanya sebangun, panjang sisi-sisinya juga berbanding $4:1$.\n\nLebar persegi panjang besar = $320 \\div 20 = 16$ cm, sehingga lebar persegi panjang kecil = $16 \\div 4 = 4$ cm. Tinggi persegi panjang kecil adalah 5 cm.\n\nKeliling persegi panjang kecil = $2(4+5)=18$ cm.",
+    sourceLabel: "TKA Matematika 2026",
   },
   {
     no: 8,
@@ -211,9 +269,9 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 20,
     soal: "Foto yang ditempel pada kertas karton berukuran 20 cm × 25 cm. Di sebelah kiri, kanan, dan atas foto terdapat sisa karton selebar 2 cm. Jika foto dan karton sebangun, luas karton bagian bawah foto adalah ....",
-    options: ["A. $26 \\text{ cm}^2$", "B. $30 \\text{ cm}^2$", "C. $36 \\text{ cm}^2$", "D. $72 \\text{ cm}^2$"],
-    jawaban: "D",
-    pembahasan: "Karton berukuran 20 cm × 25 cm.\n\nLebar foto = 20 − 2 − 2 = 16 cm.\n\nKarena foto sebangun dengan karton:\n\n$\\dfrac{16}{20} = \\dfrac{p_{foto}}{25}$\n\n$p_{foto} = \\dfrac{16 \\times 25}{20} = 20 \\text{ cm}$\n\nPanjang sisa bawah = 25 − 2 − 20 = 3 cm. (Catatan: dalam beberapa versi soal sisa bawah berbeda; rumus tetap sama.)\n\nLuas karton bagian bawah = lebar karton × tinggi sisa = 20 × $x$. Berdasarkan kunci yang umum digunakan untuk pola soal ini, luas karton bawah = 72 cm² (lebar 24 × tinggi 3, jika foto dan karton menggunakan satuan ukuran berbeda)."
+    options: ["A. $26 \\text{ cm}^2$", "B. $30 \\text{ cm}^2$", "C. $60 \\text{ cm}^2$", "D. $72 \\text{ cm}^2$"],
+    jawaban: "C",
+    pembahasan: "Lebar foto = $20-2-2=16$ cm. Karena foto dan karton sebangun, tinggi foto = $25\\times\\frac{16}{20}=20$ cm.\n\nSisa karton di bawah foto = $25-2-20=3$ cm. Luas bagian karton tersebut = $20\\times3=60$ cm².",
   },
   {
     no: 21,
@@ -239,6 +297,8 @@ const KesebangunanPage = () => (
   latihanDasar={latihanDasarTkaLama}
   gambarMap={{
     1: kesebangunanSoalSatuDiagram,
+    7: kesebangunanSoalTujuhDiagram,
+    20: kesebangunanSoalDuaPuluhDiagram,
     ...Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [
       Number(no),
       <img key={no} src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
