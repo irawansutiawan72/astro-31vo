@@ -573,7 +573,12 @@ const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, 
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
   if (!soal) throw new Error(`Soal statistika asal nomor ${nomorSumber} tidak ditemukan.`);
-  return { ...soal, no: index + 1 };
+  const no = index + 1;
+  return {
+    ...soal,
+    no,
+    ...([1, 7, 8].includes(no) ? { sourceLabel: "TKA Matematika 2026" } : {}),
+  };
 });
 
 const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
