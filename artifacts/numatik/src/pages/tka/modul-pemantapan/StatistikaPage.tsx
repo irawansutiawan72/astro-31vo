@@ -154,6 +154,14 @@ const latihanDasarSumber: LatihanSoal[] = [
     pembahasan: "Bandingkan nilai produksi karet pada tabel dengan titik-titik di setiap diagram. Produksi karet berturut-turut adalah 3,68; 3,50; 3,30; 3,12; 2,95; 2,75; dan 2,60 juta ton dari tahun 2018 sampai 2024. Nilainya turun setiap tahun, dan urutan titik tersebut sesuai dengan diagram D.\n\nDiagram A menunjukkan nilai gabungan karet dan kelapa, sedangkan diagram B dan C tidak menyajikan urutan data produksi salah satu komoditas sesuai tabel. Jadi, jawaban yang benar adalah D.",
   },
   {
+    no: 27,
+    type: "pg",
+    soal: "Tory suka sekali bermain game online. Dia selalu mengabaikan batasan waktu dalam bermain game online. Belakangan ini Tory sering merasa gelisah dan mudah marah apabila tidak diizinkan bermain. Dia juga sering merasakan sakit mata dan pusing. Dokter mengatakan bahwa Tory telah kecanduan bermain game online. Tory harus berusaha perlahan-lahan mengontrol waktu bermainnya. Dokter mengatakan bahwa batas waktu maksimal Tory diperbolehkan bermain adalah 7 jam dalam satu minggu. Selama 12 minggu, waktu bermain game Tory terus dipantau oleh kedua orang tuanya dan dilaporkan ke dokter.\n[DIAGRAM]\nDalam 12 minggu terakhir, Tory paling sering menghabiskan waktu bermain game online setiap minggunya yaitu selama …",
+    options: ["A. 10 jam", "B. 14 jam", "C. 20 jam", "D. 22 jam"],
+    jawaban: "B",
+    pembahasan: "Modus adalah nilai yang paling sering muncul. Pada diagram, durasi 14 jam terjadi pada minggu kelima, ketujuh, kedelapan, dan kesebelas, yaitu sebanyak 4 kali. Durasi 20 jam terjadi 2 kali, 12 jam terjadi 2 kali, sedangkan durasi lainnya lebih jarang.\n\nJadi, Tory paling sering bermain selama 14 jam per minggu. Jawaban yang benar adalah B.",
+  },
+  {
     "no": 1,
     "soal": "Perhatikan tabel distribusi frekuensi berikut. Pilih semua pernyataan yang benar.",
     "type": "pgk",
@@ -547,7 +555,7 @@ const latihanDasarSumber: LatihanSoal[] = [
   }
 ];
 
-const urutanNomorSoalSumber = [26, 3, 1, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const urutanNomorSoalSumber = [26, 3, 1, 5, 27, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
 const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
@@ -557,6 +565,7 @@ const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, inde
 
 const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
   26: <img src="/tka-statistika-produksi-karet-kelapa-tabel.webp" alt="Tabel produksi karet dan kelapa di Indonesia tahun 2018–2024, dalam juta ton" className="mx-auto block h-auto w-full max-w-2xl rounded-lg bg-white" loading="lazy" />,
+  27: <img src="/tka-statistika-durasi-game-tory.webp" alt="Diagram batang durasi bermain game Tory selama 12 minggu" className="mx-auto block h-auto w-full max-w-3xl rounded-lg bg-white" loading="lazy" />,
   1: renderTkaStatistikaVisual(1),
   5: renderTkaStatistikaVisual(5),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
