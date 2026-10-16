@@ -2,6 +2,7 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { koordinatKartesiusDasarPembahasan } from "@/data/pembahasan/koordinatKartesiusDasar";
+import petaPekaranganAyunda from "@assets/image_1792161242034.png";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Sistem Koordinat Kartesius", content: `Sistem koordinat kartesius memposisikan titik dengan acuan sumbu-x (mendatar) dan sumbu-y (tegak) yang saling tegak lurus.\n\n- Sumbu X: ke kanan positif, ke kiri negatif\n- Sumbu Y: ke atas positif, ke bawah negatif\n- Titik potong = titik asal O(0, 0)\n- Koordinat titik ditulis (x, y)\n  - x = absis (jarak dari sumbu-Y)\n  - y = ordinat (jarak dari sumbu-X)` },
@@ -130,6 +131,12 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 2, soal: "Perhatikan gambar berikut. Koordinat titik Q adalah....", options: ["A. $(3, 1)$", "B. $(3, -1)$", "C. $(1, 3)$", "D. $(-1, 3)$"] },
   { no: 3, soal: "Perhatikan gambar di samping!\nKoordinat-koordinat di bawah ini yang sesuai dengan gambar adalah....", options: ["A. $A(-2, -4)$", "B. $B(5, 4)$", "C. $C(-2, 6)$", "D. $D(1, -4)$"] },
   { no: 4, soal: "Pada persegi EFGH di bawah ini, tentukan koordinat titik E dan G.\n[DIAGRAM]", gambar: <SoalEmpatKoordinatSvg />, options: ["A. $E(0, 0)$ dan $G(a, 0)$", "B. $E(0, -1)$ dan $G(a, a)$", "C. $E(0, 0)$ dan $G(a, a)$", "D. $E(0, -1)$ dan $G(a, 0)$"] },
+  {
+    no: 26,
+    soal: "Pekarangan Rumah\n\nAyunda mulai memanfaatkan lahan kosong di pekarangan rumahnya untuk menanam berbagai jenis tanaman. Setelah melihat tanamannya tumbuh subur, ia berencana untuk menanam pohon mangga di pekarangan tersebut. Berikut adalah peta pekarangan rumah Ayunda.\n[DIAGRAM]\nDalam menentukan lokasi penanaman, Ayunda harus mempertimbangkan ketersediaan sinar matahari dan kualitas tanah. Berdasarkan faktor tersebut, Ayunda hanya akan menanam pohon mangga di lokasi 1, 3, dan 4, pada lahan yang masih kosong (belum ada tanaman lain).\nTentukan apakah pohon mangga bisa ditanam pada setiap koordinat berikut. Pilih Benar jika bisa ditanami dan Salah jika tidak bisa ditanami.",
+    gambar: <img src={petaPekaranganAyunda} alt="Peta pekarangan Ayunda dengan empat lokasi tanam pada bidang koordinat Kartesius" className="mx-auto my-2 h-auto max-h-[520px] w-full max-w-3xl rounded-lg bg-white object-contain" />,
+    sourceLabel: "TKA Matematika 2026",
+  },
   { no: 5, soal: "Titik $P(-5, 7)$ terletak di kuadran...", options: ["A. II", "B. IV", "C. I", "D. III"] },
   { no: 6, soal: "Perhatikan gambar di samping!\nKoordinat titik C dan D berturut-turut $C(4, -3)$ dan $D(4, 1)$, bangun ABCD disebut...", options: ["A. jajargenjang", "B. layang-layang", "C. persegi", "D. persegi panjang"] },
   { no: 7, soal: "Bangun yang terbentuk dari titik $M(0,3)$, $N(0,-3)$ dan $O(7,0)$ adalah bangun ....", options: ["A. Segitiga sama sisi", "B. Segitiga sembarang", "C. Segitiga sama kaki", "D. Segitiga siku-siku"] },
@@ -147,7 +154,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 ];
 
 type ComplexVariant = {
-  soal: string;
+  soal?: string;
   pernyataan: string[];
   pembahasan: string;
 };
@@ -283,20 +290,31 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     jawabanBS: ["B", "B", "S"],
     pembahasan: "Titik tengahnya adalah $M=((2+10)/2,(8+4)/2)=(6,6)$. Jadi (1) dan (2) benar, sedangkan (3) salah.",
   },
+  26: {
+    pernyataan: [
+      "Koordinat $(9, -2)$ bisa ditanami pohon mangga.",
+      "Koordinat $(-2, 9)$ bisa ditanami pohon mangga.",
+      "Koordinat $(-9, -9)$ bisa ditanami pohon mangga.",
+    ],
+    jawabanBS: ["B", "S", "S"],
+    pembahasan: "Koordinat $(9,-2)$ berada di lokasi 4 yang diizinkan dan lahannya kosong, jadi bisa ditanami. Koordinat $(-2,9)$ berada di lokasi 2 yang tidak diizinkan. Koordinat $(-9,-9)$ berada di lokasi 3 yang diizinkan, tetapi lahannya sudah ditanami. Jadi jawabannya Benar, Salah, Salah.",
+  },
 };
 
 const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
-  .sort((a, b) => a.no - b.no)
-  .map((soal) => {
-    const type = soal.no % 3 === 1 ? "pg" : soal.no % 3 === 2 ? "pgk" : "pgkbs";
-    const pgk = pgkVariants[soal.no];
-    const pgkbs = pgkbsVariants[soal.no];
+  .map((soal, index) => {
+    const sourceNo = soal.no;
+    const displayNo = index + 1;
+    const type = pgkVariants[sourceNo] ? "pgk" : pgkbsVariants[sourceNo] ? "pgkbs" : "pg";
+    const pgk = pgkVariants[sourceNo];
+    const pgkbs = pgkbsVariants[sourceNo];
 
     if (type === "pgk" && pgk) {
       return {
         ...soal,
+        no: displayNo,
         type,
-        soal: pgk.soal,
+        soal: pgk.soal ?? soal.soal,
         options: undefined,
         pernyataan: pgk.pernyataan,
         jawabanPGK: pgk.jawabanPGK,
@@ -308,8 +326,9 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
     if (type === "pgkbs" && pgkbs) {
       return {
         ...soal,
+        no: displayNo,
         type,
-        soal: pgkbs.soal,
+        soal: pgkbs.soal ?? soal.soal,
         options: undefined,
         pernyataan: pgkbs.pernyataan,
         jawabanBS: pgkbs.jawabanBS,
@@ -318,12 +337,13 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
       };
     }
 
-    const pembahasan = koordinatKartesiusDasarPembahasan[soal.no];
+    const pembahasan = koordinatKartesiusDasarPembahasan[sourceNo];
     return {
       ...soal,
+      no: displayNo,
       type: "pg" as const,
-      jawaban: kunciJawaban[soal.no],
-      pembahasan: pembahasan ? JSON.stringify(pembahasan) : "",
+      jawaban: kunciJawaban[sourceNo],
+      pembahasan: soal.pembahasan ?? (pembahasan ? JSON.stringify(pembahasan) : ""),
     };
   });
 
