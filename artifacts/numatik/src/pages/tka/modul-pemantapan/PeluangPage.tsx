@@ -244,7 +244,14 @@ const latihanDasar: LatihanSoal[] = [
   ...latihanPemantapan.filter((soal) => soal.no !== 10),
   ...soalTambahan.filter((soal) => soal.no === 19),
   ...soalTambahan.filter((soal) => soal.no !== 19),
-].map((soal, index) => ({ ...soal, no: index + 1 }));
+].map((soal, index) => {
+  const no = index + 1;
+  return {
+    ...soal,
+    no,
+    ...(no >= 13 && no <= 15 ? { sourceLabel: "TKA Matematika 2026" } : {}),
+  };
+});
 
 const ruangSampelDuaDadu = (
   <div className="space-y-4 min-w-[600px]">

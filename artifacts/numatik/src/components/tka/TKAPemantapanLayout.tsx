@@ -37,6 +37,8 @@ export interface LatihanSoal {
   pembahasan?: string;
   /** Optional diagram/image to show below the soal text */
   gambar?: React.ReactNode;
+  /** Optional source label displayed on exercise questions. */
+  sourceLabel?: string;
   /** Optional table or visual to show inside the example-question explanation. */
   pembahasanDiagram?: React.ReactNode;
   /** Key for a reusable question diagram supplied by the module page. */
@@ -998,6 +1000,11 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                           style={{ background: typeBadge.bg, border: `1px solid ${typeBadge.border}` }}>
                           {typeBadge.label}
                         </span>
+                        {soal.sourceLabel && (
+                          <span className="ml-1 inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-2 py-0.5 text-[9px] font-bold font-display text-cyan-200">
+                            {soal.sourceLabel}
+                          </span>
+                        )}
                         {/* Soal text */}
                         <div
                           className="font-body text-sm leading-relaxed"
