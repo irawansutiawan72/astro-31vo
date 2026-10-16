@@ -386,7 +386,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarSource
     };
   })
   .map((soal) => (
-    [6, 10].includes(soal.no)
+    soal.no === 10
       ? { ...soal, sourceLabel: "TKA Matematika 2026" }
       : soal
   ));
