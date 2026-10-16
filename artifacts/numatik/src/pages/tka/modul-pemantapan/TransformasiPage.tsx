@@ -384,7 +384,12 @@ const latihanDasar: LatihanSoal[] = latihanDasarSource
       type: "pg" as const,
       jawaban: soal.jawaban ?? kunciJawaban[sourceNo - 1],
     };
-  });
+  })
+  .map((soal) => (
+    [6, 10].includes(soal.no)
+      ? { ...soal, sourceLabel: "TKA Matematika 2026" }
+      : soal
+  ));
 
 const uploadedRefleksiImage = "/soal-refleksi-segitiga-klm.png";
 
