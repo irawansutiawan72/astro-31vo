@@ -162,6 +162,19 @@ const latihanDasarSumber: LatihanSoal[] = [
     pembahasan: "Modus adalah nilai yang paling sering muncul. Pada diagram, durasi 14 jam terjadi pada minggu kelima, ketujuh, kedelapan, dan kesebelas, yaitu sebanyak 4 kali. Durasi 20 jam terjadi 2 kali, 12 jam terjadi 2 kali, sedangkan durasi lainnya lebih jarang.\n\nJadi, Tory paling sering bermain selama 14 jam per minggu. Jawaban yang benar adalah B.",
   },
   {
+    no: 28,
+    type: "pgk",
+    soal: "Tory suka sekali bermain game online dan sering mengabaikan batasan waktu bermain. Belakangan ini ia merasa gelisah dan mudah marah apabila tidak diizinkan bermain, serta sering merasakan sakit mata dan pusing. Dokter mengatakan Tory telah kecanduan bermain game online dan harus berusaha perlahan-lahan mengontrol waktu bermainnya. Batas waktu maksimal yang disarankan adalah 7 jam dalam satu minggu.\n\nSelama 12 minggu, waktu bermain Tory dipantau oleh kedua orang tuanya dan dilaporkan kepada dokter. Dokter membandingkan rata-rata waktu bermain setiap empat minggu dan menyebutnya sebagai fase: fase pertama membandingkan empat minggu pertama dengan empat minggu kedua; fase kedua membandingkan empat minggu kedua dengan empat minggu ketiga; dan fase akhir membandingkan empat minggu ketiga dengan batas maksimal 7 jam.\n[DIAGRAM]\nHal tersebut dilakukan untuk melihat perkembangan kebiasaan Tory selama fase penyembuhan. Pilih semua jawaban yang benar.",
+    pernyataan: [
+      "Fase pertama berkurang 5,5 jam.",
+      "Fase kedua berkurang 2,25 jam.",
+      "Fase akhir berkurang 5,25 jam.",
+      "Fase penyembuhan berkurang 8 jam."
+    ],
+    jawabanPGK: [0, 3],
+    pembahasan: "Hitung rata-rata waktu bermain pada tiap kelompok empat minggu:\n\nEmpat minggu pertama: $(22+20+18+20)\\div4=20$ jam.\nEmpat minggu kedua: $(14+16+14+14)\\div4=14{,}5$ jam.\nEmpat minggu ketiga: $(12+10+14+12)\\div4=12$ jam.\n\nFase pertama berkurang $20-14{,}5=5{,}5$ jam, jadi pernyataan 1 benar. Fase kedua berkurang $14{,}5-12=2{,}5$ jam, bukan 2,25 jam, jadi pernyataan 2 salah. Fase akhir selisihnya $12-7=5$ jam, bukan 5,25 jam, jadi pernyataan 3 salah. Secara keseluruhan dari rata-rata fase pertama ke fase ketiga, penurunannya $20-12=8$ jam, jadi pernyataan 4 benar.\n\nJawaban yang benar adalah pernyataan 1 dan 4.",
+  },
+  {
     "no": 1,
     "soal": "Perhatikan tabel distribusi frekuensi berikut. Pilih semua pernyataan yang benar.",
     "type": "pgk",
@@ -555,7 +568,7 @@ const latihanDasarSumber: LatihanSoal[] = [
   }
 ];
 
-const urutanNomorSoalSumber = [26, 3, 1, 5, 27, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const urutanNomorSoalSumber = [26, 3, 1, 5, 27, 7, 8, 28, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
 const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
@@ -566,6 +579,12 @@ const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, inde
 const visualBerdasarkanNomorSumber: Record<number, React.ReactNode> = {
   26: <img src="/tka-statistika-produksi-karet-kelapa-tabel.webp" alt="Tabel produksi karet dan kelapa di Indonesia tahun 2018–2024, dalam juta ton" className="mx-auto block h-auto w-full max-w-2xl rounded-lg bg-white" loading="lazy" />,
   27: <img src="/tka-statistika-durasi-game-tory.webp" alt="Diagram batang durasi bermain game Tory selama 12 minggu" className="mx-auto block h-auto w-full max-w-3xl rounded-lg bg-white" loading="lazy" />,
+  28: (
+    <div className="mx-auto grid w-full max-w-4xl gap-3">
+      <img src="/tka-statistika-durasi-game-tory.webp" alt="Diagram batang durasi bermain game Tory selama 12 minggu" className="block h-auto w-full rounded-lg bg-white" loading="lazy" />
+      <img src="/tka-statistika-fase-penyembuhan-tory.webp" alt="Skema fase pemantauan perkembangan kebiasaan bermain game Tory" className="block h-auto w-full rounded-lg bg-white" loading="lazy" />
+    </div>
+  ),
   1: renderTkaStatistikaVisual(1),
   5: renderTkaStatistikaVisual(5),
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto/v1787612146/STATISTIKA_-_LATIHAN_DASAR_-_NO_13_fxctir.png",
