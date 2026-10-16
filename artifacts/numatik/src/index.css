@@ -1083,6 +1083,13 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .brsl-animated-diagram animate,
+  .brsl-animated-diagram animateTransform {
+    display: none;
+  }
+}
+
 .tka-responsive-diagram {
   width: 50%;
   margin-left: auto;
