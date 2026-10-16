@@ -12,8 +12,81 @@ const materiSections: MateriSection[] = [
   { heading: "F. Posisi Relatif", content: `Posisi relatif titik $T(x_2, y_2)$ terhadap titik acuan $D(x_1, y_1)$:\n\n$T_D = (x_2 - x_1,\\ y_2 - y_1)$` },
 ];
 
+const SoalSatuKoordinatSvg = () => {
+  const originX = 275;
+  const originY = 218;
+  const unit = 36;
+  const ticks = Array.from({ length: 11 }, (_, index) => index - 5);
+  const points = [
+    { name: "A", x: 1, y: 3, dx: 9, dy: -10 },
+    { name: "B", x: -3, y: 2, dx: -18, dy: -10 },
+    { name: "C", x: 3, y: 1, dx: 9, dy: -8 },
+    { name: "D", x: -2, y: -2, dx: 9, dy: 18 },
+  ];
+  const toX = (x: number) => originX + x * unit;
+  const toY = (y: number) => originY - y * unit;
+
+  return (
+    <div className="mx-auto my-3 w-full max-w-xl rounded-xl bg-white p-2">
+      <svg
+        viewBox="0 0 560 440"
+        className="block h-auto w-full"
+        role="img"
+        aria-label="Bidang koordinat Kartesius dengan titik A di (1, 3), B di (-3, 2), C di (3, 1), dan D di (-2, -2)"
+      >
+        <defs>
+          <marker id="koordinat-soal-1-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#334155" />
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="560" height="440" rx="10" fill="#ffffff" />
+        {ticks.map((tick) => (
+          <g key={`grid-${tick}`}>
+            <line x1={toX(tick)} y1={38} x2={toX(tick)} y2={398} stroke="#dbe3ed" strokeWidth="1" />
+            <line x1={95} y1={toY(tick)} x2={455} y2={toY(tick)} stroke="#dbe3ed" strokeWidth="1" />
+          </g>
+        ))}
+        <line x1="79" y1={originY} x2="478" y2={originY} stroke="#334155" strokeWidth="2" markerEnd="url(#koordinat-soal-1-arrow)" />
+        <line x1={originX} y1="414" x2={originX} y2="12" stroke="#334155" strokeWidth="2" markerEnd="url(#koordinat-soal-1-arrow)" />
+        {ticks.map((tick) => (
+          <g key={`x-tick-${tick}`}>
+            <line x1={toX(tick)} y1={originY - 4} x2={toX(tick)} y2={originY + 4} stroke="#334155" strokeWidth="1.5" />
+            <text x={toX(tick)} y={originY + 22} textAnchor="middle" fontSize="11" fill="#334155">{tick}</text>
+          </g>
+        ))}
+        {ticks.map((tick) => (
+          <g key={`y-tick-${tick}`}>
+            <line x1={originX - 4} y1={toY(tick)} x2={originX + 4} y2={toY(tick)} stroke="#334155" strokeWidth="1.5" />
+            {tick !== 0 && <text x={originX - 11} y={toY(tick) + 4} textAnchor="end" fontSize="11" fill="#334155">{tick}</text>}
+          </g>
+        ))}
+        <text x="490" y={originY + 5} fontSize="14" fontWeight="700" fill="#0f172a">x</text>
+        <text x={originX + 7} y="18" fontSize="14" fontWeight="700" fill="#0f172a">y</text>
+        {points.map((point) => (
+          <g key={point.name}>
+            <circle cx={toX(point.x)} cy={toY(point.y)} r="5" fill="#2563eb" stroke="#ffffff" strokeWidth="2" />
+            <text
+              x={toX(point.x) + point.dx}
+              y={toY(point.y) + point.dy}
+              fontSize="14"
+              fontWeight="700"
+              fill="#0f172a"
+              paintOrder="stroke"
+              stroke="#ffffff"
+              strokeWidth="3"
+              strokeLinejoin="round"
+            >
+              {point.name}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
 const latihanDasarTkaLama: LatihanSoal[] = [
-  { no: 1, soal: "Perhatikan titik-titik pada koordinat kartesius berikut.\nTitik yang berkoordinat (1, 3) adalah.....", options: ["A. titik A", "B. titik B", "C. titik C", "D. titik D"] },
+  { no: 1, soal: "Perhatikan titik-titik pada koordinat kartesius berikut.\nTitik yang berkoordinat (1, 3) adalah.....", gambar: <SoalSatuKoordinatSvg />, options: ["A. titik A", "B. titik B", "C. titik C", "D. titik D"] },
   { no: 2, soal: "Perhatikan gambar berikut. Koordinat titik Q adalah....", options: ["A. $(3, 1)$", "B. $(3, -1)$", "C. $(1, 3)$", "D. $(-1, 3)$"] },
   { no: 3, soal: "Perhatikan gambar di samping!\nKoordinat-koordinat di bawah ini yang sesuai dengan gambar adalah....", options: ["A. $A(-2, -4)$", "B. $B(5, 4)$", "C. $C(-2, 6)$", "D. $D(1, -4)$"] },
   { no: 4, soal: "Pada persegi EFGH dibawah ini, tentukan koordinat titik E dan G?", options: ["A. $E(0,0)$ dan $G(a,0)$", "B. $E(0,-1)$ dan $G(a,a)$", "C. $E(0,0)$ dan $G(a,a)$", "D. $E(0,-1)$ dan $G(a,0)$"] },
