@@ -568,7 +568,7 @@ const latihanDasarSumber: LatihanSoal[] = [
   }
 ];
 
-const urutanNomorSoalSumber = [26, 3, 1, 5, 27, 7, 8, 28, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
+const urutanNomorSoalSumber = [26, 3, 1, 5, 7, 8, 27, 28, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24];
 const soalBerdasarkanNomor = new Map(latihanDasarSumber.map((soal) => [soal.no, soal]));
 const latihanDasar: LatihanSoal[] = urutanNomorSoalSumber.map((nomorSumber, index) => {
   const soal = soalBerdasarkanNomor.get(nomorSumber);
