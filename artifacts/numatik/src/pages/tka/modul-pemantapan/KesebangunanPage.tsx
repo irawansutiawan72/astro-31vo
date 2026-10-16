@@ -28,7 +28,7 @@ const kesebangunanSoalSatuParts = [
 ] as const;
 
 const kesebangunanSoalSatuDiagram = (
-  <div role="group" aria-label="Gambar soal nomor 1" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <div role="group" aria-label="Gambar soal nomor 1" className="kesebangunan-landscape-diagram grid grid-cols-1 gap-3 sm:grid-cols-2">
     {kesebangunanSoalSatuParts.map(({ bagian, src }) => (
       <figure key={bagian} className="min-w-0 rounded-xl border border-border/40 bg-background p-2">
         <figcaption className="mb-1 text-center text-sm font-semibold">({bagian})</figcaption>
@@ -43,7 +43,7 @@ const kesebangunanSoalSatuDiagram = (
 );
 
 const kesebangunanSoalTujuhDiagram = (
-  <figure className="mx-auto my-3 w-full max-w-2xl rounded-xl border border-border/40 bg-white p-3">
+  <figure className="mx-auto w-full max-w-2xl rounded-xl border border-border/40 bg-white p-3">
     <svg
       viewBox="0 0 520 260"
       role="img"
@@ -72,8 +72,48 @@ const kesebangunanSoalTujuhDiagram = (
   </figure>
 );
 
+const kesebangunanSoalSembilanBelasDiagram = (
+  <figure className="kesebangunan-landscape-diagram mx-auto my-3 w-full max-w-lg rounded-xl border border-border/40 bg-white p-3">
+    <svg
+      viewBox="0 0 420 320"
+      role="img"
+      aria-labelledby="kesebangunan-q19-title kesebangunan-q19-desc"
+      className="block h-auto w-full"
+    >
+      <title id="kesebangunan-q19-title">Foto di atas karton berukuran 10 cm × 15 cm</title>
+      <desc id="kesebangunan-q19-desc">
+        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas foto masing-masing 2 cm. Bagian bawah karton ditandai dengan arsiran.
+      </desc>
+      <defs>
+        <pattern id="kesebangunan-q19-bottom-hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#fde68a" />
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#d97706" strokeWidth="3" />
+        </pattern>
+      </defs>
+      <text x="210" y="25" fill="#172033" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="14">
+        Karton: 10 cm × 15 cm
+      </text>
+      <rect x="140" y="50" width="140" height="210" fill="#f2c96d" stroke="#172033" strokeWidth="2" />
+      <rect x="140" y="204" width="140" height="56" fill="url(#kesebangunan-q19-bottom-hatch)" />
+      <rect x="168" y="78" width="84" height="126" fill="#73c6dc" stroke="#172033" strokeWidth="2" />
+      <text x="210" y="148" fill="#12354b" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="700">
+        FOTO
+      </text>
+      <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="12" textAnchor="middle">
+        <text x="210" y="73">2 cm</text>
+        <text x="153" y="152" transform="rotate(-90 153 152)">2 cm</text>
+        <text x="267" y="152" transform="rotate(-90 267 152)">2 cm</text>
+        <text x="210" y="285">10 cm</text>
+        <text x="117" y="155" transform="rotate(-90 117 155)">15 cm</text>
+      </g>
+      <path d="M140 272h140M140 267v10M280 267v10" stroke="#172033" strokeWidth="1.5" />
+      <path d="M122 50v210M117 50h10M117 260h10" stroke="#172033" strokeWidth="1.5" />
+    </svg>
+  </figure>
+);
+
 const kesebangunanSoalDuaPuluhDiagram = (
-  <figure className="mx-auto my-3 w-full max-w-lg rounded-xl border border-border/40 bg-white p-3">
+  <figure className="kesebangunan-landscape-diagram mx-auto my-3 w-full max-w-lg rounded-xl border border-border/40 bg-white p-3">
     <svg
       viewBox="0 0 420 350"
       role="img"
@@ -82,9 +122,16 @@ const kesebangunanSoalDuaPuluhDiagram = (
     >
       <title id="kesebangunan-q20-title">Foto pada karton berukuran 20 cm × 25 cm</title>
       <desc id="kesebangunan-q20-desc">
-        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas masing-masing 2 cm; sisa karton di bawah foto 3 cm.
+        Foto sebangun dengan karton. Jarak kiri, kanan, dan atas masing-masing 2 cm. Bagian karton di bawah foto diarsir berbeda.
       </desc>
+      <defs>
+        <pattern id="kesebangunan-q20-bottom-hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#fde68a" />
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#d97706" strokeWidth="3" />
+        </pattern>
+      </defs>
       <rect x="100" y="28" width="200" height="250" fill="#f2c96d" stroke="#172033" strokeWidth="2" />
+      <rect x="100" y="248" width="200" height="30" fill="url(#kesebangunan-q20-bottom-hatch)" />
       <rect x="120" y="48" width="160" height="200" fill="#73c6dc" stroke="#172033" strokeWidth="2" />
       <text x="200" y="148" fill="#12354b" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="700">FOTO</text>
       <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="13" textAnchor="middle">
@@ -92,10 +139,7 @@ const kesebangunanSoalDuaPuluhDiagram = (
         <text x="110" y="160" transform="rotate(-90 110 160)">2 cm</text>
         <text x="290" y="160" transform="rotate(-90 290 160)">2 cm</text>
         <text x="200" y="44">2 cm</text>
-        <text x="200" y="267">3 cm</text>
       </g>
-      <path d="M100 288h200" stroke="#172033" strokeWidth="1.5" />
-      <path d="M100 283v10M300 283v10" stroke="#172033" strokeWidth="1.5" />
     </svg>
   </figure>
 );
@@ -134,9 +178,10 @@ Syarat dua segitiga kongruen:
 const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 1,
-    soal: "Perhatikan gambar bangun-bangun berikut.\n\nPasangan bangun yang pasti sebangun adalah ...",
+    soal: "Perhatikan gambar bangun-bangun berikut.\nPasangan bangun yang pasti sebangun adalah ...",
     options: ["A. (i) dan (ii)", "B. (i) dan (iii)", "C. (ii) dan (iii)", "D. (ii) dan (iv)"],
     jawaban: "B",
+    diagramTight: true,
     pembahasan: "Bangun yang PASTI sebangun adalah bangun yang semua sudut bersesuaiannya selalu sama dan rasio sisi-sisi yang bersesuaian selalu konstan.\n\n• (i) Dua persegi → semua sudut 90° dan keempat sisinya sama panjang, sehingga rasio sisi selalu sama. PASTI sebangun ✓\n• (ii) Dua persegi panjang → sudut 90° tetapi rasio panjang : lebar bisa berbeda. Belum tentu sebangun ✗\n• (iii) Dua segitiga sama sisi → semua sudutnya 60° dan ketiga sisinya sama panjang. PASTI sebangun ✓\n• (iv) Dua belah ketupat → keempat sisinya sama panjang, tetapi sudutnya bisa berbeda. Belum tentu sebangun ✗\n\nJadi pasangan yang pasti sebangun adalah (i) dan (iii)."
   },
   {
@@ -161,13 +206,6 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pembahasan: "Dari gambar diketahui:\n• Sudut pertama yang bersesuaian sama besar (misalnya $\\angle A = \\angle C$)\n• Sisi yang menghubungkan kedua sudut tersebut sama panjang: AD = CE\n• Sudut kedua yang bersesuaian sama besar (misalnya $\\angle D = \\angle E$)\n\nKarena dua sudut sama besar dan sisi yang berada di antara kedua sudut tersebut sama panjang, kedua segitiga kongruen menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd)."
   },
   {
-    no: 5,
-    soal: "Diketahui $\\triangle$ABC dan $\\triangle$KLM adalah dua buah segitiga yang kongruen. Jika diketahui $\\angle A = \\angle L$ dan $\\angle C = \\angle K$, maka pasangan sisi-sisi yang sama panjang adalah ....",
-    options: ["A. AB = KM, BC = ML, AC = KL", "B. AB = ML, BC = KL, AC = KM", "C. AB = KL, BC = KM, AC = ML", "D. AB = ML, BC = KM, AC = KL"],
-    jawaban: "D",
-    pembahasan: "Karena kedua segitiga kongruen, setiap sudut bersesuaian dengan sudut yang sama besar, dan sisi yang bersesuaian terletak di hadapan sudut yang sama besar.\n\nKorespondensi titik sudut:\n• $\\angle A = \\angle L$ → A ↔ L\n• $\\angle C = \\angle K$ → C ↔ K\n• Maka $\\angle B = \\angle M$ → B ↔ M\n\nSisi yang bersesuaian (di hadapan sudut yang sama):\n• AB ↔ LM (di hadapan ∠C dan ∠K) → AB = ML\n• BC ↔ MK (di hadapan ∠A dan ∠L) → BC = KM\n• AC ↔ LK (di hadapan ∠B dan ∠M) → AC = KL"
-  },
-  {
     no: 6,
     soal: "ABCD trapesium sama kaki. Banyak pasangan segitiga kongruen pada gambar tersebut adalah …",
     options: ["A. 4 pasang", "B. 5 pasang", "C. 6 pasang", "D. 7 pasang"],
@@ -176,9 +214,10 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 7,
-    soal: "Perhatikan dua persegi panjang berikut.\n\nDua persegi panjang sebangun. Diketahui luas persegi panjang yang lebih besar adalah 320 cm² dan kedua persegi panjang tersebut sebangun. Berapakah keliling persegi panjang yang lebih kecil?",
+    soal: "Perhatikan dua persegi panjang berikut.\nDua persegi panjang sebangun. Diketahui luas persegi panjang yang lebih besar adalah 320 cm² dan kedua persegi panjang tersebut sebangun. Berapakah keliling persegi panjang yang lebih kecil?",
     options: ["A. 9 cm", "B. 18 cm", "C. 20 cm", "D. 72 cm"],
     jawaban: "B",
+    diagramTight: true,
     pembahasan: "Perbandingan tinggi persegi panjang besar dan kecil adalah $20:5=4:1$. Karena keduanya sebangun, panjang sisi-sisinya juga berbanding $4:1$.\n\nLebar persegi panjang besar = $320 \\div 20 = 16$ cm, sehingga lebar persegi panjang kecil = $16 \\div 4 = 4$ cm. Tinggi persegi panjang kecil adalah 5 cm.\n\nKeliling persegi panjang kecil = $2(4+5)=18$ cm.",
     sourceLabel: "TKA Matematika 2026",
   },
@@ -298,10 +337,11 @@ const KesebangunanPage = () => (
   gambarMap={{
     1: kesebangunanSoalSatuDiagram,
     7: kesebangunanSoalTujuhDiagram,
+    19: kesebangunanSoalSembilanBelasDiagram,
     20: kesebangunanSoalDuaPuluhDiagram,
     ...Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [
       Number(no),
-      <img key={no} src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
+      <img key={no} src={src} alt={`Gambar soal ${no}`} className="kesebangunan-landscape-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
     ])),
   }}
   />

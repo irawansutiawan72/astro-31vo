@@ -37,6 +37,8 @@ export interface LatihanSoal {
   pembahasan?: string;
   /** Optional diagram/image to show below the soal text */
   gambar?: React.ReactNode;
+  /** Reduce vertical whitespace around a diagram inserted within the question text. */
+  diagramTight?: boolean;
   /** Optional source label displayed on exercise questions. */
   sourceLabel?: string;
   /** Optional table or visual to show inside the example-question explanation. */
@@ -1040,12 +1042,12 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                             }
                             return (
                               <Fragment key={lineIdx}>
-                                {lineIdx > 0 && <br />}
+                                {lineIdx > 0 && !(soal.diagramTight && lineIdx === 1) && <br />}
                                 {contentRenderer(line)}
                                 {!hasInlineVisual && !diagramInserted && diagram && /berikut/i.test(line) && (
                                   (() => {
                                     diagramInserted = true;
-                                   return <div className={`my-2 min-w-0 max-w-full overflow-x-auto ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>;
+                                   return <div className={`${soal.diagramTight ? "my-0" : "my-2"} min-w-0 max-w-full overflow-x-auto ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>;
                                   })()
                                 )}
                               </Fragment>
