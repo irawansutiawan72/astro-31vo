@@ -89,17 +89,6 @@ export const koordinatKartesiusDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan:
       "Segitiga $ABC$ adalah segitiga siku-siku di $B$.",
   },
-  9: {
-    jawaban: "D. $(4, 1)$",
-    konsepTrik:
-      "Untuk membentuk segitiga siku-siku dengan dua titik diketahui, titik ketiga sering kali memiliki absis dari satu titik dan ordinat dari titik lainnya.",
-    stepByStep:
-      "$P(4, 6), Q(7, 1)$. Pilih $R(4, 1)$:\n$PR$ vertikal: panjang $|6 - 1| = 5$\n$QR$ horizontal: panjang $|7 - 4| = 3$\n$PR \\perp QR$ di $R$ → siku-siku di $R$ ✓",
-    tips:
-      "Cara cepat: ambil $(x_P, y_Q)$ atau $(x_Q, y_P)$ untuk mendapatkan siku-siku.",
-    kesimpulan:
-      "Koordinat titik $R$ adalah $(4, 1)$.",
-  },
   10: {
     jawaban: "B. Persegi panjang",
     konsepTrik:
@@ -119,17 +108,6 @@ export const koordinatKartesiusDasarPembahasan: Record<number, Pembahasan> = {
       "$A(-3, 5), B(-5, 1), C(-3, -3), D(-1, 1)$.\n$AB = \\sqrt{4 + 16} = \\sqrt{20}$\n$BC = \\sqrt{4 + 16} = \\sqrt{20}$\n$CD = \\sqrt{4 + 16} = \\sqrt{20}$\n$DA = \\sqrt{4 + 16} = \\sqrt{20}$\nKeempat sisinya sama → belah ketupat.\nDiagonal $AC$ vertikal dan $BD$ horizontal → saling tegak lurus.",
     tips:
       "Belah ketupat = jajar genjang dengan keempat sisi sama panjang.",
-    kesimpulan:
-      "Bangun ABCD adalah belah ketupat.",
-  },
-  12: {
-    jawaban: "D. Belah ketupat",
-    konsepTrik:
-      "Sama dengan nomor 11: keempat sisinya sama panjang.",
-    stepByStep:
-      "Titik-titik identik dengan nomor 11.\n$AB = BC = CD = DA = \\sqrt{20}$\nKeempat sisi sama panjang → belah ketupat.",
-    tips:
-      "Persegi adalah kasus khusus belah ketupat dengan sudut $90°$.",
     kesimpulan:
       "Bangun ABCD adalah belah ketupat.",
   },
@@ -210,28 +188,6 @@ export const koordinatKartesiusDasarPembahasan: Record<number, Pembahasan> = {
     kesimpulan:
       "Koordinat titik $Q$ adalah $(2, -7)$.",
   },
-  20: {
-    jawaban: "C. $(7, -7)$",
-    konsepTrik:
-      "$B = 2M - A$ untuk menentukan ujung lain dari ruas garis.",
-    stepByStep:
-      "$M(4, -1), A(1, 5)$.\n$B = (2 \\cdot 4 - 1, 2 \\cdot (-1) - 5) = (7, -7)$",
-    tips:
-      "Cek: titik tengah $A(1,5)$ dan $B(7,-7)$ = $(4, -1) = M$ ✓.",
-    kesimpulan:
-      "Koordinat titik $B$ adalah $(7, -7)$.",
-  },
-  21: {
-    jawaban: "C. 5",
-    konsepTrik:
-      "Cari titik tengah $M$ dulu, lalu hitung jaraknya ke garis vertikal.",
-    stepByStep:
-      "$A(1, 1), B(3, 5)$.\n$M = \\left(\\dfrac{1 + 3}{2}, \\dfrac{1 + 5}{2}\\right) = (2, 3)$\nJarak $M$ ke garis $x = 7$: $|2 - 7| = 5$",
-    tips:
-      "Selesaikan langkah demi langkah: titik tengah dulu, jarak kemudian.",
-    kesimpulan:
-      "Jarak titik $M$ ke garis $x = 7$ adalah $5$ satuan.",
-  },
   22: {
     jawaban: "B. 10",
     konsepTrik:
@@ -242,38 +198,5 @@ export const koordinatKartesiusDasarPembahasan: Record<number, Pembahasan> = {
       "Disebut juga rumus shoelace; tanda mutlak penting agar hasil positif.",
     kesimpulan:
       "Luas segitiga $PQR$ adalah $10$ satuan luas.",
-  },
-  23: {
-    jawaban: "D. 4",
-    konsepTrik:
-      "Gunakan rumus jarak: $\\sqrt{(x - x_Q)^2 + (y - y_Q)^2} = 10$.",
-    stepByStep:
-      "$P(x, 5), Q(-4, -1)$, jarak = $10$.\n$(x + 4)^2 + (5 + 1)^2 = 100$\n$(x + 4)^2 + 36 = 100$\n$(x + 4)^2 = 64$\n$x + 4 = \\pm 8$\n$x = 4$ atau $x = -12$",
-    tips:
-      "Akar kuadrat selalu memberi dua kemungkinan: positif dan negatif.",
-    kesimpulan:
-      "Salah satu nilai $x$ yang mungkin adalah $4$.",
-  },
-  24: {
-    jawaban: "B. 4",
-    konsepTrik:
-      "Rumus jarak titik $(x_1, y_1)$ ke garis $ax + by + c = 0$:\n$d = \\dfrac{|ax_1 + by_1 + c|}{\\sqrt{a^2 + b^2}}$",
-    stepByStep:
-      "$P(2, 5)$, garis $3x + 4y - 6 = 0$.\n$d = \\dfrac{|3(2) + 4(5) - 6|}{\\sqrt{3^2 + 4^2}} = \\dfrac{|6 + 20 - 6|}{\\sqrt{25}} = \\dfrac{20}{5} = 4$",
-    tips:
-      "Penyebut $\\sqrt{a^2 + b^2}$; sering disederhanakan menjadi $5$ untuk koefisien $3, 4$.",
-    kesimpulan:
-      "Jarak tegak lurus dari $P$ ke garis tersebut adalah $4$ satuan.",
-  },
-  25: {
-    jawaban: "B. Tiga langkah ke kanan dan enam langkah ke bawah",
-    konsepTrik:
-      "Posisi relatif terhadap titik acuan: $T_D = (x_T - x_D, y_T - y_D)$.",
-    stepByStep:
-      "Titik $(3, -5)$ relatif terhadap acuan $(0, 1)$:\n$(3 - 0, -5 - 1) = (3, -6)$\nArtinya: $3$ langkah ke kanan (x positif) dan $6$ langkah ke bawah (y negatif).",
-    tips:
-      "Tanda positif $x$ = kanan, negatif $x$ = kiri; positif $y$ = atas, negatif $y$ = bawah.",
-    kesimpulan:
-      "Posisi relatifnya: tiga langkah ke kanan dan enam langkah ke bawah.",
   },
 };

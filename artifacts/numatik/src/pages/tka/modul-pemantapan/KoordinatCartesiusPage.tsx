@@ -85,19 +85,57 @@ const SoalSatuKoordinatSvg = () => {
   );
 };
 
+const SoalEmpatKoordinatSvg = () => (
+  <div className="mx-auto my-3 w-full max-w-xl rounded-xl bg-white p-2">
+    <svg
+      viewBox="0 0 560 420"
+      className="block h-auto w-full"
+      role="img"
+      aria-label="Persegi EFGH pada bidang koordinat. Titik E berada di titik asal dan sisi persegi sejajar dengan sumbu koordinat."
+    >
+      <defs>
+        <marker id="koordinat-soal-4-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#334155" />
+        </marker>
+      </defs>
+      <rect x="0" y="0" width="560" height="420" rx="10" fill="#ffffff" />
+      <rect x="150" y="140" width="180" height="180" fill="#dbeafe" stroke="#2563eb" strokeWidth="3" />
+      <line x1="92" y1="320" x2="454" y2="320" stroke="#334155" strokeWidth="2" markerEnd="url(#koordinat-soal-4-arrow)" />
+      <line x1="150" y1="378" x2="150" y2="42" stroke="#334155" strokeWidth="2" markerEnd="url(#koordinat-soal-4-arrow)" />
+      <line x1="326" y1="320" x2="334" y2="320" stroke="#334155" strokeWidth="2" />
+      <line x1="150" y1="136" x2="150" y2="144" stroke="#334155" strokeWidth="2" />
+      <text x="140" y="344" textAnchor="end" fontSize="13" fill="#334155">0</text>
+      <text x="330" y="344" textAnchor="middle" fontSize="13" fill="#334155">a</text>
+      <text x="135" y="145" textAnchor="end" fontSize="13" fill="#334155">a</text>
+      <text x="466" y="325" fontSize="14" fontWeight="700" fill="#0f172a">x</text>
+      <text x="157" y="44" fontSize="14" fontWeight="700" fill="#0f172a">y</text>
+      <g fill="#2563eb" stroke="#ffffff" strokeWidth="2">
+        <circle cx="150" cy="320" r="5" />
+        <circle cx="330" cy="320" r="5" />
+        <circle cx="330" cy="140" r="5" />
+        <circle cx="150" cy="140" r="5" />
+      </g>
+      <g fontSize="14" fontWeight="700" fill="#0f172a" paintOrder="stroke" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round">
+        <text x="132" y="306">E</text>
+        <text x="338" y="307">F</text>
+        <text x="338" y="136">G</text>
+        <text x="160" y="136">H</text>
+      </g>
+    </svg>
+  </div>
+);
+
 const latihanDasarTkaLama: LatihanSoal[] = [
-  { no: 1, soal: "Perhatikan titik-titik pada koordinat kartesius berikut.\nTitik yang berkoordinat (1, 3) adalah.....", gambar: <SoalSatuKoordinatSvg />, options: ["A. titik A", "B. titik B", "C. titik C", "D. titik D"] },
+  { no: 1, soal: "Perhatikan titik-titik pada koordinat Kartesius berikut.\nTitik yang berkoordinat $(1, 3)$ adalah ....", gambar: <SoalSatuKoordinatSvg />, options: ["A. titik A", "B. titik B", "C. titik C", "D. titik D"] },
   { no: 2, soal: "Perhatikan gambar berikut. Koordinat titik Q adalah....", options: ["A. $(3, 1)$", "B. $(3, -1)$", "C. $(1, 3)$", "D. $(-1, 3)$"] },
   { no: 3, soal: "Perhatikan gambar di samping!\nKoordinat-koordinat di bawah ini yang sesuai dengan gambar adalah....", options: ["A. $A(-2, -4)$", "B. $B(5, 4)$", "C. $C(-2, 6)$", "D. $D(1, -4)$"] },
-  { no: 4, soal: "Pada persegi EFGH dibawah ini, tentukan koordinat titik E dan G?", options: ["A. $E(0,0)$ dan $G(a,0)$", "B. $E(0,-1)$ dan $G(a,a)$", "C. $E(0,0)$ dan $G(a,a)$", "D. $E(0,-1)$ dan $G(a,0)$"] },
+  { no: 4, soal: "Pada persegi EFGH di bawah ini, tentukan koordinat titik E dan G.\n[DIAGRAM]", gambar: <SoalEmpatKoordinatSvg />, options: ["A. $E(0, 0)$ dan $G(a, 0)$", "B. $E(0, -1)$ dan $G(a, a)$", "C. $E(0, 0)$ dan $G(a, a)$", "D. $E(0, -1)$ dan $G(a, 0)$"] },
   { no: 5, soal: "Titik $P(-5, 7)$ terletak di kuadran...", options: ["A. II", "B. IV", "C. I", "D. III"] },
   { no: 6, soal: "Perhatikan gambar di samping!\nKoordinat titik C dan D berturut-turut $C(4, -3)$ dan $D(4, 1)$, bangun ABCD disebut...", options: ["A. jajargenjang", "B. layang-layang", "C. persegi", "D. persegi panjang"] },
   { no: 7, soal: "Bangun yang terbentuk dari titik $M(0,3)$, $N(0,-3)$ dan $O(7,0)$ adalah bangun ....", options: ["A. Segitiga sama sisi", "B. Segitiga sembarang", "C. Segitiga sama kaki", "D. Segitiga siku-siku"] },
   { no: 8, soal: "Diketahui titik $A(3,1)$, $B(3, 5)$, $C(-2, 5)$. Jika ketiga titik tersebut dihubungkan akan membentuk", options: ["A. segitiga sama sisi", "B. segitiga sama kaki", "C. segitiga siku-siku", "D. segitiga sembarang"] },
-  { no: 9, soal: "Diketahui dalam koordinat Kartesius terdapat titik P, Q, dan R. Titik $P(4, 6)$ dan titik $Q(7, 1)$. Jika titik P, Q, dan R dihubungkan akan membentuk segitiga siku-siku, maka koordinat titik R adalah ....", options: ["A. $(6, 5)$", "B. $(4, 5)$", "C. $(6, 1)$", "D. $(4, 1)$"] },
   { no: 10, soal: "Diketahui segiempat ABCD dengan koordinat titik $A(-2, 5)$, $B(-2, 1)$, $C(4, 1)$, dan $D(4,5)$. Segiempat ABCD berbentuk....", options: ["A. persegi", "B. persegi panjang", "C. jajargenjang", "D. trapesium"] },
   { no: 11, soal: "Diketahui koordinat titik $A(-3, 5)$; $B(-5, 1)$; $C(-3, -3)$; dan $D(-1, 1)$. Jika keempat titik tersebut dihubungkan, ABCD membentuk bangun...", options: ["A. trapesium", "B. layang-layang", "C. jajargenjang", "D. belahketupat"] },
-  { no: 12, soal: "Diketahui koordinat titik $A(-3, 5)$; $B(-5, 1)$; $C(-3, -3)$; dan $D(-1,1)$. Jika keempat titik tersebut dihubungkan, ABCD membentuk bangun ...", options: ["A. Trapesium", "B. Layang-Layang", "C. Jajargenjang", "D. Belahketupat"] },
   { no: 13, soal: "Jarak titik $(-3, 5)$ terhadap sumbu-x adalah ...", options: ["A. 3 satuan", "B. 4 satuan", "C. 5 satuan", "D. 8 satuan"] },
   { no: 14, soal: "Jarak titik $(-4, -5)$ terhadap sumbu-y adalah ...", options: ["A. 4 satuan", "B. 5 satuan", "C. 8 satuan", "D. 9 satuan"] },
   { no: 15, soal: "Jarak antara titik $P(3, 5)$ dan garis $x = -2$ adalah...", options: ["A. 7", "B. 3", "C. 1", "D. 5"] },
@@ -105,12 +143,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 17, soal: "Koordinat titik R berada di tengah-tengah garis PQ. Jika titik $P(-2, 5)$ dan $Q(4, -11)$, koordinat titik R adalah ...", options: ["A. $(2, -6)$", "B. $(1, -6)$", "C. $(1, -3)$", "D. $(3, 1)$"] },
   { no: 18, soal: "Titik tengah dari segmen garis yang menghubungkan titik $A(2, 8)$ dan $B(10, 4)$ adalah...", options: ["A. $(4, 2)$", "B. $(6, 6)$", "C. $(12, 12)$", "D. $(8, 4)$"] },
   { no: 19, soal: "Titik $M(5, -2)$ adalah titik tengah dari segmen garis PQ. Jika koordinat titik P adalah $(8, 3)$, maka koordinat titik Q adalah...", options: ["A. $(3, -5)$", "B. $(2, -7)$", "C. $(6.5, 0.5)$", "D. $(11, -1)$"] },
-  { no: 20, soal: "Titik $M(4, -1)$ adalah titik tengah dari ruas garis AB. Jika koordinat titik A adalah $(1, 5)$, maka koordinat titik B adalah...", options: ["A. $(2.5, 2)$", "B. $(5, 4)$", "C. $(7, -7)$", "D. $(3, -6)$"] },
-  { no: 21, soal: "Titik M adalah titik tengah dari $A(1, 1)$ dan $B(3, 5)$. Jarak dari titik M ke garis $x = 7$ adalah...", options: ["A. 3", "B. 4", "C. 5", "D. 2"] },
   { no: 22, soal: "Luas segitiga yang titik-titik sudutnya adalah $P(0, 0)$, $Q(6, 4)$, dan $R(8, 2)$ adalah...", options: ["A. 12", "B. 10", "C. 14", "D. 20"] },
-  { no: 23, soal: "Titik $P(x, 5)$ berjarak 10 satuan dari titik $Q(-4, -1)$. Salah satu nilai x yang mungkin adalah...", options: ["A. 2", "B. 12", "C. 6", "D. 4"] },
-  { no: 24, soal: "Jarak tegak lurus dari titik $P(2, 5)$ ke garis $3x + 4y - 6 = 0$ adalah ...", options: ["A. 5", "B. 4", "C. 20", "D. 26"] },
-  { no: 25, soal: "Jarak titik $(3, -5)$ terhadap titik acuan $(0, 1)$ adalah ...", options: ["A. Tiga langkah ke kanan dan enam langkah ke atas", "B. Tiga langkah ke kanan dan enam langkah ke bawah", "C. Tiga langkah ke kiri dan enam langkah ke atas", "D. Enam langkah ke kanan dan tiga langkah ke atas"] },
 ];
 
 type ComplexVariant = {
@@ -119,10 +152,26 @@ type ComplexVariant = {
   pembahasan: string;
 };
 
-const kunciJawaban = [
-  "A", "B", "B", "C", "A", "D", "C", "C", "D", "B", "D", "D", "C",
-  "A", "D", "C", "C", "B", "B", "C", "C", "B", "D", "B", "B",
-] as const;
+const kunciJawaban: Record<number, string> = {
+  1: "A",
+  2: "B",
+  3: "B",
+  4: "C",
+  5: "A",
+  6: "D",
+  7: "C",
+  8: "C",
+  10: "B",
+  11: "D",
+  13: "C",
+  14: "A",
+  15: "D",
+  16: "C",
+  17: "C",
+  18: "B",
+  19: "B",
+  22: "B",
+};
 
 const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
   2: {
@@ -189,29 +238,7 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
       "Koordinat R adalah $(2,-6)$.",
     ],
     jawabanPGK: [0, 1, 2],
-    pembahasan: "Titik tengahnya adalah $R=(({-2+4})/2,({5-11})/2)=(1,-3)$. Jadi (1), (2), dan (3) benar.",
-  },
-  20: {
-    soal: "Titik $M(4,-1)$ adalah titik tengah ruas $AB$ dan $A(1,5)$. Pilih semua pernyataan yang benar.",
-    pernyataan: [
-      "Absis titik B adalah 7.",
-      "Ordinat titik B adalah -7.",
-      "Koordinat B adalah $(7,-7)$.",
-      "Koordinat B adalah $(5,4)$.",
-    ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Gunakan $B=2M-A$: $B=(2(4)-1,2(-1)-5)=(7,-7)$. Jadi (1), (2), dan (3) benar.",
-  },
-  23: {
-    soal: "Titik $P(x,5)$ berjarak 10 satuan dari $Q(-4,-1)$. Pilih semua pernyataan yang benar.",
-    pernyataan: [
-      "Persamaannya adalah $(x+4)^2+36=100$.",
-      "Salah satu nilai x yang mungkin adalah 4.",
-      "Salah satu nilai x yang mungkin adalah -12.",
-      "Satu-satunya nilai x yang mungkin adalah 4.",
-    ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Rumus jarak memberi $(x+4)^2+(5+1)^2=100$, sehingga $(x+4)^2=64$ dan $x=4$ atau $x=-12$. Jadi (1), (2), dan (3) benar.",
+    pembahasan: "Titik tengahnya adalah $R=\\left(\\frac{-2+4}{2},\\frac{5+(-11)}{2}\\right)=(1,-3)$. Jadi (1), (2), dan (3) benar.",
   },
 };
 
@@ -219,12 +246,12 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
   3: {
     soal: "Diberikan titik $A(-2,-4)$, $B(5,4)$, $C(-2,6)$, dan $D(1,-4)$. Tentukan Benar atau Salah.",
     pernyataan: [
-      "Titik B memiliki koordinat $(5,4)$.",
+      "Titik C berada pada kuadran IV.",
       "Titik B berada di kuadran I.",
       "Titik A berada di kuadran III.",
     ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Koordinat B memang $(5,4)$ dan keduanya positif, sehingga berada di kuadran I. Koordinat A memiliki x dan y negatif, sehingga berada di kuadran III. Semua pernyataan benar.",
+    jawabanBS: ["S", "B", "B"],
+    pembahasan: "Titik $C(-2,6)$ memiliki absis negatif dan ordinat positif, sehingga berada di kuadran II, bukan kuadran IV. Titik $B(5,4)$ berada di kuadran I, sedangkan $A(-2,-4)$ berada di kuadran III. Jadi pernyataan (1) salah, sementara (2) dan (3) benar.",
   },
   6: {
     soal: "Diberikan persegi panjang ABCD dengan $A(0,-3)$, $B(0,1)$, $C(6,1)$, dan $D(6,-3)$. Tentukan Benar atau Salah.",
@@ -235,26 +262,6 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     ],
     jawabanBS: ["B", "B", "S"],
     pembahasan: "CD vertikal dengan panjang 4 dan AD horizontal dengan panjang 6. Karena panjang sisi berdekatan berbeda, ABCD adalah persegi panjang, bukan persegi.",
-  },
-  9: {
-    soal: "Titik $P(4,6)$ dan $Q(7,1)$ dihubungkan dengan titik $R(4,1)$ untuk membentuk segitiga siku-siku. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "P dan R memiliki absis yang sama.",
-      "Q dan R memiliki ordinat yang sama.",
-      "Koordinat titik R adalah $(4,1)$.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "P dan R sama-sama memiliki x=4, sedangkan Q dan R sama-sama memiliki y=1. Jadi R=(4,1) dan semua pernyataan benar.",
-  },
-  12: {
-    soal: "Diketahui $A(-3,5)$, $B(-5,1)$, $C(-3,-3)$, dan $D(-1,1)$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Keempat sisi ABCD memiliki panjang $\\sqrt{20}$.",
-      "Diagonal AC merupakan garis vertikal.",
-      "Diagonal BD merupakan garis horizontal.",
-    ],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Semua sisi memiliki panjang $\\sqrt{20}$. A dan C memiliki x yang sama sehingga AC vertikal, sedangkan B dan D memiliki y yang sama sehingga BD horizontal. Semua pernyataan benar.",
   },
   15: {
     soal: "Tentukan jarak titik $P(3,5)$ ke garis $x=-2$. Tentukan Benar atau Salah.",
@@ -276,30 +283,9 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     jawabanBS: ["B", "B", "S"],
     pembahasan: "Titik tengahnya adalah $M=((2+10)/2,(8+4)/2)=(6,6)$. Jadi (1) dan (2) benar, sedangkan (3) salah.",
   },
-  21: {
-    soal: "Titik M adalah titik tengah $A(1,1)$ dan $B(3,5)$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Koordinat M adalah $(2,3)$.",
-      "Jarak M ke garis $x=7$ adalah 5 satuan.",
-      "Jarak M ke garis $x=7$ adalah 4 satuan.",
-    ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Titik tengahnya $M=((1+3)/2,(1+5)/2)=(2,3)$. Jarak ke $x=7$ adalah $|2-7|=5$. Jadi (1) dan (2) benar, sedangkan (3) salah.",
-  },
-  24: {
-    soal: "Titik $P(2,5)$ dan garis $3x+4y-6=0$ diberikan. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Pembilang rumus jarak bernilai 20.",
-      "Penyebut rumus jarak bernilai 5.",
-      "Jarak titik P ke garis adalah 5 satuan.",
-    ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Jaraknya $\\frac{|3(2)+4(5)-6|}{\\sqrt{3^2+4^2}}=\\frac{20}{5}=4$. Jadi (1) dan (2) benar, sedangkan (3) salah.",
-  },
 };
 
 const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
-  .filter((soal) => soal.no <= 25)
   .sort((a, b) => a.no - b.no)
   .map((soal) => {
     const type = soal.no % 3 === 1 ? "pg" : soal.no % 3 === 2 ? "pgk" : "pgkbs";
@@ -336,7 +322,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
     return {
       ...soal,
       type: "pg" as const,
-      jawaban: kunciJawaban[soal.no - 1],
+      jawaban: kunciJawaban[soal.no],
       pembahasan: pembahasan ? JSON.stringify(pembahasan) : "",
     };
   });
