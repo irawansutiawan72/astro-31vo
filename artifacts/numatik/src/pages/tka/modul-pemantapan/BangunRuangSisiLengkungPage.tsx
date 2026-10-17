@@ -1,16 +1,24 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
-import { brslDasarPembahasan } from "@/data/pembahasan/brslDasar";
+import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatihanPembahasan";
 import type { ReactNode } from "react";
 import {
   BolaDalamTabungAnimation,
   LilinTerbakarAnimation,
   TornAirAnimation,
 } from "./BangunRuangSisiLengkungAnimations";
+import {
+  AtapSetengahBolaDiagram,
+  BolaTigaPerempatDiagram,
+  JuringKerucutDiagram,
+  PerbandinganDrumTabungDiagram,
+  TopiKerucutDiagram,
+  TumpengKerucutDiagram,
+} from "./BangunRuangSisiLengkungDiagrams";
 
 const toPembahasanText = (soalNo: number) => {
-  const pembahasan = brslDasarPembahasan[soalNo];
+  const pembahasan = tkaBrslLatihanPembahasan[soalNo];
   if (!pembahasan) return undefined;
 
   return [
@@ -57,15 +65,14 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 10,
-    type: "pgk",
-    soal: "Luas permukaan sebuah bola adalah 616 $cm^2$ dan $\\pi = \\frac{22}{7}$. Tentukan pernyataan yang benar tentang bola tersebut.",
+    type: "pgkbs",
+    soal: "Luas permukaan sebuah bola adalah 616 $cm^2$ dan $\\pi = \\frac{22}{7}$. Tentukan benar atau salah setiap pernyataan tentang bola tersebut.",
     pernyataan: [
       "Jari-jari bola adalah 7 cm.",
       "Diameter bola adalah 14 cm.",
-      "Luas permukaan bola adalah 616 $cm^2$.",
-      "Jari-jari bola adalah 14 cm.",
+      "Volume bola adalah $\\frac{4312}{3}$ $cm^3$.",
     ],
-    jawabanPGK: [0, 1, 2],
+    jawabanBS: ["B", "B", "B"],
   },
   {
     no: 11,
@@ -75,9 +82,10 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Luas bagian lengkung bangun adalah 462 $cm^2$.",
       "Luas bidang potong datar adalah 154 $cm^2$.",
       "Luas seluruh permukaan bangun adalah 616 $cm^2$.",
-      "Luas seluruh permukaan bangun adalah 462 $cm^2$.",
+      "Volume bangun ¾ bola adalah 1.078 $cm^3$.",
     ],
-    jawabanPGK: [0, 1, 2],
+    jawabanPGK: [0, 1, 2, 3],
+    gambar: <BolaTigaPerempatDiagram />,
   },
   {
     no: 12,
@@ -90,6 +98,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Sisa karton yang tidak terpakai adalah 150 $cm^2$.",
     ],
     jawabanPGK: [0, 1, 2],
+    gambar: <TopiKerucutDiagram />,
   },
   { no: 13, soal: "Perhatikan gambar topi berbentuk kerucut terbuat dari karton berikut ini!\nJika diameter lingkaran alas 28 cm dan tinggi topi 48 cm, luas karton minimal yang diperlukan untuk membuat 3 buah topi tersebut adalah ....", options: ["A. 2.112 $cm^2$", "B. 2.200 $cm^2$", "C. 6.336 $cm^2$", "D. 6.600 $cm^2$"] },
   {
@@ -131,21 +140,22 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     soal: "Luas seluruh permukaan bola adalah 144$\\pi$ $cm^2$. Tentukan benar atau salah pernyataan berikut tentang bola tersebut.",
     pernyataan: [
       "Jari-jari bola adalah 6 cm.",
+      "Diameter bola berukuran 18 cm.",
       "Volume bola adalah 288$\\pi$ $cm^3$.",
-      "Diameter bola adalah 6 cm.",
     ],
-    jawabanBS: ["B", "B", "S"],
+    jawabanBS: ["B", "S", "B"],
   },
   {
     no: 19,
     type: "pgkbs",
-    soal: "Nasyara membuat nasi tumpeng berbentuk kerucut. Bagian selimut (tanpa alas) akan dihias makanan. Diameter tumpeng 28 cm dan tingginya 48 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut.",
+    soal: "Naura membuat nasi tumpeng berbentuk kerucut. Bagian selimut (tanpa alas) akan dihias makanan. Diameter tumpeng 28 cm dan tingginya 48 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut.",
     pernyataan: [
       "Jari-jari alas tumpeng adalah 14 cm.",
       "Garis pelukis tumpeng adalah 50 cm.",
       "Luas selimut yang dihias adalah 2.816 $cm^2$.",
     ],
     jawabanBS: ["B", "B", "S"],
+    gambar: <TumpengKerucutDiagram />,
   },
   {
     no: 20,
@@ -158,19 +168,19 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     ],
     jawabanBS: ["B", "B", "S"],
   },
-  { no: 21, soal: "Atap sebuah gedung berbentuk setengah bola dengan panjang diameter 14 m. Atap gedung tersebut akan dicat dengan biaya Rp50.000,00 setiap $m^2$. Biaya yang diperlukan untuk mengecat atap gedung itu adalah ....", options: ["A. Rp13.700.000,00", "B. Rp15.400.000,00", "C. Rp15.850.000,00", "D. Rp16.400.000,00"] },
+  { no: 21, soal: "Atap sebuah gedung berbentuk setengah bola dengan panjang diameter 14 m. Atap gedung tersebut akan dicat dengan biaya Rp50.000,00 setiap $m^2$. Biaya yang diperlukan untuk mengecat atap gedung itu adalah ....", options: ["A. Rp13.700.000,00", "B. Rp15.400.000,00", "C. Rp15.850.000,00", "D. Rp16.400.000,00"], gambar: <AtapSetengahBolaDiagram /> },
   { no: 23, soal: "Volume sebuah kerucut adalah 314 $cm^3$, Jika jari-jari alasnya 5 cm dan $\\pi = 3,14$, maka panjang garis pelukisnya adalah ...", options: ["A. 4 cm", "B. 12 cm", "C. 13 cm", "D. 20 cm"] },
-  { no: 24, soal: "Sebuah drum berbentuk tabung dengan panjang jari-jari 70 cm dan tinggi 100 cm penuh berisi minyak tanah. Minyak tanah tersebut akan dituang ke dalam tabung-tabung kecil dengan panjang jari-jari 35 cm dan tinggi 50 cm. Banyak tabung kecil yang akan diperlukan adalah....", options: ["A. 2 buah", "B. 4 buah", "C. 6 buah", "D. 8 buah"] },
+  { no: 24, soal: "Sebuah drum berbentuk tabung dengan panjang jari-jari 70 cm dan tinggi 100 cm penuh berisi minyak tanah. Minyak tanah tersebut akan dituang ke dalam tabung-tabung kecil dengan panjang jari-jari 35 cm dan tinggi 50 cm. Banyak tabung kecil yang akan diperlukan adalah....", options: ["A. 2 buah", "B. 4 buah", "C. 6 buah", "D. 8 buah"], gambar: <PerbandinganDrumTabungDiagram /> },
   { no: 25, soal: "Sebuah drum berbentuk tabung dengan diameter alas 10 cm dan tinggi 100 cm. Bila $\\frac{3}{4}$ bagian dari drum berisi minyak, banyak minyak di dalam drum tersebut adalah ...", options: ["A. 8587,5 $cm^3$", "B. 8578,5 $cm^3$", "C. 5887,5 $cm^3$", "D. 5878,5 $cm^3$"] },
   { no: 26, soal: "Panjang jari-jari dua buah bola masing-masing adalah 12 cm dan 20 cm. tentukan perbandingan volume kedua bola itu...", options: ["A. 27 : 125", "B. 9 : 25", "C. 3 : 20", "D. 3 : 5"] },
   { no: 27, soal: "Sebuah kerucut mempunyai volume 40 $cm^3$, jika diameter kerucut diperbesar 2 kali dan tinggi diperbesar 3 kali, maka volume kerucut yang baru adalah ....", options: ["A. 240 $cm^3$", "B. 480 $cm^3$", "C. 720 $cm^3$", "D. 1440 $cm^3$"] },
-  { no: 28, soal: "Diketahui volume suatu kerucut 120 $cm^3$, jika diameter kerucut diperbesar dua kali dan tinggi diperpanjang 3 kali, maka volume kerucut sekarang adalah....", options: ["A. 240 $cm^3$", "B. 480 $cm^3$", "C. 1.440 $cm^3$", "D. 1.540 $cm^3$"] },
-  { no: 29, soal: "Sebuah kertas karton berbentuk juring lingkaran dengan sudut pusat $216^0$ dan panjang jari-jarinya 15 cm. Jika kertas karton tersebut dibuat kerucut, maka volume kerucut maksimum adalah ....", options: ["A. $324\\pi$ $cm^3$", "B. $405\\pi$ $cm^3$", "C. $620\\pi$ $cm^3$", "D. $675\\pi$ $cm^3$"] },
+  { no: 28, soal: "Diameter alas sebuah kerucut diperbesar menjadi 2 kali ukuran semula dan tingginya menjadi 3 kali ukuran semula. Perbandingan volume kerucut mula-mula dan setelah diperbesar adalah ...", options: ["A. 1 : 3", "B. 1 : 6", "C. 1 : 12", "D. 12 : 1"] },
+  { no: 29, soal: "Sebuah kertas karton berbentuk juring lingkaran dengan sudut pusat $216^\\circ$ dan jari-jari 15 cm. Jika karton tersebut dibuat kerucut, volume kerucut yang terbentuk adalah ...", options: ["A. $324\\pi$ $cm^3$", "B. $405\\pi$ $cm^3$", "C. $620\\pi$ $cm^3$", "D. $675\\pi$ $cm^3$"], gambar: <JuringKerucutDiagram /> },
   { no: 30, soal: "Perhatikan gambar!\nLuas permukaan bangun ruang tersebut adalah .... ($\\pi = \\frac{22}{7}$)", options: ["A. 550 $cm^2$", "B. 1320 $cm^2$", "C. 1474 $cm^2$", "D. 1584 $cm^2$"] },
   { no: 31, soal: "Perhatikan gambar!\nLuas permukaan gambar disamping adalah ...", options: ["A. 400$\\pi$ $cm^2$", "B. 800$\\pi$ $cm^2$", "C. 1200$\\pi$ $cm^2$", "D. 1600$\\pi$ $cm^2$"] },
   { no: 32, soal: "Perhatikan gambar!\nBandul logam terdiri atas kerucut dan setengah bola. Jika massa setiap 1 $cm^3$ logam adalah 15 gram dan $\\pi = 3,14$, berat bandul seluruhnya adalah ....", options: ["A. 7.122 gram", "B. 7.212 gram", "C. 7.222 gram", "D. 8.635 gram"] },
   { no: 33, soal: "Sebuah bandul terdiri dari kerucut dan belahan bola.\nJika diameter bola 14 cm dan garis pelukis kerucutnya 25 cm, maka volume bandul tersebut adalah ....", options: ["A. 132,6 $cm^3$", "B. 1232,0 $cm^3$", "C. 1950,7 $cm^3$", "D. 2002,0 $cm^3$"] },
-  { no: 34, soal: "Perhatikan gambar benda padat berbentuk tabung dan setengah bola berikut!\nLuas permukaan benda tersebut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 702 cm²", "B. 802 cm²", "C. 902 cm²", "D. 1.002 cm²"] },
+  { no: 34, soal: "Perhatikan gambar bangun gabungan tabung dan setengah bola berikut!\nVolume bangun tersebut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 1.078 $cm^3$", "B. 1.862 $cm^3$", "C. 2.258,67 $cm^3$", "D. 3.080 $cm^3$"] },
   { no: 35, soal: "Perhatikan gambar berikut!\nSebuah peluru terbentuk dari tabung dan kerucut. Volume peluru tersebut adalah... ($\\pi = \\frac{22}{7}$)", options: ["A. 4.312,0 $cm^3$", "B. 4.230,0 $cm^3$", "C. 4.358,2 $cm^3$", "D. 5.312,4 $cm^3$"] },
   { no: 36, soal: "Bangun pada gambar berikut terdiri dari tabung dan belahan bola.\nLuas permukaan bangun tersebut adalah....", options: ["A. 880 $cm^2$", "B. 1.496 $cm^2$", "C. 1.596 $cm^2$", "D. 2.010 $cm^2$"] },
   { no: 37, soal: "Bola tepat pas di dalam tabung seperti pada gambar. Jika luas permukaan bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, luas seluruh permukaan tabung adalah ....", options: ["A. 616 $cm^2$", "B. 770 $cm^2$", "C. 880 $cm^2$", "D. 924 $cm^2$"] },
@@ -184,36 +194,34 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 
 const brslDasarImages: Record<number, string> = {
   6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_6_pgbiec.png",
-  13: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117359/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_13_oosn5o.png",
   30: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117360/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_30_zftbie.png",
   31: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_31_nlgpvg.png",
   32: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117365/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_32_klahbw.png",
-  33: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_33_nsnj1g.png",
   34: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117357/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_34_eqdmwj.png",
   35: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_35_uu8ch9.png",
-  36: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117357/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_36_aqje7y.png",
   37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
 const brslDasarGambarLebarPx: Record<number, number> = {
-  6: 192,
-  13: 192,
+  6: 384,
   30: 192,
   31: 192,
   32: 192,
-  33: 192,
   34: 192,
   35: 192,
-  36: 192,
   37: 192,
 };
-const nomorTampilPerNomorAsli = new Map(
-  latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),
+const nomorSoalYangDihapus = new Set([9, 13, 14, 20, 23, 25, 33, 36]);
+const latihanDasarTkaAktif = latihanDasarTkaLama.filter(
+  (soal) => !nomorSoalYangDihapus.has(soal.no),
 );
-const latihanDasarTkaBerurutan = latihanDasarTkaLama.map((soal, index) => ({
+const nomorTampilPerNomorAsli = new Map(
+  latihanDasarTkaAktif.map((soal, index) => [soal.no, index + 1]),
+);
+const latihanDasarTkaBerurutan = latihanDasarTkaAktif.map((soal, index) => ({
   ...soal,
   no: index + 1,
-  jawaban: soal.type ? undefined : brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
+  jawaban: soal.type ? undefined : tkaBrslLatihanPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
   pembahasan: toPembahasanText(soal.no),
 }));
 const brslDasarGambarMap: Record<number, ReactNode> = {};
