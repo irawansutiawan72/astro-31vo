@@ -5,6 +5,7 @@ import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatiha
 import type { ReactNode } from "react";
 import bolaTigaPerempatImage from "@assets/image_1792232484011.png";
 import duaTopiUlangTahunImage from "@assets/image_1792232576189.png";
+import nasiTumpengImage from "@assets/image_1792232780263.png";
 import {
   BakAirDikurasAnimation,
   BolaDalamTabungAnimation,
@@ -18,7 +19,6 @@ import {
   AtapSetengahBolaDiagram,
   JuringKerucutDiagram,
   PerbandinganDrumTabungDiagram,
-  TumpengKerucutDiagram,
 } from "./BangunRuangSisiLengkungDiagrams";
 
 const toPembahasanText = (soalNo: number) => {
@@ -171,7 +171,13 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Luas selimut yang dihias adalah 2.816 $cm^2$.",
     ],
     jawabanBS: ["B", "B", "S"],
-    gambar: <TumpengKerucutDiagram />,
+    gambar: (
+      <img
+        src={nasiTumpengImage}
+        alt="Nasi tumpeng berbentuk kerucut di tengah hidangan"
+        className="mx-auto my-3 h-auto w-full rounded-lg border border-border/40 bg-[#fffaf0] p-2 object-contain"
+      />
+    ),
   },
   {
     no: 20,

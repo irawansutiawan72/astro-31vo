@@ -5,19 +5,6 @@ const fill = "#fff1d1";
 const accent = "#a76537";
 const label = "#56351f";
 
-export const TumpengKerucutDiagram = () => (
-  <svg viewBox="0 0 320 230" className={frameClass} role="img" aria-label="Tumpeng berbentuk kerucut dengan diameter 28 cm dan tinggi 48 cm">
-    <title>Tumpeng berbentuk kerucut</title>
-    <path d="M160 28 L74 166 Q160 194 246 166 Z" fill={fill} stroke={stroke} strokeWidth="3" />
-    <path d="M74 166 C104 145 216 145 246 166" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="6 5" />
-    <path d="M74 166 C104 190 216 190 246 166" fill="none" stroke={stroke} strokeWidth="3" />
-    <line x1="160" y1="28" x2="160" y2="166" stroke={accent} strokeWidth="2" strokeDasharray="6 5" />
-    <line x1="160" y1="166" x2="74" y2="166" stroke={stroke} strokeWidth="2" />
-    <text x="168" y="104" fill={label} fontSize="14" fontWeight="700">t = 48 cm</text>
-    <text x="160" y="218" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">d = 28 cm</text>
-  </svg>
-);
-
 export const AtapSetengahBolaDiagram = () => (
   <svg viewBox="0 0 320 220" className={frameClass} role="img" aria-label="Atap berbentuk setengah bola dengan diameter 14 meter">
     <title>Atap setengah bola</title>
