@@ -66,8 +66,8 @@ const SoalDua = () => {
           <svg width="130" height="120" viewBox="0 0 130 120">
             <polygon points="65,15 18,90 112,90"
               fill="#818cf8" fillOpacity={0.08} stroke="#818cf8" strokeWidth={1.5} />
-            <text x="41.5" y="52.5" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace" transform="rotate(-58 41.5 52.5)">(3x+2) cm</text>
-            <text x="88.5" y="52.5" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace" transform="rotate(58 88.5 52.5)">(3x+2) cm</text>
+            <text x="32" y="46" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} stroke={isDark ? "#111827" : "#fff"} strokeWidth={3} paintOrder="stroke" strokeLinejoin="round" fontSize={9} fontFamily="monospace" transform="rotate(-58 32 46)">(3x+2) cm</text>
+            <text x="98" y="46" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} stroke={isDark ? "#111827" : "#fff"} strokeWidth={3} paintOrder="stroke" strokeLinejoin="round" fontSize={9} fontFamily="monospace" transform="rotate(58 98 46)">(3x+2) cm</text>
             <text x="65" y="105" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(5x−1) cm</text>
           </svg>
           <p className="text-indigo-300/60 text-[10px] font-body">
@@ -80,12 +80,12 @@ const SoalDua = () => {
           <svg width="170" height="124" viewBox="0 0 170 124">
             <rect x={24} y={18} width={122} height={72} rx={5}
               fill="#818cf8" fillOpacity={0.08} stroke="#818cf8" strokeWidth={1.5} />
-            <text x="85" y="14" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(4y+3) cm</text>
+            <text x="85" y="11" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(4y+3) cm</text>
             <text x="85" y="108" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(4y+3) cm</text>
-            <text x="16" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9}
-              fontFamily="monospace" transform="rotate(-90 16 54)">(2y−1) cm</text>
-            <text x="154" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9}
-              fontFamily="monospace" transform="rotate(90 154 54)">(2y−1) cm</text>
+            <text x="12" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} stroke={isDark ? "#111827" : "#fff"} strokeWidth={3} paintOrder="stroke" strokeLinejoin="round" fontSize={9}
+              fontFamily="monospace" transform="rotate(-90 12 54)">(2y−1) cm</text>
+            <text x="158" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} stroke={isDark ? "#111827" : "#fff"} strokeWidth={3} paintOrder="stroke" strokeLinejoin="round" fontSize={9}
+              fontFamily="monospace" transform="rotate(90 158 54)">(2y−1) cm</text>
           </svg>
           <p className="text-indigo-300/60 text-[10px] font-body">
             {t('practice.aljabar.penjumlahanPengurangan.q2.shapeB')}

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, ArrowRight, Home } from "lucide-react";
 import ExitDialog from "./ExitDialog";
@@ -16,7 +16,11 @@ export const PageNavigationVisibilityContext = createContext(true);
 const PageNavigation = ({ prevPath, nextPath, hidden = false }: PageNavigationProps) => {
   const isVisible = useContext(PageNavigationVisibilityContext);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { t } = useTranslation();
+  const resolvedPrevPath = pathname.startsWith("/tka/modul-pemantapan/")
+    ? "/tka/modul-pemantapan"
+    : prevPath;
 
   if (!isVisible || hidden) return null;
 
@@ -30,7 +34,7 @@ const PageNavigation = ({ prevPath, nextPath, hidden = false }: PageNavigationPr
         }}
       >
         <button
-          onClick={() => { playPopSound(); prevPath ? navigate(prevPath) : navigate(-1); }}
+          onClick={() => { playPopSound(); resolvedPrevPath ? navigate(resolvedPrevPath) : navigate(-1); }}
           className="w-11 h-11 rounded-full bg-card/80 backdrop-blur border border-border 
             flex items-center justify-center text-primary hover:border-primary/60 
             hover:box-glow-cyan transition-all duration-300 cursor-pointer"

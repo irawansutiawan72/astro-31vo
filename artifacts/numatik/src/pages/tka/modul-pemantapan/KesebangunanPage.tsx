@@ -5,7 +5,6 @@ import { getTkaContohSoal } from "@/data/tkaContohSoal";
 const kesebangunanImages: Record<number, string> = {
   3: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_3_esplzp.png",
   4: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117355/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_4_srwinp.png",
-  6: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_6_zilnja.png",
   8: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_8_get5ke.png",
   9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_9_jxeevd.png",
   10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_10_xvdtcp.png",
@@ -67,6 +66,37 @@ const kesebangunanSoalTujuhDiagram = (
       <g fill="#172033" fontFamily="Georgia, serif" fontSize="25">
         <text x="28" y="125" textAnchor="middle" transform="rotate(-90 28 125)">20 cm</text>
         <text x="346" y="201" textAnchor="middle" transform="rotate(-90 346 201)">5 cm</text>
+      </g>
+    </svg>
+  </figure>
+);
+
+const kesebangunanSoalEmpatBelasDiagram = (
+  <figure className="mx-auto my-3 w-full max-w-xl rounded-xl border border-border/40 bg-white p-3">
+    <svg
+      viewBox="0 0 520 235"
+      role="img"
+      aria-labelledby="kesebangunan-q14-title kesebangunan-q14-desc"
+      className="block h-auto w-full"
+    >
+      <title id="kesebangunan-q14-title">Tiang dan pohon dengan bayangannya</title>
+      <desc id="kesebangunan-q14-desc">
+        Tiang setinggi 4 meter memiliki bayangan 3 meter. Pohon memiliki bayangan 10 meter dan tinggi h. Sinar matahari membentuk dua segitiga sebangun.
+      </desc>
+      <line x1="40" y1="192" x2="478" y2="192" stroke="#475569" strokeWidth="2" />
+      <line x1="90" y1="148" x2="90" y2="192" stroke="#2563eb" strokeWidth="6" strokeLinecap="round" />
+      <line x1="90" y1="192" x2="123" y2="192" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
+      <line x1="300" y1="45" x2="300" y2="192" stroke="#15803d" strokeWidth="8" strokeLinecap="round" />
+      <line x1="300" y1="192" x2="410" y2="192" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
+      <line x1="90" y1="148" x2="123" y2="192" stroke="#64748b" strokeWidth="2" strokeDasharray="6 5" />
+      <line x1="300" y1="45" x2="410" y2="192" stroke="#64748b" strokeWidth="2" strokeDasharray="6 5" />
+      <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="14" textAnchor="middle">
+        <text x="90" y="135">Tiang</text>
+        <text x="65" y="174">4 m</text>
+        <text x="106" y="216">3 m</text>
+        <text x="300" y="30">Pohon</text>
+        <text x="278" y="120" fontWeight="700">h</text>
+        <text x="355" y="216">10 m</text>
       </g>
     </svg>
   </figure>
@@ -173,18 +203,30 @@ Syarat dua segitiga kongruen:
 const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 1,
-    soal: "Perhatikan gambar bangun-bangun berikut.\nPasangan bangun yang pasti sebangun adalah ...",
-    options: ["A. (i) dan (ii)", "B. (i) dan (iii)", "C. (ii) dan (iii)", "D. (ii) dan (iv)"],
-    jawaban: "B",
+    type: "pgk",
+    soal: "Perhatikan gambar bangun-bangun berikut. Pilih semua pernyataan yang benar tentang kesebangunan bangun-bangun tersebut.",
+    pernyataan: [
+      "Semua persegi pasti sebangun.",
+      "Semua persegi panjang pasti sebangun.",
+      "Semua segitiga sama sisi pasti sebangun.",
+      "Semua belah ketupat pasti sebangun.",
+    ],
+    jawabanPGK: [0, 2],
     diagramTight: true,
     pembahasan: "Bangun yang PASTI sebangun adalah bangun yang semua sudut bersesuaiannya selalu sama dan rasio sisi-sisi yang bersesuaian selalu konstan.\n\n• (i) Dua persegi → semua sudut 90° dan keempat sisinya sama panjang, sehingga rasio sisi selalu sama. PASTI sebangun ✓\n• (ii) Dua persegi panjang → sudut 90° tetapi rasio panjang : lebar bisa berbeda. Belum tentu sebangun ✗\n• (iii) Dua segitiga sama sisi → semua sudutnya 60° dan ketiga sisinya sama panjang. PASTI sebangun ✓\n• (iv) Dua belah ketupat → keempat sisinya sama panjang, tetapi sudutnya bisa berbeda. Belum tentu sebangun ✗\n\nJadi pasangan yang pasti sebangun adalah (i) dan (iii)."
   },
   {
     no: 2,
-    soal: "Perhatikan persyaratan berikut:\nI. Kertas berbentuk persegi panjang berukuran 30 cm × 20 cm\nII. Sebuah papan tulis berukuran 16 cm × 12 cm\nIII. Sebuah map berukuran 14 cm × 21 cm\nIV. Sebuah dinding tembok berukuran 25 cm × 15 cm\n\nPasangan bangun yang sebangun adalah …",
-    options: ["A. I dan II", "B. I dan III", "C. II dan III", "D. II dan IV"],
-    jawaban: "B",
-    pembahasan: "Dua persegi panjang sebangun jika rasio panjang : lebarnya sama. Hitung rasio (panjang : lebar) tiap bangun:\n\n• I. 30 : 20 = 3 : 2\n• II. 16 : 12 = 4 : 3\n• III. 21 : 14 = 3 : 2\n• IV. 25 : 15 = 5 : 3\n\nRasio yang sama hanya I dan III, yaitu 3 : 2. Jadi pasangan yang sebangun adalah I dan III."
+    type: "pgk",
+    soal: "Perhatikan empat persegi panjang berikut: I berukuran 30 cm × 20 cm, II berukuran 16 cm × 12 cm, III berukuran 14 cm × 21 cm, dan IV berukuran 25 cm × 15 cm. Pilih semua pernyataan yang benar tentang perbandingan panjang dan lebarnya.",
+    pernyataan: [
+      "Perbandingan panjang dan lebar bangun I adalah 3 : 2.",
+      "Perbandingan panjang dan lebar bangun II adalah 4 : 3.",
+      "Bangun II dan bangun IV sebangun.",
+      "Perbandingan panjang dan lebar bangun III adalah 3 : 2.",
+    ],
+    jawabanPGK: [0, 1, 3],
+    pembahasan: "Bandingkan sisi panjang dengan sisi lebar pada setiap persegi panjang:\n\n• I: 30 : 20 = 3 : 2 (benar).\n• II: 16 : 12 = 4 : 3 (benar).\n• III: 21 : 14 = 3 : 2 (benar).\n• IV: 25 : 15 = 5 : 3.\n\nBangun II dan IV tidak sebangun karena perbandingannya 4 : 3 dan 5 : 3. Bangun I dan III memiliki perbandingan sama, yaitu 3 : 2."
   },
   {
     no: 3,
@@ -201,13 +243,6 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pembahasan: "Dari gambar diketahui:\n• Sudut pertama yang bersesuaian sama besar (misalnya $\\angle A = \\angle C$)\n• Sisi yang menghubungkan kedua sudut tersebut sama panjang: AD = CE\n• Sudut kedua yang bersesuaian sama besar (misalnya $\\angle D = \\angle E$)\n\nKarena dua sudut sama besar dan sisi yang berada di antara kedua sudut tersebut sama panjang, kedua segitiga kongruen menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd)."
   },
   {
-    no: 6,
-    soal: "ABCD trapesium sama kaki. Banyak pasangan segitiga kongruen pada gambar tersebut adalah …",
-    options: ["A. 4 pasang", "B. 5 pasang", "C. 6 pasang", "D. 7 pasang"],
-    jawaban: "C",
-    pembahasan: "Pada trapesium sama kaki ABCD dengan AB ∥ DC, kedua diagonal AC dan BD ditarik dan berpotongan di titik O. Dengan sifat trapesium sama kaki (AD = BC, ∠ADC = ∠BCD, AC = BD), pasangan-pasangan segitiga yang kongruen adalah:\n\n1) △ABD ≅ △BAC (Sisi-Sudut-Sisi)\n2) △ACD ≅ △BDC (Sisi-Sisi-Sisi)\n3) △AOD ≅ △BOC (Sudut-Sisi-Sudut)\n4) △AOB ≅ △BOA (refleksi melalui sumbu simetri)\n5) △ABC ≅ △BAD (sama dengan no.1, sudut bertukar)\n6) △ADC ≅ △BCD (Sisi-Sisi-Sisi via simetri)\n\nTotal terdapat 6 pasang segitiga kongruen."
-  },
-  {
     no: 7,
     soal: "Perhatikan dua persegi panjang berikut.\nDua persegi panjang sebangun. Diketahui luas persegi panjang yang lebih besar adalah 320 cm² dan kedua persegi panjang tersebut sebangun. Berapakah keliling persegi panjang yang lebih kecil?",
     options: ["A. 9 cm", "B. 18 cm", "C. 20 cm", "D. 72 cm"],
@@ -218,44 +253,76 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 8,
-    soal: "Panjang AD adalah …",
-    options: ["A. 3 cm", "B. 4 cm", "C. 4,5 cm", "D. 5 cm"],
-    jawaban: "C",
-    pembahasan: "Gunakan konsep dua segitiga sebangun yang dibentuk oleh garis sejajar pada salah satu sisi.\n\nJika DE ∥ BC pada △ABC dengan D pada AB dan E pada AC, berlaku:\n\n$\\dfrac{AD}{DB} = \\dfrac{AE}{EC}$  atau  $\\dfrac{AD}{AB} = \\dfrac{AE}{AC} = \\dfrac{DE}{BC}$\n\nDengan substitusi nilai pada gambar (pola umum AD : DB = 3 : 2 dan DB diketahui), diperoleh AD = 4,5 cm."
+    type: "pgk",
+    soal: "Perhatikan segitiga ABC siku-siku di C. Garis CD tegak lurus AB. Pilih semua pernyataan yang benar berdasarkan gambar.",
+    pernyataan: [
+      "Panjang AD adalah 4 cm.",
+      "Panjang AB adalah 13 cm.",
+      "Panjang AC memenuhi AC² = 52 cm².",
+      "Luas segitiga ABC adalah 36 cm².",
+    ],
+    jawabanPGK: [0, 1, 2],
+    pembahasan: "Pada segitiga siku-siku dengan garis tinggi ke sisi miring, berlaku CD² = AD × DB. Maka AD = 6² ÷ 9 = 4 cm dan AB = AD + DB = 4 + 9 = 13 cm.\n\nSelanjutnya, AC² = AB × AD = 13 × 4 = 52 cm². Luas segitiga ABC = ½ × AB × CD = ½ × 13 × 6 = 39 cm², jadi pernyataan (4) salah."
   },
   {
     no: 9,
-    soal: "Panjang QR adalah ..",
-    options: ["A. 3,8 cm", "B. 3,6 cm", "C. 3,4 cm", "D. 3,2 cm"],
-    jawaban: "B",
-    pembahasan: "Gunakan kesebangunan dua segitiga. Untuk pasangan sisi yang bersesuaian berlaku:\n\n$\\dfrac{QR}{\\text{sisi pasangan}} = \\dfrac{\\text{rasio sisi tegak}}{\\text{rasio sisi tegak'}}$\n\nDengan rasio yang umum digunakan (misal 9 : 5) dan sisi pembanding 2 cm, diperoleh QR = $\\dfrac{9}{5} \\times 2 = 3{,}6$ cm."
+    type: "pgkbs",
+    soal: "Pada segitiga siku-siku SPQ, PR tegak lurus SQ. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Panjang QR adalah 3,6 cm.",
+      "Panjang SR adalah 6,4 cm.",
+      "Panjang PR adalah 5 cm.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Segitiga SPQ memiliki sisi siku-siku 8 cm dan 6 cm, sehingga SQ = √(8² + 6²) = 10 cm.\n\nDengan teorema tinggi pada segitiga siku-siku: QR = PQ² ÷ SQ = 36 ÷ 10 = 3,6 cm; SR = SP² ÷ SQ = 64 ÷ 10 = 6,4 cm; dan PR = (SP × PQ) ÷ SQ = 48 ÷ 10 = 4,8 cm, bukan 5 cm."
   },
   {
     no: 10,
-    soal: "Bangun ABCD dan AEFG sebangun. Luas bangun ABCD adalah ..",
-    options: ["A. $45 \\text{ cm}^2$", "B. $62{,}5 \\text{ cm}^2$", "C. $67{,}5 \\text{ cm}^2$", "D. $90 \\text{ cm}^2$"],
-    jawaban: "C",
-    pembahasan: "Pada dua bangun datar yang sebangun, perbandingan LUAS sama dengan KUADRAT perbandingan sisi-sisi bersesuaiannya.\n\n$\\dfrac{L_{ABCD}}{L_{AEFG}} = \\left( \\dfrac{\\text{sisi}_{ABCD}}{\\text{sisi}_{AEFG}} \\right)^2$\n\nDengan rasio sisi 3 : 2 dan luas AEFG = 30 cm² (umum pada pola soal ini):\n\n$L_{ABCD} = \\left( \\dfrac{3}{2} \\right)^2 \\times 30 = \\dfrac{9}{4} \\times 30 = 67{,}5 \\text{ cm}^2$"
+    type: "pgkbs",
+    soal: "Bangun ABCD dan AEFG sebangun seperti pada gambar. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Skala panjang bangun ABCD terhadap AEFG adalah 3 : 2.",
+      "Luas trapesium AEFG adalah 88 cm².",
+      "Luas trapesium ABCD adalah 200 cm².",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Sisi miring yang bersesuaian berukuran 15 cm dan 10 cm, sehingga skala ABCD terhadap AEFG = 15 : 10 = 3 : 2. Pada trapesium siku-siku AEFG, selisih sisi sejajarnya 14 − 8 = 6 cm. Tingginya adalah √(10² − 6²) = 8 cm, jadi luas AEFG = ½(14 + 8) × 8 = 88 cm².\n\nTinggi ABCD = 8 × 3/2 = 12 cm. Sisi sejajarnya AB = 14 × 3/2 = 21 cm dan DC = 8 × 3/2 = 12 cm. Luas ABCD = ½(21 + 12) × 12 = 198 cm², bukan 200 cm²."
   },
   {
     no: 11,
-    soal: "Panjang DE adalah ....",
-    options: ["A. 6 cm", "B. 7 cm", "C. 8 cm", "D. 9 cm"],
-    jawaban: "C",
-    pembahasan: "Gunakan rumus garis sejajar pada trapesium (rumus dasar):\n\n$DE = \\dfrac{(AB \\times CF) + (CD \\times AF)}{AF + CF}$\n\nAtau jika DE memotong dua segitiga sebangun, gunakan rasio sederhana:\n\n$\\dfrac{DE}{\\text{sisi 1}} = \\dfrac{\\text{rasio}}{\\text{rasio'}}$\n\nDengan substitusi nilai standar pada soal ini, diperoleh DE = 8 cm."
+    type: "pgkbs",
+    soal: "Pada gambar, DE sejajar BC, AE = 12 cm, EC = 8 cm, dan BC = 15 cm. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Panjang AC adalah 20 cm.",
+      "Panjang DE adalah 9 cm.",
+      "Perbandingan DE : BC adalah 4 : 5.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "AC = AE + EC = 12 + 8 = 20 cm. Karena DE ∥ BC, segitiga ADE sebangun dengan ABC, sehingga DE/BC = AE/AC = 12/20 = 3/5. Jadi DE = 3/5 × 15 = 9 cm; perbandingannya 3 : 5, bukan 4 : 5."
   },
   {
     no: 12,
-    soal: "Diketahui panjang AB = 6 cm dan DE = 14 cm. Jika panjang AE = 15 cm maka panjang CE adalah....",
-    options: ["A. 4,5 cm", "B. 10,5 cm", "C. 15 cm", "D. 21 cm"],
-    jawaban: "B",
+    type: "pgkbs",
+    soal: "Diketahui AB = 6 cm, DE = 14 cm, dan AE = 15 cm pada gambar. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Panjang CE adalah 10,5 cm.",
+      "Panjang AC adalah 4,5 cm.",
+      "Perbandingan AC : CE adalah 7 : 3.",
+    ],
+    jawabanBS: ["B", "B", "S"],
     pembahasan: "Karena AB ∥ DE, maka △CAB sebangun dengan △CED (kesebangunan oleh garis sejajar). Berlaku:\n\n$\\dfrac{CA}{CE} = \\dfrac{AB}{DE} = \\dfrac{6}{14} = \\dfrac{3}{7}$\n\nDari gambar, AE = AC + CE = 15 cm, sehingga AC = 15 − CE.\n\n$\\dfrac{15 - CE}{CE} = \\dfrac{3}{7}$\n\n$7(15 - CE) = 3 \\cdot CE$\n$105 - 7CE = 3CE$\n$105 = 10CE$\n$CE = 10{,}5 \\text{ cm}$"
   },
   {
     no: 13,
-    soal: "ABCD trapesium sama kaki dan sebangun dengan EFGH. Jika panjang EF = 24 cm, HG = 14 cm, EH = 13 cm dan DC = 21 cm, maka luas daerah yang diarsir adalah ....",
-    options: ["A. $212 \\text{ cm}^2$", "B. $248 \\text{ cm}^2$", "C. $265 \\text{ cm}^2$", "D. $285 \\text{ cm}^2$"],
-    jawaban: "D",
+    type: "pgk",
+    soal: "ABCD dan EFGH adalah trapesium sama kaki yang sebangun. Diketahui EF = 24 cm, HG = 14 cm, EH = 13 cm, dan DC = 21 cm. Pilih semua pernyataan yang benar.",
+    pernyataan: [
+      "Perbandingan ukuran sisi trapesium ABCD terhadap EFGH adalah 3 : 2.",
+      "Panjang AB adalah 36 cm.",
+      "Tinggi trapesium ABCD adalah 18 cm.",
+      "Luas daerah yang diarsir adalah 300 cm².",
+    ],
+    jawabanPGK: [0, 1, 2],
     pembahasan: "Karena trapesium ABCD ~ trapesium EFGH, rasio sisi yang bersesuaian:\n\n$\\dfrac{DC}{HG} = \\dfrac{21}{14} = \\dfrac{3}{2}$\n\nMaka: AB = $\\dfrac{3}{2}$ × EF = $\\dfrac{3}{2}$ × 24 = 36 cm, dan AD = BC = $\\dfrac{3}{2}$ × 13 = 19,5 cm.\n\nTinggi trapesium EFGH dengan rumus Pythagoras (ambil setengah selisih sisi sejajar):\nselisih = (24 − 14)/2 = 5, $t_{EFGH} = \\sqrt{13^2 - 5^2} = \\sqrt{144} = 12$ cm.\n\nLuas EFGH = $\\dfrac{(24+14)}{2} \\times 12 = 228 \\text{ cm}^2$.\n\nLuas ABCD = $\\left(\\dfrac{3}{2}\\right)^2 \\times 228 = \\dfrac{9}{4} \\times 228 = 513 \\text{ cm}^2$.\n\nLuas arsiran (selisih) = 513 − 228 = 285 cm²."
   },
   {
@@ -274,10 +341,15 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 16,
-    soal: "Jika PQRS persegi, maka panjang RT adalah ....",
-    options: ["A. $5\\frac{1}{3}$ cm", "B. $6\\frac{2}{3}$ cm", "C. 7 cm", "D. $7\\frac{1}{4}$ cm"],
-    jawaban: "B",
-    pembahasan: "Soal melibatkan kesebangunan dua segitiga yang terbentuk di dalam persegi PQRS oleh sebuah garis pemotong.\n\nGunakan perbandingan sisi-sisi yang bersesuaian:\n\n$\\dfrac{RT}{\\text{sisi persegi}} = \\dfrac{\\text{rasio segitiga kecil}}{\\text{rasio segitiga besar}}$\n\nDengan sisi persegi = 10 cm dan rasio $\\dfrac{2}{3}$, diperoleh:\n\n$RT = \\dfrac{2}{3} \\times 10 = \\dfrac{20}{3} = 6\\dfrac{2}{3} \\text{ cm}$"
+    type: "pgkbs",
+    soal: "PQRS adalah persegi dengan sisi 10 cm. Garis PT memotong RQ di U dan UQ = 4 cm. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+    pernyataan: [
+      "Panjang RU adalah 6 cm.",
+      "Panjang RT adalah 15 cm.",
+      "Panjang RT adalah 12 cm.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+    pembahasan: "Karena RQ adalah sisi persegi, RQ = 10 cm. Maka RU = RQ − UQ = 10 − 4 = 6 cm.\n\nSegitiga PQU dan RUT sebangun. Perbandingan sisi mendatar dan tegaknya sama: RT/RU = PQ/UQ = 10/4. Jadi RT = 6 × 10/4 = 15 cm."
   },
   {
     no: 17,
@@ -295,9 +367,15 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 19,
-    soal: "Foto yang ditempel pada kertas karton berukuran 10 cm × 15 cm. Di sebelah kiri, kanan, dan atas foto terdapat sisa karton selebar 2 cm. Jika foto dan karton sebangun, panjang karton bagian bawah yang tidak tertutupi foto adalah ....",
-    options: ["A. 1 cm", "B. 2 cm", "C. 3 cm", "D. 4 cm"],
-    jawaban: "D",
+    type: "pgk",
+    soal: "Foto ditempel pada karton berukuran 10 cm × 15 cm. Sisa karton di kiri, kanan, dan atas foto masing-masing 2 cm. Jika foto dan karton sebangun, pilih semua pernyataan yang benar.",
+    pernyataan: [
+      "Lebar foto adalah 6 cm.",
+      "Panjang foto adalah 9 cm.",
+      "Sisa karton di bawah foto adalah 4 cm.",
+      "Luas foto adalah 48 cm².",
+    ],
+    jawabanPGK: [0, 1, 2],
     pembahasan: "Karton berukuran 10 cm × 15 cm (lebar × panjang).\n\nLebar foto = 10 − 2 − 2 = 6 cm.\n\nKarena foto sebangun dengan karton:\n\n$\\dfrac{\\text{lebar foto}}{\\text{lebar karton}} = \\dfrac{\\text{panjang foto}}{\\text{panjang karton}}$\n\n$\\dfrac{6}{10} = \\dfrac{p_{foto}}{15}$\n\n$p_{foto} = \\dfrac{6 \\times 15}{10} = 9 \\text{ cm}$\n\nPanjang karton bagian bawah = 15 − 2 (atas) − 9 (foto) = 4 cm."
   },
   {
@@ -326,19 +404,21 @@ const latihanDasarTkaLama: LatihanSoal[] = [
 const KesebangunanPage = () => (
   <TKAPemantapanLayout
     title="KESEBANGUNAN DAN KEKONGRUENAN"
-  materiSections={materiSections}
-  contohSoal={getTkaContohSoal("kesebangunan")}
-  latihanDasar={latihanDasarTkaLama}
-  gambarMap={{
-    1: kesebangunanSoalSatuDiagram,
-    7: kesebangunanSoalTujuhDiagram,
-    19: kesebangunanSoalSembilanBelasDiagram,
-    20: kesebangunanSoalDuaPuluhDiagram,
-    ...Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [
-      Number(no),
-      <img key={no} src={src} alt={`Gambar soal ${no}`} className="kesebangunan-landscape-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
-    ])),
-  }}
+    backPath="/tka/modul-pemantapan"
+    materiSections={materiSections}
+    contohSoal={getTkaContohSoal("kesebangunan")}
+    latihanDasar={latihanDasarTkaLama}
+    gambarMap={{
+      1: kesebangunanSoalSatuDiagram,
+      7: kesebangunanSoalTujuhDiagram,
+      14: kesebangunanSoalEmpatBelasDiagram,
+      19: kesebangunanSoalSembilanBelasDiagram,
+      20: kesebangunanSoalDuaPuluhDiagram,
+      ...Object.fromEntries(Object.entries(kesebangunanImages).map(([no, src]) => [
+        Number(no),
+        <img key={no} src={src} alt={`Gambar soal ${no}`} className="kesebangunan-landscape-image mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />,
+      ])),
+    }}
   />
 );
 
