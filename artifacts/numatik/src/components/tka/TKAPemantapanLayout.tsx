@@ -277,7 +277,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isLightTheme = theme !== "dark" && theme !== "ocean";
-  const [activeTab, setActiveTab] = useState<"materi" | "contoh" | "dasar">("materi");
+  const [activeTab, setActiveTab] = useState<"materi" | "contoh" | "dasar">("dasar");
   /* PG & PGK: stores selected letter (A/B/C/D) per soal.no */
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   /* PGK modern: stores selected statement indices per soal.no */

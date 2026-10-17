@@ -4,9 +4,13 @@ import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatihanPembahasan";
 import type { ReactNode } from "react";
 import {
+  BakAirDikurasAnimation,
   BolaDalamTabungAnimation,
+  BolaPasTabungAnimation,
   LilinTerbakarAnimation,
+  TigaBolaKeTabungAnimation,
   TornAirAnimation,
+  WadahEsKrimKeCorongAnimation,
 } from "./BangunRuangSisiLengkungAnimations";
 import {
   AtapSetengahBolaDiagram,
@@ -183,13 +187,13 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 34, soal: "Perhatikan gambar bangun gabungan tabung dan setengah bola berikut!\nVolume bangun tersebut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 1.078 $cm^3$", "B. 1.862 $cm^3$", "C. 2.258,67 $cm^3$", "D. 3.080 $cm^3$"] },
   { no: 35, soal: "Perhatikan gambar berikut!\nSebuah peluru terbentuk dari tabung dan kerucut. Volume peluru tersebut adalah... ($\\pi = \\frac{22}{7}$)", options: ["A. 4.312,0 $cm^3$", "B. 4.230,0 $cm^3$", "C. 4.358,2 $cm^3$", "D. 5.312,4 $cm^3$"] },
   { no: 36, soal: "Bangun pada gambar berikut terdiri dari tabung dan belahan bola.\nLuas permukaan bangun tersebut adalah....", options: ["A. 880 $cm^2$", "B. 1.496 $cm^2$", "C. 1.596 $cm^2$", "D. 2.010 $cm^2$"] },
-  { no: 37, soal: "Bola tepat pas di dalam tabung seperti pada gambar. Jika luas permukaan bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, luas seluruh permukaan tabung adalah ....", options: ["A. 616 $cm^2$", "B. 770 $cm^2$", "C. 880 $cm^2$", "D. 924 $cm^2$"] },
-  { no: 38, soal: "Sebuah bak air berbentuk tabung dengan diameter 140 cm dan memiliki tinggi 1 m yang terisi penuh. Dari tabung tersebut dialirkan air melalui kran dengan debit 20 liter/menit selama 1 jam. Maka volume air yang masih tersisa adalah ...", options: ["A. 40 liter", "B. 140 liter", "C. 240 liter", "D. 340 liter"] },
-  { no: 41, soal: "Sebuah tabung berjari-jari 10 cm dan tinggi 50 cm berisi air setinggi $\\frac{3}{5}$ tinggi tabung. Jika 3 bola besi berjari-jari 5 cm dimasukkan hingga tenggelam, tinggi permukaan air setelahnya adalah ...", options: ["A. 32 cm", "B. 35 cm", "C. 38 cm", "D. 40 cm"] },
+  { no: 37, soal: "Bola tepat pas di dalam tabung seperti pada gambar. Jika luas permukaan bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, luas seluruh permukaan tabung adalah ....", options: ["A. 616 $cm^2$", "B. 770 $cm^2$", "C. 880 $cm^2$", "D. 924 $cm^2$"], gambar: <BolaPasTabungAnimation /> },
+  { no: 38, soal: "Sebuah bak air berbentuk tabung dengan diameter 140 cm dan memiliki tinggi 1 m yang terisi penuh. Dari tabung tersebut dialirkan air melalui kran dengan debit 20 liter/menit selama 1 jam. Maka volume air yang masih tersisa adalah ...", options: ["A. 40 liter", "B. 140 liter", "C. 240 liter", "D. 340 liter"], gambar: <BakAirDikurasAnimation /> },
+  { no: 41, soal: "Sebuah tabung berjari-jari 10 cm dan tinggi 50 cm berisi air setinggi $\\frac{3}{5}$ tinggi tabung. Jika 3 bola besi berjari-jari 5 cm dimasukkan hingga tenggelam, tinggi permukaan air setelahnya adalah ...", options: ["A. 32 cm", "B. 35 cm", "C. 38 cm", "D. 40 cm"], gambar: <TigaBolaKeTabungAnimation /> },
   { no: 42, soal: "Sebuah torn pengisi air berbentuk tabung dengan diameter 2 m dan tinggi 10 m. Torn tersebut diisi air dengan debit 200 liter/menit ($\\pi = 3,14$). Torn akan terisi penuh selama ...", options: ["A. 2 jam 15 menit", "B. 2 jam 27 menit", "C. 2 jam 37 menit", "D. 2 jam 38 menit"], gambar: <TornAirAnimation /> },
   { no: 43, soal: "Sebuah bola logam dimasukkan ke dalam tabung yang berisi air sehingga permukaan air di dalam tabung menjadi naik. Hitunglah tinggi air yang naik jika diameternya 3 cm dan diameter tabung 5 cm.", options: ["A. 0,72", "B. 52", "C. 18", "D. 7,2"], gambar: <BolaDalamTabungAnimation /> },
   { no: 44, soal: "Fitra menyalakan lilin berbentuk tabung dengan diameter 2,8 cm dan tinggi 15 cm. Jika setiap menit lilin terbakar 1,68 $cm^3$, maka lilin akan habis terbakar dalam waktu ... ($\\pi = \\frac{22}{7}$)", options: ["A. 48 menit", "B. 50 menit", "C. 55 menit", "D. 56 menit"], gambar: <LilinTerbakarAnimation /> },
-  { no: 45, soal: "Wadah pembuatan es cream berbentuk tabung dengan diameter 0,2 m dan tinggi 0,75 m. Jika es cream tersebut dimasukkan kedalam corong-corong es cream berbentuk kerucut dengan jari-jari 2,5 cm dan tinggi 10 cm. Maka banyak corong es cream yang dibutuhkan adalah...", options: ["A. 60", "B. 120", "C. 240", "D. 360"] },
+  { no: 45, soal: "Wadah pembuatan es cream berbentuk tabung dengan diameter 0,2 m dan tinggi 0,75 m. Jika es cream tersebut dimasukkan kedalam corong-corong es cream berbentuk kerucut dengan jari-jari 2,5 cm dan tinggi 10 cm. Maka banyak corong es cream yang dibutuhkan adalah...", options: ["A. 60", "B. 120", "C. 240", "D. 360"], gambar: <WadahEsKrimKeCorongAnimation /> },
 ];
 
 const brslDasarImages: Record<number, string> = {
@@ -199,7 +203,6 @@ const brslDasarImages: Record<number, string> = {
   32: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117365/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_32_klahbw.png",
   34: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117357/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_34_eqdmwj.png",
   35: "https://res.cloudinary.com/s4ge6not/image/upload/v1783117358/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_35_uu8ch9.png",
-  37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
 const brslDasarGambarLebarPx: Record<number, number> = {
@@ -209,7 +212,6 @@ const brslDasarGambarLebarPx: Record<number, number> = {
   32: 192,
   34: 192,
   35: 192,
-  37: 192,
 };
 const nomorSoalYangDihapus = new Set([9, 13, 14, 20, 23, 25, 33, 36]);
 const latihanDasarTkaAktif = latihanDasarTkaLama.filter(
@@ -246,7 +248,7 @@ const BangunRuangSisiLengkungPage = () => (
     title="BANGUN RUANG SISI LENGKUNG"
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
-    latihanDasar={latihanDasarTkaBerurutan}
+    latihanDasar={latihanDasarTkaBerurutan.filter((soal) => [23, 24, 28].includes(soal.no))}
     gambarMap={brslDasarGambarMap}
     showImmediateAnswerFeedback
   />

@@ -227,3 +227,321 @@ export const LilinTerbakarAnimation = () => (
     </svg>
   </figure>
 );
+
+export const BolaPasTabungAnimation = () => (
+  <figure className={figureClassName}>
+    <figcaption className="mb-2 text-center text-sm font-semibold text-slate-700">
+      Bola tepat pas di dalam tabung
+    </figcaption>
+    <svg
+      viewBox="0 0 480 310"
+      role="img"
+      aria-labelledby="brsl-q23-title brsl-q23-description"
+      className="brsl-animated-diagram mx-auto block h-auto w-full"
+    >
+      <title id="brsl-q23-title">Bola tepat pas di dalam tabung</title>
+      <desc id="brsl-q23-description">
+        Bola berada pas di dalam tabung. Luas permukaan bola 616 sentimeter persegi dan pi sama dengan 22 per 7.
+      </desc>
+      <style>{`
+        @keyframes brsl-q23-spin {
+          to { transform: rotate(360deg); }
+        }
+        .brsl-q23-globe-lines {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: brsl-q23-spin 10s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .brsl-q23-globe-lines { animation: none; }
+        }
+      `}</style>
+
+      <text x="240" y="34" textAnchor="middle" fill="#334155" fontFamily="Arial, sans-serif" fontSize="15">
+        Luas permukaan bola = 616 cm²
+      </text>
+
+      <circle cx="240" cy="150" r="70" fill="#fde68a" stroke="#92400e" strokeWidth="2.5" />
+      <g className="brsl-q23-globe-lines" fill="none" stroke="#d97706" strokeWidth="2.5" opacity="0.85">
+        <ellipse cx="240" cy="150" rx="70" ry="23" />
+        <ellipse cx="240" cy="150" rx="28" ry="70" />
+        <path d="M173 150c18-15 116-15 134 0M173 150c18 15 116 15 134 0" />
+      </g>
+
+      <g fill="none" stroke="#334155" strokeWidth="3">
+        <ellipse cx="240" cy="80" rx="70" ry="17" fill="#ffffff" fillOpacity="0.28" />
+        <path d="M170 80v140M310 80v140" />
+        <path d="M170 220a70 17 0 0 0 140 0" />
+        <path d="M170 220a70 17 0 0 1 140 0" strokeDasharray="5 5" opacity="0.5" />
+        <path d="M355 80v140M349 80h12M349 220h12" strokeWidth="2" />
+      </g>
+      <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="14">
+        <text x="365" y="146" transform="rotate(-90 365 146)" textAnchor="middle">tinggi tabung</text>
+        <text x="240" y="265" textAnchor="middle">Bola pas memenuhi diameter tabung</text>
+        <text x="240" y="288" textAnchor="middle">π = 22/7</text>
+      </g>
+    </svg>
+  </figure>
+);
+
+export const BakAirDikurasAnimation = () => (
+  <figure className={figureClassName}>
+    <figcaption className="mb-2 text-center text-sm font-semibold text-slate-700">
+      Air di dalam bak tabung dialirkan melalui kran
+    </figcaption>
+    <svg
+      viewBox="0 0 520 320"
+      role="img"
+      aria-labelledby="brsl-q24-title brsl-q24-description"
+      className="brsl-animated-diagram mx-auto block h-auto w-full"
+    >
+      <title id="brsl-q24-title">Animasi bak air berbentuk tabung yang dikuras</title>
+      <desc id="brsl-q24-description">
+        Bak berdiameter 140 sentimeter dan tinggi 1 meter mula-mula penuh. Air keluar melalui kran dengan debit 20 liter per menit selama 60 menit.
+      </desc>
+      <defs>
+        <clipPath id="brsl-q24-tank-clip">
+          <path d="M145 80a105 20 0 0 1 210 0v164a105 20 0 0 1-210 0z" />
+        </clipPath>
+      </defs>
+      <style>{`
+        @keyframes brsl-q24-drain {
+          0%, 12% { transform: scaleY(1); }
+          76%, 88% { transform: scaleY(.22); }
+          100% { transform: scaleY(1); }
+        }
+        @keyframes brsl-q24-drop {
+          0%, 10% { transform: translateY(0); opacity: 0; }
+          30% { opacity: 1; }
+          90%, 100% { transform: translateY(26px); opacity: 0; }
+        }
+        .brsl-q24-water {
+          transform-box: fill-box;
+          transform-origin: center bottom;
+          animation: brsl-q24-drain 8s ease-in-out infinite;
+        }
+        .brsl-q24-drop {
+          animation: brsl-q24-drop 1.2s ease-in infinite;
+        }
+        .brsl-q24-drop-two { animation-delay: .4s; }
+        .brsl-q24-drop-three { animation-delay: .8s; }
+        @media (prefers-reduced-motion: reduce) {
+          .brsl-q24-water, .brsl-q24-drop { animation: none; }
+        }
+      `}</style>
+
+      <g clipPath="url(#brsl-q24-tank-clip)">
+        <g className="brsl-q24-water">
+          <rect x="145" y="80" width="210" height="164" fill="#38bdf8" opacity="0.84" />
+          <ellipse cx="250" cy="80" rx="103" ry="18" fill="#7dd3fc" />
+        </g>
+      </g>
+
+      <g fill="none" stroke="#334155" strokeWidth="3">
+        <ellipse cx="250" cy="80" rx="105" ry="20" />
+        <path d="M145 80v164M355 80v164" />
+        <path d="M145 244a105 20 0 0 0 210 0" />
+        <path d="M145 244a105 20 0 0 1 210 0" strokeDasharray="5 5" opacity="0.45" />
+        <path d="M382 80v164M376 80h12M376 244h12" strokeWidth="2" />
+        <path d="M355 116h34v10h-19v18h-10" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="14">
+        <text x="250" y="35" textAnchor="middle">Debit 20 liter/menit · dialirkan 60 menit</text>
+        <text x="404" y="168" transform="rotate(-90 404 168)" textAnchor="middle">tinggi 1 m</text>
+        <text x="250" y="292" textAnchor="middle">diameter 140 cm</text>
+        <text x="392" y="105" fontSize="12">kran</text>
+      </g>
+      <g fill="#0ea5e9">
+        <circle className="brsl-q24-drop" cx="390" cy="143" r="4" />
+        <circle className="brsl-q24-drop brsl-q24-drop-two" cx="390" cy="143" r="3.5" />
+        <circle className="brsl-q24-drop brsl-q24-drop-three" cx="390" cy="143" r="3" />
+      </g>
+    </svg>
+  </figure>
+);
+
+export const TigaBolaKeTabungAnimation = () => (
+  <figure className={figureClassName}>
+    <figcaption className="mb-2 text-center text-sm font-semibold text-slate-700">
+      Tiga bola besi dimasukkan ke dalam tabung berisi air
+    </figcaption>
+    <svg
+      viewBox="0 0 520 320"
+      role="img"
+      aria-labelledby="brsl-q24-balls-title brsl-q24-balls-description"
+      className="brsl-animated-diagram mx-auto block h-auto w-full"
+    >
+      <title id="brsl-q24-balls-title">Air naik saat tiga bola besi masuk ke tabung</title>
+      <desc id="brsl-q24-balls-description">
+        Tabung berjari-jari 10 sentimeter dan tinggi 50 sentimeter berisi air setinggi tiga per lima tabung. Tiga bola besi berjari-jari 5 sentimeter dijatuhkan ke dalamnya.
+      </desc>
+      <defs>
+        <clipPath id="brsl-q24-balls-tube-clip">
+          <path d="M165 75a85 17 0 0 1 170 0v170a85 17 0 0 1-170 0z" />
+        </clipPath>
+        <marker id="brsl-q24-balls-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0 0L8 4L0 8Z" fill="#0284c7" />
+        </marker>
+      </defs>
+      <style>{`
+        @keyframes brsl-q24-balls-rise {
+          0%, 12% { transform: scaleY(1); }
+          56%, 84% { transform: scaleY(1.17); }
+          100% { transform: scaleY(1); }
+        }
+        @keyframes brsl-q24-balls-fall {
+          0%, 12% { transform: translateY(0); }
+          52%, 84% { transform: translateY(168px); }
+          100% { transform: translateY(0); }
+        }
+        .brsl-q24-balls-water {
+          transform-box: fill-box;
+          transform-origin: center bottom;
+          animation: brsl-q24-balls-rise 7s ease-in-out infinite;
+        }
+        .brsl-q24-falling-ball {
+          animation: brsl-q24-balls-fall 7s ease-in-out infinite;
+        }
+        .brsl-q24-falling-ball-two { animation-delay: .35s; }
+        .brsl-q24-falling-ball-three { animation-delay: .7s; }
+        @media (prefers-reduced-motion: reduce) {
+          .brsl-q24-balls-water, .brsl-q24-falling-ball { animation: none; }
+        }
+      `}</style>
+
+      <text x="250" y="35" textAnchor="middle" fill="#334155" fontFamily="Arial, sans-serif" fontSize="14">
+        3 bola besi · masing-masing berjari-jari 5 cm
+      </text>
+
+      <g clipPath="url(#brsl-q24-balls-tube-clip)">
+        <g className="brsl-q24-balls-water">
+          <rect x="165" y="139" width="170" height="106" fill="#38bdf8" opacity="0.84" />
+          <ellipse cx="250" cy="139" rx="83" ry="15" fill="#7dd3fc" />
+        </g>
+      </g>
+
+      <g fill="#94a3b8" stroke="#334155" strokeWidth="2.5">
+        <g className="brsl-q24-falling-ball">
+          <circle cx="205" cy="50" r="19" />
+          <ellipse cx="199" cy="44" rx="5" ry="8" fill="#e2e8f0" stroke="none" />
+        </g>
+        <g className="brsl-q24-falling-ball brsl-q24-falling-ball-two">
+          <circle cx="250" cy="50" r="19" />
+          <ellipse cx="244" cy="44" rx="5" ry="8" fill="#e2e8f0" stroke="none" />
+        </g>
+        <g className="brsl-q24-falling-ball brsl-q24-falling-ball-three">
+          <circle cx="295" cy="50" r="19" />
+          <ellipse cx="289" cy="44" rx="5" ry="8" fill="#e2e8f0" stroke="none" />
+        </g>
+      </g>
+
+      <g fill="none" stroke="#334155" strokeWidth="3">
+        <ellipse cx="250" cy="75" rx="85" ry="17" />
+        <path d="M165 75v170M335 75v170" />
+        <path d="M165 245a85 17 0 0 0 170 0" />
+        <path d="M165 245a85 17 0 0 1 170 0" strokeDasharray="5 5" opacity="0.45" />
+        <path d="M369 75v170M363 75h12M363 245h12" strokeWidth="2" />
+        <path d="M391 189v-44" stroke="#0284c7" strokeWidth="2.5" markerEnd="url(#brsl-q24-balls-arrow)" />
+      </g>
+      <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="13">
+        <text x="393" y="172" transform="rotate(-90 393 172)" textAnchor="middle">tinggi 50 cm</text>
+        <text x="250" y="286" textAnchor="middle">jari-jari tabung = 10 cm</text>
+        <text x="406" y="131" fill="#0369a1">air naik</text>
+        <text x="250" y="125" textAnchor="middle" fill="#075985">air awal = ⅗ tinggi tabung</text>
+      </g>
+    </svg>
+  </figure>
+);
+
+export const WadahEsKrimKeCorongAnimation = () => (
+  <figure className={figureClassName}>
+    <figcaption className="mb-2 text-center text-sm font-semibold text-slate-700">
+      Es krim dipindahkan dari wadah ke corong
+    </figcaption>
+    <svg
+      viewBox="0 0 620 320"
+      role="img"
+      aria-labelledby="brsl-q28-title brsl-q28-description"
+      className="brsl-animated-diagram mx-auto block h-auto w-full"
+    >
+      <title id="brsl-q28-title">Animasi wadah es krim dan corong kerucut</title>
+      <desc id="brsl-q28-description">
+        Wadah tabung berdiameter 0,2 meter dan tinggi 0,75 meter dituangkan ke corong kerucut berjari-jari 2,5 sentimeter dan tinggi 10 sentimeter.
+      </desc>
+      <defs>
+        <clipPath id="brsl-q28-tub-clip">
+          <path d="M70 74a52 15 0 0 1 104 0v158a52 15 0 0 1-104 0z" />
+        </clipPath>
+        <marker id="brsl-q28-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0 0L8 4L0 8Z" fill="#b45309" />
+        </marker>
+      </defs>
+      <style>{`
+        @keyframes brsl-q28-empty-tub {
+          0%, 10% { transform: scaleY(1); }
+          70%, 88% { transform: scaleY(.25); }
+          100% { transform: scaleY(1); }
+        }
+        @keyframes brsl-q28-fill-cone {
+          0%, 12% { transform: scaleY(.12); opacity: .55; }
+          60%, 82% { transform: scaleY(.95); opacity: 1; }
+          100% { transform: scaleY(.12); opacity: .55; }
+        }
+        .brsl-q28-tub-fill {
+          transform-box: fill-box;
+          transform-origin: center bottom;
+          animation: brsl-q28-empty-tub 7s ease-in-out infinite;
+        }
+        .brsl-q28-cone-fill {
+          transform-box: fill-box;
+          transform-origin: center bottom;
+          animation: brsl-q28-fill-cone 3.2s ease-in-out infinite;
+        }
+        .brsl-q28-cone-fill-two { animation-delay: .7s; }
+        .brsl-q28-cone-fill-three { animation-delay: 1.4s; }
+        @media (prefers-reduced-motion: reduce) {
+          .brsl-q28-tub-fill, .brsl-q28-cone-fill { animation: none; }
+        }
+      `}</style>
+
+      <g clipPath="url(#brsl-q28-tub-clip)">
+        <g className="brsl-q28-tub-fill">
+          <rect x="70" y="74" width="104" height="158" fill="#fde68a" opacity="0.92" />
+          <ellipse cx="122" cy="74" rx="50" ry="13" fill="#fef3c7" />
+        </g>
+      </g>
+      <g fill="none" stroke="#334155" strokeWidth="3">
+        <ellipse cx="122" cy="74" rx="52" ry="15" />
+        <path d="M70 74v158M174 74v158" />
+        <path d="M70 232a52 15 0 0 0 104 0" />
+      </g>
+      <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="13">
+        <text x="122" y="49" textAnchor="middle">wadah tabung</text>
+        <text x="122" y="272" textAnchor="middle">diameter 0,2 m</text>
+        <text x="48" y="158" transform="rotate(-90 48 158)" textAnchor="middle">tinggi 0,75 m</text>
+      </g>
+
+      <path d="M191 122C220 95 240 95 269 122" fill="none" stroke="#b45309" strokeWidth="3" markerEnd="url(#brsl-q28-arrow)" />
+      <text x="230" y="89" textAnchor="middle" fill="#334155" fontFamily="Arial, sans-serif" fontSize="12">es krim</text>
+
+      {[320, 420, 520].map((cx, index) => {
+        const fillClass = [
+          "brsl-q28-cone-fill",
+          "brsl-q28-cone-fill brsl-q28-cone-fill-two",
+          "brsl-q28-cone-fill brsl-q28-cone-fill-three",
+        ][index];
+        return (
+          <g key={cx}>
+            <path className={fillClass} d={`M${cx - 25} 224L${cx} 142L${cx + 25} 224Z`} fill="#fde68a" />
+            <path d={`M${cx - 25} 224L${cx} 142L${cx + 25} 224Z`} fill="none" stroke="#92400e" strokeWidth="2.5" />
+            <ellipse cx={cx} cy="142" rx="25" ry="7" fill="#fff7ed" stroke="#92400e" strokeWidth="2" />
+          </g>
+        );
+      })}
+      <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="13">
+        <text x="420" y="267" textAnchor="middle">setiap corong: r = 2,5 cm · tinggi = 10 cm</text>
+        <text x="420" y="290" textAnchor="middle">corong es krim berbentuk kerucut</text>
+      </g>
+    </svg>
+  </figure>
+);
