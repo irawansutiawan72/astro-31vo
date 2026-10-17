@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import bolaTigaPerempatImage from "@assets/image_1792232484011.png";
 import duaTopiUlangTahunImage from "@assets/image_1792232576189.png";
 import nasiTumpengImage from "@assets/image_1792232780263.png";
+import gedungKubahImage from "@assets/image_1792233102504.png";
 import {
   BakAirDikurasAnimation,
   BolaDalamTabungAnimation,
@@ -16,7 +17,6 @@ import {
   WadahEsKrimKeCorongAnimation,
 } from "./BangunRuangSisiLengkungAnimations";
 import {
-  AtapSetengahBolaDiagram,
   JuringKerucutDiagram,
   PerbandinganDrumTabungDiagram,
 } from "./BangunRuangSisiLengkungDiagrams";
@@ -190,7 +190,18 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     ],
     jawabanBS: ["B", "B", "S"],
   },
-  { no: 21, soal: "Atap sebuah gedung berbentuk setengah bola dengan panjang diameter 14 m. Atap gedung tersebut akan dicat dengan biaya Rp50.000,00 setiap $m^2$. Biaya yang diperlukan untuk mengecat atap gedung itu adalah ....", options: ["A. Rp13.700.000,00", "B. Rp15.400.000,00", "C. Rp15.850.000,00", "D. Rp16.400.000,00"], gambar: <AtapSetengahBolaDiagram /> },
+  {
+    no: 21,
+    soal: "Atap sebuah gedung berbentuk setengah bola dengan panjang diameter 14 m. Atap gedung tersebut akan dicat dengan biaya Rp50.000,00 setiap $m^2$. Biaya yang diperlukan untuk mengecat atap gedung itu adalah ....",
+    options: ["A. Rp13.700.000,00", "B. Rp15.400.000,00", "C. Rp15.850.000,00", "D. Rp16.400.000,00"],
+    gambar: (
+      <img
+        src={gedungKubahImage}
+        alt="Gedung dengan kubah berbentuk setengah bola"
+        className="mx-auto my-3 h-auto w-full rounded-lg border border-border/40 bg-[#fffaf0] p-2 object-contain"
+      />
+    ),
+  },
   { no: 23, soal: "Volume sebuah kerucut adalah 314 $cm^3$, Jika jari-jari alasnya 5 cm dan $\\pi = 3,14$, maka panjang garis pelukisnya adalah ...", options: ["A. 4 cm", "B. 12 cm", "C. 13 cm", "D. 20 cm"] },
   { no: 24, soal: "Sebuah drum berbentuk tabung dengan panjang jari-jari 70 cm dan tinggi 100 cm penuh berisi minyak tanah. Minyak tanah tersebut akan dituang ke dalam tabung-tabung kecil dengan panjang jari-jari 35 cm dan tinggi 50 cm. Banyak tabung kecil yang akan diperlukan adalah....", options: ["A. 2 buah", "B. 4 buah", "C. 6 buah", "D. 8 buah"], gambar: <PerbandinganDrumTabungDiagram /> },
   { no: 25, soal: "Sebuah drum berbentuk tabung dengan diameter alas 10 cm dan tinggi 100 cm. Bila $\\frac{3}{4}$ bagian dari drum berisi minyak, banyak minyak di dalam drum tersebut adalah ...", options: ["A. 8587,5 $cm^3$", "B. 8578,5 $cm^3$", "C. 5887,5 $cm^3$", "D. 5878,5 $cm^3$"] },

@@ -5,19 +5,6 @@ const fill = "#fff1d1";
 const accent = "#a76537";
 const label = "#56351f";
 
-export const AtapSetengahBolaDiagram = () => (
-  <svg viewBox="0 0 320 220" className={frameClass} role="img" aria-label="Atap berbentuk setengah bola dengan diameter 14 meter">
-    <title>Atap setengah bola</title>
-    <path d="M65 148 A95 95 0 0 1 255 148 Z" fill={fill} stroke={stroke} strokeWidth="3" />
-    <path d="M65 148 C102 168 218 168 255 148" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="6 5" />
-    <path d="M65 148 C102 128 218 128 255 148" fill="none" stroke={stroke} strokeWidth="3" />
-    <line x1="65" y1="186" x2="255" y2="186" stroke={accent} strokeWidth="2" />
-    <line x1="65" y1="178" x2="65" y2="194" stroke={accent} strokeWidth="2" />
-    <line x1="255" y1="178" x2="255" y2="194" stroke={accent} strokeWidth="2" />
-    <text x="160" y="211" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">diameter = 14 m</text>
-  </svg>
-);
-
 export const PerbandinganDrumTabungDiagram = () => (
   <svg viewBox="0 0 360 230" className={frameClass} role="img" aria-label="Perbandingan drum besar dan tabung kecil">
     <title>Drum besar dan tabung kecil</title>
@@ -29,7 +16,7 @@ export const PerbandinganDrumTabungDiagram = () => (
       <text x="70" y="216" fill={label} fontSize="11" textAnchor="middle">r = 70 cm, t = 100 cm</text>
     </g>
     <g>
-      <path d="M211 107 C211 91 263 91 263 107 L263 177 C263 193 211 193 211 177 Z" fill={fill} stroke={stroke} strokeWidth="3" />
+      <path d="M211 107 L211 177 C211 193 263 193 263 177 L263 107 Z" fill={fill} stroke={stroke} strokeWidth="3" />
       <ellipse cx="237" cy="107" rx="26" ry="8" fill={fill} stroke={stroke} strokeWidth="3" />
       <path d="M211 177 C211 163 263 163 263 177" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 4" />
       <text x="237" y="78" fill={label} fontSize="13" fontWeight="700" textAnchor="middle">Tabung kecil</text>
