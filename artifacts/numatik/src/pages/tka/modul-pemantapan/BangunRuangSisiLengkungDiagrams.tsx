@@ -5,39 +5,6 @@ const fill = "#fff1d1";
 const accent = "#a76537";
 const label = "#56351f";
 
-export const BolaTigaPerempatDiagram = () => (
-  <svg viewBox="0 0 340 275" className={frameClass} role="img" aria-label="Bola padat tiga perempat dengan dua bidang potong berbentuk setengah lingkaran, berjari-jari 7 cm">
-    <title>Bangun tiga perempat bola, jari-jari 7 cm</title>
-    <defs>
-      <radialGradient id="brslSphereGradient" cx="31%" cy="24%" r="76%">
-        <stop offset="0%" stopColor="#fff4d0" />
-        <stop offset="28%" stopColor="#f6d28b" />
-        <stop offset="68%" stopColor="#db9148" />
-        <stop offset="100%" stopColor="#81431f" />
-      </radialGradient>
-      <linearGradient id="brslSphereCutLeft" x1="0%" y1="0%" x2="100%" y2="60%">
-        <stop offset="0%" stopColor="#fff6dc" />
-        <stop offset="100%" stopColor="#e6bb7b" />
-      </linearGradient>
-      <linearGradient id="brslSphereCutRight" x1="0%" y1="0%" x2="100%" y2="60%">
-        <stop offset="0%" stopColor="#f4dfb8" />
-        <stop offset="100%" stopColor="#c28b51" />
-      </linearGradient>
-    </defs>
-    <ellipse cx="155" cy="199" rx="68" ry="11" fill="#56351f" opacity="0.16" />
-    <circle cx="155" cy="112" r="78" fill="url(#brslSphereGradient)" stroke="#75401f" strokeWidth="2.5" />
-    <path d="M101 61 C112 48 133 40 151 40" fill="none" stroke="#fff8e2" strokeWidth="5" strokeLinecap="round" opacity="0.62" />
-    <path d="M155 34 C123 42 99 77 99 112 C99 147 123 182 155 190 Z" fill="url(#brslSphereCutLeft)" stroke="#75401f" strokeWidth="2.5" strokeLinejoin="round" />
-    <path d="M155 34 C187 42 211 77 211 112 C211 147 187 182 155 190 Z" fill="url(#brslSphereCutRight)" stroke="#75401f" strokeWidth="2.5" strokeLinejoin="round" />
-    <path d="M155 34 L155 190" stroke="#75401f" strokeWidth="2.5" />
-    <path d="M155 112 L211 112" stroke="#8b572d" strokeWidth="2.5" />
-    <circle cx="155" cy="112" r="4" fill="#75401f" stroke="#fff1d1" strokeWidth="1.5" />
-    <text x="170" y="101" fill={label} fontSize="15" fontWeight="700">r = 7 cm</text>
-    <text x="155" y="225" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">Bola padat ¾ bagian</text>
-    <text x="155" y="249" fill={label} fontSize="12" fontWeight="600" textAnchor="middle">Potongan: ½ lingkaran + ½ lingkaran</text>
-  </svg>
-);
-
 export const TopiKerucutDiagram = () => (
   <svg viewBox="0 0 340 220" className={frameClass} role="img" aria-label="Dua topi berbentuk kerucut, diameter alas 21 cm dan garis pelukis 20 cm">
     <title>Dua topi kerucut tanpa alas</title>

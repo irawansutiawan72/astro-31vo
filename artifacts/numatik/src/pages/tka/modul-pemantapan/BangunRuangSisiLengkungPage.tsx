@@ -3,6 +3,7 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatihanPembahasan";
 import type { ReactNode } from "react";
+import bolaTigaPerempatImage from "@assets/image_1792232484011.png";
 import {
   BakAirDikurasAnimation,
   BolaDalamTabungAnimation,
@@ -14,7 +15,6 @@ import {
 } from "./BangunRuangSisiLengkungAnimations";
 import {
   AtapSetengahBolaDiagram,
-  BolaTigaPerempatDiagram,
   JuringKerucutDiagram,
   PerbandinganDrumTabungDiagram,
   TopiKerucutDiagram,
@@ -89,7 +89,13 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Volume bangun ¾ bola adalah 1.078 $cm^3$.",
     ],
     jawabanPGK: [0, 1, 2, 3],
-    gambar: <BolaTigaPerempatDiagram />,
+    gambar: (
+      <img
+        src={bolaTigaPerempatImage}
+        alt="Ilustrasi bola dengan dua bidang potong berbentuk setengah lingkaran dan jari-jari 7 cm"
+        className="mx-auto my-3 h-auto w-full max-w-sm rounded-lg border border-border/40 bg-[#fffaf0] p-2 object-contain"
+      />
+    ),
   },
   {
     no: 12,
