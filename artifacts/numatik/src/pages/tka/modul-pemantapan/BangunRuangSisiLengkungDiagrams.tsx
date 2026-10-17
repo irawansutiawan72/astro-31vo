@@ -6,17 +6,33 @@ const accent = "#a76537";
 const label = "#56351f";
 
 export const BolaTigaPerempatDiagram = () => (
-  <svg viewBox="0 0 320 230" className={frameClass} role="img" aria-label="Ilustrasi bangun tiga perempat bola berjari-jari 7 cm">
+  <svg viewBox="0 0 340 250" className={frameClass} role="img" aria-label="Ilustrasi bola padat dengan seperempat bagian dipotong, menyisakan tiga perempat bola berjari-jari 7 cm">
     <title>Bangun tiga perempat bola, jari-jari 7 cm</title>
-    <circle cx="155" cy="112" r="82" fill={fill} stroke={stroke} strokeWidth="3" />
-    <ellipse cx="155" cy="112" rx="82" ry="25" fill="none" stroke={accent} strokeWidth="2.5" />
-    <path d="M73 112 A82 25 0 0 0 237 112" fill="none" stroke={stroke} strokeWidth="3" />
-    <path d="M155 112 L155 30 A82 82 0 0 1 237 112 Z" fill="#fffaf0" stroke={accent} strokeWidth="2.5" />
-    <path d="M155 112 L155 30" stroke={stroke} strokeWidth="2" strokeDasharray="6 5" />
-    <path d="M155 112 L214 173" stroke={accent} strokeWidth="2.5" />
-    <circle cx="155" cy="112" r="4" fill={accent} />
-    <text x="181" y="78" fill={label} fontSize="15" fontWeight="700">r = 7 cm</text>
-    <text x="155" y="216" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">Bola padat ¾ bagian</text>
+    <defs>
+      <radialGradient id="brslSphereGradient" cx="31%" cy="24%" r="76%">
+        <stop offset="0%" stopColor="#fff4d0" />
+        <stop offset="28%" stopColor="#f6d28b" />
+        <stop offset="68%" stopColor="#db9148" />
+        <stop offset="100%" stopColor="#81431f" />
+      </radialGradient>
+      <linearGradient id="brslSphereCutGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#fff8e7" />
+        <stop offset="58%" stopColor="#f0d8ae" />
+        <stop offset="100%" stopColor="#c58e55" />
+      </linearGradient>
+    </defs>
+    <ellipse cx="160" cy="203" rx="66" ry="11" fill="#56351f" opacity="0.16" />
+    <circle cx="155" cy="112" r="78" fill="url(#brslSphereGradient)" stroke="#75401f" strokeWidth="2.5" />
+    <path d="M101 61 C112 48 133 40 151 40" fill="none" stroke="#fff8e2" strokeWidth="5" strokeLinecap="round" opacity="0.62" />
+    <path d="M77 112 C105 89 205 89 233 112" fill="none" stroke="#fff0c7" strokeWidth="1.8" strokeDasharray="5 5" opacity="0.72" />
+    <path d="M77 112 C105 137 205 137 233 112" fill="none" stroke="#80451f" strokeWidth="2" opacity="0.7" />
+    <path d="M155 112 L155 34 A78 78 0 0 1 233 112 Z" fill="url(#brslSphereCutGradient)" stroke="#75401f" strokeWidth="2.5" strokeLinejoin="round" />
+    <path d="M155 112 L155 34" stroke="#fffaf0" strokeWidth="2.2" />
+    <path d="M155 112 L233 112" stroke="#9b6436" strokeWidth="2.2" />
+    <path d="M155 112 L210 167" stroke="#a76537" strokeWidth="2.5" />
+    <circle cx="155" cy="112" r="4" fill="#75401f" stroke="#fff1d1" strokeWidth="1.5" />
+    <text x="174" y="82" fill={label} fontSize="15" fontWeight="700">r = 7 cm</text>
+    <text x="155" y="235" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">Bola padat ¾ bagian</text>
   </svg>
 );
 
