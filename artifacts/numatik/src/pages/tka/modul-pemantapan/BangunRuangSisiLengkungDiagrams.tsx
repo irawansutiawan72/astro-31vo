@@ -30,13 +30,12 @@ export const PerbandinganDrumTabungDiagram = () => (
 export const JuringKerucutDiagram = () => (
   <svg viewBox="0 0 320 235" className={frameClass} role="img" aria-label="Juring lingkaran 216 derajat berjari-jari 15 cm untuk membentuk kerucut">
     <title>Juring lingkaran untuk membuat kerucut</title>
-    <path d="M158 119 L158 28 A91 91 0 1 1 72 180 Z" fill={fill} stroke={stroke} strokeWidth="3" />
-    <path d="M158 119 L158 28" stroke={accent} strokeWidth="2" />
-    <path d="M158 119 L72 180" stroke={accent} strokeWidth="2" />
-    <path d="M158 56 A63 63 0 1 1 98 160" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="6 5" />
-    <circle cx="158" cy="119" r="4" fill={accent} />
-    <text x="172" y="67" fill={label} fontSize="14" fontWeight="700">R = 15 cm</text>
-    <text x="105" y="131" fill={label} fontSize="14" fontWeight="700">216°</text>
+    <path d="M160 112 L184 38 A78 78 0 1 0 184 186 Z" fill={fill} stroke={stroke} strokeWidth="3" />
+    <path d="M160 112 L184 38" stroke={accent} strokeWidth="2" />
+    <path d="M160 112 L184 186" stroke={accent} strokeWidth="2" />
+    <circle cx="160" cy="112" r="4" fill={accent} />
+    <text x="108" y="78" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">R = 15 cm</text>
+    <text x="103" y="118" fill={label} fontSize="14" fontWeight="700" textAnchor="middle">216°</text>
     <text x="160" y="219" fill={label} fontSize="13" fontWeight="700" textAnchor="middle">Juring karton pembentuk kerucut</text>
   </svg>
 );
