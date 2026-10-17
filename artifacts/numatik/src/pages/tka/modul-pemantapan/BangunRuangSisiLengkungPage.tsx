@@ -196,7 +196,8 @@ const brslDasarImages: Record<number, string> = {
 };
 
 const gambarSetengahNomorAsli = new Set([6, 13, 35, 36]);
-const gambarSeperempatNomorAsli = new Set([30, 31, 32, 33, 34, 37]);
+const gambarSeperempatNomorAsli = new Set([35, 36]);
+const gambarSeperdelapanNomorAsli = new Set([30, 31, 32, 33, 34, 37]);
 const nomorTampilPerNomorAsli = new Map(
   latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),
 );
@@ -212,9 +213,11 @@ for (const [nomorAsli, src] of Object.entries(brslDasarImages)) {
   const nomorTampil = nomorTampilPerNomorAsli.get(Number(nomorAsli));
   if (nomorTampil === undefined) continue;
   const originalQuestionNo = Number(nomorAsli);
-  const widthClass = gambarSeperempatNomorAsli.has(originalQuestionNo)
-    ? "max-w-[96px]"
-    : gambarSetengahNomorAsli.has(originalQuestionNo)
+  const widthClass = gambarSeperdelapanNomorAsli.has(originalQuestionNo)
+    ? "max-w-[48px]"
+    : gambarSeperempatNomorAsli.has(originalQuestionNo)
+      ? "max-w-[96px]"
+      : gambarSetengahNomorAsli.has(originalQuestionNo)
       ? "max-w-[192px]"
       : "max-w-sm";
   brslDasarGambarMap[nomorTampil] = (
