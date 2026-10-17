@@ -195,9 +195,18 @@ const brslDasarImages: Record<number, string> = {
   37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
-const gambarSetengahNomorAsli = new Set([6, 13, 35, 36]);
-const gambarSeperempatNomorAsli = new Set([35, 36]);
-const gambarSeperdelapanNomorAsli = new Set([30, 31, 32, 33, 34, 37]);
+const brslDasarGambarLebarPx: Record<number, number> = {
+  6: 192,
+  13: 192,
+  30: 24,
+  31: 24,
+  32: 24,
+  33: 24,
+  34: 24,
+  35: 48,
+  36: 48,
+  37: 24,
+};
 const nomorTampilPerNomorAsli = new Map(
   latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),
 );
@@ -213,18 +222,13 @@ for (const [nomorAsli, src] of Object.entries(brslDasarImages)) {
   const nomorTampil = nomorTampilPerNomorAsli.get(Number(nomorAsli));
   if (nomorTampil === undefined) continue;
   const originalQuestionNo = Number(nomorAsli);
-  const widthClass = gambarSeperdelapanNomorAsli.has(originalQuestionNo)
-    ? "max-w-[48px]"
-    : gambarSeperempatNomorAsli.has(originalQuestionNo)
-      ? "max-w-[96px]"
-      : gambarSetengahNomorAsli.has(originalQuestionNo)
-      ? "max-w-[192px]"
-      : "max-w-sm";
+  const widthPx = brslDasarGambarLebarPx[originalQuestionNo];
   brslDasarGambarMap[nomorTampil] = (
     <img
       src={src}
       alt={`Gambar soal ${nomorTampil}`}
-      className={`mx-auto w-full ${widthClass} rounded-lg border border-border/40 bg-background p-2`}
+      className="mx-auto w-full rounded-lg border border-border/40 bg-background p-2"
+      style={widthPx ? { maxWidth: `${widthPx}px` } : undefined}
     />
   );
 }
