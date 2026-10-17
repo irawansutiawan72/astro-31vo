@@ -2,6 +2,7 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { brslDasarPembahasan } from "@/data/pembahasan/brslDasar";
+import type { ReactNode } from "react";
 import {
   BolaDalamTabungAnimation,
   LilinTerbakarAnimation,
@@ -79,17 +80,38 @@ const brslDasarImages: Record<number, string> = {
   37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
+const gambarSetengahNomorAsli = new Set([6, 13, 30, 31, 32, 33, 34, 37]);
+const nomorTampilPerNomorAsli = new Map(
+  latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),
+);
+const latihanDasarTkaBerurutan = latihanDasarTkaLama.map((soal, index) => ({
+  ...soal,
+  no: index + 1,
+  jawaban: brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
+  pembahasan: toPembahasanText(soal.no),
+}));
+const brslDasarGambarMap: Record<number, ReactNode> = {};
+
+for (const [nomorAsli, src] of Object.entries(brslDasarImages)) {
+  const nomorTampil = nomorTampilPerNomorAsli.get(Number(nomorAsli));
+  if (nomorTampil === undefined) continue;
+  const isHalfSize = gambarSetengahNomorAsli.has(Number(nomorAsli));
+  brslDasarGambarMap[nomorTampil] = (
+    <img
+      src={src}
+      alt={`Gambar soal ${nomorTampil}`}
+      className={`mx-auto w-full ${isHalfSize ? "max-w-[192px]" : "max-w-sm"} rounded-lg border border-border/40 bg-background p-2`}
+    />
+  );
+}
+
 const BangunRuangSisiLengkungPage = () => (
   <TKAPemantapanLayout
     title="BANGUN RUANG SISI LENGKUNG"
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
-    latihanDasar={latihanDasarTkaLama.map((soal) => ({
-      ...soal,
-      jawaban: brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
-      pembahasan: toPembahasanText(soal.no),
-    }))}
-    gambarMap={Object.fromEntries(Object.entries(brslDasarImages).map(([no, src]) => [Number(no), <img src={src} alt={`Gambar soal ${no}`} className="mx-auto w-full max-w-sm rounded-lg border border-border/40 bg-background p-2" />]))}
+    latihanDasar={latihanDasarTkaBerurutan}
+    gambarMap={brslDasarGambarMap}
     showImmediateAnswerFeedback
   />
 );
