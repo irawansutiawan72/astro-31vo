@@ -4,6 +4,7 @@ import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatihanPembahasan";
 import type { ReactNode } from "react";
 import bolaTigaPerempatImage from "@assets/image_1792232484011.png";
+import duaTopiUlangTahunImage from "@assets/image_1792232576189.png";
 import {
   BakAirDikurasAnimation,
   BolaDalamTabungAnimation,
@@ -17,7 +18,6 @@ import {
   AtapSetengahBolaDiagram,
   JuringKerucutDiagram,
   PerbandinganDrumTabungDiagram,
-  TopiKerucutDiagram,
   TumpengKerucutDiagram,
 } from "./BangunRuangSisiLengkungDiagrams";
 
@@ -108,7 +108,13 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Sisa karton yang tidak terpakai adalah 150 $cm^2$.",
     ],
     jawabanPGK: [0, 1, 2],
-    gambar: <TopiKerucutDiagram />,
+    gambar: (
+      <img
+        src={duaTopiUlangTahunImage}
+        alt="Dua topi ulang tahun kerucut berwarna-warni"
+        className="mx-auto my-3 h-auto w-full rounded-lg border border-border/40 bg-[#fffaf0] p-2 object-contain"
+      />
+    ),
   },
   { no: 13, soal: "Perhatikan gambar topi berbentuk kerucut terbuat dari karton berikut ini!\nJika diameter lingkaran alas 28 cm dan tinggi topi 48 cm, luas karton minimal yang diperlukan untuk membuat 3 buah topi tersebut adalah ....", options: ["A. 2.112 $cm^2$", "B. 2.200 $cm^2$", "C. 6.336 $cm^2$", "D. 6.600 $cm^2$"] },
   {

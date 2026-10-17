@@ -5,24 +5,6 @@ const fill = "#fff1d1";
 const accent = "#a76537";
 const label = "#56351f";
 
-export const TopiKerucutDiagram = () => (
-  <svg viewBox="0 0 340 220" className={frameClass} role="img" aria-label="Dua topi berbentuk kerucut, diameter alas 21 cm dan garis pelukis 20 cm">
-    <title>Dua topi kerucut tanpa alas</title>
-    {[90, 245].map((cx) => (
-      <g key={cx}>
-        <path d={`M${cx - 47} 160 L${cx} 45 L${cx + 47} 160`} fill={fill} stroke={stroke} strokeWidth="3" />
-        <path d={`M${cx - 47} 160 C${cx - 25} 178 ${cx + 25} 178 ${cx + 47} 160`} fill="none" stroke={stroke} strokeWidth="3" />
-        <path d={`M${cx - 47} 160 C${cx - 25} 142 ${cx + 25} 142 ${cx + 47} 160`} fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 4" />
-        <line x1={cx - 47} y1="192" x2={cx + 47} y2="192" stroke={accent} strokeWidth="1.8" />
-        <line x1={cx - 47} y1="186" x2={cx - 47} y2="198" stroke={accent} strokeWidth="1.8" />
-        <line x1={cx + 47} y1="186" x2={cx + 47} y2="198" stroke={accent} strokeWidth="1.8" />
-        <text x={cx} y="211" fill={label} fontSize="12" fontWeight="700" textAnchor="middle">d = 21 cm</text>
-        <text x={cx + 28} y="99" fill={label} fontSize="12" fontWeight="700">s = 20 cm</text>
-      </g>
-    ))}
-  </svg>
-);
-
 export const TumpengKerucutDiagram = () => (
   <svg viewBox="0 0 320 230" className={frameClass} role="img" aria-label="Tumpeng berbentuk kerucut dengan diameter 28 cm dan tinggi 48 cm">
     <title>Tumpeng berbentuk kerucut</title>
