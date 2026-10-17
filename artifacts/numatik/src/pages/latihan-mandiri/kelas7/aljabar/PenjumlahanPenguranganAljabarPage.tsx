@@ -53,6 +53,7 @@ const SoalSatu = () => {
 /* ── Soal 2 ── Keliling bangun dari ekspresi aljabar ─── */
 const SoalDua = () => {
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   return (
     <div className="space-y-3">
       <p className="font-body text-sm text-white/90 leading-relaxed">
@@ -62,12 +63,12 @@ const SoalDua = () => {
         {/* Segitiga sama kaki */}
         <div className="flex flex-col items-center gap-1.5">
           <SubLabel letter="a" color="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30" />
-          <svg width="110" height="90" viewBox="0 0 110 90">
-            <polygon points="55,8 10,82 100,82"
+          <svg width="130" height="120" viewBox="0 0 130 120">
+            <polygon points="65,15 18,90 112,90"
               fill="#818cf8" fillOpacity={0.08} stroke="#818cf8" strokeWidth={1.5} />
-            <text x="55" y="5" textAnchor="middle" fill="#a5b4fc" fontSize={9} fontFamily="monospace">(3x+2) cm</text>
-            <text x="10" y="92" textAnchor="start" fill="#a5b4fc" fontSize={9} fontFamily="monospace">(5x−1) cm</text>
-            <text x="64" y="92" textAnchor="start" fill="#a5b4fc" fontSize={9} fontFamily="monospace">(3x+2) cm</text>
+            <text x="41.5" y="52.5" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace" transform="rotate(-58 41.5 52.5)">(3x+2) cm</text>
+            <text x="88.5" y="52.5" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace" transform="rotate(58 88.5 52.5)">(3x+2) cm</text>
+            <text x="65" y="105" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(5x−1) cm</text>
           </svg>
           <p className="text-indigo-300/60 text-[10px] font-body">
             {t('practice.aljabar.penjumlahanPengurangan.q2.shapeA')}
@@ -76,12 +77,15 @@ const SoalDua = () => {
         {/* Persegi panjang */}
         <div className="flex flex-col items-center gap-1.5">
           <SubLabel letter="b" color="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30" />
-          <svg width="140" height="80" viewBox="0 0 140 80">
-            <rect x={8} y={10} width={124} height={58} rx={5}
+          <svg width="170" height="124" viewBox="0 0 170 124">
+            <rect x={24} y={18} width={122} height={72} rx={5}
               fill="#818cf8" fillOpacity={0.08} stroke="#818cf8" strokeWidth={1.5} />
-            <text x="70" y="8" textAnchor="middle" fill="#a5b4fc" fontSize={9} fontFamily="monospace">(4y+3) cm</text>
-            <text x="134" y="42" textAnchor="middle" fill="#a5b4fc" fontSize={9}
-              fontFamily="monospace" transform="rotate(90,134,42)">(2y−1) cm</text>
+            <text x="85" y="14" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(4y+3) cm</text>
+            <text x="85" y="108" textAnchor="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9} fontFamily="monospace">(4y+3) cm</text>
+            <text x="16" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9}
+              fontFamily="monospace" transform="rotate(-90 16 54)">(2y−1) cm</text>
+            <text x="154" y="54" textAnchor="middle" dominantBaseline="middle" fill={isDark ? "#c7d2fe" : "#4f46e5"} fontSize={9}
+              fontFamily="monospace" transform="rotate(90 154 54)">(2y−1) cm</text>
           </svg>
           <p className="text-indigo-300/60 text-[10px] font-body">
             {t('practice.aljabar.penjumlahanPengurangan.q2.shapeB')}

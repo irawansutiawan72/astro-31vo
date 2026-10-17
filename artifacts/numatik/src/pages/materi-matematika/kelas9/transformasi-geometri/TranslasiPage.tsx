@@ -4,6 +4,7 @@ import PageNavigation from "@/components/PageNavigation";
 import { BookOpen, Lightbulb, Calculator, Target, MoveRight } from "lucide-react";
 import { playPopSound } from "@/hooks/useAudio";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import "katex/dist/katex.min.css";
 import { InlineMath, BlockMath } from "react-katex";
 
@@ -957,6 +958,7 @@ function SectionHdr({ icon, color, title }: { icon: React.ReactNode; color: stri
 /* ── Page ── */
 const TranslasiPage = () => {
   const { language } = useLanguage();
+  const { isDark } = useTheme();
 
   const translations = {
     id: {
@@ -1426,47 +1428,49 @@ const TranslasiPage = () => {
         <div className="flex flex-col gap-4 animate-slide-up">
 
           {/* ── TRANSFORMASI GEOMETRI OVERVIEW ── */}
-          <div className="bg-gradient-to-br from-indigo-950/80 via-purple-950/60 to-blue-950/80 border border-indigo-400/30 rounded-2xl overflow-hidden">
+          <div className={`rounded-2xl overflow-hidden ${isDark
+            ? "bg-gradient-to-br from-indigo-950/80 via-purple-950/60 to-blue-950/80 border border-indigo-400/30"
+            : "bg-gradient-to-br from-indigo-50 via-violet-50 to-sky-50 border border-indigo-200 shadow-sm"}`}>
             <div className="px-5 pt-6 pb-3 text-center">
               <div className="text-4xl mb-2">🔷</div>
-              <h2 className="font-display text-lg font-bold text-indigo-300 mb-1">{t.overviewTitle}</h2>
-              <p className="text-xs text-white/40 font-body uppercase tracking-widest">{t.overviewMeta}</p>
+              <h2 className={`font-display text-lg font-bold mb-1 ${isDark ? "text-indigo-300" : "text-indigo-800"}`}>{t.overviewTitle}</h2>
+              <p className={`text-xs font-body uppercase tracking-widest ${isDark ? "text-white/40" : "text-slate-500"}`}>{t.overviewMeta}</p>
             </div>
-            <div className="mx-5 border-t border-indigo-400/20 mb-4" />
-            <div className="mx-5 mb-5 bg-indigo-500/10 border border-indigo-400/25 rounded-xl p-4">
-              <p className="text-xs font-body font-bold text-indigo-300 uppercase tracking-wider mb-2">{t.defLabel}</p>
-              <p className="text-sm font-body text-white/80 leading-relaxed">{t.defText}</p>
+            <div className={`mx-5 border-t mb-4 ${isDark ? "border-indigo-400/20" : "border-indigo-200"}`} />
+            <div className={`mx-5 mb-5 rounded-xl p-4 ${isDark ? "bg-indigo-500/10 border border-indigo-400/25" : "bg-white/70 border border-indigo-200"}`}>
+              <p className={`text-xs font-body font-bold uppercase tracking-wider mb-2 ${isDark ? "text-indigo-300" : "text-indigo-700"}`}>{t.defLabel}</p>
+              <p className={`text-sm font-body leading-relaxed ${isDark ? "text-white/80" : "text-slate-700"}`}>{t.defText}</p>
             </div>
             <div className="px-5 mb-4">
               <img src="/transformasi-geometri-space.png" alt={t.imgAlt} className="w-full rounded-xl object-cover" />
-              <p className="text-[10px] text-white/30 text-right mt-1 font-body">bing.com/images/create</p>
+              <p className={`text-[10px] text-right mt-1 font-body ${isDark ? "text-white/30" : "text-slate-500"}`}>bing.com/images/create</p>
             </div>
             <div className="px-5 mb-5">
-              <p className="text-[11px] font-body text-white/40 text-center mb-3 uppercase tracking-widest">{t.jenis4}</p>
+              <p className={`text-[11px] font-body text-center mb-3 uppercase tracking-widest ${isDark ? "text-white/40" : "text-slate-500"}`}>{t.jenis4}</p>
               <div className="grid grid-cols-2 gap-3">
                 {([
-                  { bg: "bg-cyan-500/20 border-2 border-cyan-400/70 shadow-cyan-500/10",    nc: "text-cyan-300",    idx: 0 },
-                  { bg: "bg-emerald-500/20 border-2 border-emerald-400/70 shadow-emerald-500/10", nc: "text-emerald-300", idx: 1 },
-                  { bg: "bg-orange-500/20 border-2 border-orange-400/70 shadow-orange-500/10",   nc: "text-orange-300",  idx: 2 },
-                  { bg: "bg-pink-500/20 border-2 border-pink-400/70 shadow-pink-500/10",         nc: "text-pink-300",    idx: 3 },
+                  { bg: isDark ? "bg-cyan-500/20 border-2 border-cyan-400/70 shadow-cyan-500/10" : "bg-cyan-100 border-2 border-cyan-300 shadow-cyan-100", nc: isDark ? "text-cyan-300" : "text-cyan-800", idx: 0 },
+                  { bg: isDark ? "bg-emerald-500/20 border-2 border-emerald-400/70 shadow-emerald-500/10" : "bg-emerald-100 border-2 border-emerald-300 shadow-emerald-100", nc: isDark ? "text-emerald-300" : "text-emerald-800", idx: 1 },
+                  { bg: isDark ? "bg-orange-500/20 border-2 border-orange-400/70 shadow-orange-500/10" : "bg-orange-100 border-2 border-orange-300 shadow-orange-100", nc: isDark ? "text-orange-300" : "text-orange-800", idx: 2 },
+                  { bg: isDark ? "bg-pink-500/20 border-2 border-pink-400/70 shadow-pink-500/10" : "bg-pink-100 border-2 border-pink-300 shadow-pink-100", nc: isDark ? "text-pink-300" : "text-pink-800", idx: 3 },
                 ] as const).map(({ bg, nc, idx }) => (
                   <div key={idx} className={`relative ${bg} rounded-xl p-3 text-center shadow-lg`}>
                     <div className="text-2xl mb-1">{t.kinds[idx].icon}</div>
                     <p className={`font-body font-bold ${nc} text-sm`}>{t.kinds[idx].name}</p>
-                    <p className="font-body text-[11px] text-white/50 mt-0.5">{t.kinds[idx].sub}</p>
+                    <p className={`font-body text-[11px] mt-0.5 ${isDark ? "text-white/50" : "text-slate-600"}`}>{t.kinds[idx].sub}</p>
                   </div>
                 ))}
               </div>
             </div>
             <div className="px-5 pb-5">
-              <p className="text-[11px] font-body text-white/40 text-center mb-3 uppercase tracking-widest">{t.konsepPenting}</p>
+              <p className={`text-[11px] font-body text-center mb-3 uppercase tracking-widest ${isDark ? "text-white/40" : "text-slate-500"}`}>{t.konsepPenting}</p>
               <div className="space-y-2">
                 {t.concepts.map(({ icon, color, bg, label, desc }) => (
-                  <div key={label} className={`flex items-start gap-3 border rounded-xl px-3 py-2.5 ${bg}`}>
+                  <div key={label} className={`flex items-start gap-3 border rounded-xl px-3 py-2.5 ${isDark ? bg : "bg-white/70 border-slate-200"}`}>
                     <span className="text-lg shrink-0 mt-0.5">{icon}</span>
                     <div>
-                      <p className={`text-xs font-bold font-body ${color}`}>{label}</p>
-                      <p className="text-xs text-white/55 font-body mt-0.5">{desc}</p>
+                      <p className={`text-xs font-bold font-body ${isDark ? color : "text-slate-800"}`}>{label}</p>
+                      <p className={`text-xs font-body mt-0.5 ${isDark ? "text-white/55" : "text-slate-600"}`}>{desc}</p>
                     </div>
                   </div>
                 ))}

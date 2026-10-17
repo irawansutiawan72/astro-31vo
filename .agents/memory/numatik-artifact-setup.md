@@ -211,6 +211,11 @@ Pecahan soal components are JSX components (not data arrays). Key differences:
 - **Why:** A root-relative script path makes the artifact preview fail before dependency installation, even when the same command works in `Start application`.
 - **How to apply:** Keep the artifact command self-installing and use an executable Vite check plus one shared atomic install lock for all frontend workflows.
 
+## Long-running Vite build
+- The full Numatik production build can exceed the synchronous shell execution limit; a timeout does not necessarily mean Vite failed.
+- **Why:** The large route set takes several minutes to transform and render chunks, while a background shell run can finish successfully.
+- **How to apply:** Run full production builds in the background and confirm their final exit status and log instead of repeatedly retrying in the foreground.
+
 ## Practice header labels
 - Practice subtopic pages contain several legacy, hardcoded grade breadcrumbs and badges rather than one shared label component.
 - **Why:** Removing a grade label consistently across the practice route requires targeting the route-level header patterns; changing one locale key or one landing page leaves other subtopic headers visible.

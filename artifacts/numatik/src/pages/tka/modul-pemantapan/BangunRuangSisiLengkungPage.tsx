@@ -198,14 +198,14 @@ const brslDasarImages: Record<number, string> = {
 const brslDasarGambarLebarPx: Record<number, number> = {
   6: 192,
   13: 192,
-  30: 24,
-  31: 24,
-  32: 24,
-  33: 24,
-  34: 24,
-  35: 48,
-  36: 48,
-  37: 24,
+  30: 192,
+  31: 192,
+  32: 192,
+  33: 192,
+  34: 192,
+  35: 192,
+  36: 192,
+  37: 192,
 };
 const nomorTampilPerNomorAsli = new Map(
   latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),

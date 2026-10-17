@@ -92,17 +92,46 @@ const SoalTiga = () => {
         />
       </p>
       <div className="pl-1 flex items-center gap-3 flex-wrap">
-        <div className="flex gap-2">
+        <div className="flex gap-1.5">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="w-12 h-10 rounded-lg bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center">
-              <span className="text-cyan-300 font-bold text-sm font-body">n</span>
-            </div>
+            <svg key={i} viewBox="0 0 84 76" role="img" aria-label="Kotak berisi n kelereng" className="w-[66px] h-[64px] shrink-0">
+              <defs>
+                <radialGradient id={`q3-box-marble-${i}`} cx="30%" cy="25%" r="75%">
+                  <stop offset="0%" stopColor="#ecfeff" />
+                  <stop offset="38%" stopColor="#67e8f9" />
+                  <stop offset="100%" stopColor="#0891b2" />
+                </radialGradient>
+                <linearGradient id={`q3-box-left-${i}`} x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#fef3c7" />
+                  <stop offset="100%" stopColor="#d97706" />
+                </linearGradient>
+                <linearGradient id={`q3-box-right-${i}`} x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#fbbf24" />
+                  <stop offset="100%" stopColor="#92400e" />
+                </linearGradient>
+              </defs>
+              <ellipse cx="42" cy="69" rx="29" ry="4" fill="#0f172a" opacity="0.12" />
+              <path d="M14 27 42 13 70 27 42 42Z" fill="#fffbeb" stroke="#a16207" strokeWidth="1.5" />
+              <circle cx="33" cy="27" r="4.2" fill={`url(#q3-box-marble-${i})`} />
+              <circle cx="42" cy="22" r="4.2" fill={`url(#q3-box-marble-${i})`} />
+              <circle cx="51" cy="27" r="4.2" fill={`url(#q3-box-marble-${i})`} />
+              <circle cx="42" cy="32" r="4.2" fill={`url(#q3-box-marble-${i})`} />
+              <path d="M14 27 42 42V67L14 52Z" fill={`url(#q3-box-left-${i})`} stroke="#a16207" strokeWidth="1.5" strokeLinejoin="round" />
+              <path d="M70 27 42 42V67L70 52Z" fill={`url(#q3-box-right-${i})`} stroke="#92400e" strokeWidth="1.5" strokeLinejoin="round" />
+              <path d="M19 31 37 40V60L19 50Z" fill="#fff7d6" opacity="0.3" />
+              <text x="55" y="53" textAnchor="middle" fill="#713f12" fontSize="14" fontWeight="700" fontFamily="sans-serif">n</text>
+              <path d="M14 52 42 67 70 52" fill="none" stroke="#78350f" strokeWidth="1.2" opacity="0.6" />
+            </svg>
           ))}
         </div>
         <span className="text-white/40 text-sm">+</span>
-        <div className="flex gap-1 flex-wrap">
+        <div className="flex gap-1 flex-wrap items-center" role="img" aria-label="Lima kelereng lepas">
           {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="w-5 h-5 rounded-full bg-cyan-400/25 border border-cyan-300/30" />
+            <span
+              key={i}
+              className="w-5 h-5 rounded-full border border-cyan-100/80 shadow-sm"
+              style={{ background: "radial-gradient(circle at 30% 28%, #f0fdff 0 9%, #a5f3fc 18%, #22d3ee 57%, #0e7490 100%)", boxShadow: "inset -2px -2px 3px rgba(8,145,178,.3), 0 1px 2px rgba(15,23,42,.18)" }}
+            />
           ))}
         </div>
       </div>
