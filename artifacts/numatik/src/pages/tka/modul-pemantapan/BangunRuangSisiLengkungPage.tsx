@@ -248,7 +248,7 @@ const BangunRuangSisiLengkungPage = () => (
     title="BANGUN RUANG SISI LENGKUNG"
     materiSections={materiSections}
     contohSoal={getTkaContohSoal("bangun-ruang-sisi-lengkung")}
-    latihanDasar={latihanDasarTkaBerurutan.filter((soal) => [23, 24, 28].includes(soal.no))}
+    latihanDasar={latihanDasarTkaBerurutan}
     gambarMap={brslDasarGambarMap}
     showImmediateAnswerFeedback
   />
