@@ -112,7 +112,7 @@ export const brslDasarPembahasan: Record<number, Pembahasan> = {
       "Luas permukaan total = $462+154=616$ cm².",
     tips:
       "Bedakan luas kulit lengkung saja dengan luas permukaan bangun padat yang juga memiliki bidang potong datar.",
-    kesimpulan: "Luas permukaan bangun ¾ bola termasuk bidang potongnya adalah 616 cm², pilihan A.",
+    kesimpulan: "Luas permukaan bangun ¾ bola termasuk bidang potongnya adalah 616 cm².",
   },
   12: {
     jawaban: "D. 180 $cm^2$",

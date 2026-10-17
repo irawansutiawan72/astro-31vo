@@ -31,18 +31,133 @@ const materiSections: MateriSection[] = [
 const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 6, soal: "Perhatikan gambar selimut tabung berikut.\nJari-jari tabung yang terjadi adalah ...", options: ["A. 3,5 cm", "B. 5 cm", "C. 7 cm", "D. 10 cm"] },
   { no: 7, soal: "Suatu tabung tanpa tutup dengan jari-jari alas 6 cm dan tingginya 10 cm. Jika $\\pi = 3,14$ maka luas tabung tanpa tutup adalah ...", options: ["A. 602,88 $cm^2$", "B. 489,84 $cm^2$", "C. 376,84 $cm^2$", "D. 301,44 $cm^2$"] },
-  { no: 8, soal: "Suatu kerucut jari-jarinya 7 cm dan tingginya 24 cm. Jika $\\pi = \\frac{22}{7}$, maka luas seluruh permukaan kerucut tersebut adalah ...", options: ["A. 682 $cm^2$", "B. 704 $cm^2$", "C. 726 $cm^2$", "D. 752 $cm^2$"] },
-  { no: 9, soal: "Sebuah kerucut luas alasnya 154 $cm^2$. Jika tinggi kerucut 24 cm, maka luas seluruh permukaan kerucut adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 604 $cm^2$", "B. 614 $cm^2$", "C. 704 $cm^2$", "D. 714 $cm^2$"] },
-  { no: 10, soal: "Bila luas kulit bola 616 $cm^2$ dan $\\pi = \\frac{22}{7}$, maka jari-jari bola itu adalah ...", options: ["A. 28 cm", "B. 21 cm", "C. 14 cm", "D. 7 cm"] },
-  { no: 11, soal: "Luas permukaan luar bangun $\\frac{3}{4}$ bola padat berjari-jari 7 cm, termasuk seluruh bidang potong datarnya, adalah ... ($\\pi = \\frac{22}{7}$)", options: ["A. 616 $cm^2$", "B. 606 $cm^2$", "C. 462 $cm^2$", "D. 452 $cm^2$"] },
-  { no: 12, soal: "Tanti akan membuat dua buah topi ulang tahun dari karton berukuran 30 cm x 50 cm. Jika diameter topi 21 cm dan garis pelukis 20 cm, maka sisa karton yang tidak terpakai adalah ....", options: ["A. 75 $cm^2$", "B. 100 $cm^2$", "C. 150 $cm^2$", "D. 180 $cm^2$"] },
+  {
+    no: 8,
+    type: "pgk",
+    soal: "Suatu kerucut berjari-jari 7 cm dan tinggi 24 cm. Jika $\\pi = \\frac{22}{7}$, tentukan semua pernyataan yang benar tentang kerucut tersebut.",
+    pernyataan: [
+      "Panjang garis pelukis kerucut adalah 25 cm.",
+      "Luas alas kerucut adalah 154 $cm^2$.",
+      "Luas selimut kerucut adalah 550 $cm^2$.",
+      "Luas seluruh permukaan kerucut adalah 680 $cm^2$.",
+    ],
+    jawabanPGK: [0, 1, 2],
+  },
+  {
+    no: 9,
+    type: "pgk",
+    soal: "Sebuah kerucut memiliki luas alas 154 $cm^2$ dan tinggi 24 cm. Tentukan pernyataan yang benar tentang luas seluruh permukaannya ($\\pi = \\frac{22}{7}$).",
+    pernyataan: [
+      "Jari-jari alas kerucut adalah 7 cm.",
+      "Panjang garis pelukis kerucut adalah 25 cm.",
+      "Luas selimut kerucut adalah 550 $cm^2$.",
+      "Luas seluruh permukaan kerucut adalah 680 $cm^2$.",
+    ],
+    jawabanPGK: [0, 1, 2],
+  },
+  {
+    no: 10,
+    type: "pgk",
+    soal: "Luas permukaan sebuah bola adalah 616 $cm^2$ dan $\\pi = \\frac{22}{7}$. Tentukan pernyataan yang benar tentang bola tersebut.",
+    pernyataan: [
+      "Jari-jari bola adalah 7 cm.",
+      "Diameter bola adalah 14 cm.",
+      "Luas permukaan bola adalah 616 $cm^2$.",
+      "Jari-jari bola adalah 14 cm.",
+    ],
+    jawabanPGK: [0, 1, 2],
+  },
+  {
+    no: 11,
+    type: "pgk",
+    soal: "Sebuah bangun padat berbentuk $\\frac{3}{4}$ bola berjari-jari 7 cm. Luas permukaannya mencakup seluruh bidang potong datar ($\\pi = \\frac{22}{7}$). Tentukan pernyataan yang benar.",
+    pernyataan: [
+      "Luas bagian lengkung bangun adalah 462 $cm^2$.",
+      "Luas bidang potong datar adalah 154 $cm^2$.",
+      "Luas seluruh permukaan bangun adalah 616 $cm^2$.",
+      "Luas seluruh permukaan bangun adalah 462 $cm^2$.",
+    ],
+    jawabanPGK: [0, 1, 2],
+  },
+  {
+    no: 12,
+    type: "pgk",
+    soal: "Tanti membuat dua topi ulang tahun tanpa alas dari karton berukuran 30 cm × 50 cm. Diameter setiap topi 21 cm dan garis pelukisnya 20 cm ($\\pi = \\frac{22}{7}$). Tentukan pernyataan yang benar.",
+    pernyataan: [
+      "Luas karton untuk satu topi adalah 660 $cm^2$.",
+      "Luas karton untuk dua topi adalah 1.320 $cm^2$.",
+      "Luas karton mula-mula adalah 1.500 $cm^2$.",
+      "Sisa karton yang tidak terpakai adalah 150 $cm^2$.",
+    ],
+    jawabanPGK: [0, 1, 2],
+  },
   { no: 13, soal: "Perhatikan gambar topi berbentuk kerucut terbuat dari karton berikut ini!\nJika diameter lingkaran alas 28 cm dan tinggi topi 48 cm, luas karton minimal yang diperlukan untuk membuat 3 buah topi tersebut adalah ....", options: ["A. 2.112 $cm^2$", "B. 2.200 $cm^2$", "C. 6.336 $cm^2$", "D. 6.600 $cm^2$"] },
-  { no: 14, soal: "Volume kerucut yang panjang diameternya 21 cm dan tinggi 12 cm adalah ...", options: ["A. 231 $cm^3$", "B. 986 $cm^3$", "C. 1.386 $cm^3$", "D. 2.958 $cm^3$"] },
-  { no: 15, soal: "Sebuah kerucut setinggi 30 cm memiliki alas dengan keliling 66 cm ($\\pi = \\frac{22}{7}$). Volume kerucut itu adalah...", options: ["A. 16.860 $cm^3$", "B. 10.395 $cm^3$", "C. 6.930 $cm^3$", "D. 3.465 $cm^3$"] },
-  { no: 16, soal: "Diketahui luas selimut kerucut 550 $cm^2$. Jika panjang garis pelukisnya 25 cm, maka volume kerucut adalah...", options: ["A. 1.232 $cm^3$", "B. 1.283 $cm^3$", "C. 3.696 $cm^3$", "D. 3.850 $cm^3$"] },
-  { no: 18, soal: "Jika luas seluruh permukaan bola 144$\\pi$ $cm^2$, maka volume bola adalah ....", options: ["A. 278$\\pi$ $cm^3$", "B. 288$\\pi$ $cm^3$", "C. 432$\\pi$ $cm^3$", "D. 442$\\pi$ $cm^3$"] },
-  { no: 19, soal: "Nasyara akan membuat nasi tumpeng berbentuk kerucut yang permukaannya akan ditutup penuh dengan hiasan dari makanan. Jika diameter tumpeng 28 cm dan tinggi 48 cm, luas tumpeng yang akan di hias makanan adalah...", options: ["A. 2.112 $cm^2$", "B. 2.200 $cm^2$", "C. 2.288 $cm^2$", "D. 2.376 $cm^2$"] },
-  { no: 20, soal: "Panjang jari-jari alas kerucut 6 cm. Jika tinggi kerucut 8 cm, maka luas seluruh permukaan kerucut adalah... ($\\pi = 3,14$).", options: ["A. 3024,4 $cm^2$", "B. 3014,4 $cm^2$", "C. 302,44 $cm^2$", "D. 301,44 $cm^2$"] },
+  {
+    no: 14,
+    type: "pgkbs",
+    soal: "Sebuah kerucut berdiameter 21 cm dan tinggi 12 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut.",
+    pernyataan: [
+      "Jari-jari alas kerucut adalah 10,5 cm.",
+      "Panjang garis pelukis kerucut adalah 12 cm.",
+      "Volume kerucut adalah 1.386 $cm^3$.",
+    ],
+    jawabanBS: ["B", "S", "B"],
+  },
+  {
+    no: 15,
+    type: "pgkbs",
+    soal: "Sebuah kerucut setinggi 30 cm memiliki alas dengan keliling 66 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut tentang kerucut tersebut.",
+    pernyataan: [
+      "Jari-jari alas kerucut adalah 10,5 cm.",
+      "Luas alas kerucut adalah 346,5 $cm^2$.",
+      "Volume kerucut adalah 6.930 $cm^3$.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+  },
+  {
+    no: 16,
+    type: "pgkbs",
+    soal: "Diketahui luas selimut kerucut 550 $cm^2$ dan panjang garis pelukisnya 25 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut tentang kerucut tersebut.",
+    pernyataan: [
+      "Jari-jari alas kerucut adalah 7 cm.",
+      "Tinggi kerucut adalah 24 cm.",
+      "Volume kerucut adalah 2.464 $cm^3$.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+  },
+  {
+    no: 18,
+    type: "pgkbs",
+    soal: "Luas seluruh permukaan bola adalah 144$\\pi$ $cm^2$. Tentukan benar atau salah pernyataan berikut tentang bola tersebut.",
+    pernyataan: [
+      "Jari-jari bola adalah 6 cm.",
+      "Volume bola adalah 288$\\pi$ $cm^3$.",
+      "Diameter bola adalah 6 cm.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+  },
+  {
+    no: 19,
+    type: "pgkbs",
+    soal: "Nasyara membuat nasi tumpeng berbentuk kerucut. Bagian selimut (tanpa alas) akan dihias makanan. Diameter tumpeng 28 cm dan tingginya 48 cm ($\\pi = \\frac{22}{7}$). Tentukan benar atau salah pernyataan berikut.",
+    pernyataan: [
+      "Jari-jari alas tumpeng adalah 14 cm.",
+      "Garis pelukis tumpeng adalah 50 cm.",
+      "Luas selimut yang dihias adalah 2.816 $cm^2$.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+  },
+  {
+    no: 20,
+    type: "pgkbs",
+    soal: "Panjang jari-jari alas kerucut 6 cm dan tingginya 8 cm ($\\pi = 3,14$). Tentukan benar atau salah pernyataan berikut tentang kerucut tersebut.",
+    pernyataan: [
+      "Panjang garis pelukis kerucut adalah 10 cm.",
+      "Luas selimut kerucut adalah 188,4 $cm^2$.",
+      "Luas seluruh permukaan kerucut adalah 188,4 $cm^2$.",
+    ],
+    jawabanBS: ["B", "B", "S"],
+  },
   { no: 21, soal: "Atap sebuah gedung berbentuk setengah bola dengan panjang diameter 14 m. Atap gedung tersebut akan dicat dengan biaya Rp50.000,00 setiap $m^2$. Biaya yang diperlukan untuk mengecat atap gedung itu adalah ....", options: ["A. Rp13.700.000,00", "B. Rp15.400.000,00", "C. Rp15.850.000,00", "D. Rp16.400.000,00"] },
   { no: 23, soal: "Volume sebuah kerucut adalah 314 $cm^3$, Jika jari-jari alasnya 5 cm dan $\\pi = 3,14$, maka panjang garis pelukisnya adalah ...", options: ["A. 4 cm", "B. 12 cm", "C. 13 cm", "D. 20 cm"] },
   { no: 24, soal: "Sebuah drum berbentuk tabung dengan panjang jari-jari 70 cm dan tinggi 100 cm penuh berisi minyak tanah. Minyak tanah tersebut akan dituang ke dalam tabung-tabung kecil dengan panjang jari-jari 35 cm dan tinggi 50 cm. Banyak tabung kecil yang akan diperlukan adalah....", options: ["A. 2 buah", "B. 4 buah", "C. 6 buah", "D. 8 buah"] },
@@ -80,14 +195,15 @@ const brslDasarImages: Record<number, string> = {
   37: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117356/BANGUN_RUANG_SISI_LENGKUNG_-_LATIHAN_DASAR_-_NO_37_zvgxf3.png",
 };
 
-const gambarSetengahNomorAsli = new Set([6, 13, 30, 31, 32, 33, 34, 37]);
+const gambarSetengahNomorAsli = new Set([6, 13, 35, 36]);
+const gambarSeperempatNomorAsli = new Set([30, 31, 32, 33, 34, 37]);
 const nomorTampilPerNomorAsli = new Map(
   latihanDasarTkaLama.map((soal, index) => [soal.no, index + 1]),
 );
 const latihanDasarTkaBerurutan = latihanDasarTkaLama.map((soal, index) => ({
   ...soal,
   no: index + 1,
-  jawaban: brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
+  jawaban: soal.type ? undefined : brslDasarPembahasan[soal.no]?.jawaban.match(/^([A-D])\./)?.[1],
   pembahasan: toPembahasanText(soal.no),
 }));
 const brslDasarGambarMap: Record<number, ReactNode> = {};
@@ -95,12 +211,17 @@ const brslDasarGambarMap: Record<number, ReactNode> = {};
 for (const [nomorAsli, src] of Object.entries(brslDasarImages)) {
   const nomorTampil = nomorTampilPerNomorAsli.get(Number(nomorAsli));
   if (nomorTampil === undefined) continue;
-  const isHalfSize = gambarSetengahNomorAsli.has(Number(nomorAsli));
+  const originalQuestionNo = Number(nomorAsli);
+  const widthClass = gambarSeperempatNomorAsli.has(originalQuestionNo)
+    ? "max-w-[96px]"
+    : gambarSetengahNomorAsli.has(originalQuestionNo)
+      ? "max-w-[192px]"
+      : "max-w-sm";
   brslDasarGambarMap[nomorTampil] = (
     <img
       src={src}
       alt={`Gambar soal ${nomorTampil}`}
-      className={`mx-auto w-full ${isHalfSize ? "max-w-[192px]" : "max-w-sm"} rounded-lg border border-border/40 bg-background p-2`}
+      className={`mx-auto w-full ${widthClass} rounded-lg border border-border/40 bg-background p-2`}
     />
   );
 }
