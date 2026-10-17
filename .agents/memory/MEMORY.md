@@ -9,6 +9,6 @@
 - [TKA data isolation](tka-data-isolation.md) — TKA module exercise data should live outside route pages so each menu can evolve independently
 - [TKA complex-question audit](tka-complex-question-audit.md) — PGK uses 4 statements and PGKBS uses 3; every claim must have its source data in the prompt
 - [Cube net folding](cube-net-folding.md) — validate all 11 net patterns and derive 3D face frames so every assembled preview is a real cube
-- [SMA lesson voice](sma-lesson-voice.md) — keep student-facing SMA book-animation lessons cheerful, encouraging, and easy to understand in Indonesian
+- [SMA lesson voice](sma-lesson-voice.md) — preserve full source coverage, rephrase cheerfully in Indonesian, change example data, and redraw figures as SVG
 - [KaTeX JSX escaping](katex-jsx-escaping.md) — doubled slashes in quoted JSX math props can become KaTeX line breaks; preview rendered formulas
 - [Math Game Arena level separation](math-game-arena-level-separation.md) — keep the main Math Game Arena for SMP; keep SMA content in its separate SMA route

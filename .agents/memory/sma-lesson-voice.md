@@ -3,8 +3,8 @@ name: SMA lesson voice
 description: User-specified tone for SMA student learning pages in Numatik.
 ---
 
-For “Ruang untuk Guru” SMA book-animation lessons, write student-facing explanations in cheerful, encouraging, energetic, easy-to-understand Indonesian while keeping the mathematics precise.
+For source-based “Ruang untuk Guru” SMA book-animation lessons, preserve all supplied content without summarizing or dropping sections, rephrase it in cheerful, encouraging, energetic, easy-to-understand Indonesian, change example numbers/data, and redraw supplied figures as SVG. Keep the mathematics precise.
 
-**Why:** The user requested this voice when adapting the vector source material for students.
+**Why:** The user specified these requirements when adapting the uploaded Penyajian Data material for SMA students.
 
-**How to apply:** Use this tone for future SMA book-animation lessons and learning activities in Numatik.
+**How to apply:** Apply these requirements to future source-based SMA book-animation material in Numatik, keeping the educational coverage intact while making the presentation student-friendly.
