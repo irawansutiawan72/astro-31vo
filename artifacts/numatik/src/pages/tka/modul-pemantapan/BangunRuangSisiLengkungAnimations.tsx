@@ -21,20 +21,20 @@ export const TornAirAnimation = () => (
           <path d="M132 72 A98 18 0 0 1 328 72 V238 A98 18 0 0 1 132 238 Z" />
         </clipPath>
       </defs>
+      <style>{`
+        @keyframes brsl-q42-flow-pulse {
+          0%, 100% { opacity: .55; }
+          50% { opacity: 1; }
+        }
+        .brsl-q42-water-flow { animation: brsl-q42-flow-pulse .7s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .brsl-q42-water-flow { animation: none; }
+        }
+      `}</style>
 
       <text x="28" y="63" fill="#334155" fontFamily="Arial, sans-serif" fontSize="14">
         Debit 200 L/menit
       </text>
-      <path d="M230 20v36" stroke="#0284c7" strokeWidth="5" strokeLinecap="round" />
-      <circle cx="230" cy="44" r="4" fill="#38bdf8">
-        <animate attributeName="cy" values="38;58;38" dur="1.2s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="218" cy="48" r="3" fill="#38bdf8">
-        <animate attributeName="cy" values="42;60;42" dur="1.4s" begin="0.35s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="242" cy="47" r="3" fill="#38bdf8">
-        <animate attributeName="cy" values="41;59;41" dur="1.3s" begin="0.7s" repeatCount="indefinite" />
-      </circle>
 
       <g clipPath="url(#brsl-q42-tank-clip)">
         <rect x="132" y="90" width="196" height="166" fill="#38bdf8" opacity="0.82">
@@ -61,11 +61,30 @@ export const TornAirAnimation = () => (
         <ellipse cx="230" cy="72" rx="100" ry="18" />
         <path d="M130 72v166M330 72v166" />
         <path d="M130 238a100 18 0 0 0 200 0" />
-        <path d="M378 72v166M372 72h12M372 238h12" strokeWidth="2" />
+        <path d="M410 72v166M404 72h12M404 238h12" strokeWidth="2" />
         <path d="M130 278h200M130 272v12M330 272v12" strokeWidth="2" />
       </g>
+
+      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M184 27h38a10 10 0 0 1 10 10v17" stroke="#334155" strokeWidth="13" />
+        <path d="M184 27h38a10 10 0 0 1 10 10v17" stroke="#cbd5e1" strokeWidth="7" />
+        <path d="M204 27V16h15M211 16h15" stroke="#334155" strokeWidth="4" />
+        <path d="M224 54h12" stroke="#334155" strokeWidth="10" />
+      </g>
+      <path className="brsl-q42-water-flow" d="M230 59v29" stroke="#0284c7" strokeWidth="5" strokeLinecap="round" />
+      <g fill="#38bdf8">
+        <circle cx="230" cy="60" r="4">
+          <animate attributeName="cy" values="58;86;58" dur="1.2s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="222" cy="61" r="3">
+          <animate attributeName="cy" values="58;82;58" dur="1.4s" begin="0.35s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="238" cy="61" r="3">
+          <animate attributeName="cy" values="58;84;58" dur="1.3s" begin="0.7s" repeatCount="indefinite" />
+        </circle>
+      </g>
       <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="14" textAnchor="middle">
-        <text x="398" y="158" transform="rotate(-90 398 158)">tinggi 10 m</text>
+        <text x="435" y="158" transform="rotate(-90 435 158)">tinggi 10 m</text>
         <text x="230" y="302">diameter 2 m</text>
       </g>
     </svg>
@@ -325,8 +344,13 @@ export const BakAirDikurasAnimation = () => (
         }
         .brsl-q24-drop-two { animation-delay: .4s; }
         .brsl-q24-drop-three { animation-delay: .8s; }
+        @keyframes brsl-q24-stream {
+          0%, 100% { opacity: .45; }
+          50% { opacity: .95; }
+        }
+        .brsl-q24-stream { animation: brsl-q24-stream .8s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) {
-          .brsl-q24-water, .brsl-q24-drop { animation: none; }
+          .brsl-q24-water, .brsl-q24-drop, .brsl-q24-stream { animation: none; }
         }
       `}</style>
 
@@ -342,19 +366,23 @@ export const BakAirDikurasAnimation = () => (
         <path d="M145 80v164M355 80v164" />
         <path d="M145 244a105 20 0 0 0 210 0" />
         <path d="M145 244a105 20 0 0 1 210 0" strokeDasharray="5 5" opacity="0.45" />
-        <path d="M382 80v164M376 80h12M376 244h12" strokeWidth="2" />
-        <path d="M355 116h34v10h-19v18h-10" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M410 80v164M404 80h12M404 244h12" strokeWidth="2" />
       </g>
       <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="14">
         <text x="250" y="35" textAnchor="middle">Debit 20 liter/menit · dialirkan 60 menit</text>
-        <text x="404" y="168" transform="rotate(-90 404 168)" textAnchor="middle">tinggi 1 m</text>
+        <text x="433" y="168" transform="rotate(-90 433 168)" textAnchor="middle">tinggi 1 m</text>
         <text x="250" y="292" textAnchor="middle">diameter 140 cm</text>
-        <text x="392" y="105" fontSize="12">kran</text>
       </g>
+      <g>
+        <ellipse cx="355" cy="220" rx="8" ry="10" fill="#cbd5e1" stroke="#334155" strokeWidth="2.5" />
+        <path d="M353 213H378Q386 213 386 221V231H372V224H353Z" fill="#94a3b8" stroke="#334155" strokeWidth="3" strokeLinejoin="round" />
+        <path d="M366 213V200H379M372 198v-7m-6 4h12" fill="none" stroke="#334155" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <path className="brsl-q24-stream" d="M379 231v27" fill="none" stroke="#0ea5e9" strokeWidth="5" strokeLinecap="round" />
       <g fill="#0ea5e9">
-        <circle className="brsl-q24-drop" cx="390" cy="143" r="4" />
-        <circle className="brsl-q24-drop brsl-q24-drop-two" cx="390" cy="143" r="3.5" />
-        <circle className="brsl-q24-drop brsl-q24-drop-three" cx="390" cy="143" r="3" />
+        <circle className="brsl-q24-drop" cx="379" cy="232" r="4" />
+        <circle className="brsl-q24-drop brsl-q24-drop-two" cx="379" cy="232" r="3.5" />
+        <circle className="brsl-q24-drop brsl-q24-drop-three" cx="379" cy="232" r="3" />
       </g>
     </svg>
   </figure>
@@ -456,7 +484,7 @@ export const TigaBolaKeTabungAnimation = () => (
 export const WadahEsKrimKeCorongAnimation = () => (
   <figure className={figureClassName}>
     <figcaption className="mb-2 text-center text-sm font-semibold text-slate-700">
-      Es krim dipindahkan dari wadah ke corong
+      Es krim disendok dari wadah ke corong kerucut
     </figcaption>
     <svg
       viewBox="0 0 620 320"
@@ -466,7 +494,7 @@ export const WadahEsKrimKeCorongAnimation = () => (
     >
       <title id="brsl-q28-title">Animasi wadah es krim dan corong kerucut</title>
       <desc id="brsl-q28-description">
-        Wadah tabung berdiameter 0,2 meter dan tinggi 0,75 meter dituangkan ke corong kerucut berjari-jari 2,5 sentimeter dan tinggi 10 sentimeter.
+        Capit es krim mengambil es krim dari wadah tabung lalu memindahkannya ke tiga corong kerucut yang berdiri tegak.
       </desc>
       <defs>
         <clipPath id="brsl-q28-tub-clip">
@@ -478,29 +506,91 @@ export const WadahEsKrimKeCorongAnimation = () => (
       </defs>
       <style>{`
         @keyframes brsl-q28-empty-tub {
-          0%, 10% { transform: scaleY(1); }
-          70%, 88% { transform: scaleY(.25); }
+          0%, 8% { transform: scaleY(1); }
+          72%, 88% { transform: scaleY(.28); }
           100% { transform: scaleY(1); }
         }
-        @keyframes brsl-q28-fill-cone {
-          0%, 12% { transform: scaleY(.12); opacity: .55; }
-          60%, 82% { transform: scaleY(.95); opacity: 1; }
-          100% { transform: scaleY(.12); opacity: .55; }
+        @keyframes brsl-q28-scooper-route {
+          0%, 4% { transform: translate(0, 0); }
+          9% { transform: translate(0, 10px); }
+          17%, 20% { transform: translate(189px, 43px); }
+          26% { transform: translate(0, 10px); }
+          33%, 36% { transform: translate(289px, 43px); }
+          42% { transform: translate(0, 10px); }
+          49%, 52% { transform: translate(389px, 43px); }
+          60% { transform: translate(0, 10px); }
+          66%, 100% { transform: translate(0, 0); }
+        }
+        @keyframes brsl-q28-transfer-cream {
+          0%, 12% { opacity: 1; }
+          17%, 24% { opacity: 0; }
+          30%, 33% { opacity: 1; }
+          36%, 40% { opacity: 0; }
+          46%, 49% { opacity: 1; }
+          52%, 58% { opacity: 0; }
+          65%, 100% { opacity: 1; }
+        }
+        @keyframes brsl-q28-fill-one {
+          0%, 18% { transform: scaleY(.04); opacity: .35; }
+          24%, 88% { transform: scaleY(.96); opacity: 1; }
+          100% { transform: scaleY(.04); opacity: .35; }
+        }
+        @keyframes brsl-q28-fill-two {
+          0%, 37% { transform: scaleY(.04); opacity: .35; }
+          43%, 88% { transform: scaleY(.96); opacity: 1; }
+          100% { transform: scaleY(.04); opacity: .35; }
+        }
+        @keyframes brsl-q28-fill-three {
+          0%, 53% { transform: scaleY(.04); opacity: .35; }
+          59%, 88% { transform: scaleY(.96); opacity: 1; }
+          100% { transform: scaleY(.04); opacity: .35; }
+        }
+        @keyframes brsl-q28-scoop-one {
+          0%, 19% { transform: scale(.1); opacity: 0; }
+          24%, 88% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(.1); opacity: 0; }
+        }
+        @keyframes brsl-q28-scoop-two {
+          0%, 38% { transform: scale(.1); opacity: 0; }
+          43%, 88% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(.1); opacity: 0; }
+        }
+        @keyframes brsl-q28-scoop-three {
+          0%, 54% { transform: scale(.1); opacity: 0; }
+          59%, 88% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(.1); opacity: 0; }
         }
         .brsl-q28-tub-fill {
           transform-box: fill-box;
           transform-origin: center bottom;
-          animation: brsl-q28-empty-tub 7s ease-in-out infinite;
+          animation: brsl-q28-empty-tub 11s ease-in-out infinite;
         }
         .brsl-q28-cone-fill {
           transform-box: fill-box;
           transform-origin: center bottom;
-          animation: brsl-q28-fill-cone 3.2s ease-in-out infinite;
         }
-        .brsl-q28-cone-fill-two { animation-delay: .7s; }
-        .brsl-q28-cone-fill-three { animation-delay: 1.4s; }
+        .brsl-q28-cone-fill-one { animation: brsl-q28-fill-one 11s ease-in-out infinite; }
+        .brsl-q28-cone-fill-two { animation: brsl-q28-fill-two 11s ease-in-out infinite; }
+        .brsl-q28-cone-fill-three { animation: brsl-q28-fill-three 11s ease-in-out infinite; }
+        .brsl-q28-scoop-top {
+          transform-box: fill-box;
+          transform-origin: center;
+        }
+        .brsl-q28-scoop-top-one { animation: brsl-q28-scoop-one 11s ease-in-out infinite; }
+        .brsl-q28-scoop-top-two { animation: brsl-q28-scoop-two 11s ease-in-out infinite; }
+        .brsl-q28-scoop-top-three { animation: brsl-q28-scoop-three 11s ease-in-out infinite; }
+        .brsl-q28-scooper {
+          transform-box: view-box;
+          transform-origin: 0 0;
+          animation: brsl-q28-scooper-route 11s ease-in-out infinite;
+        }
+        .brsl-q28-transfer-cream { animation: brsl-q28-transfer-cream 11s linear infinite; }
         @media (prefers-reduced-motion: reduce) {
-          .brsl-q28-tub-fill, .brsl-q28-cone-fill { animation: none; }
+          .brsl-q28-tub-fill, .brsl-q28-cone-fill-one, .brsl-q28-cone-fill-two,
+          .brsl-q28-cone-fill-three, .brsl-q28-scoop-top-one, .brsl-q28-scoop-top-two,
+          .brsl-q28-scoop-top-three, .brsl-q28-scooper, .brsl-q28-transfer-cream {
+            animation: none;
+          }
         }
       `}</style>
 
@@ -522,22 +612,39 @@ export const WadahEsKrimKeCorongAnimation = () => (
       </g>
 
       <path d="M191 122C220 95 240 95 269 122" fill="none" stroke="#b45309" strokeWidth="3" markerEnd="url(#brsl-q28-arrow)" />
-      <text x="230" y="89" textAnchor="middle" fill="#334155" fontFamily="Arial, sans-serif" fontSize="12">es krim</text>
+      <text x="230" y="89" textAnchor="middle" fill="#334155" fontFamily="Arial, sans-serif" fontSize="12">arah pemindahan</text>
 
       {[320, 420, 520].map((cx, index) => {
         const fillClass = [
-          "brsl-q28-cone-fill",
+          "brsl-q28-cone-fill brsl-q28-cone-fill-one",
           "brsl-q28-cone-fill brsl-q28-cone-fill-two",
           "brsl-q28-cone-fill brsl-q28-cone-fill-three",
         ][index];
+        const scoopClass = [
+          "brsl-q28-scoop-top brsl-q28-scoop-top-one",
+          "brsl-q28-scoop-top brsl-q28-scoop-top-two",
+          "brsl-q28-scoop-top brsl-q28-scoop-top-three",
+        ][index];
         return (
           <g key={cx}>
-            <path className={fillClass} d={`M${cx - 25} 224L${cx} 142L${cx + 25} 224Z`} fill="#fde68a" />
-            <path d={`M${cx - 25} 224L${cx} 142L${cx + 25} 224Z`} fill="none" stroke="#92400e" strokeWidth="2.5" />
-            <ellipse cx={cx} cy="142" rx="25" ry="7" fill="#fff7ed" stroke="#92400e" strokeWidth="2" />
+            <path d={`M${cx - 25} 170L${cx} 250L${cx + 25} 170Z`} fill="#d6a15e" stroke="#92400e" strokeWidth="2.5" />
+            <path className={fillClass} d={`M${cx - 18} 170L${cx + 18} 170L${cx} 244Z`} fill="#fcd34d" />
+            <ellipse cx={cx} cy="170" rx="25" ry="7" fill="#fff7ed" stroke="#92400e" strokeWidth="2" />
+            <g className={scoopClass}>
+              <circle cx={cx} cy="153" r="19" fill="#fde68a" stroke="#d97706" strokeWidth="2" />
+              <ellipse cx={cx - 7} cy="147" rx="5" ry="3" fill="#fff7cc" opacity=".85" />
+            </g>
           </g>
         );
       })}
+      <g className="brsl-q28-scooper">
+        <path d="M123 115L98 139" fill="none" stroke="#475569" strokeWidth="7" strokeLinecap="round" />
+        <path d="M101 136L92 145" fill="none" stroke="#334155" strokeWidth="10" strokeLinecap="round" />
+        <circle cx="131" cy="108" r="13" fill="#cbd5e1" stroke="#334155" strokeWidth="2.5" />
+        <circle className="brsl-q28-transfer-cream" cx="131" cy="105" r="9" fill="#fde68a" stroke="#d97706" strokeWidth="1.5" />
+        <path d="M119 110Q131 121 143 110" fill="#94a3b8" stroke="#334155" strokeWidth="2.5" strokeLinejoin="round" />
+        <path d="M140 108l8-6m-2-3 4 5" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+      </g>
       <g fill="#334155" fontFamily="Arial, sans-serif" fontSize="13">
         <text x="420" y="267" textAnchor="middle">setiap corong: r = 2,5 cm · tinggi = 10 cm</text>
         <text x="420" y="290" textAnchor="middle">corong es krim berbentuk kerucut</text>

@@ -236,11 +236,11 @@ const brslDasarImages: Record<number, string> = {
 
 const brslDasarGambarLebarPx: Record<number, number> = {
   6: 384,
-  30: 192,
-  31: 192,
-  32: 192,
-  34: 192,
-  35: 192,
+  30: 384,
+  31: 384,
+  32: 384,
+  34: 384,
+  35: 384,
 };
 const nomorSoalYangDihapus = new Set([9, 13, 14, 20, 23, 25, 33, 36]);
 const latihanDasarTkaAktif = latihanDasarTkaLama.filter(
