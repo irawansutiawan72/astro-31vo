@@ -37,11 +37,21 @@ const SmaTopicMenuPage = () => {
   const config = modeConfig[mode];
   const Icon = config.icon;
   const selectedTopic = getSmaTopic(topicSlug);
-  const items = (selectedTopic?.subtopics ?? SMA_TOPICS).filter(
+  const availableItems = (selectedTopic?.subtopics ?? SMA_TOPICS).filter(
     (item) =>
       mode === "buku-animasi" ||
       (item.slug !== "identitas-dan-rumus-rumus-trigonometri" && item.slug !== "rumus-rumus-trigonometri"),
   );
+  const items =
+    mode === "buku-animasi" && selectedTopic?.slug === "peluang"
+      ? availableItems
+          .filter((item) => item.slug !== "komplemen-suatu-kejadian")
+          .map((item) =>
+            item.slug === "frekuensi-harapan"
+              ? { ...item, title: "Frekuensi Harapan dan Komplemen Suatu Kejadian" }
+              : item,
+          )
+      : availableItems;
   const heading = selectedTopic ? selectedTopic.title : config.title;
   const subtitle = selectedTopic
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
