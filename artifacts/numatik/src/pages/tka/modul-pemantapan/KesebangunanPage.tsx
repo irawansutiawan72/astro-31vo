@@ -20,23 +20,96 @@ const kesebangunanImages: Record<number, string> = {
   20: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117352/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_22_fhu89d.png",
 };
 
+const kesebangunanSoalSatuIiDiagram = (
+  <svg
+    viewBox="0 0 520 230"
+    role="img"
+    aria-labelledby="kesebangunan-q1-ii-title kesebangunan-q1-ii-desc"
+    className="mx-auto max-h-48 w-full rounded bg-white p-1"
+  >
+    <title id="kesebangunan-q1-ii-title">Dua belah ketupat dengan sudut berbeda</title>
+    <desc id="kesebangunan-q1-ii-desc">
+      Kedua bangun memiliki empat sisi sama panjang, tetapi sudut-sudutnya berbeda sehingga belum tentu sebangun.
+    </desc>
+    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4" strokeLinejoin="round">
+      <polygon points="40,50 160,50 252,127 132,127" />
+      <polygon points="300,50 420,50 441,168 321,168" />
+    </g>
+    <g stroke="#172033" strokeWidth="3">
+      <path d="M96 43l8 14M205 82l-10 12M188 120l8 14M87 82l-10 12" />
+      <path d="M356 43l8 14M436 103l-12 2M377 161l8 14M306 103l-12 2" />
+    </g>
+  </svg>
+);
+
+const kesebangunanSoalSatuIiiDiagram = (
+  <svg
+    viewBox="0 0 520 270"
+    role="img"
+    aria-labelledby="kesebangunan-q1-iii-title kesebangunan-q1-iii-desc"
+    className="mx-auto max-h-48 w-full rounded bg-white p-1"
+  >
+    <title id="kesebangunan-q1-iii-title">Dua persegi panjang sebangun, salah satunya diputar</title>
+    <desc id="kesebangunan-q1-iii-desc">
+      Persegi panjang pertama berukuran 6 kali 3 cm dan yang kedua 3 kali 6 cm.
+    </desc>
+    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4">
+      <rect x="45" y="85" width="180" height="90" />
+      <rect x="350" y="40" width="90" height="180" />
+    </g>
+    <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="19" textAnchor="middle">
+      <text x="135" y="65">6 cm × 3 cm</text>
+      <text x="395" y="250">3 cm × 6 cm</text>
+    </g>
+  </svg>
+);
+
+const kesebangunanSoalSatuIvDiagram = (
+  <svg
+    viewBox="0 0 520 230"
+    role="img"
+    aria-labelledby="kesebangunan-q1-iv-title kesebangunan-q1-iv-desc"
+    className="mx-auto max-h-48 w-full rounded bg-white p-1"
+  >
+    <title id="kesebangunan-q1-iv-title">Dua trapesium siku-siku dengan ukuran berbeda</title>
+    <desc id="kesebangunan-q1-iv-desc">
+      Trapesium kiri memiliki sisi sejajar 5 dan 8 cm serta tinggi 4 cm. Trapesium kanan memiliki sisi sejajar 3 dan 7 cm serta tinggi 5 cm.
+    </desc>
+    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4" strokeLinejoin="round">
+      <polygon points="55,65 155,65 215,145 55,145" />
+      <polygon points="320,50 380,50 460,150 320,150" />
+    </g>
+    <g fill="none" stroke="#172033" strokeWidth="2">
+      <path d="M55 132h13v13M320 137h13v13" />
+      <path d="M96 65l8-6 8 6M125 145l8-6 8 6M345 50l8-6 8 6M365 150l8-6 8 6" />
+    </g>
+    <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="16" textAnchor="middle">
+      <text x="105" y="49">5 cm</text>
+      <text x="135" y="173">8 cm</text>
+      <text x="32" y="110">4 cm</text>
+      <text x="350" y="34">3 cm</text>
+      <text x="390" y="178">7 cm</text>
+      <text x="294" y="105">5 cm</text>
+    </g>
+  </svg>
+);
+
 const kesebangunanSoalSatuParts = [
-  { bagian: "i", src: kesebangunanSoalSatuIImage },
-  { bagian: "ii", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_ii_pvvcad.png" },
-  { bagian: "iii", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_iii_desmvy.png" },
-  { bagian: "iv", src: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035300/no_1_bagian_iv_n15tkt.png" },
+  {
+    bagian: "i",
+    diagram: <img src={kesebangunanSoalSatuIImage} alt="Dua lingkaran dengan ukuran berbeda" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
+  },
+  { bagian: "ii", diagram: kesebangunanSoalSatuIiDiagram },
+  { bagian: "iii", diagram: kesebangunanSoalSatuIiiDiagram },
+  { bagian: "iv", diagram: kesebangunanSoalSatuIvDiagram },
 ] as const;
 
 const kesebangunanSoalSatuDiagram = (
   <div role="group" aria-label="Gambar soal nomor 1" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-    {kesebangunanSoalSatuParts.map(({ bagian, src }) => (
+    {kesebangunanSoalSatuParts.map(({ bagian, diagram }) => (
       <figure key={bagian} className="min-w-0 rounded-xl border border-border/40 bg-background p-2">
         <figcaption className="mb-1 text-center text-sm font-semibold">({bagian})</figcaption>
-        <img
-          src={src}
-          alt={`Gambar soal nomor 1 bagian ${bagian}`}
-          className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain"
-        />
+        {diagram}
       </figure>
     ))}
   </div>
@@ -209,7 +282,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pernyataan: ["Bangun (i)", "Bangun (ii)", "Bangun (iii)", "Bangun (iv)"],
     jawabanPGK: [0, 2],
     diagramTight: true,
-    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi bersesuaian yang sama.\n\n• (i) Dua lingkaran dengan ukuran berbeda tetap sebangun karena semua lingkaran memiliki bentuk yang sama. BENAR.\n• (ii) Tanda pada gambar menunjukkan sisi-sisi belah ketupat sama panjang, tetapi sudutnya tidak ditentukan. Belah ketupat belum tentu sebangun. SALAH.\n• (iii) Kedua persegi panjang memiliki perbandingan sisi yang sama (satu diputar), sehingga sebangun. BENAR.\n• (iv) Kesamaan satu sudut siku-siku saja belum menjamin sisi-sisi lain sebanding. Bangun-bangun itu belum tentu sebangun. SALAH.\n\nJadi, bangun yang pasti sebangun adalah (i) dan (iii)."
+    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Kedua gambar adalah lingkaran. Semua lingkaran sebangun, meskipun ukurannya berbeda. BENAR.\n• (ii) Tanda garis menunjukkan keempat sisi pada setiap belah ketupat sama panjang, tetapi sudut-sudut pada kedua belah ketupat berbeda. Belah ketupat dengan sudut berbeda tidak sebangun. SALAH.\n• (iii) Ukuran pada gambar adalah 6 cm × 3 cm dan 3 cm × 6 cm. Persegi panjang kedua hanya diputar; rasio sisi panjang terhadap sisi pendek pada keduanya sama, yaitu 6:3 = 2:1. BENAR.\n• (iv) Kedua trapesium memiliki sudut siku-siku, tetapi perbandingan sisi sejajarnya berbeda: 5:3 pada sisi atas dan 8:7 pada sisi bawah. Satu sudut siku-siku saja tidak menjamin kedua trapesium sebangun. SALAH.\n\nJadi, bangun yang pasti sebangun adalah (i) dan (iii)."
   },
   {
     no: 2,
@@ -226,17 +299,17 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   },
   {
     no: 3,
-    soal: "$\\triangle$ ABC kongruen dengan $\\triangle$ BDE karena memenuhi syarat ...",
-    options: ["A. Sisi, sisi, sisi", "B. Sisi, sudut, sisi", "C. Sisi, sisi, sudut", "D. Sudut, sudut, sudut"],
-    jawaban: "B",
-    pembahasan: "Pada gambar dua segitiga ABC dan BDE yang berimpit di titik B, terlihat:\n• Sisi AB = BD (sama panjang)\n• Sudut $\\angle ABC = \\angle DBE$ (bertolak belakang)\n• Sisi CB = BE (sama panjang)\n\nKedua sisi yang mengapit sudut yang sama besar memiliki panjang yang sama, sehingga memenuhi syarat Sisi - Sudut - Sisi (S.Sd.S)."
+    soal: "$\\triangle$ ABC kongruen dengan $\\triangle$ DBE karena memenuhi syarat ...",
+    options: ["A. Sisi, sisi, sisi", "B. Sisi, sudut, sisi", "C. Sudut, sisi, sudut", "D. Sudut, sudut, sudut"],
+    jawaban: "C",
+    pembahasan: "Pada gambar, sisi $BC$ dan $BE$ diberi tanda sama panjang. Tanda sudut di $C$ dan $E$ menunjukkan $\\angle ACB = \\angle DEB$. Karena $D$, $C$, dan $B$ segaris serta $A$, $E$, dan $B$ segaris, sudut di $B$ pada kedua segitiga juga sama: $\\angle ABC = \\angle DBE$.\n\nSisi $BC$ dan $BE$ berada di antara dua pasang sudut yang sama besar. Jadi, $\\triangle ABC$ kongruen dengan $\\triangle DBE$ menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd), yaitu pilihan C."
   },
   {
     no: 4,
     soal: "Segitiga ADB kongruen dengan segitiga CEB. Jika panjang AD = CE, syarat kekongruenan yang digunakan adalah ....",
     options: ["A. Sisi, sisi, sudut", "B. Sisi, sudut, sisi", "C. Sudut, sisi, sudut", "D. Sisi, sudut, sudut"],
     jawaban: "C",
-    pembahasan: "Dari gambar diketahui:\n• Sudut pertama yang bersesuaian sama besar (misalnya $\\angle A = \\angle C$)\n• Sisi yang menghubungkan kedua sudut tersebut sama panjang: AD = CE\n• Sudut kedua yang bersesuaian sama besar (misalnya $\\angle D = \\angle E$)\n\nKarena dua sudut sama besar dan sisi yang berada di antara kedua sudut tersebut sama panjang, kedua segitiga kongruen menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd)."
+    pembahasan: "Tanda siku-siku pada gambar menunjukkan $\\angle ADB = \\angle CEB = 90°$. Karena $A$, $E$, dan $B$ segaris serta $C$, $D$, dan $B$ segaris, sudut di $B$ pada kedua segitiga sama besar: $\\angle ABD = \\angle CBE$. Maka sudut ketiga juga sama, yaitu $\\angle DAB = \\angle BCE$.\n\nDiketahui $AD = CE$. Sisi tersebut berada di antara pasangan sudut yang sama besar, sehingga $\\triangle ADB$ kongruen dengan $\\triangle CEB$ menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd), yaitu pilihan C."
   },
   {
     no: 5,
@@ -244,7 +317,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     options: ["A. 9 cm", "B. 18 cm", "C. 20 cm", "D. 72 cm"],
     jawaban: "B",
     diagramTight: true,
-    pembahasan: "Perbandingan tinggi persegi panjang besar dan kecil adalah $20:5=4:1$. Karena keduanya sebangun, panjang sisi-sisinya juga berbanding $4:1$.\n\nLebar persegi panjang besar = $320 \\div 20 = 16$ cm, sehingga lebar persegi panjang kecil = $16 \\div 4 = 4$ cm. Tinggi persegi panjang kecil adalah 5 cm.\n\nKeliling persegi panjang kecil = $2(4+5)=18$ cm.",
+    pembahasan: "Sesuai label pada gambar, tinggi persegi panjang besar 20 cm dan yang kecil 5 cm, sehingga faktor skala besar:kecil adalah $20:5=4:1$. Karena kedua persegi panjang sebangun, perbandingan lebarnya juga $4:1$.\n\nLebar persegi panjang besar adalah $320 \\div 20 = 16$ cm. Maka lebar persegi panjang kecil $16 \\div 4 = 4$ cm. Keliling persegi panjang kecil adalah $2(4+5)=18$ cm, sehingga jawabannya B.",
     sourceLabel: "TKA Matematika 2026",
   },
   {
