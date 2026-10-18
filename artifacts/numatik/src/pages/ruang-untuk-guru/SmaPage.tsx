@@ -51,10 +51,10 @@ const smaMenuItems = [
     desc: "Uji kemampuan akademik matematika",
   },
   {
-    label: "INTENSIF UTBK",
+    label: "INTENSIF SNBT",
     icon: Rocket,
     path: "/intensif-utbk",
-    desc: "Persiapan intensif menghadapi UTBK",
+    desc: "Persiapan intensif menghadapi SNBT",
   },
   {
     label: "OLIMPIADE MATEMATIKA SMA",
