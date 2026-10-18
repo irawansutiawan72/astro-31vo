@@ -182,6 +182,7 @@ const SmaPeluangAturanPerkalianPenjumlahanPage = lazy(() => import("./pages/ruan
 const SmaPeluangPermutasiPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangPermutasiPage"));
 const SmaPeluangKombinasiPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangKombinasiPage"));
 const SmaPeluangEkspansiBinomialPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangEkspansiBinomialPage"));
+const SmaPeluangRuangSampelDistribusiPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangRuangSampelDistribusiPage"));
 const SmaEksponenLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaPage"));
 const SmaEksponenLogaritmaLatihanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaLatihanPage"));
 const SmaPersamaanEksponenLatihanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPersamaanEksponenLatihanPage"));
@@ -1330,6 +1331,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/peluang/ekspansi-binomial"
               element={<SmaPeluangEkspansiBinomialPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/peluang/ruang-sampel-dan-distribusi-peluang-kejadian"
+              element={<SmaPeluangRuangSampelDistribusiPage />}
             />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
