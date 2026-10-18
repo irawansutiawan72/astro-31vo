@@ -179,6 +179,7 @@ const SmaStatistikaUkuranPemusatanDataPage = lazy(() => import("./pages/ruang-un
 const SmaStatistikaUkuranLetakDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranLetakDataPage"));
 const SmaStatistikaUkuranPenyebaranDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranPenyebaranDataPage"));
 const SmaPeluangAturanPerkalianPenjumlahanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangAturanPerkalianPenjumlahanPage"));
+const SmaPeluangPermutasiPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangPermutasiPage"));
 const SmaPeluangKombinasiPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPeluangKombinasiPage"));
 const SmaEksponenLogaritmaPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaPage"));
 const SmaEksponenLogaritmaLatihanPage = lazy(() => import("./pages/ruang-untuk-guru/SmaEksponenLogaritmaLatihanPage"));
@@ -1320,6 +1321,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/peluang/kombinasi"
               element={<SmaPeluangKombinasiPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/peluang/permutasi"
+              element={<SmaPeluangPermutasiPage />}
             />
             <Route path="/ruang-untuk-guru/sma/:mode/:topicSlug/:subtopicSlug" element={<SmaSubtopicComingSoonPage />} />
             <Route path="/ruang-untuk-guru/sma/olimpiade" element={<SmaComingSoonPage />} />
