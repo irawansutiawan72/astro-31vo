@@ -250,15 +250,15 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 6,
     type: "pgk",
-    soal: "Perhatikan segitiga ABC siku-siku di C. Garis CD tegak lurus AB. Pilih semua pernyataan yang benar berdasarkan gambar.",
+    soal: "Perhatikan segitiga ABC siku-siku di C. Garis CD tegak lurus AB.\n[DIAGRAM]\nPilih semua pernyataan yang benar berdasarkan gambar.",
     pernyataan: [
       "Panjang AD adalah 4 cm.",
       "Panjang AB adalah 13 cm.",
-      "Panjang AC memenuhi AC² = 52 cm².",
-      "Luas segitiga ABC adalah 36 cm².",
+      "Panjang $AC$ adalah $2\\sqrt{13}$ cm.",
+      "Panjang $BC$ adalah $3\\sqrt{13}$ cm.",
     ],
-    jawabanPGK: [0, 1, 2],
-    pembahasan: "Pada segitiga siku-siku dengan garis tinggi ke sisi miring, berlaku CD² = AD × DB. Maka AD = 6² ÷ 9 = 4 cm dan AB = AD + DB = 4 + 9 = 13 cm.\n\nSelanjutnya, AC² = AB × AD = 13 × 4 = 52 cm². Luas segitiga ABC = ½ × AB × CD = ½ × 13 × 6 = 39 cm², jadi pernyataan (4) salah."
+    jawabanPGK: [0, 1, 2, 3],
+    pembahasan: "Pada segitiga siku-siku dengan garis tinggi ke sisi miring, berlaku $CD^2 = AD \\times DB$. Maka $AD = 6^2 \\div 9 = 4$ cm dan $AB = AD + DB = 4 + 9 = 13$ cm.\n\nSelanjutnya, $AC^2 = AB \\times AD = 13 \\times 4 = 52$, sehingga $AC = 2\\sqrt{13}$ cm. Untuk sisi lainnya, $BC^2 = AB \\times DB = 13 \\times 9 = 117$, sehingga $BC = 3\\sqrt{13}$ cm. Jadi, keempat pernyataan benar."
   },
   {
     no: 7,
@@ -289,12 +289,12 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     type: "pgkbs",
     soal: "Pada gambar, DE sejajar BC, AE = 12 cm, EC = 8 cm, dan BC = 15 cm. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
     pernyataan: [
-      "Panjang AC adalah 20 cm.",
       "Panjang DE adalah 9 cm.",
       "Perbandingan DE : BC adalah 4 : 5.",
+      "Panjang $AB$ adalah $5\\sqrt{7}$ cm.",
     ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "AC = AE + EC = 12 + 8 = 20 cm. Karena DE ∥ BC, segitiga ADE sebangun dengan ABC, sehingga DE/BC = AE/AC = 12/20 = 3/5. Jadi DE = 3/5 × 15 = 9 cm; perbandingannya 3 : 5, bukan 4 : 5."
+    jawabanBS: ["B", "S", "B"],
+    pembahasan: "$AC = AE + EC = 12 + 8 = 20$ cm. Karena $DE \\parallel BC$, segitiga $ADE$ sebangun dengan $ABC$, sehingga $DE/BC = AE/AC = 12/20 = 3/5$. Maka $DE = 3/5 \\times 15 = 9$ cm, sedangkan perbandingan $DE:BC$ adalah $3:5$, bukan $4:5$.\n\nSegitiga $ABC$ siku-siku di $B$, jadi dengan Teorema Pythagoras, $AB^2 = AC^2 - BC^2 = 20^2 - 15^2 = 175$. Maka $AB = 5\\sqrt{7}$ cm. Jadi, pernyataan (1) benar, (2) salah, dan (3) benar."
   },
   {
     no: 10,
@@ -311,11 +311,11 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   {
     no: 11,
     type: "pgk",
-    soal: "ABCD dan EFGH adalah trapesium sama kaki yang sebangun. Diketahui EF = 24 cm, HG = 14 cm, EH = 13 cm, dan DC = 21 cm. Pilih semua pernyataan yang benar.",
+    soal: "ABCD dan EFGH adalah trapesium sama kaki yang sebangun. Diketahui EF = 24 cm, HG = 14 cm, EH = 13 cm, dan DC = 21 cm.\n[DIAGRAM]\nPilih semua pernyataan yang benar.",
     pernyataan: [
       "Perbandingan ukuran sisi trapesium ABCD terhadap EFGH adalah 3 : 2.",
       "Panjang AB adalah 36 cm.",
-      "Tinggi trapesium ABCD adalah 18 cm.",
+      "Tinggi trapesium EFGH adalah 12 cm.",
       "Luas daerah yang diarsir adalah 300 cm².",
     ],
     jawabanPGK: [0, 1, 2],
@@ -342,10 +342,10 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pernyataan: [
       "Panjang RU adalah 6 cm.",
       "Panjang RT adalah 15 cm.",
-      "Panjang RT adalah 12 cm.",
+      "Panjang $PQ$ adalah $2\\sqrt{29}$ cm.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "Karena RQ adalah sisi persegi, RQ = 10 cm. Maka RU = RQ − UQ = 10 − 4 = 6 cm.\n\nSegitiga PQU dan RUT sebangun. Perbandingan sisi mendatar dan tegaknya sama: RT/RU = PQ/UQ = 10/4. Jadi RT = 6 × 10/4 = 15 cm."
+    pembahasan: "Karena $RQ$ adalah sisi persegi, $RQ = PQ = 10$ cm. Maka $RU = RQ - UQ = 10 - 4 = 6$ cm.\n\nSegitiga $PQU$ dan $RUT$ sebangun. Perbandingan sisi mendatar dan tegaknya sama: $RT/RU = PQ/UQ = 10/4$. Jadi $RT = 6 \\times 10/4 = 15$ cm. Pernyataan (3) salah karena $PQ=10$ cm, bukan $2\\sqrt{29}$ cm."
   },
   {
     no: 15,
