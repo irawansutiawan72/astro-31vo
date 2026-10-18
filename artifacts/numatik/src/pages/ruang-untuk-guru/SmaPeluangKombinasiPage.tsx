@@ -5,10 +5,10 @@ import PageNavigation from "@/components/PageNavigation";
 import { playPopSound } from "@/hooks/useAudio";
 
 const sections = [
-  ["3.3.1", "Memilih tanpa mengurutkan", "makna-kombinasi"],
-  ["3.3.2", "Dari permutasi ke kombinasi", "rumus-kombinasi"],
-  ["3.3.3", "Contoh pilihan dan kelompok", "contoh-pilihan"],
-  ["3.3.4", "Kasus bertahap dan pendalaman", "kasus-khusus"],
+  ["A", "Memilih tanpa mengurutkan", "makna-kombinasi"],
+  ["B", "Dari permutasi ke kombinasi", "rumus-kombinasi"],
+  ["C", "Contoh pilihan dan kelompok", "contoh-pilihan"],
+  ["D", "Kasus bertahap dan pendalaman", "kasus-khusus"],
 ];
 
 function SectionHeading({ number, title, intro }: { number: string; title: string; intro: string }) {
@@ -83,7 +83,6 @@ const SmaPeluangKombinasiPage = () => {
       <main className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
         <header className="mx-auto mb-9 max-w-4xl text-center" data-testid="lesson-header">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-200/[.06] px-3 py-1.5 font-body text-[10px] font-black uppercase tracking-[.2em] text-cyan-100"><Sparkles className="h-3.5 w-3.5" aria-hidden="true" />Peluang · Pilih dengan cermat</div>
-          <p className="font-display text-xs font-bold uppercase tracking-[.24em] text-orange-200">Bab 3.3</p>
           <h1 className="mt-2 font-display text-3xl font-black leading-tight tracking-tight text-primary text-glow-cyan sm:text-5xl">Kombinasi</h1>
           <p className="mx-auto mt-4 max-w-2xl font-body text-sm leading-relaxed text-slate-300 sm:text-base">Saat memilih anggota tim, buku, atau soal, urutan biasanya tidak mengubah siapa yang terpilih. Kita akan belajar menghitung pilihan seperti itu dengan rapi—dan membedakannya dari susunan yang urutannya penting.</p>
           <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -94,7 +93,7 @@ const SmaPeluangKombinasiPage = () => {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div className="min-w-0 space-y-10">
             <section id="makna-kombinasi" data-testid="section-combination-meaning" className="scroll-mt-6">
-              <SectionHeading number="3.3.1" title="Memilih tanpa mengurutkan" intro="Kombinasi adalah cara memilih beberapa unsur ketika posisi atau urutan unsur terpilih tidak dibedakan. Mulailah dengan pertanyaan sederhana: apakah menukar dua nama menghasilkan pilihan yang baru?" />
+              <SectionHeading number="A" title="Memilih tanpa mengurutkan" intro="Kombinasi adalah cara memilih beberapa unsur ketika posisi atau urutan unsur terpilih tidak dibedakan. Mulailah dengan pertanyaan sederhana: apakah menukar dua nama menghasilkan pilihan yang baru?" />
               <div className="grid gap-4 md:grid-cols-[1.1fr_.9fr]">
                 <div className="rounded-3xl border border-cyan-200/15 bg-cyan-200/[.05] p-5">
                   <h3 className="font-display font-bold text-cyan-100">Pasangan yang sama, bukan pilihan baru</h3>
@@ -119,7 +118,7 @@ const SmaPeluangKombinasiPage = () => {
             </section>
 
             <section id="rumus-kombinasi" data-testid="section-combination-formula" className="scroll-mt-6">
-              <SectionHeading number="3.3.2" title="Dari permutasi ke kombinasi" intro="Kita dapat mengubah susunan berurutan menjadi kelompok tak berurutan dengan membagi banyak permutasi oleh banyak urutan yang mungkin di dalam setiap kelompok." />
+              <SectionHeading number="B" title="Dari permutasi ke kombinasi" intro="Kita dapat mengubah susunan berurutan menjadi kelompok tak berurutan dengan membagi banyak permutasi oleh banyak urutan yang mungkin di dalam setiap kelompok." />
               <div className="space-y-5">
                 <div className="rounded-3xl border border-white/10 bg-white/[.035] p-4 sm:p-5">
                   <h3 className="mb-3 font-display font-bold text-white">Empat kelompok berisi tiga unsur</h3>
@@ -155,7 +154,7 @@ const SmaPeluangKombinasiPage = () => {
             </section>
 
             <section id="contoh-pilihan" data-testid="section-selection-examples" className="scroll-mt-6">
-              <SectionHeading number="3.3.3" title="Contoh: hitung pilihan yang nyata" intro="Kita gunakan rumus pada situasi yang beragam. Dalam setiap soal, benda atau orang yang dipilih hanya membentuk kelompok, bukan urutan." />
+              <SectionHeading number="C" title="Contoh: hitung pilihan yang nyata" intro="Kita gunakan rumus pada situasi yang beragam. Dalam setiap soal, benda atau orang yang dipilih hanya membentuk kelompok, bukan urutan." />
               <div className="space-y-5">
                 <Example number={1} title="Memilih soal kuis">
                   <p className="text-sm leading-relaxed text-slate-300">Kuis menyediakan 10 soal dan peserta diminta mengerjakan 6 soal. Berapa pilihan kumpulan soal yang dapat dikerjakan?</p>
@@ -190,7 +189,7 @@ const SmaPeluangKombinasiPage = () => {
             </section>
 
             <section id="kasus-khusus" data-testid="section-structured-cases" className="scroll-mt-6">
-              <SectionHeading number="3.3.4" title="Menggabungkan pilihan dan membagi kelompok" intro="Beberapa soal memerlukan lebih dari satu keputusan. Untuk kelompok-kelompok yang harus sama-sama dibentuk, kalikan banyak cara tiap tahap; untuk syarat “sedikitnya”, uraikan menjadi kasus yang saling terpisah lalu jumlahkan." />
+              <SectionHeading number="D" title="Menggabungkan pilihan dan membagi kelompok" intro="Beberapa soal memerlukan lebih dari satu keputusan. Untuk kelompok-kelompok yang harus sama-sama dibentuk, kalikan banyak cara tiap tahap; untuk syarat “sedikitnya”, uraikan menjadi kasus yang saling terpisah lalu jumlahkan." />
               <div className="space-y-5">
                 <Example number={6} title="Panitia gabungan dua klub">
                   <p className="text-sm leading-relaxed text-slate-300">Panitia beranggotakan 5 orang harus memuat tepat 3 anggota klub robotik dari 8 orang dan tepat 2 anggota klub sains dari 6 orang. Berapa panitia yang mungkin?</p>
