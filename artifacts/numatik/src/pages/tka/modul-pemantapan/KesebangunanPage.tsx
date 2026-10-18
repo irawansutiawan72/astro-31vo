@@ -20,88 +20,30 @@ const kesebangunanImages: Record<number, string> = {
   20: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117352/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_22_fhu89d.png",
 };
 
-const kesebangunanSoalSatuIiDiagram = (
-  <svg
-    viewBox="0 0 520 230"
-    role="img"
-    aria-labelledby="kesebangunan-q1-ii-title kesebangunan-q1-ii-desc"
-    className="mx-auto max-h-48 w-full rounded bg-white p-1"
-  >
-    <title id="kesebangunan-q1-ii-title">Dua belah ketupat dengan sudut berbeda</title>
-    <desc id="kesebangunan-q1-ii-desc">
-      Kedua bangun memiliki empat sisi sama panjang, tetapi sudut-sudutnya berbeda sehingga belum tentu sebangun.
-    </desc>
-    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4" strokeLinejoin="round">
-      <polygon points="40,50 160,50 252,127 132,127" />
-      <polygon points="300,50 420,50 441,168 321,168" />
-    </g>
-    <g stroke="#172033" strokeWidth="3">
-      <path d="M96 43l8 14M205 82l-10 12M188 120l8 14M87 82l-10 12" />
-      <path d="M356 43l8 14M436 103l-12 2M377 161l8 14M306 103l-12 2" />
-    </g>
-  </svg>
-);
-
-const kesebangunanSoalSatuIiiDiagram = (
-  <svg
-    viewBox="0 0 520 270"
-    role="img"
-    aria-labelledby="kesebangunan-q1-iii-title kesebangunan-q1-iii-desc"
-    className="mx-auto max-h-48 w-full rounded bg-white p-1"
-  >
-    <title id="kesebangunan-q1-iii-title">Dua persegi panjang sebangun, salah satunya diputar</title>
-    <desc id="kesebangunan-q1-iii-desc">
-      Persegi panjang pertama berukuran 6 kali 3 cm dan yang kedua 3 kali 6 cm.
-    </desc>
-    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4">
-      <rect x="45" y="85" width="180" height="90" />
-      <rect x="350" y="40" width="90" height="180" />
-    </g>
-    <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="19" textAnchor="middle">
-      <text x="135" y="65">6 cm × 3 cm</text>
-      <text x="395" y="250">3 cm × 6 cm</text>
-    </g>
-  </svg>
-);
-
-const kesebangunanSoalSatuIvDiagram = (
-  <svg
-    viewBox="0 0 520 230"
-    role="img"
-    aria-labelledby="kesebangunan-q1-iv-title kesebangunan-q1-iv-desc"
-    className="mx-auto max-h-48 w-full rounded bg-white p-1"
-  >
-    <title id="kesebangunan-q1-iv-title">Dua trapesium siku-siku dengan ukuran berbeda</title>
-    <desc id="kesebangunan-q1-iv-desc">
-      Trapesium kiri memiliki sisi sejajar 5 dan 8 cm serta tinggi 4 cm. Trapesium kanan memiliki sisi sejajar 3 dan 7 cm serta tinggi 5 cm.
-    </desc>
-    <g fill="#f7edd7" stroke="#7c4a2d" strokeWidth="4" strokeLinejoin="round">
-      <polygon points="55,65 155,65 215,145 55,145" />
-      <polygon points="320,50 380,50 460,150 320,150" />
-    </g>
-    <g fill="none" stroke="#172033" strokeWidth="2">
-      <path d="M55 132h13v13M320 137h13v13" />
-      <path d="M96 65l8-6 8 6M125 145l8-6 8 6M345 50l8-6 8 6M365 150l8-6 8 6" />
-    </g>
-    <g fill="#172033" fontFamily="Arial, sans-serif" fontSize="16" textAnchor="middle">
-      <text x="105" y="49">5 cm</text>
-      <text x="135" y="173">8 cm</text>
-      <text x="32" y="110">4 cm</text>
-      <text x="350" y="34">3 cm</text>
-      <text x="390" y="178">7 cm</text>
-      <text x="294" y="105">5 cm</text>
-    </g>
-  </svg>
-);
+const kesebangunanSoalSatuIiImage =
+  "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_ii_pvvcad.png";
+const kesebangunanSoalSatuIiiImage =
+  "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035299/no_1_bagian_iii_desmvy.png";
+const kesebangunanSoalSatuIvImage =
+  "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1791035300/no_1_bagian_iv_n15tkt.png";
 
 const kesebangunanSoalSatuParts = [
   {
     bagian: "i",
     diagram: <img src={kesebangunanSoalSatuIImage} alt="Dua lingkaran dengan ukuran berbeda" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
   },
-  { bagian: "ii", diagram: kesebangunanSoalSatuIiDiagram },
-  { bagian: "iii", diagram: kesebangunanSoalSatuIiiDiagram },
-  { bagian: "iv", diagram: kesebangunanSoalSatuIvDiagram },
+  {
+    bagian: "ii",
+    diagram: <img src={kesebangunanSoalSatuIiImage} alt="Dua bangun dengan keempat sisi sama panjang" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
+  },
+  {
+    bagian: "iii",
+    diagram: <img src={kesebangunanSoalSatuIiiImage} alt="Dua persegi panjang dengan orientasi berbeda" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
+  },
+  {
+    bagian: "iv",
+    diagram: <img src={kesebangunanSoalSatuIvImage} alt="Dua trapesium siku-siku dengan orientasi berbeda" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
+  },
 ] as const;
 
 const kesebangunanSoalSatuDiagram = (
@@ -282,7 +224,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pernyataan: ["Bangun (i)", "Bangun (ii)", "Bangun (iii)", "Bangun (iv)"],
     jawabanPGK: [0, 2],
     diagramTight: true,
-    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Kedua gambar adalah lingkaran. Semua lingkaran sebangun, meskipun ukurannya berbeda. BENAR.\n• (ii) Tanda garis menunjukkan keempat sisi pada setiap belah ketupat sama panjang, tetapi sudut-sudut pada kedua belah ketupat berbeda. Belah ketupat dengan sudut berbeda tidak sebangun. SALAH.\n• (iii) Ukuran pada gambar adalah 6 cm × 3 cm dan 3 cm × 6 cm. Persegi panjang kedua hanya diputar; rasio sisi panjang terhadap sisi pendek pada keduanya sama, yaitu 6:3 = 2:1. BENAR.\n• (iv) Kedua trapesium memiliki sudut siku-siku, tetapi perbandingan sisi sejajarnya berbeda: 5:3 pada sisi atas dan 8:7 pada sisi bawah. Satu sudut siku-siku saja tidak menjamin kedua trapesium sebangun. SALAH.\n\nJadi, bangun yang pasti sebangun adalah (i) dan (iii)."
+    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Kedua bangun adalah lingkaran. Semua lingkaran sebangun meskipun ukurannya berbeda. BENAR.\n• (ii) Keempat sisi pada kedua bangun diberi tanda sama panjang. Karena gambar tidak menandai sudut siku-siku, informasi ini hanya memastikan keduanya belah ketupat; sudut belah ketupat dapat berbeda, sehingga belum tentu sebangun. SALAH.\n• (iii) Kedua persegi panjang pada gambar memiliki perbandingan panjang dan lebar yang sama; salah satunya hanya diputar. BENAR.\n• (iv) Kedua trapesium memiliki satu sudut siku-siku, tetapi itu saja tidak menjamin semua sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding. SALAH.\n\nJadi, berdasarkan tanda dan bentuk pada gambar, bangun yang pasti sebangun adalah (i) dan (iii)."
   },
   {
     no: 2,
@@ -379,7 +321,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Perbandingan AC : CE adalah 7 : 3.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "Karena AB ∥ DE, maka △CAB sebangun dengan △CED (kesebangunan oleh garis sejajar). Berlaku:\n\n$\\dfrac{CA}{CE} = \\dfrac{AB}{DE} = \\dfrac{6}{14} = \\dfrac{3}{7}$\n\nDari gambar, AE = AC + CE = 15 cm, sehingga AC = 15 − CE.\n\n$\\dfrac{15 - CE}{CE} = \\dfrac{3}{7}$\n\n$7(15 - CE) = 3 \\cdot CE$\n$105 - 7CE = 3CE$\n$105 = 10CE$\n$CE = 10{,}5 \\text{ cm}$"
+    pembahasan: "Karena $AB \\parallel DE$, segitiga $CAB$ dan $CED$ sebangun. Maka:\n\n$\\dfrac{AC}{CE}=\\dfrac{AB}{DE}=\\dfrac{6}{14}=\\dfrac{3}{7}$.\n\nDiketahui $AE=AC+CE=15$ cm. Perbandingan $AC:CE=3:7$ terdiri atas 10 bagian, jadi satu bagian panjangnya $15\\div10=1{,}5$ cm. Dengan demikian, $AC=3(1{,}5)=4{,}5$ cm dan $CE=7(1{,}5)=10{,}5$ cm. Jadi pernyataan (1) benar, (2) benar, sedangkan $AC:CE=3:7$ sehingga pernyataan (3) salah."
   },
   {
     no: 11,
@@ -406,7 +348,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     soal: "Jika AE : EC = 2 : 3, maka panjang EF adalah ….",
     options: ["A. 15 cm", "B. 22 cm", "C. 25 cm", "D. 26 cm"],
     jawaban: "B",
-    pembahasan: "Pada trapesium dengan EF garis sejajar yang membagi kaki dengan rasio AE : EC = 2 : 3, berlaku rumus:\n\n$EF = \\dfrac{(AE \\cdot CD) + (EC \\cdot AB)}{AE + EC} = \\dfrac{(2 \\cdot CD) + (3 \\cdot AB)}{2 + 3}$\n\nDengan AB dan CD sisi sejajar trapesium (mis. AB = 30, CD = 10 pada pola soal ini):\n\n$EF = \\dfrac{(2 \\times 10) + (3 \\times 30)}{5} = \\dfrac{20 + 90}{5} = \\dfrac{110}{5} = 22 \\text{ cm}$"
+    pembahasan: "Pada gambar, $AB=50$ cm dan $CD=20$ cm, sedangkan $EF$ sejajar dengan kedua alas. Karena $AE:EC=2:3$, titik $E$ berada $\\tfrac{2}{5}$ bagian dari $A$ menuju $C$. Panjang ruas yang sejajar alas berubah sebanding, sehingga:\n\n$EF=\\dfrac{EC\\cdot AB+AE\\cdot CD}{AE+EC}=\\dfrac{3(50)+2(20)}{2+3}=\\dfrac{190}{5}=38$ cm.\n\nHasil berdasarkan gambar dan data soal adalah 38 cm, tetapi nilai tersebut tidak tersedia pada pilihan jawaban yang tercantum."
   },
   {
     no: 14,
@@ -425,14 +367,14 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     soal: "Trapesium PQUT sebangun dengan TURS. Jika PT : TS = 2 : 3, panjang SR adalah ...",
     options: ["A. 18 cm", "B. 22 cm", "C. 24 cm", "D. 27 cm"],
     jawaban: "D",
-    pembahasan: "Karena trapesium PQUT ~ trapesium TURS, rasio sisi-sisi bersesuaian sama dengan rasio kakinya:\n\n$\\dfrac{PQ}{TU} = \\dfrac{TU}{SR} = \\dfrac{PT}{TS} = \\dfrac{2}{3}$\n\nDari $\\dfrac{PQ}{TU} = \\dfrac{TU}{SR}$, diperoleh hubungan $TU^2 = PQ \\times SR$.\n\nDengan PQ = 12 cm (dari pola soal), maka:\n$TU = \\dfrac{2}{3} \\times SR$ dan $TU = \\dfrac{2}{3}$ → cocok dengan $SR = \\dfrac{3}{2} \\times TU = \\dfrac{9}{4} \\times PQ$\n\n$SR = \\dfrac{9}{4} \\times 12 = 27 \\text{ cm}$"
+    pembahasan: "Dari gambar, $PQ=12$ cm. Kedua trapesium sebangun dan perbandingan kaki yang bersesuaian adalah $PT:TS=2:3$, sehingga:\n\n$\\dfrac{PQ}{TU}=\\dfrac{TU}{SR}=\\dfrac{2}{3}$.\n\nPertama, $12/TU=2/3$, maka $TU=18$ cm. Berikutnya, $18/SR=2/3$, sehingga $SR=27$ cm. Jadi, panjang $SR$ adalah 27 cm (D)."
   },
   {
     no: 16,
     soal: "Panjang FC adalah …",
     options: ["A. 5 cm", "B. 10 cm", "C. 12 cm", "D. 14 cm"],
     jawaban: "C",
-    pembahasan: "Gunakan kesebangunan dua segitiga yang dibentuk oleh garis sejajar atau garis tinggi. Berlaku perbandingan:\n\n$\\dfrac{FC}{\\text{sisi pasangan}} = \\dfrac{\\text{sisi 1}}{\\text{sisi 1'}}$\n\nDengan substitusi nilai pada gambar (umumnya pola 3 : 4 dengan sisi 16 cm):\n\n$FC = \\dfrac{3}{4} \\times 16 = 12 \\text{ cm}$"
+    pembahasan: "Pada gambar, sisi miring kanan terbagi menjadi $DC=3$ cm dan $CB=6$ cm, jadi $DB=9$ cm. Karena $FC$ sejajar dengan kedua alas, panjang ruas sejajar berubah sebanding sepanjang sisi miring. Titik $C$ berjarak $3/9=1/3$ dari puncak $D$ menuju $B$:\n\n$FC=ED+\\dfrac{DC}{DB}(AB-ED)=5+\\dfrac{3}{9}(20-5)=10$ cm.\n\nBerdasarkan gambar, hasilnya 10 cm (pilihan B); kunci jawaban yang tersimpan saat ini menunjuk 12 cm, sehingga tidak sesuai dengan data pada gambar."
   },
   {
     no: 17,
@@ -445,7 +387,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Luas foto adalah 48 cm².",
     ],
     jawabanPGK: [0, 1, 2],
-    pembahasan: "Karton berukuran 10 cm × 15 cm (lebar × panjang).\n\nLebar foto = 10 − 2 − 2 = 6 cm.\n\nKarena foto sebangun dengan karton:\n\n$\\dfrac{\\text{lebar foto}}{\\text{lebar karton}} = \\dfrac{\\text{panjang foto}}{\\text{panjang karton}}$\n\n$\\dfrac{6}{10} = \\dfrac{p_{foto}}{15}$\n\n$p_{foto} = \\dfrac{6 \\times 15}{10} = 9 \\text{ cm}$\n\nPanjang karton bagian bawah = 15 − 2 (atas) − 9 (foto) = 4 cm."
+    pembahasan: "Karton berukuran 10 cm × 15 cm (lebar × panjang). Lebar foto = $10-2-2=6$ cm. Karena foto sebangun dengan karton:\n\n$\\dfrac{6}{10}=\\dfrac{p_{foto}}{15}$, sehingga panjang foto $p_{foto}=9$ cm.\n\nSisa karton di bawah foto adalah $15-2-9=4$ cm. Luas foto $=6\\times9=54$ cm², bukan 48 cm². Jadi pernyataan (1), (2), dan (3) benar; pernyataan (4) salah."
   },
   {
     no: 18,
@@ -459,14 +401,14 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     soal: "Jika panjang BC = CD = DE = 15 cm dan AB = 11 cm, panjang CF adalah ...",
     options: ["A. 2 cm", "B. 8 cm", "C. 12 cm", "D. 13 cm"],
     jawaban: "D",
-    pembahasan: "Gunakan konsep trapesium dengan dua sisi sejajar (AB di atas dan EF di bawah) yang dipotong oleh garis-garis sejajar pada CF dan DG.\n\nRumus garis sejajar pada trapesium yang membagi kaki menjadi tiga bagian sama (BC = CD = DE):\n\n$CF = \\dfrac{(2 \\cdot AB) + (1 \\cdot EF)}{3}$\n\nDengan AB = 11 cm dan EF = 17 cm (pola umum soal):\n\n$CF = \\dfrac{(2 \\times 11) + 17}{3} = \\dfrac{22 + 17}{3} = \\dfrac{39}{3} = 13 \\text{ cm}$"
+    pembahasan: "Pada gambar, $CD$ sejajar $AB$ dan $DE$ sejajar $BC$. Diketahui $CD=15$ cm, $AB=11$ cm, serta $DE=BC=15$ cm. Karena kedua sisi miring yang sejajar sama panjang, perpindahan mendatarnya sama; dengan garis $EFA$ memotong pasangan alas yang sejajar, diperoleh $CD=AB+2(CF)$. Maka:\n\n$15=11+2(CF)$, sehingga $CF=2$ cm.\n\nJadi, berdasarkan gambar dan data soal, jawabannya adalah A (2 cm); kunci jawaban yang tersimpan saat ini menunjuk 13 cm."
   },
   {
     no: 20,
     soal: "Diketahui panjang ED = 11 cm, panjang AB = BC = CD = 15 cm. Panjang garis FB adalah …",
     options: ["A. 10 cm", "B. 11 cm", "C. 12 cm", "D. 13 cm"],
     jawaban: "D",
-    pembahasan: "Mirip dengan soal sebelumnya. Pada trapesium dengan dua sisi sejajar (ED dan sisi atas, mis. GF) yang dipotong oleh garis-garis sejajar membagi kaki menjadi tiga bagian sama panjang (AB = BC = CD).\n\nGaris FB membagi pada bagian dengan rasio 1 : 2 dari kaki AD:\n\n$FB = \\dfrac{(2 \\cdot ED) + (1 \\cdot GF)}{3}$\n\nDengan ED = 11 cm dan GF = 17 cm (umum):\n\n$FB = \\dfrac{(2 \\times 11) + 17}{3} = \\dfrac{39}{3} = 13 \\text{ cm}$"
+    pembahasan: "Tanda pada gambar menunjukkan $ED=XC$, sehingga $XC=11$ cm. Karena $AB\\parallel CD$, segitiga $XCF$ dan $ABF$ sebangun. Maka:\n\n$\\dfrac{CF}{FB}=\\dfrac{XC}{AB}=\\dfrac{11}{15}$.\n\nDiketahui $BC=CF+FB=15$ cm. Perbandingan $CF:FB=11:15$ memiliki 26 bagian, sehingga:\n\n$FB=\\dfrac{15}{26}\\times15=\\dfrac{225}{26}\\approx8{,}65$ cm.\n\nHasil ini tidak sama dengan satu pun pilihan jawaban yang tercantum, jadi data/opsi soal dan kunci yang tersimpan perlu diperiksa kembali."
   },
 ];
 
