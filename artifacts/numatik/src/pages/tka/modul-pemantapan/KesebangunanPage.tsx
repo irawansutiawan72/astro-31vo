@@ -218,9 +218,9 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     type: "pgk",
     soal: "Perhatikan gambar bangun-bangun berikut. Pilih bangun-bangun yang pasti sebangun.",
     pernyataan: ["Bangun (i)", "Bangun (ii)", "Bangun (iii)", "Bangun (iv)"],
-    jawabanPGK: [0, 1, 2],
+    jawabanPGK: [0, 1],
     diagramTight: true,
-    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Gambar menunjukkan dua lingkaran. Semua lingkaran sebangun, walaupun ukurannya berbeda. BENAR.\n• (ii) Gambar menunjukkan dua persegi. Semua persegi sebangun karena sudut-sudutnya sama besar dan perbandingan sisi-sisi bersesuaiannya 1 : 1. BENAR.\n• (iii) Gambar menunjukkan dua persegi panjang dengan perbandingan panjang dan lebar yang sama; salah satunya hanya diputar. BENAR.\n• (iv) Gambar menunjukkan dua trapesium. Kesamaan jenis bangun saja tidak cukup untuk memastikan semua sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding. SALAH.\n\nJadi, berdasarkan gambar, bangun yang pasti sebangun adalah (i), (ii), dan (iii)."
+    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Gambar menunjukkan dua lingkaran. Semua lingkaran sebangun, walaupun ukurannya berbeda. BENAR.\n• (ii) Gambar menunjukkan dua persegi. Semua persegi sebangun karena sudut-sudutnya sama besar dan perbandingan sisi-sisi bersesuaiannya 1 : 1. BENAR.\n• (iii) Gambar menunjukkan dua persegi panjang. Kesamaan bentuk persegi panjang saja belum cukup untuk memastikan sebangun; perbandingan panjang dan lebarnya harus sama, tetapi gambar tidak memberikan ukuran atau tanda yang memastikan rasio tersebut. SALAH.\n• (iv) Gambar menunjukkan dua trapesium. Kesamaan jenis bangun saja tidak cukup untuk memastikan semua sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding. SALAH.\n\nJadi, berdasarkan gambar dan informasi yang diberikan, bangun yang pasti sebangun adalah (i) dan (ii)."
   },
   {
     no: 2,
