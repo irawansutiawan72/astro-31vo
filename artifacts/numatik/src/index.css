@@ -5057,6 +5057,56 @@ html.light-mode .division-zero-calculator-copy {
   border-color: var(--border) !important;
 }
 
+/* Keep TKA accent labels and pale diagram strokes readable in every bright
+   theme. html.light-mode excludes both dark/space and the dark ocean theme. */
+html.light-mode .tka-pemantapan [class*="text-cyan-"],
+html.light-mode .tka-pemantapan [class*="text-sky-"],
+html.light-mode .tka-pemantapan [class*="text-blue-"],
+html.light-mode .tka-pemantapan [class*="text-teal-"],
+html.light-mode .tka-pemantapan [class*="text-emerald-"],
+html.light-mode .tka-pemantapan [class*="text-green-"],
+html.light-mode .tka-pemantapan [class*="text-lime-"],
+html.light-mode .tka-pemantapan [class*="text-yellow-"],
+html.light-mode .tka-pemantapan [class*="text-amber-"],
+html.light-mode .tka-pemantapan [class*="text-orange-"],
+html.light-mode .tka-pemantapan [class*="text-red-"],
+html.light-mode .tka-pemantapan [class*="text-rose-"],
+html.light-mode .tka-pemantapan [class*="text-pink-"],
+html.light-mode .tka-pemantapan [class*="text-violet-"],
+html.light-mode .tka-pemantapan [class*="text-purple-"],
+html.light-mode .tka-pemantapan [class*="text-indigo-"],
+html.light-mode .tka-pemantapan [class*="text-fuchsia-"] {
+  color: #1e293b !important;
+}
+
+html.light-mode .tka-pemantapan .tka-pemantapan-header [class*="text-"] {
+  color: #ffffff !important;
+}
+
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#fff"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#ffffff"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="white"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#e2e8f0"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#cbd5e1"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#67e8f9"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#38bdf8"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#fcd34d"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#86efac"],
+html.light-mode .tka-pemantapan svg :is(path, line, polyline, polygon, rect, circle, ellipse)[stroke="#a5b4fc"] {
+  stroke: #334155 !important;
+}
+
+html.light-mode .tka-pemantapan svg text[fill="#fff"],
+html.light-mode .tka-pemantapan svg text[fill="#ffffff"],
+html.light-mode .tka-pemantapan svg text[fill="white"],
+html.light-mode .tka-pemantapan svg text[fill="#67e8f9"],
+html.light-mode .tka-pemantapan svg text[fill="#38bdf8"],
+html.light-mode .tka-pemantapan svg text[fill="#fcd34d"],
+html.light-mode .tka-pemantapan svg text[fill="#86efac"],
+html.light-mode .tka-pemantapan svg text[fill="#a5b4fc"] {
+  fill: #1e293b !important;
+}
+
 /* ── 4. BiografiPage: orange glow behind "Tergerak" text → hide in white ── */
 [data-theme="white"] .bg-orange-500\/20 {
   background: transparent !important;

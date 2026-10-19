@@ -12,12 +12,8 @@ const kesebangunanImages: Record<number, string> = {
   9: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_11_vk8ooq.png",
   10: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_12_zkvbci.png",
   11: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_13_nvbv3w.png",
-  13: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_15_ozmr6l.png",
   14: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117354/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_16_vfpjrw.png",
-  15: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_17_i903gj.png",
   16: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_18_h4b34o.png",
-  19: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117353/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_21_ubuud2.png",
-  20: "https://res.cloudinary.com/s4ge6not/image/upload/f_auto,q_auto,w_800,dpr_auto/v1783117352/KESEBANGUNAN_DAN_KEKONGRUENAN_-_LATIHAN_DASAR_-_NO_22_fhu89d.png",
 };
 
 const kesebangunanSoalSatuIiImage =
@@ -34,7 +30,7 @@ const kesebangunanSoalSatuParts = [
   },
   {
     bagian: "ii",
-    diagram: <img src={kesebangunanSoalSatuIiImage} alt="Dua bangun dengan keempat sisi sama panjang" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
+    diagram: <img src={kesebangunanSoalSatuIiImage} alt="Dua persegi dengan ukuran berbeda" className="mx-auto max-h-48 w-full rounded bg-white p-1 object-contain" />,
   },
   {
     bagian: "iii",
@@ -222,9 +218,9 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     type: "pgk",
     soal: "Perhatikan gambar bangun-bangun berikut. Pilih bangun-bangun yang pasti sebangun.",
     pernyataan: ["Bangun (i)", "Bangun (ii)", "Bangun (iii)", "Bangun (iv)"],
-    jawabanPGK: [0, 2],
+    jawabanPGK: [0, 1, 2],
     diagramTight: true,
-    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Kedua bangun adalah lingkaran. Semua lingkaran sebangun meskipun ukurannya berbeda. BENAR.\n• (ii) Keempat sisi pada kedua bangun diberi tanda sama panjang. Karena gambar tidak menandai sudut siku-siku, informasi ini hanya memastikan keduanya belah ketupat; sudut belah ketupat dapat berbeda, sehingga belum tentu sebangun. SALAH.\n• (iii) Kedua persegi panjang pada gambar memiliki perbandingan panjang dan lebar yang sama; salah satunya hanya diputar. BENAR.\n• (iv) Kedua trapesium memiliki satu sudut siku-siku, tetapi itu saja tidak menjamin semua sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding. SALAH.\n\nJadi, berdasarkan tanda dan bentuk pada gambar, bangun yang pasti sebangun adalah (i) dan (iii)."
+    pembahasan: "Bangun-bangun sebangun memiliki sudut-sudut bersesuaian yang sama besar dan perbandingan sisi-sisi bersesuaian yang sama.\n\n• (i) Gambar menunjukkan dua lingkaran. Semua lingkaran sebangun, walaupun ukurannya berbeda. BENAR.\n• (ii) Gambar menunjukkan dua persegi. Semua persegi sebangun karena sudut-sudutnya sama besar dan perbandingan sisi-sisi bersesuaiannya 1 : 1. BENAR.\n• (iii) Gambar menunjukkan dua persegi panjang dengan perbandingan panjang dan lebar yang sama; salah satunya hanya diputar. BENAR.\n• (iv) Gambar menunjukkan dua trapesium. Kesamaan jenis bangun saja tidak cukup untuk memastikan semua sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding. SALAH.\n\nJadi, berdasarkan gambar, bangun yang pasti sebangun adalah (i), (ii), dan (iii)."
   },
   {
     no: 2,
@@ -250,8 +246,8 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     no: 4,
     soal: "Segitiga ADB kongruen dengan segitiga CEB. Jika panjang AD = CE, syarat kekongruenan yang digunakan adalah ....",
     options: ["A. Sisi, sisi, sudut", "B. Sisi, sudut, sisi", "C. Sudut, sisi, sudut", "D. Sisi, sudut, sudut"],
-    jawaban: "C",
-    pembahasan: "Tanda siku-siku pada gambar menunjukkan $\\angle ADB = \\angle CEB = 90°$. Karena $A$, $E$, dan $B$ segaris serta $C$, $D$, dan $B$ segaris, sudut di $B$ pada kedua segitiga sama besar: $\\angle ABD = \\angle CBE$. Maka sudut ketiga juga sama, yaitu $\\angle DAB = \\angle BCE$.\n\nDiketahui $AD = CE$. Sisi tersebut berada di antara pasangan sudut yang sama besar, sehingga $\\triangle ADB$ kongruen dengan $\\triangle CEB$ menurut syarat Sudut - Sisi - Sudut (Sd.S.Sd), yaitu pilihan C."
+    jawaban: "D",
+    pembahasan: "Tanda siku-siku pada gambar menunjukkan $\\angle ADB = \\angle CEB = 90°$. Karena $A$, $E$, dan $B$ segaris serta $C$, $D$, dan $B$ segaris, sudut di $B$ pada kedua segitiga sama besar: $\\angle ABD = \\angle CBE$.\n\nDiketahui pula $AD = CE$. Jadi, ada dua sudut bersesuaian yang sama besar dan satu sisi bersesuaian yang sama panjang. Sisi $AD$ dan $CE$ bukan sisi yang diapit oleh kedua sudut tersebut (sisi yang diapit adalah $DB$ dan $BE$). Maka syarat yang tepat adalah Sisi - Sudut - Sudut (S.Sd.Sd atau AAS), yaitu pilihan D."
   },
   {
     no: 5,
@@ -285,7 +281,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Panjang PR adalah 5 cm.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "Segitiga SPQ memiliki sisi siku-siku 8 cm dan 6 cm, sehingga SQ = √(8² + 6²) = 10 cm.\n\nDengan teorema tinggi pada segitiga siku-siku: QR = PQ² ÷ SQ = 36 ÷ 10 = 3,6 cm; SR = SP² ÷ SQ = 64 ÷ 10 = 6,4 cm; dan PR = (SP × PQ) ÷ SQ = 48 ÷ 10 = 4,8 cm, bukan 5 cm."
+    pembahasan: "Konsep & Trik: Rumus Air Mancur\nPada segitiga siku-siku SPQ, misalkan ∠P = 90° dan PR tegak lurus hipotenusa SQ. R membagi SQ menjadi SR dan RQ. Dari kesebangunan ΔSPR, ΔPRQ, dan ΔSPQ diperoleh rumus umum:\n\n• $SQ = SR + RQ$.\n• $SP^2 = SR \\times SQ$ dan $PQ^2 = RQ \\times SQ$.\n• $PR^2 = SR \\times RQ$ (rumus air mancur untuk tinggi).\n• Setara dengan itu, $PR = \\dfrac{SP \\times PQ}{SQ}$.\n\nStep-by-Step Penyelesaian:\nSegitiga SPQ memiliki sisi siku-siku 8 cm dan 6 cm, sehingga $SQ = \\sqrt{8^2 + 6^2} = 10$ cm.\n\nDengan rumus air mancur, $QR = PQ^2 \\div SQ = 36 \\div 10 = 3{,}6$ cm dan $SR = SP^2 \\div SQ = 64 \\div 10 = 6{,}4$ cm. Selanjutnya, $PR = \\sqrt{SR \\times QR} = \\sqrt{6{,}4 \\times 3{,}6} = 4{,}8$ cm (atau $PR = (SP \\times PQ) \\div SQ = 48 \\div 10 = 4{,}8$ cm), bukan 5 cm."
   },
   {
     no: 8,
@@ -344,37 +340,24 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     pembahasan: "Pada saat yang sama, sudut datang sinar matahari sama, sehingga segitiga yang dibentuk tiang & bayangannya sebangun dengan segitiga pohon & bayangannya.\n\nUbah satuan: 300 cm = 3 m.\n\n$\\dfrac{\\text{tinggi tiang}}{\\text{bayangan tiang}} = \\dfrac{\\text{tinggi pohon}}{\\text{bayangan pohon}}$\n\n$\\dfrac{4}{3} = \\dfrac{h}{10}$\n\n$h = \\dfrac{4 \\times 10}{3} = \\dfrac{40}{3} \\approx 13{,}3 \\text{ m}$"
   },
   {
-    no: 13,
-    soal: "Jika AE : EC = 2 : 3, maka panjang EF adalah ….",
-    options: ["A. 15 cm", "B. 22 cm", "C. 25 cm", "D. 26 cm"],
-    jawaban: "B",
-    pembahasan: "Pada gambar, $AB=50$ cm dan $CD=20$ cm, sedangkan $EF$ sejajar dengan kedua alas. Karena $AE:EC=2:3$, titik $E$ berada $\\tfrac{2}{5}$ bagian dari $A$ menuju $C$. Panjang ruas yang sejajar alas berubah sebanding, sehingga:\n\n$EF=\\dfrac{EC\\cdot AB+AE\\cdot CD}{AE+EC}=\\dfrac{3(50)+2(20)}{2+3}=\\dfrac{190}{5}=38$ cm.\n\nHasil berdasarkan gambar dan data soal adalah 38 cm, tetapi nilai tersebut tidak tersedia pada pilihan jawaban yang tercantum."
-  },
-  {
     no: 14,
     type: "pgkbs",
     soal: "PQRS adalah persegi dengan sisi 10 cm. Garis PT memotong RQ di U dan UQ = 4 cm. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
     pernyataan: [
       "Panjang RU adalah 6 cm.",
       "Panjang RT adalah 15 cm.",
-      "Panjang $PQ$ adalah $2\\sqrt{29}$ cm.",
+      "Panjang $PU$ adalah $2\\sqrt{29}$ cm.",
     ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Karena $RQ$ adalah sisi persegi, $RQ = PQ = 10$ cm. Maka $RU = RQ - UQ = 10 - 4 = 6$ cm.\n\nSegitiga $PQU$ dan $RUT$ sebangun. Perbandingan sisi mendatar dan tegaknya sama: $RT/RU = PQ/UQ = 10/4$. Jadi $RT = 6 \\times 10/4 = 15$ cm. Pernyataan (3) salah karena $PQ=10$ cm, bukan $2\\sqrt{29}$ cm."
-  },
-  {
-    no: 15,
-    soal: "Trapesium PQUT sebangun dengan TURS. Jika PT : TS = 2 : 3, panjang SR adalah ...",
-    options: ["A. 18 cm", "B. 22 cm", "C. 24 cm", "D. 27 cm"],
-    jawaban: "D",
-    pembahasan: "Dari gambar, $PQ=12$ cm. Kedua trapesium sebangun dan perbandingan kaki yang bersesuaian adalah $PT:TS=2:3$, sehingga:\n\n$\\dfrac{PQ}{TU}=\\dfrac{TU}{SR}=\\dfrac{2}{3}$.\n\nPertama, $12/TU=2/3$, maka $TU=18$ cm. Berikutnya, $18/SR=2/3$, sehingga $SR=27$ cm. Jadi, panjang $SR$ adalah 27 cm (D)."
+    jawabanBS: ["B", "B", "B"],
+    diagramBeforeStatements: true,
+    pembahasan: "Karena $RQ$ adalah sisi persegi, $RQ = PQ = 10$ cm. Maka $RU = RQ - UQ = 10 - 4 = 6$ cm.\n\nSegitiga $PQU$ dan $RUT$ sebangun. Perbandingan sisi mendatar dan tegaknya sama: $RT/RU = PQ/UQ = 10/4$. Jadi $RT = 6 \\times 10/4 = 15$ cm.\n\nUntuk pernyataan (3), segitiga $PQU$ siku-siku di $Q$, sehingga $PU = \\sqrt{PQ^2 + UQ^2} = \\sqrt{10^2 + 4^2} = \\sqrt{116} = 2\\sqrt{29}$ cm. Ketiga pernyataan benar."
   },
   {
     no: 16,
     soal: "Panjang FC adalah …",
     options: ["A. 5 cm", "B. 10 cm", "C. 12 cm", "D. 14 cm"],
-    jawaban: "C",
-    pembahasan: "Pada gambar, sisi miring kanan terbagi menjadi $DC=3$ cm dan $CB=6$ cm, jadi $DB=9$ cm. Karena $FC$ sejajar dengan kedua alas, panjang ruas sejajar berubah sebanding sepanjang sisi miring. Titik $C$ berjarak $3/9=1/3$ dari puncak $D$ menuju $B$:\n\n$FC=ED+\\dfrac{DC}{DB}(AB-ED)=5+\\dfrac{3}{9}(20-5)=10$ cm.\n\nBerdasarkan gambar, hasilnya 10 cm (pilihan B); kunci jawaban yang tersimpan saat ini menunjuk 12 cm, sehingga tidak sesuai dengan data pada gambar."
+    jawaban: "B",
+    pembahasan: "Pada gambar, sisi miring kanan terbagi menjadi $DC=3$ cm dan $CB=6$ cm, jadi $DB=9$ cm. Karena $FC$ sejajar dengan kedua alas, panjang ruas sejajar berubah sebanding sepanjang sisi miring. Titik $C$ berjarak $3/9=1/3$ dari puncak $D$ menuju $B$:\n\n$FC=ED+\\dfrac{DC}{DB}(AB-ED)=5+\\dfrac{3}{9}(20-5)=10$ cm.\n\nJadi, panjang $FC$ adalah 10 cm, yaitu pilihan B."
   },
   {
     no: 17,
@@ -387,6 +370,7 @@ const latihanDasarTkaLama: LatihanSoal[] = [
       "Luas foto adalah 48 cm².",
     ],
     jawabanPGK: [0, 1, 2],
+    diagramBeforeStatements: true,
     pembahasan: "Karton berukuran 10 cm × 15 cm (lebar × panjang). Lebar foto = $10-2-2=6$ cm. Karena foto sebangun dengan karton:\n\n$\\dfrac{6}{10}=\\dfrac{p_{foto}}{15}$, sehingga panjang foto $p_{foto}=9$ cm.\n\nSisa karton di bawah foto adalah $15-2-9=4$ cm. Luas foto $=6\\times9=54$ cm², bukan 48 cm². Jadi pernyataan (1), (2), dan (3) benar; pernyataan (4) salah."
   },
   {
@@ -395,20 +379,6 @@ const latihanDasarTkaLama: LatihanSoal[] = [
     options: ["A. $26 \\text{ cm}^2$", "B. $30 \\text{ cm}^2$", "C. $60 \\text{ cm}^2$", "D. $72 \\text{ cm}^2$"],
     jawaban: "C",
     pembahasan: "Lebar foto = $20-2-2=16$ cm. Karena foto dan karton sebangun, tinggi foto = $25\\times\\frac{16}{20}=20$ cm.\n\nSisa karton di bawah foto = $25-2-20=3$ cm. Luas bagian karton tersebut = $20\\times3=60$ cm².",
-  },
-  {
-    no: 19,
-    soal: "Jika panjang BC = CD = DE = 15 cm dan AB = 11 cm, panjang CF adalah ...",
-    options: ["A. 2 cm", "B. 8 cm", "C. 12 cm", "D. 13 cm"],
-    jawaban: "D",
-    pembahasan: "Pada gambar, $CD$ sejajar $AB$ dan $DE$ sejajar $BC$. Diketahui $CD=15$ cm, $AB=11$ cm, serta $DE=BC=15$ cm. Karena kedua sisi miring yang sejajar sama panjang, perpindahan mendatarnya sama; dengan garis $EFA$ memotong pasangan alas yang sejajar, diperoleh $CD=AB+2(CF)$. Maka:\n\n$15=11+2(CF)$, sehingga $CF=2$ cm.\n\nJadi, berdasarkan gambar dan data soal, jawabannya adalah A (2 cm); kunci jawaban yang tersimpan saat ini menunjuk 13 cm."
-  },
-  {
-    no: 20,
-    soal: "Diketahui panjang ED = 11 cm, panjang AB = BC = CD = 15 cm. Panjang garis FB adalah …",
-    options: ["A. 10 cm", "B. 11 cm", "C. 12 cm", "D. 13 cm"],
-    jawaban: "D",
-    pembahasan: "Tanda pada gambar menunjukkan $ED=XC$, sehingga $XC=11$ cm. Karena $AB\\parallel CD$, segitiga $XCF$ dan $ABF$ sebangun. Maka:\n\n$\\dfrac{CF}{FB}=\\dfrac{XC}{AB}=\\dfrac{11}{15}$.\n\nDiketahui $BC=CF+FB=15$ cm. Perbandingan $CF:FB=11:15$ memiliki 26 bagian, sehingga:\n\n$FB=\\dfrac{15}{26}\\times15=\\dfrac{225}{26}\\approx8{,}65$ cm.\n\nHasil ini tidak sama dengan satu pun pilihan jawaban yang tercantum, jadi data/opsi soal dan kunci yang tersimpan perlu diperiksa kembali."
   },
 ];
 

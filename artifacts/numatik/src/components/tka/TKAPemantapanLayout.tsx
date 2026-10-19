@@ -39,6 +39,8 @@ export interface LatihanSoal {
   gambar?: React.ReactNode;
   /** Reduce vertical whitespace around a diagram inserted within the question text. */
   diagramTight?: boolean;
+  /** Render this question's fallback diagram before its statement list. */
+  diagramBeforeStatements?: boolean;
   /** Optional source label displayed on exercise questions. */
   sourceLabel?: string;
   /** Optional table or visual to show inside the example-question explanation. */
@@ -921,6 +923,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
               {latihanDasar.map((soal) => {
                 const type = soal.type ?? "pg";
                 const soalImageScale = soal.no === imageScaleExceptQuestionNo ? "default" : imageScale;
+                const diagramBeforeStatementsForQuestion = soal.diagramBeforeStatements ?? diagramBeforeStatements;
                 const selected = selectedAnswers[soal.no];
                 const selectedPGK = pgkAnswers[soal.no] ?? [];
                 const correctPGK = getPgkCorrectIndices(soal);
@@ -1057,7 +1060,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                       </div>
                     </div>
 
-                    {diagramBeforeStatements && !diagramInserted && diagram && (
+                    {diagramBeforeStatementsForQuestion && !diagramInserted && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
                         <div className={`min-w-0 max-w-full ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
@@ -1137,7 +1140,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     )}
 
                     {/* ── Optional diagram/image, placed after the statements ── */}
-                    {!diagramBeforeStatements && !diagramInserted && diagram && (
+                    {!diagramBeforeStatementsForQuestion && !diagramInserted && diagram && (
                       <div className="px-5 pb-2 min-w-0 max-w-full overflow-x-auto">
                          <div className={`min-w-0 max-w-full ${soalImageScale === "responsiveHalf" ? "tka-responsive-diagram" : soalImageScale === "half" ? "w-1/2 mx-auto" : ""}`}>{diagram}</div>
                       </div>
