@@ -176,6 +176,7 @@ const SmaSpltvPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSpltvPage"))
 const SmaSptdvPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSptdvPage"));
 const SmaPolinomialKonsepPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPolinomialKonsepPage"));
 const SmaNilaiPolinomialHornerPage = lazy(() => import("./pages/ruang-untuk-guru/SmaNilaiPolinomialHornerPage"));
+const SmaPembagianPolinomialPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPembagianPolinomialPage"));
 const SmaStatistikaPenyajianDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaPenyajianDataPage"));
 const SmaStatistikaUkuranPemusatanDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranPemusatanDataPage"));
 const SmaStatistikaUkuranLetakDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranLetakDataPage"));
@@ -1311,6 +1312,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/polinomial/nilai-polinomial-dan-metode-horner"
               element={<SmaNilaiPolinomialHornerPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/polinomial/pembagian-polinomial"
+              element={<SmaPembagianPolinomialPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/statistika/penyajian-data"
