@@ -3,6 +3,7 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { koordinatKartesiusDasarPembahasan } from "@/data/pembahasan/koordinatKartesiusDasar";
 import petaPekaranganAyunda from "@assets/image_1792161242034.png";
+import type { ReactNode } from "react";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Sistem Koordinat Kartesius", content: `Sistem koordinat kartesius memposisikan titik dengan acuan sumbu-x (mendatar) dan sumbu-y (tegak) yang saling tegak lurus.\n\n- Sumbu X: ke kanan positif, ke kiri negatif\n- Sumbu Y: ke atas positif, ke bawah negatif\n- Titik potong = titik asal O(0, 0)\n- Koordinat titik ditulis (x, y)\n  - x = absis (jarak dari sumbu-Y)\n  - y = ordinat (jarak dari sumbu-X)` },
@@ -126,6 +127,187 @@ const SoalEmpatKoordinatSvg = () => (
   </div>
 );
 
+type KoordinatTitik = { label: string; x: number; y: number };
+type KoordinatSegmen = {
+  from: [number, number];
+  to: [number, number];
+  dashed?: boolean;
+  color?: string;
+};
+
+const KoordinatGridPembahasan = ({
+  ariaLabel,
+  points,
+  polygon,
+  segments = [],
+  verticalLineX,
+}: {
+  ariaLabel: string;
+  points: KoordinatTitik[];
+  polygon?: string[];
+  segments?: KoordinatSegmen[];
+  verticalLineX?: number;
+}) => {
+  const plottedCoordinates = [
+    ...points.map(({ x, y }) => [x, y] as [number, number]),
+    ...segments.flatMap(({ from, to }) => [from, to]),
+    ...(verticalLineX === undefined ? [] : [[verticalLineX, 0] as [number, number]]),
+  ];
+  const minX = Math.floor(Math.min(0, ...plottedCoordinates.map(([x]) => x))) - 1;
+  const maxX = Math.ceil(Math.max(0, ...plottedCoordinates.map(([x]) => x))) + 1;
+  const minY = Math.floor(Math.min(0, ...plottedCoordinates.map(([, y]) => y))) - 1;
+  const maxY = Math.ceil(Math.max(0, ...plottedCoordinates.map(([, y]) => y))) + 1;
+  const plot = { left: 42, right: 458, top: 20, bottom: 322 };
+  const unit = Math.min(
+    (plot.right - plot.left) / (maxX - minX),
+    (plot.bottom - plot.top) / (maxY - minY),
+  );
+  const offsetX = plot.left + ((plot.right - plot.left) - (maxX - minX) * unit) / 2;
+  const offsetY = plot.top + ((plot.bottom - plot.top) - (maxY - minY) * unit) / 2;
+  const toX = (x: number) => offsetX + (x - minX) * unit;
+  const toY = (y: number) => offsetY + (maxY - y) * unit;
+  const pointByLabel = new Map(points.map((point) => [point.label, point]));
+  const ticksX = Array.from({ length: maxX - minX + 1 }, (_, index) => minX + index);
+  const ticksY = Array.from({ length: maxY - minY + 1 }, (_, index) => minY + index);
+  const polygonPoints = polygon
+    ?.map((label) => pointByLabel.get(label))
+    .filter((point): point is KoordinatTitik => Boolean(point))
+    .map(({ x, y }) => `${toX(x)},${toY(y)}`)
+    .join(" ");
+
+  return (
+    <div className="mx-auto w-full max-w-lg overflow-hidden rounded-lg bg-white p-2">
+      <svg viewBox="0 0 480 360" className="block h-auto w-full" role="img" aria-label={ariaLabel}>
+        <rect width="480" height="360" rx="8" fill="#fff" />
+        {ticksX.map((tick) => (
+          <g key={`x-${tick}`}>
+            <line x1={toX(tick)} y1={plot.top} x2={toX(tick)} y2={plot.bottom} stroke="#dbe3ed" />
+            <text x={toX(tick)} y={Math.min(plot.bottom + 17, 350)} textAnchor="middle" fontSize="10" fill="#475569">{tick}</text>
+          </g>
+        ))}
+        {ticksY.map((tick) => (
+          <g key={`y-${tick}`}>
+            <line x1={plot.left} y1={toY(tick)} x2={plot.right} y2={toY(tick)} stroke="#dbe3ed" />
+            {tick !== 0 && <text x={plot.left - 7} y={toY(tick) + 3} textAnchor="end" fontSize="10" fill="#475569">{tick}</text>}
+          </g>
+        ))}
+        {minY <= 0 && maxY >= 0 && <line x1={plot.left} y1={toY(0)} x2={plot.right} y2={toY(0)} stroke="#334155" strokeWidth="1.7" />}
+        {minX <= 0 && maxX >= 0 && <line x1={toX(0)} y1={plot.top} x2={toX(0)} y2={plot.bottom} stroke="#334155" strokeWidth="1.7" />}
+        {verticalLineX !== undefined && (
+          <line x1={toX(verticalLineX)} y1={plot.top} x2={toX(verticalLineX)} y2={plot.bottom} stroke="#e11d48" strokeWidth="2" strokeDasharray="6 4" />
+        )}
+        {polygonPoints && <polygon points={polygonPoints} fill="#60a5fa" fillOpacity="0.2" stroke="#2563eb" strokeWidth="2.5" />}
+        {segments.map((segment, index) => (
+          <line
+            key={`segment-${index}`}
+            x1={toX(segment.from[0])}
+            y1={toY(segment.from[1])}
+            x2={toX(segment.to[0])}
+            y2={toY(segment.to[1])}
+            stroke={segment.color ?? "#7c3aed"}
+            strokeWidth="2"
+            strokeDasharray={segment.dashed ? "5 4" : undefined}
+          />
+        ))}
+        <text x={plot.right + 8} y={toY(0) + 4} fontSize="12" fontWeight="700" fill="#0f172a">x</text>
+        <text x={toX(0) + 5} y={plot.top + 1} fontSize="12" fontWeight="700" fill="#0f172a">y</text>
+        {points.map((point) => (
+          <g key={point.label}>
+            <circle cx={toX(point.x)} cy={toY(point.y)} r="4.5" fill="#1d4ed8" stroke="#fff" strokeWidth="1.5" />
+            <text
+              x={toX(point.x) + 7}
+              y={toY(point.y) - 7}
+              fontSize="12"
+              fontWeight="700"
+              fill="#0f172a"
+              paintOrder="stroke"
+              stroke="#fff"
+              strokeWidth="3"
+              strokeLinejoin="round"
+            >
+              {point.label}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+const pembahasanGridBySourceNo: Record<number, ReactNode> = {
+  6: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid persegi panjang ABCD dengan titik A (0, -3), B (0, 1), C (6, 1), dan D (6, -3)"
+      points={[{ label: "A", x: 0, y: -3 }, { label: "B", x: 0, y: 1 }, { label: "C", x: 6, y: 1 }, { label: "D", x: 6, y: -3 }]}
+      polygon={["A", "B", "C", "D"]}
+    />
+  ),
+  7: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid segitiga MNO dengan M (0, 3), N (0, -3), dan O (7, 0)"
+      points={[{ label: "M", x: 0, y: 3 }, { label: "N", x: 0, y: -3 }, { label: "O", x: 7, y: 0 }]}
+      polygon={["M", "N", "O"]}
+    />
+  ),
+  8: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid segitiga siku-siku ABC dengan A (3, 1), B (3, 5), dan C (-2, 5)"
+      points={[{ label: "A", x: 3, y: 1 }, { label: "B", x: 3, y: 5 }, { label: "C", x: -2, y: 5 }]}
+      polygon={["A", "B", "C"]}
+    />
+  ),
+  10: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid segiempat ABCD dengan A (-2, 5), B (-2, 1), C (4, 1), dan D (4, 5)"
+      points={[{ label: "A", x: -2, y: 5 }, { label: "B", x: -2, y: 1 }, { label: "C", x: 4, y: 1 }, { label: "D", x: 4, y: 5 }]}
+      polygon={["A", "B", "C", "D"]}
+    />
+  ),
+  11: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid belah ketupat ABCD dengan A (-3, 5), B (-5, 1), C (-3, -3), dan D (-1, 1)"
+      points={[{ label: "A", x: -3, y: 5 }, { label: "B", x: -5, y: 1 }, { label: "C", x: -3, y: -3 }, { label: "D", x: -1, y: 1 }]}
+      polygon={["A", "B", "C", "D"]}
+    />
+  ),
+  14: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid titik P (-4, -5) dengan garis bantu menuju sumbu-X dan sumbu-Y"
+      points={[{ label: "P", x: -4, y: -5 }]}
+      segments={[{ from: [-4, 0], to: [-4, -5], dashed: true }, { from: [0, -5], to: [-4, -5], dashed: true }]}
+    />
+  ),
+  15: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid titik P (3, 5) dan garis vertikal x sama dengan minus dua, dengan ruas jarak terpendek"
+      points={[{ label: "P", x: 3, y: 5 }]}
+      verticalLineX={-2}
+      segments={[{ from: [-2, 5], to: [3, 5], dashed: true }]}
+    />
+  ),
+  17: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid titik P (-2, 5), Q (4, -11), dan titik tengah R (1, -3)"
+      points={[{ label: "P", x: -2, y: 5 }, { label: "Q", x: 4, y: -11 }, { label: "R", x: 1, y: -3 }]}
+      segments={[{ from: [-2, 5], to: [4, -11] }]}
+    />
+  ),
+  18: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid titik A (2, 8), B (10, 4), dan titik tengah M (6, 6)"
+      points={[{ label: "A", x: 2, y: 8 }, { label: "B", x: 10, y: 4 }, { label: "M", x: 6, y: 6 }]}
+      segments={[{ from: [2, 8], to: [10, 4] }]}
+    />
+  ),
+  22: (
+    <KoordinatGridPembahasan
+      ariaLabel="Grid segitiga sama kaki PQR dengan P (0, 0), Q (6, 0), dan R (3, 4)"
+      points={[{ label: "P", x: 0, y: 0 }, { label: "Q", x: 6, y: 0 }, { label: "R", x: 3, y: 4 }]}
+      polygon={["P", "Q", "R"]}
+    />
+  ),
+};
+
 const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 1, soal: "Perhatikan titik-titik pada koordinat Kartesius berikut.\nTitik yang berkoordinat $(1, 3)$ adalah ....", gambar: <SoalSatuKoordinatSvg />, options: ["A. titik A", "B. titik B", "C. titik C", "D. titik D"] },
   { no: 2, soal: "Perhatikan gambar berikut. Koordinat titik Q adalah....", options: ["A. $(3, 1)$", "B. $(3, -1)$", "C. $(1, 3)$", "D. $(-1, 3)$"] },
@@ -150,7 +332,12 @@ const latihanDasarTkaLama: LatihanSoal[] = [
   { no: 17, soal: "Koordinat titik R berada di tengah-tengah garis PQ. Jika titik $P(-2, 5)$ dan $Q(4, -11)$, koordinat titik R adalah ...", options: ["A. $(2, -6)$", "B. $(1, -6)$", "C. $(1, -3)$", "D. $(3, 1)$"] },
   { no: 18, soal: "Titik tengah dari segmen garis yang menghubungkan titik $A(2, 8)$ dan $B(10, 4)$ adalah...", options: ["A. $(4, 2)$", "B. $(6, 6)$", "C. $(12, 12)$", "D. $(8, 4)$"] },
   { no: 19, soal: "Titik $M(5, -2)$ adalah titik tengah dari segmen garis PQ. Jika koordinat titik P adalah $(8, 3)$, maka koordinat titik Q adalah...", options: ["A. $(3, -5)$", "B. $(2, -7)$", "C. $(6.5, 0.5)$", "D. $(11, -1)$"] },
-  { no: 22, soal: "Luas segitiga yang titik-titik sudutnya adalah $P(0, 0)$, $Q(6, 4)$, dan $R(8, 2)$ adalah...", options: ["A. 12", "B. 10", "C. 14", "D. 20"] },
+  {
+    no: 22,
+    soal: "Luas segitiga yang titik-titik sudutnya adalah $P(0, 0)$, $Q(6, 0)$, dan $R(3, 4)$ adalah...",
+    options: ["A. 12", "B. 10", "C. 14", "D. 20"],
+    pembahasan: "Segitiga sama kaki karena $PR=QR=5$ satuan. Alas $PQ=6$ dan tinggi dari $R$ ke $PQ=4$.\n\n$L=\\dfrac{1}{2}\\times6\\times4=12$ satuan luas.",
+  },
 ];
 
 type ComplexVariant = {
@@ -164,20 +351,16 @@ const kunciJawaban: Record<number, string> = {
   2: "B",
   3: "B",
   4: "C",
-  5: "A",
   6: "D",
   7: "C",
   8: "C",
   10: "B",
   11: "D",
-  13: "C",
-  14: "A",
   15: "D",
   16: "C",
   17: "C",
   18: "B",
-  19: "B",
-  22: "B",
+  22: "A",
 };
 
 const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
@@ -229,12 +412,12 @@ const pgkVariants: Record<number, ComplexVariant & { jawabanPGK: number[] }> = {
     soal: "Titik $P(-4,-5)$ berada pada bidang koordinat Kartesius. Pilih semua pernyataan yang benar.",
     pernyataan: [
       "Jarak titik P ke sumbu-Y adalah 4 satuan.",
-      "Jarak ke sumbu-Y dihitung dengan $|x|$.",
+      "Jarak titik P ke sumbu-X adalah 5 satuan.",
       "Jarak titik P ke sumbu-Y adalah 5 satuan.",
       "Titik P berada 4 satuan di sebelah kiri sumbu-Y.",
     ],
     jawabanPGK: [0, 1, 3],
-    pembahasan: "Jarak ke sumbu-Y adalah $|x|=|-4|=4$. Tanda x negatif berarti titik berada di sebelah kiri sumbu-Y. Jadi (1), (2), dan (4) benar.",
+    pembahasan: "Jarak titik ke sumbu-Y adalah $|x|=|-4|=4$ satuan, sedangkan jarak ke sumbu-X adalah $|y|=|-5|=5$ satuan. Tanda x negatif berarti P berada di sebelah kiri sumbu-Y. Jadi pernyataan (1), (2), dan (4) benar.",
   },
   17: {
     soal: "Titik R adalah titik tengah dari $P(-2,5)$ dan $Q(4,-11)$. Pilih semua pernyataan yang benar.",
@@ -265,20 +448,10 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
     pernyataan: [
       "Panjang CD adalah 4 satuan.",
       "Panjang AD adalah 6 satuan.",
-      "Bangun ABCD adalah persegi.",
+      "Luas ABCD adalah 12 satuan luas.",
     ],
     jawabanBS: ["B", "B", "S"],
-    pembahasan: "CD vertikal dengan panjang 4 dan AD horizontal dengan panjang 6. Karena panjang sisi berdekatan berbeda, ABCD adalah persegi panjang, bukan persegi.",
-  },
-  15: {
-    soal: "Tentukan jarak titik $P(3,5)$ ke garis $x=-2$. Tentukan Benar atau Salah.",
-    pernyataan: [
-      "Jaraknya adalah 5 satuan.",
-      "Jarak dapat dihitung dengan $|3-(-2)|$.",
-      "Jaraknya adalah 7 satuan.",
-    ],
-    jawabanBS: ["B", "B", "S"],
-    pembahasan: "Jarak ke garis vertikal $x=k$ adalah $|x-k|=|3-(-2)|=5$. Jadi (1) dan (2) benar, sedangkan (3) salah.",
+    pembahasan: "CD vertikal dengan panjang 4 satuan dan AD horizontal dengan panjang 6 satuan. Luas ABCD = $6\\times4=24$ satuan luas, bukan 12, sehingga pernyataan (3) salah.",
   },
   18: {
     soal: "Titik tengah segmen yang menghubungkan $A(2,8)$ dan $B(10,4)$ adalah M. Tentukan Benar atau Salah.",
@@ -301,8 +474,12 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
   },
 };
 
+const deletedQuestionNumbers = new Set([6, 12, 18]);
+
 const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
-  .map((soal, index) => {
+  .map((soal, index) => ({ soal, originalDisplayNo: index + 1 }))
+  .filter(({ originalDisplayNo }) => !deletedQuestionNumbers.has(originalDisplayNo))
+  .map(({ soal }, index) => {
     const sourceNo = soal.no;
     const displayNo = index + 1;
     const type = pgkVariants[sourceNo] ? "pgk" : pgkbsVariants[sourceNo] ? "pgkbs" : "pg";
@@ -320,6 +497,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
         jawabanPGK: pgk.jawabanPGK,
         jawaban: undefined,
         pembahasan: pgk.pembahasan,
+        pembahasanDiagram: pembahasanGridBySourceNo[sourceNo],
       };
     }
 
@@ -334,6 +512,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
         jawabanBS: pgkbs.jawabanBS,
         jawaban: undefined,
         pembahasan: pgkbs.pembahasan,
+        pembahasanDiagram: pembahasanGridBySourceNo[sourceNo],
       };
     }
 
@@ -344,6 +523,7 @@ const latihanDasar: LatihanSoal[] = latihanDasarTkaLama
       type: "pg" as const,
       jawaban: kunciJawaban[sourceNo],
       pembahasan: soal.pembahasan ?? (pembahasan ? JSON.stringify(pembahasan) : ""),
+      pembahasanDiagram: pembahasanGridBySourceNo[sourceNo],
     };
   });
 

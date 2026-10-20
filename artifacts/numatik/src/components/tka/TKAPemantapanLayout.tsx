@@ -1430,6 +1430,11 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                               <span key={i}>{i > 0 && <br />}{contentRenderer(line)}</span>
                             ))}
                           </div>
+                          {soal.pembahasanDiagram && (
+                            <div className="mt-4 overflow-x-auto">
+                              {soal.pembahasanDiagram}
+                            </div>
+                          )}
                         </div>
                         {showPembahasanTips && tipsPembahasan && (
                           <div className={`rounded-xl px-4 py-3 border ${isLightTheme ? "bg-amber-50 border-amber-300" : "bg-gradient-to-r from-amber-900/40 to-yellow-900/20 border-amber-500/40"}`}>
