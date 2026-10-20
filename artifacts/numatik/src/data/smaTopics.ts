@@ -158,6 +158,7 @@ export const SMA_TOPICS: SmaTopic[] = [
     slug: "polinomial",
     subtopics: [
       { title: "Konsep Dasar dan Operasi Aljabar Polinomial", slug: "konsep-dasar-dan-operasi-polinomial" },
+      { title: "Nilai Polinomial dan Metode Horner", slug: "nilai-polinomial-dan-metode-horner" },
       { title: "Pembagian Polinomial (Metode Bersusun dan Horner)", slug: "pembagian-polinomial" },
       { title: "Teorema Sisa dan Teorema Faktor", slug: "teorema-sisa-dan-teorema-faktor" },
       { title: "Persamaan Polinomial dan Teorema Vieta", slug: "persamaan-polinomial-dan-teorema-vieta" },
