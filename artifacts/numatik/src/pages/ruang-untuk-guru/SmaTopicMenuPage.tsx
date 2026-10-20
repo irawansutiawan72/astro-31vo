@@ -43,15 +43,24 @@ const SmaTopicMenuPage = () => {
       (item.slug !== "identitas-dan-rumus-rumus-trigonometri" && item.slug !== "rumus-rumus-trigonometri"),
   );
   const items =
-    mode === "buku-animasi" && selectedTopic?.slug === "peluang"
-      ? availableItems
-          .filter((item) => item.slug !== "komplemen-suatu-kejadian")
-          .map((item) =>
-            item.slug === "frekuensi-harapan"
-              ? { ...item, title: "Frekuensi Harapan dan Komplemen Suatu Kejadian" }
-              : item,
-          )
-      : availableItems;
+    mode === "buku-animasi" && selectedTopic?.slug === "polinomial"
+      ? availableItems.map((item) =>
+          item.slug === "konsep-dasar-dan-operasi-polinomial"
+            ? {
+                ...item,
+                title: "Konsep Dasar, Nilai Fungsi Polinomial, Polinomial Identik dan Faktor Dari Suatu Polinomial",
+              }
+            : item,
+        )
+      : mode === "buku-animasi" && selectedTopic?.slug === "peluang"
+        ? availableItems
+            .filter((item) => item.slug !== "komplemen-suatu-kejadian")
+            .map((item) =>
+              item.slug === "frekuensi-harapan"
+                ? { ...item, title: "Frekuensi Harapan dan Komplemen Suatu Kejadian" }
+                : item,
+            )
+        : availableItems;
   const heading = selectedTopic ? selectedTopic.title : config.title;
   const subtitle = selectedTopic
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
