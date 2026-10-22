@@ -16,3 +16,11 @@ Across phases, retain the mobile performance requirements: instance repeated wal
 **Why:** These are the user's explicit product and delivery constraints for the game.
 
 **How to apply:** Only implement the next phase after review of the previous one; do not proceed into later phases in the same delivery.
+
+## Preview limitation
+
+The automated app-preview browser cannot create a WebGL context for Numatik Strike, so it shows the app's graceful 3D-unavailable fallback instead of live gameplay.
+
+**Why:** The capture browser reported that it could not create a WebGL context, even though the Vite workflow and production build succeeded.
+
+**How to apply:** Treat this screenshot limitation as inconclusive for gameplay. Verify the build and code, and use a WebGL-capable device/browser to confirm live 3D behavior.

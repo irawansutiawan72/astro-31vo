@@ -1077,6 +1077,14 @@ const GamePage = () => {
         .strike-reticle{position:absolute;left:50%;top:50%;width:15px;height:15px;transform:translate(-50%,-50%);opacity:.62}
         .strike-reticle:before,.strike-reticle:after{content:"";position:absolute;background:#d6fbff}
         .strike-reticle:before{width:1px;height:15px;left:7px}.strike-reticle:after{height:1px;width:15px;top:7px}
+        .strike-hit-feedback{position:absolute;z-index:3;left:50%;top:50%;display:grid;justify-items:center;gap:10px;transform:translate(-50%,-50%);pointer-events:none;animation:strike-hit-pop .72s ease-out both}
+        .strike-hit-marker{width:30px;height:30px;overflow:visible;filter:drop-shadow(0 0 5px rgba(66,238,187,.6))}
+        .strike-hit-marker path{fill:none;stroke:#79f4c6;stroke-width:2.4;stroke-linecap:round}
+        .strike-hit-number{padding:4px 8px;border:1px solid rgba(115,244,198,.55);background:rgba(5,20,25,.78);color:#a4ffda;font:700 10px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;text-shadow:0 0 10px rgba(91,242,191,.55);white-space:nowrap}
+        .strike-hit-feedback.is-headshot .strike-hit-marker path{stroke:#ffd087}
+        .strike-hit-feedback.is-headshot .strike-hit-number{border-color:rgba(255,208,135,.65);color:#ffdda5;text-shadow:0 0 10px rgba(255,184,98,.55)}
+        .strike-hit-feedback.is-eliminated .strike-hit-number{background:rgba(47,24,20,.86)}
+        @keyframes strike-hit-pop{0%{opacity:0;transform:translate(-50%,-38%) scale(.78)}14%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}65%{opacity:1;transform:translate(-50%,-58%) scale(1)}100%{opacity:0;transform:translate(-50%,-86%) scale(.96)}}
         .strike-bottom{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:clamp(16px,3vh,30px);display:flex;align-items:flex-end;justify-content:space-between}
         .strike-hint{font-size:11px;color:rgba(207,231,239,.72);letter-spacing:.04em;line-height:1.8}
         .strike-hint b{font:600 9px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#83d9e1;margin-right:6px}
@@ -1104,8 +1112,25 @@ const GamePage = () => {
             <span className="strike-mark" aria-hidden="true" />
             <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · tahap 02</div></div>
           </div>
-          <div className="strike-status"><i />DRONE {String(droneCount).padStart(2, "0")} <span>·</span> SKOR {String(score).padStart(3, "0")}</div>
+          <div className="strike-status"><i />PRAJURIT {String(enemyCount).padStart(2, "0")} <span>·</span> SKOR {String(score).padStart(3, "0")}</div>
         </header>
+        {hitFeedback && (
+          <div
+            key={hitFeedback.id}
+            className={`strike-hit-feedback${hitFeedback.headshot ? " is-headshot" : ""}${hitFeedback.eliminated ? " is-eliminated" : ""}`}
+            role="status"
+            aria-live="polite"
+          >
+            <svg className="strike-hit-marker" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M4 4l7 7m10 10l7 7M28 4l-7 7M11 21l-7 7" />
+            </svg>
+            <span className="strike-hit-number">
+              −{hitFeedback.damage}
+              {hitFeedback.headshot ? " · HEADSHOT" : ""}
+              {hitFeedback.eliminated ? " · ELIMINATED" : ""}
+            </span>
+          </div>
+        )}
         <div className="strike-quality-control">
           <label htmlFor="strike-quality">KUALITAS</label>
           <select
@@ -1158,7 +1183,7 @@ const GamePage = () => {
           <button
             className="strike-mobile-control strike-fire"
             onPointerDown={(event) => { event.preventDefault(); fireRef.current?.(); }}
-            aria-label="Tembak drone"
+            aria-label="Tembak prajurit"
           >TEMBAK</button>
           <div className="strike-bottom"><div className="strike-hint"><b>GESER KANAN</b><br />untuk melihat</div></div>
         </>}
