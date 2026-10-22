@@ -19,6 +19,7 @@ const GamePage = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [locked, setLocked] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const mobileRef = useRef(mobile);
   const [joystick, setJoystick] = useState<MoveInput>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
   const [droneCount, setDroneCount] = useState(0);
@@ -31,7 +32,11 @@ const GamePage = () => {
   const joystickPointer = useRef<number | null>(null);
 
   useEffect(() => {
-    const updateMobile = () => setMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 760);
+    const updateMobile = () => {
+      const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 760;
+      mobileRef.current = isMobile;
+      setMobile(isMobile);
+    };
     updateMobile();
     window.addEventListener("resize", updateMobile);
     return () => window.removeEventListener("resize", updateMobile);
@@ -41,13 +46,25 @@ const GamePage = () => {
     const host = mountRef.current;
     if (!host) return;
 
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
-    } catch {
-      host.innerHTML = '<div class="strike-render-error">Perangkat ini belum mendukung arena 3D.</div>';
-      return;
-    }
+    let teardown: (() => void) | undefined;
+    const initFrame = window.requestAnimationFrame(() => {
+      if (!host.isConnected) return;
+
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+      } catch (error) {
+        console.error("Numatik Strike gagal membuat WebGLRenderer:", error);
+        const fallback = document.createElement("div");
+        fallback.className = "strike-render-error";
+        const message = document.createElement("div");
+        message.textContent = "Perangkat ini belum mendukung arena 3D.";
+        const detail = document.createElement("small");
+        detail.textContent = (error instanceof Error ? error.message : String(error)).slice(0, 240);
+        fallback.append(message, detail);
+        host.replaceChildren(fallback);
+        return;
+      }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(host.clientWidth, host.clientHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -254,7 +271,7 @@ const GamePage = () => {
       pitch = THREE.MathUtils.clamp(pitch - event.movementY * 0.0022, -1.25, 1.25);
     };
     const onCanvasClick = () => {
-      if (!mobile && renderer.domElement.requestPointerLock) renderer.domElement.requestPointerLock();
+      if (!mobileRef.current && renderer.domElement.requestPointerLock) renderer.domElement.requestPointerLock();
     };
     const onCanvasMouseDown = (event: MouseEvent) => {
       if (event.button === 0) fire();
@@ -331,7 +348,7 @@ const GamePage = () => {
     };
     frame = window.requestAnimationFrame(animate);
 
-    return () => {
+    teardown = () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("keydown", onKeyDown);
@@ -353,7 +370,13 @@ const GamePage = () => {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [mobile]);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(initFrame);
+      teardown?.();
+    };
+  }, []);
 
   const updateJoystick = (event: PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -394,7 +417,8 @@ const GamePage = () => {
       <style>{`
         .strike-page{position:relative;width:100%;height:100dvh;min-height:460px;overflow:hidden;background:#07101d;color:#e9f6ff;font-family:var(--font-body,'Exo 2'),sans-serif;isolation:isolate}
         .strike-canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
-        .strike-render-error{height:100%;display:grid;place-items:center;padding:2rem;color:#b7d8e5;text-align:center}
+        .strike-render-error{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;padding:2rem;color:#b7d8e5;text-align:center}
+        .strike-render-error small{max-width:min(80vw,720px);color:#7895a4;font:400 11px/1.5 var(--font-body,'Exo 2'),sans-serif;overflow-wrap:anywhere}
         .strike-hud{position:absolute;z-index:2;inset:0;pointer-events:none}
         .strike-top{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);top:clamp(16px,3vh,30px);display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
         .strike-brand{display:flex;align-items:center;gap:12px}
