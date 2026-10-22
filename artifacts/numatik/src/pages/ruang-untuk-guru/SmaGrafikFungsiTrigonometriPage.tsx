@@ -355,7 +355,7 @@ function GraphExplorer() {
 }
 
 const SmaGrafikFungsiTrigonometriPage = () => (
-  <div className="relative min-h-screen overflow-x-hidden bg-[#080d22] text-white">
+  <div className="sma-trigonometry-route relative min-h-screen overflow-x-hidden bg-[#080d22] text-white">
     <Starfield />
     <div className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.19),_transparent_68%)]" />
     <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/perbandingan-trigonometri" />

@@ -152,7 +152,7 @@ const SmaNilaiKuadranPage = () => {
   };
 
   return (
-    <div className="animation-submaterial-route relative min-h-[100dvh] overflow-x-hidden bg-[#080f1e] text-slate-100">
+    <div className="animation-submaterial-route sma-trigonometry-route relative min-h-[100dvh] overflow-x-hidden bg-[#080f1e] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes quadrant-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }

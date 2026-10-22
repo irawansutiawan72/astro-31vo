@@ -69,6 +69,7 @@ const SmaTopicMenuPage = () => {
     "eksponen-dan-logaritma": "animation-submaterial-route sma-exponent-logarithm-route",
     "barisan-dan-deret": "animation-submaterial-route sma-barisan-deret-route",
     "vektor-dan-operasinya": "animation-submaterial-route sma-vektor-route",
+    "perbandingan-trigonometri": "animation-submaterial-route sma-trigonometry-route",
   };
   const lightThemeRouteClass =
     mode === "buku-animasi" && selectedTopic

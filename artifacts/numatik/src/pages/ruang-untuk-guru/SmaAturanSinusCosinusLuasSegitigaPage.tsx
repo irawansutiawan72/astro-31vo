@@ -133,7 +133,7 @@ const AreaExplorer = () => {
 };
 
 const SmaAturanSinusCosinusLuasSegitigaPage = () => (
-  <div className="animation-submaterial-route relative min-h-[100dvh] overflow-x-hidden bg-[#080f1e] text-slate-100">
+  <div className="animation-submaterial-route sma-trigonometry-route relative min-h-[100dvh] overflow-x-hidden bg-[#080f1e] text-slate-100">
     <Starfield />
     <style>{`
       @keyframes lesson-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
