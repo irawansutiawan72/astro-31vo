@@ -6,6 +6,9 @@ import * as THREE from "three";
 type MoveInput = { x: number; y: number };
 type QualitySetting = "low" | "medium" | "high";
 type WeaponId = "rifle" | "pistol";
+type GamePhase = "combat" | "supply" | "paused" | "gameover";
+type SupplyQuestion = { prompt: string; answer: number; options: number[] };
+type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover";
 type WeaponAmmo = { magazine: number; reserve: number };
 type AmmoLoadout = Record<WeaponId, WeaponAmmo>;
 type RadarContact = { id: number; x: number; y: number };
@@ -91,6 +94,72 @@ const WEAPON_CONFIG: Record<WeaponId, {
     baseSpread: 0.0042,
   },
 };
+const MAX_ACTIVE_ENEMIES = 10;
+const STARTING_ENEMIES = 6;
+const BEST_SCORE_KEY = "numatik-strike-best-score";
+const createSupplyQuestion = (waveNumber: number): SupplyQuestion => {
+  const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+  let prompt: string;
+  let answer: number;
+
+  if (waveNumber === 1) {
+    const left = randomInt(3, 12);
+    const right = randomInt(2, 9);
+    prompt = `${left} + ${right} = ?`;
+    answer = left + right;
+  } else if (waveNumber === 2) {
+    const left = randomInt(24, 75);
+    const right = randomInt(8, left - 2);
+    prompt = `${left} − ${right} = ?`;
+    answer = left - right;
+  } else if (waveNumber === 3) {
+    const left = randomInt(3, 9);
+    const right = randomInt(4, 12);
+    prompt = `${left} × ${right} = ?`;
+    answer = left * right;
+  } else if (waveNumber === 4) {
+    const left = randomInt(11, 24);
+    const right = randomInt(4, 9);
+    prompt = `${left} × ${right} = ?`;
+    answer = left * right;
+  } else if (waveNumber === 5) {
+    const divisor = randomInt(3, 10);
+    const quotient = randomInt(4, 12);
+    prompt = `${divisor * quotient} ÷ ${divisor} = ?`;
+    answer = quotient;
+  } else if (waveNumber === 6) {
+    const divisor = randomInt(6, 15);
+    const quotient = randomInt(8, 20);
+    prompt = `${divisor * quotient} ÷ ${divisor} = ?`;
+    answer = quotient;
+  } else if (waveNumber < 10) {
+    const left = randomInt(7, 12 + waveNumber);
+    const right = randomInt(3, 9);
+    const extra = randomInt(4, 18);
+    prompt = waveNumber % 2
+      ? `${left} × ${right} + ${extra} = ?`
+      : `(${left} + ${extra}) × ${right} = ?`;
+    answer = waveNumber % 2 ? left * right + extra : (left + extra) * right;
+  } else {
+    const percent = [20, 25, 50][randomInt(0, 2)];
+    const base = 100 * (1 + Math.floor((waveNumber - 10) / 2));
+    prompt = `${percent}% dari ${base} = ?`;
+    answer = (percent / 100) * base;
+  }
+
+  const candidates = new Set<number>([answer]);
+  for (const offset of [2, -2, 5, -5, 10, -10, 1, -1, 12, -12]) {
+    const candidate = answer + offset;
+    if (candidate >= 0) candidates.add(candidate);
+    if (candidates.size >= 4) break;
+  }
+  const options = [...candidates].slice(0, 4);
+  for (let index = options.length - 1; index > 0; index -= 1) {
+    const swapIndex = randomInt(0, index);
+    [options[index], options[swapIndex]] = [options[swapIndex], options[index]];
+  }
+  return { prompt, answer, options };
+};
 const QUALITY_PIXEL_RATIOS: Record<QualitySetting, number> = { low: 1, medium: 1.5, high: 2 };
 const getQualityPixelRatio = (quality: QualitySetting) => (
   Math.min(window.devicePixelRatio || 1, QUALITY_PIXEL_RATIOS[quality])
@@ -107,11 +176,24 @@ const GamePage = () => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [joystick, setJoystick] = useState<MoveInput>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
+  const [bestScore, setBestScore] = useState(0);
   const [enemyCount, setEnemyCount] = useState(0);
   const [wave, setWave] = useState(1);
   const waveRef = useRef(1);
   const [playerHealth, setPlayerHealth] = useState(100);
   const playerHealthRef = useRef(100);
+  const [playerArmor, setPlayerArmor] = useState(0);
+  const playerArmorRef = useRef(0);
+  const [gamePhase, setGamePhase] = useState<GamePhase>("combat");
+  const gamePhaseRef = useRef<GamePhase>("combat");
+  const [supplyQuestion, setSupplyQuestion] = useState<SupplyQuestion | null>(null);
+  const supplyQuestionRef = useRef<SupplyQuestion | null>(null);
+  const [supplyMessage, setSupplyMessage] = useState<string | null>(null);
+  const supplyResolvedRef = useRef(false);
+  const [muted, setMuted] = useState(false);
+  const mutedRef = useRef(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const [hitFeedback, setHitFeedback] = useState<HitFeedback | null>(null);
   const hitFeedbackIdRef = useRef(0);
   const hitFeedbackTimeoutRef = useRef<number | null>(null);
@@ -137,6 +219,12 @@ const GamePage = () => {
   const fireRef = useRef<(() => void) | null>(null);
   const swapWeaponRef = useRef<(() => void) | null>(null);
   const reloadWeaponRef = useRef<(() => void) | null>(null);
+  const pauseGameRef = useRef<(() => void) | null>(null);
+  const resumeGameRef = useRef<(() => void) | null>(null);
+  const restartGameRef = useRef<(() => void) | null>(null);
+  const answerSupplyRef = useRef<((answer: number) => void) | null>(null);
+  const nextWaveRef = useRef<(() => void) | null>(null);
+  const soundRef = useRef<((cue: SoundCue) => void) | null>(null);
   const firingRef = useRef(false);
   const keys = useRef<Record<string, boolean>>({});
   const jumpRequested = useRef(false);
@@ -153,6 +241,12 @@ const GamePage = () => {
       setMobile(isMobile);
     };
     updateMobile();
+    try {
+      const saved = Number(window.localStorage.getItem(BEST_SCORE_KEY));
+      if (Number.isFinite(saved) && saved > 0) setBestScore(saved);
+    } catch {
+      setBestScore(0);
+    }
     window.addEventListener("resize", updateMobile);
     return () => window.removeEventListener("resize", updateMobile);
   }, []);
@@ -532,11 +626,27 @@ const GamePage = () => {
     };
 
     const soldierSpawns = [
-      [-23, -44], [-14, -49], [-4, -46], [7, -51], [17, -45], [26, -42],
+      [-43, -44], [-31, -49], [-23, -44], [-14, -49], [-4, -46],
+      [7, -51], [17, -45], [26, -42], [36, -47], [46, -40],
     ];
     soldierSpawns.forEach(([x, z], index) => soldiers.push(createSoldier(x, z, index)));
-    const combatTargets: THREE.Object3D[] = [floor, ...worldOccluders, ...soldiers.map((soldier) => soldier.group)];
-    setEnemyCount(soldiers.length);
+    soldiers.forEach((soldier, index) => {
+      if (index >= STARTING_ENEMIES) {
+        soldier.alive = false;
+        soldier.group.visible = false;
+      }
+    });
+    const combatTargets: THREE.Object3D[] = [
+      floor,
+      ...worldOccluders,
+      ...soldiers.filter((soldier) => soldier.alive).map((soldier) => soldier.group),
+    ];
+    const setSoldierCombatTarget = (soldier: SoldierState, active: boolean) => {
+      const existingIndex = combatTargets.indexOf(soldier.group);
+      if (active && existingIndex < 0) combatTargets.push(soldier.group);
+      else if (!active && existingIndex >= 0) combatTargets.splice(existingIndex, 1);
+    };
+    setEnemyCount(STARTING_ENEMIES);
     setWave(1);
     waveRef.current = 1;
 
@@ -793,8 +903,119 @@ const GamePage = () => {
       }, 3600);
       killFeedTimeoutsRef.current.push(timeout);
     };
+    const setPhase = (next: GamePhase) => {
+      gamePhaseRef.current = next;
+      setGamePhase(next);
+    };
+    const addScore = (points: number) => {
+      scoreRef.current += points;
+      setScore(scoreRef.current);
+    };
+    const playSound = (cue: SoundCue) => {
+      if (mutedRef.current) return;
+      try {
+        const Context = window.AudioContext;
+        if (!Context) return;
+        const context = audioContextRef.current ?? new Context();
+        audioContextRef.current = context;
+        if (context.state === "suspended") void context.resume().catch(() => undefined);
+        const presets: Record<SoundCue, [number, number, number, OscillatorType]> = {
+          rifle: [118, 0.045, 0.045, "sawtooth"],
+          pistol: [190, 0.07, 0.055, "square"],
+          hit: [540, 0.075, 0.04, "triangle"],
+          enemy: [92, 0.09, 0.035, "sawtooth"],
+          wave: [330, 0.2, 0.06, "sine"],
+          correct: [720, 0.16, 0.065, "sine"],
+          wrong: [145, 0.17, 0.045, "triangle"],
+          gameover: [105, 0.48, 0.065, "sawtooth"],
+        };
+        const [frequency, duration, volume, type] = presets[cue];
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, frequency * 0.48), context.currentTime + duration);
+        gain.gain.setValueAtTime(0.0001, context.currentTime);
+        gain.gain.exponentialRampToValueAtTime(volume, context.currentTime + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration);
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.onended = () => {
+          oscillator.disconnect();
+          gain.disconnect();
+        };
+        oscillator.start();
+        oscillator.stop(context.currentTime + duration);
+      } catch {
+        // Audio is an optional enhancement; unsupported or locked contexts do not interrupt play.
+      }
+    };
+    soundRef.current = playSound;
+    const pauseGame = () => {
+      if (gamePhaseRef.current !== "combat") return;
+      document.exitPointerLock?.();
+      firingRef.current = false;
+      sprintingRef.current = false;
+      moveInput.current = { x: 0, y: 0 };
+      lookDelta.current = { x: 0, y: 0 };
+      keys.current = {};
+      joystickPointer.current = null;
+      lookPointer.current = null;
+      setJoystick({ x: 0, y: 0 });
+      setSprinting(false);
+      aimingRef.current = false;
+      setAiming(false);
+      setMobileSprintHeld(false);
+      setPhase("paused");
+      if (audioContextRef.current?.state === "running") {
+        void audioContextRef.current.suspend().catch(() => undefined);
+      }
+    };
+    const resumeGame = () => {
+      if (gamePhaseRef.current !== "paused") return;
+      setPhase("combat");
+      if (!mutedRef.current && audioContextRef.current?.state === "suspended") {
+        void audioContextRef.current.resume().catch(() => undefined);
+      }
+    };
+    pauseGameRef.current = pauseGame;
+    resumeGameRef.current = resumeGame;
+    const persistBestScore = (finalScore: number) => {
+      let previousBest = 0;
+      try {
+        const saved = Number(window.localStorage.getItem(BEST_SCORE_KEY));
+        if (Number.isFinite(saved) && saved > 0) previousBest = saved;
+        const nextBest = Math.max(previousBest, finalScore);
+        window.localStorage.setItem(BEST_SCORE_KEY, String(nextBest));
+        previousBest = nextBest;
+      } catch {
+        previousBest = Math.max(previousBest, finalScore);
+      }
+      setBestScore(previousBest);
+    };
+    const finishGame = () => {
+      if (gamePhaseRef.current === "gameover") return;
+      document.exitPointerLock?.();
+      firingRef.current = false;
+      sprintingRef.current = false;
+      aimingRef.current = false;
+      moveInput.current = { x: 0, y: 0 };
+      lookDelta.current = { x: 0, y: 0 };
+      keys.current = {};
+      joystickPointer.current = null;
+      lookPointer.current = null;
+      setSprinting(false);
+      setAiming(false);
+      setMobileSprintHeld(false);
+      reloading = false;
+      reloadingRef.current = false;
+      setIsReloading(false);
+      setPhase("gameover");
+      persistBestScore(scoreRef.current);
+      playSound("gameover");
+    };
     const startReload = () => {
-      if (reloading || reloadingRef.current) return;
+      if (gamePhaseRef.current !== "combat" || reloading || reloadingRef.current) return;
       const selected = activeWeaponRef.current;
       const config = WEAPON_CONFIG[selected];
       const currentAmmo = ammoRef.current[selected];
@@ -807,6 +1028,7 @@ const GamePage = () => {
       firingRef.current = false;
     };
     const swapWeapon = () => {
+      if (gamePhaseRef.current !== "combat") return;
       if (reloading) {
         reloading = false;
         reloadingRef.current = false;
@@ -845,7 +1067,7 @@ const GamePage = () => {
     };
     const fire = () => {
       const now = performance.now();
-      if (reloading || now - lastShotAt[activeWeaponRef.current] < WEAPON_CONFIG[activeWeaponRef.current].fireInterval) return;
+      if (gamePhaseRef.current !== "combat" || reloading || now - lastShotAt[activeWeaponRef.current] < WEAPON_CONFIG[activeWeaponRef.current].fireInterval) return;
       const selected = activeWeaponRef.current;
       const config = WEAPON_CONFIG[selected];
       const currentAmmo = ammoRef.current[selected];
@@ -858,6 +1080,7 @@ const GamePage = () => {
         ...ammoRef.current,
         [selected]: { ...currentAmmo, magazine: currentAmmo.magazine - 1 },
       });
+      playSound(selected);
 
       const moving = Math.hypot(
         moveInput.current.x + ((keys.current.KeyD || keys.current.ArrowRight ? 1 : 0) - (keys.current.KeyA || keys.current.ArrowLeft ? 1 : 0)),
@@ -906,13 +1129,15 @@ const GamePage = () => {
         const eliminated = hitSoldier.health === 0;
         if (eliminated) {
           hitSoldier.alive = false;
+          setSoldierCombatTarget(hitSoldier, false);
           hitSoldier.mode = "dead";
           hitSoldier.deathStartedAt = now;
           hitSoldier.muzzleFlash.visible = false;
           setEnemyCount((current) => Math.max(0, current - 1));
           addKillFeed(headshot);
         }
-        setScore((current) => current + (headshot ? 120 : 30) + (eliminated ? 100 : 0));
+        addScore((headshot ? 120 : 30) + (eliminated ? 100 : 0));
+        playSound("hit");
         hitFeedbackIdRef.current += 1;
         setHitFeedback({ id: hitFeedbackIdRef.current, damage, headshot, eliminated });
         if (hitFeedbackTimeoutRef.current !== null) window.clearTimeout(hitFeedbackTimeoutRef.current);
@@ -932,6 +1157,12 @@ const GamePage = () => {
     };
     const onKeyDown = (event: KeyboardEvent) => {
       keys.current[event.code] = true;
+      if (event.code === "KeyP" && !event.repeat) {
+        if (gamePhaseRef.current === "combat") pauseGame();
+        else if (gamePhaseRef.current === "paused") resumeGame();
+        return;
+      }
+      if (gamePhaseRef.current !== "combat") return;
       if (event.code === "Space") {
         event.preventDefault();
         jumpRequested.current = true;
@@ -968,9 +1199,12 @@ const GamePage = () => {
       pitch = THREE.MathUtils.clamp(pitch - event.movementY * 0.0022, -1.25, 1.25);
     };
     const onCanvasClick = () => {
-      if (!mobileRef.current && renderer.domElement.requestPointerLock) renderer.domElement.requestPointerLock();
+      if (gamePhaseRef.current === "combat" && !mobileRef.current && renderer.domElement.requestPointerLock) {
+        renderer.domElement.requestPointerLock();
+      }
     };
     const onCanvasMouseDown = (event: MouseEvent) => {
+      if (gamePhaseRef.current !== "combat") return;
       if (event.button === 0) {
         firingRef.current = true;
         fire();
@@ -997,6 +1231,7 @@ const GamePage = () => {
       setMobileSprintHeld(false);
       aimingRef.current = false;
       setAiming(false);
+      if (gamePhaseRef.current === "combat") pauseGame();
     };
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
@@ -1010,6 +1245,7 @@ const GamePage = () => {
     renderer.domElement.addEventListener("contextmenu", onContextMenu);
 
     const shootSoldier = (soldier: SoldierState, now: number, target: THREE.Vector3) => {
+      if (gamePhaseRef.current !== "combat") return;
       const accuracy = Math.min(0.82, 0.32 + (waveRef.current - 1) * 0.055);
       const hitsPlayer = Math.random() < accuracy;
       const impact = target.clone();
@@ -1034,6 +1270,7 @@ const GamePage = () => {
       soldier.muzzleFlashUntil = now + 90;
       soldier.recoilUntil = now + 150;
       soldier.muzzleFlash.visible = true;
+      playSound("enemy");
       const dx = soldier.group.position.x - player.position.x;
       const dz = soldier.group.position.z - player.position.z;
       const forwardX = -Math.sin(yaw);
@@ -1050,11 +1287,16 @@ const GamePage = () => {
       if (damageDirectionTimeoutRef.current !== null) window.clearTimeout(damageDirectionTimeoutRef.current);
       damageDirectionTimeoutRef.current = window.setTimeout(() => setIncomingDirection(null), 1050);
       if (hitsPlayer) {
-        playerHealthRef.current = Math.max(0, playerHealthRef.current - 9);
+        const damage = 9;
+        const absorbed = Math.min(playerArmorRef.current, damage);
+        playerArmorRef.current = Math.max(0, playerArmorRef.current - absorbed);
+        setPlayerArmor(playerArmorRef.current);
+        playerHealthRef.current = Math.max(0, playerHealthRef.current - (damage - absorbed));
         setPlayerHealth(Math.ceil(playerHealthRef.current));
         lastDamageAt = now;
-        healthWasDamaged = true;
+        healthWasDamaged = playerHealthRef.current > 0 && playerHealthRef.current < 100;
         setDamageFlashId((current) => current + 1);
+        if (playerHealthRef.current <= 0) finishGame();
       }
     };
 
@@ -1062,11 +1304,14 @@ const GamePage = () => {
     const beginNextWave = (now: number) => {
       waveRef.current += 1;
       setWave(waveRef.current);
+      const activeCount = Math.min(MAX_ACTIVE_ENEMIES, STARTING_ENEMIES + waveRef.current - 1);
       soldiers.forEach((soldier, index) => {
+        const active = index < activeCount;
         soldier.health = soldier.maxHealth;
-        soldier.alive = true;
-        soldier.mode = "patrol";
-        soldier.group.visible = true;
+        soldier.alive = active;
+        setSoldierCombatTarget(soldier, active);
+        soldier.mode = active ? "patrol" : "dead";
+        soldier.group.visible = active;
         soldier.group.position.set(soldier.spawnX, 0, soldier.spawnZ);
         soldier.group.rotation.set(0, 0, 0);
         soldier.group.lookAt(player.position.x, 0, player.position.z);
@@ -1081,7 +1326,7 @@ const GamePage = () => {
         soldier.canSeePlayer = false;
         soldier.lastSeenAt = 0;
         soldier.lastKnownPlayer.set(soldier.spawnX, 0, soldier.spawnZ);
-        soldier.nextShotAt = now + 950 + Math.random() * 500;
+        soldier.nextShotAt = now + Math.max(300, 950 - waveRef.current * 36) + Math.random() * 420;
         soldier.nextCoverAt = 0;
         soldier.coverUntil = 0;
         soldier.coverTarget = null;
@@ -1091,10 +1336,65 @@ const GamePage = () => {
         soldier.pathTarget.set(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY);
         soldier.muzzleFlashUntil = 0;
         soldier.recoilUntil = 0;
-        soldier.deathStartedAt = 0;
+        soldier.deathStartedAt = now;
       });
-      setEnemyCount(soldiers.length);
+      setEnemyCount(activeCount);
       waveTransitionAt = 0;
+      supplyQuestionRef.current = null;
+      setSupplyQuestion(null);
+      setSupplyMessage(null);
+      supplyResolvedRef.current = false;
+      setPhase("combat");
+      playSound("wave");
+    };
+    const openSupplyDrop = () => {
+      if (gamePhaseRef.current !== "combat") return;
+      document.exitPointerLock?.();
+      firingRef.current = false;
+      sprintingRef.current = false;
+      aimingRef.current = false;
+      setSprinting(false);
+      setAiming(false);
+      setMobileSprintHeld(false);
+      setPhase("supply");
+      const question = createSupplyQuestion(waveRef.current);
+      supplyQuestionRef.current = question;
+      setSupplyQuestion(question);
+      setSupplyMessage(null);
+      supplyResolvedRef.current = false;
+      playSound("wave");
+    };
+    answerSupplyRef.current = (selectedAnswer: number) => {
+      const question = supplyQuestionRef.current;
+      if (gamePhaseRef.current !== "supply" || supplyResolvedRef.current || !question) return;
+      supplyResolvedRef.current = true;
+      if (selectedAnswer === question.answer) {
+        const reward = Math.floor(Math.random() * 3);
+        if (reward === 0) {
+          updateAmmo({
+            rifle: { ...ammoRef.current.rifle, reserve: ammoRef.current.rifle.reserve + 30 },
+            pistol: { ...ammoRef.current.pistol, reserve: ammoRef.current.pistol.reserve + 12 },
+          });
+          setSupplyMessage("Benar! Amunisi cadangan bertambah.");
+        } else if (reward === 1) {
+          playerHealthRef.current = 100;
+          healthWasDamaged = false;
+          setPlayerHealth(100);
+          setSupplyMessage("Benar! HP dipulihkan penuh.");
+        } else {
+          playerArmorRef.current = Math.min(100, playerArmorRef.current + 40);
+          setPlayerArmor(playerArmorRef.current);
+          setSupplyMessage("Benar! Armor +40.");
+        }
+        playSound("correct");
+      } else {
+        setSupplyMessage("Belum tepat. Suplai ini tidak memberi bonus.");
+        playSound("wrong");
+      }
+    };
+    nextWaveRef.current = () => {
+      if (gamePhaseRef.current !== "supply" || !supplyResolvedRef.current) return;
+      beginNextWave(performance.now());
     };
 
     let aimBlend = 0;
@@ -1109,16 +1409,128 @@ const GamePage = () => {
       },
     };
     const radarRange = 58;
+    const restartGame = () => {
+      if (document.pointerLockElement) document.exitPointerLock?.();
+      const now = performance.now();
+      waveRef.current = 1;
+      setWave(1);
+      waveTransitionAt = 0;
+      scoreRef.current = 0;
+      setScore(0);
+      setEnemyCount(STARTING_ENEMIES);
+      playerHealthRef.current = 100;
+      setPlayerHealth(100);
+      playerArmorRef.current = 0;
+      setPlayerArmor(0);
+      healthWasDamaged = false;
+      lastDamageAt = 0;
+      updateAmmo(createInitialAmmo());
+      activeWeaponRef.current = "rifle";
+      setActiveWeapon("rifle");
+      rifleView.visible = true;
+      pistolView.visible = false;
+      aimingRef.current = false;
+      setAiming(false);
+      sprintingRef.current = false;
+      setSprinting(false);
+      setMobileSprintHeld(false);
+      firingRef.current = false;
+      reloading = false;
+      reloadingRef.current = false;
+      setIsReloading(false);
+      keys.current = {};
+      jumpRequested.current = false;
+      moveInput.current = { x: 0, y: 0 };
+      lookDelta.current = { x: 0, y: 0 };
+      setJoystick({ x: 0, y: 0 });
+      setCrosshairGap(4);
+      setHitFeedback(null);
+      setDamageFlashId(0);
+      setIncomingDirection(null);
+      setKillFeed([]);
+      setRadarContacts([]);
+      supplyResolvedRef.current = false;
+      supplyQuestionRef.current = null;
+      setSupplyQuestion(null);
+      setSupplyMessage(null);
+      if (hitFeedbackTimeoutRef.current !== null) window.clearTimeout(hitFeedbackTimeoutRef.current);
+      if (damageDirectionTimeoutRef.current !== null) window.clearTimeout(damageDirectionTimeoutRef.current);
+      killFeedTimeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
+      killFeedTimeoutsRef.current = [];
+      tracers.forEach(({ line, disposeMaterial }) => {
+        scene.remove(line);
+        line.geometry.dispose();
+        if (disposeMaterial) (line.material as THREE.Material).dispose();
+      });
+      tracers.length = 0;
+      yaw = 0;
+      pitch = 0;
+      verticalVelocity = 0;
+      player.position.set(0, 1.65, 51);
+      player.rotation.set(0, 0, 0);
+      camera.rotation.set(0, 0, 0);
+      camera.fov = 72;
+      camera.updateProjectionMatrix();
+      cameraRecoil = 0;
+      aimBlend = 0;
+      elapsed = 0;
+      lastShotAt.rifle = Number.NEGATIVE_INFINITY;
+      lastShotAt.pistol = Number.NEGATIVE_INFINITY;
+      muzzleFlashUntil = 0;
+      rifleFlash.visible = false;
+      pistolFlash.visible = false;
+      soldiers.forEach((soldier, index) => {
+        const active = index < STARTING_ENEMIES;
+        soldier.health = soldier.maxHealth;
+        soldier.alive = active;
+        setSoldierCombatTarget(soldier, active);
+        soldier.mode = active ? "patrol" : "dead";
+        soldier.group.visible = active;
+        soldier.group.position.set(soldier.spawnX, 0, soldier.spawnZ);
+        soldier.group.rotation.set(0, 0, 0);
+        soldier.group.lookAt(player.position.x, 0, player.position.z);
+        soldier.leftArmPivot.rotation.set(0, 0, 0);
+        soldier.rightArmPivot.rotation.set(0, 0, 0);
+        soldier.leftLegPivot.rotation.set(0, 0, 0);
+        soldier.rightLegPivot.rotation.set(0, 0, 0);
+        soldier.rifle.position.set(0.3, 1.24, -0.22);
+        soldier.muzzleFlash.visible = false;
+        soldier.patrolIndex = index % soldier.patrolPoints.length;
+        soldier.nextSenseAt = 0;
+        soldier.canSeePlayer = false;
+        soldier.lastSeenAt = 0;
+        soldier.lastKnownPlayer.set(soldier.spawnX, 0, soldier.spawnZ);
+        soldier.nextShotAt = now + 950 + Math.random() * 500;
+        soldier.nextCoverAt = 0;
+        soldier.coverUntil = 0;
+        soldier.coverTarget = null;
+        soldier.path = [];
+        soldier.pathIndex = 0;
+        soldier.nextPathAt = 0;
+        soldier.pathTarget.set(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY);
+        soldier.muzzleFlashUntil = 0;
+        soldier.recoilUntil = 0;
+        soldier.deathStartedAt = now;
+      });
+      setPhase("combat");
+      playSound("wave");
+    };
+    restartGameRef.current = restartGame;
     const animate = (now: number) => {
       frame = window.requestAnimationFrame(animate);
       if (lastRenderAt && now - lastRenderAt < 1000 / 60) return;
       const dt = Math.min((now - previousTime) / 1000, 0.05);
       previousTime = now;
       lastRenderAt = now;
+      if (gamePhaseRef.current !== "combat") {
+        renderer.render(scene, camera);
+        return;
+      }
       elapsed += dt;
       const playerPosition = new THREE.Vector3(player.position.x, 0, player.position.z);
       const playerAimPoint = new THREE.Vector3(player.position.x, player.position.y - 0.35, player.position.z);
       soldiers.forEach((soldier) => {
+        if (gamePhaseRef.current !== "combat") return;
         if (!soldier.alive) {
           const fallProgress = THREE.MathUtils.clamp((now - soldier.deathStartedAt) / 680, 0, 1);
           soldier.group.rotation.x = soldier.deathDirection * fallProgress * 1.16;
@@ -1226,9 +1638,13 @@ const GamePage = () => {
           }
         }
       });
+      if (gamePhaseRef.current !== "combat") {
+        renderer.render(scene, camera);
+        return;
+      }
       if (soldiers.every((soldier) => !soldier.alive)) {
         if (!waveTransitionAt) waveTransitionAt = now + 2300;
-        if (now >= waveTransitionAt) beginNextWave(now);
+        if (now >= waveTransitionAt) openSupplyDrop();
       } else {
         waveTransitionAt = 0;
       }
@@ -1317,7 +1733,7 @@ const GamePage = () => {
         reloadingRef.current = false;
         setIsReloading(false);
       }
-      if (firingRef.current && selectedWeapon === "rifle" && !reloading) fire();
+      if (gamePhaseRef.current === "combat" && firingRef.current && selectedWeapon === "rifle" && !reloading) fire();
 
       if (healthWasDamaged && playerHealthRef.current < 100 && now - lastDamageAt >= 4300) {
         playerHealthRef.current = Math.min(100, playerHealthRef.current + 8 * dt);
@@ -1373,6 +1789,12 @@ const GamePage = () => {
       fireRef.current = null;
       swapWeaponRef.current = null;
       reloadWeaponRef.current = null;
+      pauseGameRef.current = null;
+      resumeGameRef.current = null;
+      restartGameRef.current = null;
+      answerSupplyRef.current = null;
+      nextWaveRef.current = null;
+      soundRef.current = null;
       firingRef.current = false;
       reloadingRef.current = false;
       if (rendererRef.current === renderer) rendererRef.current = null;
@@ -1387,6 +1809,11 @@ const GamePage = () => {
       }
       killFeedTimeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
       killFeedTimeoutsRef.current = [];
+      const audioContext = audioContextRef.current;
+      audioContextRef.current = null;
+      if (audioContext && audioContext.state !== "closed") {
+        void audioContext.close().catch(() => undefined);
+      }
       tracers.forEach(({ line, disposeMaterial }) => {
         scene.remove(line);
         line.geometry.dispose();
@@ -1417,6 +1844,7 @@ const GamePage = () => {
   }, []);
 
   const updateJoystick = (event: PointerEvent<HTMLDivElement>) => {
+    if (gamePhaseRef.current !== "combat") return;
     const rect = event.currentTarget.getBoundingClientRect();
     const dx = (event.clientX - (rect.left + rect.width / 2)) / (rect.width * 0.34);
     const dy = (event.clientY - (rect.top + rect.height / 2)) / (rect.height * 0.34);
@@ -1431,10 +1859,12 @@ const GamePage = () => {
     setJoystick({ x: 0, y: 0 });
   };
   const onTouchLookStart = (event: PointerEvent<HTMLDivElement>) => {
+    if (gamePhaseRef.current !== "combat") return;
     lookPointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
   const onTouchLookMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (gamePhaseRef.current !== "combat") return;
     const touch = lookPointer.current;
     if (!touch || touch.id !== event.pointerId) return;
     const dx = event.clientX - touch.x;
@@ -1445,11 +1875,13 @@ const GamePage = () => {
     lookDelta.current.y += dy;
   };
   const onJoystickPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (gamePhaseRef.current !== "combat") return;
     joystickPointer.current = event.pointerId;
     event.currentTarget.setPointerCapture(event.pointerId);
     updateJoystick(event);
   };
   const toggleAim = () => {
+    if (gamePhaseRef.current !== "combat") return;
     if (!aimingRef.current && sprintingRef.current) {
       sprintingRef.current = false;
       setSprinting(false);
@@ -1461,6 +1893,7 @@ const GamePage = () => {
   };
   const startMobileSprint = (event: PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (gamePhaseRef.current !== "combat") return;
     event.currentTarget.setPointerCapture(event.pointerId);
     sprintingRef.current = true;
     setSprinting(true);
@@ -1475,11 +1908,23 @@ const GamePage = () => {
   };
   const startMobileFire = (event: PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (gamePhaseRef.current !== "combat") return;
     event.currentTarget.setPointerCapture(event.pointerId);
     firingRef.current = true;
     fireRef.current?.();
   };
   const stopMobileFire = () => { firingRef.current = false; };
+  const toggleMute = () => {
+    const next = !mutedRef.current;
+    mutedRef.current = next;
+    setMuted(next);
+    const context = audioContextRef.current;
+    if (next && context?.state === "running") {
+      void context.suspend().catch(() => undefined);
+    } else if (!next && gamePhaseRef.current === "combat" && context?.state === "suspended") {
+      void context.resume().catch(() => undefined);
+    }
+  };
 
   return (
     <main className="strike-page">
@@ -1495,9 +1940,12 @@ const GamePage = () => {
         .strike-mark:after{content:"";width:10px;height:10px;background:#43dce8;box-shadow:0 0 12px #43dce8}
         .strike-title{font:700 13px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.16em;color:#e9fbff}
         .strike-subtitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#76a1b2;margin-top:4px}
+         .strike-header-actions{display:flex;align-items:center;gap:7px}
          .strike-status{font:500 10px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#8ab6c3;border:1px solid rgba(144,203,218,.2);background:rgba(5,16,28,.55);padding:9px 12px;white-space:nowrap}
          .strike-status span{color:rgba(144,203,218,.4);padding:0 4px}
         .strike-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#45dfb1;margin-right:8px;box-shadow:0 0 8px #45dfb1}
+         .strike-header-button{pointer-events:auto;min-height:36px;padding:7px 10px;border:1px solid rgba(105,210,220,.45);background:rgba(5,20,31,.82);color:#dffbff;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;cursor:pointer}
+         .strike-header-button:disabled{opacity:.46;cursor:not-allowed}
         .strike-quality-control{position:absolute;right:clamp(16px,4vw,48px);top:68px;display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid rgba(202,211,211,.2);background:rgba(19,24,30,.58);pointer-events:auto}
         .strike-quality-control label{font:500 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#aeb8b8}
         .strike-quality-control select{border:1px solid rgba(202,211,211,.28);border-radius:2px;background:#22282c;color:#e6e5dc;padding:4px 7px;font:500 10px var(--font-body,'Exo 2'),sans-serif;cursor:pointer}
@@ -1525,7 +1973,7 @@ const GamePage = () => {
          .strike-radar-player{fill:#66f5e6;stroke:#d3fffa;stroke-width:1}
          .strike-radar-enemy{fill:#ff514c;stroke:#ffc3a5;stroke-width:.8;filter:drop-shadow(0 0 2px #ff4d48)}
          .strike-radar-label{position:absolute;left:50%;top:-1px;transform:translateX(-50%);font:600 7px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;color:#7dbbc0;text-shadow:0 1px 4px #06131a}
-         .strike-health-panel,.strike-ammo-panel{position:absolute;bottom:82px;min-height:52px;padding:9px 11px;border:1px solid rgba(144,203,218,.22);background:rgba(5,16,28,.76);box-shadow:0 8px 24px rgba(0,0,0,.16);pointer-events:none}
+          .strike-health-panel,.strike-ammo-panel{position:absolute;bottom:82px;min-height:60px;padding:9px 11px;border:1px solid rgba(144,203,218,.22);background:rgba(5,16,28,.76);box-shadow:0 8px 24px rgba(0,0,0,.16);pointer-events:none}
          .strike-health-panel{left:clamp(16px,4vw,48px);width:210px}
          .strike-ammo-panel{right:clamp(16px,4vw,48px);width:220px;text-align:right}
          .strike-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.12em;color:#8eb4c0}
@@ -1533,6 +1981,9 @@ const GamePage = () => {
          .strike-health-track,.strike-reload-track{height:5px;margin-top:7px;background:rgba(210,235,236,.13);overflow:hidden}
          .strike-health-fill{height:100%;background:linear-gradient(90deg,#28b997,#8df1bd);transition:width .18s}
          .strike-health-fill.is-low{background:linear-gradient(90deg,#e94b52,#ffb26f)}
+          .strike-armor-heading{display:flex;justify-content:space-between;margin-top:5px;color:#91a9c7;font:600 7px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.09em}
+          .strike-armor-track{height:4px;margin-top:4px;background:rgba(210,235,236,.13);overflow:hidden}
+          .strike-armor-fill{height:100%;background:linear-gradient(90deg,#628be8,#b6d9ff);transition:width .18s}
          .strike-ammo-count{margin-top:4px;font:700 18px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.05em;color:#eefbfc}
          .strike-ammo-count small{font-size:11px;color:#7294a0}
          .strike-reload-track{height:2px;margin-top:5px}
@@ -1558,6 +2009,23 @@ const GamePage = () => {
         .strike-lock:hover{background:rgba(17,67,82,.88);border-color:#72f0f5}
          .strike-back{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(144,203,218,.24);background:rgba(5,16,28,.68);color:#c6e2ea;padding:9px 12px;font:600 9px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;cursor:pointer}
          .strike-back:hover{border-color:rgba(60,220,233,.55);color:#e9fbff}
+         .strike-phase-layer{position:absolute;z-index:6;inset:0;display:grid;place-items:center;padding:16px;background:rgba(3,10,18,.78);backdrop-filter:blur(7px);pointer-events:auto}
+         .strike-phase-card{width:min(520px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto;padding:clamp(22px,5vw,38px);border:1px solid rgba(92,220,230,.38);background:linear-gradient(145deg,rgba(9,28,42,.98),rgba(6,14,27,.98));box-shadow:0 24px 90px rgba(0,0,0,.42);text-align:center}
+         .strike-phase-kicker{color:#73d9df;font:600 9px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.2em;text-transform:uppercase}
+         .strike-phase-title{margin:10px 0 8px;color:#effcff;font:700 clamp(22px,5vw,30px) var(--font-display,'Orbitron'),sans-serif;letter-spacing:.09em}
+         .strike-phase-copy{margin:0 auto 20px;max-width:420px;color:#a8c5d0;font-size:14px;line-height:1.6}
+         .strike-math-question{margin:18px 0 22px;color:#fff;font:700 clamp(32px,8vw,52px) var(--font-display,'Orbitron'),sans-serif;letter-spacing:.06em}
+         .strike-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+         .strike-answer-button,.strike-phase-button{min-height:58px;border:1px solid rgba(91,210,220,.45);background:rgba(15,45,60,.82);color:#effcff;font:700 17px var(--font-display,'Orbitron'),sans-serif;cursor:pointer;touch-action:manipulation}
+         .strike-answer-button:hover,.strike-phase-button:hover{border-color:#82f3eb;background:rgba(21,82,91,.88)}
+         .strike-answer-button:disabled{opacity:.56;cursor:default}
+         .strike-phase-button{width:100%;margin-top:12px;padding:12px 16px;font-size:11px;letter-spacing:.1em}
+         .strike-phase-button.is-secondary{border-color:rgba(170,194,206,.25);background:rgba(11,23,34,.82);color:#c6dce4}
+         .strike-supply-result{min-height:26px;margin:18px 0 6px;color:#9ff2d6;font-size:14px;font-weight:700}
+         .strike-score-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+         .strike-score-cell{padding:14px 8px;border:1px solid rgba(144,203,218,.2);background:rgba(3,14,24,.7)}
+         .strike-score-label{color:#8bb1bf;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.12em}
+         .strike-score-value{margin-top:7px;color:#f1ffff;font:700 22px var(--font-display,'Orbitron'),sans-serif}
         .strike-mobile-control{position:absolute;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}
         .strike-stick{width:118px;height:118px;border:1px solid rgba(157,224,231,.32);border-radius:50%;background:rgba(9,24,38,.32);left:25px;bottom:34px;display:grid;place-items:center}
         .strike-stick:before{content:"";position:absolute;inset:13px;border:1px solid rgba(157,224,231,.14);border-radius:50%}
@@ -1581,12 +2049,14 @@ const GamePage = () => {
            .strike-title{font-size:10px}
            .strike-subtitle{font-size:7px;letter-spacing:.1em}
            .strike-status{font-size:7px;padding:7px 6px;letter-spacing:.04em}
+            .strike-header-actions{gap:4px}
+            .strike-header-button{min-height:30px;padding:5px 6px;font-size:6px;letter-spacing:.04em}
            .strike-quality-control{top:62px;padding:5px 6px}
            .strike-quality-control label{font-size:7px}
            .strike-radar{right:13px;top:105px;width:92px;height:92px}
            .strike-feed{top:78px;left:12px;width:min(185px,49vw)}
            .strike-feed-item{padding:5px 7px;font-size:7px}
-           .strike-health-panel,.strike-ammo-panel{bottom:154px;width:min(42vw,170px);min-height:48px;padding:7px 8px}
+            .strike-health-panel,.strike-ammo-panel{bottom:162px;width:min(42vw,170px);min-height:60px;padding:7px 8px}
            .strike-health-panel{left:12px}
            .strike-ammo-panel{right:12px}
            .strike-panel-heading{font-size:7px;letter-spacing:.08em}
@@ -1609,6 +2079,8 @@ const GamePage = () => {
            .strike-brand{gap:5px}
            .strike-title{font-size:9px}
            .strike-status{font-size:6px;padding:6px 5px}
+            .strike-header-actions{gap:3px}
+            .strike-header-button{padding:5px 4px;font-size:5px}
            .strike-switch{right:145px;width:52px}
            .strike-sprint{left:132px;width:56px}
          }
@@ -1622,9 +2094,23 @@ const GamePage = () => {
               <ArrowLeft size={14} /> MENU
             </button>
             <span className="strike-mark" aria-hidden="true" />
-            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · tahap 02</div></div>
+            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · wave {wave}</div></div>
           </div>
-          <div className="strike-status"><i />PRAJURIT {String(enemyCount).padStart(2, "0")} <span>·</span> SKOR {String(score).padStart(3, "0")}</div>
+          <div className="strike-header-actions">
+            <div className="strike-status"><i />WAVE {String(wave).padStart(2, "0")} <span>·</span> {String(enemyCount).padStart(2, "0")} MUSUH <span>·</span> {String(score).padStart(3, "0")}</div>
+            <button
+              className="strike-header-button"
+              onClick={() => pauseGameRef.current?.()}
+              disabled={gamePhase !== "combat"}
+              aria-label="Jeda permainan"
+            >JEDA</button>
+            <button
+              className="strike-header-button"
+              onClick={toggleMute}
+              aria-pressed={muted}
+              aria-label={muted ? "Aktifkan suara" : "Matikan suara"}
+            >{muted ? "SUARA MATI" : "SUARA AKTIF"}</button>
+          </div>
         </header>
         {damageFlashId > 0 && <div key={damageFlashId} className="strike-damage-vignette" aria-hidden="true" />}
         {incomingDirection && (
@@ -1692,11 +2178,13 @@ const GamePage = () => {
             <path className="strike-radar-player" d="M50 43 46 56 50 53 54 56Z" />
           </svg>
         </div>
-        <section className="strike-health-panel" aria-label={`HP ${playerHealth} persen`}>
+        <section className="strike-health-panel" aria-label={`HP ${playerHealth} persen, armor ${playerArmor} persen`}>
           <div className="strike-panel-heading"><span>VITAL · HP</span><span className="strike-health-value">{playerHealth}%</span></div>
           <div className="strike-health-track">
             <div className={`strike-health-fill${playerHealth <= 30 ? " is-low" : ""}`} style={{ width: `${playerHealth}%` }} />
           </div>
+          <div className="strike-armor-heading"><span>ARMOR</span><span>{playerArmor}%</span></div>
+          <div className="strike-armor-track"><div className="strike-armor-fill" style={{ width: `${playerArmor}%` }} /></div>
         </section>
         <section className="strike-ammo-panel" aria-label={`${WEAPON_CONFIG[activeWeapon].label}, magazen ${ammo[activeWeapon].magazine}, cadangan ${ammo[activeWeapon].reserve}`}>
           <div className="strike-panel-heading">
@@ -1719,7 +2207,7 @@ const GamePage = () => {
         </div>
         {!mobile && <footer className="strike-bottom">
           <div className="strike-hint">
-            <b>W A S D</b> gerak &nbsp; <b>SHIFT</b> sprint &nbsp; <b>Q</b> ganti senjata<br />
+            <b>W A S D</b> gerak &nbsp; <b>SHIFT</b> sprint &nbsp; <b>Q</b> ganti senjata &nbsp; <b>P</b> jeda<br />
             <b>KLIK KIRI</b> tembak otomatis &nbsp; <b>KLIK KANAN</b> bidik &nbsp; <b>R</b> isi ulang &nbsp; <b>SPACE</b> lompat
           </div>
           <button className="strike-lock" onClick={() => {
@@ -1790,6 +2278,58 @@ const GamePage = () => {
             aria-pressed={mobileSprintHeld}
           >LARI</button>
         </>}
+        {gamePhase === "supply" && supplyQuestion && (
+          <div className="strike-phase-layer">
+            <section className="strike-phase-card" role="dialog" aria-modal="true" aria-labelledby="strike-supply-title">
+              <div className="strike-phase-kicker">Wave {wave} selesai · supply drop</div>
+              <h2 className="strike-phase-title" id="strike-supply-title">JAWAB UNTUK MEMBUKA SUPLAI</h2>
+              <p className="strike-phase-copy">Pilih jawaban yang benar. Hadiah benar berupa amunisi, HP penuh, atau armor.</p>
+              <div className="strike-math-question" aria-label={`Soal: ${supplyQuestion.prompt}`}>{supplyQuestion.prompt}</div>
+              <div className="strike-answer-grid">
+                {supplyQuestion.options.map((option) => (
+                  <button
+                    key={option}
+                    className="strike-answer-button"
+                    onClick={() => answerSupplyRef.current?.(option)}
+                    disabled={supplyMessage !== null}
+                    aria-label={`Jawaban ${option}`}
+                  >{option}</button>
+                ))}
+              </div>
+              <div className="strike-supply-result" role="status" aria-live="polite">{supplyMessage}</div>
+              {supplyMessage !== null && (
+                <button className="strike-phase-button" onClick={() => nextWaveRef.current?.()}>
+                  LANJUT KE WAVE {wave + 1}
+                </button>
+              )}
+            </section>
+          </div>
+        )}
+        {gamePhase === "paused" && (
+          <div className="strike-phase-layer">
+            <section className="strike-phase-card" role="dialog" aria-modal="true" aria-labelledby="strike-pause-title">
+              <div className="strike-phase-kicker">Permainan dijeda · wave {wave}</div>
+              <h2 className="strike-phase-title" id="strike-pause-title">PAUSE</h2>
+              <p className="strike-phase-copy">Skor saat ini: {score}. Lanjutkan permainan atau kembali ke menu.</p>
+              <button className="strike-phase-button" onClick={() => resumeGameRef.current?.()}>LANJUT BERMAIN</button>
+              <button className="strike-phase-button is-secondary" onClick={() => navigate("/ruang-untuk-guru/numatik-game")}>KEMBALI KE MENU</button>
+            </section>
+          </div>
+        )}
+        {gamePhase === "gameover" && (
+          <div className="strike-phase-layer">
+            <section className="strike-phase-card" role="dialog" aria-modal="true" aria-labelledby="strike-gameover-title">
+              <div className="strike-phase-kicker">Operasi selesai · wave {wave}</div>
+              <h2 className="strike-phase-title" id="strike-gameover-title">GAME OVER</h2>
+              <div className="strike-score-summary">
+                <div className="strike-score-cell"><div className="strike-score-label">SKOR</div><div className="strike-score-value">{score}</div></div>
+                <div className="strike-score-cell"><div className="strike-score-label">SKOR TERTINGGI</div><div className="strike-score-value">{bestScore}</div></div>
+              </div>
+              <button className="strike-phase-button" onClick={() => restartGameRef.current?.()}>MAIN LAGI</button>
+              <button className="strike-phase-button is-secondary" onClick={() => navigate("/ruang-untuk-guru/numatik-game")}>KEMBALI KE MENU</button>
+            </section>
+          </div>
+        )}
       </div>
     </main>
   );
