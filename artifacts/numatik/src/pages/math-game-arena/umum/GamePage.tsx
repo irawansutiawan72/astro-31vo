@@ -4,6 +4,15 @@ import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 
 type MoveInput = { x: number; y: number };
+type DroneState = {
+  group: THREE.Group;
+  parts: THREE.Mesh[];
+  baseX: number;
+  baseY: number;
+  baseZ: number;
+  phase: number;
+  alive: boolean;
+};
 
 const GamePage = () => {
   const navigate = useNavigate();
@@ -11,6 +20,9 @@ const GamePage = () => {
   const [locked, setLocked] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [joystick, setJoystick] = useState<MoveInput>({ x: 0, y: 0 });
+  const [score, setScore] = useState(0);
+  const [droneCount, setDroneCount] = useState(0);
+  const fireRef = useRef<(() => void) | null>(null);
   const keys = useRef<Record<string, boolean>>({});
   const jumpRequested = useRef(false);
   const moveInput = useRef<MoveInput>({ x: 0, y: 0 });
@@ -77,7 +89,10 @@ const GamePage = () => {
     const trimMat = material("#3c586d", 0.55, 0.42);
     const cyanMat = new THREE.MeshStandardMaterial({ color: "#35d7e7", emissive: "#087d91", emissiveIntensity: 1.2, roughness: 0.45 });
     const goldMat = new THREE.MeshStandardMaterial({ color: "#f6b45e", emissive: "#985216", emissiveIntensity: 0.85, roughness: 0.48 });
-    materials.push(cyanMat, goldMat);
+    const droneMat = new THREE.MeshStandardMaterial({ color: "#91a9bb", roughness: 0.4, metalness: 0.68 });
+    const droneTrimMat = new THREE.MeshStandardMaterial({ color: "#243b4e", roughness: 0.46, metalness: 0.54 });
+    const droneLightMat = new THREE.MeshStandardMaterial({ color: "#ff566d", emissive: "#b61136", emissiveIntensity: 2.2, roughness: 0.3 });
+    materials.push(cyanMat, goldMat, droneMat, droneTrimMat, droneLightMat);
 
     const addBox = (w: number, h: number, d: number, mat: THREE.Material, x: number, y: number, z: number) => {
       const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
@@ -134,13 +149,88 @@ const GamePage = () => {
       scene.add(cap);
     }
 
+    const drones: DroneState[] = [];
+    const droneSpawns = [
+      [-10, 3.4, -12], [-3.6, 2.7, -15], [4.7, 3.5, -13],
+      [11, 2.9, -8], [-11, 3.1, 1], [8.7, 3.8, 3],
+    ];
+    droneSpawns.forEach(([x, y, z], index) => {
+      const group = new THREE.Group();
+      const parts: THREE.Mesh[] = [];
+      const addDronePart = (geometry: THREE.BufferGeometry, mat: THREE.Material, px: number, py: number, pz: number) => {
+        const mesh = new THREE.Mesh(geometry, mat);
+        mesh.position.set(px, py, pz);
+        group.add(mesh);
+        parts.push(mesh);
+      };
+      addDronePart(new THREE.SphereGeometry(0.48, 12, 8), droneMat, 0, 0, 0);
+      addDronePart(new THREE.BoxGeometry(1.7, 0.12, 0.14), droneTrimMat, 0, 0.04, 0);
+      addDronePart(new THREE.BoxGeometry(0.14, 0.12, 1.7), droneTrimMat, 0, 0.04, 0);
+      addDronePart(new THREE.SphereGeometry(0.19, 10, 8), droneLightMat, 0, -0.02, -0.43);
+      for (const rotorX of [-0.78, 0.78]) {
+        for (const rotorZ of [-0.78, 0.78]) {
+          addDronePart(new THREE.CylinderGeometry(0.25, 0.25, 0.07, 10), droneTrimMat, rotorX, 0.1, rotorZ);
+          addDronePart(new THREE.BoxGeometry(0.68, 0.035, 0.09), droneLightMat, rotorX, 0.16, rotorZ);
+        }
+      }
+      group.position.set(x, y, z);
+      scene.add(group);
+      drones.push({
+        group,
+        parts,
+        baseX: x,
+        baseY: y,
+        baseZ: z,
+        phase: index * 1.17,
+        alive: true,
+      });
+    });
+    setDroneCount(drones.length);
+
     let yaw = 0;
     let pitch = 0;
     let verticalVelocity = 0;
     let frame = 0;
     let lastRenderAt = 0;
     let previousTime = performance.now();
+    let elapsed = 0;
+    let lastShotAt = 0;
+    const raycaster = new THREE.Raycaster();
+    const tracers: Array<{ line: THREE.Line; expiresAt: number }> = [];
     const bounds = 17.2;
+    const fire = () => {
+      const now = performance.now();
+      if (now - lastShotAt < 160) return;
+      lastShotAt = now;
+      scene.updateMatrixWorld(true);
+      camera.updateMatrixWorld(true);
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const intersections = raycaster.intersectObjects(scene.children, true);
+      const firstHit = intersections[0];
+      const hitDrone = firstHit && drones.find((drone) => (
+        drone.alive && drone.parts.includes(firstHit.object as THREE.Mesh)
+      ));
+      const direction = new THREE.Vector3();
+      camera.getWorldDirection(direction);
+      const origin = camera.getWorldPosition(new THREE.Vector3());
+      const endpoint = firstHit?.point ?? origin.clone().add(direction.multiplyScalar(34));
+      const tracerGeometry = new THREE.BufferGeometry().setFromPoints([origin, endpoint]);
+      const tracerMaterial = new THREE.LineBasicMaterial({
+        color: hitDrone ? "#ff7587" : "#6cf6ff",
+        transparent: true,
+        opacity: 0.92,
+      });
+      const tracer = new THREE.Line(tracerGeometry, tracerMaterial);
+      scene.add(tracer);
+      tracers.push({ line: tracer, expiresAt: now + 105 });
+      if (hitDrone) {
+        hitDrone.alive = false;
+        scene.remove(hitDrone.group);
+        setScore((current) => current + 100);
+        setDroneCount((current) => Math.max(0, current - 1));
+      }
+    };
+    fireRef.current = fire;
     const onResize = () => {
       if (!host.clientWidth || !host.clientHeight) return;
       camera.aspect = host.clientWidth / host.clientHeight;
@@ -154,6 +244,7 @@ const GamePage = () => {
         event.preventDefault();
         jumpRequested.current = true;
       }
+      if (event.code === "KeyF") fire();
     };
     const onKeyUp = (event: KeyboardEvent) => { keys.current[event.code] = false; };
     const onLockChange = () => setLocked(document.pointerLockElement === renderer.domElement);
@@ -165,12 +256,16 @@ const GamePage = () => {
     const onCanvasClick = () => {
       if (!mobile && renderer.domElement.requestPointerLock) renderer.domElement.requestPointerLock();
     };
+    const onCanvasMouseDown = (event: MouseEvent) => {
+      if (event.button === 0) fire();
+    };
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
     document.addEventListener("pointerlockchange", onLockChange);
     document.addEventListener("mousemove", onMouseMove);
     renderer.domElement.addEventListener("click", onCanvasClick);
+    renderer.domElement.addEventListener("mousedown", onCanvasMouseDown);
 
     const animate = (now: number) => {
       frame = window.requestAnimationFrame(animate);
@@ -178,6 +273,23 @@ const GamePage = () => {
       const dt = Math.min((now - previousTime) / 1000, 0.05);
       previousTime = now;
       lastRenderAt = now;
+      elapsed += dt;
+      drones.forEach((drone) => {
+        if (!drone.alive) return;
+        drone.group.position.set(
+          drone.baseX + Math.sin(elapsed * 0.62 + drone.phase) * 1.2,
+          drone.baseY + Math.sin(elapsed * 1.45 + drone.phase) * 0.34,
+          drone.baseZ + Math.cos(elapsed * 0.48 + drone.phase) * 0.8,
+        );
+        drone.group.rotation.y = Math.sin(elapsed * 0.8 + drone.phase) * 0.25;
+      });
+      for (let i = tracers.length - 1; i >= 0; i -= 1) {
+        if (now < tracers[i].expiresAt) continue;
+        scene.remove(tracers[i].line);
+        tracers[i].line.geometry.dispose();
+        (tracers[i].line.material as THREE.Material).dispose();
+        tracers.splice(i, 1);
+      }
       if (lookDelta.current.x || lookDelta.current.y) {
         yaw -= lookDelta.current.x * 0.004;
         pitch = THREE.MathUtils.clamp(pitch - lookDelta.current.y * 0.004, -1.25, 1.25);
@@ -227,7 +339,13 @@ const GamePage = () => {
       document.removeEventListener("pointerlockchange", onLockChange);
       document.removeEventListener("mousemove", onMouseMove);
       renderer.domElement.removeEventListener("click", onCanvasClick);
+      renderer.domElement.removeEventListener("mousedown", onCanvasMouseDown);
+      fireRef.current = null;
       if (document.pointerLockElement === renderer.domElement) document.exitPointerLock?.();
+      tracers.forEach(({ line }) => {
+        line.geometry.dispose();
+        (line.material as THREE.Material).dispose();
+      });
       scene.traverse((object) => {
         if (object instanceof THREE.Mesh) object.geometry.dispose();
       });
@@ -284,7 +402,8 @@ const GamePage = () => {
         .strike-mark:after{content:"";width:10px;height:10px;background:#43dce8;box-shadow:0 0 12px #43dce8}
         .strike-title{font:700 13px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.16em;color:#e9fbff}
         .strike-subtitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#76a1b2;margin-top:4px}
-        .strike-status{font:500 10px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.12em;color:#8ab6c3;border:1px solid rgba(144,203,218,.2);background:rgba(5,16,28,.55);padding:9px 12px}
+         .strike-status{font:500 10px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#8ab6c3;border:1px solid rgba(144,203,218,.2);background:rgba(5,16,28,.55);padding:9px 12px;white-space:nowrap}
+         .strike-status span{color:rgba(144,203,218,.4);padding:0 4px}
         .strike-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#45dfb1;margin-right:8px;box-shadow:0 0 8px #45dfb1}
         .strike-reticle{position:absolute;left:50%;top:50%;width:15px;height:15px;transform:translate(-50%,-50%);opacity:.62}
         .strike-reticle:before,.strike-reticle:after{content:"";position:absolute;background:#d6fbff}
@@ -302,7 +421,8 @@ const GamePage = () => {
         .strike-knob{position:absolute;width:43px;height:43px;border:1px solid rgba(105,231,237,.72);border-radius:50%;background:rgba(28,122,137,.48);box-shadow:0 0 16px rgba(39,207,217,.18)}
         .strike-look{right:0;top:18%;bottom:0;width:48%;pointer-events:auto;touch-action:none}
          .strike-jump{right:22px;bottom:26px;width:64px;height:64px;border:1px solid rgba(60,220,233,.65);border-radius:50%;background:rgba(7,25,38,.82);color:#dffbff;font:600 9px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.05em}
-         @media(max-width:600px){.strike-status{font-size:8px;padding:8px}.strike-bottom{bottom:16px}.strike-hint{max-width:48%;font-size:9px}.strike-stick{left:18px;bottom:24px;width:108px;height:108px}.strike-look{top:28%;bottom:112px}.strike-jump{right:22px;bottom:24px}}
+         .strike-fire{right:22px;bottom:104px;width:64px;height:64px;border:1px solid rgba(255,102,124,.72);border-radius:50%;background:rgba(76,17,36,.82);color:#ffe5e9;font:700 9px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.05em}
+          @media(max-width:600px){.strike-status{font-size:8px;padding:8px}.strike-bottom{bottom:16px}.strike-hint{max-width:48%;font-size:9px}.strike-stick{left:18px;bottom:24px;width:108px;height:108px}.strike-look{top:28%;bottom:112px}.strike-jump{right:22px;bottom:24px}.strike-fire{right:22px;bottom:98px}}
         @media(prefers-reduced-motion:reduce){.strike-lock{transition:none}}
       `}</style>
       <div ref={mountRef} className="absolute inset-0" />
@@ -313,17 +433,17 @@ const GamePage = () => {
               <ArrowLeft size={14} /> MENU
             </button>
             <span className="strike-mark" aria-hidden="true" />
-            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Arena latihan · tahap 01</div></div>
+            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Arena latihan · tahap 02</div></div>
           </div>
-          <div className="strike-status"><i />ARENA SIAP</div>
+          <div className="strike-status"><i />DRONE {String(droneCount).padStart(2, "0")} <span>·</span> SKOR {String(score).padStart(3, "0")}</div>
         </header>
         <div className="strike-reticle" aria-hidden="true" />
         {!mobile && <footer className="strike-bottom">
-          <div className="strike-hint"><b>W A S D</b> bergerak &nbsp; <b>MOUSE</b> melihat &nbsp; <b>SPACE</b> lompat</div>
+          <div className="strike-hint"><b>W A S D</b> bergerak &nbsp; <b>MOUSE</b> melihat/tembak &nbsp; <b>SPACE</b> lompat</div>
           <button className="strike-lock" onClick={() => {
             const canvas = mountRef.current?.querySelector("canvas");
             canvas?.requestPointerLock?.();
-          }}>{locked ? "MOUSE TERKUNCI · ESC UNTUK LEPAS" : "KLIK UNTUK MULAI MELIHAT"}</button>
+          }}>{locked ? "MOUSE TERKUNCI · KLIK KIRI TEMBAK" : "KLIK UNTUK MULAI · KLIK KIRI TEMBAK"}</button>
         </footer>}
         {mobile && <>
           <div
@@ -349,6 +469,11 @@ const GamePage = () => {
             onPointerDown={() => { jumpRequested.current = true; }}
             aria-label="Lompat"
           >LOMPAT</button>
+          <button
+            className="strike-mobile-control strike-fire"
+            onPointerDown={(event) => { event.preventDefault(); fireRef.current?.(); }}
+            aria-label="Tembak drone"
+          >TEMBAK</button>
           <div className="strike-bottom"><div className="strike-hint"><b>GESER KANAN</b><br />untuk melihat</div></div>
         </>}
       </div>

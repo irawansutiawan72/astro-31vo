@@ -71,7 +71,7 @@ const games = [
     label: "Numatik Strike",
     emoji: "",
     path: "/math-game-arena/umum/numatik-strike",
-    desc: "Jelajahi arena 3D dan latih gerak dalam sudut pandang orang pertama!",
+    desc: "Jelajahi arena 3D, bidik, dan tembak drone dalam sudut pandang orang pertama!",
     icon: <Crosshair className="w-7 h-7 text-cyan-300 shrink-0 group-hover:scale-110 transition-transform" />,
   },
   {
