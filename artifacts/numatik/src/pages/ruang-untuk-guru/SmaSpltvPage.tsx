@@ -202,7 +202,7 @@ const SmaSpltvPage = () => {
   };
 
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+    <div className="sma-linear-systems-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
       <Starfield />
       <style>{`
         @keyframes spltv-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }

@@ -70,6 +70,7 @@ const SmaTopicMenuPage = () => {
     "barisan-dan-deret": "animation-submaterial-route sma-barisan-deret-route",
     "vektor-dan-operasinya": "animation-submaterial-route sma-vektor-route",
     "perbandingan-trigonometri": "animation-submaterial-route sma-trigonometry-route",
+    "sistem-persamaan-dan-pertidaksamaan-linear": "animation-submaterial-route sma-linear-systems-route",
   };
   const lightThemeRouteClass =
     mode === "buku-animasi" && selectedTopic

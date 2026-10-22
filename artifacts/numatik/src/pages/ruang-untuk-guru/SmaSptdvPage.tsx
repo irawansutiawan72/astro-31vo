@@ -264,7 +264,7 @@ export default function SmaSptdvPage() {
     ["circles", "Contoh 28 · Lingkaran"], ["ellipse-parabola-line", "Contoh 29 · Tiga batas"],
   ];
   const jumpTo = (id: string) => { playPopSound(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); };
-  return <div className="relative min-h-[100dvh] overflow-hidden bg-[#081321] text-slate-100">
+  return <div className="sma-linear-systems-route relative min-h-[100dvh] overflow-hidden bg-[#081321] text-slate-100">
     <Starfield /><PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/sistem-persamaan-dan-pertidaksamaan-linear" />
     <main className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-24 pt-8 sm:px-7 sm:pt-12 lg:px-10">
       <header className="relative mb-8 overflow-hidden rounded-[2rem] border border-cyan-100/15 bg-[linear-gradient(125deg,rgba(15,47,67,.96),rgba(14,27,48,.97)_58%,rgba(67,45,48,.75))] p-5 shadow-2xl shadow-black/25 sm:p-9" data-testid="lesson-hero">
