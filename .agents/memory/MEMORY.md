@@ -12,3 +12,4 @@
 - [SMA lesson voice](sma-lesson-voice.md) — preserve full source coverage, rephrase cheerfully in Indonesian, change example data, and redraw figures as SVG
 - [KaTeX JSX escaping](katex-jsx-escaping.md) — doubled slashes in quoted JSX math props can become KaTeX line breaks; preview rendered formulas
 - [Math Game Arena level separation](math-game-arena-level-separation.md) — keep the main Math Game Arena for SMP; keep SMA content in its separate SMA route
+- [Numatik Strike scope](numatik-strike-scope.md) — original assets, staged delivery, no extra runtime dependencies, and mobile performance limits
