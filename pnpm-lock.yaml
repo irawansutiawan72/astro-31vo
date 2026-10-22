@@ -66,9 +66,6 @@ catalogs:
     vite:
       specifier: ^7.3.2
       version: 7.3.6
-    wouter:
-      specifier: ^3.3.5
-      version: 3.11.0
     zod:
       specifier: ^3.25.76
       version: 3.25.76
@@ -453,6 +450,9 @@ importers:
       react-router-dom:
         specifier: ^6.30.4
         version: 6.30.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      three:
+        specifier: ^0.186.1
+        version: 0.186.1
     devDependencies:
       '@hookform/resolvers':
         specifier: ^3.10.0
@@ -3787,6 +3787,9 @@ packages:
   thread-stream@3.1.0:
     resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
 
+  three@0.186.1:
+    resolution: {integrity: sha512-blFeqb49wRCSGUGj7gtpfnSGHy2lwDk94RhUmS1c/hTby70kvChbWpkJ4Pm1390LqzzvTmzgXKHPEafJwCb8jA==}
+
   tiny-emitter@2.1.0:
     resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
 
@@ -7090,6 +7093,8 @@ snapshots:
   thread-stream@3.1.0:
     dependencies:
       real-require: 0.2.0
+
+  three@0.186.1: {}
 
   tiny-emitter@2.1.0: {}
 

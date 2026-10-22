@@ -68,6 +68,13 @@ const games = [
     icon: <Worm className="w-7 h-7 text-lime-400 shrink-0 group-hover:scale-110 transition-transform" />,
   },
   {
+    label: "Numatik Strike",
+    emoji: "",
+    path: "/math-game-arena/umum/numatik-strike",
+    desc: "Jelajahi arena 3D dan latih gerak dalam sudut pandang orang pertama!",
+    icon: <Crosshair className="w-7 h-7 text-cyan-300 shrink-0 group-hover:scale-110 transition-transform" />,
+  },
+  {
     label: "Galaksi Tempur",
     emoji: "🌌",
     path: "/math-game-arena/umum/asteroid-blaster",
@@ -135,7 +142,7 @@ const NumatikGamePage = () => {
             >
               <div className="flex items-center gap-2 mb-2">
                 {game.icon}
-                <span className="text-xl">{game.emoji}</span>
+                {game.emoji && <span className="text-xl">{game.emoji}</span>}
               </div>
               <h3 className="font-display text-[11px] sm:text-xs font-bold text-foreground mb-1 leading-tight">
                 {game.label}
