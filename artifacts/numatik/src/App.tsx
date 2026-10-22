@@ -177,6 +177,7 @@ const SmaSptdvPage = lazy(() => import("./pages/ruang-untuk-guru/SmaSptdvPage"))
 const SmaPolinomialKonsepPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPolinomialKonsepPage"));
 const SmaNilaiPolinomialHornerPage = lazy(() => import("./pages/ruang-untuk-guru/SmaNilaiPolinomialHornerPage"));
 const SmaPembagianPolinomialPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPembagianPolinomialPage"));
+const SmaPolinomialTeoremaFaktorPage = lazy(() => import("./pages/ruang-untuk-guru/SmaPolinomialTeoremaFaktorPage.tsx"));
 const SmaStatistikaPenyajianDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaPenyajianDataPage"));
 const SmaStatistikaUkuranPemusatanDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranPemusatanDataPage"));
 const SmaStatistikaUkuranLetakDataPage = lazy(() => import("./pages/ruang-untuk-guru/SmaStatistikaUkuranLetakDataPage"));
@@ -1316,6 +1317,10 @@ const AppInner = () => {
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/polinomial/pembagian-polinomial"
               element={<SmaPembagianPolinomialPage />}
+            />
+            <Route
+              path="/ruang-untuk-guru/sma/buku-animasi/polinomial/teorema-sisa-dan-teorema-faktor"
+              element={<SmaPolinomialTeoremaFaktorPage />}
             />
             <Route
               path="/ruang-untuk-guru/sma/buku-animasi/statistika/penyajian-data"

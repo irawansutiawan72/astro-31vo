@@ -5,7 +5,7 @@
 - [TKA Google authentication](tka-google-auth.md) — shared secret and every preview/production origin must be configured before real GIS login testing
 - [Production diagnostic logs](production-diagnostic-logs.md) — critical frontend diagnostics must avoid console methods stripped by the production minifier
 - [Imported API workflow](imported-api-workflow.md) — API artifact metadata may exist while the API workflow is absent after GitHub import
-- [Numatik typecheck baseline](numatik-typecheck-baseline.md) — full typecheck currently has pre-existing readonly locale typing errors even when the Vite build succeeds
+- [Numatik typecheck baseline](numatik-typecheck-baseline.md) — full typecheck is slow and has baseline errors; explicit `.tsx` imports can clear stale diagnostics for new lazy pages
 - [TKA data isolation](tka-data-isolation.md) — TKA module exercise data should live outside route pages so each menu can evolve independently
 - [TKA complex-question audit](tka-complex-question-audit.md) — PGK uses 4 statements and PGKBS uses 3; every claim must have its source data in the prompt
 - [Cube net folding](cube-net-folding.md) — validate all 11 net patterns and derive 3D face frames so every assembled preview is a real cube
