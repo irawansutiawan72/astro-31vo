@@ -14,15 +14,44 @@ type BoxInstanceSpec = {
   d: number;
   solid?: boolean;
 };
-type DroneState = {
+type SoldierMode = "patrol" | "chase" | "attack" | "cover" | "dead";
+type SoldierState = {
   group: THREE.Group;
   parts: THREE.Mesh[];
-  baseX: number;
-  baseY: number;
-  baseZ: number;
-  phase: number;
+  headParts: THREE.Mesh[];
+  leftArmPivot: THREE.Group;
+  rightArmPivot: THREE.Group;
+  leftLegPivot: THREE.Group;
+  rightLegPivot: THREE.Group;
+  rifle: THREE.Group;
+  muzzleFlash: THREE.Mesh;
+  spawnX: number;
+  spawnZ: number;
+  patrolPoints: THREE.Vector3[];
+  patrolIndex: number;
+  health: number;
+  maxHealth: number;
   alive: boolean;
+  mode: SoldierMode;
+  nextSenseAt: number;
+  canSeePlayer: boolean;
+  lastSeenAt: number;
+  lastKnownPlayer: THREE.Vector3;
+  nextShotAt: number;
+  nextCoverAt: number;
+  coverUntil: number;
+  coverTarget: THREE.Vector3 | null;
+  path: THREE.Vector3[];
+  pathIndex: number;
+  nextPathAt: number;
+  pathTarget: THREE.Vector3;
+  muzzleFlashUntil: number;
+  recoilUntil: number;
+  deathStartedAt: number;
+  deathDirection: number;
+  phase: number;
 };
+type HitFeedback = { id: number; damage: number; headshot: boolean; eliminated: boolean };
 
 const QUALITY_PIXEL_RATIOS: Record<QualitySetting, number> = { low: 1, medium: 1.5, high: 2 };
 const getQualityPixelRatio = (quality: QualitySetting) => (
@@ -40,7 +69,13 @@ const GamePage = () => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [joystick, setJoystick] = useState<MoveInput>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
-  const [droneCount, setDroneCount] = useState(0);
+  const [enemyCount, setEnemyCount] = useState(0);
+  const [wave, setWave] = useState(1);
+  const waveRef = useRef(1);
+  const [playerHealth, setPlayerHealth] = useState(100);
+  const [hitFeedback, setHitFeedback] = useState<HitFeedback | null>(null);
+  const hitFeedbackIdRef = useRef(0);
+  const hitFeedbackTimeoutRef = useRef<number | null>(null);
   const fireRef = useRef<(() => void) | null>(null);
   const keys = useRef<Record<string, boolean>>({});
   const jumpRequested = useRef(false);
@@ -126,10 +161,18 @@ const GamePage = () => {
     const lowWallMat = material("#8b8376", 0.94, 0.02);
     const crateMat = material("#655747", 0.88, 0.08);
     const towerMat = material("#454d51", 0.7, 0.28);
-    const droneMat = new THREE.MeshStandardMaterial({ color: "#91a9bb", roughness: 0.4, metalness: 0.68 });
-    const droneTrimMat = new THREE.MeshStandardMaterial({ color: "#243b4e", roughness: 0.46, metalness: 0.54 });
-    const droneLightMat = new THREE.MeshStandardMaterial({ color: "#ff566d", emissive: "#b61136", emissiveIntensity: 2.2, roughness: 0.3 });
-    materials.push(droneMat, droneTrimMat, droneLightMat);
+    const soldierUniformMat = material("#69765c", 0.94, 0.02);
+    const soldierVestMat = material("#424a40", 0.86, 0.08);
+    const soldierPantsMat = material("#50574c", 0.96, 0.01);
+    const soldierHelmetMat = material("#59664f", 0.82, 0.12);
+    const soldierSkinMat = material("#b68d6f", 0.88, 0.01);
+    const soldierBootMat = material("#333633", 0.82, 0.12);
+    const soldierWeaponMat = material("#292e2c", 0.62, 0.3);
+    const soldierMetalMat = material("#74766d", 0.5, 0.48);
+    const soldierMarkingMat = material("#a96348", 0.7, 0.12);
+    const enemyTracerMat = new THREE.LineBasicMaterial({ color: "#ff604d", transparent: true, opacity: 0.84 });
+    const muzzleFlashMat = new THREE.MeshBasicMaterial({ color: "#ffd59a", toneMapped: false });
+    materials.push(enemyTracerMat, muzzleFlashMat);
 
     const skyGeometry = new THREE.SphereGeometry(145, 32, 20);
     const skyPositions = skyGeometry.getAttribute("position");
@@ -163,6 +206,7 @@ const GamePage = () => {
 
     type CollisionBox = { x: number; z: number; width: number; depth: number };
     const solidObstacles: CollisionBox[] = [];
+    const worldOccluders: THREE.Object3D[] = [];
     const instanceBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
     const addBoxInstances = (mat: THREE.Material, specs: BoxInstanceSpec[]) => {
       if (!specs.length) return;
@@ -181,6 +225,7 @@ const GamePage = () => {
       mesh.computeBoundingBox();
       mesh.computeBoundingSphere();
       scene.add(mesh);
+      if (specs.some((spec) => spec.solid)) worldOccluders.push(mesh);
       return mesh;
     };
 
@@ -209,10 +254,10 @@ const GamePage = () => {
     addGroundPatch(30, 34, roadMat, 37, -20);
 
     const boundaryWalls: BoxInstanceSpec[] = [
-      { x: 0, y: 4.5, z: -60, w: 120, h: 9, d: 1.4 },
-      { x: 0, y: 4.5, z: 60, w: 120, h: 9, d: 1.4 },
-      { x: -60, y: 4.5, z: 0, w: 1.4, h: 9, d: 120 },
-      { x: 60, y: 4.5, z: 0, w: 1.4, h: 9, d: 120 },
+      { x: 0, y: 4.5, z: -60, w: 120, h: 9, d: 1.4, solid: true },
+      { x: 0, y: 4.5, z: 60, w: 120, h: 9, d: 1.4, solid: true },
+      { x: -60, y: 4.5, z: 0, w: 1.4, h: 9, d: 120, solid: true },
+      { x: 60, y: 4.5, z: 0, w: 1.4, h: 9, d: 120, solid: true },
     ];
     addBoxInstances(perimeterMat, boundaryWalls);
 
@@ -266,43 +311,123 @@ const GamePage = () => {
     addBox(9, 0.7, 9, bunkerMat, 37, 19, -24);
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
 
-    const drones: DroneState[] = [];
-    const droneSpawns = [
-      [-23, 3.4, -44], [-14, 2.7, -49], [-4, 3.5, -46],
-      [7, 2.9, -51], [17, 3.1, -45], [26, 3.8, -42],
-    ];
-    droneSpawns.forEach(([x, y, z], index) => {
+    const soldierGeometries = new Set<THREE.BufferGeometry>();
+    const soldierGeometry = <T extends THREE.BufferGeometry>(geometry: T) => {
+      soldierGeometries.add(geometry);
+      return geometry;
+    };
+    const torsoGeometry = soldierGeometry(new THREE.BoxGeometry(0.62, 0.82, 0.38));
+    const vestGeometry = soldierGeometry(new THREE.BoxGeometry(0.68, 0.48, 0.42));
+    const neckGeometry = soldierGeometry(new THREE.CylinderGeometry(0.11, 0.12, 0.18, 6));
+    const headGeometry = soldierGeometry(new THREE.SphereGeometry(0.23, 8, 6));
+    const helmetGeometry = soldierGeometry(new THREE.SphereGeometry(0.29, 8, 5, 0, Math.PI * 2, 0, Math.PI / 2));
+    const helmetBrimGeometry = soldierGeometry(new THREE.BoxGeometry(0.58, 0.07, 0.48));
+    const upperArmGeometry = soldierGeometry(new THREE.BoxGeometry(0.2, 0.43, 0.22));
+    const forearmGeometry = soldierGeometry(new THREE.BoxGeometry(0.17, 0.4, 0.18));
+    const legGeometry = soldierGeometry(new THREE.BoxGeometry(0.23, 0.76, 0.25));
+    const bootGeometry = soldierGeometry(new THREE.BoxGeometry(0.28, 0.16, 0.4));
+    const shoulderGeometry = soldierGeometry(new THREE.BoxGeometry(0.27, 0.2, 0.3));
+    const rifleReceiverGeometry = soldierGeometry(new THREE.BoxGeometry(0.15, 0.15, 0.62));
+    const rifleBarrelGeometry = soldierGeometry(new THREE.CylinderGeometry(0.035, 0.045, 0.58, 6));
+    const rifleStockGeometry = soldierGeometry(new THREE.BoxGeometry(0.16, 0.17, 0.3));
+    const rifleGripGeometry = soldierGeometry(new THREE.BoxGeometry(0.12, 0.24, 0.13));
+    const rifleSightGeometry = soldierGeometry(new THREE.BoxGeometry(0.12, 0.1, 0.14));
+    const muzzleFlashGeometry = soldierGeometry(new THREE.SphereGeometry(0.085, 6, 4));
+
+    const soldiers: SoldierState[] = [];
+    const createSoldier = (x: number, z: number, index: number): SoldierState => {
       const group = new THREE.Group();
       const parts: THREE.Mesh[] = [];
-      const addDronePart = (geometry: THREE.BufferGeometry, mat: THREE.Material, px: number, py: number, pz: number) => {
+      const headParts: THREE.Mesh[] = [];
+      const addPart = (
+        parent: THREE.Object3D,
+        geometry: THREE.BufferGeometry,
+        mat: THREE.Material,
+        px: number,
+        py: number,
+        pz: number,
+        targetable = true,
+      ) => {
         const mesh = new THREE.Mesh(geometry, mat);
         mesh.position.set(px, py, pz);
-        group.add(mesh);
-        parts.push(mesh);
+        parent.add(mesh);
+        if (targetable) parts.push(mesh);
+        return mesh;
       };
-      addDronePart(new THREE.SphereGeometry(0.48, 12, 8), droneMat, 0, 0, 0);
-      addDronePart(new THREE.BoxGeometry(1.7, 0.12, 0.14), droneTrimMat, 0, 0.04, 0);
-      addDronePart(new THREE.BoxGeometry(0.14, 0.12, 1.7), droneTrimMat, 0, 0.04, 0);
-      addDronePart(new THREE.SphereGeometry(0.19, 10, 8), droneLightMat, 0, -0.02, -0.43);
-      for (const rotorX of [-0.78, 0.78]) {
-        for (const rotorZ of [-0.78, 0.78]) {
-          addDronePart(new THREE.CylinderGeometry(0.25, 0.25, 0.07, 10), droneTrimMat, rotorX, 0.1, rotorZ);
-          addDronePart(new THREE.BoxGeometry(0.68, 0.035, 0.09), droneLightMat, rotorX, 0.16, rotorZ);
-        }
-      }
-      group.position.set(x, y, z);
+
+      addPart(group, torsoGeometry, soldierUniformMat, 0, 1.22, 0);
+      addPart(group, vestGeometry, soldierVestMat, 0, 1.23, -0.025);
+      addPart(group, neckGeometry, soldierSkinMat, 0, 1.72, 0);
+      const head = addPart(group, headGeometry, soldierSkinMat, 0, 1.91, 0);
+      const helmet = addPart(group, helmetGeometry, soldierHelmetMat, 0, 2.035, 0);
+      const helmetBrim = addPart(group, helmetBrimGeometry, soldierHelmetMat, 0, 1.98, -0.07);
+      headParts.push(head, helmet, helmetBrim);
+      addPart(group, shoulderGeometry, soldierUniformMat, -0.37, 1.42, -0.015);
+      addPart(group, shoulderGeometry, soldierUniformMat, 0.37, 1.42, -0.015);
+      addPart(group, new THREE.BoxGeometry(0.09, 0.28, 0.05), soldierMarkingMat, -0.35, 1.42, -0.18);
+      soldierGeometries.add((parts[parts.length - 1]).geometry);
+
+      const leftArmPivot = new THREE.Group();
+      leftArmPivot.position.set(-0.34, 1.39, 0);
+      group.add(leftArmPivot);
+      addPart(leftArmPivot, upperArmGeometry, soldierUniformMat, 0, -0.2, -0.02);
+      addPart(leftArmPivot, forearmGeometry, soldierUniformMat, 0, -0.49, -0.13);
+      const rightArmPivot = new THREE.Group();
+      rightArmPivot.position.set(0.34, 1.39, 0);
+      group.add(rightArmPivot);
+      addPart(rightArmPivot, upperArmGeometry, soldierUniformMat, 0, -0.2, -0.02);
+      addPart(rightArmPivot, forearmGeometry, soldierUniformMat, 0, -0.49, -0.13);
+
+      const leftLegPivot = new THREE.Group();
+      leftLegPivot.position.set(-0.16, 0.94, 0);
+      group.add(leftLegPivot);
+      addPart(leftLegPivot, legGeometry, soldierPantsMat, 0, -0.38, 0);
+      addPart(leftLegPivot, bootGeometry, soldierBootMat, 0, -0.81, -0.08);
+      const rightLegPivot = new THREE.Group();
+      rightLegPivot.position.set(0.16, 0.94, 0);
+      group.add(rightLegPivot);
+      addPart(rightLegPivot, legGeometry, soldierPantsMat, 0, -0.38, 0);
+      addPart(rightLegPivot, bootGeometry, soldierBootMat, 0, -0.81, -0.08);
+
+      const rifle = new THREE.Group();
+      rifle.position.set(0.3, 1.24, -0.22);
+      group.add(rifle);
+      addPart(rifle, rifleReceiverGeometry, soldierWeaponMat, 0, 0, -0.26);
+      const barrel = addPart(rifle, rifleBarrelGeometry, soldierMetalMat, 0, 0.025, -0.78);
+      barrel.rotation.x = Math.PI / 2;
+      addPart(rifle, rifleStockGeometry, soldierWeaponMat, 0, 0, 0.17);
+      addPart(rifle, rifleGripGeometry, soldierWeaponMat, 0, -0.15, -0.09);
+      addPart(rifle, rifleSightGeometry, soldierMetalMat, 0, 0.12, -0.27);
+      const muzzleFlash = addPart(rifle, muzzleFlashGeometry, muzzleFlashMat, 0, 0.02, -1.08, false);
+      muzzleFlash.visible = false;
+
+      group.position.set(x, 0, z);
+      group.lookAt(0, 0, player.position.z);
       scene.add(group);
-      drones.push({
-        group,
-        parts,
-        baseX: x,
-        baseY: y,
-        baseZ: z,
-        phase: index * 1.17,
-        alive: true,
-      });
-    });
-    setDroneCount(drones.length);
+      const patrolPoints = [
+        new THREE.Vector3(x + (index % 2 ? 3.5 : -3.5), 0, z + 1.5),
+        new THREE.Vector3(x + (index % 2 ? -2.5 : 2.5), 0, z + 3.8),
+        new THREE.Vector3(x, 0, z - 2.8),
+      ];
+      return {
+        group, parts, headParts, leftArmPivot, rightArmPivot, leftLegPivot, rightLegPivot, rifle, muzzleFlash,
+        spawnX: x, spawnZ: z, patrolPoints, patrolIndex: index % patrolPoints.length,
+        health: 100, maxHealth: 100, alive: true, mode: "patrol", nextSenseAt: 0, canSeePlayer: false,
+        lastSeenAt: 0, lastKnownPlayer: new THREE.Vector3(x, 0, z), nextShotAt: 0, nextCoverAt: 0,
+        coverUntil: 0, coverTarget: null, path: [], pathIndex: 0, nextPathAt: 0,
+        pathTarget: new THREE.Vector3(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY),
+        muzzleFlashUntil: 0, recoilUntil: 0, deathStartedAt: 0, deathDirection: index % 2 ? -1 : 1,
+        phase: index * 1.31,
+      };
+    };
+
+    const soldierSpawns = [
+      [-23, -44], [-14, -49], [-4, -46], [7, -51], [17, -45], [26, -42],
+    ];
+    soldierSpawns.forEach(([x, z], index) => soldiers.push(createSoldier(x, z, index)));
+    setEnemyCount(soldiers.length);
+    setWave(1);
+    waveRef.current = 1;
 
     let yaw = 0;
     let pitch = 0;
@@ -314,8 +439,226 @@ const GamePage = () => {
     let lastShotAt = 0;
     const raycaster = new THREE.Raycaster();
     raycaster.far = 155;
-    const tracers: Array<{ line: THREE.Line; expiresAt: number }> = [];
+    const tracers: Array<{ line: THREE.Line; expiresAt: number; disposeMaterial: boolean }> = [];
+    const sightRaycaster = new THREE.Raycaster();
     const playerLimit = 55;
+    const worldCollisionRadius = 0.48;
+    const isBlocked = (x: number, z: number, radius = worldCollisionRadius) => solidObstacles.some(({ x: cx, z: cz, width, depth }) => (
+      Math.abs(x - cx) < width / 2 + radius && Math.abs(z - cz) < depth / 2 + radius
+    ));
+    const hasLineOfSight = (origin: THREE.Vector3, target: THREE.Vector3) => {
+      const direction = target.clone().sub(origin);
+      const distance = direction.length();
+      if (distance < 0.5) return true;
+      sightRaycaster.set(origin, direction.normalize());
+      sightRaycaster.far = distance - 0.35;
+      return sightRaycaster.intersectObjects(worldOccluders, false).length === 0;
+    };
+    const coverCandidates: THREE.Vector3[] = [];
+    const coverKeys = new Set<string>();
+    solidObstacles.forEach((box) => {
+      const points = [
+        [box.x - box.width / 2 - 1.2, box.z],
+        [box.x + box.width / 2 + 1.2, box.z],
+        [box.x, box.z - box.depth / 2 - 1.2],
+        [box.x, box.z + box.depth / 2 + 1.2],
+      ];
+      points.forEach(([x, z]) => {
+        if (x < -playerLimit || x > playerLimit || z < -playerLimit || z > playerLimit || isBlocked(x, z)) return;
+        const key = `${Math.round(x * 2)}:${Math.round(z * 2)}`;
+        if (coverKeys.has(key)) return;
+        coverKeys.add(key);
+        coverCandidates.push(new THREE.Vector3(x, 0, z));
+      });
+    });
+    const chooseCoverPoint = (soldier: SoldierState, target: THREE.Vector3) => {
+      const origin = new THREE.Vector3(0, 1.45, 0);
+      const targetEye = target.clone().setY(1.3);
+      let best: THREE.Vector3 | null = null;
+      let bestScore = Number.POSITIVE_INFINITY;
+      coverCandidates.forEach((candidate) => {
+        const distanceToSoldier = candidate.distanceTo(soldier.group.position);
+        const distanceToPlayer = candidate.distanceTo(target);
+        if (distanceToSoldier > 28 || distanceToPlayer < 5 || distanceToPlayer > 48) return;
+        origin.set(candidate.x, 1.45, candidate.z);
+        if (hasLineOfSight(origin, targetEye)) return;
+        const score = distanceToSoldier + distanceToPlayer * 0.18;
+        if (score < bestScore) {
+          best = candidate;
+          bestScore = score;
+        }
+      });
+      return best;
+    };
+
+    const gridStep = 3;
+    const gridMin = -54;
+    const gridCount = 37;
+    const gridTotal = gridCount * gridCount;
+    const cellIndex = (column: number, row: number) => row * gridCount + column;
+    const cellCoordinates = (index: number) => ({ column: index % gridCount, row: Math.floor(index / gridCount) });
+    const worldToCell = (value: number) => THREE.MathUtils.clamp(Math.round((value - gridMin) / gridStep), 0, gridCount - 1);
+    const cellToWorld = (value: number) => gridMin + value * gridStep;
+    const blockedCell = (column: number, row: number) => isBlocked(cellToWorld(column), cellToWorld(row), 0.62);
+    const nearestOpenCell = (column: number, row: number) => {
+      if (!blockedCell(column, row)) return { column, row };
+      for (let radius = 1; radius <= 4; radius += 1) {
+        let closest: { column: number; row: number } | null = null;
+        let closestDistance = Number.POSITIVE_INFINITY;
+        for (let dz = -radius; dz <= radius; dz += 1) {
+          for (let dx = -radius; dx <= radius; dx += 1) {
+            const candidateX = column + dx;
+            const candidateZ = row + dz;
+            if (candidateX < 0 || candidateX >= gridCount || candidateZ < 0 || candidateZ >= gridCount) continue;
+            if (blockedCell(candidateX, candidateZ)) continue;
+            const distance = dx * dx + dz * dz;
+            if (distance < closestDistance) {
+              closest = { column: candidateX, row: candidateZ };
+              closestDistance = distance;
+            }
+          }
+        }
+        if (closest) return closest;
+      }
+      return { column, row };
+    };
+    const findPath = (startX: number, startZ: number, goalX: number, goalZ: number) => {
+      let start = nearestOpenCell(worldToCell(startX), worldToCell(startZ));
+      const goal = nearestOpenCell(worldToCell(goalX), worldToCell(goalZ));
+      const startIndex = cellIndex(start.column, start.row);
+      const goalIndex = cellIndex(goal.column, goal.row);
+      if (startIndex === goalIndex) {
+        return [new THREE.Vector3(goalX, 0, goalZ)];
+      }
+
+      const costs = new Float32Array(gridTotal);
+      costs.fill(Number.POSITIVE_INFINITY);
+      const parents = new Int32Array(gridTotal);
+      parents.fill(-1);
+      const closed = new Uint8Array(gridTotal);
+      const openFlags = new Uint8Array(gridTotal);
+      const open = [startIndex];
+      openFlags[startIndex] = 1;
+      costs[startIndex] = 0;
+      const heuristic = (column: number, row: number) => {
+        const { column: goalColumn, row: goalRow } = cellCoordinates(goalIndex);
+        const dx = Math.abs(goalColumn - column);
+        const dz = Math.abs(goalRow - row);
+        return Math.max(dx, dz) + (Math.SQRT2 - 1) * Math.min(dx, dz);
+      };
+      let found = false;
+      let examined = 0;
+      while (open.length && examined < 520) {
+        let bestPosition = 0;
+        for (let i = 1; i < open.length; i += 1) {
+          const current = cellCoordinates(open[i]);
+          const best = cellCoordinates(open[bestPosition]);
+          if (costs[open[i]] + heuristic(current.column, current.row) < costs[open[bestPosition]] + heuristic(best.column, best.row)) {
+            bestPosition = i;
+          }
+        }
+        const currentIndex = open.splice(bestPosition, 1)[0];
+        openFlags[currentIndex] = 0;
+        if (currentIndex === goalIndex) {
+          found = true;
+          break;
+        }
+        if (closed[currentIndex]) continue;
+        closed[currentIndex] = 1;
+        examined += 1;
+        const current = cellCoordinates(currentIndex);
+        for (let dz = -1; dz <= 1; dz += 1) {
+          for (let dx = -1; dx <= 1; dx += 1) {
+            if (!dx && !dz) continue;
+            const column = current.column + dx;
+            const row = current.row + dz;
+            if (column < 0 || column >= gridCount || row < 0 || row >= gridCount || blockedCell(column, row)) continue;
+            if (dx && dz && (blockedCell(current.column + dx, current.row) || blockedCell(current.column, current.row + dz))) continue;
+            const nextIndex = cellIndex(column, row);
+            if (closed[nextIndex]) continue;
+            const cost = costs[currentIndex] + (dx && dz ? Math.SQRT2 : 1);
+            if (cost >= costs[nextIndex]) continue;
+            costs[nextIndex] = cost;
+            parents[nextIndex] = currentIndex;
+            if (!openFlags[nextIndex]) {
+              open.push(nextIndex);
+              openFlags[nextIndex] = 1;
+            }
+          }
+        }
+      }
+      if (!found) return [new THREE.Vector3(goalX, 0, goalZ)];
+      const pathIndices: number[] = [];
+      let currentIndex = goalIndex;
+      while (currentIndex !== startIndex && currentIndex >= 0) {
+        pathIndices.push(currentIndex);
+        currentIndex = parents[currentIndex];
+      }
+      pathIndices.reverse();
+      return pathIndices.map((index) => {
+        const cell = cellCoordinates(index);
+        return new THREE.Vector3(cellToWorld(cell.column), 0, cellToWorld(cell.row));
+      });
+    };
+    const moveSoldier = (soldier: SoldierState, target: THREE.Vector3, speed: number, dt: number, now: number) => {
+      const distanceToTarget = Math.hypot(target.x - soldier.group.position.x, target.z - soldier.group.position.z);
+      if (distanceToTarget < 0.65) {
+        soldier.path = [];
+        soldier.pathIndex = 0;
+        soldier.pathTarget.copy(target);
+        soldier.nextPathAt = now + 650;
+        soldier.leftLegPivot.rotation.x = 0;
+        soldier.rightLegPivot.rotation.x = 0;
+        soldier.leftArmPivot.rotation.x = 0.62;
+        soldier.rightArmPivot.rotation.x = 0.62;
+        return false;
+      }
+      if (now >= soldier.nextPathAt || soldier.pathTarget.distanceToSquared(target) > 9) {
+        soldier.path = findPath(soldier.group.position.x, soldier.group.position.z, target.x, target.z);
+        soldier.pathIndex = 0;
+        soldier.pathTarget.copy(target);
+        soldier.nextPathAt = now + 650;
+      }
+      while (
+        soldier.pathIndex < soldier.path.length &&
+        Math.hypot(
+          soldier.path[soldier.pathIndex].x - soldier.group.position.x,
+          soldier.path[soldier.pathIndex].z - soldier.group.position.z,
+        ) < 0.8
+      ) soldier.pathIndex += 1;
+      const waypoint = soldier.path[soldier.pathIndex];
+      if (!waypoint) {
+        soldier.leftLegPivot.rotation.x = 0;
+        soldier.rightLegPivot.rotation.x = 0;
+        soldier.leftArmPivot.rotation.x = 0.62;
+        soldier.rightArmPivot.rotation.x = 0.62;
+        return false;
+      }
+      const dx = waypoint.x - soldier.group.position.x;
+      const dz = waypoint.z - soldier.group.position.z;
+      const distance = Math.hypot(dx, dz);
+      if (distance < 0.001) return false;
+      const step = Math.min(speed * dt, distance);
+      const nextX = soldier.group.position.x + (dx / distance) * step;
+      const nextZ = soldier.group.position.z + (dz / distance) * step;
+      let moved = false;
+      if (!isBlocked(nextX, soldier.group.position.z, 0.55)) {
+        soldier.group.position.x = nextX;
+        moved = true;
+      }
+      if (!isBlocked(soldier.group.position.x, nextZ, 0.55)) {
+        soldier.group.position.z = nextZ;
+        moved = true;
+      }
+      if (moved) soldier.group.lookAt(waypoint.x, soldier.group.position.y, waypoint.z);
+      const swing = moved ? Math.sin(now * 0.009 + soldier.phase) * 0.42 : 0;
+      soldier.leftLegPivot.rotation.x = swing;
+      soldier.rightLegPivot.rotation.x = -swing;
+      soldier.leftArmPivot.rotation.x = 0.62 - swing * 0.42;
+      soldier.rightArmPivot.rotation.x = 0.62 + swing * 0.42;
+      return moved;
+    };
+
     const fire = () => {
       const now = performance.now();
       if (now - lastShotAt < 160) return;
@@ -325,30 +668,39 @@ const GamePage = () => {
       raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
       const intersections = raycaster.intersectObjects(scene.children, true);
       const firstHit = intersections[0];
-      const hitDrone = firstHit && drones.find((drone) => (
-        drone.alive && drone.parts.includes(firstHit.object as THREE.Mesh)
+      const hitSoldier = firstHit && soldiers.find((soldier) => (
+        soldier.alive && soldier.parts.includes(firstHit.object as THREE.Mesh)
       ));
+      const headshot = Boolean(hitSoldier && firstHit && hitSoldier.headParts.includes(firstHit.object as THREE.Mesh));
       const direction = new THREE.Vector3();
       camera.getWorldDirection(direction);
       const origin = camera.getWorldPosition(new THREE.Vector3());
       const endpoint = firstHit?.point ?? origin.clone().add(direction.multiplyScalar(34));
       const tracerGeometry = new THREE.BufferGeometry().setFromPoints([origin, endpoint]);
       const tracerMaterial = new THREE.LineBasicMaterial({
-        color: hitDrone ? "#ff7587" : "#6cf6ff",
+        color: hitSoldier ? (headshot ? "#ffd087" : "#ff7587") : "#6cf6ff",
         transparent: true,
         opacity: 0.92,
       });
       const tracer = new THREE.Line(tracerGeometry, tracerMaterial);
       scene.add(tracer);
-      tracers.push({ line: tracer, expiresAt: now + 105 });
-      if (hitDrone) {
-        hitDrone.alive = false;
-        scene.remove(hitDrone.group);
-        hitDrone.group.traverse((object) => {
-          if (object instanceof THREE.Mesh) object.geometry.dispose();
-        });
-        setScore((current) => current + 100);
-        setDroneCount((current) => Math.max(0, current - 1));
+      tracers.push({ line: tracer, expiresAt: now + 105, disposeMaterial: true });
+      if (hitSoldier) {
+        const damage = Math.min(hitSoldier.health, headshot ? 80 : 32);
+        hitSoldier.health = Math.max(0, hitSoldier.health - damage);
+        const eliminated = hitSoldier.health === 0;
+        if (eliminated) {
+          hitSoldier.alive = false;
+          hitSoldier.mode = "dead";
+          hitSoldier.deathStartedAt = now;
+          hitSoldier.muzzleFlash.visible = false;
+          setEnemyCount((current) => Math.max(0, current - 1));
+        }
+        setScore((current) => current + (headshot ? 120 : 30) + (eliminated ? 100 : 0));
+        hitFeedbackIdRef.current += 1;
+        setHitFeedback({ id: hitFeedbackIdRef.current, damage, headshot, eliminated });
+        if (hitFeedbackTimeoutRef.current !== null) window.clearTimeout(hitFeedbackTimeoutRef.current);
+        hitFeedbackTimeoutRef.current = window.setTimeout(() => setHitFeedback(null), 720);
       }
     };
     fireRef.current = fire;
@@ -388,6 +740,73 @@ const GamePage = () => {
     renderer.domElement.addEventListener("click", onCanvasClick);
     renderer.domElement.addEventListener("mousedown", onCanvasMouseDown);
 
+    const shootSoldier = (soldier: SoldierState, now: number, target: THREE.Vector3) => {
+      const accuracy = Math.min(0.82, 0.32 + (waveRef.current - 1) * 0.055);
+      const hitsPlayer = Math.random() < accuracy;
+      const impact = target.clone();
+      const missRadius = Math.max(0.8, soldier.group.position.distanceTo(target) * (1 - accuracy) * 0.12);
+      if (!hitsPlayer) {
+        impact.x += (Math.random() - 0.5) * missRadius * 2;
+        impact.y += (Math.random() - 0.5) * missRadius;
+      }
+      soldier.group.updateMatrixWorld(true);
+      const origin = soldier.muzzleFlash.getWorldPosition(new THREE.Vector3());
+      const shotDirection = impact.clone().sub(origin);
+      const shotDistance = shotDirection.length();
+      sightRaycaster.set(origin, shotDirection.normalize());
+      sightRaycaster.far = shotDistance;
+      const blocker = sightRaycaster.intersectObjects(worldOccluders, false)[0];
+      const endpoint = blocker?.point ?? impact;
+      const tracerGeometry = new THREE.BufferGeometry().setFromPoints([origin, endpoint]);
+      const tracer = new THREE.Line(tracerGeometry, enemyTracerMat);
+      scene.add(tracer);
+      tracers.push({ line: tracer, expiresAt: now + 180, disposeMaterial: false });
+      soldier.nextShotAt = now + Math.max(620, 1750 - waveRef.current * 42) + Math.random() * 420;
+      soldier.muzzleFlashUntil = now + 90;
+      soldier.recoilUntil = now + 150;
+      soldier.muzzleFlash.visible = true;
+      if (hitsPlayer) setPlayerHealth((current) => Math.max(0, current - 9));
+    };
+
+    let waveTransitionAt = 0;
+    const beginNextWave = (now: number) => {
+      waveRef.current += 1;
+      setWave(waveRef.current);
+      soldiers.forEach((soldier, index) => {
+        soldier.health = soldier.maxHealth;
+        soldier.alive = true;
+        soldier.mode = "patrol";
+        soldier.group.visible = true;
+        soldier.group.position.set(soldier.spawnX, 0, soldier.spawnZ);
+        soldier.group.rotation.set(0, 0, 0);
+        soldier.group.lookAt(player.position.x, 0, player.position.z);
+        soldier.leftArmPivot.rotation.set(0, 0, 0);
+        soldier.rightArmPivot.rotation.set(0, 0, 0);
+        soldier.leftLegPivot.rotation.set(0, 0, 0);
+        soldier.rightLegPivot.rotation.set(0, 0, 0);
+        soldier.rifle.position.set(0.3, 1.24, -0.22);
+        soldier.muzzleFlash.visible = false;
+        soldier.patrolIndex = (index + waveRef.current) % soldier.patrolPoints.length;
+        soldier.nextSenseAt = 0;
+        soldier.canSeePlayer = false;
+        soldier.lastSeenAt = 0;
+        soldier.lastKnownPlayer.set(soldier.spawnX, 0, soldier.spawnZ);
+        soldier.nextShotAt = now + 950 + Math.random() * 500;
+        soldier.nextCoverAt = 0;
+        soldier.coverUntil = 0;
+        soldier.coverTarget = null;
+        soldier.path = [];
+        soldier.pathIndex = 0;
+        soldier.nextPathAt = 0;
+        soldier.pathTarget.set(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY);
+        soldier.muzzleFlashUntil = 0;
+        soldier.recoilUntil = 0;
+        soldier.deathStartedAt = 0;
+      });
+      setEnemyCount(soldiers.length);
+      waveTransitionAt = 0;
+    };
+
     const animate = (now: number) => {
       frame = window.requestAnimationFrame(animate);
       if (lastRenderAt && now - lastRenderAt < 1000 / 60) return;
@@ -395,20 +814,127 @@ const GamePage = () => {
       previousTime = now;
       lastRenderAt = now;
       elapsed += dt;
-      drones.forEach((drone) => {
-        if (!drone.alive) return;
-        drone.group.position.set(
-          drone.baseX + Math.sin(elapsed * 0.62 + drone.phase) * 1.2,
-          drone.baseY + Math.sin(elapsed * 1.45 + drone.phase) * 0.34,
-          drone.baseZ + Math.cos(elapsed * 0.48 + drone.phase) * 0.8,
-        );
-        drone.group.rotation.y = Math.sin(elapsed * 0.8 + drone.phase) * 0.25;
+      const playerPosition = new THREE.Vector3(player.position.x, 0, player.position.z);
+      const playerAimPoint = new THREE.Vector3(player.position.x, player.position.y - 0.35, player.position.z);
+      soldiers.forEach((soldier) => {
+        if (!soldier.alive) {
+          const fallProgress = THREE.MathUtils.clamp((now - soldier.deathStartedAt) / 680, 0, 1);
+          soldier.group.rotation.x = soldier.deathDirection * fallProgress * 1.16;
+          soldier.group.position.y = -0.08 * fallProgress;
+          return;
+        }
+
+        if (now >= soldier.muzzleFlashUntil) soldier.muzzleFlash.visible = false;
+        soldier.rifle.position.z = -0.22 + (now < soldier.recoilUntil ? 0.1 : 0);
+        const offsetToPlayer = playerPosition.clone().sub(soldier.group.position);
+        const distanceToPlayer = offsetToPlayer.length();
+        if (now >= soldier.nextSenseAt) {
+          const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(soldier.group.quaternion);
+          forward.y = 0;
+          forward.normalize();
+          const directionToPlayer = offsetToPlayer.clone().normalize();
+          const inFieldOfView = soldier.mode !== "patrol" || forward.dot(directionToPlayer) > 0.24;
+          const eye = soldier.group.position.clone().add(new THREE.Vector3(0, 1.48, 0));
+          soldier.canSeePlayer = distanceToPlayer < 62 && inFieldOfView && hasLineOfSight(eye, playerAimPoint);
+          soldier.nextSenseAt = now + 240;
+          if (soldier.canSeePlayer) {
+            soldier.lastSeenAt = now;
+            soldier.lastKnownPlayer.copy(playerPosition);
+            if (soldier.mode !== "cover" && soldier.mode !== "attack") {
+              soldier.mode = "attack";
+              soldier.nextCoverAt = now + 2600;
+            }
+          } else if (soldier.mode !== "cover") {
+            if (soldier.lastSeenAt && now - soldier.lastSeenAt < 6500) {
+              soldier.mode = "chase";
+            } else if (soldier.mode !== "patrol") {
+              soldier.mode = "patrol";
+              soldier.coverTarget = null;
+              soldier.nextPathAt = 0;
+            }
+          }
+        }
+
+        if (
+          soldier.mode === "attack" &&
+          now >= soldier.nextCoverAt &&
+          distanceToPlayer > 11 &&
+          distanceToPlayer < 48
+        ) {
+          soldier.nextCoverAt = now + 9000;
+          const cover = chooseCoverPoint(soldier, playerPosition);
+          if (cover) {
+            soldier.mode = "cover";
+            soldier.coverTarget = cover;
+            soldier.coverUntil = now + 1750;
+            soldier.nextPathAt = 0;
+          }
+        }
+
+        if (soldier.mode === "patrol") {
+          const patrolTarget = soldier.patrolPoints[soldier.patrolIndex];
+          if (Math.hypot(patrolTarget.x - soldier.group.position.x, patrolTarget.z - soldier.group.position.z) < 1.3) {
+            soldier.patrolIndex = (soldier.patrolIndex + 1) % soldier.patrolPoints.length;
+            soldier.nextPathAt = 0;
+          }
+          moveSoldier(soldier, soldier.patrolPoints[soldier.patrolIndex], 1.35, dt, now);
+        } else if (soldier.mode === "cover" && soldier.coverTarget) {
+          const distanceToCover = Math.hypot(
+            soldier.coverTarget.x - soldier.group.position.x,
+            soldier.coverTarget.z - soldier.group.position.z,
+          );
+          if (distanceToCover > 1.15) {
+            moveSoldier(soldier, soldier.coverTarget, 2.35, dt, now);
+          } else {
+            moveSoldier(soldier, soldier.group.position.clone(), 0, dt, now);
+            soldier.group.lookAt(playerPosition.x, soldier.group.position.y, playerPosition.z);
+            if (now >= soldier.coverUntil) {
+              soldier.mode = "chase";
+              soldier.coverTarget = null;
+              soldier.lastKnownPlayer.copy(playerPosition);
+              soldier.nextPathAt = 0;
+            }
+          }
+        } else if (soldier.mode === "chase") {
+          const distanceToLastSeen = Math.hypot(
+            soldier.lastKnownPlayer.x - soldier.group.position.x,
+            soldier.lastKnownPlayer.z - soldier.group.position.z,
+          );
+          if (distanceToLastSeen > 1.5) {
+            moveSoldier(soldier, soldier.lastKnownPlayer, 2.6, dt, now);
+          } else if (!soldier.canSeePlayer && now - soldier.lastSeenAt > 2800) {
+            soldier.mode = "patrol";
+            soldier.nextPathAt = 0;
+          }
+        } else if (soldier.mode === "attack") {
+          if (distanceToPlayer > 15) {
+            moveSoldier(soldier, playerPosition, 2.15, dt, now);
+          } else {
+            moveSoldier(soldier, soldier.group.position.clone(), 0, dt, now);
+            soldier.group.lookAt(playerPosition.x, soldier.group.position.y, playerPosition.z);
+          }
+          const muzzleOrigin = soldier.group.position.clone().add(new THREE.Vector3(0, 1.48, 0));
+          if (
+            soldier.canSeePlayer &&
+            distanceToPlayer < 58 &&
+            now >= soldier.nextShotAt &&
+            hasLineOfSight(muzzleOrigin, playerAimPoint)
+          ) {
+            shootSoldier(soldier, now, playerAimPoint);
+          }
+        }
       });
+      if (soldiers.every((soldier) => !soldier.alive)) {
+        if (!waveTransitionAt) waveTransitionAt = now + 2300;
+        if (now >= waveTransitionAt) beginNextWave(now);
+      } else {
+        waveTransitionAt = 0;
+      }
       for (let i = tracers.length - 1; i >= 0; i -= 1) {
         if (now < tracers[i].expiresAt) continue;
         scene.remove(tracers[i].line);
         tracers[i].line.geometry.dispose();
-        (tracers[i].line.material as THREE.Material).dispose();
+        if (tracers[i].disposeMaterial) (tracers[i].line.material as THREE.Material).dispose();
         tracers.splice(i, 1);
       }
       if (lookDelta.current.x || lookDelta.current.y) {
@@ -459,10 +985,16 @@ const GamePage = () => {
       fireRef.current = null;
       if (rendererRef.current === renderer) rendererRef.current = null;
       if (document.pointerLockElement === renderer.domElement) document.exitPointerLock?.();
+      if (hitFeedbackTimeoutRef.current !== null) {
+        window.clearTimeout(hitFeedbackTimeoutRef.current);
+        hitFeedbackTimeoutRef.current = null;
+      }
       tracers.forEach(({ line }) => {
         scene.remove(line);
         line.geometry.dispose();
-        (line.material as THREE.Material).dispose();
+        if (tracers.some((tracer) => tracer.line === line && tracer.disposeMaterial)) {
+          (line.material as THREE.Material).dispose();
+        }
       });
       const disposedGeometries = new Set<THREE.BufferGeometry>();
       scene.traverse((object) => {
@@ -470,6 +1002,11 @@ const GamePage = () => {
           object.geometry.dispose();
           disposedGeometries.add(object.geometry);
         }
+      });
+      soldierGeometries.forEach((geometry) => {
+        if (disposedGeometries.has(geometry)) return;
+        geometry.dispose();
+        disposedGeometries.add(geometry);
       });
       materials.forEach((mat) => mat.dispose());
       renderer.dispose();
