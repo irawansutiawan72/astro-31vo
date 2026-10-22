@@ -66,6 +66,7 @@ const SmaTopicMenuPage = () => {
     ? `Pilih subtopik ${mode === "buku-animasi" ? "materi" : "latihan"} yang ingin dibuka.`
     : config.subtitle;
   const lightThemeClassByTopic: Record<string, string> = {
+    statistika: "animation-submaterial-route sma-statistika-route",
     "eksponen-dan-logaritma": "animation-submaterial-route sma-exponent-logarithm-route",
     "barisan-dan-deret": "animation-submaterial-route sma-barisan-deret-route",
     "vektor-dan-operasinya": "animation-submaterial-route sma-vektor-route",

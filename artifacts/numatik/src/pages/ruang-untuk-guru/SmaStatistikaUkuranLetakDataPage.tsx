@@ -79,7 +79,7 @@ const outline = [
 const grouped = [["21–25",4,4],["26–30",8,12],["31–35",6,18],["36–40",10,28],["41–45",5,33],["46–50",7,40]];
 
 export default function SmaStatistikaUkuranLetakDataPage() {
-  return <div className="animation-submaterial-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+  return <div className="animation-submaterial-route sma-statistika-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
     <Starfield />
     <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/statistika/ukuran-pemusatan-data" />
     <main className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-24 pt-8 sm:px-7 sm:pt-12 lg:px-10">

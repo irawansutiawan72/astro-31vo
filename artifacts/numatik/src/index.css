@@ -6146,61 +6146,67 @@ html.light-mode .pola-geometri-materi-route .katex {
 
 /* SMA book lessons with legacy space-theme colors stay bright in light themes,
    while dark and ocean modes retain their original appearance. */
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) {
   background: linear-gradient(180deg, #dbeafe 0%, #ecfeff 42%, #f8fafc 100%) !important;
   color: #1e293b !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-["] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-["] {
   background: #f8fafc !important;
   background-image: none !important;
   color: #1e293b !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-800/"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-900/"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-950/"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-black"] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-800/"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-900/"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-"][class*="-950/"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="bg-black"] {
   background-color: rgba(248, 250, 252, 0.96) !important;
   background-image: none !important;
   color: #1e293b !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="from-"][class*="-900/"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="to-"][class*="-900/"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="via-"][class*="-900/"] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="from-"][class*="-900/"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="to-"][class*="-900/"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="via-"][class*="-900/"] {
   --tw-gradient-from: rgba(248, 250, 252, 0.96) var(--tw-gradient-from-position) !important;
   --tw-gradient-to: rgba(241, 245, 249, 0.92) var(--tw-gradient-to-position) !important;
   --tw-gradient-via: rgba(248, 250, 252, 0.94) var(--tw-gradient-via-position) !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-100"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-200"],
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-300"] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-50"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-100"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-200"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="text-"][class*="-300"] {
   color: #334155 !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="border-white"] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) [class*="border-white"] {
   border-color: rgba(100, 116, 139, 0.28) !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] {
   background-color: #f8fafc !important;
   border-color: #cbd5e1 !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] > rect:first-of-type:not([fill*="grid"]) {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] > rect:first-of-type:not([fill*="grid"]) {
   fill: #f8fafc !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] pattern path {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] pattern path {
   stroke: #cbd5e1 !important;
   stroke-opacity: 0.65 !important;
 }
 
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] text,
-:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] tspan {
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] text,
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) :is(.sma-statistika-route, .sma-exponent-logarithm-route, .sma-barisan-deret-route, .sma-vektor-route, .sma-linear-systems-route) svg[role="img"] tspan {
   fill: #334155 !important;
+  color: #334155 !important;
+}
+
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) .sma-statistika-route [class*="text-slate-100"],
+:is([data-theme="light"], [data-theme="white"], [data-theme="forest"], [data-theme="sunset"]) .sma-statistika-route [class*="text-slate-200"] {
   color: #334155 !important;
 }
 

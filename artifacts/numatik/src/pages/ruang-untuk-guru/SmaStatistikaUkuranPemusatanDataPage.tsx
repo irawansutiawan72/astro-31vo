@@ -283,7 +283,7 @@ const SmaStatistikaUkuranPemusatanDataPage = () => {
   const commuteTotal = commuteFrequencies.reduce((sum, frequency) => sum + frequency, 0);
 
   return (
-    <div className="animation-submaterial-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
+    <div className="animation-submaterial-route sma-statistika-route relative min-h-[100dvh] overflow-hidden bg-[#080f1e] text-slate-100">
       <Starfield />
       <PageNavigation prevPath="/ruang-untuk-guru/sma/buku-animasi/statistika" />
       <main className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-24 pt-8 sm:px-7 sm:pt-12 lg:px-10">
