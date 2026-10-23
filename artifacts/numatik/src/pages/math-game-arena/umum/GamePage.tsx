@@ -22,7 +22,12 @@ type BoxInstanceSpec = {
   h: number;
   d: number;
   solid?: boolean;
+  rotX?: number;
+  rotY?: number;
+  rotZ?: number;
+  color?: THREE.ColorRepresentation;
 };
+type QualityCounts = Record<QualitySetting, number>;
 type SoldierMode = "patrol" | "chase" | "attack" | "cover" | "dead";
 type SoldierState = {
   group: THREE.Group;
@@ -288,7 +293,7 @@ const GamePage = () => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#ad7770");
     scene.fog = new THREE.Fog("#a47b78", 46, 138);
-    const camera = new THREE.PerspectiveCamera(72, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 160);
+    const camera = new THREE.PerspectiveCamera(72, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 140);
     const player = new THREE.Group();
     player.position.set(0, 1.65, 51);
     scene.add(player);
@@ -303,10 +308,94 @@ const GamePage = () => {
     scene.add(fillLight);
 
     const materials: THREE.Material[] = [];
+    const textures: THREE.Texture[] = [];
     const material = (color: string, roughness = 0.72, metalness = 0.15) => {
       const mat = new THREE.MeshStandardMaterial({ color, roughness, metalness, flatShading: true });
       materials.push(mat);
       return mat;
+    };
+    let textureSeed = 23817;
+    const textureRandom = () => {
+      textureSeed = (textureSeed * 1664525 + 1013904223) >>> 0;
+      return textureSeed / 4294967296;
+    };
+    const createSurfaceTexture = (base: string, kind: "concrete" | "wood" | "metal" | "earth") => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 128;
+      canvas.height = 128;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Canvas 2D tidak tersedia untuk tekstur arena.");
+      context.fillStyle = base;
+      context.fillRect(0, 0, 128, 128);
+      for (let index = 0; index < 850; index += 1) {
+        const shade = textureRandom() > 0.52 ? 255 : 0;
+        context.globalAlpha = 0.025 + textureRandom() * 0.11;
+        context.fillStyle = `rgb(${shade},${shade},${shade})`;
+        const size = 1 + textureRandom() * (kind === "wood" ? 3 : 2);
+        context.fillRect(textureRandom() * 128, textureRandom() * 128, size, size);
+      }
+      context.globalAlpha = 1;
+      if (kind === "wood") {
+        for (let index = 0; index < 14; index += 1) {
+          const y = textureRandom() * 128;
+          context.globalAlpha = 0.08 + textureRandom() * 0.12;
+          context.strokeStyle = index % 2 ? "#d5b17d" : "#33291d";
+          context.lineWidth = 1 + textureRandom() * 2;
+          context.beginPath();
+          context.moveTo(0, y);
+          context.bezierCurveTo(40, y - 5, 82, y + 5, 128, y - 2);
+          context.stroke();
+        }
+      } else if (kind === "concrete") {
+        for (let index = 0; index < 7; index += 1) {
+          const x = textureRandom() * 128;
+          const y = textureRandom() * 128;
+          context.globalAlpha = 0.16;
+          context.strokeStyle = index % 2 ? "#302e2b" : "#c2b9a8";
+          context.lineWidth = 1;
+          context.beginPath();
+          context.moveTo(x, y);
+          context.lineTo(x + (textureRandom() - 0.5) * 15, y + 5 + textureRandom() * 13);
+          context.lineTo(x + (textureRandom() - 0.5) * 18, y + 14 + textureRandom() * 18);
+          context.stroke();
+        }
+      } else if (kind === "metal") {
+        for (let index = 0; index < 30; index += 1) {
+          const x = textureRandom() * 128;
+          const y = textureRandom() * 128;
+          context.globalAlpha = 0.1 + textureRandom() * 0.16;
+          context.strokeStyle = index % 2 ? "#d7d1c3" : "#321f19";
+          context.lineWidth = 1 + textureRandom() * 2;
+          context.beginPath();
+          context.moveTo(x, y);
+          context.lineTo(x + 2 + textureRandom() * 10, y - 1 + textureRandom() * 2);
+          context.stroke();
+        }
+      } else {
+        for (let index = 0; index < 13; index += 1) {
+          context.globalAlpha = 0.08 + textureRandom() * 0.1;
+          context.fillStyle = index % 2 ? "#332b24" : "#a48b69";
+          context.beginPath();
+          context.ellipse(
+            textureRandom() * 128,
+            textureRandom() * 128,
+            4 + textureRandom() * 15,
+            2 + textureRandom() * 8,
+            textureRandom() * Math.PI,
+            0,
+            Math.PI * 2,
+          );
+          context.fill();
+        }
+      }
+      context.globalAlpha = 1;
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(2, 2);
+      textures.push(texture);
+      return texture;
     };
     const floorMat = material("#66594d", 0.96, 0.02);
     const roadMat = material("#4d4c49", 0.94, 0.04);
@@ -317,6 +406,43 @@ const GamePage = () => {
     const lowWallMat = material("#8b8376", 0.94, 0.02);
     const crateMat = material("#655747", 0.88, 0.08);
     const towerMat = material("#454d51", 0.7, 0.28);
+    const steelDetailMat = material("#566064", 0.48, 0.62);
+    const sandbagMat = material("#77725e", 0.98, 0.01);
+    const tireMat = material("#242829", 0.94, 0.01);
+    const vehicleMat = material("#52564d", 0.83, 0.24);
+    const windowMat = new THREE.MeshStandardMaterial({
+      color: "#55636a",
+      roughness: 0.24,
+      metalness: 0.38,
+      transparent: true,
+      opacity: 0.68,
+      flatShading: true,
+    });
+    materials.push(windowMat);
+    const puddleMat = material("#484d4d", 0.2, 0.52);
+    const groundDetailMat = material("#72634f", 0.98, 0.01);
+    const glowMat = new THREE.MeshBasicMaterial({ color: "#ffd18b", toneMapped: false });
+    const darkInsetMat = material("#343a3b", 0.8, 0.14);
+    materials.push(glowMat);
+    floorMat.map = createSurfaceTexture("#66594d", "earth");
+    roadMat.map = createSurfaceTexture("#4d4c49", "earth");
+    openZoneMat.map = floorMat.map;
+    perimeterMat.map = createSurfaceTexture("#575858", "concrete");
+    bunkerMat.map = createSurfaceTexture("#77736b", "concrete");
+    bunkerRoofMat.map = createSurfaceTexture("#494d4d", "concrete");
+    lowWallMat.map = bunkerMat.map;
+    crateMat.map = createSurfaceTexture("#655747", "wood");
+    towerMat.map = createSurfaceTexture("#454d51", "metal");
+    steelDetailMat.map = createSurfaceTexture("#566064", "metal");
+    sandbagMat.map = createSurfaceTexture("#77725e", "earth");
+    vehicleMat.map = createSurfaceTexture("#52564d", "metal");
+    puddleMat.map = createSurfaceTexture("#484d4d", "earth");
+    groundDetailMat.map = floorMat.map;
+    [
+      floorMat, roadMat, openZoneMat, perimeterMat, bunkerMat, bunkerRoofMat,
+      lowWallMat, crateMat, towerMat, steelDetailMat, sandbagMat, vehicleMat,
+      puddleMat, groundDetailMat,
+    ].forEach((mat) => { mat.needsUpdate = true; });
     const soldierUniformMat = material("#69765c", 0.94, 0.02);
     const soldierVestMat = material("#424a40", 0.86, 0.08);
     const soldierPantsMat = material("#50574c", 0.96, 0.01);
@@ -411,21 +537,94 @@ const GamePage = () => {
     type CollisionBox = { x: number; z: number; width: number; depth: number };
     const solidObstacles: CollisionBox[] = [];
     const worldOccluders: THREE.Object3D[] = [];
+    const tieredInstanceMeshes: Array<{ mesh: THREE.InstancedMesh; counts: QualityCounts }> = [];
     const instanceBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const addTieredInstances = (
+      geometry: THREE.BufferGeometry,
+      mat: THREE.Material,
+      specs: BoxInstanceSpec[],
+      counts: QualityCounts,
+    ) => {
+      if (!specs.length) return;
+      const solidSpecs = specs.filter((spec) => spec.solid);
+      const decorativeSpecs = specs.filter((spec) => !spec.solid);
+      const addBatch = (batchSpecs: BoxInstanceSpec[], batchCounts: QualityCounts, isSolid: boolean) => {
+        if (!batchSpecs.length) return;
+        const mesh = new THREE.InstancedMesh(geometry, mat, batchSpecs.length);
+        mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+        const transform = new THREE.Object3D();
+        batchSpecs.forEach((spec, index) => {
+          transform.position.set(spec.x, spec.y, spec.z);
+          transform.rotation.set(spec.rotX ?? 0, spec.rotY ?? 0, spec.rotZ ?? 0);
+          transform.scale.set(spec.w, spec.h, spec.d);
+          transform.updateMatrix();
+          mesh.setMatrixAt(index, transform.matrix);
+          mesh.setColorAt(index, new THREE.Color(spec.color ?? "#ffffff"));
+          if (isSolid) {
+            const cos = Math.abs(Math.cos(spec.rotY ?? 0));
+            const sin = Math.abs(Math.sin(spec.rotY ?? 0));
+            solidObstacles.push({
+              x: spec.x,
+              z: spec.z,
+              width: spec.w * cos + spec.d * sin,
+              depth: spec.w * sin + spec.d * cos,
+            });
+          }
+        });
+        mesh.count = batchCounts[qualityRef.current];
+        mesh.instanceMatrix.needsUpdate = true;
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+        mesh.computeBoundingBox();
+        mesh.computeBoundingSphere();
+        scene.add(mesh);
+        if (isSolid) worldOccluders.push(mesh);
+        tieredInstanceMeshes.push({ mesh, counts: batchCounts });
+      };
+      if (solidSpecs.length) {
+        const solidCount = solidSpecs.length;
+        if (counts.low < solidCount) {
+          throw new Error("Objek padat dekorasi melebihi batas instance kualitas rendah.");
+        }
+        addBatch(solidSpecs, tierCounts(solidCount, solidCount, solidCount), true);
+      }
+      if (decorativeSpecs.length) {
+        const solidCount = solidSpecs.length;
+        addBatch(
+          decorativeSpecs,
+          tierCounts(
+            counts.low - solidCount,
+            counts.medium - solidCount,
+            counts.high - solidCount,
+          ),
+          false,
+        );
+      }
+    };
     const addBoxInstances = (mat: THREE.Material, specs: BoxInstanceSpec[]) => {
       if (!specs.length) return;
       const mesh = new THREE.InstancedMesh(instanceBoxGeometry, mat, specs.length);
+      mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
       const transform = new THREE.Object3D();
       specs.forEach((spec, index) => {
         transform.position.set(spec.x, spec.y, spec.z);
+        transform.rotation.set(spec.rotX ?? 0, spec.rotY ?? 0, spec.rotZ ?? 0);
         transform.scale.set(spec.w, spec.h, spec.d);
         transform.updateMatrix();
         mesh.setMatrixAt(index, transform.matrix);
+        mesh.setColorAt(index, new THREE.Color(spec.color ?? "#ffffff"));
         if (spec.solid) {
-          solidObstacles.push({ x: spec.x, z: spec.z, width: spec.w, depth: spec.d });
+          const cos = Math.abs(Math.cos(spec.rotY ?? 0));
+          const sin = Math.abs(Math.sin(spec.rotY ?? 0));
+          solidObstacles.push({
+            x: spec.x,
+            z: spec.z,
+            width: spec.w * cos + spec.d * sin,
+            depth: spec.w * sin + spec.d * cos,
+          });
         }
       });
       mesh.instanceMatrix.needsUpdate = true;
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
       mesh.computeBoundingBox();
       mesh.computeBoundingSphere();
       scene.add(mesh);
@@ -490,9 +689,23 @@ const GamePage = () => {
     ];
     addBoxInstances(lowWallMat, lowWalls);
 
-    const makeCrate = (x: number, y: number, z: number, size = 2.6): BoxInstanceSpec => ({
-      x, y, z, w: size, h: size, d: size, solid: true,
-    });
+    let crateVariant = 0;
+    const makeCrate = (x: number, y: number, z: number): BoxInstanceSpec => {
+      const variants = [
+        { w: 2.4, h: 2.5, d: 2.65 },
+        { w: 2.72, h: 2.68, d: 2.38 },
+        { w: 2.52, h: 2.58, d: 2.76 },
+        { w: 2.78, h: 2.44, d: 2.5 },
+      ];
+      const colors = ["#d3c4a7", "#bcae91", "#d0c0a0", "#c8b99d"];
+      const variant = crateVariant++;
+      const size = variants[variant % variants.length];
+      const rotation = [-0.08, 0.06, 0.12, -0.04][variant % 4];
+      return {
+        x, y, z, ...size, solid: true, rotY: rotation,
+        color: colors[variant % colors.length],
+      };
+    };
     const crates: BoxInstanceSpec[] = [
       makeCrate(-19, 1.3, 20), makeCrate(-16, 1.3, 20), makeCrate(-19, 1.3, 23),
       makeCrate(-19, 3.9, 20), makeCrate(-16, 3.9, 23),
@@ -514,6 +727,358 @@ const GamePage = () => {
     addBox(13, 0.9, 13, towerMat, 37, 15, -24);
     addBox(9, 0.7, 9, bunkerMat, 37, 19, -24);
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
+
+    const soldierSpawns: Array<[number, number]> = [
+      [-43, -44], [-31, -49], [-23, -44], [-14, -49], [-4, -46],
+      [7, -51], [17, -45], [26, -42], [36, -47], [46, -40],
+    ];
+    const currentQualityCounts: Record<QualitySetting, number> = {
+      low: 150,
+      medium: 223,
+      high: 300,
+    };
+    const tierCounts = (low: number, medium: number, high: number): QualityCounts => ({
+      low, medium, high,
+    });
+    let scenerySeed = 41821;
+    const sceneryRandom = () => {
+      scenerySeed = (scenerySeed * 1103515245 + 12345) >>> 0;
+      return scenerySeed / 4294967296;
+    };
+    const reservedDecorations: Array<{ x: number; z: number; width: number; depth: number }> = [];
+    const findDecorationPosition = (width: number, depth: number) => {
+      for (let attempt = 0; attempt < 1200; attempt += 1) {
+        const side = sceneryRandom() < 0.5 ? -1 : 1;
+        const x = side * (24 + sceneryRandom() * 30);
+        const z = -34 + sceneryRandom() * 77;
+        if (Math.abs(x) < 23 || z < -35 || z > 43) continue;
+        if (x * x + (z - 51) * (z - 51) < 15 * 15) continue;
+        if (soldierSpawns.some(([spawnX, spawnZ]) => Math.hypot(x - spawnX, z - spawnZ) < 11)) continue;
+        const overlapsExisting = solidObstacles.some((obstacle) => (
+          Math.abs(x - obstacle.x) < width / 2 + obstacle.width / 2 + 0.7
+          && Math.abs(z - obstacle.z) < depth / 2 + obstacle.depth / 2 + 0.7
+        ));
+        if (overlapsExisting) continue;
+        const overlapsDecor = reservedDecorations.some((obstacle) => (
+          Math.abs(x - obstacle.x) < width / 2 + obstacle.width / 2 + 0.55
+          && Math.abs(z - obstacle.z) < depth / 2 + obstacle.depth / 2 + 0.55
+        ));
+        if (overlapsDecor) continue;
+        reservedDecorations.push({ x, z, width, depth });
+        return { x, z };
+      }
+      throw new Error("Tidak cukup ruang aman untuk dekorasi Numatik Strike.");
+    };
+    const scatterSpecs = (
+      count: number,
+      width: number,
+      depth: number,
+      height: number,
+      colorPalette: THREE.ColorRepresentation[],
+      solidCount = 0,
+      y = height / 2,
+    ) => Array.from({ length: count }, (_, index) => {
+      const position = findDecorationPosition(width, depth);
+      return {
+        x: position.x,
+        y,
+        z: position.z,
+        w: width * (0.88 + sceneryRandom() * 0.24),
+        h: height * (0.9 + sceneryRandom() * 0.2),
+        d: depth * (0.88 + sceneryRandom() * 0.24),
+        rotY: sceneryRandom() * Math.PI * 2,
+        color: colorPalette[index % colorPalette.length],
+        solid: index < solidCount,
+      };
+    });
+
+    const framedCrates = crates.filter((_, index) => index % 5 !== 4);
+    const crateFrameSpecs: BoxInstanceSpec[] = [];
+    const frameCorners = [[-1, -1], [1, 1], [-1, 1], [1, -1]];
+    for (let part = 0; part < 4; part += 1) {
+      framedCrates.slice(0, 16).forEach((crate) => {
+        const [cornerX, cornerZ] = frameCorners[part];
+        const localX = cornerX * (crate.w / 2 - 0.06);
+        const localZ = cornerZ * (crate.d / 2 - 0.06);
+        const rotation = crate.rotY ?? 0;
+        crateFrameSpecs.push({
+          x: crate.x + localX * Math.cos(rotation) + localZ * Math.sin(rotation),
+          y: crate.y,
+          z: crate.z - localX * Math.sin(rotation) + localZ * Math.cos(rotation),
+          w: 0.075,
+          h: crate.h * 0.96,
+          d: 0.075,
+          rotY: rotation,
+          color: "#b4a28a",
+        });
+      });
+    }
+    addTieredInstances(
+      instanceBoxGeometry,
+      steelDetailMat,
+      crateFrameSpecs,
+      tierCounts(32, 48, 64),
+    );
+
+    const bunkerDetails: BoxInstanceSpec[] = [
+      { x: -37.35, y: 2.25, z: -0.12, w: 0.26, h: 4.5, d: 0.26 },
+      { x: -30.65, y: 2.25, z: -0.12, w: 0.26, h: 4.5, d: 0.26 },
+      { x: -34, y: 4.48, z: -0.12, w: 6.8, h: 0.26, d: 0.26 },
+      { x: -34, y: 0.18, z: -0.12, w: 6.8, h: 0.36, d: 0.26 },
+      { x: -43, y: 3.45, z: -29.78, w: 1.3, h: 0.16, d: 0.08 },
+      { x: -26, y: 3.45, z: -29.78, w: 1.3, h: 0.16, d: 0.08 },
+      { x: -45.18, y: 3.25, z: -24, w: 0.08, h: 0.15, d: 1.05 },
+      { x: -45.18, y: 3.25, z: -16, w: 0.08, h: 0.15, d: 1.05 },
+      { x: -45.18, y: 3.25, z: -8, w: 0.08, h: 0.15, d: 1.05 },
+      { x: -22.82, y: 3.25, z: -24, w: 0.08, h: 0.15, d: 1.05 },
+      { x: -22.82, y: 3.25, z: -16, w: 0.08, h: 0.15, d: 1.05 },
+      { x: -22.82, y: 3.25, z: -8, w: 0.08, h: 0.15, d: 1.05 },
+    ];
+    addTieredInstances(
+      instanceBoxGeometry,
+      darkInsetMat,
+      bunkerDetails,
+      tierCounts(12, 12, 12),
+    );
+
+    const towerDetailSpecs: BoxInstanceSpec[] = [
+      { x: 36.2, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
+      { x: 37.8, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
+      ...[1.2, 2.3, 3.4, 4.5].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 })),
+      { x: 37, y: 15.8, z: -30.2, w: 12, h: 0.2, d: 0.18 },
+      { x: 37, y: 15.8, z: -17.8, w: 12, h: 0.2, d: 0.18 },
+      ...[5.6, 6.7, 7.8, 8.9, 10, 11.1, 12.2, 13.2].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 })),
+      { x: 30.7, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
+      { x: 43.3, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
+      { x: 34.2, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: 0.22 },
+      { x: 39.8, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: -0.22 },
+    ];
+    addTieredInstances(
+      instanceBoxGeometry,
+      towerMat,
+      towerDetailSpecs,
+      tierCounts(8, 12, 20),
+    );
+
+    const barrierShape = new THREE.Shape();
+    barrierShape.moveTo(-0.5, 0);
+    barrierShape.lineTo(0.5, 0);
+    barrierShape.lineTo(0.38, 0.55);
+    barrierShape.lineTo(0.2, 1);
+    barrierShape.lineTo(-0.2, 1);
+    barrierShape.lineTo(-0.38, 0.55);
+    barrierShape.closePath();
+    const barrierGeometry = new THREE.ExtrudeGeometry(barrierShape, {
+      depth: 1,
+      bevelEnabled: false,
+      steps: 1,
+    });
+    barrierGeometry.translate(0, -0.5, -0.5);
+    const barriers = scatterSpecs(
+      12,
+      3.4,
+      0.85,
+      1.25,
+      ["#d4c7b0", "#bfb39e", "#c9c0af"],
+      6,
+      0.62,
+    );
+    addTieredInstances(barrierGeometry, bunkerMat, barriers, tierCounts(6, 9, 12));
+
+    const sandbagGeometry = new THREE.SphereGeometry(0.5, 8, 6);
+    const sandbags = scatterSpecs(
+      24,
+      1.12,
+      0.64,
+      0.58,
+      ["#d0c6a7", "#b7ae91", "#c4ba9f"],
+      12,
+      0.3,
+    );
+    addTieredInstances(sandbagGeometry, sandbagMat, sandbags, tierCounts(12, 18, 24));
+
+    const drumGeometry = new THREE.CylinderGeometry(0.48, 0.48, 1, 10, 1);
+    const drums = scatterSpecs(
+      16,
+      0.95,
+      0.95,
+      1.25,
+      ["#9c6548", "#68756e", "#725a4c", "#80734f"],
+      8,
+      0.62,
+    );
+    addTieredInstances(drumGeometry, steelDetailMat, drums, tierCounts(8, 12, 16));
+
+    const tireGeometry = new THREE.TorusGeometry(0.42, 0.16, 6, 10);
+    const tires = scatterSpecs(
+      20,
+      1.2,
+      1.2,
+      1.15,
+      ["#f1e9db", "#c4c2b8", "#d5d0c2"],
+      10,
+      0.56,
+    ).map((spec) => ({ ...spec, rotX: Math.PI / 2 }));
+    addTieredInstances(tireGeometry, tireMat, tires, tierCounts(10, 15, 20));
+
+    const palletSpecs = scatterSpecs(
+      16,
+      2.2,
+      1.35,
+      0.3,
+      ["#d3c1a0", "#bca783", "#c8b593"],
+      8,
+      0.16,
+    );
+    addTieredInstances(instanceBoxGeometry, crateMat, palletSpecs, tierCounts(8, 12, 16));
+
+    const vehicleAnchors = [
+      { x: -49, z: 0.5, rotation: 0.07 },
+      { x: 49, z: 0.5, rotation: -0.09 },
+    ];
+    const vehicleBodies = vehicleAnchors.map(({ x, z, rotation }) => ({
+      x, y: 0.74, z, w: 3.8, h: 1.25, d: 5.2, rotY: rotation, solid: true,
+      color: "#c3c0b2",
+    }));
+    const vehicleHoods = vehicleAnchors.map(({ x, z, rotation }) => ({
+      x, y: 0.94, z: z - 1.75, w: 3.55, h: 0.55, d: 1.55, rotY: rotation,
+      color: "#a9aa9e",
+    }));
+    const vehicleRoofs = vehicleAnchors.map(({ x, z, rotation }) => ({
+      x, y: 1.95, z: z + 0.05, w: 2.35, h: 0.55, d: 2.45, rotY: rotation,
+      color: "#b7b8ab",
+    }));
+    const vehicleGlass = vehicleAnchors.map(({ x, z, rotation }) => ({
+      x, y: 1.72, z: z - 1.2, w: 2.35, h: 0.65, d: 0.09, rotY: rotation,
+    }));
+    const vehicleWheels = vehicleAnchors.flatMap(({ x, z, rotation }) => (
+      [-1, 1].flatMap((sideX) => [-1, 1].map((sideZ) => ({
+        x: x + sideX * 1.8,
+        y: 0.48,
+        z: z + sideZ * 1.55,
+        w: 0.88,
+        h: 0.88,
+        d: 0.88,
+        rotX: Math.PI / 2,
+        rotY: rotation,
+        color: "#ebe8dc",
+      })))
+    ));
+    addTieredInstances(instanceBoxGeometry, vehicleMat, vehicleBodies, tierCounts(2, 2, 2));
+    addTieredInstances(instanceBoxGeometry, steelDetailMat, vehicleHoods, tierCounts(2, 2, 2));
+    addTieredInstances(instanceBoxGeometry, vehicleMat, vehicleRoofs, tierCounts(2, 2, 2));
+    addTieredInstances(instanceBoxGeometry, windowMat, vehicleGlass, tierCounts(2, 2, 2));
+    addTieredInstances(tireGeometry, tireMat, vehicleWheels, tierCounts(8, 8, 8));
+
+    const fenceWireSpecs: BoxInstanceSpec[] = [
+      { x: 0, y: 9.5, z: -59.15, w: 118, h: 0.035, d: 0.035 },
+      { x: 0, y: 10.3, z: -59.15, w: 118, h: 0.035, d: 0.035 },
+      { x: 0, y: 9.5, z: 59.15, w: 118, h: 0.035, d: 0.035 },
+      { x: 0, y: 10.3, z: 59.15, w: 118, h: 0.035, d: 0.035 },
+      { x: -59.15, y: 9.5, z: 0, w: 0.035, h: 0.035, d: 118 },
+      { x: -59.15, y: 10.3, z: 0, w: 0.035, h: 0.035, d: 118 },
+      { x: 59.15, y: 9.5, z: 0, w: 0.035, h: 0.035, d: 118 },
+      { x: 59.15, y: 10.3, z: 0, w: 0.035, h: 0.035, d: 118 },
+    ];
+    addTieredInstances(instanceBoxGeometry, steelDetailMat, fenceWireSpecs, tierCounts(8, 8, 8));
+    const fencePostSpecs = Array.from({ length: 16 }, (_, index) => {
+      const edge = Math.floor(index / 4);
+      const along = [-42, -14, 14, 42][index % 4];
+      const point = edge === 0 ? { x: along, z: -59.1 }
+        : edge === 1 ? { x: along, z: 59.1 }
+          : edge === 2 ? { x: -59.1, z: along } : { x: 59.1, z: along };
+      return { ...point, y: 10, w: 0.14, h: 2.1, d: 0.14, color: "#aaa99d" };
+    });
+    addTieredInstances(
+      instanceBoxGeometry,
+      steelDetailMat,
+      fencePostSpecs,
+      tierCounts(4, 10, 16),
+    );
+
+    const poleAnchors = [
+      { x: -52, z: -31 },
+      { x: 52, z: -31 },
+      { x: -52, z: 31 },
+      { x: 52, z: 31 },
+    ];
+    addTieredInstances(
+      new THREE.CylinderGeometry(0.17, 0.24, 10, 7),
+      towerMat,
+      poleAnchors.map(({ x, z }) => ({ x, y: 5, z, w: 1, h: 1, d: 1 })),
+      tierCounts(4, 4, 4),
+    );
+    addTieredInstances(
+      instanceBoxGeometry,
+      steelDetailMat,
+      poleAnchors.map(({ x, z }) => ({ x, y: 10.05, z, w: 2.2, h: 0.16, d: 0.16 })),
+      tierCounts(2, 4, 4),
+    );
+    const overheadWireSpecs: BoxInstanceSpec[] = [
+      { x: 0, y: 11.2, z: -31, w: 104, h: 0.025, d: 0.025 },
+      { x: 0, y: 11.2, z: 31, w: 104, h: 0.025, d: 0.025 },
+      { x: -52, y: 11.2, z: 0, w: 0.025, h: 0.025, d: 62 },
+      { x: 52, y: 11.2, z: 0, w: 0.025, h: 0.025, d: 62 },
+    ];
+    addTieredInstances(instanceBoxGeometry, steelDetailMat, overheadWireSpecs, tierCounts(0, 1, 4));
+    const searchlightGeometry = new THREE.BoxGeometry(0.48, 0.35, 0.74);
+    addTieredInstances(
+      searchlightGeometry,
+      glowMat,
+      [
+        { x: 32.7, y: 16.8, z: -24, w: 1, h: 1, d: 1 },
+        { x: 41.3, y: 16.8, z: -24, w: 1, h: 1, d: 1 },
+        { x: 37, y: 16.8, z: -28.3, w: 1, h: 1, d: 1, rotY: Math.PI / 2 },
+        { x: 37, y: 16.8, z: -19.7, w: 1, h: 1, d: 1, rotY: Math.PI / 2 },
+      ],
+      tierCounts(0, 2, 4),
+    );
+
+    const rockGeometry = new THREE.DodecahedronGeometry(0.5, 0);
+    addTieredInstances(
+      rockGeometry,
+      groundDetailMat,
+      scatterSpecs(20, 0.52, 0.48, 0.28, ["#a49780", "#c4b18b", "#776c5c"]),
+      tierCounts(8, 14, 20),
+    );
+    addTieredInstances(
+      instanceBoxGeometry,
+      groundDetailMat,
+      scatterSpecs(20, 0.14, 0.75, 0.16, ["#b29b72", "#766c59", "#c1aa7b"])
+        .map((spec) => ({ ...spec, rotY: sceneryRandom() * Math.PI })),
+      tierCounts(4, 12, 20),
+    );
+    addTieredInstances(
+      instanceBoxGeometry,
+      steelDetailMat,
+      scatterSpecs(12, 0.52, 0.3, 0.28, ["#aba08c", "#7e7770", "#c4bba9"]),
+      tierCounts(4, 8, 12),
+    );
+    const puddleGeometry = new THREE.PlaneGeometry(1, 1);
+    addTieredInstances(
+      puddleGeometry,
+      puddleMat,
+      scatterSpecs(8, 1.7, 1.05, 1.05, ["#9caaa5", "#b0b8b1", "#d0c6af"], 0, -0.038)
+        .map((spec) => ({ ...spec, d: 0.012, rotX: -Math.PI / 2 })),
+      tierCounts(4, 6, 8),
+    );
+    const actualQualityCounts = (Object.keys(currentQualityCounts) as QualitySetting[]).reduce(
+      (result, selectedQuality) => {
+        result[selectedQuality] = tieredInstanceMeshes.reduce(
+          (count, entry) => count + entry.counts[selectedQuality],
+          0,
+        );
+        return result;
+      },
+      {} as Record<QualitySetting, number>,
+    );
+    if (
+      actualQualityCounts.low !== currentQualityCounts.low
+      || actualQualityCounts.medium !== currentQualityCounts.medium
+      || actualQualityCounts.high !== currentQualityCounts.high
+    ) {
+      throw new Error(`Jumlah instance dekorasi tidak sesuai batas kualitas: ${JSON.stringify(actualQualityCounts)}`);
+    }
 
     const soldierGeometries = new Set<THREE.BufferGeometry>();
     const soldierGeometry = <T extends THREE.BufferGeometry>(geometry: T) => {
@@ -625,10 +1190,6 @@ const GamePage = () => {
       };
     };
 
-    const soldierSpawns = [
-      [-43, -44], [-31, -49], [-23, -44], [-14, -49], [-4, -46],
-      [7, -51], [17, -45], [26, -42], [36, -47], [46, -40],
-    ];
     soldierSpawns.forEach(([x, z], index) => soldiers.push(createSoldier(x, z, index)));
     soldiers.forEach((soldier, index) => {
       if (index >= STARTING_ENEMIES) {
@@ -655,6 +1216,7 @@ const GamePage = () => {
     let verticalVelocity = 0;
     let frame = 0;
     let lastRenderAt = 0;
+    let activeDecorationQuality = qualityRef.current;
     let previousTime = performance.now();
     let elapsed = 0;
     const lastShotAt: Record<WeaponId, number> = { rifle: Number.NEGATIVE_INFINITY, pistol: Number.NEGATIVE_INFINITY };
@@ -1522,6 +2084,12 @@ const GamePage = () => {
       const dt = Math.min((now - previousTime) / 1000, 0.05);
       previousTime = now;
       lastRenderAt = now;
+      if (activeDecorationQuality !== qualityRef.current) {
+        activeDecorationQuality = qualityRef.current;
+        tieredInstanceMeshes.forEach(({ mesh, counts }) => {
+          mesh.count = counts[activeDecorationQuality];
+        });
+      }
       if (gamePhaseRef.current !== "combat") {
         renderer.render(scene, camera);
         return;
@@ -1832,6 +2400,7 @@ const GamePage = () => {
         disposedGeometries.add(geometry);
       });
       materials.forEach((mat) => mat.dispose());
+      textures.forEach((texture) => texture.dispose());
       renderer.dispose();
       renderer.domElement.remove();
     };
