@@ -405,6 +405,7 @@ const GamePage = () => {
     const bunkerRoofMat = material("#494d4d", 0.88, 0.12);
     const lowWallMat = material("#8b8376", 0.94, 0.02);
     const crateMat = material("#655747", 0.88, 0.08);
+    const crateMetalMat = material("#59625d", 0.48, 0.68);
     const towerMat = material("#454d51", 0.7, 0.28);
     const steelDetailMat = material("#566064", 0.48, 0.62);
     const sandbagMat = material("#77725e", 0.98, 0.01);
@@ -432,6 +433,7 @@ const GamePage = () => {
     bunkerRoofMat.map = createSurfaceTexture("#494d4d", "concrete");
     lowWallMat.map = bunkerMat.map;
     crateMat.map = createSurfaceTexture("#655747", "wood");
+    crateMetalMat.map = createSurfaceTexture("#59625d", "metal");
     towerMat.map = createSurfaceTexture("#454d51", "metal");
     steelDetailMat.map = createSurfaceTexture("#566064", "metal");
     sandbagMat.map = createSurfaceTexture("#77725e", "earth");
@@ -440,7 +442,7 @@ const GamePage = () => {
     groundDetailMat.map = floorMat.map;
     [
       floorMat, roadMat, openZoneMat, perimeterMat, bunkerMat, bunkerRoofMat,
-      lowWallMat, crateMat, towerMat, steelDetailMat, sandbagMat, vehicleMat,
+      lowWallMat, crateMat, crateMetalMat, towerMat, steelDetailMat, sandbagMat, vehicleMat,
       puddleMat, groundDetailMat,
     ].forEach((mat) => { mat.needsUpdate = true; });
     const soldierUniformMat = material("#69765c", 0.94, 0.02);
@@ -700,7 +702,7 @@ const GamePage = () => {
       const colors = ["#d3c4a7", "#bcae91", "#d0c0a0", "#c8b99d"];
       const variant = crateVariant++;
       const size = variants[variant % variants.length];
-      const rotation = [-0.08, 0.06, 0.12, -0.04][variant % 4];
+      const rotation = [-0.18, 0.09, 0.22, -0.11][variant % 4];
       return {
         x, y, z, ...size, solid: true, rotY: rotation,
         color: colors[variant % colors.length],
@@ -715,7 +717,16 @@ const GamePage = () => {
       makeCrate(14, 1.3, -22), makeCrate(17, 1.3, -22), makeCrate(14, 1.3, -25),
       makeCrate(17, 3.9, -25), makeCrate(32, 1.3, 13), makeCrate(35, 1.3, 13),
     ];
-    addBoxInstances(crateMat, crates);
+    addBoxInstances(crateMat, crates.filter((_, index) => index % 4 !== 3));
+    addBoxInstances(
+      crateMetalMat,
+      crates
+        .filter((_, index) => index % 4 === 3)
+        .map((crate, index) => ({
+          ...crate,
+          color: ["#d4d0c1", "#b7c0b9", "#c3b7a2", "#aab2aa", "#d0c5af"][index % 5],
+        })),
+    );
 
     const towerLegs: BoxInstanceSpec[] = [
       { x: 32, y: 7.5, z: -29, w: 0.9, h: 15, d: 0.9, solid: true },
