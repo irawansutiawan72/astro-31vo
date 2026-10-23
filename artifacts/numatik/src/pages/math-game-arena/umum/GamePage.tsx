@@ -425,6 +425,15 @@ const GamePage = () => {
     const glowMat = new THREE.MeshBasicMaterial({ color: "#ffd18b", toneMapped: false });
     const darkInsetMat = material("#343a3b", 0.8, 0.14);
     materials.push(glowMat);
+    const searchlightBeamMat = new THREE.MeshBasicMaterial({
+      color: "#f7d49d",
+      transparent: true,
+      opacity: 0.09,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      toneMapped: false,
+    });
+    materials.push(searchlightBeamMat);
     floorMat.map = createSurfaceTexture("#66594d", "earth");
     roadMat.map = createSurfaceTexture("#4d4c49", "earth");
     openZoneMat.map = floorMat.map;
@@ -744,9 +753,9 @@ const GamePage = () => {
       [7, -51], [17, -45], [26, -42], [36, -47], [46, -40],
     ];
     const currentQualityCounts: Record<QualitySetting, number> = {
-      low: 150,
-      medium: 223,
-      high: 300,
+      low: 156,
+      medium: 230,
+      high: 308,
     };
     const tierCounts = (low: number, medium: number, high: number): QualityCounts => ({
       low, medium, high,
@@ -852,13 +861,19 @@ const GamePage = () => {
       tierCounts(12, 12, 12),
     );
 
+    const towerStairSteps: BoxInstanceSpec[] = [
+      1.2, 2.9, 4.6, 6.3, 8, 9.7, 11.4, 13.1,
+    ].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 }));
+    const towerExtraSteps: BoxInstanceSpec[] = [
+      2, 3.7, 5.4, 7.1,
+    ].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 }));
     const towerDetailSpecs: BoxInstanceSpec[] = [
+      ...towerStairSteps,
+      ...towerExtraSteps,
       { x: 36.2, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
       { x: 37.8, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
-      ...[1.2, 2.3, 3.4, 4.5].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 })),
       { x: 37, y: 15.8, z: -30.2, w: 12, h: 0.2, d: 0.18 },
       { x: 37, y: 15.8, z: -17.8, w: 12, h: 0.2, d: 0.18 },
-      ...[5.6, 6.7, 7.8, 8.9, 10, 11.1, 12.2, 13.2].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 })),
       { x: 30.7, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
       { x: 43.3, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
       { x: 34.2, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: 0.22 },
@@ -949,37 +964,55 @@ const GamePage = () => {
     ];
     const vehicleBodies = vehicleAnchors.map(({ x, z, rotation }) => ({
       x, y: 0.74, z, w: 3.8, h: 1.25, d: 5.2, rotY: rotation, solid: true,
-      color: "#c3c0b2",
+      color: "#777064",
     }));
     const vehicleHoods = vehicleAnchors.map(({ x, z, rotation }) => ({
       x, y: 0.94, z: z - 1.75, w: 3.55, h: 0.55, d: 1.55, rotY: rotation,
-      color: "#a9aa9e",
+      rotZ: rotation > 0 ? -0.12 : 0.17,
+      color: "#80684e",
     }));
     const vehicleRoofs = vehicleAnchors.map(({ x, z, rotation }) => ({
-      x, y: 1.95, z: z + 0.05, w: 2.35, h: 0.55, d: 2.45, rotY: rotation,
-      color: "#b7b8ab",
+      x: x + (rotation > 0 ? 0.18 : -0.14), y: 1.95, z: z + 0.05,
+      w: 2.35, h: 0.55, d: 2.45, rotY: rotation, rotZ: rotation > 0 ? 0.14 : -0.1,
+      color: "#655b4d",
     }));
     const vehicleGlass = vehicleAnchors.map(({ x, z, rotation }) => ({
       x, y: 1.72, z: z - 1.2, w: 2.35, h: 0.65, d: 0.09, rotY: rotation,
+      color: "#485052",
     }));
+    const vehicleDamagePanels = vehicleAnchors.flatMap(({ x, z, rotation }) => (
+      [-1, 1].map((side) => ({
+        x: x + side * 1.84,
+        y: 1.05,
+        z: z + 0.12,
+        w: 0.12,
+        h: 0.72,
+        d: 1.15,
+        rotY: rotation,
+        rotZ: side < 0 ? 0.16 : -0.13,
+        color: side < 0 ? "#927150" : "#5b625b",
+      }))
+    ));
     const vehicleWheels = vehicleAnchors.flatMap(({ x, z, rotation }) => (
       [-1, 1].flatMap((sideX) => [-1, 1].map((sideZ) => ({
         x: x + sideX * 1.8,
         y: 0.48,
         z: z + sideZ * 1.55,
         w: 0.88,
-        h: 0.88,
+        h: 0.42,
         d: 0.88,
-        rotX: Math.PI / 2,
+        rotZ: Math.PI / 2,
         rotY: rotation,
-        color: "#ebe8dc",
+        color: "#292b29",
       })))
     ));
+    const vehicleWheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 8);
     addTieredInstances(instanceBoxGeometry, vehicleMat, vehicleBodies, tierCounts(2, 2, 2));
     addTieredInstances(instanceBoxGeometry, steelDetailMat, vehicleHoods, tierCounts(2, 2, 2));
     addTieredInstances(instanceBoxGeometry, vehicleMat, vehicleRoofs, tierCounts(2, 2, 2));
     addTieredInstances(instanceBoxGeometry, windowMat, vehicleGlass, tierCounts(2, 2, 2));
-    addTieredInstances(tireGeometry, tireMat, vehicleWheels, tierCounts(8, 8, 8));
+    addTieredInstances(instanceBoxGeometry, steelDetailMat, vehicleDamagePanels, tierCounts(4, 4, 4));
+    addTieredInstances(vehicleWheelGeometry, tireMat, vehicleWheels, tierCounts(8, 8, 8));
 
     const fenceWireSpecs: BoxInstanceSpec[] = [
       { x: 0, y: 9.5, z: -59.15, w: 118, h: 0.035, d: 0.035 },
@@ -1043,6 +1076,18 @@ const GamePage = () => {
         { x: 37, y: 16.8, z: -19.7, w: 1, h: 1, d: 1, rotY: Math.PI / 2 },
       ],
       tierCounts(0, 2, 4),
+    );
+    const searchlightBeamGeometry = new THREE.ConeGeometry(0.5, 1, 8, 1);
+    addTieredInstances(
+      searchlightBeamGeometry,
+      searchlightBeamMat,
+      [
+        { x: 37, y: 9.3, z: -27, w: 13, h: 15, d: 13, rotX: 0.48 },
+        { x: 37, y: 9.3, z: -21, w: 13, h: 15, d: 13, rotX: -0.48 },
+        { x: 34, y: 9.3, z: -24, w: 13, h: 15, d: 13, rotZ: -0.48 },
+        { x: 40, y: 9.3, z: -24, w: 13, h: 15, d: 13, rotZ: 0.48 },
+      ],
+      tierCounts(2, 3, 4),
     );
 
     const rockGeometry = new THREE.DodecahedronGeometry(0.5, 0);
