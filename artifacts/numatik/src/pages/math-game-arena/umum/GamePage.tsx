@@ -919,16 +919,50 @@ const GamePage = () => {
     addBox(towerPlatform.width, towerPlatform.height, towerPlatform.depth, towerMat, towerPlatform.x, towerPlatform.y, towerPlatform.z);
     addBox(9, 0.7, 9, bunkerMat, 37, 19, -24);
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
-    const towerRampStartZ = -17.1;
-    const towerRampEndZ = towerPlatform.z - towerPlatform.depth / 2;
     const towerPlatformTop = towerPlatform.y + towerPlatform.height / 2;
+    const towerRampPathPoints = [
+      { x: towerPlatform.x, z: -17.1 },
+      { x: towerPlatform.x, z: -16.25 },
+      { x: 44.3, z: -16.25 },
+      { x: 44.3, z: towerPlatform.z - towerPlatform.depth / 2 - 0.7 },
+      { x: towerPlatform.x, z: towerPlatform.z - towerPlatform.depth / 2 - 0.7 },
+    ];
+    let towerRampTotalLength = 0;
+    const towerRampSegments = towerRampPathPoints.slice(1).map((end, index) => {
+      const start = towerRampPathPoints[index]!;
+      const dx = end.x - start.x;
+      const dz = end.z - start.z;
+      const length = Math.hypot(dx, dz);
+      const segment = {
+        startX: start.x,
+        startZ: start.z,
+        dx,
+        dz,
+        length,
+        startDistance: towerRampTotalLength,
+      };
+      towerRampTotalLength += length;
+      return segment;
+    });
+    const getTowerRampPointAtDistance = (distance: number) => {
+      const safeDistance = THREE.MathUtils.clamp(distance, 0, towerRampTotalLength);
+      const segment = towerRampSegments.find(
+        (candidate) => safeDistance <= candidate.startDistance + candidate.length,
+      ) ?? towerRampSegments[towerRampSegments.length - 1]!;
+      const progress = (safeDistance - segment.startDistance) / segment.length;
+      return {
+        x: segment.startX + segment.dx * progress,
+        z: segment.startZ + segment.dz * progress,
+      };
+    };
     const towerRampStepSpecs: BoxInstanceSpec[] = Array.from({ length: 12 }, (_, index) => {
       const progress = (index + 0.5) / 12;
       const stepHeight = progress * towerPlatformTop;
+      const stepPosition = getTowerRampPointAtDistance(progress * towerRampTotalLength);
       return {
-        x: towerPlatform.x,
+        x: stepPosition.x,
         y: stepHeight - 0.045,
-        z: towerRampStartZ + (towerRampEndZ - towerRampStartZ) * progress,
+        z: stepPosition.z,
         w: 1.5,
         h: 0.09,
         d: 0.1,
@@ -1526,20 +1560,35 @@ const GamePage = () => {
       }),
     ];
     const playerCollisionObstacles = [...solidObstacles, ...playerOnlyTowerRailColliders];
-    const isWithinTowerRamp = (x: number, z: number) => (
-      Math.abs(x - towerStairSteps[0].x) <= towerStairSteps[0].w / 2
-      && z <= towerRampStartZ
-      && z >= towerRampEndZ
-    );
-    const getGroundHeight = (x: number, z: number) => {
-      if (isWithinTowerRamp(x, z)) {
-        const progress = THREE.MathUtils.clamp(
-          (towerRampStartZ - z) / (towerRampStartZ - towerRampEndZ),
+    const towerRampHalfWidth = 0.7;
+    const getTowerRampProgress = (x: number, z: number) => {
+      let nearestDistanceSquared = Number.POSITIVE_INFINITY;
+      let nearestProgress: number | null = null;
+      towerRampSegments.forEach((segment) => {
+        const lengthSquared = segment.length * segment.length;
+        const projection = THREE.MathUtils.clamp(
+          ((x - segment.startX) * segment.dx + (z - segment.startZ) * segment.dz) / lengthSquared,
           0,
           1,
         );
-        return progress * towerPlatformTop;
-      }
+        const nearestX = segment.startX + segment.dx * projection;
+        const nearestZ = segment.startZ + segment.dz * projection;
+        const dx = x - nearestX;
+        const dz = z - nearestZ;
+        const distanceSquared = dx * dx + dz * dz;
+        if (distanceSquared < nearestDistanceSquared) {
+          nearestDistanceSquared = distanceSquared;
+          nearestProgress = (segment.startDistance + projection * segment.length) / towerRampTotalLength;
+        }
+      });
+      return nearestDistanceSquared <= towerRampHalfWidth * towerRampHalfWidth
+        ? nearestProgress
+        : null;
+    };
+    const isWithinTowerRamp = (x: number, z: number) => getTowerRampProgress(x, z) !== null;
+    const getGroundHeight = (x: number, z: number) => {
+      const rampProgress = getTowerRampProgress(x, z);
+      if (rampProgress !== null) return rampProgress * towerPlatformTop;
       const insideTowerPlatform = (
         Math.abs(x - towerPlatform.x) <= towerPlatform.width / 2
         && Math.abs(z - towerPlatform.z) <= towerPlatform.depth / 2
