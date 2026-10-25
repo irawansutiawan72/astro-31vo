@@ -923,17 +923,17 @@ const GamePage = () => {
       // Bunker: ruang barat dan ceruk belakang.
       [-42, -8],
       [-33, -25],
-      // Sisi barat menara, di luar kaki dan platformnya.
+      // Area menara, di luar kaki dan platformnya.
       [25, -35],
+      [52, -30],
       // Area peti sisi barat dan timur.
       [-34, 20],
       [44, 18],
-      // Area terbuka: sudut selatan, utara, dan tengah.
+      // Area terbuka: sudut selatan dan utara.
       [-52, 47],
       [52, 47],
       [0, -49],
       [-48, -47],
-      [0, -5],
     ];
     const currentQualityCounts: Record<QualitySetting, number> = {
       low: 156,
