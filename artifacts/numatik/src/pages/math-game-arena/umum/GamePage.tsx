@@ -915,7 +915,8 @@ const GamePage = () => {
       { x: 42, y: 7.5, z: -19, w: 0.9, h: 15, d: 0.9, solid: true },
     ];
     addBoxInstances(towerMat, towerLegs);
-    addBox(13, 0.9, 13, towerMat, 37, 15, -24);
+    const towerPlatform = { x: 37, y: 15, z: -24, width: 13, height: 0.9, depth: 13 };
+    addBox(towerPlatform.width, towerPlatform.height, towerPlatform.depth, towerMat, towerPlatform.x, towerPlatform.y, towerPlatform.z);
     addBox(9, 0.7, 9, bunkerMat, 37, 19, -24);
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
 
@@ -1050,15 +1051,21 @@ const GamePage = () => {
     const towerExtraSteps: BoxInstanceSpec[] = [
       2, 3.7, 5.4, 7.1,
     ].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 }));
-    const towerDetailSpecs: BoxInstanceSpec[] = [
-      ...towerStairSteps,
-      ...towerExtraSteps,
+    const towerStairRailSpecs: BoxInstanceSpec[] = [
       { x: 36.2, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
       { x: 37.8, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
+    ];
+    const towerPlatformRailSpecs: BoxInstanceSpec[] = [
       { x: 37, y: 15.8, z: -30.2, w: 12, h: 0.2, d: 0.18 },
       { x: 37, y: 15.8, z: -17.8, w: 12, h: 0.2, d: 0.18 },
       { x: 30.7, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
       { x: 43.3, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
+    ];
+    const towerDetailSpecs: BoxInstanceSpec[] = [
+      ...towerStairSteps,
+      ...towerExtraSteps,
+      ...towerStairRailSpecs,
+      ...towerPlatformRailSpecs,
       { x: 34.2, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: 0.22 },
       { x: 39.8, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: -0.22 },
     ];
@@ -1068,6 +1075,17 @@ const GamePage = () => {
       towerDetailSpecs,
       tierCounts(8, 12, 20),
     );
+    const towerRampStartZ = towerStairSteps[0].z;
+    const towerRampEndZ = towerPlatform.z - towerPlatform.depth / 2;
+    const towerPlatformTop = towerPlatform.y + towerPlatform.height / 2;
+    const towerRampLevels = [
+      0,
+      ...[...towerStairSteps, ...towerExtraSteps]
+        .map((step) => step.y + step.h / 2)
+        .filter((height) => height < towerPlatformTop)
+        .sort((a, b) => a - b),
+      towerPlatformTop,
+    ];
 
     const barrierShape = new THREE.Shape();
     barrierShape.moveTo(-0.5, 0);
@@ -1463,6 +1481,7 @@ const GamePage = () => {
     let yaw = 0;
     let pitch = 0;
     let verticalVelocity = 0;
+    let playerGrounded = true;
     let frame = 0;
     let lastRenderAt = 0;
     let activeDecorationQuality = qualityRef.current;
@@ -1485,6 +1504,91 @@ const GamePage = () => {
     const sightRaycaster = new THREE.Raycaster();
     const playerLimit = 55;
     const worldCollisionRadius = 0.48;
+    const playerOnlyTowerRailColliders: CollisionBox[] = [
+      ...towerStairRailSpecs.map((rail) => ({
+        x: rail.x,
+        z: rail.z,
+        width: rail.w,
+        depth: rail.d,
+      })),
+      ...towerPlatformRailSpecs.flatMap((rail) => {
+        if (rail.w <= rail.d) {
+          return [{ x: rail.x, z: rail.z, width: rail.w, depth: rail.d }];
+        }
+        const openingWidth = towerStairSteps[0].w;
+        const segmentWidth = (rail.w - openingWidth) / 2;
+        const segmentOffset = openingWidth / 2 + segmentWidth / 2;
+        return [-1, 1].map((side) => ({
+          x: rail.x + side * segmentOffset,
+          z: rail.z,
+          width: segmentWidth,
+          depth: rail.d,
+        }));
+      }),
+    ];
+    const playerCollisionObstacles = [...solidObstacles, ...playerOnlyTowerRailColliders];
+    const isWithinTowerRamp = (x: number, z: number) => (
+      Math.abs(x - towerStairSteps[0].x) <= towerStairSteps[0].w / 2
+      && z <= towerRampStartZ
+      && z >= towerRampEndZ
+    );
+    const getGroundHeight = (x: number, z: number) => {
+      if (isWithinTowerRamp(x, z)) {
+        const progress = THREE.MathUtils.clamp(
+          (towerRampStartZ - z) / (towerRampStartZ - towerRampEndZ),
+          0,
+          1,
+        );
+        const levelPosition = progress * (towerRampLevels.length - 1);
+        const levelIndex = Math.min(Math.floor(levelPosition), towerRampLevels.length - 2);
+        return THREE.MathUtils.lerp(
+          towerRampLevels[levelIndex],
+          towerRampLevels[levelIndex + 1],
+          levelPosition - levelIndex,
+        );
+      }
+      const insideTowerPlatform = (
+        Math.abs(x - towerPlatform.x) <= towerPlatform.width / 2
+        && Math.abs(z - towerPlatform.z) <= towerPlatform.depth / 2
+      );
+      return insideTowerPlatform ? towerPlatformTop : 0;
+    };
+    const maxStepUp = 0.6;
+    const movePlayerTo = (nextX: number, nextZ: number) => {
+      const collidesWithObstacle = (x: number, z: number) => playerCollisionObstacles.some(({ x: cx, z: cz, width, depth }) => (
+        Math.abs(x - cx) < width / 2 + 0.45 && Math.abs(z - cz) < depth / 2 + 0.45
+      ));
+      const startX = player.position.x;
+      const startZ = player.position.z;
+      if (collidesWithObstacle(nextX, nextZ)) return;
+
+      const startGround = getGroundHeight(startX, startZ);
+      if (getGroundHeight(nextX, nextZ) - startGround <= maxStepUp) {
+        player.position.x = nextX;
+        player.position.z = nextZ;
+        return;
+      }
+
+      let low = 0;
+      let high = 1;
+      for (let iteration = 0; iteration < 12; iteration += 1) {
+        const fraction = (low + high) / 2;
+        const candidateX = THREE.MathUtils.lerp(startX, nextX, fraction);
+        const candidateZ = THREE.MathUtils.lerp(startZ, nextZ, fraction);
+        if (
+          !collidesWithObstacle(candidateX, candidateZ)
+          && getGroundHeight(candidateX, candidateZ) - startGround <= maxStepUp
+        ) {
+          low = fraction;
+        } else {
+          high = fraction;
+        }
+      }
+      if (low > 0.001) {
+        player.position.x = THREE.MathUtils.lerp(startX, nextX, low);
+        player.position.z = THREE.MathUtils.lerp(startZ, nextZ, low);
+      }
+    };
     const isBlocked = (x: number, z: number, radius = worldCollisionRadius) => solidObstacles.some(({ x: cx, z: cz, width, depth }) => (
       Math.abs(x - cx) < width / 2 + radius && Math.abs(z - cz) < depth / 2 + radius
     ));
@@ -2236,6 +2340,7 @@ const GamePage = () => {
       yaw = 0;
       pitch = 0;
       verticalVelocity = 0;
+      playerGrounded = true;
       player.position.set(0, 1.65, 51);
       player.rotation.set(0, 0, 0);
       camera.rotation.set(0, 0, 0);
@@ -2441,9 +2546,15 @@ const GamePage = () => {
       }
       const keysNow = keys.current;
       if (jumpRequested.current) {
-        if (player.position.y <= 1.651) verticalVelocity = 7;
+        if (playerGrounded) {
+          verticalVelocity = 7;
+          playerGrounded = false;
+        }
         jumpRequested.current = false;
       }
+      const startGroundX = player.position.x;
+      const startGroundZ = player.position.z;
+      const groundBeforeMovement = getGroundHeight(startGroundX, startGroundZ);
       const inputX = (keysNow.KeyD || keysNow.ArrowRight ? 1 : 0) - (keysNow.KeyA || keysNow.ArrowLeft ? 1 : 0) + moveInput.current.x;
       const inputY = (keysNow.KeyW || keysNow.ArrowUp ? 1 : 0) - (keysNow.KeyS || keysNow.ArrowDown ? 1 : 0) + moveInput.current.y;
       const length = Math.hypot(inputX, inputY);
@@ -2452,18 +2563,44 @@ const GamePage = () => {
         const speed = 7.2 * (sprintActive ? 1.62 : 1) * dt / Math.max(1, length);
         const dx = (Math.cos(yaw) * inputX + Math.sin(yaw) * inputY) * speed;
         const dz = (Math.sin(yaw) * inputX - Math.cos(yaw) * inputY) * speed;
-        const collidesWithObstacle = (x: number, z: number) => solidObstacles.some(({ x: cx, z: cz, width, depth }) => (
-          Math.abs(x - cx) < width / 2 + 0.45 && Math.abs(z - cz) < depth / 2 + 0.45
-        ));
         const nextX = THREE.MathUtils.clamp(player.position.x + dx, -playerLimit, playerLimit);
         const nextZ = THREE.MathUtils.clamp(player.position.z + dz, -playerLimit, playerLimit);
-        if (!collidesWithObstacle(nextX, player.position.z)) player.position.x = nextX;
-        if (!collidesWithObstacle(player.position.x, nextZ)) player.position.z = nextZ;
+        movePlayerTo(nextX, player.position.z);
+        movePlayerTo(player.position.x, nextZ);
       }
-      if (player.position.y > 1.65 || verticalVelocity > 0) {
+
+      const groundAfterMovement = getGroundHeight(player.position.x, player.position.z);
+      const stayedOnRamp = (
+        isWithinTowerRamp(startGroundX, startGroundZ)
+        && isWithinTowerRamp(player.position.x, player.position.z)
+      );
+      if (
+        playerGrounded
+        && groundBeforeMovement - groundAfterMovement > maxStepUp
+        && !stayedOnRamp
+      ) {
+        playerGrounded = false;
+      }
+      if (playerGrounded) {
+        const targetEyeHeight = groundAfterMovement + 1.65;
+        player.position.y = THREE.MathUtils.lerp(
+          player.position.y,
+          targetEyeHeight,
+          1 - Math.exp(-60 * dt),
+        );
+        if (Math.abs(targetEyeHeight - player.position.y) < 0.015) {
+          player.position.y = targetEyeHeight;
+        }
+        verticalVelocity = 0;
+      } else {
         verticalVelocity -= 18 * dt;
-        player.position.y = Math.max(1.65, player.position.y + verticalVelocity * dt);
-        if (player.position.y === 1.65) verticalVelocity = 0;
+        player.position.y += verticalVelocity * dt;
+        const groundEyeHeight = groundAfterMovement + 1.65;
+        if (verticalVelocity <= 0 && player.position.y <= groundEyeHeight) {
+          player.position.y = groundEyeHeight;
+          verticalVelocity = 0;
+          playerGrounded = true;
+        }
       }
       player.rotation.y = yaw;
       const aimTarget = aimingRef.current && !sprintActive ? 1 : 0;
