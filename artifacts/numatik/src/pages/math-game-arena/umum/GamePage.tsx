@@ -5,6 +5,7 @@ import * as THREE from "three";
 
 type MoveInput = { x: number; y: number };
 type QualitySetting = "low" | "medium" | "high";
+type BrightnessSetting = "normal" | "bright" | "very-bright";
 type WeaponId = "rifle" | "pistol";
 type GamePhase = "combat" | "supply" | "paused" | "gameover";
 type SupplyQuestion = { prompt: string; answer: number; options: number[] };
@@ -102,6 +103,17 @@ const WEAPON_CONFIG: Record<WeaponId, {
 const MAX_ACTIVE_ENEMIES = 10;
 const STARTING_ENEMIES = 6;
 const BEST_SCORE_KEY = "numatik-strike-best-score";
+const SKY_HORIZON_COLOR = "#e9f3f7";
+const QUALITY_FOG: Record<QualitySetting, { near: number; far: number }> = {
+  low: { near: 30, far: 124 },
+  medium: { near: 36, far: 145 },
+  high: { near: 40, far: 160 },
+};
+const BRIGHTNESS_PRESETS: Record<BrightnessSetting, { label: string; exposure: number; hemisphereIntensity: number }> = {
+  normal: { label: "Normal", exposure: 1.22, hemisphereIntensity: 2.7 },
+  bright: { label: "Terang", exposure: 1.3, hemisphereIntensity: 3.05 },
+  "very-bright": { label: "Sangat Terang", exposure: 1.38, hemisphereIntensity: 3.4 },
+};
 const createSupplyQuestion = (waveNumber: number): SupplyQuestion => {
   const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
   let prompt: string;
@@ -178,7 +190,13 @@ const GamePage = () => {
   const mobileRef = useRef(mobile);
   const [quality, setQuality] = useState<QualitySetting>("medium");
   const qualityRef = useRef<QualitySetting>("medium");
+  const [brightness, setBrightness] = useState<BrightnessSetting>("normal");
+  const brightnessRef = useRef<BrightnessSetting>("normal");
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const hemisphereLightRef = useRef<THREE.HemisphereLight | null>(null);
+  const sunlightRef = useRef<THREE.DirectionalLight | null>(null);
   const [joystick, setJoystick] = useState<MoveInput>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
   const scoreRef = useRef(0);
@@ -239,11 +257,58 @@ const GamePage = () => {
   const joystickPointer = useRef<number | null>(null);
   const [mobileSprintHeld, setMobileSprintHeld] = useState(false);
 
+  const applyBrightnessSetting = (nextBrightness: BrightnessSetting) => {
+    brightnessRef.current = nextBrightness;
+    const preset = BRIGHTNESS_PRESETS[nextBrightness];
+    if (rendererRef.current) rendererRef.current.toneMappingExposure = preset.exposure;
+    if (hemisphereLightRef.current) hemisphereLightRef.current.intensity = preset.hemisphereIntensity;
+  };
+
+  const applyQualitySetting = (nextQuality: QualitySetting) => {
+    qualityRef.current = nextQuality;
+    const renderer = rendererRef.current;
+    const shadowsEnabled = nextQuality === "high" && !mobileRef.current;
+    if (renderer) {
+      renderer.setPixelRatio(getQualityPixelRatio(nextQuality));
+      renderer.shadowMap.enabled = shadowsEnabled;
+      renderer.shadowMap.needsUpdate = true;
+    }
+    const sunlight = sunlightRef.current;
+    if (sunlight) {
+      sunlight.castShadow = shadowsEnabled;
+      if (shadowsEnabled) sunlight.shadow.mapSize.set(1024, 1024);
+      sunlight.shadow.camera.left = -70;
+      sunlight.shadow.camera.right = 70;
+      sunlight.shadow.camera.top = 70;
+      sunlight.shadow.camera.bottom = -70;
+      sunlight.shadow.camera.near = 0.5;
+      sunlight.shadow.camera.far = 150;
+      sunlight.shadow.bias = -0.0005;
+      sunlight.shadow.normalBias = 0.025;
+      sunlight.shadow.camera.updateProjectionMatrix();
+    }
+    const scene = sceneRef.current;
+    if (scene) {
+      const fog = QUALITY_FOG[nextQuality];
+      scene.fog = new THREE.Fog(SKY_HORIZON_COLOR, fog.near, fog.far);
+      scene.traverse((object) => {
+        if (!(object instanceof THREE.Mesh)) return;
+        if (object.userData.strikeShadowEligible) {
+          object.castShadow = shadowsEnabled;
+          object.receiveShadow = shadowsEnabled;
+        }
+        if (object.userData.strikeShadowReceiver) object.receiveShadow = shadowsEnabled;
+      });
+    }
+  };
+
   useEffect(() => {
     const updateMobile = () => {
       const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 760;
+      const wasMobile = mobileRef.current;
       mobileRef.current = isMobile;
       setMobile(isMobile);
+      if (wasMobile !== isMobile) applyQualitySetting(qualityRef.current);
     };
     updateMobile();
     try {
@@ -283,32 +348,75 @@ const GamePage = () => {
     renderer.setPixelRatio(getQualityPixelRatio(qualityRef.current));
     renderer.setSize(host.clientWidth, host.clientHeight);
     renderer.shadowMap.enabled = false;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.08;
+    renderer.toneMappingExposure = BRIGHTNESS_PRESETS[brightnessRef.current].exposure;
     renderer.domElement.className = "strike-canvas";
     renderer.domElement.setAttribute("aria-label", "Arena Numatik Strike");
     host.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#ad7770");
-    scene.fog = new THREE.Fog("#a47b78", 46, 138);
-    const camera = new THREE.PerspectiveCamera(72, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 140);
+    sceneRef.current = scene;
+    const initialFog = QUALITY_FOG[qualityRef.current];
+    scene.background = new THREE.Color(SKY_HORIZON_COLOR);
+    scene.fog = new THREE.Fog(SKY_HORIZON_COLOR, initialFog.near, initialFog.far);
+    const camera = new THREE.PerspectiveCamera(72, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 180);
     const player = new THREE.Group();
     player.position.set(0, 1.65, 51);
     scene.add(player);
     player.add(camera);
 
-    scene.add(new THREE.HemisphereLight(0xffd9bd, 0x373c43, 2.1));
-    const keyLight = new THREE.DirectionalLight(0xffc08c, 2.4);
+    const hemisphereLight = new THREE.HemisphereLight(
+      0xc4e5ff,
+      0x8a704f,
+      BRIGHTNESS_PRESETS[brightnessRef.current].hemisphereIntensity,
+    );
+    hemisphereLightRef.current = hemisphereLight;
+    scene.add(hemisphereLight);
+    scene.add(new THREE.AmbientLight(0xffe8ca, 0.42));
+    const keyLight = new THREE.DirectionalLight(0xffe5b5, 3);
     keyLight.position.set(-32, 42, -24);
+    keyLight.castShadow = false;
+    keyLight.shadow.camera.left = -70;
+    keyLight.shadow.camera.right = 70;
+    keyLight.shadow.camera.top = 70;
+    keyLight.shadow.camera.bottom = -70;
+    keyLight.shadow.camera.near = 0.5;
+    keyLight.shadow.camera.far = 150;
+    keyLight.shadow.bias = -0.0005;
+    keyLight.shadow.normalBias = 0.025;
+    sunlightRef.current = keyLight;
     scene.add(keyLight);
-    const fillLight = new THREE.DirectionalLight(0x8b9fbd, 0.8);
+    const fillLight = new THREE.DirectionalLight(0xb8d6f4, 0.65);
     fillLight.position.set(28, 18, 34);
     scene.add(fillLight);
 
     const materials: THREE.Material[] = [];
     const textures: THREE.Texture[] = [];
+    const contactShadowCanvas = document.createElement("canvas");
+    contactShadowCanvas.width = 128;
+    contactShadowCanvas.height = 128;
+    const contactShadowContext = contactShadowCanvas.getContext("2d");
+    if (!contactShadowContext) throw new Error("Canvas 2D tidak tersedia untuk bayangan arena.");
+    const contactGradient = contactShadowContext.createRadialGradient(64, 64, 8, 64, 64, 64);
+    contactGradient.addColorStop(0, "rgba(48,36,23,0.58)");
+    contactGradient.addColorStop(0.48, "rgba(48,36,23,0.29)");
+    contactGradient.addColorStop(1, "rgba(48,36,23,0)");
+    contactShadowContext.fillStyle = contactGradient;
+    contactShadowContext.fillRect(0, 0, 128, 128);
+    const contactShadowTexture = new THREE.CanvasTexture(contactShadowCanvas);
+    contactShadowTexture.colorSpace = THREE.SRGBColorSpace;
+    textures.push(contactShadowTexture);
+    const contactShadowMaterial = new THREE.MeshBasicMaterial({
+      map: contactShadowTexture,
+      transparent: true,
+      opacity: 0.48,
+      depthWrite: false,
+      toneMapped: false,
+    });
+    materials.push(contactShadowMaterial);
+    const contactShadowGeometry = new THREE.PlaneGeometry(1, 1);
     const material = (color: string, roughness = 0.72, metalness = 0.15) => {
       const mat = new THREE.MeshStandardMaterial({ color, roughness, metalness, flatShading: true });
       materials.push(mat);
@@ -397,20 +505,20 @@ const GamePage = () => {
       textures.push(texture);
       return texture;
     };
-    const floorMat = material("#66594d", 0.96, 0.02);
-    const roadMat = material("#4d4c49", 0.94, 0.04);
-    const openZoneMat = material("#70604e", 0.98, 0.01);
-    const perimeterMat = material("#575858", 0.92, 0.08);
-    const bunkerMat = material("#77736b", 0.9, 0.05);
-    const bunkerRoofMat = material("#494d4d", 0.88, 0.12);
-    const lowWallMat = material("#8b8376", 0.94, 0.02);
-    const crateMat = material("#655747", 0.88, 0.08);
-    const crateMetalMat = material("#59625d", 0.48, 0.68);
-    const towerMat = material("#454d51", 0.7, 0.28);
-    const steelDetailMat = material("#566064", 0.48, 0.62);
-    const sandbagMat = material("#77725e", 0.98, 0.01);
-    const tireMat = material("#242829", 0.94, 0.01);
-    const vehicleMat = material("#52564d", 0.83, 0.24);
+    const floorMat = material("#ffffff", 0.96, 0.02);
+    const roadMat = material("#ffffff", 0.94, 0.04);
+    const openZoneMat = material("#ffffff", 0.98, 0.01);
+    const perimeterMat = material("#ffffff", 0.92, 0.08);
+    const bunkerMat = material("#ffffff", 0.9, 0.05);
+    const bunkerRoofMat = material("#ffffff", 0.88, 0.12);
+    const lowWallMat = material("#ffffff", 0.94, 0.02);
+    const crateMat = material("#ffffff", 0.88, 0.08);
+    const crateMetalMat = material("#ffffff", 0.58, 0.42);
+    const towerMat = material("#ffffff", 0.7, 0.22);
+    const steelDetailMat = material("#ffffff", 0.56, 0.42);
+    const sandbagMat = material("#ffffff", 0.98, 0.01);
+    const tireMat = material("#414644", 0.94, 0.01);
+    const vehicleMat = material("#ffffff", 0.83, 0.18);
     const windowMat = new THREE.MeshStandardMaterial({
       color: "#55636a",
       roughness: 0.24,
@@ -420,8 +528,8 @@ const GamePage = () => {
       flatShading: true,
     });
     materials.push(windowMat);
-    const puddleMat = material("#484d4d", 0.2, 0.52);
-    const groundDetailMat = material("#72634f", 0.98, 0.01);
+    const puddleMat = material("#ffffff", 0.34, 0.28);
+    const groundDetailMat = material("#ffffff", 0.98, 0.01);
     const glowMat = new THREE.MeshBasicMaterial({ color: "#ffd18b", toneMapped: false });
     const darkInsetMat = material("#343a3b", 0.8, 0.14);
     materials.push(glowMat);
@@ -434,20 +542,20 @@ const GamePage = () => {
       toneMapped: false,
     });
     materials.push(searchlightBeamMat);
-    floorMat.map = createSurfaceTexture("#66594d", "earth");
-    roadMat.map = createSurfaceTexture("#4d4c49", "earth");
-    openZoneMat.map = floorMat.map;
-    perimeterMat.map = createSurfaceTexture("#575858", "concrete");
-    bunkerMat.map = createSurfaceTexture("#77736b", "concrete");
-    bunkerRoofMat.map = createSurfaceTexture("#494d4d", "concrete");
+    floorMat.map = createSurfaceTexture("#97856b", "earth");
+    roadMat.map = createSurfaceTexture("#77756d", "earth");
+    openZoneMat.map = createSurfaceTexture("#b8a276", "earth");
+    perimeterMat.map = createSurfaceTexture("#898d88", "concrete");
+    bunkerMat.map = createSurfaceTexture("#b7b1a2", "concrete");
+    bunkerRoofMat.map = createSurfaceTexture("#858b84", "concrete");
     lowWallMat.map = bunkerMat.map;
-    crateMat.map = createSurfaceTexture("#655747", "wood");
-    crateMetalMat.map = createSurfaceTexture("#59625d", "metal");
-    towerMat.map = createSurfaceTexture("#454d51", "metal");
-    steelDetailMat.map = createSurfaceTexture("#566064", "metal");
-    sandbagMat.map = createSurfaceTexture("#77725e", "earth");
-    vehicleMat.map = createSurfaceTexture("#52564d", "metal");
-    puddleMat.map = createSurfaceTexture("#484d4d", "earth");
+    crateMat.map = createSurfaceTexture("#c3a77a", "wood");
+    crateMetalMat.map = createSurfaceTexture("#aeb8af", "metal");
+    towerMat.map = createSurfaceTexture("#929d9d", "metal");
+    steelDetailMat.map = createSurfaceTexture("#a4ada6", "metal");
+    sandbagMat.map = createSurfaceTexture("#bdb18b", "earth");
+    vehicleMat.map = createSurfaceTexture("#909384", "metal");
+    puddleMat.map = createSurfaceTexture("#758285", "earth");
     groundDetailMat.map = floorMat.map;
     [
       floorMat, roadMat, openZoneMat, perimeterMat, bunkerMat, bunkerRoofMat,
@@ -518,16 +626,16 @@ const GamePage = () => {
     const skyGeometry = new THREE.SphereGeometry(145, 32, 20);
     const skyPositions = skyGeometry.getAttribute("position");
     const skyColors = new Float32Array(skyPositions.count * 3);
-    const horizonColor = new THREE.Color("#e2a16d");
-    const duskColor = new THREE.Color("#825e70");
-    const zenithColor = new THREE.Color("#26314c");
+    const horizonColor = new THREE.Color(SKY_HORIZON_COLOR);
+    const middayColor = new THREE.Color("#a8d9f3");
+    const zenithColor = new THREE.Color("#4f91cb");
     const skyColor = new THREE.Color();
     for (let i = 0; i < skyPositions.count; i += 1) {
       const height = THREE.MathUtils.clamp(skyPositions.getY(i) / 145, 0, 1);
-      if (height < 0.48) {
-        skyColor.copy(horizonColor).lerp(duskColor, height / 0.48);
+      if (height < 0.34) {
+        skyColor.copy(horizonColor).lerp(middayColor, height / 0.34);
       } else {
-        skyColor.copy(duskColor).lerp(zenithColor, (height - 0.48) / 0.52);
+        skyColor.copy(middayColor).lerp(zenithColor, (height - 0.34) / 0.66);
       }
       skyColors[i * 3] = skyColor.r;
       skyColors[i * 3 + 1] = skyColor.g;
@@ -539,11 +647,48 @@ const GamePage = () => {
     const sky = new THREE.Mesh(skyGeometry, skyMaterial);
     sky.renderOrder = -1;
     scene.add(sky);
-    const sunMaterial = new THREE.MeshBasicMaterial({ color: "#ffca91", fog: true });
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: "#fff0b8", fog: false, toneMapped: false });
     materials.push(sunMaterial);
-    const sun = new THREE.Mesh(new THREE.SphereGeometry(5.2, 20, 12), sunMaterial);
-    sun.position.set(-28, 31, -42);
+    const sun = new THREE.Mesh(new THREE.SphereGeometry(5.8, 20, 12), sunMaterial);
+    sun.position.set(-16, 35, -52);
     scene.add(sun);
+    const cloudCanvas = document.createElement("canvas");
+    cloudCanvas.width = 256;
+    cloudCanvas.height = 128;
+    const cloudContext = cloudCanvas.getContext("2d");
+    if (!cloudContext) throw new Error("Canvas 2D tidak tersedia untuk awan arena.");
+    const cloudGradient = cloudContext.createRadialGradient(128, 70, 8, 128, 70, 112);
+    cloudGradient.addColorStop(0, "rgba(255,255,255,0.7)");
+    cloudGradient.addColorStop(0.48, "rgba(255,255,255,0.38)");
+    cloudGradient.addColorStop(1, "rgba(255,255,255,0)");
+    cloudContext.fillStyle = cloudGradient;
+    cloudContext.beginPath();
+    cloudContext.ellipse(128, 70, 112, 42, 0, 0, Math.PI * 2);
+    cloudContext.ellipse(86, 61, 48, 29, -0.12, 0, Math.PI * 2);
+    cloudContext.ellipse(164, 56, 54, 34, 0.1, 0, Math.PI * 2);
+    cloudContext.fill();
+    const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+    cloudTexture.colorSpace = THREE.SRGBColorSpace;
+    textures.push(cloudTexture);
+    const cloudMaterial = new THREE.SpriteMaterial({
+      map: cloudTexture,
+      transparent: true,
+      opacity: 0.52,
+      depthWrite: false,
+      fog: false,
+      toneMapped: false,
+    });
+    materials.push(cloudMaterial);
+    [
+      { x: -58, y: 30, z: -92, width: 29, height: 9 },
+      { x: 15, y: 42, z: -120, width: 39, height: 11 },
+      { x: 69, y: 27, z: -83, width: 25, height: 8 },
+    ].forEach(({ x, y, z, width, height }) => {
+      const cloud = new THREE.Sprite(cloudMaterial);
+      cloud.position.set(x, y, z);
+      cloud.scale.set(width, height, 1);
+      scene.add(cloud);
+    });
 
     type CollisionBox = { x: number; z: number; width: number; depth: number };
     const solidObstacles: CollisionBox[] = [];
@@ -562,6 +707,7 @@ const GamePage = () => {
       const addBatch = (batchSpecs: BoxInstanceSpec[], batchCounts: QualityCounts, isSolid: boolean) => {
         if (!batchSpecs.length) return;
         const mesh = new THREE.InstancedMesh(geometry, mat, batchSpecs.length);
+        mesh.userData.strikeShadowEligible = true;
         mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
         const transform = new THREE.Object3D();
         batchSpecs.forEach((spec, index) => {
@@ -588,6 +734,7 @@ const GamePage = () => {
         mesh.computeBoundingBox();
         mesh.computeBoundingSphere();
         scene.add(mesh);
+        if (isSolid) addContactShadows(batchSpecs);
         if (isSolid) worldOccluders.push(mesh);
         tieredInstanceMeshes.push({ mesh, counts: batchCounts });
       };
@@ -611,9 +758,29 @@ const GamePage = () => {
         );
       }
     };
+    const addContactShadows = (specs: BoxInstanceSpec[]) => {
+      const groundedSpecs = specs.filter((spec) => spec.y - spec.h / 2 <= 0.15);
+      if (!groundedSpecs.length) return;
+      const mesh = new THREE.InstancedMesh(contactShadowGeometry, contactShadowMaterial, groundedSpecs.length);
+      mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+      const transform = new THREE.Object3D();
+      groundedSpecs.forEach((spec, index) => {
+        transform.position.set(spec.x, -0.032, spec.z);
+        transform.rotation.set(-Math.PI / 2, spec.rotY ?? 0, 0);
+        transform.scale.set(Math.max(1.25, spec.w * 1.38), Math.max(1.25, spec.d * 1.42), 1);
+        transform.updateMatrix();
+        mesh.setMatrixAt(index, transform.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingBox();
+      mesh.computeBoundingSphere();
+      mesh.renderOrder = 1;
+      scene.add(mesh);
+    };
     const addBoxInstances = (mat: THREE.Material, specs: BoxInstanceSpec[]) => {
       if (!specs.length) return;
       const mesh = new THREE.InstancedMesh(instanceBoxGeometry, mat, specs.length);
+      mesh.userData.strikeShadowEligible = true;
       mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
       const transform = new THREE.Object3D();
       specs.forEach((spec, index) => {
@@ -639,26 +806,30 @@ const GamePage = () => {
       mesh.computeBoundingBox();
       mesh.computeBoundingSphere();
       scene.add(mesh);
+      addContactShadows(specs.filter((spec) => spec.solid));
       if (specs.some((spec) => spec.solid)) worldOccluders.push(mesh);
       return mesh;
     };
 
     const addBox = (w: number, h: number, d: number, mat: THREE.Material, x: number, y: number, z: number) => {
       const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+      mesh.userData.strikeShadowEligible = true;
       mesh.position.set(x, y, z);
       scene.add(mesh);
       return mesh;
     };
     const addGroundPatch = (w: number, d: number, mat: THREE.Material, x: number, z: number, y = -0.045) => {
       const patch = new THREE.Mesh(new THREE.PlaneGeometry(w, d), mat);
+      patch.userData.strikeShadowReceiver = true;
       patch.rotation.x = -Math.PI / 2;
       patch.position.set(x, y, z);
       scene.add(patch);
       return patch;
     };
 
-    // A 120 x 120 dusk training zone with an open range, bunker corridor, crate yards, and watchtower.
+    // A 120 x 120 daylight training zone with an open range, bunker corridor, crate yards, and watchtower.
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), floorMat);
+    floor.userData.strikeShadowReceiver = true;
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = -0.09;
     scene.add(floor);
@@ -2134,6 +2305,9 @@ const GamePage = () => {
       playSound("wave");
     };
     restartGameRef.current = restartGame;
+    applyQualitySetting(qualityRef.current);
+    applyBrightnessSetting(brightnessRef.current);
+
     const animate = (now: number) => {
       frame = window.requestAnimationFrame(animate);
       if (lastRenderAt && now - lastRenderAt < 1000 / 60) return;
@@ -2422,6 +2596,9 @@ const GamePage = () => {
       firingRef.current = false;
       reloadingRef.current = false;
       if (rendererRef.current === renderer) rendererRef.current = null;
+      if (sceneRef.current === scene) sceneRef.current = null;
+      hemisphereLightRef.current = null;
+      sunlightRef.current = null;
       if (document.pointerLockElement === renderer.domElement) document.exitPointerLock?.();
       if (hitFeedbackTimeoutRef.current !== null) {
         window.clearTimeout(hitFeedbackTimeoutRef.current);
@@ -2571,9 +2748,20 @@ const GamePage = () => {
         .strike-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#45dfb1;margin-right:8px;box-shadow:0 0 8px #45dfb1}
          .strike-header-button{pointer-events:auto;min-height:36px;padding:7px 10px;border:1px solid rgba(105,210,220,.45);background:rgba(5,20,31,.82);color:#dffbff;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;cursor:pointer}
          .strike-header-button:disabled{opacity:.46;cursor:not-allowed}
-        .strike-quality-control{position:absolute;right:clamp(16px,4vw,48px);top:68px;display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid rgba(202,211,211,.2);background:rgba(19,24,30,.58);pointer-events:auto}
-        .strike-quality-control label{font:500 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#aeb8b8}
-        .strike-quality-control select{border:1px solid rgba(202,211,211,.28);border-radius:2px;background:#22282c;color:#e6e5dc;padding:4px 7px;font:500 10px var(--font-body,'Exo 2'),sans-serif;cursor:pointer}
+        .strike-quality-control{position:absolute;z-index:4;right:clamp(16px,4vw,48px);top:68px;pointer-events:auto}
+        .strike-settings-toggle,.strike-settings-panel select{border:1px solid rgba(202,211,211,.32);background:rgba(19,31,38,.88);color:#eef7f7;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em;cursor:pointer}
+        .strike-settings-toggle{padding:8px 10px;box-shadow:0 4px 14px rgba(16,28,34,.14)}
+        .strike-settings-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(248px,calc(100vw - 24px));padding:12px;border:1px solid rgba(202,211,211,.3);background:rgba(22,33,37,.94);box-shadow:0 12px 32px rgba(21,31,35,.22);backdrop-filter:blur(7px)}
+        .strike-settings-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .strike-settings-row label,.strike-settings-panel legend{font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#d7e4e4}
+        .strike-settings-panel select{border-radius:2px;padding:6px 8px;font:500 10px var(--font-body,'Exo 2'),sans-serif;letter-spacing:0}
+        .strike-settings-panel fieldset{margin:12px 0 0;padding:10px 0 0;border:0;border-top:1px solid rgba(202,211,211,.18)}
+        .strike-settings-panel legend{padding:0 8px 0 0}
+        .strike-brightness-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+        .strike-brightness-options button{min-height:34px;padding:5px 4px;border:1px solid rgba(202,211,211,.24);background:rgba(9,18,23,.74);color:#c7d6d8;font:500 8px var(--font-body,'Exo 2'),sans-serif;cursor:pointer}
+        .strike-brightness-options button[aria-pressed="true"]{border-color:#f3d391;background:rgba(120,99,57,.35);color:#fff1c9}
+        .strike-settings-toggle:focus-visible,.strike-settings-panel select:focus-visible,.strike-brightness-options button:focus-visible{outline:2px solid #8fe3ec;outline-offset:2px}
+        .strike-atmosphere-vignette{position:absolute;z-index:0;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(42,46,48,.16) 100%)}
          .strike-reticle{position:absolute;left:50%;top:50%;width:36px;height:36px;transform:translate(-50%,-50%);opacity:.78;transition:opacity .15s,filter .15s}
          .strike-reticle span{position:absolute;display:block;background:#d6fbff;border-radius:2px;box-shadow:0 0 4px rgba(95,230,238,.35)}
          .strike-reticle .reticle-top,.strike-reticle .reticle-bottom{left:17px;width:2px;height:7px}
@@ -2676,8 +2864,9 @@ const GamePage = () => {
            .strike-status{font-size:7px;padding:7px 6px;letter-spacing:.04em}
             .strike-header-actions{gap:4px}
             .strike-header-button{min-height:30px;padding:5px 6px;font-size:6px;letter-spacing:.04em}
-           .strike-quality-control{top:62px;padding:5px 6px}
-           .strike-quality-control label{font-size:7px}
+            .strike-quality-control{top:62px;right:12px}
+            .strike-settings-toggle{padding:6px 7px;font-size:7px}
+            .strike-settings-panel{width:min(232px,calc(100vw - 24px));padding:10px}
            .strike-radar{right:13px;top:105px;width:92px;height:92px}
            .strike-feed{top:78px;left:12px;width:min(185px,49vw)}
            .strike-feed-item{padding:5px 7px;font-size:7px}
@@ -2713,6 +2902,7 @@ const GamePage = () => {
       `}</style>
       <div ref={mountRef} className="absolute inset-0" />
       <div className="strike-hud">
+        <div className="strike-atmosphere-vignette" aria-hidden="true" />
         <header className="strike-top">
           <div className="strike-brand">
             <button className="strike-back" onClick={() => navigate("/ruang-untuk-guru/numatik-game")} aria-label="Kembali ke menu Numatik Game">
@@ -2773,21 +2963,52 @@ const GamePage = () => {
           </div>
         )}
         <div className="strike-quality-control">
-          <label htmlFor="strike-quality">KUALITAS</label>
-          <select
-            id="strike-quality"
-            value={quality}
-            onChange={(event) => {
-              const nextQuality = event.target.value as QualitySetting;
-              qualityRef.current = nextQuality;
-              setQuality(nextQuality);
-              rendererRef.current?.setPixelRatio(getQualityPixelRatio(nextQuality));
-            }}
+          <button
+            className="strike-settings-toggle"
+            type="button"
+            aria-expanded={settingsOpen}
+            aria-controls="strike-settings-panel"
+            onClick={() => setSettingsOpen((open) => !open)}
+          >PENGATURAN</button>
+          <section
+            className="strike-settings-panel"
+            id="strike-settings-panel"
+            aria-label="Pengaturan permainan"
+            hidden={!settingsOpen}
           >
-            <option value="low">Rendah</option>
-            <option value="medium">Sedang</option>
-            <option value="high">Tinggi</option>
-          </select>
+            <div className="strike-settings-row">
+              <label htmlFor="strike-quality">KUALITAS</label>
+              <select
+                id="strike-quality"
+                value={quality}
+                onChange={(event) => {
+                  const nextQuality = event.target.value as QualitySetting;
+                  setQuality(nextQuality);
+                  applyQualitySetting(nextQuality);
+                }}
+              >
+                <option value="low">Rendah</option>
+                <option value="medium">Sedang</option>
+                <option value="high">Tinggi</option>
+              </select>
+            </div>
+            <fieldset>
+              <legend>Kecerahan</legend>
+              <div className="strike-brightness-options" role="group" aria-label="Kecerahan">
+                {(Object.keys(BRIGHTNESS_PRESETS) as BrightnessSetting[]).map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    aria-pressed={brightness === level}
+                    onClick={() => {
+                      setBrightness(level);
+                      applyBrightnessSetting(level);
+                    }}
+                  >{BRIGHTNESS_PRESETS[level].label}</button>
+                ))}
+              </div>
+            </fieldset>
+          </section>
         </div>
         <div className="strike-radar" aria-label="Radar musuh sekitar">
           <span className="strike-radar-label">RADAR</span>
