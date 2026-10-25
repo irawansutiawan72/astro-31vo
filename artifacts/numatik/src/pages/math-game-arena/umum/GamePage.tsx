@@ -919,6 +919,21 @@ const GamePage = () => {
     addBox(towerPlatform.width, towerPlatform.height, towerPlatform.depth, towerMat, towerPlatform.x, towerPlatform.y, towerPlatform.z);
     addBox(9, 0.7, 9, bunkerMat, 37, 19, -24);
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
+    const towerRampStartZ = -17.1;
+    const towerRampEndZ = towerPlatform.z - towerPlatform.depth / 2;
+    const towerPlatformTop = towerPlatform.y + towerPlatform.height / 2;
+    const towerRampStepSpecs: BoxInstanceSpec[] = Array.from({ length: 12 }, (_, index) => {
+      const progress = (index + 0.5) / 12;
+      const stepHeight = progress * towerPlatformTop;
+      return {
+        x: towerPlatform.x,
+        y: stepHeight - 0.045,
+        z: towerRampStartZ + (towerRampEndZ - towerRampStartZ) * progress,
+        w: 1.5,
+        h: 0.09,
+        d: 0.1,
+      };
+    });
 
     const soldierSpawns: Array<[number, number]> = [
       // Bunker: ruang barat dan ceruk belakang.
@@ -1045,12 +1060,8 @@ const GamePage = () => {
       tierCounts(12, 12, 12),
     );
 
-    const towerStairSteps: BoxInstanceSpec[] = [
-      1.2, 2.9, 4.6, 6.3, 8, 9.7, 11.4, 13.1,
-    ].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 }));
-    const towerExtraSteps: BoxInstanceSpec[] = [
-      2, 3.7, 5.4, 7.1,
-    ].map((y) => ({ x: 37, y, z: -17.1, w: 1.5, h: 0.09, d: 0.1 }));
+    const towerStairSteps = towerRampStepSpecs.slice(0, 8);
+    const towerExtraSteps = towerRampStepSpecs.slice(8);
     const towerStairRailSpecs: BoxInstanceSpec[] = [
       { x: 36.2, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
       { x: 37.8, y: 7.5, z: -17.1, w: 0.12, h: 14, d: 0.12 },
@@ -1075,18 +1086,6 @@ const GamePage = () => {
       towerDetailSpecs,
       tierCounts(8, 12, 20),
     );
-    const towerRampStartZ = towerStairSteps[0].z;
-    const towerRampEndZ = towerPlatform.z - towerPlatform.depth / 2;
-    const towerPlatformTop = towerPlatform.y + towerPlatform.height / 2;
-    const towerRampLevels = [
-      0,
-      ...[...towerStairSteps, ...towerExtraSteps]
-        .map((step) => step.y + step.h / 2)
-        .filter((height) => height < towerPlatformTop)
-        .sort((a, b) => a - b),
-      towerPlatformTop,
-    ];
-
     const barrierShape = new THREE.Shape();
     barrierShape.moveTo(-0.5, 0);
     barrierShape.lineTo(0.5, 0);
@@ -1539,13 +1538,7 @@ const GamePage = () => {
           0,
           1,
         );
-        const levelPosition = progress * (towerRampLevels.length - 1);
-        const levelIndex = Math.min(Math.floor(levelPosition), towerRampLevels.length - 2);
-        return THREE.MathUtils.lerp(
-          towerRampLevels[levelIndex],
-          towerRampLevels[levelIndex + 1],
-          levelPosition - levelIndex,
-        );
+        return progress * towerPlatformTop;
       }
       const insideTowerPlatform = (
         Math.abs(x - towerPlatform.x) <= towerPlatform.width / 2

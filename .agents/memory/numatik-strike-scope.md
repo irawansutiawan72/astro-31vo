@@ -17,6 +17,12 @@ Across phases, retain the mobile performance requirements: instance repeated wal
 
 **How to apply:** Only implement the next phase after review of the previous one; do not proceed into later phases in the same delivery.
 
+For the current Numatik Strike scope, preserve the existing visuals, lighting, enemy AI, and fixed roster of 10 enemies without respawns. Do not change other pages or add dependencies.
+
+**Why:** The user restated these boundaries in the tower-ramp handoff.
+
+**How to apply:** Treat these as constraints for Numatik Strike changes unless the user explicitly changes the scope.
+
 ## Preview limitation
 
 The automated app-preview browser cannot create a WebGL context for Numatik Strike, so it shows the app's graceful 3D-unavailable fallback instead of live gameplay.
