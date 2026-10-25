@@ -103,6 +103,8 @@ const WEAPON_CONFIG: Record<WeaponId, {
 const STARTING_ENEMIES = 10;
 const GUNFIRE_ALERT_RADIUS = 36;
 const BEST_SCORE_KEY = "numatik-strike-best-score";
+const TOUCH_LOOK_SENSITIVITY_KEY = "numatik-strike-touch-look-sensitivity";
+const DEFAULT_TOUCH_LOOK_SENSITIVITY = 1.2;
 const SKY_HORIZON_COLOR = "#e9f3f7";
 const QUALITY_FOG: Record<QualitySetting, { near: number; far: number }> = {
   low: { near: 30, far: 124 },
@@ -193,6 +195,10 @@ const GamePage = () => {
   const [brightness, setBrightness] = useState<BrightnessSetting>("normal");
   const brightnessRef = useRef<BrightnessSetting>("normal");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [touchLookSensitivity, setTouchLookSensitivity] = useState(DEFAULT_TOUCH_LOOK_SENSITIVITY);
+  const touchLookSensitivityRef = useRef(DEFAULT_TOUCH_LOOK_SENSITIVITY);
+  const cameraFovRef = useRef(72);
+  const [showTurnAroundButton, setShowTurnAroundButton] = useState(true);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const hemisphereLightRef = useRef<THREE.HemisphereLight | null>(null);
@@ -253,8 +259,13 @@ const GamePage = () => {
   const jumpRequested = useRef(false);
   const moveInput = useRef<MoveInput>({ x: 0, y: 0 });
   const lookDelta = useRef<MoveInput>({ x: 0, y: 0 });
-  const lookPointer = useRef<{ id: number; x: number; y: number } | null>(null);
+  const lookPointers = useRef(new Map<number, { x: number; y: number; lastAt: number }>());
   const joystickPointer = useRef<number | null>(null);
+  const firePointers = useRef(new Set<number>());
+  const sprintPointers = useRef(new Set<number>());
+  const turnAroundPointer = useRef<number | null>(null);
+  const turnAroundRequested = useRef(false);
+  const turnAroundAnimating = useRef(false);
   const [mobileSprintHeld, setMobileSprintHeld] = useState(false);
 
   const applyBrightnessSetting = (nextBrightness: BrightnessSetting) => {
@@ -316,6 +327,15 @@ const GamePage = () => {
       if (Number.isFinite(saved) && saved > 0) setBestScore(saved);
     } catch {
       setBestScore(0);
+    }
+    try {
+      const savedSensitivity = Number(window.localStorage.getItem(TOUCH_LOOK_SENSITIVITY_KEY));
+      if (Number.isFinite(savedSensitivity) && savedSensitivity >= 0.5 && savedSensitivity <= 3) {
+        touchLookSensitivityRef.current = savedSensitivity;
+        setTouchLookSensitivity(savedSensitivity);
+      }
+    } catch {
+      // Sensitivity remains at its default when local storage is unavailable.
     }
     window.addEventListener("resize", updateMobile);
     return () => window.removeEventListener("resize", updateMobile);
@@ -1540,6 +1560,8 @@ const GamePage = () => {
 
     let yaw = 0;
     let pitch = 0;
+    let turnAroundStartYaw = 0;
+    let turnAroundStartedAt = 0;
     let verticalVelocity = 0;
     let playerGrounded = true;
     let frame = 0;
@@ -1919,12 +1941,17 @@ const GamePage = () => {
       if (gamePhaseRef.current !== "combat") return;
       document.exitPointerLock?.();
       firingRef.current = false;
+      firePointers.current.clear();
       sprintingRef.current = false;
+      sprintPointers.current.clear();
       moveInput.current = { x: 0, y: 0 };
       lookDelta.current = { x: 0, y: 0 };
       keys.current = {};
       joystickPointer.current = null;
-      lookPointer.current = null;
+      lookPointers.current.clear();
+      turnAroundPointer.current = null;
+      turnAroundRequested.current = false;
+      turnAroundAnimating.current = false;
       setJoystick({ x: 0, y: 0 });
       setSprinting(false);
       aimingRef.current = false;
@@ -1967,7 +1994,12 @@ const GamePage = () => {
       lookDelta.current = { x: 0, y: 0 };
       keys.current = {};
       joystickPointer.current = null;
-      lookPointer.current = null;
+      lookPointers.current.clear();
+      firePointers.current.clear();
+      sprintPointers.current.clear();
+      turnAroundPointer.current = null;
+      turnAroundRequested.current = false;
+      turnAroundAnimating.current = false;
       setSprinting(false);
       setAiming(false);
       setMobileSprintHeld(false);
@@ -2358,6 +2390,13 @@ const GamePage = () => {
       setSprinting(false);
       setMobileSprintHeld(false);
       firingRef.current = false;
+      firePointers.current.clear();
+      sprintPointers.current.clear();
+      joystickPointer.current = null;
+      lookPointers.current.clear();
+      turnAroundPointer.current = null;
+      turnAroundRequested.current = false;
+      turnAroundAnimating.current = false;
       reloading = false;
       reloadingRef.current = false;
       setIsReloading(false);
@@ -2394,6 +2433,7 @@ const GamePage = () => {
       player.rotation.set(0, 0, 0);
       camera.rotation.set(0, 0, 0);
       camera.fov = 72;
+      cameraFovRef.current = 72;
       camera.updateProjectionMatrix();
       cameraRecoil = 0;
       aimBlend = 0;
@@ -2588,7 +2628,18 @@ const GamePage = () => {
         if (tracers[i].disposeMaterial) (tracers[i].line.material as THREE.Material).dispose();
         tracers.splice(i, 1);
       }
-      if (lookDelta.current.x || lookDelta.current.y) {
+      if (turnAroundRequested.current) {
+        turnAroundRequested.current = false;
+        turnAroundStartYaw = yaw;
+        turnAroundStartedAt = now;
+      }
+      if (turnAroundAnimating.current) {
+        const progress = THREE.MathUtils.clamp((now - turnAroundStartedAt) / 200, 0, 1);
+        const easeOut = 1 - (1 - progress) ** 3;
+        yaw = turnAroundStartYaw + Math.PI * easeOut;
+        lookDelta.current = { x: 0, y: 0 };
+        if (progress >= 1) turnAroundAnimating.current = false;
+      } else if (lookDelta.current.x || lookDelta.current.y) {
         yaw -= lookDelta.current.x * 0.004;
         pitch = THREE.MathUtils.clamp(pitch - lookDelta.current.y * 0.004, -1.25, 1.25);
         lookDelta.current = { x: 0, y: 0 };
@@ -2659,6 +2710,7 @@ const GamePage = () => {
         camera.fov = targetFov;
         camera.updateProjectionMatrix();
       }
+      cameraFovRef.current = camera.fov;
       cameraRecoil *= Math.exp(-dt * 8);
       camera.rotation.x = THREE.MathUtils.clamp(pitch + cameraRecoil, -1.25, 1.25);
 
@@ -2761,6 +2813,13 @@ const GamePage = () => {
       nextWaveRef.current = null;
       soundRef.current = null;
       firingRef.current = false;
+      firePointers.current.clear();
+      sprintPointers.current.clear();
+      lookPointers.current.clear();
+      joystickPointer.current = null;
+      turnAroundPointer.current = null;
+      turnAroundRequested.current = false;
+      turnAroundAnimating.current = false;
       reloadingRef.current = false;
       if (rendererRef.current === renderer) rendererRef.current = null;
       if (sceneRef.current === scene) sceneRef.current = null;
@@ -2822,26 +2881,45 @@ const GamePage = () => {
     moveInput.current = next;
     setJoystick(next);
   };
-  const clearJoystick = () => {
+  const clearJoystick = (event: PointerEvent<HTMLDivElement>) => {
+    if (joystickPointer.current !== event.pointerId) return;
     joystickPointer.current = null;
     moveInput.current = { x: 0, y: 0 };
     setJoystick({ x: 0, y: 0 });
   };
   const onTouchLookStart = (event: PointerEvent<HTMLDivElement>) => {
     if (gamePhaseRef.current !== "combat") return;
-    lookPointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+    event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
+    lookPointers.current.set(event.pointerId, {
+      x: event.clientX,
+      y: event.clientY,
+      lastAt: event.timeStamp,
+    });
   };
   const onTouchLookMove = (event: PointerEvent<HTMLDivElement>) => {
     if (gamePhaseRef.current !== "combat") return;
-    const touch = lookPointer.current;
-    if (!touch || touch.id !== event.pointerId) return;
+    const touch = lookPointers.current.get(event.pointerId);
+    if (!touch) return;
     const dx = event.clientX - touch.x;
     const dy = event.clientY - touch.y;
+    const elapsedSeconds = Math.max((event.timeStamp - touch.lastAt) / 1000, 1 / 240);
+    const swipeSpeed = Math.hypot(dx, dy) / elapsedSeconds;
+    const accelerationProgress = THREE.MathUtils.clamp((swipeSpeed - 240) / 1200, 0, 1);
+    const easedAcceleration = accelerationProgress * accelerationProgress * (3 - 2 * accelerationProgress);
+    const acceleration = 1 + 0.8 * easedAcceleration;
+    const zoomScale = THREE.MathUtils.clamp(cameraFovRef.current / 72, 0.5, 1);
+    const lookScale = touchLookSensitivityRef.current * zoomScale * acceleration;
     touch.x = event.clientX;
     touch.y = event.clientY;
-    lookDelta.current.x += dx;
-    lookDelta.current.y += dy;
+    touch.lastAt = event.timeStamp;
+    if (!turnAroundAnimating.current) {
+      lookDelta.current.x += dx * lookScale;
+      lookDelta.current.y += dy * lookScale;
+    }
+  };
+  const onTouchLookEnd = (event: PointerEvent<HTMLDivElement>) => {
+    lookPointers.current.delete(event.pointerId);
   };
   const onJoystickPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (gamePhaseRef.current !== "combat") return;
@@ -2855,6 +2933,7 @@ const GamePage = () => {
       sprintingRef.current = false;
       setSprinting(false);
       setMobileSprintHeld(false);
+      sprintPointers.current.clear();
     }
     const next = !aimingRef.current;
     aimingRef.current = next;
@@ -2864,25 +2943,85 @@ const GamePage = () => {
     event.preventDefault();
     if (gamePhaseRef.current !== "combat") return;
     event.currentTarget.setPointerCapture(event.pointerId);
+    sprintPointers.current.add(event.pointerId);
     sprintingRef.current = true;
     setSprinting(true);
     setMobileSprintHeld(true);
     aimingRef.current = false;
     setAiming(false);
   };
-  const stopMobileSprint = () => {
-    sprintingRef.current = false;
-    setSprinting(false);
-    setMobileSprintHeld(false);
+  const stopMobileSprint = (event: PointerEvent<HTMLButtonElement>) => {
+    sprintPointers.current.delete(event.pointerId);
+    const stillHeld = sprintPointers.current.size > 0;
+    sprintingRef.current = stillHeld;
+    setSprinting(stillHeld);
+    setMobileSprintHeld(stillHeld);
   };
   const startMobileFire = (event: PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (gamePhaseRef.current !== "combat") return;
     event.currentTarget.setPointerCapture(event.pointerId);
+    firePointers.current.add(event.pointerId);
     firingRef.current = true;
     fireRef.current?.();
   };
-  const stopMobileFire = () => { firingRef.current = false; };
+  const stopMobileFire = (event: PointerEvent<HTMLButtonElement>) => {
+    firePointers.current.delete(event.pointerId);
+    firingRef.current = firePointers.current.size > 0;
+  };
+  const startTurnAround = (event: PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (
+      gamePhaseRef.current !== "combat"
+      || turnAroundAnimating.current
+      || turnAroundRequested.current
+    ) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    turnAroundPointer.current = event.pointerId;
+    turnAroundRequested.current = true;
+    turnAroundAnimating.current = true;
+  };
+  const endTurnAround = (event: PointerEvent<HTMLButtonElement>) => {
+    if (turnAroundPointer.current === event.pointerId) turnAroundPointer.current = null;
+  };
+  const updateTouchLookSensitivity = (value: number) => {
+    const next = THREE.MathUtils.clamp(value, 0.5, 3);
+    touchLookSensitivityRef.current = next;
+    setTouchLookSensitivity(next);
+    try {
+      window.localStorage.setItem(TOUCH_LOOK_SENSITIVITY_KEY, String(next));
+    } catch {
+      // The control remains usable if local storage is unavailable.
+    }
+  };
+  const renderTouchControlSettings = (idPrefix: string) => (
+    <div className="strike-touch-settings">
+      <div className="strike-sensitivity-control">
+        <label className="strike-sensitivity-label" htmlFor={`${idPrefix}-touch-look-sensitivity`}>
+          <span>SENSITIVITAS GESER</span>
+          <output>{touchLookSensitivity.toFixed(1)}×</output>
+        </label>
+        <input
+          id={`${idPrefix}-touch-look-sensitivity`}
+          type="range"
+          min="0.5"
+          max="3"
+          step="0.1"
+          value={touchLookSensitivity}
+          aria-label="Sensitivitas geser kamera"
+          onChange={(event) => updateTouchLookSensitivity(Number(event.currentTarget.value))}
+        />
+      </div>
+      <label className="strike-turn-visibility">
+        <input
+          type="checkbox"
+          checked={showTurnAroundButton}
+          onChange={(event) => setShowTurnAroundButton(event.currentTarget.checked)}
+        />
+        <span>Tampilkan tombol Putar 180°</span>
+      </label>
+    </div>
+  );
   const toggleMute = () => {
     const next = !mutedRef.current;
     mutedRef.current = next;
@@ -2924,6 +3063,14 @@ const GamePage = () => {
         .strike-settings-panel select{border-radius:2px;padding:6px 8px;font:500 10px var(--font-body,'Exo 2'),sans-serif;letter-spacing:0}
         .strike-settings-panel fieldset{margin:12px 0 0;padding:10px 0 0;border:0;border-top:1px solid rgba(202,211,211,.18)}
         .strike-settings-panel legend{padding:0 8px 0 0}
+         .strike-touch-settings{margin-top:12px;padding-top:10px;border-top:1px solid rgba(202,211,211,.18)}
+         .strike-sensitivity-control{display:grid;gap:7px}
+         .strike-sensitivity-label{display:flex;justify-content:space-between;align-items:center;color:#d7e4e4;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.08em}
+         .strike-sensitivity-label output{color:#73d9df;font:700 10px var(--font-display,'Orbitron'),sans-serif}
+         .strike-sensitivity-control input{width:100%;accent-color:#43dce8;touch-action:pan-x}
+         .strike-turn-visibility{display:flex;align-items:center;gap:8px;margin-top:10px;color:#c6dce4;font-size:10px}
+         .strike-turn-visibility input{accent-color:#43dce8}
+         @media(pointer:coarse),(max-width:759px){.strike-top{z-index:2}}
         .strike-brightness-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
         .strike-brightness-options button{min-height:34px;padding:5px 4px;border:1px solid rgba(202,211,211,.24);background:rgba(9,18,23,.74);color:#c7d6d8;font:500 8px var(--font-body,'Exo 2'),sans-serif;cursor:pointer}
         .strike-brightness-options button[aria-pressed="true"]{border-color:#f3d391;background:rgba(120,99,57,.35);color:#fff1c9}
@@ -3006,11 +3153,11 @@ const GamePage = () => {
          .strike-score-cell{padding:14px 8px;border:1px solid rgba(144,203,218,.2);background:rgba(3,14,24,.7)}
          .strike-score-label{color:#8bb1bf;font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.12em}
          .strike-score-value{margin-top:7px;color:#f1ffff;font:700 22px var(--font-display,'Orbitron'),sans-serif}
-        .strike-mobile-control{position:absolute;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+        .strike-mobile-control{position:absolute;z-index:1;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}
         .strike-stick{width:118px;height:118px;border:1px solid rgba(157,224,231,.32);border-radius:50%;background:rgba(9,24,38,.32);left:25px;bottom:34px;display:grid;place-items:center}
         .strike-stick:before{content:"";position:absolute;inset:13px;border:1px solid rgba(157,224,231,.14);border-radius:50%}
         .strike-knob{position:absolute;width:43px;height:43px;border:1px solid rgba(105,231,237,.72);border-radius:50%;background:rgba(28,122,137,.48);box-shadow:0 0 16px rgba(39,207,217,.18)}
-         .strike-look{right:0;top:20%;bottom:122px;width:48%;pointer-events:auto;touch-action:none}
+          .strike-look{right:0;top:0;bottom:0;width:50%;z-index:0;pointer-events:auto;touch-action:none}
          .strike-action{display:grid;place-items:center;border:1px solid rgba(105,210,220,.58);background:rgba(7,25,38,.88);color:#dffbff;font:700 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.04em;box-shadow:0 5px 14px rgba(0,0,0,.24)}
          .strike-action:active,.strike-action.is-active{border-color:#70f2df;background:rgba(15,83,83,.92);color:#f1fffb}
          .strike-action:disabled{opacity:.4;filter:saturate(.45)}
@@ -3021,6 +3168,7 @@ const GamePage = () => {
          .strike-reload{right:88px;bottom:94px;width:58px;height:44px}
          .strike-switch{right:152px;bottom:94px;width:58px;height:44px}
          .strike-sprint{left:145px;bottom:29px;width:62px;height:54px}
+          .strike-turn{right:18px;top:50%;width:62px;height:46px;transform:translateY(-50%);border-radius:50%;font-size:7px}
          @media(max-width:600px){
            .strike-top{left:12px;right:12px;gap:7px}
            .strike-brand{gap:7px}
@@ -3047,13 +3195,14 @@ const GamePage = () => {
            .strike-bottom{bottom:12px}
            .strike-hint{max-width:48%;font-size:9px}
            .strike-stick{left:18px;bottom:22px;width:108px;height:108px}
-           .strike-look{top:25%;bottom:122px}
+            .strike-look{top:0;bottom:0}
            .strike-jump{right:87px;bottom:23px;width:56px;height:56px}
            .strike-fire{right:18px;bottom:20px;width:62px;height:62px}
            .strike-aim{right:18px;bottom:94px;width:62px;height:44px}
            .strike-reload{right:88px;bottom:94px;width:58px;height:44px}
            .strike-switch{right:152px;bottom:94px;width:58px;height:44px}
            .strike-sprint{left:145px;bottom:29px;width:62px;height:54px}
+            .strike-turn{right:14px;width:58px;height:44px}
          }
          @media(max-width:380px){
            .strike-mark{display:none}
@@ -3177,6 +3326,7 @@ const GamePage = () => {
                 ))}
               </div>
             </fieldset>
+            {mobile && renderTouchControlSettings("settings")}
           </section>
         </div>
         <div className="strike-radar" aria-label="Radar musuh sekitar">
@@ -3238,6 +3388,7 @@ const GamePage = () => {
             onPointerMove={(event) => { if (joystickPointer.current === event.pointerId) updateJoystick(event); }}
             onPointerUp={clearJoystick}
             onPointerCancel={clearJoystick}
+            onLostPointerCapture={clearJoystick}
           >
             <span className="strike-knob" style={{ transform: `translate(${joystick.x * 29}px, ${-joystick.y * 29}px)` }} />
           </div>
@@ -3246,9 +3397,20 @@ const GamePage = () => {
             aria-label="Geser untuk melihat"
             onPointerDown={onTouchLookStart}
             onPointerMove={onTouchLookMove}
-            onPointerUp={() => { lookPointer.current = null; }}
-            onPointerCancel={() => { lookPointer.current = null; }}
+            onPointerUp={onTouchLookEnd}
+            onPointerCancel={onTouchLookEnd}
+            onLostPointerCapture={onTouchLookEnd}
           />
+          {showTurnAroundButton && (
+            <button
+              className="strike-mobile-control strike-action strike-turn"
+              onPointerDown={startTurnAround}
+              onPointerUp={endTurnAround}
+              onPointerCancel={endTurnAround}
+              onLostPointerCapture={endTurnAround}
+              aria-label="Putar kamera 180 derajat"
+            >PUTAR<small>180°</small></button>
+          )}
           <button
             className="strike-mobile-control strike-jump"
             onPointerDown={(event) => {
@@ -3326,6 +3488,7 @@ const GamePage = () => {
               <div className="strike-phase-kicker">Permainan dijeda</div>
               <h2 className="strike-phase-title" id="strike-pause-title">PAUSE</h2>
               <p className="strike-phase-copy">Skor saat ini: {score}. Lanjutkan permainan atau kembali ke menu.</p>
+              {mobile && renderTouchControlSettings("pause")}
               <button className="strike-phase-button" onClick={() => resumeGameRef.current?.()}>LANJUT BERMAIN</button>
               <button className="strike-phase-button is-secondary" onClick={() => navigate("/ruang-untuk-guru/numatik-game")}>KEMBALI KE MENU</button>
             </section>
