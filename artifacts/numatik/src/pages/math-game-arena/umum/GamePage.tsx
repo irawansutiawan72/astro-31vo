@@ -895,7 +895,7 @@ const GamePage = () => {
       makeCrate(21, 3.9, 20), makeCrate(18, 3.9, 23),
       makeCrate(-14, 1.3, -9), makeCrate(-11, 1.3, -9), makeCrate(-14, 3.9, -9),
       makeCrate(14, 1.3, -22), makeCrate(17, 1.3, -22), makeCrate(14, 1.3, -25),
-      makeCrate(17, 3.9, -25), makeCrate(32, 1.3, 13), makeCrate(35, 1.3, 13),
+      makeCrate(17, 3.9, -25), makeCrate(47, 1.3, 13), makeCrate(50, 1.3, 13),
     ];
     addBoxInstances(crateMat, crates.filter((_, index) => index % 4 !== 3));
     addBoxInstances(
@@ -921,9 +921,9 @@ const GamePage = () => {
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
     const towerPlatformTop = towerPlatform.y + towerPlatform.height / 2;
     const towerStairWidth = 3;
-    const towerRampStart = { x: 39.2, z: 10 };
+    const towerRampStart = { x: towerPlatform.x, z: 10 };
     const towerRampEnd = {
-      x: towerPlatform.x + 2.2,
+      x: towerPlatform.x,
       z: towerPlatform.z + towerPlatform.depth / 2,
     };
     const towerRampDx = towerRampEnd.x - towerRampStart.x;
@@ -931,12 +931,13 @@ const GamePage = () => {
     const towerRampHorizontalLength = Math.hypot(towerRampDx, towerRampDz);
     const towerRampSlopeLength = Math.hypot(towerRampHorizontalLength, towerPlatformTop);
     const towerRampIncline = Math.atan2(towerPlatformTop, towerRampHorizontalLength);
+    const towerStairStepCount = 20;
     const towerRampMidpoint = {
       x: (towerRampStart.x + towerRampEnd.x) / 2,
       z: (towerRampStart.z + towerRampEnd.z) / 2,
     };
-    const towerRampStepSpecs: BoxInstanceSpec[] = Array.from({ length: 12 }, (_, index) => {
-      const progress = (index + 0.5) / 12;
+    const towerRampStepSpecs: BoxInstanceSpec[] = Array.from({ length: towerStairStepCount }, (_, index) => {
+      const progress = (index + 0.5) / towerStairStepCount;
       const stepHeight = progress * towerPlatformTop;
       return {
         x: towerRampStart.x + towerRampDx * progress,
@@ -944,9 +945,17 @@ const GamePage = () => {
         z: towerRampStart.z + towerRampDz * progress,
         w: towerStairWidth,
         h: 0.09,
-        d: 0.16,
+        d: towerRampHorizontalLength / towerStairStepCount * 0.9,
       };
     });
+    const lowQualityStairIndices = [0, 3, 5, 7, 10, 12, 16, 19];
+    const mediumQualityStairIndices = [2, 9, 14, 17];
+    const selectedStairIndices = new Set([...lowQualityStairIndices, ...mediumQualityStairIndices]);
+    const towerRampStepSpecsByQuality = [
+      ...lowQualityStairIndices.map((index) => towerRampStepSpecs[index]),
+      ...mediumQualityStairIndices.map((index) => towerRampStepSpecs[index]),
+      ...towerRampStepSpecs.filter((_, index) => !selectedStairIndices.has(index)),
+    ];
 
     const soldierSpawns: Array<[number, number]> = [
       // Bunker: ruang barat dan ceruk belakang.
@@ -967,7 +976,7 @@ const GamePage = () => {
     const currentQualityCounts: Record<QualitySetting, number> = {
       low: 156,
       medium: 230,
-      high: 308,
+      high: 317,
     };
     const tierCounts = (low: number, medium: number, high: number): QualityCounts => ({
       low, medium, high,
@@ -978,6 +987,18 @@ const GamePage = () => {
       return scenerySeed / 4294967296;
     };
     const reservedDecorations: Array<{ x: number; z: number; width: number; depth: number }> = [];
+    const towerRampClearanceHalfWidth = towerStairWidth / 2 + 3;
+    const distanceToTowerRamp = (x: number, z: number) => {
+      const lengthSquared = towerRampHorizontalLength * towerRampHorizontalLength;
+      const progress = THREE.MathUtils.clamp(
+        ((x - towerRampStart.x) * towerRampDx + (z - towerRampStart.z) * towerRampDz) / lengthSquared,
+        0,
+        1,
+      );
+      const nearestX = towerRampStart.x + towerRampDx * progress;
+      const nearestZ = towerRampStart.z + towerRampDz * progress;
+      return Math.hypot(x - nearestX, z - nearestZ);
+    };
     const findDecorationPosition = (width: number, depth: number) => {
       for (let attempt = 0; attempt < 1200; attempt += 1) {
         const side = sceneryRandom() < 0.5 ? -1 : 1;
@@ -986,6 +1007,7 @@ const GamePage = () => {
         if (Math.abs(x) < 23 || z < -35 || z > 43) continue;
         if (x * x + (z - 51) * (z - 51) < 15 * 15) continue;
         if (soldierSpawns.some(([spawnX, spawnZ]) => Math.hypot(x - spawnX, z - spawnZ) < 11)) continue;
+        if (distanceToTowerRamp(x, z) <= towerRampClearanceHalfWidth + Math.hypot(width * 0.56, depth * 0.56)) continue;
         const overlapsExisting = solidObstacles.some((obstacle) => (
           Math.abs(x - obstacle.x) < width / 2 + obstacle.width / 2 + 0.7
           && Math.abs(z - obstacle.z) < depth / 2 + obstacle.depth / 2 + 0.7
@@ -1073,8 +1095,6 @@ const GamePage = () => {
       tierCounts(12, 12, 12),
     );
 
-    const towerStairSteps = towerRampStepSpecs.slice(0, 8);
-    const towerExtraSteps = towerRampStepSpecs.slice(8);
     const towerStairRailOffset = towerStairWidth / 2 + 0.08;
     const towerStairRailSpecs: BoxInstanceSpec[] = [-1, 1].map((side) => ({
       x: towerRampMidpoint.x + side * towerStairRailOffset,
@@ -1115,8 +1135,7 @@ const GamePage = () => {
       { x: 43.3, y: 15.8, z: -24, w: 0.18, h: 0.2, d: 12 },
     ];
     const towerDetailSpecs: BoxInstanceSpec[] = [
-      ...towerStairSteps,
-      ...towerExtraSteps,
+      ...towerRampStepSpecsByQuality,
       ...towerStairRailSpecs,
       ...towerPlatformRailSpecs,
       { x: 34.2, y: 8.5, z: -28.1, w: 0.16, h: 13.2, d: 0.16, rotZ: 0.22 },
@@ -1126,7 +1145,7 @@ const GamePage = () => {
       instanceBoxGeometry,
       towerMat,
       towerDetailSpecs,
-      tierCounts(8, 12, 20),
+      tierCounts(8, 12, 29),
     );
     const barrierShape = new THREE.Shape();
     barrierShape.moveTo(-0.5, 0);
