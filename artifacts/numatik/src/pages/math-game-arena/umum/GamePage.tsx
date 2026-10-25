@@ -7,7 +7,7 @@ type MoveInput = { x: number; y: number };
 type QualitySetting = "low" | "medium" | "high";
 type BrightnessSetting = "normal" | "bright" | "very-bright";
 type WeaponId = "rifle" | "pistol";
-type GamePhase = "combat" | "supply" | "paused" | "gameover";
+type GamePhase = "combat" | "supply" | "paused" | "gameover" | "complete";
 type SupplyQuestion = { prompt: string; answer: number; options: number[] };
 type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover";
 type WeaponAmmo = { magazine: number; reserve: number };
@@ -100,8 +100,8 @@ const WEAPON_CONFIG: Record<WeaponId, {
     baseSpread: 0.0042,
   },
 };
-const MAX_ACTIVE_ENEMIES = 10;
-const STARTING_ENEMIES = 6;
+const STARTING_ENEMIES = 10;
+const GUNFIRE_ALERT_RADIUS = 36;
 const BEST_SCORE_KEY = "numatik-strike-best-score";
 const SKY_HORIZON_COLOR = "#e9f3f7";
 const QUALITY_FOG: Record<QualitySetting, { near: number; far: number }> = {
@@ -920,8 +920,20 @@ const GamePage = () => {
     addBox(4.8, 3.2, 4.8, towerMat, 37, 17, -24);
 
     const soldierSpawns: Array<[number, number]> = [
-      [-43, -44], [-31, -49], [-23, -44], [-14, -49], [-4, -46],
-      [7, -51], [17, -45], [26, -42], [36, -47], [46, -40],
+      // Bunker: ruang barat dan ceruk belakang.
+      [-42, -8],
+      [-33, -25],
+      // Sisi barat menara, di luar kaki dan platformnya.
+      [25, -35],
+      // Area peti sisi barat dan timur.
+      [-34, 20],
+      [44, 18],
+      // Area terbuka: sudut selatan, utara, dan tengah.
+      [-52, 47],
+      [52, 47],
+      [0, -49],
+      [-48, -47],
+      [0, -5],
     ];
     const currentQualityCounts: Record<QualitySetting, number> = {
       low: 156,
@@ -1330,6 +1342,21 @@ const GamePage = () => {
     const rifleSightGeometry = soldierGeometry(new THREE.BoxGeometry(0.12, 0.1, 0.14));
     const muzzleFlashGeometry = soldierGeometry(new THREE.SphereGeometry(0.085, 6, 4));
 
+    const spawnsAreValid = soldierSpawns.length === STARTING_ENEMIES
+      && soldierSpawns.every(([x, z], index) => (
+        Math.hypot(x, z - 51) >= 40
+        && !solidObstacles.some((obstacle) => (
+          Math.abs(x - obstacle.x) < obstacle.width / 2 + 0.55
+          && Math.abs(z - obstacle.z) < obstacle.depth / 2 + 0.55
+        ))
+        && soldierSpawns.slice(index + 1).every(([otherX, otherZ]) => (
+          Math.hypot(x - otherX, z - otherZ) >= 15
+        ))
+      ));
+    if (!spawnsAreValid) {
+      throw new Error("Titik spawn musuh menabrak collider atau melanggar jarak aman.");
+    }
+
     const soldiers: SoldierState[] = [];
     const createSoldier = (x: number, z: number, index: number): SoldierState => {
       const group = new THREE.Group();
@@ -1397,14 +1424,15 @@ const GamePage = () => {
       const muzzleFlash = addPart(rifle, muzzleFlashGeometry, muzzleFlashMat, 0, 0.02, -1.08, false);
       muzzleFlash.visible = false;
 
-      group.position.set(x, 0, z);
-      group.lookAt(0, 0, player.position.z);
-      scene.add(group);
       const patrolPoints = [
-        new THREE.Vector3(x + (index % 2 ? 3.5 : -3.5), 0, z + 1.5),
-        new THREE.Vector3(x + (index % 2 ? -2.5 : 2.5), 0, z + 3.8),
-        new THREE.Vector3(x, 0, z - 2.8),
+        new THREE.Vector3(x + (index % 2 ? 2 : -2), 0, z + 1.5),
+        new THREE.Vector3(x + (index % 2 ? -2 : 2), 0, z + 2.8),
+        new THREE.Vector3(x, 0, z - 2),
       ];
+      group.position.set(x, 0, z);
+      const firstPatrolPoint = patrolPoints[index % patrolPoints.length];
+      group.lookAt(firstPatrolPoint.x, 0, firstPatrolPoint.z);
+      scene.add(group);
       return {
         group, parts, headParts, leftArmPivot, rightArmPivot, leftLegPivot, rightLegPivot, rifle, muzzleFlash,
         spawnX: x, spawnZ: z, patrolPoints, patrolIndex: index % patrolPoints.length,
@@ -1418,12 +1446,6 @@ const GamePage = () => {
     };
 
     soldierSpawns.forEach(([x, z], index) => soldiers.push(createSoldier(x, z, index)));
-    soldiers.forEach((soldier, index) => {
-      if (index >= STARTING_ENEMIES) {
-        soldier.alive = false;
-        soldier.group.visible = false;
-      }
-    });
     const combatTargets: THREE.Object3D[] = [
       floor,
       ...worldOccluders,
@@ -1782,8 +1804,8 @@ const GamePage = () => {
       }
       setBestScore(previousBest);
     };
-    const finishGame = () => {
-      if (gamePhaseRef.current === "gameover") return;
+    const finishGame = (missionComplete = false) => {
+      if (gamePhaseRef.current === "gameover" || gamePhaseRef.current === "complete") return;
       document.exitPointerLock?.();
       firingRef.current = false;
       sprintingRef.current = false;
@@ -1799,7 +1821,7 @@ const GamePage = () => {
       reloading = false;
       reloadingRef.current = false;
       setIsReloading(false);
-      setPhase("gameover");
+      setPhase(missionComplete ? "complete" : "gameover");
       persistBestScore(scoreRef.current);
       playSound("gameover");
     };
@@ -1870,6 +1892,18 @@ const GamePage = () => {
         [selected]: { ...currentAmmo, magazine: currentAmmo.magazine - 1 },
       });
       playSound(selected);
+      soldiers.forEach((soldier) => {
+        if (!soldier.alive || soldier.mode !== "patrol") return;
+        const distanceToShot = Math.hypot(
+          soldier.group.position.x - player.position.x,
+          soldier.group.position.z - player.position.z,
+        );
+        if (distanceToShot > GUNFIRE_ALERT_RADIUS) return;
+        soldier.lastKnownPlayer.set(player.position.x, 0, player.position.z);
+        soldier.lastSeenAt = now;
+        soldier.mode = "chase";
+        soldier.nextPathAt = 0;
+      });
 
       const moving = Math.hypot(
         moveInput.current.x + ((keys.current.KeyD || keys.current.ArrowRight ? 1 : 0) - (keys.current.KeyA || keys.current.ArrowLeft ? 1 : 0)),
@@ -2089,53 +2123,6 @@ const GamePage = () => {
       }
     };
 
-    let waveTransitionAt = 0;
-    const beginNextWave = (now: number) => {
-      waveRef.current += 1;
-      setWave(waveRef.current);
-      const activeCount = Math.min(MAX_ACTIVE_ENEMIES, STARTING_ENEMIES + waveRef.current - 1);
-      soldiers.forEach((soldier, index) => {
-        const active = index < activeCount;
-        soldier.health = soldier.maxHealth;
-        soldier.alive = active;
-        setSoldierCombatTarget(soldier, active);
-        soldier.mode = active ? "patrol" : "dead";
-        soldier.group.visible = active;
-        soldier.group.position.set(soldier.spawnX, 0, soldier.spawnZ);
-        soldier.group.rotation.set(0, 0, 0);
-        soldier.group.lookAt(player.position.x, 0, player.position.z);
-        soldier.leftArmPivot.rotation.set(0, 0, 0);
-        soldier.rightArmPivot.rotation.set(0, 0, 0);
-        soldier.leftLegPivot.rotation.set(0, 0, 0);
-        soldier.rightLegPivot.rotation.set(0, 0, 0);
-        soldier.rifle.position.set(0.3, 1.24, -0.22);
-        soldier.muzzleFlash.visible = false;
-        soldier.patrolIndex = (index + waveRef.current) % soldier.patrolPoints.length;
-        soldier.nextSenseAt = 0;
-        soldier.canSeePlayer = false;
-        soldier.lastSeenAt = 0;
-        soldier.lastKnownPlayer.set(soldier.spawnX, 0, soldier.spawnZ);
-        soldier.nextShotAt = now + Math.max(300, 950 - waveRef.current * 36) + Math.random() * 420;
-        soldier.nextCoverAt = 0;
-        soldier.coverUntil = 0;
-        soldier.coverTarget = null;
-        soldier.path = [];
-        soldier.pathIndex = 0;
-        soldier.nextPathAt = 0;
-        soldier.pathTarget.set(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY);
-        soldier.muzzleFlashUntil = 0;
-        soldier.recoilUntil = 0;
-        soldier.deathStartedAt = now;
-      });
-      setEnemyCount(activeCount);
-      waveTransitionAt = 0;
-      supplyQuestionRef.current = null;
-      setSupplyQuestion(null);
-      setSupplyMessage(null);
-      supplyResolvedRef.current = false;
-      setPhase("combat");
-      playSound("wave");
-    };
     const openSupplyDrop = () => {
       if (gamePhaseRef.current !== "combat") return;
       document.exitPointerLock?.();
@@ -2181,11 +2168,6 @@ const GamePage = () => {
         playSound("wrong");
       }
     };
-    nextWaveRef.current = () => {
-      if (gamePhaseRef.current !== "supply" || !supplyResolvedRef.current) return;
-      beginNextWave(performance.now());
-    };
-
     let aimBlend = 0;
     const weaponPose = {
       rifle: {
@@ -2203,7 +2185,6 @@ const GamePage = () => {
       const now = performance.now();
       waveRef.current = 1;
       setWave(1);
-      waveTransitionAt = 0;
       scoreRef.current = 0;
       setScore(0);
       setEnemyCount(STARTING_ENEMIES);
@@ -2277,14 +2258,15 @@ const GamePage = () => {
         soldier.group.visible = active;
         soldier.group.position.set(soldier.spawnX, 0, soldier.spawnZ);
         soldier.group.rotation.set(0, 0, 0);
-        soldier.group.lookAt(player.position.x, 0, player.position.z);
+        soldier.patrolIndex = index % soldier.patrolPoints.length;
+        const firstPatrolPoint = soldier.patrolPoints[soldier.patrolIndex];
+        soldier.group.lookAt(firstPatrolPoint.x, 0, firstPatrolPoint.z);
         soldier.leftArmPivot.rotation.set(0, 0, 0);
         soldier.rightArmPivot.rotation.set(0, 0, 0);
         soldier.leftLegPivot.rotation.set(0, 0, 0);
         soldier.rightLegPivot.rotation.set(0, 0, 0);
         soldier.rifle.position.set(0.3, 1.24, -0.22);
         soldier.muzzleFlash.visible = false;
-        soldier.patrolIndex = index % soldier.patrolPoints.length;
         soldier.nextSenseAt = 0;
         soldier.canSeePlayer = false;
         soldier.lastSeenAt = 0;
@@ -2441,10 +2423,9 @@ const GamePage = () => {
         return;
       }
       if (soldiers.every((soldier) => !soldier.alive)) {
-        if (!waveTransitionAt) waveTransitionAt = now + 2300;
-        if (now >= waveTransitionAt) openSupplyDrop();
-      } else {
-        waveTransitionAt = 0;
+        finishGame(true);
+        renderer.render(scene, camera);
+        return;
       }
       for (let i = tracers.length - 1; i >= 0; i -= 1) {
         if (now < tracers[i].expiresAt) continue;
@@ -2909,10 +2890,12 @@ const GamePage = () => {
               <ArrowLeft size={14} /> MENU
             </button>
             <span className="strike-mark" aria-hidden="true" />
-            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · wave {wave}</div></div>
+            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · misi tunggal</div></div>
           </div>
           <div className="strike-header-actions">
-            <div className="strike-status"><i />WAVE {String(wave).padStart(2, "0")} <span>·</span> {String(enemyCount).padStart(2, "0")} MUSUH <span>·</span> {String(score).padStart(3, "0")}</div>
+            <div className="strike-status" role="status" aria-live="polite">
+              <i />Musuh tersisa: {enemyCount}/10 <span>·</span> Skor {String(score).padStart(3, "0")}
+            </div>
             <button
               className="strike-header-button"
               onClick={() => pauseGameRef.current?.()}
@@ -3154,7 +3137,7 @@ const GamePage = () => {
         {gamePhase === "paused" && (
           <div className="strike-phase-layer">
             <section className="strike-phase-card" role="dialog" aria-modal="true" aria-labelledby="strike-pause-title">
-              <div className="strike-phase-kicker">Permainan dijeda · wave {wave}</div>
+              <div className="strike-phase-kicker">Permainan dijeda</div>
               <h2 className="strike-phase-title" id="strike-pause-title">PAUSE</h2>
               <p className="strike-phase-copy">Skor saat ini: {score}. Lanjutkan permainan atau kembali ke menu.</p>
               <button className="strike-phase-button" onClick={() => resumeGameRef.current?.()}>LANJUT BERMAIN</button>
@@ -3162,11 +3145,15 @@ const GamePage = () => {
             </section>
           </div>
         )}
-        {gamePhase === "gameover" && (
+        {(gamePhase === "gameover" || gamePhase === "complete") && (
           <div className="strike-phase-layer">
             <section className="strike-phase-card" role="dialog" aria-modal="true" aria-labelledby="strike-gameover-title">
-              <div className="strike-phase-kicker">Operasi selesai · wave {wave}</div>
-              <h2 className="strike-phase-title" id="strike-gameover-title">GAME OVER</h2>
+              <div className="strike-phase-kicker">
+                {gamePhase === "complete" ? "Semua musuh berhasil dikalahkan" : "Operasi berakhir"}
+              </div>
+              <h2 className="strike-phase-title" id="strike-gameover-title">
+                {gamePhase === "complete" ? "Misi Selesai" : "GAME OVER"}
+              </h2>
               <div className="strike-score-summary">
                 <div className="strike-score-cell"><div className="strike-score-label">SKOR</div><div className="strike-score-value">{score}</div></div>
                 <div className="strike-score-cell"><div className="strike-score-label">SKOR TERTINGGI</div><div className="strike-score-value">{bestScore}</div></div>
