@@ -11,6 +11,7 @@ type WeaponId = "rifle" | "pistol";
 type GamePhase = "combat" | "supply" | "paused" | "gameover" | "complete";
 type SupplyQuestion = { prompt: string; answer: number; options: number[] };
 type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover";
+type EnemyVoiceKind = "scream" | "death" | "hurt";
 type WeaponAmmo = { magazine: number; reserve: number };
 type AmmoLoadout = Record<WeaponId, WeaponAmmo>;
 type RadarContact = { id: number; x: number; y: number };
@@ -66,8 +67,10 @@ type SoldierState = {
   deathStartedAt: number;
   deathDirection: number;
   phase: number;
+  voicePitch: number;
 };
 type HitFeedback = { id: number; damage: number; headshot: boolean; eliminated: boolean };
+type EnemyScreamVariant = { pitch: number; duration: number; formants: [number, number, number] };
 
 const createInitialAmmo = (): AmmoLoadout => ({
   rifle: { magazine: 30, reserve: 120 },
@@ -106,6 +109,12 @@ const GUNFIRE_ALERT_RADIUS = 36;
 const BEST_SCORE_KEY = "numatik-strike-best-score";
 const TOUCH_LOOK_SENSITIVITY_KEY = "numatik-strike-touch-look-sensitivity";
 const DEFAULT_TOUCH_LOOK_SENSITIVITY = 1.2;
+const ENEMY_SCREAM_VARIANTS: EnemyScreamVariant[] = [
+  { pitch: 194, duration: 0.36, formants: [690, 1160, 2460] },
+  { pitch: 210, duration: 0.41, formants: [760, 1290, 2700] },
+  { pitch: 226, duration: 0.47, formants: [650, 1080, 2380] },
+  { pitch: 202, duration: 0.39, formants: [720, 1370, 2820] },
+];
 const SKY_HORIZON_COLOR = "#e9f3f7";
 const QUALITY_FOG: Record<QualitySetting, { near: number; far: number }> = {
   low: { near: 30, far: 124 },
@@ -1737,6 +1746,7 @@ const GamePage = () => {
         pathTarget: new THREE.Vector3(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY),
         muzzleFlashUntil: 0, recoilUntil: 0, deathStartedAt: 0, deathDirection: index % 2 ? -1 : 1,
         phase: index * 1.31,
+        voicePitch: 0.92 + ((index * 7) % STARTING_ENEMIES) * 0.018,
       };
     };
 
@@ -1781,6 +1791,7 @@ const GamePage = () => {
     raycaster.far = 155;
     const tracers: Array<{ line: THREE.Line | THREE.LineSegments; expiresAt: number; disposeMaterial: boolean }> = [];
     const sightRaycaster = new THREE.Raycaster();
+    const voiceOcclusionRaycaster = new THREE.Raycaster();
     const playerLimit = 55;
     const worldCollisionRadius = 0.48;
     const playerOnlyTowerRailColliders: CollisionBox[] = [
@@ -2098,14 +2109,197 @@ const GamePage = () => {
       scoreRef.current += points;
       setScore(scoreRef.current);
     };
+    type ActiveEnemyVoice = { nodes: AudioNode[]; isScream: boolean };
+    const activeEnemyVoices = new Set<ActiveEnemyVoice>();
+    let enemyBreathBuffer: AudioBuffer | null = null;
+    let lastScreamVariant = -1;
+    const getStrikeAudioContext = () => {
+      const Context = window.AudioContext;
+      if (!Context) return null;
+      const context = audioContextRef.current ?? new Context();
+      audioContextRef.current = context;
+      if (context.state === "suspended") void context.resume().catch(() => undefined);
+      return context;
+    };
+    const playEnemyVoice = (soldier: SoldierState, kind: EnemyVoiceKind) => {
+      if (mutedRef.current || activeEnemyVoices.size >= 12) return;
+      const isScream = kind === "scream";
+      if (isScream && [...activeEnemyVoices].filter((voice) => voice.isScream).length >= 2) return;
+      let activeVoice: ActiveEnemyVoice | null = null;
+      try {
+        const context = getStrikeAudioContext();
+        if (!context) return;
+        const time = context.currentTime;
+        const cameraPosition = camera.getWorldPosition(new THREE.Vector3());
+        const sourcePosition = soldier.group.getWorldPosition(new THREE.Vector3());
+        sourcePosition.y += 1.18;
+        const towardSource = sourcePosition.clone().sub(cameraPosition);
+        const distance = towardSource.length();
+        let occluded = false;
+        if (distance > 0.35) {
+          voiceOcclusionRaycaster.set(cameraPosition, towardSource.normalize());
+          voiceOcclusionRaycaster.far = distance - 0.3;
+          occluded = voiceOcclusionRaycaster.intersectObjects(worldOccluders, false).length > 0;
+        }
+
+        const listener = context.listener;
+        const listenerQuaternion = camera.getWorldQuaternion(new THREE.Quaternion());
+        const listenerForward = new THREE.Vector3(0, 0, -1).applyQuaternion(listenerQuaternion);
+        const listenerUp = new THREE.Vector3(0, 1, 0).applyQuaternion(listenerQuaternion);
+        listener.positionX.setValueAtTime(cameraPosition.x, time);
+        listener.positionY.setValueAtTime(cameraPosition.y, time);
+        listener.positionZ.setValueAtTime(cameraPosition.z, time);
+        listener.forwardX.setValueAtTime(listenerForward.x, time);
+        listener.forwardY.setValueAtTime(listenerForward.y, time);
+        listener.forwardZ.setValueAtTime(listenerForward.z, time);
+        listener.upX.setValueAtTime(listenerUp.x, time);
+        listener.upY.setValueAtTime(listenerUp.y, time);
+        listener.upZ.setValueAtTime(listenerUp.z, time);
+
+        let variant: EnemyScreamVariant | undefined;
+        if (isScream) {
+          let variantIndex = Math.floor(Math.random() * ENEMY_SCREAM_VARIANTS.length);
+          if (variantIndex === lastScreamVariant) {
+            variantIndex = (variantIndex + 1 + Math.floor(Math.random() * (ENEMY_SCREAM_VARIANTS.length - 1)))
+              % ENEMY_SCREAM_VARIANTS.length;
+          }
+          lastScreamVariant = variantIndex;
+          variant = ENEMY_SCREAM_VARIANTS[variantIndex];
+        }
+        const eventJitter = 0.92 + Math.random() * 0.16;
+        const duration = isScream
+          ? (variant?.duration ?? 0.4) * (0.92 + Math.random() * 0.16)
+          : kind === "death" ? 0.25 : 0.1;
+        const pitch = isScream
+          ? THREE.MathUtils.clamp((variant?.pitch ?? 210) * soldier.voicePitch * eventJitter, 180, 260)
+          : THREE.MathUtils.clamp((kind === "death" ? 218 : 224) * soldier.voicePitch, 180, 260);
+        const distanceGain = Math.max(0.16, 1 - distance / 48) * (occluded ? 0.38 : 1);
+        const formantCenters = isScream
+          ? (variant?.formants ?? [700, 1200, 2600])
+          : kind === "death" ? [540, 980] : [430, 820];
+        const oscillator = context.createOscillator();
+        oscillator.type = "sawtooth";
+        const voiceGain = context.createGain();
+        const lowpass = context.createBiquadFilter();
+        lowpass.type = "lowpass";
+        lowpass.frequency.setValueAtTime(
+          Math.max(700, (7800 - distance * 118) * (occluded ? 0.42 : 1)),
+          time,
+        );
+        lowpass.Q.value = 0.65;
+        const panner = context.createPanner();
+        panner.panningModel = "HRTF";
+        panner.distanceModel = "inverse";
+        panner.refDistance = 2;
+        panner.maxDistance = 48;
+        panner.rolloffFactor = 1;
+        panner.positionX.setValueAtTime(sourcePosition.x, time);
+        panner.positionY.setValueAtTime(sourcePosition.y, time);
+        panner.positionZ.setValueAtTime(sourcePosition.z, time);
+        const formantFilters = formantCenters.map((center, index) => {
+          const filter = context.createBiquadFilter();
+          filter.type = "bandpass";
+          filter.Q.value = isScream ? 3.7 + index * 0.35 : 2.6;
+          const shifted = center * (0.92 + Math.random() * 0.16);
+          filter.frequency.setValueAtTime(shifted * 0.96, time);
+          filter.frequency.linearRampToValueAtTime(shifted * 1.04, time + duration * 0.42);
+          filter.frequency.linearRampToValueAtTime(shifted * 0.98, time + duration * 0.9);
+          oscillator.connect(filter);
+          filter.connect(voiceGain);
+          return filter;
+        });
+        voiceGain.connect(lowpass);
+        lowpass.connect(panner);
+        panner.connect(context.destination);
+
+        const nodes: AudioNode[] = [oscillator, voiceGain, lowpass, panner, ...formantFilters];
+        if (isScream) {
+          if (!enemyBreathBuffer) {
+            const sampleCount = Math.floor(context.sampleRate * 0.55);
+            enemyBreathBuffer = context.createBuffer(1, sampleCount, context.sampleRate);
+            const samples = enemyBreathBuffer.getChannelData(0);
+            for (let index = 0; index < samples.length; index += 1) {
+              samples[index] = (Math.random() * 2 - 1) * 0.65;
+            }
+          }
+          const breath = context.createBufferSource();
+          breath.buffer = enemyBreathBuffer;
+          const breathFilter = context.createBiquadFilter();
+          breathFilter.type = "bandpass";
+          breathFilter.frequency.setValueAtTime(1750, time);
+          breathFilter.frequency.linearRampToValueAtTime(2550, time + duration * 0.48);
+          breathFilter.Q.value = 0.8;
+          const breathGain = context.createGain();
+          breathGain.gain.setValueAtTime(0.0001, time);
+          breathGain.gain.linearRampToValueAtTime(0.085, time + 0.055);
+          breathGain.gain.exponentialRampToValueAtTime(0.0001, time + duration * 0.88);
+          breath.connect(breathFilter);
+          breathFilter.connect(breathGain);
+          breathGain.connect(voiceGain);
+          nodes.push(breath, breathFilter, breathGain);
+
+          const vibrato = context.createOscillator();
+          vibrato.type = "sine";
+          vibrato.frequency.value = 6;
+          const vibratoDepth = context.createGain();
+          vibratoDepth.gain.value = Math.min(5, pitch * 0.018);
+          vibrato.connect(vibratoDepth);
+          vibratoDepth.connect(oscillator.frequency);
+          nodes.push(vibrato, vibratoDepth);
+          vibrato.start(time);
+          vibrato.stop(time + duration);
+          breath.start(time);
+          breath.stop(time + duration);
+        }
+
+        const peak = (isScream ? 0.16 : kind === "death" ? 0.085 : 0.06) * distanceGain;
+        voiceGain.gain.setValueAtTime(0.0001, time);
+        voiceGain.gain.linearRampToValueAtTime(peak, time + Math.min(0.015, duration * 0.18));
+        if (isScream) voiceGain.gain.setValueAtTime(peak * 0.72, time + duration * 0.48);
+        voiceGain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+        if (isScream) {
+          oscillator.frequency.setValueAtTime(Math.max(180, pitch * 0.9), time);
+          oscillator.frequency.linearRampToValueAtTime(Math.min(260, pitch * 1.1), time + duration * 0.2);
+          oscillator.frequency.exponentialRampToValueAtTime(Math.max(180, pitch * 0.74), time + duration);
+        } else {
+          oscillator.frequency.setValueAtTime(pitch, time);
+          oscillator.frequency.exponentialRampToValueAtTime(
+            Math.max(90, pitch * (kind === "death" ? 0.58 : 0.62)),
+            time + duration,
+          );
+        }
+
+        const voiceEntry: ActiveEnemyVoice = { nodes, isScream };
+        activeVoice = voiceEntry;
+        activeEnemyVoices.add(voiceEntry);
+        oscillator.onended = () => {
+          activeEnemyVoices.delete(voiceEntry);
+          nodes.forEach((node) => {
+            try {
+              node.disconnect();
+            } catch {
+              // Nodes may already be disconnected when the audio context closes.
+            }
+          });
+        };
+        oscillator.start(time);
+        oscillator.stop(time + duration);
+      } catch {
+        if (activeVoice) activeEnemyVoices.delete(activeVoice);
+        activeVoice?.nodes.forEach((node) => {
+          try {
+            node.disconnect();
+          } catch {
+            // Ignore cleanup errors from unsupported or closed audio contexts.
+          }
+        });
+      }
+    };
     const playSound = (cue: SoundCue) => {
       if (mutedRef.current) return;
       try {
-        const Context = window.AudioContext;
-        if (!Context) return;
-        const context = audioContextRef.current ?? new Context();
-        audioContextRef.current = context;
-        if (context.state === "suspended") void context.resume().catch(() => undefined);
+        const context = getStrikeAudioContext();
+        if (!context) return;
         const presets: Record<SoundCue, [number, number, number, OscillatorType]> = {
           rifle: [118, 0.045, 0.045, "sawtooth"],
           pistol: [190, 0.07, 0.055, "square"],
@@ -2347,6 +2541,7 @@ const GamePage = () => {
         }
         addScore((headshot ? 120 : 30) + (eliminated ? 100 : 0));
         playSound("hit");
+        playEnemyVoice(hitSoldier, eliminated ? (headshot ? "scream" : "death") : "hurt");
         hitFeedbackIdRef.current += 1;
         setHitFeedback({ id: hitFeedbackIdRef.current, damage, headshot, eliminated });
         if (hitFeedbackTimeoutRef.current !== null) window.clearTimeout(hitFeedbackTimeoutRef.current);
@@ -3037,6 +3232,14 @@ const GamePage = () => {
       }
       killFeedTimeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
       killFeedTimeoutsRef.current = [];
+      activeEnemyVoices.forEach((voice) => voice.nodes.forEach((node) => {
+        try {
+          node.disconnect();
+        } catch {
+          // The audio context may already be closing.
+        }
+      }));
+      activeEnemyVoices.clear();
       const audioContext = audioContextRef.current;
       audioContextRef.current = null;
       if (audioContext && audioContext.state !== "closed") {
