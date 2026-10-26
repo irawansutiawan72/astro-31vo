@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } fr
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
 type MoveInput = { x: number; y: number };
 type QualitySetting = "low" | "medium" | "high";
@@ -582,18 +583,66 @@ const GamePage = () => {
       lowWallMat, crateMat, crateMetalMat, towerMat, steelDetailMat, sandbagMat, vehicleMat,
       puddleMat, groundDetailMat,
     ].forEach((mat) => { mat.needsUpdate = true; });
-    const soldierUniformMat = material("#69765c", 0.94, 0.02);
+    const camoPalettes = [
+      { base: "#69745b", colors: ["#4d5845", "#8d8968", "#354037"] },
+      { base: "#9a8d6b", colors: ["#6f7055", "#c2ad7b", "#4d503f"] },
+      { base: "#68706e", colors: ["#42494a", "#96978c", "#343b3e"] },
+      { base: "#73775a", colors: ["#515942", "#a19a68", "#3a4639"] },
+    ];
+    const soldierCamoMaterials = camoPalettes.map(({ base, colors }) => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 128;
+      canvas.height = 128;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Canvas 2D tidak tersedia untuk tekstur seragam.");
+      context.fillStyle = base;
+      context.fillRect(0, 0, 128, 128);
+      for (let index = 0; index < 44; index += 1) {
+        const x = textureRandom() * 128;
+        const y = textureRandom() * 128;
+        const width = 8 + textureRandom() * 21;
+        const height = 4 + textureRandom() * 12;
+        context.fillStyle = colors[Math.floor(textureRandom() * colors.length)] ?? base;
+        context.beginPath();
+        context.moveTo(x - width * 0.45, y);
+        context.bezierCurveTo(
+          x - width * 0.48, y - height * 0.78,
+          x + width * 0.35, y - height * 0.62,
+          x + width * 0.5, y - height * 0.08,
+        );
+        context.bezierCurveTo(
+          x + width * 0.42, y + height * 0.7,
+          x - width * 0.35, y + height * 0.82,
+          x - width * 0.45, y,
+        );
+        context.fill();
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      textures.push(texture);
+      const mat = new THREE.MeshStandardMaterial({
+        map: texture,
+        roughness: 0.91,
+        metalness: 0.02,
+        flatShading: true,
+      });
+      materials.push(mat);
+      return mat;
+    });
     const soldierVestMat = material("#424a40", 0.86, 0.08);
-    const soldierPantsMat = material("#50574c", 0.96, 0.01);
     const soldierHelmetMat = material("#59664f", 0.82, 0.12);
     const soldierSkinMat = material("#b68d6f", 0.88, 0.01);
     const soldierBootMat = material("#333633", 0.82, 0.12);
-    const soldierWeaponMat = material("#292e2c", 0.62, 0.3);
-    const soldierMetalMat = material("#74766d", 0.5, 0.48);
-    const soldierMarkingMat = material("#a96348", 0.7, 0.12);
-    const playerGunMat = material("#263138", 0.48, 0.52);
-    const playerGunMetalMat = material("#5f7174", 0.38, 0.72);
-    const playerGunAccentMat = material("#25c5cf", 0.58, 0.28);
+    const soldierGearMat = material("#343a35", 0.88, 0.06);
+    const soldierGloveMat = material("#292f2c", 0.9, 0.04);
+    const soldierMaskMat = material("#252c29", 0.95, 0.01);
+    const soldierWeaponMat = material("#282d2c", 0.72, 0.22);
+    const soldierMetalMat = material("#454c49", 0.34, 0.72);
+    const playerGunMat = material("#2b3231", 0.74, 0.18);
+    const playerGunMetalMat = material("#3e4847", 0.33, 0.76);
+    const playerGunAccentMat = material("#756a4d", 0.58, 0.28);
+    const playerGloveMat = material("#292f2c", 0.9, 0.04);
+    const playerSleeveMat = soldierCamoMaterials[0]!;
     const enemyTracerMat = new THREE.LineBasicMaterial({ color: "#ff604d", transparent: true, opacity: 0.84 });
     const muzzleFlashMat = new THREE.MeshBasicMaterial({ color: "#ffd59a", toneMapped: false });
     const playerMuzzleMat = new THREE.MeshBasicMaterial({ color: "#ffbd55", toneMapped: false });
@@ -613,33 +662,74 @@ const GamePage = () => {
       parent.add(mesh);
       return mesh;
     };
+    const playerSleeveGeometry = new THREE.CylinderGeometry(0.12, 0.16, 0.54, 8);
+    const playerHandGeometry = new THREE.SphereGeometry(0.13, 10, 8);
+    const addViewArm = (
+      parent: THREE.Object3D,
+      start: THREE.Vector3,
+      end: THREE.Vector3,
+    ) => {
+      const direction = end.clone().sub(start);
+      const sleeve = addViewPart(
+        parent,
+        playerSleeveGeometry,
+        playerSleeveMat,
+        (start.x + end.x) / 2,
+        (start.y + end.y) / 2,
+        (start.z + end.z) / 2,
+      );
+      sleeve.scale.y = direction.length() / 0.54;
+      sleeve.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+      const hand = addViewPart(parent, playerHandGeometry, playerGloveMat, end.x, end.y, end.z);
+      hand.scale.set(0.9, 0.76, 1.12);
+    };
     const rifleView = new THREE.Group();
     camera.add(rifleView);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.17, 0.15, 0.5), playerGunMat, 0, 0, -0.13);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.13, 0.13, 0.34), playerGunMat, 0, 0.035, -0.52);
-    const rifleBarrel = addViewPart(rifleView, new THREE.CylinderGeometry(0.022, 0.03, 0.34, 6), playerGunMetalMat, 0, 0.025, -0.84);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.18, 0.15, 0.37), playerGunMat, 0, 0, 0.16);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.17, 0.15, 0.43), playerGunMetalMat, 0, 0.01, -0.24);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.15, 0.13, 0.36), playerGunMat, 0, 0.015, -0.59);
+    const rifleBarrel = addViewPart(rifleView, new THREE.CylinderGeometry(0.023, 0.03, 0.42, 8), playerGunMetalMat, 0, 0.02, -0.87);
     rifleBarrel.rotation.x = -Math.PI / 2;
-    addViewPart(rifleView, new THREE.BoxGeometry(0.14, 0.15, 0.24), playerGunMat, 0, -0.005, 0.22);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.11, 0.24, 0.13), playerGunMat, 0, -0.18, -0.05);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.12, 0.24, 0.15), playerGunMetalMat, 0, -0.19, -0.23);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.1, 0.075, 0.13), playerGunMetalMat, 0, 0.12, -0.17);
-    addViewPart(rifleView, new THREE.BoxGeometry(0.18, 0.025, 0.08), playerGunAccentMat, 0, 0.084, -0.43);
-    const rifleFlash = addViewPart(rifleView, new THREE.ConeGeometry(0.075, 0.22, 6), playerMuzzleMat, 0, 0.025, -1.08);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.12, 0.25, 0.13), playerGunMat, 0.035, -0.17, -0.13);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.11, 0.035, 0.42), playerGunMetalMat, 0, 0.105, -0.42);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.12, 0.09, 0.13), playerGunMetalMat, 0, 0.16, -0.37);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.19, 0.055, 0.12), playerGunAccentMat, 0, 0.12, -0.38);
+    addViewPart(rifleView, new THREE.BoxGeometry(0.045, 0.12, 0.055), playerGunMetalMat, 0, 0.11, -0.72);
+    addViewPart(rifleView, new THREE.CylinderGeometry(0.055, 0.055, 0.13, 8), playerGunMetalMat, 0, 0.02, -1.1).rotation.x = -Math.PI / 2;
+    addViewPart(rifleView, new THREE.BoxGeometry(0.05, 0.07, 0.08), playerGunMetalMat, 0.12, 0.015, -0.24);
+    addViewPart(rifleView, new THREE.TorusGeometry(0.075, 0.012, 5, 12), playerGunMat, 0.08, -0.11, -0.24);
+    const rifleMagazineCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.025, -0.1, -0.24),
+      new THREE.Vector3(-0.015, -0.2, -0.22),
+      new THREE.Vector3(0.015, -0.32, -0.16),
+      new THREE.Vector3(0.055, -0.4, -0.08),
+    ]);
+    addViewPart(rifleView, new THREE.TubeGeometry(rifleMagazineCurve, 10, 0.055, 6, false), playerGunMat, 0, 0, 0);
+    const rifleFlash = addViewPart(rifleView, new THREE.ConeGeometry(0.07, 0.19, 8), playerMuzzleMat, 0, 0.02, -1.19);
     rifleFlash.rotation.x = -Math.PI / 2;
     rifleFlash.visible = false;
+    addViewArm(rifleView, new THREE.Vector3(0.54, -0.52, 0.12), new THREE.Vector3(0.1, -0.18, -0.02));
+    addViewArm(rifleView, new THREE.Vector3(-0.48, -0.53, -0.3), new THREE.Vector3(-0.12, -0.12, -0.42));
     rifleView.position.set(0.34, -0.3, -0.58);
 
     const pistolView = new THREE.Group();
     camera.add(pistolView);
-    addViewPart(pistolView, new THREE.BoxGeometry(0.15, 0.13, 0.3), playerGunMat, 0, 0.025, -0.1);
-    addViewPart(pistolView, new THREE.BoxGeometry(0.14, 0.065, 0.25), playerGunMetalMat, 0, 0.115, -0.11);
-    const pistolBarrel = addViewPart(pistolView, new THREE.CylinderGeometry(0.02, 0.025, 0.15, 6), playerGunMetalMat, 0, 0.08, -0.31);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.16, 0.13, 0.28), playerGunMat, 0, 0.025, -0.12);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.15, 0.07, 0.28), playerGunMetalMat, 0, 0.115, -0.13);
+    const pistolBarrel = addViewPart(pistolView, new THREE.CylinderGeometry(0.022, 0.026, 0.18, 8), playerGunMetalMat, 0, 0.08, -0.34);
     pistolBarrel.rotation.x = -Math.PI / 2;
-    addViewPart(pistolView, new THREE.BoxGeometry(0.12, 0.23, 0.13), playerGunMat, 0, -0.13, 0.035);
-    addViewPart(pistolView, new THREE.BoxGeometry(0.16, 0.025, 0.055), playerGunAccentMat, 0, 0.17, -0.13);
-    const pistolFlash = addViewPart(pistolView, new THREE.ConeGeometry(0.065, 0.18, 6), playerMuzzleMat, 0, 0.08, -0.48);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.13, 0.25, 0.14), playerGunMat, 0, -0.13, 0.025);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.12, 0.22, 0.105), playerGunMetalMat, 0, -0.245, 0.04);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.15, 0.022, 0.07), playerGunAccentMat, 0, 0.17, -0.13);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.04, 0.06, 0.04), playerGunMetalMat, 0, 0.18, -0.25);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.04, 0.055, 0.04), playerGunMetalMat, 0, 0.18, -0.01);
+    addViewPart(pistolView, new THREE.BoxGeometry(0.13, 0.015, 0.22), playerGunMetalMat, 0, 0.16, -0.13);
+    addViewPart(pistolView, new THREE.TorusGeometry(0.067, 0.011, 5, 12), playerGunMat, 0.07, -0.08, -0.12);
+    const pistolFlash = addViewPart(pistolView, new THREE.ConeGeometry(0.06, 0.16, 8), playerMuzzleMat, 0, 0.08, -0.48);
     pistolFlash.rotation.x = -Math.PI / 2;
     pistolFlash.visible = false;
+    addViewArm(pistolView, new THREE.Vector3(0.53, -0.53, 0.12), new THREE.Vector3(0.08, -0.17, -0.02));
+    addViewArm(pistolView, new THREE.Vector3(-0.46, -0.53, -0.23), new THREE.Vector3(-0.04, -0.24, 0.06));
     pistolView.position.set(0.34, -0.32, -0.48);
     pistolView.visible = false;
 
@@ -1422,23 +1512,141 @@ const GamePage = () => {
       soldierGeometries.add(geometry);
       return geometry;
     };
-    const torsoGeometry = soldierGeometry(new THREE.BoxGeometry(0.62, 0.82, 0.38));
-    const vestGeometry = soldierGeometry(new THREE.BoxGeometry(0.68, 0.48, 0.42));
-    const neckGeometry = soldierGeometry(new THREE.CylinderGeometry(0.11, 0.12, 0.18, 6));
-    const headGeometry = soldierGeometry(new THREE.SphereGeometry(0.23, 8, 6));
-    const helmetGeometry = soldierGeometry(new THREE.SphereGeometry(0.29, 8, 5, 0, Math.PI * 2, 0, Math.PI / 2));
-    const helmetBrimGeometry = soldierGeometry(new THREE.BoxGeometry(0.58, 0.07, 0.48));
-    const upperArmGeometry = soldierGeometry(new THREE.BoxGeometry(0.2, 0.43, 0.22));
-    const forearmGeometry = soldierGeometry(new THREE.BoxGeometry(0.17, 0.4, 0.18));
-    const legGeometry = soldierGeometry(new THREE.BoxGeometry(0.23, 0.76, 0.25));
-    const bootGeometry = soldierGeometry(new THREE.BoxGeometry(0.28, 0.16, 0.4));
-    const shoulderGeometry = soldierGeometry(new THREE.BoxGeometry(0.27, 0.2, 0.3));
-    const rifleReceiverGeometry = soldierGeometry(new THREE.BoxGeometry(0.15, 0.15, 0.62));
-    const rifleBarrelGeometry = soldierGeometry(new THREE.CylinderGeometry(0.035, 0.045, 0.58, 6));
-    const rifleStockGeometry = soldierGeometry(new THREE.BoxGeometry(0.16, 0.17, 0.3));
-    const rifleGripGeometry = soldierGeometry(new THREE.BoxGeometry(0.12, 0.24, 0.13));
-    const rifleSightGeometry = soldierGeometry(new THREE.BoxGeometry(0.12, 0.1, 0.14));
-    const muzzleFlashGeometry = soldierGeometry(new THREE.SphereGeometry(0.085, 6, 4));
+    type SoldierPartSpec = {
+      geometry: THREE.BufferGeometry;
+      materialIndex: number;
+      position: [number, number, number];
+      scale: [number, number, number];
+      rotation: [number, number, number];
+    };
+    const soldierBoxGeometry = soldierGeometry(new THREE.BoxGeometry(1, 1, 1));
+    const soldierSphereGeometry = soldierGeometry(new THREE.SphereGeometry(0.5, 10, 8));
+    const soldierMaskGeometry = soldierGeometry(
+      new THREE.SphereGeometry(0.5, 10, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
+    );
+    const soldierHelmetShellGeometry = soldierGeometry(
+      new THREE.SphereGeometry(0.5, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2),
+    );
+    const soldierCylinderGeometry = soldierGeometry(new THREE.CylinderGeometry(0.5, 0.5, 1, 8));
+    const soldierTorusGeometry = soldierGeometry(new THREE.TorusGeometry(0.5, 0.08, 4, 14));
+    const soldierMagazineCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, -0.08, 0),
+      new THREE.Vector3(0, -0.18, 0.02),
+      new THREE.Vector3(0.03, -0.29, 0.08),
+      new THREE.Vector3(0.065, -0.36, 0.14),
+    ]);
+    const soldierMagazineGeometry = soldierGeometry(new THREE.TubeGeometry(soldierMagazineCurve, 9, 0.055, 6, false));
+    const muzzleFlashGeometry = soldierGeometry(new THREE.SphereGeometry(0.5, 8, 6));
+    const soldierPart = (
+      geometry: THREE.BufferGeometry,
+      materialIndex: number,
+      position: [number, number, number],
+      scale: [number, number, number],
+      rotation: [number, number, number] = [0, 0, 0],
+    ): SoldierPartSpec => ({ geometry, materialIndex, position, scale, rotation });
+    const mergeSoldierParts = (specs: SoldierPartSpec[]) => {
+      const byMaterial = new Map<number, SoldierPartSpec[]>();
+      specs.forEach((spec) => {
+        const materialSpecs = byMaterial.get(spec.materialIndex) ?? [];
+        materialSpecs.push(spec);
+        byMaterial.set(spec.materialIndex, materialSpecs);
+      });
+      const materialGeometries: THREE.BufferGeometry[] = [];
+      byMaterial.forEach((materialSpecs, materialIndex) => {
+        const transformed = materialSpecs.map((spec) => {
+          const geometry = spec.geometry.clone();
+          geometry.clearGroups();
+          geometry.applyMatrix4(new THREE.Matrix4().compose(
+            new THREE.Vector3(...spec.position),
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(...spec.rotation)),
+            new THREE.Vector3(...spec.scale),
+          ));
+          return geometry;
+        });
+        const materialGeometry = mergeGeometries(transformed, false);
+        transformed.forEach((geometry) => geometry.dispose());
+        if (!materialGeometry) throw new Error("Geometri prajurit tidak dapat digabungkan.");
+        materialGeometry.clearGroups();
+        materialGeometry.addGroup(
+          0,
+          materialGeometry.index?.count ?? materialGeometry.getAttribute("position").count,
+          materialIndex,
+        );
+        materialGeometries.push(materialGeometry);
+      });
+      const merged = mergeGeometries(materialGeometries, true);
+      materialGeometries.forEach((geometry) => geometry.dispose());
+      if (!merged) throw new Error("Mesh gabungan prajurit tidak dapat dibuat.");
+      return soldierGeometry(merged);
+    };
+    const bodyGeometry = mergeSoldierParts([
+      soldierPart(soldierBoxGeometry, 0, [0, 1.29, 0], [0.58, 0.76, 0.36]),
+      soldierPart(soldierBoxGeometry, 1, [0, 1.31, 0.04], [0.66, 0.52, 0.42]),
+      soldierPart(soldierSphereGeometry, 0, [-0.31, 1.54, 0], [0.26, 0.2, 0.3]),
+      soldierPart(soldierSphereGeometry, 0, [0.31, 1.54, 0], [0.26, 0.2, 0.3]),
+      soldierPart(soldierBoxGeometry, 2, [0, 1.01, 0.02], [0.64, 0.12, 0.42]),
+      soldierPart(soldierBoxGeometry, 2, [0, 1.01, 0.245], [0.1, 0.075, 0.025]),
+      soldierPart(soldierBoxGeometry, 1, [-0.22, 1.22, 0.25], [0.14, 0.17, 0.12]),
+      soldierPart(soldierBoxGeometry, 1, [-0.07, 1.22, 0.25], [0.13, 0.17, 0.12]),
+      soldierPart(soldierBoxGeometry, 1, [0.08, 1.22, 0.25], [0.13, 0.17, 0.12]),
+      soldierPart(soldierBoxGeometry, 1, [0.22, 1.22, 0.25], [0.14, 0.17, 0.12]),
+      soldierPart(soldierBoxGeometry, 2, [0, 1.48, -0.27], [0.48, 0.54, 0.22]),
+      soldierPart(soldierBoxGeometry, 2, [-0.29, 1.45, -0.25], [0.13, 0.27, 0.21]),
+      soldierPart(soldierBoxGeometry, 2, [0.29, 1.45, -0.25], [0.13, 0.27, 0.21]),
+      soldierPart(soldierBoxGeometry, 2, [-0.2, 1.5, -0.12], [0.075, 0.45, 0.045], [0, 0, -0.2]),
+      soldierPart(soldierBoxGeometry, 2, [0.2, 1.5, -0.12], [0.075, 0.45, 0.045], [0, 0, 0.2]),
+      soldierPart(soldierBoxGeometry, 2, [-0.25, 1.49, 0.218], [0.13, 0.1, 0.025]),
+    ]);
+    const headGeometry = mergeSoldierParts([
+      soldierPart(soldierCylinderGeometry, 0, [0, 1.72, 0], [0.14, 0.2, 0.14]),
+      soldierPart(soldierSphereGeometry, 0, [0, 1.91, 0], [0.44, 0.48, 0.42]),
+      soldierPart(soldierMaskGeometry, 2, [0, 1.9, 0.035], [0.44, 0.46, 0.425]),
+      soldierPart(soldierHelmetShellGeometry, 1, [0, 2.12, 0], [0.58, 0.38, 0.58]),
+      soldierPart(soldierBoxGeometry, 1, [0, 2.015, 0.035], [0.61, 0.06, 0.5]),
+      soldierPart(soldierCylinderGeometry, 1, [-0.275, 2.01, 0.02], [0.16, 0.1, 0.16], [0, 0, Math.PI / 2]),
+      soldierPart(soldierCylinderGeometry, 1, [0.275, 2.01, 0.02], [0.16, 0.1, 0.16], [0, 0, Math.PI / 2]),
+      soldierPart(soldierTorusGeometry, 2, [0, 1.93, 0], [0.45, 0.45, 0.45], [Math.PI / 2, 0, 0]),
+      soldierPart(soldierBoxGeometry, 2, [0, 1.98, 0.205], [0.38, 0.075, 0.04]),
+      soldierPart(soldierBoxGeometry, 2, [-0.225, 1.98, 0.16], [0.11, 0.055, 0.04]),
+      soldierPart(soldierBoxGeometry, 2, [0.225, 1.98, 0.16], [0.11, 0.055, 0.04]),
+      soldierPart(soldierBoxGeometry, 2, [-0.13, 1.82, 0.13], [0.07, 0.17, 0.035], [0, 0, -0.25]),
+      soldierPart(soldierBoxGeometry, 2, [0.13, 1.82, 0.13], [0.07, 0.17, 0.035], [0, 0, 0.25]),
+    ]);
+    const makeArmGeometry = (side: -1 | 1) => {
+      const inward = side < 0 ? 1 : -1;
+      const gloveZ = side < 0 ? 0.31 : -0.08;
+      return mergeSoldierParts([
+        soldierPart(soldierBoxGeometry, 0, [0, -0.15, 0], [0.23, 0.34, 0.25]),
+        soldierPart(soldierBoxGeometry, 0, [inward * 0.1, -0.39, 0.15], [0.18, 0.34, 0.2], [0, 0, inward * 0.16]),
+        soldierPart(soldierBoxGeometry, 1, [inward * 0.1, -0.38, 0.25], [0.19, 0.15, 0.065]),
+        soldierPart(soldierSphereGeometry, 1, [inward * 0.13, -0.52, gloveZ], [0.16, 0.13, 0.18]),
+      ]);
+    };
+    const leftArmGeometry = makeArmGeometry(-1);
+    const rightArmGeometry = makeArmGeometry(1);
+    const legGeometry = mergeSoldierParts([
+      soldierPart(soldierBoxGeometry, 0, [0, -0.2, 0], [0.24, 0.43, 0.26]),
+      soldierPart(soldierBoxGeometry, 0, [0, -0.56, 0.015], [0.21, 0.36, 0.23]),
+      soldierPart(soldierBoxGeometry, 1, [0, -0.44, 0.14], [0.23, 0.16, 0.08]),
+      soldierPart(soldierBoxGeometry, 1, [0, -0.75, 0.015], [0.24, 0.13, 0.26]),
+      soldierPart(soldierBoxGeometry, 1, [0, -0.85, 0.1], [0.29, 0.15, 0.42]),
+    ]);
+    const rifleGeometry = mergeSoldierParts([
+      soldierPart(soldierBoxGeometry, 0, [0, 0, -0.39], [0.17, 0.15, 0.34]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0, -0.06], [0.18, 0.15, 0.43]),
+      soldierPart(soldierBoxGeometry, 0, [0, 0.005, 0.34], [0.19, 0.16, 0.34]),
+      soldierPart(soldierCylinderGeometry, 1, [0, 0.02, 0.7], [0.05, 0.58, 0.05], [Math.PI / 2, 0, 0]),
+      soldierPart(soldierCylinderGeometry, 1, [0, 0.02, 1.02], [0.075, 0.16, 0.075], [Math.PI / 2, 0, 0]),
+      soldierPart(soldierBoxGeometry, 0, [0.08, -0.17, -0.08], [0.12, 0.22, 0.13], [0.18, 0, -0.08]),
+      soldierPart(soldierMagazineGeometry, 0, [0, -0.01, -0.12], [1, 1, 1]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0.115, -0.04], [0.12, 0.035, 0.48]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0.18, -0.28], [0.12, 0.11, 0.14]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0.19, -0.28], [0.19, 0.055, 0.12]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0.1, 0.55], [0.045, 0.12, 0.07]),
+      soldierPart(soldierBoxGeometry, 1, [0, 0.09, -0.23], [0.045, 0.1, 0.07]),
+      soldierPart(soldierTorusGeometry, 0, [0.08, -0.12, -0.07], [0.18, 0.16, 0.18]),
+      soldierPart(soldierBoxGeometry, 1, [0.13, 0.015, -0.08], [0.05, 0.07, 0.08]),
+    ]);
 
     const spawnsAreValid = soldierSpawns.length === STARTING_ENEMIES
       && soldierSpawns.every(([x, z], index) => (
@@ -1460,66 +1668,55 @@ const GamePage = () => {
       const group = new THREE.Group();
       const parts: THREE.Mesh[] = [];
       const headParts: THREE.Mesh[] = [];
-      const addPart = (
+      const addMergedPart = (
         parent: THREE.Object3D,
         geometry: THREE.BufferGeometry,
-        mat: THREE.Material,
-        px: number,
-        py: number,
-        pz: number,
+        mats: THREE.Material[],
         targetable = true,
       ) => {
-        const mesh = new THREE.Mesh(geometry, mat);
-        mesh.position.set(px, py, pz);
+        const mesh = new THREE.Mesh(geometry, mats);
         parent.add(mesh);
         if (targetable) parts.push(mesh);
         return mesh;
       };
-
-      addPart(group, torsoGeometry, soldierUniformMat, 0, 1.22, 0);
-      addPart(group, vestGeometry, soldierVestMat, 0, 1.23, -0.025);
-      addPart(group, neckGeometry, soldierSkinMat, 0, 1.72, 0);
-      const head = addPart(group, headGeometry, soldierSkinMat, 0, 1.91, 0);
-      const helmet = addPart(group, helmetGeometry, soldierHelmetMat, 0, 2.035, 0);
-      const helmetBrim = addPart(group, helmetBrimGeometry, soldierHelmetMat, 0, 1.98, -0.07);
-      headParts.push(head, helmet, helmetBrim);
-      addPart(group, shoulderGeometry, soldierUniformMat, -0.37, 1.42, -0.015);
-      addPart(group, shoulderGeometry, soldierUniformMat, 0.37, 1.42, -0.015);
-      addPart(group, new THREE.BoxGeometry(0.09, 0.28, 0.05), soldierMarkingMat, -0.35, 1.42, -0.18);
-      soldierGeometries.add((parts[parts.length - 1]).geometry);
+      const uniformMat = soldierCamoMaterials[Math.floor(Math.random() * soldierCamoMaterials.length)]
+        ?? soldierCamoMaterials[0]!;
+      addMergedPart(group, bodyGeometry, [uniformMat, soldierVestMat, soldierGearMat]);
+      const head = addMergedPart(group, headGeometry, [
+        soldierSkinMat,
+        soldierHelmetMat,
+        soldierMaskMat,
+      ]);
+      headParts.push(head);
 
       const leftArmPivot = new THREE.Group();
-      leftArmPivot.position.set(-0.34, 1.39, 0);
+      leftArmPivot.position.set(-0.34, 1.46, 0);
+      leftArmPivot.rotation.x = -0.52;
       group.add(leftArmPivot);
-      addPart(leftArmPivot, upperArmGeometry, soldierUniformMat, 0, -0.2, -0.02);
-      addPart(leftArmPivot, forearmGeometry, soldierUniformMat, 0, -0.49, -0.13);
+      addMergedPart(leftArmPivot, leftArmGeometry, [uniformMat, soldierGloveMat]);
       const rightArmPivot = new THREE.Group();
-      rightArmPivot.position.set(0.34, 1.39, 0);
+      rightArmPivot.position.set(0.34, 1.46, 0);
+      rightArmPivot.rotation.x = -0.52;
       group.add(rightArmPivot);
-      addPart(rightArmPivot, upperArmGeometry, soldierUniformMat, 0, -0.2, -0.02);
-      addPart(rightArmPivot, forearmGeometry, soldierUniformMat, 0, -0.49, -0.13);
+      addMergedPart(rightArmPivot, rightArmGeometry, [uniformMat, soldierGloveMat]);
 
       const leftLegPivot = new THREE.Group();
       leftLegPivot.position.set(-0.16, 0.94, 0);
       group.add(leftLegPivot);
-      addPart(leftLegPivot, legGeometry, soldierPantsMat, 0, -0.38, 0);
-      addPart(leftLegPivot, bootGeometry, soldierBootMat, 0, -0.81, -0.08);
+      addMergedPart(leftLegPivot, legGeometry, [uniformMat, soldierBootMat]);
       const rightLegPivot = new THREE.Group();
       rightLegPivot.position.set(0.16, 0.94, 0);
       group.add(rightLegPivot);
-      addPart(rightLegPivot, legGeometry, soldierPantsMat, 0, -0.38, 0);
-      addPart(rightLegPivot, bootGeometry, soldierBootMat, 0, -0.81, -0.08);
+      addMergedPart(rightLegPivot, legGeometry, [uniformMat, soldierBootMat]);
 
       const rifle = new THREE.Group();
-      rifle.position.set(0.3, 1.24, -0.22);
+      rifle.position.set(0, 1.26, 0.18);
       group.add(rifle);
-      addPart(rifle, rifleReceiverGeometry, soldierWeaponMat, 0, 0, -0.26);
-      const barrel = addPart(rifle, rifleBarrelGeometry, soldierMetalMat, 0, 0.025, -0.78);
-      barrel.rotation.x = Math.PI / 2;
-      addPart(rifle, rifleStockGeometry, soldierWeaponMat, 0, 0, 0.17);
-      addPart(rifle, rifleGripGeometry, soldierWeaponMat, 0, -0.15, -0.09);
-      addPart(rifle, rifleSightGeometry, soldierMetalMat, 0, 0.12, -0.27);
-      const muzzleFlash = addPart(rifle, muzzleFlashGeometry, muzzleFlashMat, 0, 0.02, -1.08, false);
+      addMergedPart(rifle, rifleGeometry, [soldierWeaponMat, soldierMetalMat]);
+      const muzzleFlash = new THREE.Mesh(muzzleFlashGeometry, muzzleFlashMat);
+      muzzleFlash.position.set(0, 0.02, 1.17);
+      muzzleFlash.scale.set(0.22, 0.18, 0.36);
+      rifle.add(muzzleFlash);
       muzzleFlash.visible = false;
 
       const patrolPoints = [
@@ -1817,6 +2014,17 @@ const GamePage = () => {
         return new THREE.Vector3(cellToWorld(cell.column), 0, cellToWorld(cell.row));
       });
     };
+    const animateSoldierGait = (soldier: SoldierState, walking: boolean, dt: number, now: number) => {
+      const blend = 1 - Math.exp(-dt * 12);
+      const gait = now * 0.007 + soldier.phase;
+      const legSwing = walking ? Math.sin(gait) * 0.3 : 0;
+      const armSwing = walking ? Math.sin(gait) * 0.04 : 0;
+      const armHold = -0.52;
+      soldier.leftLegPivot.rotation.x = THREE.MathUtils.lerp(soldier.leftLegPivot.rotation.x, legSwing, blend);
+      soldier.rightLegPivot.rotation.x = THREE.MathUtils.lerp(soldier.rightLegPivot.rotation.x, -legSwing, blend);
+      soldier.leftArmPivot.rotation.x = THREE.MathUtils.lerp(soldier.leftArmPivot.rotation.x, armHold + armSwing, blend);
+      soldier.rightArmPivot.rotation.x = THREE.MathUtils.lerp(soldier.rightArmPivot.rotation.x, armHold - armSwing, blend);
+    };
     const moveSoldier = (soldier: SoldierState, target: THREE.Vector3, speed: number, dt: number, now: number) => {
       const distanceToTarget = Math.hypot(target.x - soldier.group.position.x, target.z - soldier.group.position.z);
       if (distanceToTarget < 0.65) {
@@ -1824,10 +2032,7 @@ const GamePage = () => {
         soldier.pathIndex = 0;
         soldier.pathTarget.copy(target);
         soldier.nextPathAt = now + 650;
-        soldier.leftLegPivot.rotation.x = 0;
-        soldier.rightLegPivot.rotation.x = 0;
-        soldier.leftArmPivot.rotation.x = 0.62;
-        soldier.rightArmPivot.rotation.x = 0.62;
+        animateSoldierGait(soldier, false, dt, now);
         return false;
       }
       if (now >= soldier.nextPathAt || soldier.pathTarget.distanceToSquared(target) > 9) {
@@ -1845,16 +2050,16 @@ const GamePage = () => {
       ) soldier.pathIndex += 1;
       const waypoint = soldier.path[soldier.pathIndex];
       if (!waypoint) {
-        soldier.leftLegPivot.rotation.x = 0;
-        soldier.rightLegPivot.rotation.x = 0;
-        soldier.leftArmPivot.rotation.x = 0.62;
-        soldier.rightArmPivot.rotation.x = 0.62;
+        animateSoldierGait(soldier, false, dt, now);
         return false;
       }
       const dx = waypoint.x - soldier.group.position.x;
       const dz = waypoint.z - soldier.group.position.z;
       const distance = Math.hypot(dx, dz);
-      if (distance < 0.001) return false;
+      if (distance < 0.001) {
+        animateSoldierGait(soldier, false, dt, now);
+        return false;
+      }
       const step = Math.min(speed * dt, distance);
       const nextX = soldier.group.position.x + (dx / distance) * step;
       const nextZ = soldier.group.position.z + (dz / distance) * step;
@@ -1868,11 +2073,7 @@ const GamePage = () => {
         moved = true;
       }
       if (moved) soldier.group.lookAt(waypoint.x, soldier.group.position.y, waypoint.z);
-      const swing = moved ? Math.sin(now * 0.009 + soldier.phase) * 0.42 : 0;
-      soldier.leftLegPivot.rotation.x = swing;
-      soldier.rightLegPivot.rotation.x = -swing;
-      soldier.leftArmPivot.rotation.x = 0.62 - swing * 0.42;
-      soldier.rightArmPivot.rotation.x = 0.62 + swing * 0.42;
+      animateSoldierGait(soldier, moved, dt, now);
       return moved;
     };
 
@@ -2455,11 +2656,11 @@ const GamePage = () => {
         soldier.patrolIndex = index % soldier.patrolPoints.length;
         const firstPatrolPoint = soldier.patrolPoints[soldier.patrolIndex];
         soldier.group.lookAt(firstPatrolPoint.x, 0, firstPatrolPoint.z);
-        soldier.leftArmPivot.rotation.set(0, 0, 0);
-        soldier.rightArmPivot.rotation.set(0, 0, 0);
+        soldier.leftArmPivot.rotation.set(-0.52, 0, 0);
+        soldier.rightArmPivot.rotation.set(-0.52, 0, 0);
         soldier.leftLegPivot.rotation.set(0, 0, 0);
         soldier.rightLegPivot.rotation.set(0, 0, 0);
-        soldier.rifle.position.set(0.3, 1.24, -0.22);
+        soldier.rifle.position.set(0, 1.26, 0.18);
         soldier.muzzleFlash.visible = false;
         soldier.nextSenseAt = 0;
         soldier.canSeePlayer = false;

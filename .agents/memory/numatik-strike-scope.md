@@ -23,6 +23,12 @@ For the current Numatik Strike scope, preserve the existing visuals, lighting, e
 
 **How to apply:** Treat these as constraints for Numatik Strike changes unless the user explicitly changes the scope.
 
+For procedural soldier detail work, keep each soldier under about 25 mesh objects, reuse geometry and materials, and keep camouflage canvas textures at or below 128×128.
+
+**Why:** The user set these limits to add visual detail without sacrificing mobile performance.
+
+**How to apply:** Merge static equipment by material, reuse the 3–4 camouflage variants, and include new scene resources in teardown cleanup.
+
 ## Preview limitation
 
 The automated app-preview browser cannot create a WebGL context for Numatik Strike, so it shows the app's graceful 3D-unavailable fallback instead of live gameplay.
