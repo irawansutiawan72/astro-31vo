@@ -14,6 +14,14 @@ type SupplyQuestion = { prompt: string; answer: number; options: number[] };
 type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover" | "reload" | "empty" | "step";
 type EnemyVoiceKind = "scream" | "death" | "hurt";
 type ImpactSurface = "wall" | "metal" | "ground";
+type StrikeSoundBufferKey =
+  | "rifleShot"
+  | "pistolShot"
+  | "reload"
+  | "headshotScream1"
+  | "headshotScream2"
+  | "headshotScream3"
+  | "enemyDeath";
 type WeaponAmmo = { magazine: number; reserve: number };
 type AmmoLoadout = Record<WeaponId, WeaponAmmo>;
 type RadarContact = { id: number; x: number; y: number };
@@ -112,6 +120,15 @@ const BEST_SCORE_KEY = "numatik-strike-best-score";
 const TOUCH_LOOK_SENSITIVITY_KEY = "numatik-strike-touch-look-sensitivity";
 const ENEMY_SCREAMS_KEY = "numatik-strike-enemy-screams";
 const HAPTICS_ENABLED_KEY = "numatik-strike-haptics";
+const STRIKE_SOUND_FILES: Record<StrikeSoundBufferKey, string> = {
+  rifleShot: "rifle_shot.mp3",
+  pistolShot: "pistol_shot.mp3",
+  reload: "reload.mp3",
+  headshotScream1: "headshot_scream_1.mp3",
+  headshotScream2: "headshot_scream_2.mp3",
+  headshotScream3: "headshot_scream_3.mp3",
+  enemyDeath: "enemy_death.mp3",
+};
 const DEFAULT_TOUCH_LOOK_SENSITIVITY = 1.2;
 const ENEMY_SCREAM_VARIANTS: EnemyScreamVariant[] = [
   { pitch: 194, duration: 0.36, formants: [690, 1160, 2460] },
@@ -2138,6 +2155,8 @@ const GamePage = () => {
     type ActiveAudioVoice = { nodes: AudioNode[]; isScream: boolean };
     type PendingAudioSource = { source: AudioScheduledSourceNode; startsAt: number; stopsAt: number };
     const activeAudioVoices = new Set<ActiveAudioVoice>();
+    const decodedSoundBuffers = new Map<StrikeSoundBufferKey, AudioBuffer>();
+    const soundLoadAbortController = new AbortController();
     let enemyBreathBuffer: AudioBuffer | null = null;
     let gunNoiseBuffer: AudioBuffer | null = null;
     let gunImpulseBuffer: AudioBuffer | null = null;
@@ -2145,9 +2164,11 @@ const GamePage = () => {
     let reverb: ConvolverNode | null = null;
     let bassShaper: WaveShaperNode | null = null;
     let resumePromise: Promise<void> | null = null;
+    let soundLoadPromise: Promise<void> | null = null;
     let unlockBeepPlayed = false;
     let lastAudioWarning = "";
     let lastScreamVariant = -1;
+    let lastRecordedScreamKey: StrikeSoundBufferKey | null = null;
     const getStrikeAudioContext = () => {
       const legacyWindow = window as Window & { webkitAudioContext?: typeof AudioContext };
       const Context = window.AudioContext ?? legacyWindow.webkitAudioContext;
@@ -2238,6 +2259,27 @@ const GamePage = () => {
       await resumePromise;
       return context.state === "running";
     };
+    const loadStrikeSoundFiles = (context: AudioContext) => {
+      if (soundLoadPromise) return soundLoadPromise;
+      soundLoadPromise = Promise.all(
+        (Object.entries(STRIKE_SOUND_FILES) as Array<[StrikeSoundBufferKey, string]>).map(async ([key, filename]) => {
+          const soundPath = `${import.meta.env.BASE_URL}sounds/${filename}`;
+          try {
+            const response = await fetch(soundPath, { signal: soundLoadAbortController.signal });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const encodedAudio = await response.arrayBuffer();
+            const decodedAudio = await context.decodeAudioData(encodedAudio);
+            decodedSoundBuffers.set(key, decodedAudio);
+            console.log("loaded sound buffer", filename);
+          } catch (error) {
+            if (!soundLoadAbortController.signal.aborted) {
+              console.warn(`File suara ${filename} gagal dimuat; memakai suara sintesis.`, error);
+            }
+          }
+        }),
+      ).then(() => undefined);
+      return soundLoadPromise;
+    };
     const updateAudioListener = (context: AudioContext, position: THREE.Vector3, time: number) => {
       const listener = context.listener;
       const listenerQuaternion = camera.getWorldQuaternion(new THREE.Quaternion());
@@ -2268,6 +2310,7 @@ const GamePage = () => {
       if (!context) return;
       void resumeStrikeAudio(context).then((ready) => {
         if (!ready || context.state === "closed") return;
+        void loadStrikeSoundFiles(context);
         callback(context);
       }).catch((error: unknown) => {
         console.warn("Gagal menyiapkan suara:", error);
@@ -2285,6 +2328,7 @@ const GamePage = () => {
       void resumeStrikeAudio(context).then((ready) => {
         if (!ready || unlockBeepPlayed) return;
         unlockBeepPlayed = true;
+        void loadStrikeSoundFiles(context);
         const time = context.currentTime;
         const oscillator = context.createOscillator();
         const gain = context.createGain();
@@ -2418,8 +2462,103 @@ const GamePage = () => {
       nodes.push(oscillator, gain);
       sources.push({ source: oscillator, startsAt: time, stopsAt: time + duration });
     };
+    const playRecordedBuffer = (
+      context: AudioContext,
+      key: StrikeSoundBufferKey,
+      options: {
+        gain?: number;
+        maxDuration?: number;
+        wetAmount?: number;
+        position?: THREE.Vector3;
+        lowpassFrequency?: number;
+        distanceGain?: number;
+        isScream?: boolean;
+      } = {},
+    ) => {
+      const buffer = decodedSoundBuffers.get(key);
+      if (!buffer) return false;
+      const time = context.currentTime;
+      const playbackRate = 0.95 + Math.random() * 0.1;
+      const duration = Math.min(buffer.duration / playbackRate, options.maxDuration ?? buffer.duration / playbackRate);
+      if (!Number.isFinite(duration) || duration <= 0.02) {
+        console.warn(`File suara ${STRIKE_SOUND_FILES[key]} memiliki durasi tidak valid.`);
+        return false;
+      }
+      const peak = (options.gain ?? 0.76) * (0.94 + Math.random() * 0.12) * (options.distanceGain ?? 1);
+      if (!Number.isFinite(peak) || peak <= 0) {
+        console.warn(`Gain file suara ${STRIKE_SOUND_FILES[key]} tidak valid.`);
+        return false;
+      }
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.playbackRate.setValueAtTime(playbackRate, time);
+      const gain = context.createGain();
+      const attack = Math.min(0.004, duration * 0.2);
+      const release = Math.max(time + attack, time + duration - 0.04);
+      gain.gain.setValueAtTime(0, time);
+      gain.gain.linearRampToValueAtTime(peak, time + attack);
+      gain.gain.setValueAtTime(peak, release);
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+      source.connect(gain);
+      const nodes: AudioNode[] = [source, gain];
+      let output: AudioNode = gain;
+      if (options.lowpassFrequency) {
+        const lowpass = context.createBiquadFilter();
+        lowpass.type = "lowpass";
+        lowpass.frequency.setValueAtTime(options.lowpassFrequency, time);
+        lowpass.Q.value = 0.7;
+        output.connect(lowpass);
+        nodes.push(lowpass);
+        output = lowpass;
+      }
+      if (options.position) {
+        updateAudioListener(context, camera.getWorldPosition(new THREE.Vector3()), time);
+        const panner = context.createPanner();
+        panner.panningModel = "HRTF";
+        panner.distanceModel = "inverse";
+        panner.refDistance = 5;
+        panner.maxDistance = 80;
+        panner.rolloffFactor = 0.5;
+        panner.positionX.setValueAtTime(options.position.x, time);
+        panner.positionY.setValueAtTime(options.position.y, time);
+        panner.positionZ.setValueAtTime(options.position.z, time);
+        output.connect(panner);
+        panner.connect(compressor!);
+        nodes.push(panner);
+      } else {
+        output.connect(compressor!);
+      }
+      if (options.wetAmount && reverb) {
+        const send = context.createGain();
+        send.gain.setValueAtTime(options.wetAmount, time);
+        gain.connect(send);
+        send.connect(reverb);
+        nodes.push(send);
+      }
+      scheduleVoice(
+        [{ source, startsAt: time, stopsAt: time + duration }],
+        nodes,
+        options.isScream ?? false,
+      );
+      return true;
+    };
     const playWeaponShot = (context: AudioContext, weapon: WeaponId) => {
       const time = context.currentTime;
+      const soundKey: StrikeSoundBufferKey = weapon === "rifle" ? "rifleShot" : "pistolShot";
+      const recorded = playRecordedBuffer(context, soundKey, {
+        gain: weapon === "rifle" ? 0.78 : 0.82,
+        wetAmount: weapon === "rifle" ? 0.3 : 0.14,
+        maxDuration: weapon === "rifle" ? 1.15 : 1.5,
+      });
+      if (recorded) {
+        if (weapon === "rifle") {
+          const nodes: AudioNode[] = [];
+          const sources: PendingAudioSource[] = [];
+          createOscillatorLayer(context, time, 0.18, 0.1, "sine", 165, 55, nodes, sources, true);
+          scheduleVoice(sources, nodes);
+        }
+        return;
+      }
       const jitter = 1 + (Math.random() * 2 - 1) * 0.07;
       const nodes: AudioNode[] = [];
       const sources: PendingAudioSource[] = [];
@@ -2441,6 +2580,15 @@ const GamePage = () => {
       runWithAudio((context) => {
         const time = context.currentTime;
         const position = soldier.muzzleFlash.getWorldPosition(new THREE.Vector3());
+        const distantGain = Math.max(0.12, 1 - distance / 78);
+        const distantCutoff = Math.max(850, 4600 - distance * 66);
+        if (playRecordedBuffer(context, "rifleShot", {
+          gain: 0.38,
+          maxDuration: 1.05,
+          position,
+          lowpassFrequency: distantCutoff,
+          distanceGain: distantGain,
+        })) return;
         const listenerPosition = camera.getWorldPosition(new THREE.Vector3());
         updateAudioListener(context, listenerPosition, time);
         const nodes: AudioNode[] = [];
@@ -2515,6 +2663,42 @@ const GamePage = () => {
           voiceOcclusionRaycaster.far = distance - 0.3;
           occluded = voiceOcclusionRaycaster.intersectObjects(worldOccluders, false).length > 0;
         }
+        const distanceGain = Math.max(0.24, 1 - distance / 80) * (occluded ? 0.45 : 1);
+        if (isScream) {
+          const recordedScreams: StrikeSoundBufferKey[] = [
+            "headshotScream1", "headshotScream2", "headshotScream3",
+          ].filter((key) => decodedSoundBuffers.has(key));
+          if (recordedScreams.length > 0) {
+            let recordedKey = recordedScreams[Math.floor(Math.random() * recordedScreams.length)];
+            if (recordedScreams.length > 1 && recordedKey === lastRecordedScreamKey) {
+              const previousIndex = recordedScreams.indexOf(recordedKey);
+              recordedKey = recordedScreams[
+                (previousIndex + 1 + Math.floor(Math.random() * (recordedScreams.length - 1)))
+                % recordedScreams.length
+              ];
+            }
+            if (playRecordedBuffer(context, recordedKey, {
+              gain: 0.52,
+              maxDuration: 0.8,
+              position: sourcePosition,
+              lowpassFrequency: Math.max(700, (7800 - distance * 118) * (occluded ? 0.42 : 1)),
+              distanceGain,
+              isScream: true,
+            })) {
+              lastRecordedScreamKey = recordedKey;
+              console.log("play headshot scream", STRIKE_SOUND_FILES[recordedKey]);
+              return;
+            }
+          }
+        } else if (kind === "death" && playRecordedBuffer(context, "enemyDeath", {
+          gain: 0.42,
+          maxDuration: 0.8,
+          position: sourcePosition,
+          lowpassFrequency: Math.max(700, (7800 - distance * 118) * (occluded ? 0.42 : 1)),
+          distanceGain,
+        })) {
+          return;
+        }
         updateAudioListener(context, cameraPosition, time);
         let variant: EnemyScreamVariant | undefined;
         let variantIndex = -1;
@@ -2535,7 +2719,6 @@ const GamePage = () => {
         const pitch = isScream
           ? THREE.MathUtils.clamp((variant?.pitch ?? 210) * soldier.voicePitch * jitter, 180, 260)
           : THREE.MathUtils.clamp((kind === "death" ? 218 : 224) * soldier.voicePitch, 180, 260);
-        const distanceGain = Math.max(0.24, 1 - distance / 80) * (occluded ? 0.45 : 1);
         const formants = isScream
           ? (variant?.formants ?? [700, 1200, 2600])
           : kind === "death" ? [540, 980, 2050] : [430, 820, 1700];
@@ -2628,6 +2811,11 @@ const GamePage = () => {
         return;
       }
       runWithAudio((context) => {
+        if (cue === "reload" && playRecordedBuffer(context, "reload", {
+          gain: 0.72,
+          maxDuration: 0.9,
+          wetAmount: 0.08,
+        })) return;
         const time = context.currentTime;
         const settings: Record<Exclude<SoundCue, "rifle" | "pistol">, [number, number, number, OscillatorType]> = {
           hit: [860, 0.055, 0.16, "triangle"],
@@ -3651,6 +3839,8 @@ const GamePage = () => {
       killFeedTimeoutsRef.current = [];
       hapticTimeouts.forEach((timeout) => window.clearTimeout(timeout));
       hapticTimeouts.length = 0;
+      soundLoadAbortController.abort();
+      decodedSoundBuffers.clear();
       activeAudioVoices.forEach((voice) => disconnectAudioNodes(voice.nodes));
       activeAudioVoices.clear();
       const audioContext = audioContextRef.current;
