@@ -2556,22 +2556,13 @@ const GamePage = () => {
       return true;
     };
     const playWeaponShot = (context: AudioContext, weapon: WeaponId) => {
-      const time = context.currentTime;
-      const soundKey: StrikeSoundBufferKey = weapon === "rifle" ? "rifleShot" : "pistolShot";
-      const recorded = playRecordedBuffer(context, soundKey, {
-        gain: weapon === "rifle" ? 0.78 : 0.82,
-        wetAmount: weapon === "rifle" ? 0.3 : 0.14,
-        maxDuration: weapon === "rifle" ? 1.15 : 1.5,
+      const recorded = playRecordedBuffer(context, "pistolShot", {
+        gain: 0.82,
+        wetAmount: 0.14,
+        maxDuration: 1.5,
       });
-      if (recorded) {
-        if (weapon === "rifle") {
-          const nodes: AudioNode[] = [];
-          const sources: PendingAudioSource[] = [];
-          createOscillatorLayer(context, time, 0.18, 0.1, "sine", 165, 55, nodes, sources, true);
-          scheduleVoice(sources, nodes);
-        }
-        return;
-      }
+      if (recorded) return;
+      const time = context.currentTime;
       const jitter = 1 + (Math.random() * 2 - 1) * 0.07;
       const nodes: AudioNode[] = [];
       const sources: PendingAudioSource[] = [];
