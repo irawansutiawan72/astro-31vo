@@ -11,7 +11,7 @@ type BrightnessSetting = "normal" | "bright" | "very-bright";
 type WeaponId = "rifle" | "pistol";
 type GamePhase = "combat" | "supply" | "paused" | "gameover" | "complete";
 type SupplyQuestion = { prompt: string; answer: number; options: number[] };
-type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover" | "reload" | "empty" | "step";
+type SoundCue = "rifle" | "pistol" | "hit" | "headshot" | "enemy" | "wave" | "correct" | "wrong" | "gameover" | "reload" | "empty" | "step";
 type EnemyVoiceKind = "scream" | "death" | "hurt";
 type ImpactSurface = "wall" | "metal" | "ground";
 type StrikeSoundBufferKey =
@@ -21,6 +21,7 @@ type StrikeSoundBufferKey =
   | "headshotScream1"
   | "headshotScream2"
   | "headshotScream3"
+  | "headshotHit"
   | "enemyDeath";
 type WeaponAmmo = { magazine: number; reserve: number };
 type AmmoLoadout = Record<WeaponId, WeaponAmmo>;
@@ -128,6 +129,7 @@ const STRIKE_SOUND_FILES: Record<StrikeSoundBufferKey, string> = {
   headshotScream1: "headshot_scream_1.mp3",
   headshotScream2: "headshot_scream_2.mp3",
   headshotScream3: "headshot_scream_3.mp3",
+  headshotHit: "headshot_1.mp3",
   enemyDeath: "enemy_death.mp3",
 };
 const DEFAULT_TOUCH_LOOK_SENSITIVITY = 1.2;
@@ -2308,7 +2310,7 @@ const GamePage = () => {
       listener.upY.setValueAtTime(up.y, time);
       listener.upZ.setValueAtTime(up.z, time);
     };
-    const runWithAudio = (callback: (context: AudioContext) => void) => {
+    const runWithAudio = (callback: (context: AudioContext) => void, waitForSoundFiles = false) => {
       if (mutedRef.current && !muteWarningLoggedRef.current) {
         console.warn("Suara dimatikan; masterGain berada di 0.");
         muteWarningLoggedRef.current = true;
@@ -2323,8 +2325,14 @@ const GamePage = () => {
       if (!context) return;
       void resumeStrikeAudio(context).then((ready) => {
         if (!ready || context.state === "closed") return;
-        void loadStrikeSoundFiles(context);
-        callback(context);
+        const soundFiles = loadStrikeSoundFiles(context);
+        if (waitForSoundFiles) {
+          void soundFiles.then(() => {
+            if (!soundLoadAbortController.signal.aborted && context.state === "running") callback(context);
+          });
+        } else {
+          callback(context);
+        }
       }).catch((error: unknown) => {
         console.warn("Gagal menyiapkan suara:", error);
       });
@@ -2815,6 +2823,10 @@ const GamePage = () => {
         return;
       }
       runWithAudio((context) => {
+        if (cue === "headshot" && playRecordedBuffer(context, "headshotHit", {
+          gain: 0.88,
+          wetAmount: 0.05,
+        })) return;
         if (cue === "reload" && playRecordedBuffer(context, "reload", {
           gain: 0.72,
           maxDuration: 0.9,
@@ -2823,6 +2835,7 @@ const GamePage = () => {
         const time = context.currentTime;
         const settings: Record<Exclude<SoundCue, "rifle" | "pistol">, [number, number, number, OscillatorType]> = {
           hit: [860, 0.055, 0.16, "triangle"],
+          headshot: [1080, 0.18, 0.13, "sine"],
           enemy: [130, 0.08, 0.06, "sawtooth"],
           wave: [330, 0.2, 0.06, "sine"],
           correct: [720, 0.16, 0.065, "sine"],
@@ -2857,7 +2870,7 @@ const GamePage = () => {
           sources.push({ source: oscillator, startsAt: time, stopsAt: time + duration });
         }
         scheduleVoice(sources, nodes);
-      });
+      }, cue === "headshot");
     };
     soundRef.current = playSound;
     const hapticTimeouts: number[] = [];
@@ -3138,7 +3151,7 @@ const GamePage = () => {
           addKillFeed(headshot);
         }
         addScore((headshot ? 120 : 30) + (eliminated ? 100 : 0));
-        playSound("hit");
+        playSound(headshot ? "headshot" : "hit");
         playEnemyVoice(hitSoldier, headshot ? "scream" : eliminated ? "death" : "hurt");
         if (eliminated || headshot) haptic("kill");
         hitFeedbackIdRef.current += 1;
