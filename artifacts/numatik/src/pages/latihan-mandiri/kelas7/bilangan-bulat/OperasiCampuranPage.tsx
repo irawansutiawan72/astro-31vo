@@ -16,7 +16,7 @@ interface Question {
   content?: string;
 }
 
-// Questions 1–7 and 10 are pure math expressions — identical across all languages.
+// Questions 1–8 are pure math expressions — identical across all languages.
 export const MATH_QUESTIONS: Question[] = [
   { number: 1,  type: "math", math: "25 + 48 : (-8) = ..." },
   { number: 2,  type: "math", math: "64 - 26 \\times (-4) = ..." },
@@ -25,12 +25,12 @@ export const MATH_QUESTIONS: Question[] = [
   { number: 5,  type: "math", math: "(-3)^2 + \\sqrt{144} \\times (-2) : 4 - (-5) = ..." },
   { number: 6,  type: "math", math: "126 : 9 \\times (-13) - 6 \\times 17 = ..." },
   { number: 7,  type: "math", math: "\\sqrt{225} - [(-2)^3 \\times 3] : 4 + (-6) = ..." },
-  { number: 10, type: "math", math: "(-4)^2 : 2 + \\sqrt{81} \\times (-3) - (-5) \\times 2 = ..." },
+  { number: 8,  type: "math", math: "(-4)^2 : 2 + \\sqrt{81} \\times (-3 + 5) - (-5) \\times 2 = ..." },
 ];
 
 export const ESSAY_QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
   id: [
-    { number: 8,  type: "essay", content: `Dalam kompetensi Bahasa Inggris yang terdiri dari 50 soal, peserta akan mendapatkan skor 4 untuk setiap jawaban benar, skor -2 untuk setiap jawaban salah, dan skor -1 untuk soal yang tidak dijawab. Jika Budi menjawab 44 soal dan yang benar 36 soal, maka skor yang diperoleh Budi adalah ...` },
+    { number: 10, type: "essay", content: `Dalam kompetensi Bahasa Inggris yang terdiri dari 50 soal, peserta akan mendapatkan skor 4 untuk setiap jawaban benar, skor -2 untuk setiap jawaban salah, dan skor -1 untuk soal yang tidak dijawab. Jika Budi menjawab 44 soal dan yang benar 36 soal, maka skor yang diperoleh Budi adalah ...` },
     { number: 9,  type: "essay", content: `Dalam suatu pertandingan setiap kemenangan mendapat nilai 3, seri bernilai 1 dan kalah bernilai -2. Jika tim SMPN 28 BDG bermain sebanyak 20 kali dengan meraih 10 kemenangan dan 4 seri, maka nilai yang diperoleh SMPN 28 BDG adalah ...` },
     { number: 11, type: "essay", content: `Perhatikan suhu udara di beberapa negara berikut!\nWina -7°C\nSoul -1°C\nBaghdad 39°C\nSurabaya 33°C\nSelisih suhu udara yang benar di bawah ini adalah.....\n- Selisih suhu udara Wina dan Soul -6°C\n- Selisih suhu udara Baghdad dan Wina 30°C\n- Selisih suhu udara Surabaya dan Soul adalah 34°C\n- Selisih udara Surabaya dan Wina adalah 39°C` },
     { number: 12, type: "essay", content: `Pa Bangun menjual gorengan dengan harga Rp. 5000 per 4 gorengan. Bagus membeli 32 gorengan. Jika Ia membayar dengan uang lima puluh ribu, uang kembali yang diterima Bagus adalah sebesar........` },
@@ -39,7 +39,7 @@ export const ESSAY_QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
     { number: 15, type: "essay", content: `Operasi " # " artinya kalikan bilangan pertama dengan bilangan kedua, kemudian kurangkan hasilnya dengan dua kali bilangan kedua. Hasil dari 5 # - 4 adalah......` },
   ],
   en: [
-    { number: 8,  type: "essay", content: `In an English language competition consisting of 50 questions, participants receive a score of 4 for each correct answer, −2 for each wrong answer, and −1 for each unanswered question. If Budi answers 44 questions and 36 of them are correct, Budi's score is ...` },
+    { number: 10, type: "essay", content: `In an English language competition consisting of 50 questions, participants receive a score of 4 for each correct answer, −2 for each wrong answer, and −1 for each unanswered question. If Budi answers 44 questions and 36 of them are correct, Budi's score is ...` },
     { number: 9,  type: "essay", content: `In a competition, each win earns 3 points, a draw earns 1 point, and a loss earns −2 points. If SMPN 28 BDG team plays 20 games, winning 10 and drawing 4, the total score obtained by SMPN 28 BDG is ...` },
     { number: 11, type: "essay", content: `Notice the air temperature in several countries below!\nVienna −7°C\nSeoul −1°C\nBaghdad 39°C\nSurabaya 33°C\nWhich of the following temperature differences is correct?\n− Vienna and Seoul: −6°C\n− Baghdad and Vienna: 30°C\n− Surabaya and Seoul: 34°C\n− Surabaya and Vienna: 39°C` },
     { number: 12, type: "essay", content: `Mr. Bangun sells fried snacks at Rp. 5,000 per 4 pieces. Bagus buys 32 pieces. If he pays with a fifty-thousand rupiah bill, the change Bagus receives is ...` },
@@ -48,7 +48,7 @@ export const ESSAY_QUESTIONS_BY_LANG: Record<Lang, Question[]> = {
     { number: 15, type: "essay", content: `Operation "#" means multiply the first number by the second number, then subtract twice the second number from the result. The result of 5 # −4 is ...` },
   ],
   ja: [
-    { number: 8,  type: "essay", content: `50問からなる英語コンテストで、正解1問につき4点、不正解1問につき −2点、未回答1問につき −1点が与えられます。ブディが44問に答え、そのうち36問が正解だった場合、ブディの得点は…` },
+    { number: 10, type: "essay", content: `50問からなる英語コンテストで、正解1問につき4点、不正解1問につき −2点、未回答1問につき −1点が与えられます。ブディが44問に答え、そのうち36問が正解だった場合、ブディの得点は…` },
     { number: 9,  type: "essay", content: `ある試合で、勝利は3点、引き分けは1点、敗北は −2点です。SMPN 28 BDG チームが20試合行い、10勝4分けだった場合、SMPN 28 BDG の合計スコアは…` },
     { number: 11, type: "essay", content: `次のいくつかの国の気温に注目しなさい！\nウィーン −7℃\nソウル −1℃\nバグダード 39℃\nスラバヤ 33℃\n以下の気温差で正しいものはどれですか？\n− ウィーンとソウル：−6℃\n− バグダードとウィーン：30℃\n− スラバヤとソウル：34℃\n− スラバヤとウィーン：39℃` },
     { number: 12, type: "essay", content: `バングン氏は揚げスナックを4個で Rp. 5,000で売っています。バグスは32個購入しました。5万ルピア札で支払った場合、バグスが受け取るお釣りは…` },
