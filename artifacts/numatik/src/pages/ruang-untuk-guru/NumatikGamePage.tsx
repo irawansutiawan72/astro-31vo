@@ -71,7 +71,7 @@ const games = [
     label: "Numatik Strike",
     emoji: "",
     path: "/math-game-arena/umum/numatik-strike",
-    desc: "Menembak para Teroris",
+    desc: "Siap beraksi? Masuki arena 3D, bidik jitu, dan hadapi para teroris!",
     icon: <Crosshair className="w-7 h-7 text-cyan-300 shrink-0 group-hover:scale-110 transition-transform" />,
   },
   {
