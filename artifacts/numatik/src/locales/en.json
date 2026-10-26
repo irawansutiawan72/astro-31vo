@@ -988,7 +988,8 @@
           "sentence1": "A minibus can carry <pass>12 passengers</pass>, 1 driver, and 1 conductor with an average weight of <weight>k kg</weight>.",
           "sentence2Pre": "The minibus also carries baggage weighing ",
           "sentence2Post": " kg.",
-          "svgLabel": "12 passengers + driver + conductor",
+          "svgLabel": "12 passengers · 1 driver · 1 conductor",
+          "svgBagLabel": "A bag is being loaded into the luggage compartment",
           "itemA": "Express the total weight of the minibus load (passengers + baggage) in simplified algebraic form!",
           "itemB": "If k = 55, what is the total weight of the minibus load in kg?"
         }

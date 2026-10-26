@@ -148,8 +148,6 @@ const SoalEmpat = () => {
           { l: "b", expr: "P - Q" },
           { l: "c", expr: "2P + Q" },
           { l: "d", expr: "3P - 2Q" },
-          { l: "e", expr: "P + 3Q" },
-          { l: "f", expr: "4P - \\tfrac{1}{2}Q" },
         ].map(({ l, expr }) => (
           <div key={l} className="flex items-center gap-2.5 bg-amber-500/5 border border-amber-500/10 rounded-lg px-3 py-2">
             <SubLabel letter={l} color="bg-amber-500/20 text-amber-300 border border-amber-400/30" />
@@ -180,22 +178,173 @@ const SoalLima = () => {
         <InlineMath math="(3k - 8)" />
         {t('practice.aljabar.penjumlahanPengurangan.q5.sentence2Post')}
       </p>
-      <div className="pl-1">
-        <svg width="180" height="60" viewBox="0 0 180 60">
-          <rect x={5} y={10} width={155} height={38} rx={8}
-            fill="#2dd4bf" fillOpacity={0.08} stroke="#2dd4bf" strokeWidth={1.5} />
-          <rect x={160} y={20} width={16} height={18} rx={4}
-            fill="#2dd4bf" fillOpacity={0.12} stroke="#2dd4bf" strokeWidth={1} />
-          {[30, 60, 90, 120].map((x) => (
-            <rect key={x} x={x} y={17} width={20} height={14} rx={3}
-              fill="#2dd4bf" fillOpacity={0.15} stroke="#2dd4bf" strokeOpacity={0.4} strokeWidth={1} />
+      <div className="rounded-xl border border-teal-400/15 bg-slate-950/20 px-2 pt-3 pb-2">
+        <svg
+          viewBox="0 0 760 330"
+          className="bus-animated-diagram mx-auto block w-full max-w-3xl"
+          role="img"
+          aria-label={t('practice.aljabar.penjumlahanPengurangan.q5.svgLabel')}
+        >
+          <title>{t('practice.aljabar.penjumlahanPengurangan.q5.svgLabel')}</title>
+          <defs>
+            <linearGradient id="bus-body-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#0e7490" />
+              <stop offset="55%" stopColor="#155e75" />
+              <stop offset="100%" stopColor="#0f3548" />
+            </linearGradient>
+            <linearGradient id="bus-window-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.92" />
+              <stop offset="45%" stopColor="#164e63" stopOpacity="0.98" />
+              <stop offset="100%" stopColor="#082f49" />
+            </linearGradient>
+            <linearGradient id="bus-bag-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#fbbf24" />
+              <stop offset="100%" stopColor="#f97316" />
+            </linearGradient>
+            <filter id="bus-shadow" x="-20%" y="-20%" width="140%" height="160%">
+              <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#020617" floodOpacity="0.45" />
+            </filter>
+            <marker id="bus-bag-arrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+              <path d="M0 0 L7 3.5 L0 7 Z" fill="#fbbf24" />
+            </marker>
+          </defs>
+
+          <ellipse cx="385" cy="278" rx="320" ry="15" fill="#020617" fillOpacity="0.38" />
+          <path d="M20 290 H740" stroke="#64748b" strokeOpacity="0.3" strokeWidth="2" strokeDasharray="14 12" />
+
+          {/* Wheels sit behind the lower bus body. */}
+          <g fill="#101820" stroke="#94a3b8" strokeWidth="2">
+            <circle cx="174" cy="250" r="32" />
+            <circle cx="655" cy="250" r="32" />
+          </g>
+
+          {/* A full minibus body with front cabin, bumpers, lights, and route sign. */}
+          <path
+            d="M70 94 Q70 69 96 69 H624 Q670 69 694 103 L730 184 Q739 203 739 226 V239 Q739 253 723 253 H78 Q63 253 63 238 V108 Q63 94 70 94 Z"
+            fill="url(#bus-body-gradient)"
+            stroke="#67e8f9"
+            strokeOpacity="0.7"
+            strokeWidth="2"
+            filter="url(#bus-shadow)"
+          />
+          <path d="M78 178 H720" stroke="#fbbf24" strokeWidth="5" strokeOpacity="0.95" />
+          <path d="M78 185 H720" stroke="#fef3c7" strokeWidth="1.5" strokeOpacity="0.65" />
+          <path d="M94 74 H618" stroke="#cffafe" strokeOpacity="0.45" strokeWidth="2" />
+
+          {/* Four windows, with three visible passengers in each: 12 total. */}
+          {[0, 1, 2, 3].map((windowIndex) => {
+            const windowX = 91 + windowIndex * 112;
+            return (
+              <g key={`passenger-window-${windowIndex}`}>
+                <rect
+                  x={windowX}
+                  y={91}
+                  width={104}
+                  height={77}
+                  rx={8}
+                  fill="url(#bus-window-gradient)"
+                  stroke="#bae6fd"
+                  strokeOpacity="0.7"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d={`M${windowX + 5} 98 H${windowX + 95}`}
+                  stroke="#e0f2fe"
+                  strokeOpacity="0.45"
+                  strokeWidth="2"
+                />
+                {[0, 1, 2].map((seatIndex) => {
+                  const personX = windowX + 18 + seatIndex * 32;
+                  const shirtColors = ["#fb7185", "#fbbf24", "#a78bfa"];
+                  return (
+                    <g key={`passenger-${windowIndex}-${seatIndex}`}>
+                      <path
+                        d={`M${personX - 11} 158 V147 Q${personX - 11} 132 ${personX} 132 Q${personX + 11} 132 ${personX + 11} 147 V158 Z`}
+                        fill={shirtColors[(windowIndex + seatIndex) % shirtColors.length]}
+                        stroke="#0f172a"
+                        strokeOpacity="0.35"
+                        strokeWidth="1"
+                      />
+                      <circle cx={personX} cy={121} r={7} fill="#f2c6a0" stroke="#7c4a35" strokeWidth="1" />
+                      <path
+                        d={`M${personX - 7} 119 Q${personX - 5} 111 ${personX + 3} 114 Q${personX + 7} 116 ${personX + 7} 120`}
+                        fill="#334155"
+                      />
+                    </g>
+                  );
+                })}
+              </g>
+            );
+          })}
+
+          {/* Sliding passenger door, with the conductor standing inside. */}
+          <rect x="541" y="91" width="57" height="132" rx="5" fill="#0c2636" stroke="#bae6fd" strokeOpacity="0.65" strokeWidth="2" />
+          <rect x="547" y="97" width="45" height="58" rx="3" fill="url(#bus-window-gradient)" />
+          <path d="M569.5 97 V155" stroke="#cffafe" strokeOpacity="0.65" strokeWidth="2" />
+          <path d="M547 160 H592 V217 H547 Z" fill="#123e50" stroke="#67e8f9" strokeOpacity="0.45" />
+          <circle cx="570" cy="119" r="7" fill="#f2c6a0" stroke="#7c4a35" strokeWidth="1" />
+          <path d="M559 149 V137 Q559 127 570 127 Q581 127 581 137 V149 Z" fill="#34d399" stroke="#064e3b" strokeWidth="1" />
+          <path d="M585 165 V184" stroke="#fef3c7" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Front windscreen and the single driver. */}
+          <path d="M610 82 H624 Q663 82 685 111 L704 158 H610 Z" fill="url(#bus-window-gradient)" stroke="#bae6fd" strokeOpacity="0.75" strokeWidth="2" />
+          <path d="M620 88 L620 153" stroke="#cffafe" strokeOpacity="0.3" strokeWidth="2" />
+          <circle cx="660" cy="119" r="8" fill="#eabf9c" stroke="#7c4a35" strokeWidth="1" />
+          <path d="M648 151 V139 Q648 127 660 127 Q672 127 672 139 V151 Z" fill="#f8fafc" stroke="#475569" strokeWidth="1" />
+          <circle cx="674" cy="151" r="7" fill="none" stroke="#fbbf24" strokeWidth="2" />
+          <path d="M660 151 L674 151" stroke="#fbbf24" strokeWidth="2" />
+
+          {/* Rear/front details, side mirror, route sign, and wheel rims. */}
+          <rect x="76" y="96" width="12" height="32" rx="3" fill="#fb7185" />
+          <rect x="718" y="186" width="13" height="18" rx="4" fill="#fef08a" />
+          <path d="M695 97 L711 88 L721 93" fill="none" stroke="#cbd5e1" strokeWidth="3" strokeLinecap="round" />
+          <rect x="642" y="70" width="48" height="17" rx="4" fill="#082f49" stroke="#67e8f9" strokeOpacity="0.6" />
+          <text x="666" y="82" textAnchor="middle" fill="#fef3c7" fontSize="9" fontWeight="700" fontFamily="sans-serif">BUS</text>
+          {[174, 655].map((wheelX) => (
+            <g key={`wheel-rim-${wheelX}`}>
+              <circle cx={wheelX} cy="250" r="19" fill="#475569" stroke="#cbd5e1" strokeWidth="2" />
+              <circle cx={wheelX} cy="250" r="7" fill="#0f172a" stroke="#e2e8f0" strokeWidth="2" />
+              {[0, 1, 2, 3].map((lug) => {
+                const angle = (lug * Math.PI) / 2;
+                return <circle key={lug} cx={wheelX + Math.cos(angle) * 13} cy={250 + Math.sin(angle) * 13} r="2" fill="#e2e8f0" />;
+              })}
+            </g>
           ))}
-          <circle cx={35} cy={52} r={7} fill="#2dd4bf" fillOpacity={0.2} stroke="#2dd4bf" strokeWidth={1.5} />
-          <circle cx={130} cy={52} r={7} fill="#2dd4bf" fillOpacity={0.2} stroke="#2dd4bf" strokeWidth={1.5} />
-          <text x={90} y={36} textAnchor="middle" fill="#5eead4" fontSize={9} fontFamily="monospace">
+
+          {/* Open luggage bay and a bag that boards, then disappears into the compartment. */}
+          <rect x="238" y="195" width="151" height="43" rx="4" fill="#061a28" stroke="#67e8f9" strokeOpacity="0.75" strokeWidth="2" />
+          <path d="M241 194 L258 179 H384 V194" fill="#164e63" stroke="#a5f3fc" strokeWidth="2" strokeLinejoin="round" />
+          <path d="M199 225 H229" fill="none" stroke="#fbbf24" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#bus-bag-arrow)" />
+          <g transform="translate(100 0)">
+            <rect x="170" y="207" width="26" height="25" rx="4" fill="url(#bus-bag-gradient)" stroke="#7c2d12" strokeWidth="1.5" />
+            <path d="M176 207 V203 Q176 197 183 197 Q190 197 190 203 V207" fill="none" stroke="#fed7aa" strokeWidth="3" />
+            <path d="M176 215 H190 M176 223 H190" stroke="#7c2d12" strokeOpacity="0.55" strokeWidth="1.5" />
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values="-100 0; -100 0; 0 0; 0 0"
+              keyTimes="0; 0.16; 0.62; 1"
+              dur="5s"
+              repeatCount="indefinite"
+              additive="sum"
+            />
+            <animate
+              attributeName="opacity"
+              values="1; 1; 1; 0; 0"
+              keyTimes="0; 0.16; 0.62; 0.72; 1"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </g>
+
+          <rect x="201" y="263" width="368" height="27" rx="13.5" fill="#042f2e" stroke="#2dd4bf" strokeOpacity="0.4" />
+          <text x="385" y="281" textAnchor="middle" fill="#99f6e4" fontSize="11" fontWeight="700" fontFamily="sans-serif">
             {t('practice.aljabar.penjumlahanPengurangan.q5.svgLabel')}
           </text>
         </svg>
+        <p className="mt-1 text-center text-[11px] font-body font-semibold text-amber-200/90">
+          {t('practice.aljabar.penjumlahanPengurangan.q5.svgBagLabel')}
+        </p>
       </div>
       <div className="space-y-1.5 pl-1">
         {[

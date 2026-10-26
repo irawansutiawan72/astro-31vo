@@ -1085,7 +1085,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .brsl-animated-diagram animate,
-  .brsl-animated-diagram animateTransform {
+  .brsl-animated-diagram animateTransform,
+  .bus-animated-diagram animate,
+  .bus-animated-diagram animateTransform {
     display: none;
   }
 }

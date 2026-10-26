@@ -988,7 +988,8 @@
           "sentence1": "Sebuah angkot dapat mengangkut <pass>12 penumpang</pass>, 1 sopir, dan 1 kenek dengan berat rata-rata <weight>k kg</weight>.",
           "sentence2Pre": "Angkot itu juga memuat bagasi seberat ",
           "sentence2Post": " kg.",
-          "svgLabel": "12 penumpang + sopir + kenek",
+          "svgLabel": "12 penumpang · 1 sopir · 1 kenek",
+          "svgBagLabel": "Tas sedang dimasukkan ke ruang bagasi",
           "itemA": "Nyatakan total berat muatan angkot seluruhnya (penumpang + bagasi) dalam bentuk aljabar yang sederhana!",
           "itemB": "Jika k = 55, berapa kg total berat muatan angkot tersebut?"
         }
