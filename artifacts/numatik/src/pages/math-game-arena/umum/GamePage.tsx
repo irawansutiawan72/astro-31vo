@@ -2114,12 +2114,24 @@ const GamePage = () => {
     let enemyBreathBuffer: AudioBuffer | null = null;
     let lastScreamVariant = -1;
     const getStrikeAudioContext = () => {
-      const Context = window.AudioContext;
+      const legacyWindow = window as Window & { webkitAudioContext?: typeof AudioContext };
+      const Context = window.AudioContext ?? legacyWindow.webkitAudioContext;
       if (!Context) return null;
-      const context = audioContextRef.current ?? new Context();
+      const existingContext = audioContextRef.current;
+      const context = existingContext && existingContext.state !== "closed"
+        ? existingContext
+        : new Context();
       audioContextRef.current = context;
       if (context.state === "suspended") void context.resume().catch(() => undefined);
       return context;
+    };
+    const unlockStrikeAudio = () => {
+      if (mutedRef.current) return;
+      try {
+        getStrikeAudioContext();
+      } catch {
+        // Audio remains optional on browsers that do not support Web Audio.
+      }
     };
     const playEnemyVoice = (soldier: SoldierState, kind: EnemyVoiceKind) => {
       if (mutedRef.current || activeEnemyVoices.size >= 12) return;
@@ -2173,7 +2185,7 @@ const GamePage = () => {
         const pitch = isScream
           ? THREE.MathUtils.clamp((variant?.pitch ?? 210) * soldier.voicePitch * eventJitter, 180, 260)
           : THREE.MathUtils.clamp((kind === "death" ? 218 : 224) * soldier.voicePitch, 180, 260);
-        const distanceGain = Math.max(0.16, 1 - distance / 48) * (occluded ? 0.38 : 1);
+        const distanceGain = Math.max(0.34, 1 - distance / 80) * (occluded ? 0.45 : 1);
         const formantCenters = isScream
           ? (variant?.formants ?? [700, 1200, 2600])
           : kind === "death" ? [540, 980] : [430, 820];
@@ -2190,9 +2202,9 @@ const GamePage = () => {
         const panner = context.createPanner();
         panner.panningModel = "HRTF";
         panner.distanceModel = "inverse";
-        panner.refDistance = 2;
-        panner.maxDistance = 48;
-        panner.rolloffFactor = 1;
+        panner.refDistance = 5;
+        panner.maxDistance = 80;
+        panner.rolloffFactor = 0.5;
         panner.positionX.setValueAtTime(sourcePosition.x, time);
         panner.positionY.setValueAtTime(sourcePosition.y, time);
         panner.positionZ.setValueAtTime(sourcePosition.z, time);
@@ -2252,7 +2264,7 @@ const GamePage = () => {
           breath.stop(time + duration);
         }
 
-        const peak = (isScream ? 0.16 : kind === "death" ? 0.085 : 0.06) * distanceGain;
+        const peak = (isScream ? 0.42 : kind === "death" ? 0.2 : 0.12) * distanceGain;
         voiceGain.gain.setValueAtTime(0.0001, time);
         voiceGain.gain.linearRampToValueAtTime(peak, time + Math.min(0.015, duration * 0.18));
         if (isScream) voiceGain.gain.setValueAtTime(peak * 0.72, time + duration * 0.48);
@@ -2301,8 +2313,8 @@ const GamePage = () => {
         const context = getStrikeAudioContext();
         if (!context) return;
         const presets: Record<SoundCue, [number, number, number, OscillatorType]> = {
-          rifle: [118, 0.045, 0.045, "sawtooth"],
-          pistol: [190, 0.07, 0.055, "square"],
+          rifle: [310, 0.095, 0.18, "sawtooth"],
+          pistol: [430, 0.085, 0.16, "square"],
           hit: [540, 0.075, 0.04, "triangle"],
           enemy: [92, 0.09, 0.035, "sawtooth"],
           wave: [330, 0.2, 0.06, "sine"],
@@ -2644,6 +2656,7 @@ const GamePage = () => {
     document.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     window.addEventListener("blur", onWindowBlur);
+    document.addEventListener("pointerdown", unlockStrikeAudio, true);
     renderer.domElement.addEventListener("click", onCanvasClick);
     renderer.domElement.addEventListener("mousedown", onCanvasMouseDown);
     renderer.domElement.addEventListener("contextmenu", onContextMenu);
@@ -3195,6 +3208,7 @@ const GamePage = () => {
       window.removeEventListener("mouseup", onMouseUp);
       window.removeEventListener("blur", onWindowBlur);
       document.removeEventListener("pointerlockchange", onLockChange);
+      document.removeEventListener("pointerdown", unlockStrikeAudio, true);
       document.removeEventListener("mousemove", onMouseMove);
       renderer.domElement.removeEventListener("click", onCanvasClick);
       renderer.domElement.removeEventListener("mousedown", onCanvasMouseDown);
