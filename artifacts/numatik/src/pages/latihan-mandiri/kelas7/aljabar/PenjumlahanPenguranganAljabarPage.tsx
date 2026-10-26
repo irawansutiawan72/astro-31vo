@@ -198,8 +198,8 @@ const SoalLima = () => {
               <stop offset="100%" stopColor="#082f49" />
             </linearGradient>
             <linearGradient id="bus-bag-gradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#fbbf24" />
-              <stop offset="100%" stopColor="#f97316" />
+              <stop offset="0%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#2563eb" />
             </linearGradient>
             <filter id="bus-shadow" x="-20%" y="-20%" width="140%" height="160%">
               <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#020617" floodOpacity="0.45" />
@@ -314,11 +314,15 @@ const SoalLima = () => {
           {/* Open luggage bay and a bag that boards, then disappears into the compartment. */}
           <rect x="238" y="195" width="151" height="43" rx="4" fill="#061a28" stroke="#67e8f9" strokeOpacity="0.75" strokeWidth="2" />
           <path d="M241 194 L258 179 H384 V194" fill="#164e63" stroke="#a5f3fc" strokeWidth="2" strokeLinejoin="round" />
-          <path d="M199 225 H229" fill="none" stroke="#fbbf24" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#bus-bag-arrow)" />
+          <path d="M207 225 H229" fill="none" stroke="#fbbf24" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#bus-bag-arrow)" />
           <g transform="translate(100 0)">
-            <rect x="170" y="207" width="26" height="25" rx="4" fill="url(#bus-bag-gradient)" stroke="#7c2d12" strokeWidth="1.5" />
-            <path d="M176 207 V203 Q176 197 183 197 Q190 197 190 203 V207" fill="none" stroke="#fed7aa" strokeWidth="3" />
-            <path d="M176 215 H190 M176 223 H190" stroke="#7c2d12" strokeOpacity="0.55" strokeWidth="1.5" />
+            <rect x="166" y="205" width="38" height="29" rx="5" fill="url(#bus-bag-gradient)" stroke="#dbeafe" strokeWidth="1.5" />
+            <path d="M178 205 V198 H194 V205" fill="none" stroke="#e0f2fe" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M170 210 H200" stroke="#0f172a" strokeOpacity="0.65" strokeWidth="1.5" strokeDasharray="2 2" />
+            <rect x="172" y="214" width="26" height="13" rx="3" fill="#fbbf24" stroke="#92400e" strokeWidth="1" />
+            <path d="M177 218 H193 M177 222 H190" stroke="#92400e" strokeWidth="1" strokeLinecap="round" />
+            <circle cx="174" cy="235" r="3" fill="#1e293b" stroke="#cbd5e1" strokeWidth="1" />
+            <circle cx="197" cy="235" r="3" fill="#1e293b" stroke="#cbd5e1" strokeWidth="1" />
             <animateTransform
               attributeName="transform"
               type="translate"
