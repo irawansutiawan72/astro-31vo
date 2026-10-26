@@ -3,6 +3,7 @@ import {
   ArrowLeft,
   Layers,
   Zap,
+  Cuboid,
   Rocket,
   Worm,
   Crosshair,
@@ -72,7 +73,12 @@ const games = [
     emoji: "",
     path: "/math-game-arena/umum/numatik-strike",
     desc: "Siap beraksi? Masuki arena 3D, bidik jitu, dan hadapi para teroris!",
-    icon: <Crosshair className="w-7 h-7 text-cyan-300 shrink-0 group-hover:scale-110 transition-transform" />,
+    icon: (
+      <span className="relative inline-flex w-7 h-7 shrink-0 text-cyan-300 group-hover:scale-110 transition-transform">
+        <Cuboid className="absolute inset-0 w-7 h-7" />
+        <Crosshair className="absolute left-1/2 top-1/2 w-3.5 h-3.5 -translate-x-1/2 -translate-y-1/2 text-white" />
+      </span>
+    ),
   },
   {
     label: "Galaksi Tempur",
