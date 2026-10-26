@@ -3245,8 +3245,7 @@ const GamePage = () => {
         .strike-hud{position:absolute;z-index:2;inset:0;pointer-events:none}
         .strike-top{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);top:clamp(16px,3vh,30px);display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
         .strike-brand{display:flex;align-items:center;gap:12px}
-        .strike-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(69,224,237,.55);transform:rotate(45deg);background:rgba(14,41,57,.72);box-shadow:inset 0 0 18px rgba(53,215,231,.1)}
-        .strike-mark:after{content:"";width:10px;height:10px;background:#43dce8;box-shadow:0 0 12px #43dce8}
+        .strike-logo{display:block;flex:0 0 auto;width:76px;height:22px;overflow:hidden;opacity:.84;filter:drop-shadow(0 0 5px rgba(67,220,232,.12))}
         .strike-title{font:700 13px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.16em;color:#e9fbff}
         .strike-subtitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#76a1b2;margin-top:4px}
          .strike-header-actions{display:flex;align-items:center;gap:7px}
@@ -3374,9 +3373,9 @@ const GamePage = () => {
            .strike-top{left:12px;right:12px;gap:7px}
            .strike-brand{gap:7px}
            .strike-back{padding:7px 8px;font-size:8px}
-           .strike-mark{width:26px;height:26px}
+           .strike-logo{width:56px;height:17px}
            .strike-title{font-size:10px}
-           .strike-subtitle{font-size:7px;letter-spacing:.1em}
+           .strike-subtitle{display:none}
            .strike-status{font-size:7px;padding:7px 6px;letter-spacing:.04em}
             .strike-header-actions{gap:4px}
             .strike-header-button{min-height:30px;padding:5px 6px;font-size:6px;letter-spacing:.04em}
@@ -3406,7 +3405,7 @@ const GamePage = () => {
             .strike-turn{right:14px;width:58px;height:44px}
          }
          @media(max-width:380px){
-           .strike-mark{display:none}
+           .strike-logo{width:46px;height:14px}
            .strike-brand{gap:5px}
            .strike-title{font-size:9px}
            .strike-status{font-size:6px;padding:6px 5px}
@@ -3425,8 +3424,15 @@ const GamePage = () => {
             <button className="strike-back" onClick={() => navigate("/ruang-untuk-guru/numatik-game")} aria-label="Kembali ke menu Numatik Game">
               <ArrowLeft size={14} /> MENU
             </button>
-            <span className="strike-mark" aria-hidden="true" />
-            <div><div className="strike-title">NUMATIK STRIKE</div><div className="strike-subtitle">Zona latihan · misi tunggal</div></div>
+            <svg className="strike-logo" viewBox="188 414 648 160" role="img" aria-label="Logo Numatik">
+              <defs>
+                <filter id="numatik-hud-ink" colorInterpolationFilters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
+                  <feColorMatrix values="0 0 0 0 0.38 0 0 0 0 0.81 0 0 0 0 0.86 -0.2126 -0.7152 -0.0722 0 1" />
+                </filter>
+              </defs>
+              <image href="/logo-numatik.png" x="0" y="0" width="1024" height="1024" preserveAspectRatio="xMidYMid meet" filter="url(#numatik-hud-ink)" />
+            </svg>
+            <div><div className="strike-title">STRIKE</div><div className="strike-subtitle">Zona latihan · misi tunggal</div></div>
           </div>
           <div className="strike-header-actions">
             <div className="strike-status" role="status" aria-live="polite">
