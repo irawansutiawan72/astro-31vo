@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
@@ -10,8 +11,9 @@ type BrightnessSetting = "normal" | "bright" | "very-bright";
 type WeaponId = "rifle" | "pistol";
 type GamePhase = "combat" | "supply" | "paused" | "gameover" | "complete";
 type SupplyQuestion = { prompt: string; answer: number; options: number[] };
-type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover";
+type SoundCue = "rifle" | "pistol" | "hit" | "enemy" | "wave" | "correct" | "wrong" | "gameover" | "reload" | "empty" | "step";
 type EnemyVoiceKind = "scream" | "death" | "hurt";
+type ImpactSurface = "wall" | "metal" | "ground";
 type WeaponAmmo = { magazine: number; reserve: number };
 type AmmoLoadout = Record<WeaponId, WeaponAmmo>;
 type RadarContact = { id: number; x: number; y: number };
@@ -108,6 +110,8 @@ const STARTING_ENEMIES = 10;
 const GUNFIRE_ALERT_RADIUS = 36;
 const BEST_SCORE_KEY = "numatik-strike-best-score";
 const TOUCH_LOOK_SENSITIVITY_KEY = "numatik-strike-touch-look-sensitivity";
+const ENEMY_SCREAMS_KEY = "numatik-strike-enemy-screams";
+const HAPTICS_ENABLED_KEY = "numatik-strike-haptics";
 const DEFAULT_TOUCH_LOOK_SENSITIVITY = 1.2;
 const ENEMY_SCREAM_VARIANTS: EnemyScreamVariant[] = [
   { pitch: 194, duration: 0.36, formants: [690, 1160, 2460] },
@@ -232,7 +236,26 @@ const GamePage = () => {
   const supplyResolvedRef = useRef(false);
   const [muted, setMuted] = useState(false);
   const mutedRef = useRef(false);
+  const muteWarningLoggedRef = useRef(false);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const masterGainRef = useRef<GainNode | null>(null);
+  const [audioState, setAudioState] = useState("belum aktif");
+  const [enemyScreamsEnabled, setEnemyScreamsEnabled] = useState(() => {
+    try {
+      return window.localStorage.getItem(ENEMY_SCREAMS_KEY) !== "false";
+    } catch {
+      return true;
+    }
+  });
+  const enemyScreamsEnabledRef = useRef(enemyScreamsEnabled);
+  const [hapticsEnabled, setHapticsEnabled] = useState(() => {
+    try {
+      return window.localStorage.getItem(HAPTICS_ENABLED_KEY) !== "false";
+    } catch {
+      return true;
+    }
+  });
+  const hapticsEnabledRef = useRef(hapticsEnabled);
   const [hitFeedback, setHitFeedback] = useState<HitFeedback | null>(null);
   const hitFeedbackIdRef = useRef(0);
   const hitFeedbackTimeoutRef = useRef<number | null>(null);
@@ -256,6 +279,7 @@ const GamePage = () => {
   const killFeedIdRef = useRef(0);
   const killFeedTimeoutsRef = useRef<number[]>([]);
   const fireRef = useRef<(() => void) | null>(null);
+  const unlockAudioRef = useRef<(() => void) | null>(null);
   const swapWeaponRef = useRef<(() => void) | null>(null);
   const reloadWeaponRef = useRef<(() => void) | null>(null);
   const pauseGameRef = useRef<(() => void) | null>(null);
@@ -1777,6 +1801,8 @@ const GamePage = () => {
     let previousTime = performance.now();
     let elapsed = 0;
     const lastShotAt: Record<WeaponId, number> = { rifle: Number.NEGATIVE_INFINITY, pistol: Number.NEGATIVE_INFINITY };
+    let lastFootstepAt = 0;
+    let lastCriticalHapticAt = 0;
     let weaponRecoilUntil = 0;
     let muzzleFlashUntil = 0;
     let cameraRecoil = 0;
@@ -2109,38 +2135,374 @@ const GamePage = () => {
       scoreRef.current += points;
       setScore(scoreRef.current);
     };
-    type ActiveEnemyVoice = { nodes: AudioNode[]; isScream: boolean };
-    const activeEnemyVoices = new Set<ActiveEnemyVoice>();
+    type ActiveAudioVoice = { nodes: AudioNode[]; isScream: boolean };
+    type PendingAudioSource = { source: AudioScheduledSourceNode; startsAt: number; stopsAt: number };
+    const activeAudioVoices = new Set<ActiveAudioVoice>();
     let enemyBreathBuffer: AudioBuffer | null = null;
+    let gunNoiseBuffer: AudioBuffer | null = null;
+    let gunImpulseBuffer: AudioBuffer | null = null;
+    let compressor: DynamicsCompressorNode | null = null;
+    let reverb: ConvolverNode | null = null;
+    let bassShaper: WaveShaperNode | null = null;
+    let resumePromise: Promise<void> | null = null;
+    let unlockBeepPlayed = false;
+    let lastAudioWarning = "";
     let lastScreamVariant = -1;
     const getStrikeAudioContext = () => {
       const legacyWindow = window as Window & { webkitAudioContext?: typeof AudioContext };
       const Context = window.AudioContext ?? legacyWindow.webkitAudioContext;
-      if (!Context) return null;
+      if (!Context) {
+        console.warn("Web Audio API tidak tersedia di perangkat ini.");
+        return null;
+      }
       const existingContext = audioContextRef.current;
       const context = existingContext && existingContext.state !== "closed"
         ? existingContext
         : new Context();
       audioContextRef.current = context;
-      if (context.state === "suspended") void context.resume().catch(() => undefined);
+      if (context !== existingContext) {
+        const outputCompressor = context.createDynamicsCompressor();
+        outputCompressor.threshold.setValueAtTime(-18, context.currentTime);
+        outputCompressor.knee.setValueAtTime(16, context.currentTime);
+        outputCompressor.ratio.setValueAtTime(6, context.currentTime);
+        outputCompressor.attack.setValueAtTime(0.003, context.currentTime);
+        outputCompressor.release.setValueAtTime(0.22, context.currentTime);
+        const master = context.createGain();
+        master.gain.setValueAtTime(mutedRef.current ? 0 : 0.82, context.currentTime);
+        const convolver = context.createConvolver();
+        const wetGain = context.createGain();
+        wetGain.gain.setValueAtTime(0.9, context.currentTime);
+        const shaper = context.createWaveShaper();
+        const curve = new Float32Array(256);
+        const normalizer = Math.tanh(1.45);
+        for (let index = 0; index < curve.length; index += 1) {
+          const input = (index * 2) / (curve.length - 1) - 1;
+          curve[index] = Math.tanh(input * 1.45) / normalizer;
+        }
+        shaper.curve = curve;
+        shaper.oversample = "2x";
+        outputCompressor.connect(master);
+        master.connect(context.destination);
+        convolver.connect(wetGain);
+        wetGain.connect(outputCompressor);
+        shaper.connect(outputCompressor);
+        masterGainRef.current = master;
+        compressor = outputCompressor;
+        reverb = convolver;
+        bassShaper = shaper;
+        const sampleCount = Math.max(1, Math.floor(context.sampleRate * 1.8));
+        gunNoiseBuffer = context.createBuffer(1, sampleCount, context.sampleRate);
+        const noiseSamples = gunNoiseBuffer.getChannelData(0);
+        for (let index = 0; index < noiseSamples.length; index += 1) {
+          noiseSamples[index] = Math.random() * 2 - 1;
+        }
+        const impulseLength = Math.max(1, Math.floor(context.sampleRate * 1.4));
+        gunImpulseBuffer = context.createBuffer(2, impulseLength, context.sampleRate);
+        for (let channel = 0; channel < gunImpulseBuffer.numberOfChannels; channel += 1) {
+          const impulse = gunImpulseBuffer.getChannelData(channel);
+          for (let index = 0; index < impulse.length; index += 1) {
+            const decay = (1 - index / impulse.length) ** 2.8;
+            impulse[index] = (Math.random() * 2 - 1) * decay * 0.72;
+          }
+        }
+        convolver.buffer = gunImpulseBuffer;
+        context.onstatechange = () => {
+          if (audioContextRef.current !== context) return;
+          setAudioState(context.state);
+          console.log("audio state", context.state);
+          if (context.state === "running") lastAudioWarning = "";
+        };
+        setAudioState(context.state);
+        console.log("audio state", context.state);
+      }
       return context;
     };
-    const unlockStrikeAudio = () => {
-      if (mutedRef.current) return;
-      try {
-        getStrikeAudioContext();
-      } catch {
-        // Audio remains optional on browsers that do not support Web Audio.
+    const resumeStrikeAudio = async (context: AudioContext) => {
+      if (context.state === "running") return true;
+      const state = context.state as string;
+      if (state === "closed") return false;
+      if (lastAudioWarning !== state) {
+        console.warn("AudioContext suspended; attempting resume", state);
+        lastAudioWarning = state;
       }
+      if (!resumePromise) {
+        resumePromise = context.resume()
+          .then(() => undefined)
+          .catch((error: unknown) => {
+            console.warn("AudioContext resume gagal:", error);
+          })
+          .finally(() => {
+            resumePromise = null;
+          });
+      }
+      await resumePromise;
+      return context.state === "running";
+    };
+    const updateAudioListener = (context: AudioContext, position: THREE.Vector3, time: number) => {
+      const listener = context.listener;
+      const listenerQuaternion = camera.getWorldQuaternion(new THREE.Quaternion());
+      const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(listenerQuaternion);
+      const up = new THREE.Vector3(0, 1, 0).applyQuaternion(listenerQuaternion);
+      listener.positionX.setValueAtTime(position.x, time);
+      listener.positionY.setValueAtTime(position.y, time);
+      listener.positionZ.setValueAtTime(position.z, time);
+      listener.forwardX.setValueAtTime(forward.x, time);
+      listener.forwardY.setValueAtTime(forward.y, time);
+      listener.forwardZ.setValueAtTime(forward.z, time);
+      listener.upX.setValueAtTime(up.x, time);
+      listener.upY.setValueAtTime(up.y, time);
+      listener.upZ.setValueAtTime(up.z, time);
+    };
+    const runWithAudio = (callback: (context: AudioContext) => void) => {
+      if (mutedRef.current && !muteWarningLoggedRef.current) {
+        console.warn("Suara dimatikan; masterGain berada di 0.");
+        muteWarningLoggedRef.current = true;
+      }
+      let context: AudioContext | null;
+      try {
+        context = getStrikeAudioContext();
+      } catch (error) {
+        console.warn("Gagal membuat AudioContext:", error);
+        return;
+      }
+      if (!context) return;
+      void resumeStrikeAudio(context).then((ready) => {
+        if (!ready || context.state === "closed") return;
+        callback(context);
+      }).catch((error: unknown) => {
+        console.warn("Gagal menyiapkan suara:", error);
+      });
+    };
+    const unlockAudio = () => {
+      let context: AudioContext | null;
+      try {
+        context = getStrikeAudioContext();
+      } catch (error) {
+        console.warn("Gagal mengaktifkan audio:", error);
+        return;
+      }
+      if (!context) return;
+      void resumeStrikeAudio(context).then((ready) => {
+        if (!ready || unlockBeepPlayed) return;
+        unlockBeepPlayed = true;
+        const time = context.currentTime;
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(440, time);
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(0.035, time + 0.004);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.06);
+        oscillator.connect(gain);
+        gain.connect(compressor!);
+        oscillator.onended = () => {
+          oscillator.disconnect();
+          gain.disconnect();
+        };
+        oscillator.start(time);
+        oscillator.stop(time + 0.06);
+      }).catch((error: unknown) => {
+        console.warn("Audio unlock gagal:", error);
+      });
+    };
+    unlockAudioRef.current = unlockAudio;
+    const disconnectAudioNodes = (nodes: AudioNode[]) => {
+      nodes.forEach((node) => {
+        try {
+          node.disconnect();
+        } catch (error) {
+          console.warn("Gagal melepas node audio:", error);
+        }
+      });
+    };
+    const scheduleVoice = (
+      sources: PendingAudioSource[],
+      nodes: AudioNode[],
+      isScream = false,
+    ) => {
+      const screamCount = [...activeAudioVoices].filter((voice) => voice.isScream).length;
+      if (activeAudioVoices.size >= 12 || (isScream && screamCount >= 2)) {
+        console.warn(isScream && screamCount >= 2 ? "Batas dua teriakan aktif tercapai." : "Batas 12 voice audio tercapai.");
+        disconnectAudioNodes(nodes);
+        return false;
+      }
+      const voice: ActiveAudioVoice = { nodes, isScream };
+      activeAudioVoices.add(voice);
+      let remaining = sources.length;
+      let schedulingFailed = false;
+      sources.forEach(({ source, startsAt, stopsAt }) => {
+        if (schedulingFailed) return;
+        source.onended = () => {
+          source.onended = null;
+          remaining -= 1;
+          if (remaining <= 0) {
+            activeAudioVoices.delete(voice);
+            disconnectAudioNodes(nodes);
+          }
+        };
+        try {
+          source.start(startsAt);
+          source.stop(stopsAt);
+        } catch (error) {
+          schedulingFailed = true;
+          console.warn("Gagal menjadwalkan suara:", error);
+          activeAudioVoices.delete(voice);
+          disconnectAudioNodes(nodes);
+        }
+      });
+      return true;
+    };
+    const setEnvelope = (gain: GainNode, time: number, peak: number, duration: number, attack = 0.001) => {
+      gain.gain.setValueAtTime(0, time);
+      gain.gain.linearRampToValueAtTime(peak, time + Math.min(attack, duration * 0.3));
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+    };
+    const createNoiseLayer = (
+      context: AudioContext,
+      time: number,
+      duration: number,
+      peak: number,
+      filterType: BiquadFilterType,
+      frequency: number,
+      q: number,
+      nodes: AudioNode[],
+      sources: PendingAudioSource[],
+      wetAmount = 0,
+    ) => {
+      const source = context.createBufferSource();
+      source.buffer = gunNoiseBuffer;
+      const filter = context.createBiquadFilter();
+      filter.type = filterType;
+      filter.frequency.setValueAtTime(frequency, time);
+      filter.Q.setValueAtTime(q, time);
+      const gain = context.createGain();
+      setEnvelope(gain, time, peak, duration);
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(compressor!);
+      nodes.push(source, filter, gain);
+      if (wetAmount > 0 && reverb) {
+        const send = context.createGain();
+        send.gain.setValueAtTime(wetAmount, time);
+        gain.connect(send);
+        send.connect(reverb);
+        nodes.push(send);
+      }
+      sources.push({ source, startsAt: time, stopsAt: time + duration });
+      return gain;
+    };
+    const createOscillatorLayer = (
+      context: AudioContext,
+      time: number,
+      duration: number,
+      peak: number,
+      type: OscillatorType,
+      startFrequency: number,
+      endFrequency: number,
+      nodes: AudioNode[],
+      sources: PendingAudioSource[],
+      useBassShaper = false,
+    ) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(startFrequency, time);
+      oscillator.frequency.exponentialRampToValueAtTime(endFrequency, time + duration);
+      setEnvelope(gain, time, peak, duration);
+      oscillator.connect(gain);
+      if (useBassShaper && bassShaper) {
+        gain.connect(bassShaper);
+      } else {
+        gain.connect(compressor!);
+      }
+      nodes.push(oscillator, gain);
+      sources.push({ source: oscillator, startsAt: time, stopsAt: time + duration });
+    };
+    const playWeaponShot = (context: AudioContext, weapon: WeaponId) => {
+      const time = context.currentTime;
+      const jitter = 1 + (Math.random() * 2 - 1) * 0.07;
+      const nodes: AudioNode[] = [];
+      const sources: PendingAudioSource[] = [];
+      if (weapon === "rifle") {
+        createNoiseLayer(context, time, 0.06, 0.8 * jitter, "highpass", 220, 0.7, nodes, sources, 0.3);
+        createNoiseLayer(context, time, 0.02, 0.46 * jitter, "bandpass", 3650 + Math.random() * 800, 0.8, nodes, sources, 0.3);
+        createOscillatorLayer(context, time, 0.18, 0.34 * jitter, "sine", 170, 55, nodes, sources, true);
+        createOscillatorLayer(context, time, 0.18, 0.2 * jitter, "triangle", 90, 40, nodes, sources, true);
+        createNoiseLayer(context, time + 0.03, 0.008, 0.12 * jitter, "highpass", 2700, 1.2, nodes, sources, 0.12);
+      } else {
+        createNoiseLayer(context, time, 0.033, 0.67 * jitter, "highpass", 380, 0.8, nodes, sources, 0.18);
+        createNoiseLayer(context, time, 0.018, 0.5 * jitter, "bandpass", 4300 + Math.random() * 400, 0.9, nodes, sources, 0.18);
+        createOscillatorLayer(context, time, 0.1, 0.3 * jitter, "sine", 200, 80, nodes, sources);
+        createNoiseLayer(context, time + 0.026, 0.007, 0.13 * jitter, "highpass", 3200, 1.2, nodes, sources, 0.08);
+      }
+      scheduleVoice(sources, nodes);
+    };
+    const playEnemyShot = (soldier: SoldierState, distance: number) => {
+      runWithAudio((context) => {
+        const time = context.currentTime;
+        const position = soldier.muzzleFlash.getWorldPosition(new THREE.Vector3());
+        const listenerPosition = camera.getWorldPosition(new THREE.Vector3());
+        updateAudioListener(context, listenerPosition, time);
+        const nodes: AudioNode[] = [];
+        const sources: PendingAudioSource[] = [];
+        const source = context.createBufferSource();
+        source.buffer = gunNoiseBuffer;
+        const lowpass = context.createBiquadFilter();
+        lowpass.type = "lowpass";
+        lowpass.frequency.setValueAtTime(Math.max(850, 4600 - distance * 66), time);
+        const bandpass = context.createBiquadFilter();
+        bandpass.type = "bandpass";
+        bandpass.frequency.setValueAtTime(Math.max(700, 2700 - distance * 24), time);
+        bandpass.Q.value = 0.8;
+        const gain = context.createGain();
+        const distanceGain = Math.max(0.12, 1 - distance / 78) * 0.34;
+        setEnvelope(gain, time, distanceGain, 0.075);
+        const panner = context.createPanner();
+        panner.panningModel = "HRTF";
+        panner.distanceModel = "inverse";
+        panner.refDistance = 5;
+        panner.maxDistance = 80;
+        panner.rolloffFactor = 0.6;
+        panner.positionX.setValueAtTime(position.x, time);
+        panner.positionY.setValueAtTime(position.y, time);
+        panner.positionZ.setValueAtTime(position.z, time);
+        source.connect(lowpass);
+        lowpass.connect(bandpass);
+        bandpass.connect(gain);
+        gain.connect(panner);
+        panner.connect(compressor!);
+        nodes.push(source, lowpass, bandpass, gain, panner);
+        sources.push({ source, startsAt: time, stopsAt: time + 0.075 });
+        scheduleVoice(sources, nodes);
+      });
+    };
+    const playImpact = (surface: ImpactSurface) => {
+      runWithAudio((context) => {
+        const time = context.currentTime;
+        const nodes: AudioNode[] = [];
+        const sources: PendingAudioSource[] = [];
+        const profile = surface === "metal"
+          ? { duration: 0.045, peak: 0.28, filter: "bandpass" as const, frequency: 2350, q: 2.4 }
+          : surface === "ground"
+            ? { duration: 0.055, peak: 0.2, filter: "lowpass" as const, frequency: 850, q: 0.8 }
+            : { duration: 0.05, peak: 0.23, filter: "bandpass" as const, frequency: 1450, q: 1.1 };
+        createNoiseLayer(
+          context, time, profile.duration, profile.peak, profile.filter, profile.frequency, profile.q, nodes, sources,
+          surface === "metal" ? 0.08 : 0.025,
+        );
+        if (surface !== "ground") {
+          createOscillatorLayer(context, time, 0.04, 0.09, "triangle", surface === "metal" ? 950 : 520, 180, nodes, sources);
+        }
+        scheduleVoice(sources, nodes);
+      });
     };
     const playEnemyVoice = (soldier: SoldierState, kind: EnemyVoiceKind) => {
-      if (mutedRef.current || activeEnemyVoices.size >= 12) return;
-      const isScream = kind === "scream";
-      if (isScream && [...activeEnemyVoices].filter((voice) => voice.isScream).length >= 2) return;
-      let activeVoice: ActiveEnemyVoice | null = null;
-      try {
-        const context = getStrikeAudioContext();
-        if (!context) return;
+      if (!enemyScreamsEnabledRef.current) {
+        if (kind === "scream") console.warn("Teriakan musuh dimatikan di pengaturan.");
+        return;
+      }
+      runWithAudio((context) => {
+        const isScream = kind === "scream";
         const time = context.currentTime;
         const cameraPosition = camera.getWorldPosition(new THREE.Vector3());
         const sourcePosition = soldier.group.getWorldPosition(new THREE.Vector3());
@@ -2153,51 +2515,36 @@ const GamePage = () => {
           voiceOcclusionRaycaster.far = distance - 0.3;
           occluded = voiceOcclusionRaycaster.intersectObjects(worldOccluders, false).length > 0;
         }
-
-        const listener = context.listener;
-        const listenerQuaternion = camera.getWorldQuaternion(new THREE.Quaternion());
-        const listenerForward = new THREE.Vector3(0, 0, -1).applyQuaternion(listenerQuaternion);
-        const listenerUp = new THREE.Vector3(0, 1, 0).applyQuaternion(listenerQuaternion);
-        listener.positionX.setValueAtTime(cameraPosition.x, time);
-        listener.positionY.setValueAtTime(cameraPosition.y, time);
-        listener.positionZ.setValueAtTime(cameraPosition.z, time);
-        listener.forwardX.setValueAtTime(listenerForward.x, time);
-        listener.forwardY.setValueAtTime(listenerForward.y, time);
-        listener.forwardZ.setValueAtTime(listenerForward.z, time);
-        listener.upX.setValueAtTime(listenerUp.x, time);
-        listener.upY.setValueAtTime(listenerUp.y, time);
-        listener.upZ.setValueAtTime(listenerUp.z, time);
-
+        updateAudioListener(context, cameraPosition, time);
         let variant: EnemyScreamVariant | undefined;
+        let variantIndex = -1;
         if (isScream) {
-          let variantIndex = Math.floor(Math.random() * ENEMY_SCREAM_VARIANTS.length);
+          variantIndex = Math.floor(Math.random() * ENEMY_SCREAM_VARIANTS.length);
           if (variantIndex === lastScreamVariant) {
             variantIndex = (variantIndex + 1 + Math.floor(Math.random() * (ENEMY_SCREAM_VARIANTS.length - 1)))
               % ENEMY_SCREAM_VARIANTS.length;
           }
           lastScreamVariant = variantIndex;
           variant = ENEMY_SCREAM_VARIANTS[variantIndex];
+          console.log("play headshot scream", variantIndex);
         }
-        const eventJitter = 0.92 + Math.random() * 0.16;
+        const jitter = 0.92 + Math.random() * 0.16;
         const duration = isScream
-          ? (variant?.duration ?? 0.4) * (0.92 + Math.random() * 0.16)
+          ? (variant?.duration ?? 0.4) * jitter
           : kind === "death" ? 0.25 : 0.1;
         const pitch = isScream
-          ? THREE.MathUtils.clamp((variant?.pitch ?? 210) * soldier.voicePitch * eventJitter, 180, 260)
+          ? THREE.MathUtils.clamp((variant?.pitch ?? 210) * soldier.voicePitch * jitter, 180, 260)
           : THREE.MathUtils.clamp((kind === "death" ? 218 : 224) * soldier.voicePitch, 180, 260);
-        const distanceGain = Math.max(0.34, 1 - distance / 80) * (occluded ? 0.45 : 1);
-        const formantCenters = isScream
+        const distanceGain = Math.max(0.24, 1 - distance / 80) * (occluded ? 0.45 : 1);
+        const formants = isScream
           ? (variant?.formants ?? [700, 1200, 2600])
-          : kind === "death" ? [540, 980] : [430, 820];
+          : kind === "death" ? [540, 980, 2050] : [430, 820, 1700];
         const oscillator = context.createOscillator();
         oscillator.type = "sawtooth";
         const voiceGain = context.createGain();
         const lowpass = context.createBiquadFilter();
         lowpass.type = "lowpass";
-        lowpass.frequency.setValueAtTime(
-          Math.max(700, (7800 - distance * 118) * (occluded ? 0.42 : 1)),
-          time,
-        );
+        lowpass.frequency.setValueAtTime(Math.max(700, (7800 - distance * 118) * (occluded ? 0.42 : 1)), time);
         lowpass.Q.value = 0.65;
         const panner = context.createPanner();
         panner.panningModel = "HRTF";
@@ -2208,7 +2555,7 @@ const GamePage = () => {
         panner.positionX.setValueAtTime(sourcePosition.x, time);
         panner.positionY.setValueAtTime(sourcePosition.y, time);
         panner.positionZ.setValueAtTime(sourcePosition.z, time);
-        const formantFilters = formantCenters.map((center, index) => {
+        const formantFilters = formants.map((center, index) => {
           const filter = context.createBiquadFilter();
           filter.type = "bandpass";
           filter.Q.value = isScream ? 3.7 + index * 0.35 : 2.6;
@@ -2222,12 +2569,12 @@ const GamePage = () => {
         });
         voiceGain.connect(lowpass);
         lowpass.connect(panner);
-        panner.connect(context.destination);
-
+        panner.connect(compressor!);
         const nodes: AudioNode[] = [oscillator, voiceGain, lowpass, panner, ...formantFilters];
+        const sources: PendingAudioSource[] = [{ source: oscillator, startsAt: time, stopsAt: time + duration }];
         if (isScream) {
           if (!enemyBreathBuffer) {
-            const sampleCount = Math.floor(context.sampleRate * 0.55);
+            const sampleCount = Math.max(1, Math.floor(context.sampleRate * 0.55));
             enemyBreathBuffer = context.createBuffer(1, sampleCount, context.sampleRate);
             const samples = enemyBreathBuffer.getChannelData(0);
             for (let index = 0; index < samples.length; index += 1) {
@@ -2242,14 +2589,12 @@ const GamePage = () => {
           breathFilter.frequency.linearRampToValueAtTime(2550, time + duration * 0.48);
           breathFilter.Q.value = 0.8;
           const breathGain = context.createGain();
-          breathGain.gain.setValueAtTime(0.0001, time);
-          breathGain.gain.linearRampToValueAtTime(0.085, time + 0.055);
-          breathGain.gain.exponentialRampToValueAtTime(0.0001, time + duration * 0.88);
+          setEnvelope(breathGain, time, 0.085, duration * 0.88, 0.015);
           breath.connect(breathFilter);
           breathFilter.connect(breathGain);
           breathGain.connect(voiceGain);
           nodes.push(breath, breathFilter, breathGain);
-
+          sources.push({ source: breath, startsAt: time, stopsAt: time + duration });
           const vibrato = context.createOscillator();
           vibrato.type = "sine";
           vibrato.frequency.value = 6;
@@ -2258,17 +2603,10 @@ const GamePage = () => {
           vibrato.connect(vibratoDepth);
           vibratoDepth.connect(oscillator.frequency);
           nodes.push(vibrato, vibratoDepth);
-          vibrato.start(time);
-          vibrato.stop(time + duration);
-          breath.start(time);
-          breath.stop(time + duration);
+          sources.push({ source: vibrato, startsAt: time, stopsAt: time + duration });
         }
-
         const peak = (isScream ? 0.42 : kind === "death" ? 0.2 : 0.12) * distanceGain;
-        voiceGain.gain.setValueAtTime(0.0001, time);
-        voiceGain.gain.linearRampToValueAtTime(peak, time + Math.min(0.015, duration * 0.18));
-        if (isScream) voiceGain.gain.setValueAtTime(peak * 0.72, time + duration * 0.48);
-        voiceGain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+        setEnvelope(voiceGain, time, peak, duration, isScream ? 0.015 : 0.008);
         if (isScream) {
           oscillator.frequency.setValueAtTime(Math.max(180, pitch * 0.9), time);
           oscillator.frequency.linearRampToValueAtTime(Math.min(260, pitch * 1.1), time + duration * 0.2);
@@ -2280,70 +2618,100 @@ const GamePage = () => {
             time + duration,
           );
         }
-
-        const voiceEntry: ActiveEnemyVoice = { nodes, isScream };
-        activeVoice = voiceEntry;
-        activeEnemyVoices.add(voiceEntry);
-        oscillator.onended = () => {
-          activeEnemyVoices.delete(voiceEntry);
-          nodes.forEach((node) => {
-            try {
-              node.disconnect();
-            } catch {
-              // Nodes may already be disconnected when the audio context closes.
-            }
-          });
-        };
-        oscillator.start(time);
-        oscillator.stop(time + duration);
-      } catch {
-        if (activeVoice) activeEnemyVoices.delete(activeVoice);
-        activeVoice?.nodes.forEach((node) => {
-          try {
-            node.disconnect();
-          } catch {
-            // Ignore cleanup errors from unsupported or closed audio contexts.
-          }
-        });
-      }
+        scheduleVoice(sources, nodes, isScream);
+      });
     };
     const playSound = (cue: SoundCue) => {
-      if (mutedRef.current) return;
-      try {
-        const context = getStrikeAudioContext();
-        if (!context) return;
-        const presets: Record<SoundCue, [number, number, number, OscillatorType]> = {
-          rifle: [310, 0.095, 0.18, "sawtooth"],
-          pistol: [430, 0.085, 0.16, "square"],
-          hit: [540, 0.075, 0.04, "triangle"],
-          enemy: [92, 0.09, 0.035, "sawtooth"],
+      if (cue === "rifle" || cue === "pistol") {
+        console.log("play shot", cue);
+        runWithAudio((context) => playWeaponShot(context, cue));
+        return;
+      }
+      runWithAudio((context) => {
+        const time = context.currentTime;
+        const settings: Record<Exclude<SoundCue, "rifle" | "pistol">, [number, number, number, OscillatorType]> = {
+          hit: [860, 0.055, 0.16, "triangle"],
+          enemy: [130, 0.08, 0.06, "sawtooth"],
           wave: [330, 0.2, 0.06, "sine"],
           correct: [720, 0.16, 0.065, "sine"],
           wrong: [145, 0.17, 0.045, "triangle"],
           gameover: [105, 0.48, 0.065, "sawtooth"],
+          reload: [1800, 0.72, 0.16, "square"],
+          empty: [1150, 0.018, 0.08, "square"],
+          step: [105, 0.06, 0.045, "triangle"],
         };
-        const [frequency, duration, volume, type] = presets[cue];
-        const oscillator = context.createOscillator();
-        const gain = context.createGain();
-        oscillator.type = type;
-        oscillator.frequency.setValueAtTime(frequency, context.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, frequency * 0.48), context.currentTime + duration);
-        gain.gain.setValueAtTime(0.0001, context.currentTime);
-        gain.gain.exponentialRampToValueAtTime(volume, context.currentTime + 0.012);
-        gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration);
-        oscillator.connect(gain);
-        gain.connect(context.destination);
-        oscillator.onended = () => {
-          oscillator.disconnect();
-          gain.disconnect();
-        };
-        oscillator.start();
-        oscillator.stop(context.currentTime + duration);
-      } catch {
-        // Audio is an optional enhancement; unsupported or locked contexts do not interrupt play.
-      }
+        const [frequency, duration, volume, type] = settings[cue];
+        const nodes: AudioNode[] = [];
+        const sources: PendingAudioSource[] = [];
+        if (cue === "reload") {
+          [0, 0.28, 0.56].forEach((offset, index) => {
+            createNoiseLayer(context, time + offset, index === 1 ? 0.012 : 0.009, 0.18, "highpass", 1700 + index * 550, 1.4, nodes, sources, 0.04);
+          });
+        } else if (cue === "step") {
+          createNoiseLayer(context, time, 0.045, 0.05, "lowpass", 420, 0.7, nodes, sources);
+          createOscillatorLayer(context, time, 0.06, volume, type, frequency, 55, nodes, sources);
+        } else if (cue === "empty") {
+          createNoiseLayer(context, time, duration, volume, "highpass", 2400, 1.2, nodes, sources);
+        } else {
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(frequency, time);
+          oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, frequency * 0.48), time + duration);
+          setEnvelope(gain, time, volume, duration, 0.012);
+          oscillator.connect(gain);
+          gain.connect(compressor!);
+          nodes.push(oscillator, gain);
+          sources.push({ source: oscillator, startsAt: time, stopsAt: time + duration });
+        }
+        scheduleVoice(sources, nodes);
+      });
     };
     soundRef.current = playSound;
+    const hapticTimeouts: number[] = [];
+    let lastWeaponHapticAt = 0;
+    const hasTouchHaptics = () => (
+      mobileRef.current
+      && (navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches)
+    );
+    const playHapticImpact = async (style: ImpactStyle, fallback: number | number[]) => {
+      try {
+        await Haptics.impact({ style });
+      } catch (error) {
+        console.warn("Haptics native tidak tersedia; mencoba getar browser:", error);
+        try {
+          if (typeof navigator.vibrate === "function") navigator.vibrate(fallback);
+        } catch (vibrationError) {
+          console.warn("Getar browser tidak tersedia:", vibrationError);
+        }
+      }
+    };
+    const scheduleHaptic = (delay: number, callback: () => void) => {
+      const timeout = window.setTimeout(() => {
+        hapticTimeouts.splice(hapticTimeouts.indexOf(timeout), 1);
+        if (gamePhaseRef.current === "combat" && hapticsEnabledRef.current && hasTouchHaptics()) callback();
+      }, delay);
+      hapticTimeouts.push(timeout);
+    };
+    const haptic = (kind: "rifle" | "pistol" | "reload" | "damage" | "kill" | "critical") => {
+      if (!hapticsEnabledRef.current || gamePhaseRef.current !== "combat" || !hasTouchHaptics()) return;
+      const now = performance.now();
+      if (kind === "rifle" || kind === "pistol") {
+        if (now - lastWeaponHapticAt < 83) return;
+        lastWeaponHapticAt = now;
+      }
+      if (kind === "rifle") void playHapticImpact(ImpactStyle.Light, 17);
+      else if (kind === "pistol") void playHapticImpact(ImpactStyle.Medium, 25);
+      else if (kind === "damage") void playHapticImpact(ImpactStyle.Medium, 70);
+      else if (kind === "kill") void playHapticImpact(ImpactStyle.Light, 30);
+      else if (kind === "reload") {
+        void playHapticImpact(ImpactStyle.Light, 12);
+        scheduleHaptic(145, () => { void playHapticImpact(ImpactStyle.Light, 12); });
+      } else {
+        void playHapticImpact(ImpactStyle.Light, [12, 120, 12]);
+        scheduleHaptic(170, () => { void playHapticImpact(ImpactStyle.Light, 12); });
+      }
+    };
     const pauseGame = () => {
       if (gamePhaseRef.current !== "combat") return;
       document.exitPointerLock?.();
@@ -2366,15 +2734,16 @@ const GamePage = () => {
       setMobileSprintHeld(false);
       setPhase("paused");
       if (audioContextRef.current?.state === "running") {
-        void audioContextRef.current.suspend().catch(() => undefined);
+        void audioContextRef.current.suspend().catch((error: unknown) => {
+          console.warn("AudioContext tidak dapat dijeda:", error);
+        });
       }
     };
     const resumeGame = () => {
       if (gamePhaseRef.current !== "paused") return;
       setPhase("combat");
-      if (!mutedRef.current && audioContextRef.current?.state === "suspended") {
-        void audioContextRef.current.resume().catch(() => undefined);
-      }
+      const context = audioContextRef.current;
+      if (context) void resumeStrikeAudio(context);
     };
     pauseGameRef.current = pauseGame;
     resumeGameRef.current = resumeGame;
@@ -2429,6 +2798,8 @@ const GamePage = () => {
       reloadEndsAt = reloadStartedAt + config.reloadDuration;
       setIsReloading(true);
       firingRef.current = false;
+      playSound("reload");
+      haptic("reload");
     };
     const swapWeapon = () => {
       if (gamePhaseRef.current !== "combat") return;
@@ -2475,6 +2846,7 @@ const GamePage = () => {
       const config = WEAPON_CONFIG[selected];
       const currentAmmo = ammoRef.current[selected];
       if (currentAmmo.magazine <= 0) {
+        playSound("empty");
         startReload();
         return;
       }
@@ -2484,6 +2856,7 @@ const GamePage = () => {
         [selected]: { ...currentAmmo, magazine: currentAmmo.magazine - 1 },
       });
       playSound(selected);
+      haptic(selected);
       soldiers.forEach((soldier) => {
         if (!soldier.alive || soldier.mode !== "patrol") return;
         const distanceToShot = Math.hypot(
@@ -2534,6 +2907,21 @@ const GamePage = () => {
       flash.visible = true;
       cameraRecoil = Math.min(0.13, cameraRecoil + (selected === "rifle" ? 0.012 : 0.021) * (aimingRef.current ? 1.18 : 1));
 
+      if (firstHit && !hitSoldier) {
+        const hitMesh = firstHit.object as THREE.Mesh;
+        const material = hitMesh.material;
+        const hitMaterials = Array.isArray(material) ? material : [material];
+        const materialName = hitMaterials
+          .map((entry) => entry.name.toLowerCase())
+          .join(" ");
+        const metalSurface = hitMaterials.some((entry) => (
+          entry === steelDetailMat || entry === crateMetalMat || entry === vehicleMat || entry === towerMat
+        )) || materialName.includes("steel") || materialName.includes("metal");
+        const surface: ImpactSurface = firstHit.object === floor
+          ? "ground"
+          : metalSurface ? "metal" : "wall";
+        playImpact(surface);
+      }
       if (firstHit && worldOccluders.includes(firstHit.object)) {
         const normal = firstHit.face?.normal.clone().transformDirection(firstHit.object.matrixWorld) ?? new THREE.Vector3(0, 1, 0);
         spawnWallSparks(firstHit.point, normal, now);
@@ -2553,7 +2941,8 @@ const GamePage = () => {
         }
         addScore((headshot ? 120 : 30) + (eliminated ? 100 : 0));
         playSound("hit");
-        playEnemyVoice(hitSoldier, eliminated ? (headshot ? "scream" : "death") : "hurt");
+        playEnemyVoice(hitSoldier, headshot ? "scream" : eliminated ? "death" : "hurt");
+        if (eliminated || headshot) haptic("kill");
         hitFeedbackIdRef.current += 1;
         setHitFeedback({ id: hitFeedbackIdRef.current, damage, headshot, eliminated });
         if (hitFeedbackTimeoutRef.current !== null) window.clearTimeout(hitFeedbackTimeoutRef.current);
@@ -2656,7 +3045,9 @@ const GamePage = () => {
     document.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     window.addEventListener("blur", onWindowBlur);
-    document.addEventListener("pointerdown", unlockStrikeAudio, true);
+      document.addEventListener("pointerdown", unlockAudio, true);
+      document.addEventListener("touchstart", unlockAudio, true);
+      document.addEventListener("click", unlockAudio, true);
     renderer.domElement.addEventListener("click", onCanvasClick);
     renderer.domElement.addEventListener("mousedown", onCanvasMouseDown);
     renderer.domElement.addEventListener("contextmenu", onContextMenu);
@@ -2687,7 +3078,7 @@ const GamePage = () => {
       soldier.muzzleFlashUntil = now + 90;
       soldier.recoilUntil = now + 150;
       soldier.muzzleFlash.visible = true;
-      playSound("enemy");
+      playEnemyShot(soldier, soldier.group.position.distanceTo(player.position));
       const dx = soldier.group.position.x - player.position.x;
       const dz = soldier.group.position.z - player.position.z;
       const forwardX = -Math.sin(yaw);
@@ -2710,6 +3101,7 @@ const GamePage = () => {
         setPlayerArmor(playerArmorRef.current);
         playerHealthRef.current = Math.max(0, playerHealthRef.current - (damage - absorbed));
         setPlayerHealth(Math.ceil(playerHealthRef.current));
+        haptic("damage");
         lastDamageAt = now;
         healthWasDamaged = playerHealthRef.current > 0 && playerHealthRef.current < 100;
         setDamageFlashId((current) => current + 1);
@@ -3111,6 +3503,14 @@ const GamePage = () => {
           playerGrounded = true;
         }
       }
+      if (length > 0.1 && playerGrounded && now - lastFootstepAt >= (sprintActive ? 330 : 440)) {
+        lastFootstepAt = now;
+        playSound("step");
+      }
+      if (playerHealthRef.current <= 25 && now - lastCriticalHapticAt >= 1400) {
+        lastCriticalHapticAt = now;
+        haptic("critical");
+      }
       player.rotation.y = yaw;
       const aimTarget = aimingRef.current && !sprintActive ? 1 : 0;
       aimBlend += (aimTarget - aimBlend) * (1 - Math.exp(-dt * 13));
@@ -3208,7 +3608,9 @@ const GamePage = () => {
       window.removeEventListener("mouseup", onMouseUp);
       window.removeEventListener("blur", onWindowBlur);
       document.removeEventListener("pointerlockchange", onLockChange);
-      document.removeEventListener("pointerdown", unlockStrikeAudio, true);
+      document.removeEventListener("pointerdown", unlockAudio, true);
+      document.removeEventListener("touchstart", unlockAudio, true);
+      document.removeEventListener("click", unlockAudio, true);
       document.removeEventListener("mousemove", onMouseMove);
       renderer.domElement.removeEventListener("click", onCanvasClick);
       renderer.domElement.removeEventListener("mousedown", onCanvasMouseDown);
@@ -3222,6 +3624,7 @@ const GamePage = () => {
       answerSupplyRef.current = null;
       nextWaveRef.current = null;
       soundRef.current = null;
+      unlockAudioRef.current = null;
       firingRef.current = false;
       firePointers.current.clear();
       sprintPointers.current.clear();
@@ -3246,18 +3649,18 @@ const GamePage = () => {
       }
       killFeedTimeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
       killFeedTimeoutsRef.current = [];
-      activeEnemyVoices.forEach((voice) => voice.nodes.forEach((node) => {
-        try {
-          node.disconnect();
-        } catch {
-          // The audio context may already be closing.
-        }
-      }));
-      activeEnemyVoices.clear();
+      hapticTimeouts.forEach((timeout) => window.clearTimeout(timeout));
+      hapticTimeouts.length = 0;
+      activeAudioVoices.forEach((voice) => disconnectAudioNodes(voice.nodes));
+      activeAudioVoices.clear();
       const audioContext = audioContextRef.current;
       audioContextRef.current = null;
+      masterGainRef.current = null;
+      if (audioContext) audioContext.onstatechange = null;
       if (audioContext && audioContext.state !== "closed") {
-        void audioContext.close().catch(() => undefined);
+        void audioContext.close().catch((error: unknown) => {
+          console.warn("AudioContext tidak dapat ditutup:", error);
+        });
       }
       tracers.forEach(({ line, disposeMaterial }) => {
         scene.remove(line);
@@ -3443,12 +3846,32 @@ const GamePage = () => {
   const toggleMute = () => {
     const next = !mutedRef.current;
     mutedRef.current = next;
+    if (!next) muteWarningLoggedRef.current = false;
     setMuted(next);
     const context = audioContextRef.current;
-    if (next && context?.state === "running") {
-      void context.suspend().catch(() => undefined);
-    } else if (!next && gamePhaseRef.current === "combat" && context?.state === "suspended") {
-      void context.resume().catch(() => undefined);
+    const masterGain = masterGainRef.current;
+    if (context && masterGain) {
+      const time = context.currentTime;
+      masterGain.gain.cancelScheduledValues(time);
+      masterGain.gain.setTargetAtTime(next ? 0 : 0.82, time, 0.018);
+    }
+  };
+  const toggleEnemyScreams = (enabled: boolean) => {
+    enemyScreamsEnabledRef.current = enabled;
+    setEnemyScreamsEnabled(enabled);
+    try {
+      window.localStorage.setItem(ENEMY_SCREAMS_KEY, String(enabled));
+    } catch (error) {
+      console.warn("Pengaturan teriakan tidak tersimpan:", error);
+    }
+  };
+  const toggleHaptics = (enabled: boolean) => {
+    hapticsEnabledRef.current = enabled;
+    setHapticsEnabled(enabled);
+    try {
+      window.localStorage.setItem(HAPTICS_ENABLED_KEY, String(enabled));
+    } catch (error) {
+      console.warn("Pengaturan getar tidak tersimpan:", error);
     }
   };
 
@@ -3476,6 +3899,9 @@ const GamePage = () => {
         .strike-settings-toggle{padding:8px 10px;box-shadow:0 4px 14px rgba(16,28,34,.14)}
         .strike-settings-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(248px,calc(100vw - 24px));padding:12px;border:1px solid rgba(202,211,211,.3);background:rgba(22,33,37,.94);box-shadow:0 12px 32px rgba(21,31,35,.22);backdrop-filter:blur(7px)}
         .strike-settings-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .strike-audio-state{margin-top:10px;color:#a8c5d0;font-size:10px}
+        .strike-audio-settings{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;color:#c6dce4;font-size:10px}
+        .strike-audio-settings input{accent-color:#43dce8}
         .strike-settings-row label,.strike-settings-panel legend{font:600 8px var(--font-display,'Orbitron'),sans-serif;letter-spacing:.1em;color:#d7e4e4}
         .strike-settings-panel select{border-radius:2px;padding:6px 8px;font:500 10px var(--font-body,'Exo 2'),sans-serif;letter-spacing:0}
         .strike-settings-panel fieldset{margin:12px 0 0;padding:10px 0 0;border:0;border-top:1px solid rgba(202,211,211,.18)}
@@ -3734,6 +4160,23 @@ const GamePage = () => {
                 <option value="high">Tinggi</option>
               </select>
             </div>
+            <div className="strike-audio-state" role="status">Audio: {audioState}</div>
+            <label className="strike-audio-settings">
+              <span>Teriakan musuh</span>
+              <input
+                type="checkbox"
+                checked={enemyScreamsEnabled}
+                onChange={(event) => toggleEnemyScreams(event.currentTarget.checked)}
+              />
+            </label>
+            <label className="strike-audio-settings">
+              <span>Getar</span>
+              <input
+                type="checkbox"
+                checked={hapticsEnabled}
+                onChange={(event) => toggleHaptics(event.currentTarget.checked)}
+              />
+            </label>
             <fieldset>
               <legend>Kecerahan</legend>
               <div className="strike-brightness-options" role="group" aria-label="Kecerahan">
@@ -3800,6 +4243,7 @@ const GamePage = () => {
             <b>KLIK KIRI</b> tembak otomatis &nbsp; <b>KLIK KANAN</b> bidik &nbsp; <b>R</b> isi ulang &nbsp; <b>SPACE</b> lompat
           </div>
           <button className="strike-lock" onClick={() => {
+            unlockAudioRef.current?.();
             const canvas = mountRef.current?.querySelector("canvas");
             canvas?.requestPointerLock?.();
           }}>{locked ? "MOUSE TERKUNCI · KLIK KIRI TEMBAK" : "KLIK UNTUK MULAI · KLIK KIRI TEMBAK"}</button>
@@ -3912,6 +4356,7 @@ const GamePage = () => {
               <div className="strike-phase-kicker">Permainan dijeda</div>
               <h2 className="strike-phase-title" id="strike-pause-title">PAUSE</h2>
               <p className="strike-phase-copy">Skor saat ini: {score}. Lanjutkan permainan atau kembali ke menu.</p>
+              <div className="strike-audio-state" role="status">Audio: {audioState}</div>
               {mobile && renderTouchControlSettings("pause")}
               <button className="strike-phase-button" onClick={() => resumeGameRef.current?.()}>LANJUT BERMAIN</button>
               <button className="strike-phase-button is-secondary" onClick={() => navigate("/ruang-untuk-guru/numatik-game")}>KEMBALI KE MENU</button>
