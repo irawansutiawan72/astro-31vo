@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { MateriSection } from "@/components/tka/TKAPemantapanLayout";
+import polaLingkaranImage from "@assets/image_1793092180774.png";
 
 export interface TkaPolaBilanganSoal {
   no: number;
@@ -81,7 +82,7 @@ Jawab: $U_n = \\frac{1}{2}n(n-1)$`,
 ];
 
 export const latihanDasarPolaBilanganTka: TkaPolaBilanganSoal[] = [
-  { no: 1, soal: "Perhatikan barisan bertingkat dua berikut.\n$2, 6, 12, 20, 30, \\ldots$\nSuku ke-8 adalah ....", options: ["A. 64", "B. 70", "C. 72", "D. 80"] },
+  { no: 1, soal: "Perhatikan gambar pola berikut.\n[DIAGRAM]\nBanyak lingkaran pada pola ke-15 adalah ....", options: ["A. 105", "B. 120", "C. 210", "D. 240"] },
   { no: 2, soal: "Perhatikan pola bilangan berselang-seling berikut.\n$1, 3, 5, 8, 9, 13, 13, 18, 17, \\ldots$\nPernyataan yang sesuai dengan pola tersebut adalah ....", options: ["A. Suku ke-7, ke-8, dan ke-9 adalah 13, 18, 17", "B. Suku ke-7, ke-8, dan ke-9 adalah 14, 17, 18", "C. Suku ke-7, ke-8, dan ke-9 adalah 13, 17, 18", "D. Suku ke-7, ke-8, dan ke-9 adalah 14, 18, 19"] },
   { no: 3, soal: "Suku ke-22 dari barisan 99, 93, 87, 81, … adalah ....", options: ["A. –27", "B. –21", "C. –15", "D. –9"] },
   { no: 4, soal: "Suku pertama dari barisan aritmatika adalah 3 dan bedanya 4, suku ke-10 dari barisan aritmatika tersebut adalah ....", options: ["A. 30", "B. 33", "C. 36", "D. 39"] },
@@ -401,6 +402,13 @@ const Soal31Svg = () => {
 };
 
 export const polaBilanganSoalSvgMap: Record<string, ReactNode> = {
+  "1": (
+    <img
+      src={polaLingkaranImage}
+      alt="Pola lingkaran segitiga untuk pola 1, 2, 3, dan 4"
+      className="my-2 w-full max-w-sm rounded-xl bg-white"
+    />
+  ),
   "7": <Soal7Svg />,
   "9": <Soal9Svg />,
   "27": <Soal27Svg />,

@@ -9,7 +9,7 @@ import {
 } from "@/data/tka/polaBilanganLatihan";
 
 const kunciJawaban = [
-  "C", "C", "A", "D", "C", "B", "B", "A", "D", "C", "C", "D", "D", "A",
+  "B", "C", "A", "D", "C", "B", "B", "A", "D", "C", "C", "D", "D", "A",
   "C", "D", "B", "C", "A", "A", "D", "C", "B", "C", "C", "C", "C", "B",
   "D", "D", "D", "B", "C", "D", "A", "B", "B", "A", "B", "A", "A", "A",
 ] as const;
@@ -197,10 +197,10 @@ const pgkbsVariants: Record<number, ComplexVariant & { jawabanBS: ("B" | "S")[] 
 const toPembahasanText = (soalNo: number) => {
   if (soalNo === 1) {
     return [
-      "Konsep & Trik: Barisan dengan selisih tingkat kedua tetap 2 mengikuti rumus kuadrat. Untuk barisan ini, $U_n=n(n+1)$.",
-      "Step-by-Step Penyelesaian:\nSelisih pertama: $4,6,8,10,\\ldots$. Selisih tingkat kedua: $2,2,2,\\ldots$.\nPola suku ke-$n$: $U_n=n(n+1)$.\n$U_8=8(8+1)=72$.",
-      "Tips: Periksa selisih pertama, lalu selisih keduanya untuk mengenali pola bertingkat dua.",
-      "Kesimpulan: Suku ke-8 adalah $72$ (C).",
+      "Konsep & Trik: Banyak lingkaran pada pola segitiga ke-$n$ adalah jumlah $n$ bilangan asli pertama, yaitu $U_n=\\frac{n(n+1)}{2}$.",
+      "Step-by-Step Penyelesaian:\nDari gambar, banyak lingkaran berturut-turut adalah $1,3,6,10,\\ldots$. Setiap pola menambah satu baris baru. Maka banyak lingkaran pada pola ke-15 adalah $U_{15}=\\frac{15(15+1)}{2}=\\frac{15\\cdot16}{2}=120$.",
+      "Tips: Gunakan rumus bilangan segitiga saat pola bertambah satu lingkaran pada setiap baris.",
+      "Kesimpulan: Banyak lingkaran pada pola ke-15 adalah $120$ (B).",
     ].join("\n\n");
   }
   const pembahasan = polaBilanganDasarPembahasan[soalNo];
