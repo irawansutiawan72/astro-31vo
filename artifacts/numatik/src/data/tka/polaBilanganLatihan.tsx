@@ -149,9 +149,6 @@ const Soal7Svg = () => {
                 strokeWidth="0.65"
               />
             ))}
-            <text x="352" y={y + 7} fill="#e2e8f0" fontSize="9" fontFamily="sans-serif">
-              {count} bata
-            </text>
           </g>
         );
       })}

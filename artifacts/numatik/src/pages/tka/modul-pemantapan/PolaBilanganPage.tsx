@@ -217,7 +217,7 @@ const materiSections: MateriSection[] = polaBilanganMateriSections;
 
 const tambahanSoal = latihanDasarPolaBilanganTka.filter((soal) => soal.no <= 26 && ![6, 12, 18].includes(soal.no));
 
-const latihanDasar: LatihanSoal[] = tambahanSoal
+const latihanDasarSebelumDipindahkan: LatihanSoal[] = tambahanSoal
   .sort((a, b) => a.no - b.no)
   .map((soal, index) => {
     const sourceNo = soal.no;
@@ -265,6 +265,20 @@ const latihanDasar: LatihanSoal[] = tambahanSoal
       soalSvg: polaBilanganSoalSvgMap[String(sourceNo)] ? String(sourceNo) : undefined,
     };
   });
+
+const urutanNomorSebelumnya = [
+  1, 3, 4, 5, 22, 6, 7, 8, 9, 10, 14, 15, 16, 19, 20, 23, 18, 17, 11, 12, 13, 2, 21,
+];
+const latihanDasarByNomorSebelumnya = new Map<number, LatihanSoal>(
+  latihanDasarSebelumDipindahkan.map((soal): [number, LatihanSoal] => [soal.no, soal]),
+);
+const latihanDasar: LatihanSoal[] = urutanNomorSebelumnya.map((nomorSebelumnya, index) => {
+  const soal = latihanDasarByNomorSebelumnya.get(nomorSebelumnya);
+  if (!soal) {
+    throw new Error(`Soal Pola Bilangan nomor ${nomorSebelumnya} tidak ditemukan untuk pengurutan.`);
+  }
+  return { ...soal, no: index + 1 };
+});
 
 const PolaBilanganPage = () => (
   <TKAPemantapanLayout
