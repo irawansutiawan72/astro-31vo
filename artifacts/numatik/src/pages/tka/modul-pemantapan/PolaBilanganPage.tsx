@@ -219,14 +219,17 @@ const tambahanSoal = latihanDasarPolaBilanganTka.filter((soal) => soal.no <= 26 
 
 const latihanDasar: LatihanSoal[] = tambahanSoal
   .sort((a, b) => a.no - b.no)
-  .map((soal) => {
-    const pgk = pgkVariants[soal.no];
-    const pgkbs = pgkbsVariants[soal.no];
-    const type = pgkbs ? "pgkbs" : pgk ? "pgk" : soal.no % 3 === 1 ? "pg" : soal.no % 3 === 2 ? "pgk" : "pgkbs";
+  .map((soal, index) => {
+    const sourceNo = soal.no;
+    const displayNo = index + 1;
+    const pgk = pgkVariants[sourceNo];
+    const pgkbs = pgkbsVariants[sourceNo];
+    const type = pgkbs ? "pgkbs" : pgk ? "pgk" : sourceNo % 3 === 1 ? "pg" : sourceNo % 3 === 2 ? "pgk" : "pgkbs";
 
     if (type === "pgk" && pgk) {
       return {
         ...soal,
+        no: displayNo,
         type,
         soal: pgk.soal,
         options: undefined,
@@ -234,13 +237,14 @@ const latihanDasar: LatihanSoal[] = tambahanSoal
         jawabanPGK: pgk.jawabanPGK,
         jawaban: undefined,
         pembahasan: pgk.pembahasan,
-        soalSvg: polaBilanganSoalSvgMap[String(soal.no)] ? String(soal.no) : undefined,
+        soalSvg: polaBilanganSoalSvgMap[String(sourceNo)] ? String(sourceNo) : undefined,
       };
     }
 
     if (type === "pgkbs" && pgkbs) {
       return {
         ...soal,
+        no: displayNo,
         type,
         soal: pgkbs.soal,
         options: undefined,
@@ -248,16 +252,17 @@ const latihanDasar: LatihanSoal[] = tambahanSoal
         jawabanBS: pgkbs.jawabanBS,
         jawaban: undefined,
         pembahasan: pgkbs.pembahasan,
-        soalSvg: polaBilanganSoalSvgMap[String(soal.no)] ? String(soal.no) : undefined,
+        soalSvg: polaBilanganSoalSvgMap[String(sourceNo)] ? String(sourceNo) : undefined,
       };
     }
 
     return {
       ...soal,
+      no: displayNo,
       type: "pg" as const,
-      jawaban: kunciJawaban[soal.no - 1],
-      pembahasan: toPembahasanText(soal.no),
-      soalSvg: polaBilanganSoalSvgMap[String(soal.no)] ? String(soal.no) : undefined,
+      jawaban: kunciJawaban[sourceNo - 1],
+      pembahasan: toPembahasanText(sourceNo),
+      soalSvg: polaBilanganSoalSvgMap[String(sourceNo)] ? String(sourceNo) : undefined,
     };
   });
 
