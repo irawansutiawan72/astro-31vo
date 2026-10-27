@@ -19,7 +19,7 @@ export interface MateriSection {
 
 export interface LatihanSoal {
   no: number;
-  /** "pg" = pilihan ganda biasa | "pgk" = PG Kompleks 4 pernyataan | "pgkbs" = PG Benar-Salah 3 pernyataan */
+  /** "pg" = pilihan ganda | "pgk" = pilih semua pernyataan benar | "pgkbs" = tentukan Benar/Salah */
   type?: "pg" | "pgk" | "pgkbs";
   soal: string;
   /** PG & PGK: opsi A-D (combo untuk PGK) */
@@ -28,9 +28,9 @@ export interface LatihanSoal {
   optionsJsx?: React.ReactNode[];
   /** PG & PGK: huruf jawaban benar (A/B/C/D) */
   jawaban?: string;
-  /** PGK: indeks pernyataan benar (0-based); mendukung lebih dari satu jawaban */
+  /** PGK: indeks pernyataan benar (0-based); jumlah pernyataan dapat disesuaikan per soal */
   jawabanPGK?: number[];
-  /** PGK: 4 pernyataan | PGKBS: 3 pernyataan */
+  /** Pernyataan untuk PGK atau PGKBS; jumlahnya mengikuti bentuk soal */
   pernyataan?: string[];
   /** PGKBS: array ["B"|"S"] untuk tiap pernyataan */
   jawabanBS?: ("B" | "S")[];

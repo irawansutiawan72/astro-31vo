@@ -81,25 +81,22 @@ Jawab: $U_n = \\frac{1}{2}n(n-1)$`,
 ];
 
 export const latihanDasarPolaBilanganTka: TkaPolaBilanganSoal[] = [
-  { no: 1, soal: "Diketahui barisan bilangan aritmetika sebagai berikut.\n$-8, -4, 0, 4, 8, 12, n, 20, 24$\nNilai n yang memenuhi adalah ....", options: ["A. 10", "B. 14", "C. 16", "D. 18"] },
+  { no: 1, soal: "Perhatikan barisan bertingkat dua berikut.\n$2, 6, 12, 20, 30, \\ldots$\nSuku ke-8 adalah ....", options: ["A. 64", "B. 70", "C. 72", "D. 80"] },
   { no: 2, soal: "Perhatikan pola bilangan berselang-seling berikut.\n$1, 3, 5, 8, 9, 13, 13, 18, 17, \\ldots$\nPernyataan yang sesuai dengan pola tersebut adalah ....", options: ["A. Suku ke-7, ke-8, dan ke-9 adalah 13, 18, 17", "B. Suku ke-7, ke-8, dan ke-9 adalah 14, 17, 18", "C. Suku ke-7, ke-8, dan ke-9 adalah 13, 17, 18", "D. Suku ke-7, ke-8, dan ke-9 adalah 14, 18, 19"] },
   { no: 3, soal: "Suku ke-22 dari barisan 99, 93, 87, 81, … adalah ....", options: ["A. –27", "B. –21", "C. –15", "D. –9"] },
   { no: 4, soal: "Suku pertama dari barisan aritmatika adalah 3 dan bedanya 4, suku ke-10 dari barisan aritmatika tersebut adalah ....", options: ["A. 30", "B. 33", "C. 36", "D. 39"] },
   { no: 5, soal: "Dari barisan aritmetika diketahui $U_3 = 18$ dan $U_7 = 38$. Jumlah 24 suku pertama adalah ....", options: ["A. 786", "B. 1248", "C. 1572", "D. 3144"] },
-  { no: 6, soal: "Dalam gedung pertunjukkan disusun kursi dengan baris paling depan terdiri dari 12 buah, baris kedua berisi 14 buah, baris ketiga 16 buah dan seterusnya selalu bertambah 2. Banyaknya kursi pada baris ke-20 adalah ....", options: ["A. 28 buah", "B. 50 buah", "C. 58 buah", "D. 60 buah"] },
-  { no: 7, soal: "Pada tumpukan batu bata, banyak batu bata paling atas ada 8 buah, tepat di bawahnya ada 10 buah, dan seterusnya setiap tumpukan di bawahnya selalu lebih banyak 2 buah dari tumpukan di atasnya. Jika ada 15 tumpukan batu bata (dari atas sampai bawah), berapa banyak batu bata pada tumpukan paling bawah?", options: ["A. 35 buah", "B. 36 buah", "C. 38 buah", "D. 40 buah"] },
+  { no: 7, soal: "Perhatikan gambar tumpukan batu bata berikut.\nPada lapisan paling atas ada 8 buah, dan setiap lapisan di bawahnya memiliki 2 batu bata lebih banyak dari lapisan sebelumnya. Jika ada 15 lapisan dari atas sampai bawah, berapa banyak batu bata pada lapisan paling bawah?", options: ["A. 35 buah", "B. 36 buah", "C. 38 buah", "D. 40 buah"] },
   { no: 8, soal: "Dalam suatu ruang terdapat 15 baris kursi, baris paling depan terdapat 23 kursi, baris berikutnya 2 kursi lebih banyak dari baris di depannya. Jumlah kursi dalam ruang tersebut adalah ....", options: ["A. 555", "B. 385", "C. 1.110", "D. 1.140"] },
   { no: 9, soal: "Permintaan suatu produk barang diperkirakan mengalami kenaikan 5.000 unit setiap bulan. Jika jumlah produk pertamanya 100.000, maka jumlah produk selama satu tahun pertama adalah ....", options: ["A. 1.205.000 unit", "B. 1.255.000 unit", "C. 1.260.000 unit", "D. 1.530.000 unit", "E. 1.560.000 unit"] },
   { no: 10, soal: "Diketahui barisan aritmatika, suku ke-7 dan suku ke-4 adalah 26 dan 14. Jika $U_n$ menyatakan suku ke-n dan $S_n$ menyatakan jumlah sampai n suku pertama, pernyataan yang benar adalah ....", options: ["A. $U_{30} = 108$", "B. $U_{35} = 158$", "C. $S_{15} = 450$", "D. $S_{20} = 1.600$"] },
-  { no: 11, soal: "Tentukan jumlah semua bilangan asli antara 200 dan 400 yang habis dibagi 4 dan habis dibagi 6.", options: ["A. 3.000", "B. 3.200", "C. 3.600", "D. 3.800"] },
-  { no: 12, soal: "Berapakah jumlah semua bilangan bulat dari 100 sampai 500 yang habis dibagi 8 dan habis dibagi 12?", options: ["A. 3.000", "B. 3.120", "C. 3.360", "D. 3.600"] },
+  { no: 11, soal: "Tentukan jumlah semua bilangan asli antara 200 dan 400 yang habis dibagi 5.", options: ["A. 10.700", "B. 11.500", "C. 11.700", "D. 12.000"] },
   { no: 13, soal: "Tentukan jumlah semua bilangan asli antara 100 dan 300 yang habis dibagi 7 tetapi tidak habis dibagi 5.", options: ["A. 3.424", "B. 3.696", "C. 4.060", "D. 4.200"] },
   { no: 14, soal: "Diberikan deret bilangan bulat positif: 1, 2, 3, …, 200. Tentukan jumlah bilangan dalam deret tersebut yang habis dibagi 4 tetapi tidak habis dibagi 10.", options: ["A. 4.000", "B. 4.200", "C. 4.400", "D. 4.800"] },
   { no: 15, soal: "Diketahui barisan bilangan 8, 4, 2, 1, …. Rumus suku ke-n barisan tersebut adalah ....", options: ["A. $2^{n+2}$", "B. $2^{n-4}$", "C. $2^{-n+4}$", "D. $2^{n-1}$"] },
   { no: 16, soal: "Suku pertama dan kelima suatu barisan geometri berturut-turut 5 dan 80. Suku ke-9 barisan geometri tersebut adalah ....", options: ["A. 90", "B. 405", "C. 940", "D. 1.280"] },
   { no: 17, soal: "Suku ke-2 dan ke-4 barisan geometri adalah 384 dan 96. Suku ke-8 barisan tersebut adalah ....", options: ["A. 3", "B. 6", "C. 9", "D. 12"] },
-  { no: 18, soal: "Suku ke-1 dan suku ke-4 barisan geometri adalah 5 dan 40. Jumlah 6 suku pertama dari barisan tersebut adalah ....", options: ["A. 155", "B. 160", "C. 315", "D. 320"] },
-  { no: 19, soal: "Celin melipat-lipat kertas berkali-kali. Jika ketebalan kertas mula-mula 2 mm, maka butuh berapa kali lipatan sehingga ketebalan kertas menjadi 256 mm?", options: ["A. 7 kali", "B. 8 kali", "C. 9 kali", "D. 10 kali"] },
+  { no: 19, soal: "Kaisan melipat-lipat kertas berkali-kali. Jika ketebalan kertas mula-mula 2 mm, maka butuh berapa kali lipatan sehingga ketebalan kertas menjadi 256 mm?", options: ["A. 7 kali", "B. 8 kali", "C. 9 kali", "D. 10 kali"] },
   { no: 20, soal: "Seutas tali dibagi menjadi enam bagian, sehingga bagian-bagiannya membentuk barisan geometri. Jika panjang tali terpendek 9 cm dan panjang tali terpanjang 288 cm, maka panjang tali mula-mula adalah ....", options: ["A. 567 cm", "B. 576 cm", "C. 586 cm", "D. 596 cm"] },
   { no: 21, soal: "Setiap bakteri akan membelah diri menjadi 2 setiap 15 menit. Jika banyak bakteri pada pukul 10.00 ada 25 buah, maka banyak bakteri pada pukul 12.15 adalah ....", options: ["A. 800", "B. 1600", "C. 3200", "D. 6400"] },
   { no: 22, soal: "Diketahui barisan $15, 24, 35, 48, \\ldots$. Suku ke-14 barisan tersebut adalah ....", options: ["A. 280", "B. 286", "C. 288", "D. 290"] },
@@ -113,6 +110,119 @@ export const latihanDasarPolaBilanganTka: TkaPolaBilanganSoal[] = [
   { no: 30, soal: "Perhatikan gambar pola berikut!\nBanyak lingkaran pada pola ke-10 adalah ....", options: ["A. 99 buah", "B. 104 buah", "C. 115 buah", "D. 120 buah"] },
   { no: 31, soal: "Perhatikanlah pola berikut.\nBanyak lingkaran pada pola ke-30 adalah ....", options: ["A. 39", "B. 41", "C. 57", "D. 59"] },
 ];
+
+const Soal7Svg = () => {
+  const rowCount = 15;
+  const brickWidth = 8;
+  const brickHeight = 8;
+  const brickGap = 1;
+  const rowStep = 11;
+  const maxBricks = 36;
+  const stackCenter = 178;
+
+  return (
+    <svg
+      viewBox="0 0 440 205"
+      role="img"
+      aria-label="Ilustrasi tumpukan 15 lapis batu bata, dari 8 batu bata di lapisan atas hingga 36 di lapisan bawah"
+      className="block h-auto w-full max-w-xl"
+    >
+      <title>Tumpukan batu bata: 15 lapis, bertambah 2 bata setiap lapis</title>
+      {Array.from({ length: rowCount }, (_, index) => {
+        const count = 8 + index * 2;
+        const rowWidth = count * brickWidth + (count - 1) * brickGap;
+        const x = stackCenter - rowWidth / 2;
+        const y = 18 + index * rowStep;
+        return (
+          <g key={count}>
+            {Array.from({ length: count }, (_, brickIndex) => (
+              <rect
+                key={brickIndex}
+                x={x + brickIndex * (brickWidth + brickGap)}
+                y={y}
+                width={brickWidth}
+                height={brickHeight}
+                rx="1"
+                fill={index % 2 === 0 ? "#fb923c" : "#f97316"}
+                stroke="#7c2d12"
+                strokeWidth="0.65"
+              />
+            ))}
+            <text x="352" y={y + 7} fill="#e2e8f0" fontSize="9" fontFamily="sans-serif">
+              {count} bata
+            </text>
+          </g>
+        );
+      })}
+      <text x="196" y="201" textAnchor="middle" fill="#a5f3fc" fontSize="10" fontFamily="sans-serif">
+        Lapisan atas → lapisan bawah
+      </text>
+    </svg>
+  );
+};
+
+const Soal9Svg = () => {
+  const values = Array.from({ length: 12 }, (_, index) => 100_000 + index * 5_000);
+  const left = 62;
+  const right = 468;
+  const top = 26;
+  const bottom = 166;
+  const min = 100_000;
+  const max = 160_000;
+  const points = values.map((value, index) => ({
+    value,
+    x: left + (index * (right - left)) / (values.length - 1),
+    y: bottom - ((value - min) / (max - min)) * (bottom - top),
+  }));
+  const format = (value: number) => value.toLocaleString("id-ID");
+
+  return (
+    <div className="my-2 w-full max-w-xl rounded-xl border border-cyan-400/30 bg-white/5 p-2">
+      <div className="text-center text-xs font-bold text-cyan-200">Perkiraan jumlah produk per bulan</div>
+      <svg
+        viewBox="0 0 500 205"
+        role="img"
+        aria-label={`Grafik kenaikan jumlah produk bulanan: ${values.map((value, index) => `bulan ${index + 1}, ${format(value)} unit`).join("; ")}`}
+        className="block h-auto w-full"
+      >
+        <title>Jumlah produk meningkat 5.000 unit setiap bulan</title>
+        {[100_000, 120_000, 140_000, 160_000].map((value) => {
+          const y = bottom - ((value - min) / (max - min)) * (bottom - top);
+          return (
+            <g key={value}>
+              <line x1={left} y1={y} x2={right} y2={y} stroke="#ffffff22" />
+              <text x={left - 6} y={y + 3} textAnchor="end" fill="#cbd5e1" fontSize="8">
+                {format(value)}
+              </text>
+            </g>
+          );
+        })}
+        <polyline
+          points={points.map(({ x, y }) => `${x},${y}`).join(" ")}
+          fill="none"
+          stroke="#22d3ee"
+          strokeWidth="3"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        {points.map((point, index) => (
+          <g key={index}>
+            <circle cx={point.x} cy={point.y} r="3" fill="#fbbf24" stroke="#0f172a" strokeWidth="1.5" />
+            <text x={point.x} y={point.y - 7} textAnchor="middle" fill="#fef08a" fontSize="7.5">
+              {format(point.value)}
+            </text>
+            <text x={point.x} y={bottom + 13} textAnchor="middle" fill="#e2e8f0" fontSize="8">
+              {index + 1}
+            </text>
+          </g>
+        ))}
+        <text x={(left + right) / 2} y="198" textAnchor="middle" fill="#a5f3fc" fontSize="9">
+          Bulan
+        </text>
+      </svg>
+    </div>
+  );
+};
 
 const Soal27Svg = () => {
   const square = 18;
@@ -291,6 +401,8 @@ const Soal31Svg = () => {
 };
 
 export const polaBilanganSoalSvgMap: Record<string, ReactNode> = {
+  "7": <Soal7Svg />,
+  "9": <Soal9Svg />,
   "27": <Soal27Svg />,
   "28": <Soal28Svg />,
   "29": (
