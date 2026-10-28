@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { MateriSection } from "@/components/tka/TKAPemantapanLayout";
-import polaLingkaranImage from "@assets/image_1793171450761.png";
+import polaLingkaranImage from "@/assets/image_1793171450761.png";
 
 export interface TkaPolaBilanganSoal {
   no: number;

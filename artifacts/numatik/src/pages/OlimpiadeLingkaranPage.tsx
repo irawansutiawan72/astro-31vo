@@ -9,8 +9,8 @@ import { InlineMath } from 'react-katex';
 import PembahasanCard from "@/components/PembahasanCard";
 import { lingkaranDasarPembahasan } from "@/data/pembahasan/lingkaranDasar";
 import { lingkaranOlimpiadePembahasan } from "@/data/pembahasan/lingkaranOlimpiade";
-import arsiranLingkaran7cm from "@assets/Gemini_Generated_Image_nznv2pnznv2pnznv_(1)_1788488828137.jpg";
-import arsiranLingkaran14cm from "@assets/Gemini_Generated_Image_mtiuzxmtiuzxmtiu_1788488895904.jpg";
+import arsiranLingkaran7cm from "@/assets/Gemini_Generated_Image_nznv2pnznv2pnznv_(1)_1788488828137.jpg";
+import arsiranLingkaran14cm from "@/assets/Gemini_Generated_Image_mtiuzxmtiuzxmtiu_1788488895904.jpg";
 
 const M = ({ math }: { math: string }) => <InlineMath math={math} />;
 

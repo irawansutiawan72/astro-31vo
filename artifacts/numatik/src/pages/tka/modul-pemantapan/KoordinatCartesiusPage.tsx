@@ -2,7 +2,7 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { koordinatKartesiusDasarPembahasan } from "@/data/pembahasan/koordinatKartesiusDasar";
-import petaPekaranganAyunda from "@assets/image_1792161242034.png";
+import petaPekaranganAyunda from "@/assets/image_1792161242034.png";
 import type { ReactNode } from "react";
 
 const materiSections: MateriSection[] = [

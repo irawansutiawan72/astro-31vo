@@ -55,3 +55,17 @@ Thumbs.db
 # Migration artifacts (keep locally, don't commit)
 .migration-backup/
 .old-artifacts-backup/
+
+# Allow image assets in attached_assets to be tracked despite global ignore rules.
+!attached_assets/
+!attached_assets/**/
+!attached_assets/*.png
+!attached_assets/*.jpg
+!attached_assets/*.jpeg
+!attached_assets/*.svg
+!attached_assets/*.webp
+!attached_assets/**/*.png
+!attached_assets/**/*.jpg
+!attached_assets/**/*.jpeg
+!attached_assets/**/*.svg
+!attached_assets/**/*.webp

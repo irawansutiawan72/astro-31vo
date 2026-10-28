@@ -3,10 +3,10 @@ import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanL
 import { getTkaContohSoal } from "@/data/tkaContohSoal";
 import { tkaBrslLatihanPembahasan } from "@/data/tka/modul-pemantapan/brslLatihanPembahasan";
 import type { ReactNode } from "react";
-import bolaTigaPerempatImage from "@assets/image_1792232484011.png";
-import duaTopiUlangTahunImage from "@assets/image_1792232576189.png";
-import nasiTumpengImage from "@assets/image_1792232780263.png";
-import gedungKubahImage from "@assets/image_1792233102504.png";
+import bolaTigaPerempatImage from "@/assets/image_1792232484011.png";
+import duaTopiUlangTahunImage from "@/assets/image_1792232576189.png";
+import nasiTumpengImage from "@/assets/image_1792232780263.png";
+import gedungKubahImage from "@/assets/image_1792233102504.png";
 import {
   BakAirDikurasAnimation,
   BolaDalamTabungAnimation,

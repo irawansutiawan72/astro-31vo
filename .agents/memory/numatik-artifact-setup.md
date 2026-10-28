@@ -8,6 +8,9 @@ description: Key wiring details, port quirks, and coding patterns for the Numati
 - Workflow `artifacts/numatik: web` runs `pnpm --filter @workspace/numatik run dev` from `artifacts/numatik/`; the current imported artifact uses `PORT=18860` directly (no Express proxy).
 - First-time setup: `pnpm install` at workspace root (not `npm install` in `.migration-backup/`).
 - `.migration-backup/` is gitignored but its files are **already tracked** in git (committed before gitignore rule). Do not treat it as the active source; it is dead code.
+- The host-level `/etc/.gitignore` may ignore `attached_assets/*` even when the repository `.gitignore` does not. Active Numatik images should live in `artifacts/numatik/src/assets/` and import through `@/assets/...`.
+  **Why:** Vercel only receives Git-tracked files, so an `@assets` import can work in a Replit preview but fail in a clean deployment when the uploaded file was globally ignored.
+  **How to apply:** Move images used by active Numatik source under `src/assets`, update imports, check that no imported assets are missing, and stage only required app assets.
 - `listArtifacts()` returns empty after GitHub import — artifact registration is not preserved. Workflow is manually configured via `configureWorkflow` to match `artifact.toml` intent.
 - Imported projects may therefore be unreachable by artifact-based screenshot/presentation tools even while the managed frontend workflow runs; use build, logs, and direct route checks as fallback verification.
 - **Artifact.toml** at `artifacts/numatik/.replit-artifact/artifact.toml` has `id = "artifacts/numatik"`, kind = "web", previewPath = "/", and localPort/PORT=18860. Keep its service port aligned with Vite's fallback.

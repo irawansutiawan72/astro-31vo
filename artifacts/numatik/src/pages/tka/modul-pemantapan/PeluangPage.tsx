@@ -1,11 +1,11 @@
 import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 import RuangSampelMateri from "@/components/tka/RuangSampelMateri";
-import diagramKelereng from "@assets/image_1787583206453.png";
-import papanSpinner from "@assets/image_1791865167639.png";
-import gambarSakaKirana from "@assets/image_1791860500613.png";
-import gambarMesinTetas from "@assets/image_1791860506939.png";
-import gambarSoalKode from "@assets/image_1791860512596.png";
+import diagramKelereng from "@/assets/image_1787583206453.png";
+import papanSpinner from "@/assets/image_1791865167639.png";
+import gambarSakaKirana from "@/assets/image_1791860500613.png";
+import gambarMesinTetas from "@/assets/image_1791860506939.png";
+import gambarSoalKode from "@/assets/image_1791860512596.png";
 
 const materiSections: MateriSection[] = [
   { heading: "A. Ruang Sampel", renderContent: () => <RuangSampelMateri /> },
