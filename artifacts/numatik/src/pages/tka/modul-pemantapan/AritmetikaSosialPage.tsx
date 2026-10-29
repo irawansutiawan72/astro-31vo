@@ -2,14 +2,13 @@ import TKAPemantapanLayout from "@/components/tka/TKAPemantapanLayout";
 import type { MateriSection, LatihanSoal } from "@/components/tka/TKAPemantapanLayout";
 
 const materiSections: MateriSection[] = [
-  { heading: "A. Harga Beli (Modal)", content: `Harga beli atau modal adalah harga barang saat dibeli dari produsen, distributor, atau toko lain.\n\nContoh: Seorang pedagang membeli 1 lusin buku dengan harga Rp50.000. Harga beli 1 lusin buku tersebut adalah Rp50.000.` },
-  { heading: "B. Untung dan Rugi", content: `Untung: $\\text{Untung} = \\text{Harga Jual} - \\text{Harga Beli}$ (HJ > HB)\nRugi: $\\text{Rugi} = \\text{Harga Beli} - \\text{Harga Jual}$ (HJ < HB)\nImpas: Harga Jual = Harga Beli` },
-  { heading: "C. Persentase Untung/Rugi", content: `$\\%U = \\dfrac{\\text{Untung}}{\\text{Harga Beli}} \\times 100\\%$\n\n$\\%R = \\dfrac{\\text{Rugi}}{\\text{Harga Beli}} \\times 100\\%$` },
-  { heading: "D. Mencari Harga Jual", content: `Jika untung: $\\text{HJ} = \\dfrac{(100 + \\%U)}{100} \\times \\text{HB}$\n\nJika rugi: $\\text{HJ} = \\dfrac{(100 - \\%R)}{100} \\times \\text{HB}$\n\nJika untung: $\\text{HB} = \\dfrac{100}{100 + \\%U} \\times \\text{HJ}$` },
-  { heading: "E. Bunga Tunggal", content: `$B = M \\times W \\times P$\n\nB = besar bunga, M = modal, W = waktu, dan P = suku bunga per periode.\n\nModal akhir: $M_1 = M(1 + WP)$` },
-  { heading: "F. Diskon (Potongan Harga)", content: `Besar diskon = Persentase diskon × Harga awal\n\nHarga bayar = Harga awal × (100% − Persentase diskon)\n\nDiskon ganda 20% + 10% tidak sama dengan diskon 30%.` },
-  { heading: "G. Bruto, Netto, Tara", content: `Bruto = berat kotor (barang + kemasan)\nNetto = berat bersih (tanpa kemasan)\nTara = berat kemasan\n\nBruto = Netto + Tara` },
-  { heading: "H. Pajak (PPN & PPh)", content: `PPN: Total bayar = Harga × (100% + %PPN)\n\nPPh: PKP = Penghasilan bruto − PTKP\nPPh = %PPh × PKP\nPenghasilan bersih = Penghasilan bruto − PPh` },
+  { heading: "A. Harga Beli (Modal)", content: `Harga beli atau modal adalah harga barang saat dibeli dari produsen, distributor, atau toko lain.\n\nContoh: Seorang pedagang membeli 1 lusin buku dengan harga Rp50.000. Harga beli 1 lusin buku tersebut adalah Rp50.000.\n\n[FORMULABOX:Hubungan harga beli dan modal|$\\text{Harga Beli} = \\text{Modal}$]` },
+  { heading: "B. Untung dan Rugi", content: `[FORMULABOX:Rumus Untung|$\\text{Untung} = \\text{Harga Jual} - \\text{Harga Beli}$]\n\n[FORMULABOX:Rumus Rugi|$\\text{Rugi} = \\text{Harga Beli} - \\text{Harga Jual}$]\n\n[FORMULABOX:Kondisi Impas|$\\text{Harga Jual} = \\text{Harga Beli}$]` },
+  { heading: "C. Persentase Untung/Rugi", content: `[FORMULABOX:Persentase Untung|$\\%U = \\dfrac{\\text{Untung}}{\\text{Harga Beli}} \\times 100\\%$]\n\n[FORMULABOX:Persentase Rugi|$\\%R = \\dfrac{\\text{Rugi}}{\\text{Harga Beli}} \\times 100\\%$]` },
+  { heading: "D. Mencari Harga Jual", content: `[FORMULABOX:Harga Jual saat Untung|$\\text{HJ} = \\dfrac{100 + \\%U}{100} \\times \\text{HB}$]\n\n[FORMULABOX:Harga Jual saat Rugi|$\\text{HJ} = \\dfrac{100 - \\%R}{100} \\times \\text{HB}$]\n\n[FORMULABOX:Mencari Harga Beli saat Untung|$\\text{HB} = \\dfrac{100}{100 + \\%U} \\times \\text{HJ}$]` },
+  { heading: "E. Bunga Tunggal", content: `Keterangan: B = besar bunga, M = modal, W = waktu, dan P = suku bunga per periode.\n\n[FORMULABOX:Rumus Bunga Tunggal|$B = M \\times W \\times P$]\n\n[FORMULABOX:Modal Akhir|$M_1 = M(1 + WP)$]` },
+  { heading: "F. Diskon (Potongan Harga)", content: `[FORMULABOX:Besar Potongan Harga|$\\text{Diskon} = \\text{Persentase Diskon} \\times \\text{Harga Awal}$]\n\n[FORMULABOX:Harga Setelah Diskon|$\\text{Harga Bayar} = \\text{Harga Awal} \\times (100\\% - \\text{Persentase Diskon})$]\n\n[SUBHEADING:Catatan]\nDiskon ganda 20% + 10% tidak sama dengan diskon 30%.` },
+  { heading: "G. Bruto, Netto, Tara", content: `Bruto adalah berat kotor barang beserta kemasannya. Netto adalah berat bersih barang tanpa kemasan, sedangkan tara adalah berat kemasan.\n\n[FORMULABOX:Hubungan Bruto, Netto, dan Tara|$\\text{Bruto} = \\text{Netto} + \\text{Tara}$]` },
 ];
 
 const contohSoal: LatihanSoal[] = [

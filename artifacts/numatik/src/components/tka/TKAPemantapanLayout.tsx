@@ -482,7 +482,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                     <span className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ${color.badge}`}>
                       {section.heading.match(/^([A-Z])\.\s*/)?.[1] ?? String.fromCharCode(65 + idx)}
                     </span>
-                    <span className="font-display text-sm font-bold text-white/90 flex-1 leading-snug">
+                    <span className={`font-display text-sm font-bold flex-1 leading-snug ${isLightTheme ? "text-slate-900" : "text-white/90"}`}>
                       {contentRenderer(headingText)}
                     </span>
                   </div>
@@ -490,7 +490,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                   <div className="px-6 pb-5 pt-1 border-t border-white/5">
                     {section.jsx && <div className="mb-3">{section.jsx}</div>}
                     {section.renderContent ? section.renderContent() : (
-                    <div className="font-body text-sm text-white/80 leading-relaxed space-y-0.5">
+                    <div className={`font-body text-sm leading-relaxed space-y-0.5 ${isLightTheme ? "text-slate-700" : "text-white/80"}`}>
                       {(section.content ?? "").split('\n').map((line, i) => {
                         const trimmed = line.trim();
                         const imgMatch = trimmed.match(/^\[IMAGE:([^|]+)(?:\|(\w+))?\]$/);
@@ -535,7 +535,7 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         const centerMatch = trimmed.match(/^\[CENTER:(.+)\]$/);
                         if (centerMatch) return <div key={i} className="text-center font-semibold mb-1">{centerMatch[1]}</div>;
                         const subheadingMatch = trimmed.match(/^\[SUBHEADING:(.+)\]$/);
-                        if (subheadingMatch) return <div key={i} className="text-amber-300 font-semibold mt-3 mb-1">{contentRenderer(subheadingMatch[1])}</div>;
+                        if (subheadingMatch) return <div key={i} className={`font-semibold mt-3 mb-1 ${isLightTheme ? "text-amber-800" : "text-amber-300"}`}>{contentRenderer(subheadingMatch[1])}</div>;
                         const blockMathMatch = trimmed.match(/^\[BLOCKMATH:(.+)\]$/);
                         if (blockMathMatch) return (
                           <div key={i} className="flex justify-start my-3 pl-2 overflow-x-auto">
@@ -545,21 +545,42 @@ const TKAPemantapanLayout = ({ title, backPath = "/tka/modul-pemantapan", materi
                         const formulaBoxMatch = trimmed.match(/^\[FORMULABOX:([^|]+)\|(.+)\]$/);
                         if (formulaBoxMatch) {
                           return (
-                            <div key={i} className="my-4 flex justify-center">
-                              <div className="min-w-[220px] rounded-xl border-2 border-amber-400/60 bg-amber-400/10 px-6 py-4 text-center">
-                                <div
-                                  className={`mb-3 text-xs font-bold uppercase tracking-widest ${isLightTheme ? "text-gray-900" : "text-amber-300"}`}
-                                >
-                                  {formulaBoxMatch[1]}
-                                </div>
-                                {formulaBoxMatch[2].split('|').map((formula, formulaIndex) => (
-                                  <div
-                                    key={formulaIndex}
-                                    className={`mb-1 text-base font-semibold ${isLightTheme ? "text-gray-900" : "text-white"}`}
-                                  >
-                                    {contentRenderer(formula)}
+                            <div key={i} className="my-3">
+                              <div
+                                className="overflow-hidden rounded-2xl border shadow-sm"
+                                style={isLightTheme ? {
+                                  borderColor: "rgba(217,119,6,0.28)",
+                                  background: "linear-gradient(135deg, rgba(255,251,235,0.95), rgba(255,247,237,0.8))",
+                                  boxShadow: "0 5px 16px rgba(180,83,9,0.08)",
+                                } : {
+                                  borderColor: "rgba(251,191,36,0.25)",
+                                  background: "linear-gradient(135deg, rgba(245,158,11,0.12), rgba(120,53,15,0.08))",
+                                  boxShadow: "0 5px 18px rgba(245,158,11,0.08)",
+                                }}
+                              >
+                                <div className="flex items-center gap-2.5 border-b px-4 py-2.5"
+                                  style={{ borderColor: isLightTheme ? "rgba(217,119,6,0.16)" : "rgba(251,191,36,0.14)" }}>
+                                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg"
+                                    style={{
+                                      background: isLightTheme ? "rgba(217,119,6,0.12)" : "rgba(251,191,36,0.14)",
+                                      color: isLightTheme ? "#b45309" : "#fbbf24",
+                                    }}>
+                                    <Lightbulb className="h-4 w-4" />
+                                  </span>
+                                  <div className={`text-xs font-extrabold uppercase tracking-[0.12em] ${isLightTheme ? "text-amber-900" : "text-amber-200"}`}>
+                                    {formulaBoxMatch[1]}
                                   </div>
-                                ))}
+                                </div>
+                                <div className="space-y-2 px-4 py-3">
+                                  {formulaBoxMatch[2].split('|').map((formula, formulaIndex) => (
+                                    <div
+                                      key={formulaIndex}
+                                      className={`overflow-x-auto rounded-xl px-3 py-2 text-center text-base font-semibold ${isLightTheme ? "bg-white/80 text-gray-900" : "bg-slate-950/35 text-white"}`}
+                                    >
+                                      {contentRenderer(formula)}
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           );
