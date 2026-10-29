@@ -85,52 +85,50 @@ const contohSoal: LatihanSoal[] = [
   },
 ];
 
-// 21 soal dibagi merata: 7 PG biasa, 7 PG kompleks (4 pernyataan), dan 7 PG benar-salah (3 pernyataan).
-// Pola nomor: PG (1,4,7,10,13,16,19) · PGK (2,5,8,11,14,17,20) · PGKBS (3,6,9,12,15,18,21).
+// Latihan terdiri dari 15 soal pilihan ganda, PG kompleks, dan PG benar-salah.
 const latihanDasar: LatihanSoal[] = [
   {
     no: 1, type: "pg",
-    soal: "Seorang pedagang membeli 60 kg mangga dan menjualnya Rp15.000,00 per kg. Jika untung 20%, harga beli seluruh mangga adalah ...",
-    options: ["A. Rp600.000,00", "B. Rp720.000,00", "C. Rp750.000,00", "D. Rp800.000,00"], jawaban: "C",
-    pembahasan: "Harga jual total $=60\\times15.000=900.000$. Karena HJ $=120\\%$ HB, maka HB $=900.000/1,2=750.000$. Jawaban C.",
+    soal: "Seorang pedagang membeli 60 kg mangga dengan harga total Rp600.000,00. Sebanyak 10 kg mangga busuk sehingga tidak dapat dijual. Jika pedagang ingin memperoleh untung 20% dari seluruh modal, berapa harga jual setiap kilogram mangga yang masih baik?",
+    options: ["A. Rp12.000,00", "B. Rp13.200,00", "C. Rp14.400,00", "D. Rp15.000,00"], jawaban: "C",
+    pembahasan: "Jumlah mangga yang dapat dijual $=60-10=50$ kg. Agar mendapat untung 20%, hasil penjualan harus $=120\\%\\times Rp600.000,00=Rp720.000,00$. Harga jual per kg $=Rp720.000,00\\div50=\\mathbf{Rp14.400,00}$. Jawaban C.",
   },
   {
-    no: 2, type: "pgk",
-    soal: "Sepeda bekas dijual Rp1.040.000,00 setelah diperbaiki dengan biaya Rp200.000,00 dan menghasilkan untung 30%. Pernyataan yang benar adalah ...",
-    pernyataan: ["Modal total sepeda dan perbaikan adalah Rp800.000,00.", "Harga beli sepeda sebelum diperbaiki adalah Rp600.000,00.", "Keuntungan pedagang adalah Rp240.000,00.", "Harga beli sepeda semula adalah Rp800.000,00."],
-    options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
-    pembahasan: "Modal total $=1.040.000/1,3=800.000$. Harga beli sepeda $=800.000-200.000=600.000$. Keuntungan $=1.040.000-800.000=240.000$. Jadi (1), (2), dan (3) benar.",
+    no: 2, type: "pg",
+    soal: "Seorang pedagang membeli sebuah sepeda seharga Rp800.000,00. Ia menjual sepeda tersebut dengan untung 25% dari harga beli. Berapa harga jual sepeda itu?",
+    options: ["A. Rp900.000,00", "B. Rp960.000,00", "C. Rp1.000.000,00", "D. Rp1.040.000,00"], jawaban: "C",
+    pembahasan: "Untung $=25\\%\\times Rp800.000,00=Rp200.000,00$. Harga jual $=Rp800.000,00+Rp200.000,00=\\mathbf{Rp1.000.000,00}$. Jawaban C.",
   },
   {
     no: 3, type: "pgkbs",
-    soal: "Beras seharga Rp475.000,00 dijual dengan untung 20% dalam karung berisi 50 kg. Tentukan Benar atau Salah!",
+    soal: "Sebanyak 50 kg beras dibeli dengan harga total Rp475.000,00. Seluruh beras itu dijual dengan keuntungan 20% dari harga beli. Tentukan apakah setiap pernyataan berikut benar atau salah!",
     pernyataan: ["Harga jual seluruh beras adalah Rp570.000,00.", "Harga jual beras per kg adalah Rp11.400,00.", "Harga beli beras per kg adalah Rp9.500,00."],
     jawabanBS: ["B", "B", "B"],
     pembahasan: "Harga jual total $=475.000\\times1,2=570.000$. Harga jual per kg $=570.000/50=11.400$ dan harga beli per kg $=475.000/50=9.500$.",
   },
   {
     no: 4, type: "pg",
-    soal: "Bima menabung Rp1.200.000,00 dengan bunga tunggal 15% setahun. Tabungannya menjadi Rp1.260.000,00. Lama Bima menabung adalah ...",
+    soal: "Zahira menabung Rp1.200.000,00 dengan bunga tunggal 15% setahun. Jumlah tabungannya menjadi Rp1.260.000,00. Berapa lama Zahira menabung?",
     options: ["A. 3 bulan", "B. 4 bulan", "C. 5 bulan", "D. 6 bulan"], jawaban: "B",
-    pembahasan: "Bunga $=60.000$. Dari $60.000=1.200.000\\times W\\times0,15$, diperoleh $W=1/3$ tahun = 4 bulan. Jawaban B.",
+    pembahasan: "Bunga yang diperoleh Zahira $=Rp1.260.000,00-Rp1.200.000,00=Rp60.000,00$. Dari $60.000=1.200.000\\times W\\times0,15$, diperoleh $W=1/3$ tahun, yaitu 4 bulan. Jawaban B.",
   },
   {
-    no: 5, type: "pgk",
-    soal: "Doni menabung Rp800.000,00 dengan bunga tunggal 12% per tahun hingga menjadi Rp872.000,00. Pernyataan yang benar adalah ...",
-    pernyataan: ["Bunga yang diperoleh Doni Rp72.000,00.", "Lama menabung adalah 0,75 tahun.", "Lama menabung sama dengan 9 bulan.", "Doni menabung selama 6 bulan."],
-    options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
-    pembahasan: "Bunga $=72.000$. Dari $72.000=800.000\\times W\\times12\\%$, diperoleh $W=0,75$ tahun atau 9 bulan. Jadi (1), (2), dan (3) benar.",
+    no: 5, type: "pgkbs",
+    soal: "Ifa menabung Rp800.000,00 dengan bunga tunggal 12% per tahun. Setelah beberapa waktu, jumlah tabungannya menjadi Rp872.000,00. Tentukan apakah setiap pernyataan berikut benar atau salah!",
+    pernyataan: ["Bunga yang diperoleh Ifa adalah Rp72.000,00.", "Ifa menabung selama 0,75 tahun.", "Lama menabung Ifa sama dengan 9 bulan."],
+    jawabanBS: ["B", "B", "B"],
+    pembahasan: "Bunga $=Rp872.000,00-Rp800.000,00=Rp72.000,00$. Dari $72.000=800.000\\times W\\times12\\%$, diperoleh $W=0,75$ tahun atau 9 bulan. Jadi ketiga pernyataan benar.",
   },
   {
     no: 6, type: "pgkbs",
-    soal: "Egi menabung Rp600.000,00. Setelah 10 bulan tabungannya menjadi Rp640.000,00. Tentukan Benar atau Salah!",
-    pernyataan: ["Bunga yang diperoleh Egi Rp40.000,00.", "Waktu menabung adalah $\\frac{10}{12}$ tahun.", "Persentase bunga tunggal per tahun adalah 8%."],
+    soal: "Nabila menabung sebesar Rp600.000,00. Setelah 10 bulan, jumlah tabungannya menjadi Rp640.000,00. Tentukan apakah setiap pernyataan berikut benar atau salah!",
+    pernyataan: ["Bunga yang diperoleh Nabila adalah Rp40.000,00.", "Lama Nabila menabung adalah 10 bulan.", "Suku bunga tunggal yang diterapkan adalah 8% per tahun."],
     jawabanBS: ["B", "B", "B"],
     pembahasan: "Bunga $=40.000$. Dengan $40.000=600.000\\times\\frac{10}{12}\\times P$, diperoleh $P=8\\%$.",
   },
   {
     no: 7, type: "pg",
-    soal: "Nina menabung dengan bunga tunggal 16% setahun. Setelah 9 bulan uangnya menjadi Rp2.240.000,00. Tabungan awal Nina adalah ...",
+    soal: "Noval menabung dengan bunga tunggal 16% per tahun. Setelah 9 bulan, jumlah tabungannya menjadi Rp2.240.000,00. Berapa tabungan awal Noval?",
     options: ["A. Rp1.800.000,00", "B. Rp1.900.000,00", "C. Rp2.000.000,00", "D. Rp2.100.000,00"], jawaban: "C",
     pembahasan: "$M_1=M(1+\\frac{9}{12}\\times0,16)=1,12M=2.240.000$, sehingga $M=2.000.000$. Jawaban C.",
   },
@@ -143,34 +141,102 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 9, type: "pgkbs",
-    soal: "Harga sepatu Rp140.000,00 dan kaos Rp100.000,00. Diskon di Toko Damai 20% dan 25%, Tentram 25% dan 20%, Rukun 15% dan 30%, Sentosa 30% dan 15%. Tentukan Benar atau Salah!",
+    soal: "Harga sepatu dan kaos serta persentase potongan harga di setiap toko disajikan pada tabel berikut. Tentukan apakah setiap pernyataan berikut benar atau salah!",
+    gambar: (
+      <div className="overflow-x-auto rounded-lg border border-cyan-400/20">
+        <table className="w-full min-w-[560px] border-collapse text-left text-xs">
+          <thead className="bg-cyan-500/10 text-cyan-300">
+            <tr>
+              <th className="px-3 py-2">Barang</th>
+              <th className="px-3 py-2">Harga</th>
+              <th className="px-3 py-2">Toko Damai</th>
+              <th className="px-3 py-2">Toko Tentram</th>
+              <th className="px-3 py-2">Toko Rukun</th>
+              <th className="px-3 py-2">Toko Sentosa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sepatu</td>
+              <td className="px-3 py-2">Rp140.000,00</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">15%</td>
+              <td className="px-3 py-2">30%</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Kaos</td>
+              <td className="px-3 py-2">Rp100.000,00</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">30%</td>
+              <td className="px-3 py-2">15%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    ),
     pernyataan: ["Total pembayaran di Toko Damai Rp187.000,00.", "Total pembayaran di Toko Tentram Rp185.000,00.", "Toko Sentosa memberikan total termurah, yaitu Rp183.000,00."],
     jawabanBS: ["B", "B", "B"],
     pembahasan: "Damai $=112.000+75.000=187.000$, Tentram $=105.000+80.000=185.000$, dan Sentosa $=98.000+85.000=183.000$.",
   },
   {
     no: 10, type: "pg",
-    soal: "Harga tas Rp80.000,00 diskon 15%, sandal Rp50.000,00 diskon 25%, dan sepatu Rp120.000,00 diskon 20%. Uang untuk membeli 3 tas, 2 sandal, dan 1 sepatu adalah ...",
+    soal: "Harga satuan, potongan harga, dan jumlah barang yang akan dibeli disajikan pada tabel berikut. Berapa total uang yang harus dibayarkan?",
+    gambar: (
+      <div className="overflow-x-auto rounded-lg border border-cyan-400/20">
+        <table className="w-full min-w-[420px] border-collapse text-left text-xs">
+          <thead className="bg-cyan-500/10 text-cyan-300">
+            <tr>
+              <th className="px-3 py-2">Barang</th>
+              <th className="px-3 py-2">Harga satuan</th>
+              <th className="px-3 py-2">Potongan harga</th>
+              <th className="px-3 py-2">Jumlah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Tas</td>
+              <td className="px-3 py-2">Rp80.000,00</td>
+              <td className="px-3 py-2">15%</td>
+              <td className="px-3 py-2">3 buah</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sandal</td>
+              <td className="px-3 py-2">Rp50.000,00</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">2 pasang</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sepatu</td>
+              <td className="px-3 py-2">Rp120.000,00</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">1 pasang</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    ),
     options: ["A. Rp360.000,00", "B. Rp365.000,00", "C. Rp370.000,00", "D. Rp375.000,00"], jawaban: "D",
     pembahasan: "Tas $=3(80.000\\times0,85)=204.000$, sandal $=2(50.000\\times0,75)=75.000$, sepatu $=96.000$. Total $=375.000$. Jawaban D.",
   },
   {
     no: 11, type: "pgk",
-    soal: "Karung beras memiliki bruto 50 kg, tara 2%, dan harga jual Rp12.000,00 per kg netto. Pernyataan yang benar adalah ...",
+    soal: "Sebuah karung berisi beras memiliki berat bruto 50 kg. Berat kemasan (tara) adalah 2% dari berat bruto. Beras dijual seharga Rp12.000,00 untuk setiap kilogram netto. Pilih semua pernyataan yang benar!",
     pernyataan: ["Tara karung adalah 1 kg.", "Netto beras adalah 49 kg.", "Total uang hasil penjualan Rp588.000,00.", "Total uang hasil penjualan Rp600.000,00."],
     options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
     pembahasan: "Tara $=2\\%\\times50=1$ kg, netto $=49$ kg, dan penjualan $=49\\times12.000=588.000$. Jadi (1), (2), dan (3) benar.",
   },
   {
-    no: 12, type: "pgkbs",
-    soal: "Toko A menjual bruto 100 kg dengan tara 2% seharga Rp1.000.000,00. Toko B menjual bruto 100 kg dengan tara 3% seharga Rp990.000,00. Tentukan Benar atau Salah!",
-    pernyataan: ["Netto Toko A adalah 98 kg.", "Harga per kg netto Toko B sekitar Rp10.206.", "Toko A lebih murah per kg netto daripada Toko B."],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Harga/kg A $=1.000.000/98\\approx10.204$, sedangkan B $=990.000/97\\approx10.206$. Jadi A lebih murah.",
+    no: 12, type: "pgk",
+    soal: "Toko A dan Toko B masing-masing menjual barang dengan berat bruto 100 kg. Toko A menetapkan tara 2% dan harga Rp1.000.000,00, sedangkan Toko B menetapkan tara 3% dan harga Rp990.000,00. Pilih semua pernyataan yang benar!",
+    pernyataan: ["Netto barang di Toko A adalah 98 kg.", "Netto barang di Toko B adalah 97 kg.", "Harga per kg netto di Toko B sekitar Rp10.206,00.", "Harga per kg netto di Toko A lebih mahal daripada di Toko B."],
+    options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
+    pembahasan: "Netto A $=100-2\\%\\times100=98$ kg dan netto B $=100-3\\%\\times100=97$ kg. Harga per kg netto A $=Rp1.000.000,00\\div98\\approx Rp10.204,08$, sedangkan B $=Rp990.000,00\\div97\\approx Rp10.206,19$. Jadi harga per kg netto Toko A lebih rendah. Pernyataan (1), (2), dan (3) benar.",
   },
   {
     no: 13, type: "pg",
-    soal: "Seorang penjual mendapat untung Rp100.000,00. Ia menjual buah Rp15.000,00 per kg netto dari peti bruto 60 kg dengan tara 2 kg. Harga beli peti buah adalah ...",
+    soal: "Seorang pedagang menjual seluruh buah dalam sebuah peti dengan harga Rp15.000,00 per kilogram netto. Berat bruto peti berisi buah adalah 60 kg dan berat tara peti kosong 2 kg. Jika pedagang memperoleh untung Rp100.000,00, berapa harga beli seluruh buah tersebut?",
     options: ["A. Rp900.000,00", "B. Rp870.000,00", "C. Rp800.000,00", "D. Rp770.000,00"], jawaban: "D",
     pembahasan: "Netto $=60-2=58$ kg. HJ $=58\\times15.000=870.000$. HB $=870.000-100.000=770.000$. Jawaban D.",
   },
@@ -183,50 +249,10 @@ const latihanDasar: LatihanSoal[] = [
   },
   {
     no: 15, type: "pgkbs",
-    soal: "Sebuah drum memiliki diskon tara 3% dan netto 97 kg. Tentukan Benar atau Salah!",
+    soal: "Sebuah drum memiliki netto 97 kg. Berat tara drum adalah 3% dari berat brutonya. Tentukan apakah setiap pernyataan berikut benar atau salah!",
     pernyataan: ["Netto merupakan 97% dari bruto.", "Bruto drum adalah 100 kg.", "Tara drum adalah 3 kg."],
     jawabanBS: ["B", "B", "B"],
     pembahasan: "Bruto $=97/0,97=100$ kg dan tara $=3\\%\\times100=3$ kg.",
-  },
-  {
-    no: 16, type: "pg",
-    soal: "Aris membeli lemari Rp5.000.000,00 dan dikenai PPN 11%. Total uang yang harus dibayar adalah ...",
-    options: ["A. Rp6.100.000,00", "B. Rp5.500.000,00", "C. Rp5.055.000,00", "D. Rp5.550.000,00"], jawaban: "D",
-    pembahasan: "PPN $=11\\%\\times5.000.000=550.000$. Total $=5.550.000$. Jawaban D.",
-  },
-  {
-    no: 17, type: "pgk",
-    soal: "Harga makanan Rp50.000,00 belum termasuk PPN 11%. Pernyataan yang benar adalah ...",
-    pernyataan: ["PPN yang ditambahkan Rp5.500,00.", "Total bayar Rp55.500,00.", "Total bayar dapat dihitung dengan $50.000\\times1,11$.", "Total bayar Rp55.000,00."],
-    options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
-    pembahasan: "PPN $=5.500$ dan total $=55.500$. Jadi (1), (2), dan (3) benar.",
-  },
-  {
-    no: 18, type: "pgkbs",
-    soal: "Seseorang membayar Rp2.220.000,00 untuk barang yang sudah termasuk PPN 11%. Tentukan Benar atau Salah!",
-    pernyataan: ["Harga sebelum PPN adalah Rp2.000.000,00.", "PPN yang termasuk di dalam harga adalah Rp220.000,00.", "Harga sebelum PPN dapat dihitung dengan $2.220.000/1,11$."],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "Harga awal $=2.220.000/1,11=2.000.000$, sehingga PPN $=220.000$.",
-  },
-  {
-    no: 19, type: "pg",
-    soal: "Gaji karyawan Rp6.000.000,00 per bulan dan PTKP Rp4.500.000,00 per bulan. PKP karyawan tersebut adalah ...",
-    options: ["A. Rp10.500.000,00", "B. Rp1.500.000,00", "C. Rp6.000.000,00", "D. Rp4.500.000,00"], jawaban: "B",
-    pembahasan: "PKP $=6.000.000-4.500.000=1.500.000$. Jawaban B.",
-  },
-  {
-    no: 20, type: "pgk",
-    soal: "Pak Doni mendapat gaji Rp8.000.000,00 dengan PTKP Rp5.000.000,00. Tarif PPh 5% dari PKP. Pernyataan yang benar adalah ...",
-    pernyataan: ["PKP Pak Doni Rp3.000.000,00.", "PPh yang harus dibayar Rp150.000,00.", "Penghasilan bersihnya Rp7.850.000,00.", "PPh yang harus dibayar Rp400.000,00."],
-    options: ["A. (1) dan (2) saja", "B. (1), (2), dan (3)", "C. (2) dan (4) saja", "D. Semua benar"], jawaban: "B", jawabanPGK: [0, 1, 2],
-    pembahasan: "PKP $=3.000.000$, PPh $=5\\%\\times3.000.000=150.000$, dan penghasilan bersih $=7.850.000$. Jadi (1), (2), dan (3) benar.",
-  },
-  {
-    no: 21, type: "pgkbs",
-    soal: "Pekerja lepas mendapat upah Rp10.000.000,00, PTKP Rp6.000.000,00, dan tarif PPh 10% dari PKP. Tentukan Benar atau Salah!",
-    pernyataan: ["PKP pekerja tersebut Rp4.000.000,00.", "PPh yang harus dibayar Rp400.000,00.", "Penghasilan bersihnya Rp9.600.000,00."],
-    jawabanBS: ["B", "B", "B"],
-    pembahasan: "PKP $=10.000.000-6.000.000=4.000.000$. PPh $=400.000$. Penghasilan bersih $=10.000.000-400.000=9.600.000$.",
   },
 ];
 
