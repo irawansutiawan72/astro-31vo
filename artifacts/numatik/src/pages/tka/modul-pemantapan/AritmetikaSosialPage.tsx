@@ -143,60 +143,37 @@ const latihanDasar: LatihanSoal[] = [
     no: 9, type: "pgkbs",
     soal: "Harga sepatu dan kaos serta persentase potongan harga di setiap toko disajikan pada tabel berikut. Tentukan apakah setiap pernyataan berikut benar atau salah!",
     gambar: (
-      <div className="space-y-3">
-        <div className="space-y-3 sm:hidden">
-          {[
-            { item: "Sepatu", price: "Rp140.000,00", stores: [["Toko Damai", "20%"], ["Toko Tentram", "25%"], ["Toko Rukun", "15%"], ["Toko Sentosa", "30%"]] },
-            { item: "Kaos", price: "Rp100.000,00", stores: [["Toko Damai", "25%"], ["Toko Tentram", "20%"], ["Toko Rukun", "30%"], ["Toko Sentosa", "15%"]] },
-          ].map(({ item, price, stores }) => (
-            <div key={item} className="rounded-lg border border-cyan-400/20 p-3">
-              <div className="mb-2 flex flex-wrap items-baseline justify-between gap-1 border-b border-cyan-400/10 pb-2">
-                <span className="font-semibold text-cyan-200">{item}</span>
-                <span className="text-xs">{price}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                {stores.map(([store, rate]) => (
-                  <div key={store} className="rounded-md bg-cyan-500/5 px-2 py-1.5">
-                    <div className="text-[10px] leading-tight text-cyan-200/70">{store}</div>
-                    <div className="mt-0.5 font-semibold">{rate}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="hidden overflow-x-auto rounded-lg border border-cyan-400/20 sm:block">
-          <table className="w-full min-w-[560px] border-collapse text-left text-xs">
-            <thead className="bg-cyan-500/10 text-cyan-300">
-              <tr>
-                <th className="px-3 py-2">Barang</th>
-                <th className="px-3 py-2">Harga</th>
-                <th className="px-3 py-2">Toko Damai</th>
-                <th className="px-3 py-2">Toko Tentram</th>
-                <th className="px-3 py-2">Toko Rukun</th>
-                <th className="px-3 py-2">Toko Sentosa</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t border-cyan-400/10">
-                <td className="px-3 py-2">Sepatu</td>
-                <td className="px-3 py-2">Rp140.000,00</td>
-                <td className="px-3 py-2">20%</td>
-                <td className="px-3 py-2">25%</td>
-                <td className="px-3 py-2">15%</td>
-                <td className="px-3 py-2">30%</td>
-              </tr>
-              <tr className="border-t border-cyan-400/10">
-                <td className="px-3 py-2">Kaos</td>
-                <td className="px-3 py-2">Rp100.000,00</td>
-                <td className="px-3 py-2">25%</td>
-                <td className="px-3 py-2">20%</td>
-                <td className="px-3 py-2">30%</td>
-                <td className="px-3 py-2">15%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div className="overflow-x-auto rounded-lg border border-cyan-400/20">
+        <table className="w-full min-w-[560px] border-collapse text-left text-xs">
+          <thead className="bg-cyan-500/10 text-cyan-300">
+            <tr>
+              <th className="px-3 py-2">Barang</th>
+              <th className="px-3 py-2">Harga</th>
+              <th className="px-3 py-2">Toko Damai</th>
+              <th className="px-3 py-2">Toko Tentram</th>
+              <th className="px-3 py-2">Toko Rukun</th>
+              <th className="px-3 py-2">Toko Sentosa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sepatu</td>
+              <td className="px-3 py-2">Rp140.000,00</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">15%</td>
+              <td className="px-3 py-2">30%</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Kaos</td>
+              <td className="px-3 py-2">Rp100.000,00</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">30%</td>
+              <td className="px-3 py-2">15%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     ),
     pernyataan: ["Total pembayaran di Toko Damai Rp187.000,00.", "Total pembayaran di Toko Tentram Rp185.000,00.", "Toko Sentosa memberikan total termurah, yaitu Rp183.000,00."],
@@ -207,64 +184,37 @@ const latihanDasar: LatihanSoal[] = [
     no: 10, type: "pg",
     soal: "Harga satuan, potongan harga, dan jumlah barang yang akan dibeli disajikan pada tabel berikut. Berapa total uang yang harus dibayarkan?",
     gambar: (
-      <div className="space-y-3">
-        <div className="space-y-2 sm:hidden">
-          {[
-            { item: "Tas", price: "Rp80.000,00", discount: "15%", quantity: "3 buah" },
-            { item: "Sandal", price: "Rp50.000,00", discount: "25%", quantity: "2 pasang" },
-            { item: "Sepatu", price: "Rp120.000,00", discount: "20%", quantity: "1 pasang" },
-          ].map(({ item, price, discount, quantity }) => (
-            <div key={item} className="rounded-lg border border-cyan-400/20 p-3">
-              <div className="mb-2 border-b border-cyan-400/10 pb-2 font-semibold text-cyan-200">{item}</div>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
-                <div>
-                  <div className="text-[10px] leading-tight text-cyan-200/70">Harga satuan</div>
-                  <div className="mt-0.5">{price}</div>
-                </div>
-                <div>
-                  <div className="text-[10px] leading-tight text-cyan-200/70">Potongan harga</div>
-                  <div className="mt-0.5">{discount}</div>
-                </div>
-                <div>
-                  <div className="text-[10px] leading-tight text-cyan-200/70">Jumlah</div>
-                  <div className="mt-0.5">{quantity}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="hidden overflow-x-auto rounded-lg border border-cyan-400/20 sm:block">
-          <table className="w-full min-w-[420px] border-collapse text-left text-xs">
-            <thead className="bg-cyan-500/10 text-cyan-300">
-              <tr>
-                <th className="px-3 py-2">Barang</th>
-                <th className="px-3 py-2">Harga satuan</th>
-                <th className="px-3 py-2">Potongan harga</th>
-                <th className="px-3 py-2">Jumlah</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t border-cyan-400/10">
-                <td className="px-3 py-2">Tas</td>
-                <td className="px-3 py-2">Rp80.000,00</td>
-                <td className="px-3 py-2">15%</td>
-                <td className="px-3 py-2">3 buah</td>
-              </tr>
-              <tr className="border-t border-cyan-400/10">
-                <td className="px-3 py-2">Sandal</td>
-                <td className="px-3 py-2">Rp50.000,00</td>
-                <td className="px-3 py-2">25%</td>
-                <td className="px-3 py-2">2 pasang</td>
-              </tr>
-              <tr className="border-t border-cyan-400/10">
-                <td className="px-3 py-2">Sepatu</td>
-                <td className="px-3 py-2">Rp120.000,00</td>
-                <td className="px-3 py-2">20%</td>
-                <td className="px-3 py-2">1 pasang</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div className="overflow-x-auto rounded-lg border border-cyan-400/20">
+        <table className="w-full min-w-[420px] border-collapse text-left text-xs">
+          <thead className="bg-cyan-500/10 text-cyan-300">
+            <tr>
+              <th className="px-3 py-2">Barang</th>
+              <th className="px-3 py-2">Harga satuan</th>
+              <th className="px-3 py-2">Potongan harga</th>
+              <th className="px-3 py-2">Jumlah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Tas</td>
+              <td className="px-3 py-2">Rp80.000,00</td>
+              <td className="px-3 py-2">15%</td>
+              <td className="px-3 py-2">3 buah</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sandal</td>
+              <td className="px-3 py-2">Rp50.000,00</td>
+              <td className="px-3 py-2">25%</td>
+              <td className="px-3 py-2">2 pasang</td>
+            </tr>
+            <tr className="border-t border-cyan-400/10">
+              <td className="px-3 py-2">Sepatu</td>
+              <td className="px-3 py-2">Rp120.000,00</td>
+              <td className="px-3 py-2">20%</td>
+              <td className="px-3 py-2">1 pasang</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     ),
     options: ["A. Rp360.000,00", "B. Rp365.000,00", "C. Rp370.000,00", "D. Rp375.000,00"], jawaban: "D",
